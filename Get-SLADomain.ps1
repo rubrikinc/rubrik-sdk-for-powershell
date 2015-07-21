@@ -2,13 +2,11 @@
 function Get-SLADomain 
 {
     <#  
-            .SYNOPSIS  Connects to Rubrik and retrieves a token value for authentication
-            .DESCRIPTION Connects to Rubrik and retrieves a token value for authentication
+            .SYNOPSIS  Connects to Rubrik and retrieves details on SLA Domain(s)
+            .DESCRIPTION Connects to Rubrik and retrieves details on SLA Domain(s)
             .NOTES  Author:  Chris Wahl, chris.wahl@rubrik.com
-            .PARAMETER Username
-            The Rubrik username
-            .PARAMETER Password
-            The Rubrik password
+            .PARAMETER SLADomain
+            A specific SLA Domain to query
             .PARAMETER Server
             The Rubrik FQDN or IP address
             .EXAMPLE
