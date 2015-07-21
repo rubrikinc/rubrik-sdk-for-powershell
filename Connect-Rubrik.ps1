@@ -19,10 +19,10 @@ function Connect-Rubrik
     Param(
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Rubrik username')]
         [ValidateNotNullorEmpty()]
-        [String]$username = 'admin',
+        [String]$username,
         [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Rubrik password')]
         [ValidateNotNullorEmpty()]
-        [String]$password = 'admin',
+        [String]$password,
         [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$server

@@ -17,7 +17,7 @@ function Get-SLADomain
     Param(
         [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'SLA Domain Name')]
         [ValidateNotNullorEmpty()]
-        [String]$sladomain,
+        [String]$name,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$server = $global:RubrikServer
@@ -57,10 +57,10 @@ function Get-SLADomain
 
         # Report the results
         $result = ConvertFrom-Json -InputObject $r.Content 
-        if ($sladomain) 
+        if ($name) 
         {
             $result | Where-Object -FilterScript {
-                $_.name -match $sladomain
+                $_.name -match $name
             }
         }
         else 
