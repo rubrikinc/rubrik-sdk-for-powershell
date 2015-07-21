@@ -1,5 +1,37 @@
-﻿# Allow untrusted SSL certs
-	add-type @"
+﻿#Requires -Version 3
+function Connect-Rubrik 
+{
+    <#  
+            .SYNOPSIS  Connects to Rubrik and retrieves a token value for authentication
+            .DESCRIPTION Connects to Rubrik and retrieves a token value for authentication
+            .NOTES  Author:  Chris Wahl, chris.wahl@rubrik.com
+            .PARAMETER Username
+            The Rubrik username
+            .PARAMETER Password
+            The Rubrik password
+            .PARAMETER Server
+            The Rubrik FQDN or IP address
+            .EXAMPLE
+            PS> tbd
+    #>
+
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Rubrik username')]
+        [ValidateNotNullorEmpty()]
+        [String]$username = 'admin',
+        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Rubrik password')]
+        [ValidateNotNullorEmpty()]
+        [String]$password = 'admin',
+        [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
+        [ValidateNotNullorEmpty()]
+        [String]$server
+    )
+
+    Process {
+
+        # Allow untrusted SSL certs
+        Add-Type -TypeDefinition @"
 	    using System.Net;
 	    using System.Security.Cryptography.X509Certificates;
 	    public class TrustAllCertsPolicy : ICertificatePolicy {
@@ -10,17 +42,22 @@
 	        }
 	    }
 "@
-	[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
 
-$uri = 'https://192.168.2.10:443/'
+        # Build the URI
+        $uri = 'https://'+$server+':443/login'
 
-$login_call = @{
-  userId = "admin"
-  password = "admin"
-}
+        # Build the login call JSON
+        $body = @{
+            userId   = $username
+            password = $password
+        }
 
-$r = Invoke-WebRequest -Uri ($uri + "login") -Method: Post -Body (ConvertTo-Json $login_call)
+        # Submit the token request
+        $r = Invoke-WebRequest -Uri $uri -Method: Post -Body (ConvertTo-Json -InputObject $body)
 
-$r = Invoke-WebRequest -Uri ($uri + "vm/list") -Method: Get -Headers @{"Authorization"="Basic OWU2MDMyMGMtYzFhYy00ZjkyLTgzZDAtYzk0NGU2ZjlkNjZhOg=="}
+        $global:RubrikToken = (ConvertFrom-Json -InputObject $r.Content).token
+        Write-Host "Acquired token: $global:rubriktoken"
 
-$r.Content | ConvertFrom-Json
+    } # End of process
+} # End of function
