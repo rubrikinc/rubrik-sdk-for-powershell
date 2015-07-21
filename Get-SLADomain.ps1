@@ -1,5 +1,5 @@
 ﻿#Requires -Version 3
-function Connect-Rubrik 
+function Get-SLADomain 
 {
     <#  
             .SYNOPSIS  Connects to Rubrik and retrieves a token value for authentication
@@ -17,15 +17,12 @@ function Connect-Rubrik
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Rubrik username')]
+        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'SLA Domain Name')]
         [ValidateNotNullorEmpty()]
-        [String]$username = 'admin',
-        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Rubrik password')]
+        [String]$sladomain,
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$password = 'admin',
-        [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
-        [ValidateNotNullorEmpty()]
-        [String]$server
+        [String]$server = $global:RubrikServer
     )
 
     Process {
@@ -44,27 +41,34 @@ function Connect-Rubrik
 "@
         [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
 
+        # Validate token and build Base64 Auth string
+        if (-not $global:RubrikToken) 
+        {
+            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
+        }
+        $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($global:RubrikToken+':'))
+        $head = @{
+            'Authorization' = "Basic $auth"
+        }
+        
         # Build the URI
-        $uri = 'https://'+$server+':443/login'
+        $uri = 'https://'+$server+':443/slaDomain'
 
-        # Build the login call JSON
-        $body = @{
-            userId   = $username
-            password = $password
-        }
+        # Submit the request
+        $r = Invoke-WebRequest -Uri $uri -Headers $head -Method Get
 
-        # Submit the token request
-        try 
+        # Report the results
+        $result = ConvertFrom-Json -InputObject $r.Content 
+        if ($sladomain) 
         {
-            $r = Invoke-WebRequest -Uri $uri -Method: Post -Body (ConvertTo-Json -InputObject $body)
+            $result | Where-Object -FilterScript {
+                $_.name -match $sladomain
+            }
         }
-        catch 
+        else 
         {
-            throw 'Error connecting to Rubrik server'
+            $result
         }
-        $global:RubrikServer = $server
-        $global:RubrikToken = (ConvertFrom-Json -InputObject $r.Content).token
-        Write-Host -Object "Acquired token: $global:RubrikToken"
 
     } # End of process
 } # End of function
