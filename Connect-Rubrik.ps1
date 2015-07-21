@@ -1,54 +1,37 @@
-﻿#Requires -Version 4.0
+﻿#Requires -Version 3
+function Connect-Rubrik 
+{
+    <#  
+            .SYNOPSIS  Connects to Rubrik and retrieves a token value for authentication
+            .DESCRIPTION Connects to Rubrik and retrieves a token value for authentication
+            .NOTES  Author:  Chris Wahl, chris.wahl@rubrik.com
+            .PARAMETER Username
+            The Rubrik username
+            .PARAMETER Password
+            The Rubrik password
+            .PARAMETER Server
+            The Rubrik FQDN or IP address
+            .EXAMPLE
+            PS> tbd
+    #>
 
-<#  
-.SYNOPSIS  Creates a virtual network tier for VMware NSX
-.DESCRIPTION Creates a virtual network tier for VMware NSX
-.NOTES  Author:  Chris Wahl, @ChrisWahl, WahlNetwork.com
-.PARAMETER NSX
-	NSX Manager IP or FQDN
-.PARAMETER NSXPassword
-	NSX Manager credentials with administrative authority
-.PARAMETER NSXUsername
-	NSX Manager username with administrative authority
-.PARAMETER JSONPath
-	Path to your JSON configuration file
-.PARAMETER vCenter
-	vCenter Server IP or FQDN
-.PARAMETER NoAskCreds
-	Use your current login credentials for vCenter
-.EXAMPLE
-	PS> Create-NSXTier -NSX nsxmgr.tld -vCenter vcenter.tld -JSONPath "c:\path\prod.json"
-#>
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Rubrik username')]
+        [ValidateNotNullorEmpty()]
+        [String]$username = 'admin',
+        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Rubrik password')]
+        [ValidateNotNullorEmpty()]
+        [String]$password = 'admin',
+        [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
+        [ValidateNotNullorEmpty()]
+        [String]$server
+    )
 
-[CmdletBinding()]
-Param(
-	[Parameter(Mandatory=$true,Position=0,HelpMessage="NSX Manager IP or FQDN")]
-	[ValidateNotNullorEmpty()]
-	[String]$NSX,
-	[Parameter(Mandatory=$true,Position=1,HelpMessage="NSX Manager credentials with administrative authority")]
-	[ValidateNotNullorEmpty()]
-	[System.Security.SecureString]$NSXPassword,
-	[Parameter(Mandatory=$true,Position=2,HelpMessage="Path to your JSON configuration file")]
-	[ValidateNotNullorEmpty()]
-	[String]$JSONPath,
-	[Parameter(Mandatory=$true,Position=3,HelpMessage="vCenter Server IP or FQDN")]
-	[ValidateNotNullorEmpty()]
-	[String]$vCenter,
-	[String]$NSXUsername = "admin",
-	[Parameter(HelpMessage="Use your current login credentials for vCenter")]
-	[Switch]$NoAskCreds
-	)
+    Process {
 
-
-# Create NSX authorization string and store in $head
-$nsxcreds = New-Object System.Management.Automation.PSCredential "admin",$NSXPassword
-$auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($NSXUsername+":"+$($nsxcreds.GetNetworkCredential().password)))
-$head = @{"Authorization"="Basic $auth"}
-$uri = "https://$nsx"
-
-
-# Allow untrusted SSL certs
-	add-type @"
+        # Allow untrusted SSL certs
+        Add-Type -TypeDefinition @"
 	    using System.Net;
 	    using System.Security.Cryptography.X509Certificates;
 	    public class TrustAllCertsPolicy : ICertificatePolicy {
@@ -59,8 +42,22 @@ $uri = "https://$nsx"
 	        }
 	    }
 "@
-	[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
 
-$uri = 'https://192.168.2.10:443/'
+        # Build the URI
+        $uri = 'https://'+$server+':443/login'
 
-Invoke-WebRequest -Uri $uri
+        # Build the login call JSON
+        $body = @{
+            userId   = $username
+            password = $password
+        }
+
+        # Submit the token request
+        $r = Invoke-WebRequest -Uri $uri -Method: Post -Body (ConvertTo-Json -InputObject $body)
+
+        $global:RubrikToken = (ConvertFrom-Json -InputObject $r.Content).token
+        Write-Host "Acquired token: $global:rubriktoken"
+
+    } # End of process
+} # End of function
