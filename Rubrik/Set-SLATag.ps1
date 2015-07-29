@@ -74,7 +74,10 @@ function Set-SLATag
         {
             throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
         }
-        else {Write-Host 'Connecting to the Rubrik API ...'}
+        else 
+        {
+            Write-Host -Object 'Connecting to the Rubrik API ...'
+        }
         $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($global:RubrikToken+':'))
         $head = @{
             'Authorization' = "Basic $auth"
@@ -105,7 +108,7 @@ function Set-SLATag
         # Connect to vCenter
         try 
         {
-            $null = Connect-VIServer $vcenter -Credential $creds -ErrorAction Stop
+            $null = Connect-VIServer -Server $vcenter -Credential $creds -ErrorAction Stop
         }
         catch 
         {
@@ -113,19 +116,25 @@ function Set-SLATag
         }
 
         # Validate custom annotation exists in vCenter
-        if (-not (Get-CustomAttribute -Name 'Rubrik_SLA')) {New-CustomAttribute -Name 'Rubrik_SLA' -TargetType VirtualMachine}
-        if (-not (Get-CustomAttribute -Name 'Rubrik_Backups')) {New-CustomAttribute -Name 'Rubrik_Backups' -TargetType VirtualMachine}
+        if (-not (Get-CustomAttribute -Name 'Rubrik_SLA')) 
+        {
+            New-CustomAttribute -Name 'Rubrik_SLA' -TargetType VirtualMachine
+        }
+        if (-not (Get-CustomAttribute -Name 'Rubrik_Backups')) 
+        {
+            New-CustomAttribute -Name 'Rubrik_Backups' -TargetType VirtualMachine
+        }
 
         # Set annotation on VMs in vCenter
         foreach ($_ in $result)
-            {
+        {
             if ($_.slaDomainName)
-                {
-                Set-Annotation (Get-VM -id ('VirtualMachine-'+$_.moid)) -CustomAttribute 'Rubrik_SLA' -Value $_.slaDomainName | Out-Null
-                Set-Annotation (Get-VM -id ('VirtualMachine-'+$_.moid)) -CustomAttribute 'Rubrik_Backups' -Value $_.snapshotCount | Out-Null
-                Write-Host "Successfully tagged $($_.name)"
-                }
+            {
+                $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute 'Rubrik_SLA' -Value $_.slaDomainName
+                $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute 'Rubrik_Backups' -Value $_.snapshotCount
+                Write-Host -Object "Successfully tagged $($_.name)"
             }
+        }
 
     } # End of process
 } # End of function
