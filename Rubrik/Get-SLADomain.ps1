@@ -5,7 +5,7 @@ function Get-SLADomain
             .SYNOPSIS  Connects to Rubrik and retrieves details on SLA Domain(s)
             .DESCRIPTION Connects to Rubrik and retrieves details on SLA Domain(s)
             .NOTES  Author:  Chris Wahl, chris.wahl@rubrik.com
-            .PARAMETER SLADomain
+            .PARAMETER Name
             A specific SLA Domain to query
             .PARAMETER Server
             The Rubrik FQDN or IP address
