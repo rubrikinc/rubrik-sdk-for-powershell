@@ -84,7 +84,7 @@ function Set-SLATag
         }
         
         # Query Rubrik for SLA Domain Information
-        $uri = 'https://'+$server+':443/vm'
+        $uri = 'https://'+$global:RubrikServer+':443/vm'
 
         # Submit the request
         $r = Invoke-WebRequest -Uri $uri -Headers $head -Method Get
@@ -108,7 +108,7 @@ function Set-SLATag
         # Connect to vCenter
         try 
         {
-            $null = Connect-VIServer -Server $vcenter -Credential $creds -ErrorAction Stop
+            $null = Connect-VIServer -Server $vcenter -ErrorAction Stop
         }
         catch 
         {
