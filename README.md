@@ -10,7 +10,7 @@ The code assumes that you've already deployed at least one Brik into your enviro
 ##### Option 1:
 
 1. Download the contents of this repository to your workstation.
-2. Run the Install-Rubrik script and follow the prompt to install the module into your `$Home` path.
+2. Run the `Install-Rubrik.ps1` script and follow the prompt to install the module into your `$Home` path.
 
 ##### Option 2:
 
