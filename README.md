@@ -5,12 +5,19 @@ This project provides a Windows PowerShell module for managing and monitoring Ru
 
 # Installation
 
-The code assumes that you've already deployed at least one Brik into your environment and have completed the initial configuration process.
+The code assumes that you've already deployed at least one Brik into your environment and have completed the initial configuration process. Make sure you have PowerShell version 4 or higher installed on your workstation.
 
-1. Make sure you have PowerShell version 4 or higher installed on your workstation.
-2. Copy the contents of the Rubrik folder onto your workstation into the path `\User\Documents\WindowsPowerShell\Modules\`
-3. Launch PowerShell and make sure `Set-ExecutionPolicy` is set to `RemoteSigned` or `Bypass`.
-4. To load the module, use `Import-Module Rubrik`.
+##### Option 1:
+
+1. Download the contents of this repository to your workstation.
+2. Run the Install-Rubrik script and follow the prompt to install the module into your `$Home` path.
+
+##### Option 2:
+
+1. Download the contents of this repository to your workstation.
+2. Copy the contents of the `Rubrik` folder onto your workstation into the path `$Home\Documents\WindowsPowerShell\Modules\`
+
+Launch PowerShell and make sure `Set-ExecutionPolicy` is set to `RemoteSigned` or `Bypass`. To load the module, use `Import-Module Rubrik`.
 
 # Usage Instructions
 
