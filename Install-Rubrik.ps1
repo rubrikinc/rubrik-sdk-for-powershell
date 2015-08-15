@@ -17,16 +17,19 @@ switch ($result)
         If (Test-Path -Path $InstallPath)
         {
             Write-Host -Object 'Found previous installation of Rubrik module. Updating ...'
-            Remove-Item -Path $InstallPath -Recurse -Force
-            New-Item -ItemType Directory -Path $InstallPath
+            $null = Remove-Item -Path $InstallPath -Recurse -Force
+            $null = New-Item -ItemType Directory -Path $InstallPath
         }
         Else 
         {
             Write-Host -Object 'No previous installation of Rubrik module found. Installing ...'
-            New-Item -ItemType Directory -Path $InstallPath
+            $null = New-Item -ItemType Directory -Path $InstallPath
         }
 
-        Copy-Item $PSScriptRoot\* $InstallPath -Force -Recurse
+        $null = Copy-Item $PSScriptRoot\Rubrik\* $InstallPath -Force -Recurse
+        try {Import-Module Rubrik}
+        catch {throw "Error loading the Rubrik module"}
+        Write-Host "Rubrik module successfully installed and loaded.`r`nUse Get-Command -Module Rubrik to view all of the available cmdlets"
     }
 
 
