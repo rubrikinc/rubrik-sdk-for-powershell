@@ -35,7 +35,7 @@ function Connect-Rubrik
         [String]$Username,
         [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Rubrik password')]
         [ValidateNotNullorEmpty()]
-        [String]$Password,
+        [SecureString]$Password,
         [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server
@@ -61,9 +61,10 @@ function Connect-Rubrik
         $uri = 'https://'+$server+':443/login'
 
         # Build the login call JSON
+        $credentials = New-Object System.Management.Automation.PSCredential -ArgumentList $Username, $Password        
         $body = @{
             userId   = $username
-            password = $password
+            password = $credentials.GetNetworkCredential().Password
         }
 
         # Submit the token request
