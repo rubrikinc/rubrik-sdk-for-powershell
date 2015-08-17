@@ -1,11 +1,11 @@
 ﻿#Requires -Version 3
-function Get-SLADomain 
+function Get-RubrikSLA 
 {
      <#  
             .SYNOPSIS
             Connects to Rubrik and retrieves details on SLA Domain(s)
             .DESCRIPTION
-            The Get-SLADomain cmdlet will query the Rubrik API for details on all available SLA Domains. Information on each
+            The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains. Information on each
             domain will be reported to the console.
             .NOTES
             Written by Chris Wahl for community usage

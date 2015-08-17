@@ -1,11 +1,11 @@
 ﻿#Requires -Version 3
-function Set-SLATag
+function Set-RubrikTag
 {
     <#  
             .SYNOPSIS
             Applies Rubrik SLA Domain information to VM tags in vCenter
             .DESCRIPTION
-            The Set-SLATag cmdlet will comb through all VMs currently being protected by Rubrik. It will then create custom annotation
+            The Set-RubrikTag cmdlet will comb through all VMs currently being protected by Rubrik. It will then create custom annotation
             columns for Rubrik_SLA and Rubrik_Backups details for each VM found in vCenter.
             .NOTES
             Written by Chris Wahl for community usage
