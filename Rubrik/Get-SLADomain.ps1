@@ -1,26 +1,28 @@
 ﻿#Requires -Version 3
 function Get-SLADomain 
 {
-    <#  
-            .SYNOPSIS  Connects to Rubrik and retrieves details on SLA Domain(s)
-            .DESCRIPTION Connects to Rubrik and retrieves details on SLA Domain(s)
-            .NOTES  Author:  Chris Wahl, chris.wahl@rubrik.com
-            .PARAMETER Name
-            A specific SLA Domain to query
-            .PARAMETER Server
-            The Rubrik FQDN or IP address
-            .EXAMPLE
-            PS> tbd
+     <#  
+            .SYNOPSIS
+            Connects to Rubrik and retrieves details on SLA Domain(s)
+            .DESCRIPTION
+            The Get-SLADomain cmdlet will query the Rubrik API for details on all available SLA Domains. Information on each
+            domain will be reported to the console.
+            .NOTES
+            Written by Chris Wahl for community usage
+            Twitter: @ChrisWahl
+            GitHub: chriswahl
+            .LINK
+            https://github.com/rubrikinc/PowerShell-Module
     #>
 
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'SLA Domain Name')]
         [ValidateNotNullorEmpty()]
-        [String]$name,
+        [String]$SLA,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$server = $global:RubrikServer
+        [String]$Server = $global:RubrikServer
     )
 
     Process {
@@ -39,28 +41,31 @@ function Get-SLADomain
 "@
         [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
 
-        # Validate token and build Base64 Auth string
+        # Validate the Rubrik token exists
         if (-not $global:RubrikToken) 
         {
             throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
-        $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($global:RubrikToken+':'))
-        $head = @{
-            'Authorization' = "Basic $auth"
         }
         
         # Build the URI
         $uri = 'https://'+$server+':443/slaDomain'
 
         # Submit the request
-        $r = Invoke-WebRequest -Uri $uri -Headers $head -Method Get
+        try 
+        {
+            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
+        }
+        catch 
+        {
+            throw 'Error connecting to Rubrik server'
+        }
 
         # Report the results
         $result = ConvertFrom-Json -InputObject $r.Content 
-        if ($name) 
+        if ($sla) 
         {
             $result | Where-Object -FilterScript {
-                $_.name -match $name
+                $_.name -match $sla
             }
         }
         else 

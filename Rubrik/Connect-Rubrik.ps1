@@ -11,7 +11,7 @@ function Connect-Rubrik
             .NOTES
             Written by Chris Wahl for community usage
             Twitter: @ChrisWahl
-            Email: Chris.Wahl@Rubrik.com
+            GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
             .PARAMETER Username
@@ -32,13 +32,13 @@ function Connect-Rubrik
     Param(
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Rubrik username')]
         [ValidateNotNullorEmpty()]
-        [String]$username,
+        [String]$Username,
         [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Rubrik password')]
         [ValidateNotNullorEmpty()]
-        [String]$password,
+        [String]$Password,
         [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$server
+        [String]$Server
     )
 
     Process {
@@ -77,7 +77,13 @@ function Connect-Rubrik
         }
         $global:RubrikServer = $server
         $global:RubrikToken = (ConvertFrom-Json -InputObject $r.Content).token
-        Write-Host -Object "Acquired token: $global:RubrikToken"
+        Write-Host -Object "Acquired token: $global:RubrikToken`r`nYou are now connected to the Rubrik API."
+
+        # Validate token and build Base64 Auth string
+        $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($global:RubrikToken+':'))
+        $global:RubrikHead = @{
+            'Authorization' = "Basic $auth"
+        }
 
     } # End of process
 } # End of function

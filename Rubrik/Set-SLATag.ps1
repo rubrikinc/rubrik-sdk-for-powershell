@@ -2,25 +2,27 @@
 function Set-SLATag
 {
     <#  
-            .SYNOPSIS  Applies Rubrik SLA Domain information to VM tags in vCenter
-            .DESCRIPTION Applies Rubrik SLA Domain information to VM tags in vCenter
-            .NOTES  Author:  Chris Wahl, chris.wahl@rubrik.com
-            .PARAMETER vCenter
-            The vCenter FQDN or IP address
-            .PARAMETER Name
-            A specific SLA Domain to tag
-            .EXAMPLE
-            PS> tbd
+            .SYNOPSIS
+            Applies Rubrik SLA Domain information to VM tags in vCenter
+            .DESCRIPTION
+            The Set-SLATag cmdlet will comb through all VMs currently being protected by Rubrik. It will then create custom annotation
+            columns for Rubrik_SLA and Rubrik_Backups details for each VM found in vCenter.
+            .NOTES
+            Written by Chris Wahl for community usage
+            Twitter: @ChrisWahl
+            GitHub: chriswahl
+            .LINK
+            https://github.com/rubrikinc/PowerShell-Module
     #>
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'vCenter FQDN or IP address')]
+        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'vCenter FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$vcenter,
+        [String]$vCenter,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'SLA Domain Name')]
         [ValidateNotNullorEmpty()]
-        [String]$name
+        [String]$SLA
     )
 
     Process {
@@ -69,41 +71,36 @@ function Set-SLATag
 "@
         [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
 
-        # Validate token and build Base64 Auth string
+        # Validate the Rubrik token exists
         if (-not $global:RubrikToken) 
         {
             throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
-        else 
-        {
-            Write-Host -Object 'Connecting to the Rubrik API ...'
-        }
-        $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($global:RubrikToken+':'))
-        $head = @{
-            'Authorization' = "Basic $auth"
         }
         
         # Query Rubrik for SLA Domain Information
         $uri = 'https://'+$global:RubrikServer+':443/vm'
 
         # Submit the request
-        $r = Invoke-WebRequest -Uri $uri -Headers $head -Method Get
+        try 
+        {
+            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
+        }
+        catch 
+        {
+            throw 'Error connecting to Rubrik server'
+        }
 
         # Report the results
         $result = ConvertFrom-Json -InputObject $r.Content 
-        if ($name) 
+        if ($sla) 
         {
             $result = $result | Where-Object -FilterScript {
-                $_.slaDomainName -match $name
+                $_.slaDomainName -match $sla
             }
-        }
-        else 
-        {
-            $result
         }
 
         # Ignore self-signed SSL certificates for vCenter Server (optional)
-        Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -DisplayDeprecationWarnings:$false -Scope User -Confirm:$false
+        $null = Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -DisplayDeprecationWarnings:$false -Scope User -Confirm:$false
 
         # Connect to vCenter
         try 
@@ -132,9 +129,12 @@ function Set-SLATag
             {
                 $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute 'Rubrik_SLA' -Value $_.slaDomainName
                 $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute 'Rubrik_Backups' -Value $_.snapshotCount
-                Write-Host -Object "Successfully tagged $($_.name)"
+                Write-Host -Object "Successfully tagged $($_.name) as $($_.effectiveSlaDomainName)"
             }
         }
+
+        # Disconnect from vCenter
+        Disconnect-VIServer -Confirm:$false
 
     } # End of process
 } # End of function
