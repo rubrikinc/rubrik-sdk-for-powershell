@@ -1,5 +1,7 @@
 ﻿#requires -Version 2
-$Basepath = "$Home\Documents\WindowsPowerShell\Modules"
+
+# Static variables. Using MyDocuments var for those with redirected folders
+$Basepath = [Environment]::GetFolderPath('MyDocuments') + '\WindowsPowerShell\Modules'
 $InstallPath = $Basepath+'\Rubrik'
 
 # Installer options
