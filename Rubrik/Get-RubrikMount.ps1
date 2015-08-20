@@ -16,7 +16,7 @@ function Get-RubrikMount
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine to inspect for mounts',ValueFromPipeline=$true)]
+        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine to inspect for mounts',ValueFromPipeline = $true)]
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
@@ -41,20 +41,50 @@ function Get-RubrikMount
         {
             $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
             $response = ConvertFrom-Json -InputObject $r.Content
-            [array]$mount = $response | Where-Object {$_.snapshot.virtualMachineName -eq $VM}
-            if (!$mount) {throw "No mounts found for $VM.name"}
-
-            # Send mount details to $result and console
-            Write-Host "Found $($mount.count) mounts for $($VM.name)"
-            $result = $mount | Select-Object -Property @{N="MountName"; E={$_.virtualMachine.name}},@{N="MOID"; E={$_.virtualMachine.moid}},@{N="HostID"; E={$_.virtualMachine.hostID}}
-            $result | ft -AutoSize
-            
-            
+            [array]$mount = $response | Where-Object -FilterScript {
+                $_.snapshot.virtualMachineName -eq $VM
+            }
+            if (!$mount) 
+            {
+                Write-Host -Object "No mounts found for $VM"
+                break
+            }
         }
         catch 
         {
-            throw 'Error connecting to Rubrik server'
+            $ErrorMessage = $_.Exception.Message
+            throw "Error connecting to Rubrik server: $ErrorMessage"
         }
+
+        # Send mount details to $result and console
+        Write-Host -Object "Found $($mount.count) mounts for $VM"
+        $result = $mount | Select-Object -Property @{
+            N = 'MountName'
+            E = {
+                $_.virtualMachine.name
+            }
+        }, @{
+            N = 'MOID'
+            E = {
+                $_.virtualMachine.moid
+            }
+        }, @{
+            N = 'HostID'
+            E = {
+                $_.virtualMachine.hostID
+            }
+        }, @{
+            N = 'vCenterID'
+            E = {
+                $_.virtualMachine.vCenterID
+            }
+        }, @{
+            N = 'RubrikID'
+            E = {
+                $_.id
+            }
+        }
+        $result | Format-Table -AutoSize
 
 
     } # End of process
