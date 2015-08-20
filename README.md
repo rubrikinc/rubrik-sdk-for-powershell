@@ -1,7 +1,7 @@
-PowerShell Module for Rubrik
+Community PowerShell Module for Rubrik
 ============================
 
-This project provides a Windows PowerShell module for managing and monitoring Rubrik's Converged Data Management platform.
+This is a community project that provides a Windows PowerShell module for managing and monitoring Rubrik's Converged Data Management platform.
 
 # Installation
 
@@ -25,7 +25,9 @@ To see all of the imported commands, use `Get-Command -Module Rubrik`.
 
 # Future
 
-Add more commands!
+The community module is not officially supported and should be **used at your own risk**.
+
+A future release will offer API versioning and may also include formal support.
 
 # Contribution
 
