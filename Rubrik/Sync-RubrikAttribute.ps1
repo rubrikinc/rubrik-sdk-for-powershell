@@ -1,12 +1,11 @@
 ﻿#Requires -Version 3
-function Set-RubrikTag
+function Sync-RubrikAnnotation
 {
     <#  
             .SYNOPSIS
-            Applies Rubrik SLA Domain information to VM tags in vCenter
+            Applies Rubrik SLA Domain information to VM Attributes using Custom Attributes in vCenter
             .DESCRIPTION
-            The Set-RubrikTag cmdlet will comb through all VMs currently being protected by Rubrik. It will then create custom annotation
-            columns for Rubrik_SLA and Rubrik_Backups details for each VM found in vCenter.
+            The Sync-RubrikAttribute cmdlet will comb through all VMs currently being protected by Rubrik. It will then create Custom Attribute buckets for Rubrik_SLA and Rubrik_Backups and assign details for each VM found in vCenter using Annotations.
             .NOTES
             Written by Chris Wahl for community usage
             Twitter: @ChrisWahl
