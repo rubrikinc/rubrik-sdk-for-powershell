@@ -35,6 +35,9 @@ function Sync-RubrikTag
         # Gather the SLA Domains
         $sladomain = Get-RubrikSLA
 
+        # Query Rubrik for SLA Domain Information
+        $uri = 'https://'+$global:RubrikServer+':443/vm/list'
+
         # Import modules or snapins
         $powercli = Get-PSSnapin -Name VMware.VimAutomation.Core -Registered
 
@@ -86,7 +89,7 @@ function Sync-RubrikTag
         # Connect to vCenter
         try 
         {
-            $null = Connect-VIServer -Server $vcenter -ErrorAction Stop
+            $null = Connect-VIServer -Server $vCenter -ErrorAction Stop
         }
         catch 
         {
@@ -95,18 +98,41 @@ function Sync-RubrikTag
 
         # Validate the tag category exists
         $category_name = 'Rubrik_SLA'
-        if (-not ((Get-TagCategory) -match $category_name)) {New-TagCategory -Name $category_name -Description 'Rubrik SLA Domains' -Cardinality Single}
+        if (-not ((Get-TagCategory) -match $category_name)) 
+        {
+            New-TagCategory -Name $category_name -Description 'Rubrik SLA Domains' -Cardinality Single
+        }
        
         # Validate the tags exist
         foreach ($_ in $sladomain)
+        {
+            New-Tag -Name $_.name -Category $category_name -ErrorAction SilentlyContinue
+        }
+        
+        # Create the Unprotected assignment for VMs without an SLA Domain
+        New-Tag -Name 'Unprotected' -Category $category_name -ErrorAction SilentlyContinue
+        
+        # Submit the request to determine SLA Domain assignments to VMs
+        try 
+        {
+            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
+            $response = ConvertFrom-Json -InputObject $r.Content            
+        }
+        catch 
+        {
+            $ErrorMessage = $_.Exception.Message
+            throw "Error connecting to Rubrik server: $ErrorMessage"
+        }
+        
+        # Assign tags to the VMs that have SLA Domain assignments
+        foreach ($_ in $response)
+        {
+            if ($_.slaDomainName) 
             {
-            New-Tag -Name $_.name -Category $category_name
+                New-TagAssignment -Tag (Get-Tag -Name $_.slaDomainName) -Entity $_.name
             }
-        
-        # Assign tags to VMs
+        }
 
-
-        
         # Disconnect from vCenter
         Disconnect-VIServer -Confirm:$false
 
