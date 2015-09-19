@@ -93,9 +93,20 @@ function Sync-RubrikTag
             throw 'Could not connect to vCenter'
         }
 
-        #
+        # Validate the tag category exists
+        $category_name = 'Rubrik_SLA'
+        if (-not ((Get-TagCategory) -match $category_name)) {New-TagCategory -Name $category_name -Description 'Rubrik SLA Domains' -Cardinality Single}
+       
+        # Validate the tags exist
+        foreach ($_ in $sladomain)
+            {
+            New-Tag -Name $_.name -Category $category_name
+            }
+        
+        # Assign tags to VMs
 
 
+        
         # Disconnect from vCenter
         Disconnect-VIServer -Confirm:$false
 
