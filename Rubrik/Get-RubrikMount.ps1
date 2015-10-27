@@ -84,7 +84,7 @@ function Get-RubrikMount
                 $_.id
             }
         }
-        $result | Format-Table -AutoSize
+        $result
 
 
     } # End of process
