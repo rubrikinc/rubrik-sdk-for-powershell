@@ -47,7 +47,38 @@ function Get-RubrikMount
             if (!$mount) 
             {
                 Write-Host -Object "No mounts found for $VM"
-                break
+            }
+            else 
+            {
+                # Send mount details to $result and console
+                Write-Host -Object "Found $($mount.count) mounts for $VM"
+                $result = $mount | Select-Object -Property @{
+                    N = 'MountName'
+                    E = {
+                        $_.virtualMachine.name
+                    }
+                }, @{
+                    N = 'MOID'
+                    E = {
+                        $_.virtualMachine.moid
+                    }
+                }, @{
+                    N = 'HostID'
+                    E = {
+                        $_.virtualMachine.hostID
+                    }
+                }, @{
+                    N = 'vCenterID'
+                    E = {
+                        $_.virtualMachine.vCenterID
+                    }
+                }, @{
+                    N = 'RubrikID'
+                    E = {
+                        $_.id
+                    }
+                }
+                $result
             }
         }
         catch 
@@ -55,36 +86,6 @@ function Get-RubrikMount
             $ErrorMessage = $_.Exception.Message
             throw "Error connecting to Rubrik server: $ErrorMessage"
         }
-
-        # Send mount details to $result and console
-        Write-Host -Object "Found $($mount.count) mounts for $VM"
-        $result = $mount | Select-Object -Property @{
-            N = 'MountName'
-            E = {
-                $_.virtualMachine.name
-            }
-        }, @{
-            N = 'MOID'
-            E = {
-                $_.virtualMachine.moid
-            }
-        }, @{
-            N = 'HostID'
-            E = {
-                $_.virtualMachine.hostID
-            }
-        }, @{
-            N = 'vCenterID'
-            E = {
-                $_.virtualMachine.vCenterID
-            }
-        }, @{
-            N = 'RubrikID'
-            E = {
-                $_.id
-            }
-        }
-        $result
 
 
     } # End of process
