@@ -23,7 +23,10 @@ function Move-RubrikMountVMDK
         [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'vCenter FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$vCenter,
-        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'Backup date in MM/DD/YYYY HH:MM format',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [String]$Date,
+        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikServer
     )
@@ -85,7 +88,7 @@ function Move-RubrikMountVMDK
         [array]$mounts = Get-RubrikMount -VM $VM
         if (!$mounts)
         {
-            New-RubrikMount -VM $VM
+            New-RubrikMount -VM $VM -Date $Date
             While ($mounts.MountName -eq $null)
             {
                 [array]$mounts = Get-RubrikMount -VM $VM
@@ -128,7 +131,7 @@ function Move-RubrikMountVMDK
         
         Write-Verbose -Message 'Offering cleanup options'
         $title = 'Setup is complete!'
-        $message = "A Mount of $VM has been created, and all VMDKs associated with the mount have been attached. You may now start testing.`r`rWhen finished, select YES to automatically cleanup the attached VMDKs and mount, or select NO to leave the mount and VMDKs intact."
+        $message = "A Mount of $VM has been created, and all VMDKs associated with the mount have been attached.`rYou may now start testing.`r`rWhen finished:`rSelect YES to automatically cleanup the attached VMDKs and mount`rSelect NO to leave the mount and VMDKs intact."
 
         $yes = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes', `
         'Automated Removal: This script will detatch the VMDK(s) and discard the Mount VM'

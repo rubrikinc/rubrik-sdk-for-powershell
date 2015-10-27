@@ -73,7 +73,7 @@ function New-RubrikMount
             throw 'Error connecting to Rubrik server'
         }
 
-        # Compare backup dates to user date
+        Write-Verbose -Message 'Comparing backup dates to user date'
         $Date = $Date -as [datetime]
         if (!$Date) {throw "You did not enter a valid date and time"}
         foreach ($_ in $result)
@@ -85,7 +85,7 @@ function New-RubrikMount
                 }
             }
 
-        # Create a Live Mount
+        Write-Verbose -Message 'Creating a Live Mount'
         $uri = 'https://'+$global:RubrikServer+':443/job/type/mount'
 
         $body = @{
