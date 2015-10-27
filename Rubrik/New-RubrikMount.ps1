@@ -16,7 +16,7 @@ function New-RubrikMount
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine to mount',ValueFromPipeline=$true)]
+        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine to mount',ValueFromPipeline = $true)]
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
@@ -38,8 +38,13 @@ function New-RubrikMount
         try 
         {
             $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
-            $result = (ConvertFrom-Json -InputObject $r.Content) | Where-Object {$_.name -eq $VM}
-            if (!$result) {throw 'No VM found with that name.'}
+            $result = (ConvertFrom-Json -InputObject $r.Content) | Where-Object -FilterScript {
+                $_.name -eq $VM
+            }
+            if (!$result) 
+            {
+                throw 'No VM found with that name.'
+            }
             $vmid = $result.id
             $hostid = $result.hostId
         }
@@ -54,7 +59,10 @@ function New-RubrikMount
         {
             $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
             $result = (ConvertFrom-Json -InputObject $r.Content)
-            if (!$result) {throw 'No snapshots found for VM.'}
+            if (!$result) 
+            {
+                throw 'No snapshots found for VM.'
+            }
             $vmsnapid = $result[0].id
         }
         catch 
@@ -66,16 +74,19 @@ function New-RubrikMount
         $uri = 'https://'+$global:RubrikServer+':443/job/type/mount'
 
         $body = @{
-          snapshotId = $vmsnapid
-          hostId = $hostid
-          disableNetwork = 'true'
+            snapshotId     = $vmsnapid
+            hostId         = $hostid
+            disableNetwork = 'true'
         }
 
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Post -Body (ConvertTO-Json $body)
-            if ($r.StatusCode -ne '200') {throw 'Did not receive successful status code from Rubrik for Live Mount request'}
-            Write-Host "Success: $($r.Content)"
+            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Post -Body (ConvertTo-Json -InputObject $body)
+            if ($r.StatusCode -ne '200') 
+            {
+                throw 'Did not receive successful status code from Rubrik for Live Mount request'
+            }
+            Write-Host -Object "Success: $($r.Content)"
         }
         catch 
         {
