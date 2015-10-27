@@ -46,12 +46,12 @@ function Get-RubrikMount
             }
             if (!$mount) 
             {
-                Write-Host -Object "No mounts found for $VM"
+                Write-Verbose -Message "No mounts found for $VM"
             }
             else 
             {
                 # Send mount details to $result and console
-                Write-Host -Object "Found $($mount.count) mounts for $VM"
+                Write-Verbose -Message "Found $($mount.count) mounts for $VM"
                 $result = $mount | Select-Object -Property @{
                     N = 'MountName'
                     E = {

@@ -86,7 +86,7 @@ function New-RubrikMount
             {
                 throw 'Did not receive successful status code from Rubrik for Live Mount request'
             }
-            Write-Host -Object "Success: $($r.Content)"
+            Write-Verbose -Message "Success: $($r.Content)"
         }
         catch 
         {
