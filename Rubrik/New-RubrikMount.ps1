@@ -20,20 +20,24 @@ function New-RubrikMount
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Backup date in MM/DD/YYYY HH:MM format',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [String]$Date,
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikServer
     )
 
     Process {
 
-        # Validate the Rubrik token exists
+        Write-Verbose -Message 'Validating the Rubrik API token exists'
         if (-not $global:RubrikToken) 
         {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
+            Write-Warning -Message 'You are not connected to a Rubrik server. Using Connect-Rubrik cmdlet.'
+            Connect-Rubrik
         }
 
-        # Query Rubrik for the list of protected VM details
+        Write-Verbose -Message 'Query Rubrik for the list of protected VM details'
         $uri = 'https://'+$global:RubrikServer+':443/vm?showArchived=false'
         try 
         {
@@ -53,7 +57,7 @@ function New-RubrikMount
             throw 'Error connecting to Rubrik server'
         }
 
-        # Query Rubrik for the protected VM snapshot list
+        Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
         $uri = 'https://'+$global:RubrikServer+':443/snapshot?vm='+$vmid
         try 
         {
@@ -63,12 +67,23 @@ function New-RubrikMount
             {
                 throw 'No snapshots found for VM.'
             }
-            $vmsnapid = $result[0].id
         }
         catch 
         {
             throw 'Error connecting to Rubrik server'
         }
+
+        # Compare backup dates to user date
+        $Date = $Date -as [datetime]
+        if (!$Date) {throw "You did not enter a valid date and time"}
+        foreach ($_ in $result)
+            {
+            if ((Get-Date $_.date) -lt (Get-Date $Date) -eq $true)
+                {
+                $vmsnapid = $_.id
+                break
+                }
+            }
 
         # Create a Live Mount
         $uri = 'https://'+$global:RubrikServer+':443/job/type/mount'
