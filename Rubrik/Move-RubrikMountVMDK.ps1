@@ -16,17 +16,20 @@ function Move-RubrikMountVMDK
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Source Virtual Machine',ValueFromPipeline = $true)]
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
-        [String]$VM,
-        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'vCenter FQDN or IP address')]
+        [String]$SourceVM,
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Target Virtual Machine',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [String]$TargetVM,
+        [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'vCenter FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$vCenter,
-        [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'Backup date in MM/DD/YYYY HH:MM format',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true,Position = 3,HelpMessage = 'Backup date in MM/DD/YYYY HH:MM format',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Date,
-        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikServer
     )
@@ -84,18 +87,25 @@ function Move-RubrikMountVMDK
         [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
 
 
-        Write-Verbose -Message 'Creating an Instant Mount (clone) of the VM'
-        [array]$mounts = Get-RubrikMount -VM $VM
-        if (!$mounts)
-        {
-            New-RubrikMount -VM $VM -Date $Date
-            While ($mounts.MountName -eq $null)
+        Write-Verbose -Message 'Creating an Instant Mount (clone) of the Source VM'
+        New-RubrikMount -VM $SourceVM -Date $Date
+        Start-Sleep -Seconds 2
+        [array]$mounts = Get-RubrikMount -VM $SourceVM
+        $i = 0
+        foreach ($_ in $mounts.MountName)
+        {            
+            if ($_ -eq $null)
             {
-                [array]$mounts = Get-RubrikMount -VM $VM
-                Start-Sleep -Seconds 2
+                break
             }
-            Write-Verbose -Message 'Mount is online. vSphere data loaded into the system.'
+            $i++
         }
+        While ($mounts[$i].MountName -eq $null)
+        {
+            [array]$mounts = Get-RubrikMount -VM $SourceVM
+            Start-Sleep -Seconds 2
+        }
+        Write-Verbose -Message 'Mount is online. vSphere data loaded into the system.'
 
         Write-Verbose -Message 'Ignoring self-signed SSL certificates for vCenter Server (optional)'
         $null = Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -DisplayDeprecationWarnings:$false -Scope User -Confirm:$false
@@ -111,27 +121,48 @@ function Move-RubrikMountVMDK
         }
     
         Write-Verbose -Message 'Gathering details on the Instant Mount'
-        $mountvm = $null
-        While ($mountvm.PowerState -ne 'PoweredOn')
+        $MountVM = $null
+        While ($MountVM.PowerState -ne 'PoweredOn')
         {
-            $mountvm = Get-VM -Name $mounts[0].MountName
+            $MountVM = Get-VM -Name $mounts[$i].MountName
             Start-Sleep -Seconds 2
         }
 
         Write-Verbose -Message 'Powering off the Instant Mount'
-        $null = Stop-VM -VM $mountvm -Confirm:$false
+        $null = Stop-VM -VM $MountVM -Confirm:$false
+
+        Write-Verbose -Message 'Gathering details on the Target VM'
+        if (!$TargetVM) 
+        {
+            $TargetVM = $SourceVM
+        }
+        $TargetHost = Get-VMHost -VM $TargetVM
+
+        Write-Verbose -Message 'Mounting Rubrik datastore to the Target Host'
+        $MountDatastore = Get-VM $MountVM | Get-Datastore
+        if (!(Get-VMHost $TargetHost | Get-Datastore -Name $MountDatastore)) 
+        {
+            $null = New-Datastore -Name $MountDatastore.Name -VMHost $TargetHost -NfsHost $MountDatastore.RemoteHost -Path $MountDatastore.RemotePath -Nfs
+        }
 
         Write-Verbose -Message 'Migrating the Mount VMDKs to VM'
-        [array]$mountvmdisk = Get-HardDisk $mountvm
-        foreach ($_ in $mountvmdisk)
+        [array]$MountVMdisk = Get-HardDisk $MountVM
+        foreach ($_ in $MountVMdisk)
         {
-            $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
-            $null = New-HardDisk -VM $VM -DiskPath $_.Filename
+            try
+            {
+                $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
+                $null = New-HardDisk -VM $TargetVM -DiskPath $_.Filename
+            }
+            catch
+            {
+                throw 'Unable to attach VMDKs to the TargetVM'
+            }
         }
         
         Write-Verbose -Message 'Offering cleanup options'
         $title = 'Setup is complete!'
-        $message = "A Mount of $VM has been created, and all VMDKs associated with the mount have been attached.`rYou may now start testing.`r`rWhen finished:`rSelect YES to automatically cleanup the attached VMDKs and mount`rSelect NO to leave the mount and VMDKs intact."
+        $message = "A Mount of $SourceVM has been created, and all VMDKs associated with the mount have been attached.`rYou may now start testing.`r`rWhen finished:`rSelect YES to automatically cleanup the attached VMDKs and mount`rSelect NO to leave the mount and VMDKs intact."
 
         $yes = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes', `
         'Automated Removal: This script will detatch the VMDK(s) and discard the Mount VM'
@@ -148,12 +179,12 @@ function Move-RubrikMountVMDK
             0 
             {
                 Write-Verbose -Message 'Removing VMDKs from the VM'
-                [array]$vmdisk = Get-HardDisk $VM
-                foreach ($_ in $vmdisk)
+                [array]$SourceVMdisk = Get-HardDisk $TargetVM
+                foreach ($_ in $SourceVMdisk)
                 {
-                    if ($_.Filename -eq $mountvmdisk.Filename)
+                    if ($_.Filename -eq $MountVMdisk.Filename)
                     {
-                        Write-Verbose -Message "Removing $_ from $VM"
+                        Write-Verbose -Message "Removing $_ from $TargetVM"
                         Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
                     }
                 }
