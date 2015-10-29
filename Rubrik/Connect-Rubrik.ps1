@@ -50,17 +50,17 @@ function Connect-Rubrik
 "@
         [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
 
-        # Build the URI
-        $uri = 'https://'+$server+':443/login'
+        Write-Verbose -Message 'Build the URI'
+        $uri = 'https://'+$Server+':443/login'
 
-        # Build the login call JSON
-        $credentials = New-Object System.Management.Automation.PSCredential -ArgumentList $Username, $Password        
+        Write-Verbose -Message 'Build the JSON body for Basic Auth'
+        $credentials = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $Username, $Password        
         $body = @{
-            userId   = $username
+            userId   = $Username
             password = $credentials.GetNetworkCredential().Password
         }
 
-        # Submit the token request
+        Write-Verbose -Message 'Submit the token request'
         try 
         {
             $r = Invoke-WebRequest -Uri $uri -Method: Post -Body (ConvertTo-Json -InputObject $body)
@@ -69,11 +69,13 @@ function Connect-Rubrik
         {
             throw 'Error connecting to Rubrik server'
         }
-        $global:RubrikServer = $server
+        $global:RubrikServer = $Server
         $global:RubrikToken = (ConvertFrom-Json -InputObject $r.Content).token
-        Write-Host -Object "Acquired token: $global:RubrikToken`r`nYou are now connected to the Rubrik API."
+        Write-Verbose -Message "Acquired token: $global:RubrikToken"
+        
+        Write-Host -Object 'You are now connected to the Rubrik API.'
 
-        # Validate token and build Base64 Auth string
+        Write-Verbose -Message 'Validate token and build Base64 Auth string'
         $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($global:RubrikToken+':'))
         $global:RubrikHead = @{
             'Authorization' = "Basic $auth"
