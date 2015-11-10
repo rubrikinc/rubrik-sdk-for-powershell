@@ -106,20 +106,20 @@ function Move-RubrikMountVMDK
                 $i++
             }
         
-        While ($mounts[$i].MountName -eq $null)
-        {
-            [array]$mounts = Get-RubrikMount -VM $SourceVM
-            Start-Sleep -Seconds 2
-        }
+            While ($mounts[$i].MountName -eq $null)
+            {
+                [array]$mounts = Get-RubrikMount -VM $SourceVM
+                Start-Sleep -Seconds 2
+            }
         }
         else
         {
-        Write-Verbose -Message 'No other mounts found, waiting for new mount to load'
-        While ($mounts.MountName -eq $null)
-        {
-            [array]$mounts = Get-RubrikMount -VM $SourceVM
-            Start-Sleep -Seconds 2
-        }
+            Write-Verbose -Message 'No other mounts found, waiting for new mount to load'
+            While ($mounts.MountName -eq $null)
+            {
+                [array]$mounts = Get-RubrikMount -VM $SourceVM
+                Start-Sleep -Seconds 2
+            }
         }
         Write-Verbose -Message 'Mount is online. vSphere data loaded into the system.'
 
