@@ -68,7 +68,7 @@ function Move-RubrikMountVMDK
         }
         catch 
         {
-            throw 'Could not load the required VMware.VimAutomation.Core cmdlets'
+            throw $_
         }
 
         
@@ -92,18 +92,34 @@ function Move-RubrikMountVMDK
         Start-Sleep -Seconds 2
         [array]$mounts = Get-RubrikMount -VM $SourceVM
         $i = 0
-        foreach ($_ in $mounts.MountName)
-        {            
-            if ($_ -eq $null)
-            {
-                break
+        
+        Write-Verbose -Message 'Checking for quantity of mounts in the system'
+        if ($mounts -ne $null) 
+        {
+            Write-Verbose -Message 'Finding the correct mount'
+            foreach ($_ in $mounts.MountName)
+            {            
+                if ($_ -eq $null)
+                {
+                    break
+                }
+                $i++
             }
-            $i++
-        }
+        
         While ($mounts[$i].MountName -eq $null)
         {
             [array]$mounts = Get-RubrikMount -VM $SourceVM
             Start-Sleep -Seconds 2
+        }
+        }
+        else
+        {
+        Write-Verbose -Message 'No other mounts found, waiting for new mount to load'
+        While ($mounts.MountName -eq $null)
+        {
+            [array]$mounts = Get-RubrikMount -VM $SourceVM
+            Start-Sleep -Seconds 2
+        }
         }
         Write-Verbose -Message 'Mount is online. vSphere data loaded into the system.'
 
