@@ -67,7 +67,7 @@ function Connect-Rubrik
         }
         catch 
         {
-            throw 'Error connecting to Rubrik server'
+            throw $_
         }
         $global:RubrikServer = $Server
         $global:RubrikToken = (ConvertFrom-Json -InputObject $r.Content).token
