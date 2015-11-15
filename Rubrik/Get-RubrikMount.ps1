@@ -42,7 +42,7 @@ function Get-RubrikMount
             $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
             $response = ConvertFrom-Json -InputObject $r.Content
             [array]$mount = $response | Where-Object -FilterScript {
-                $_.snapshot.virtualMachineName -eq $VM
+                $_.snapshot.virtualMachineName -like $VM
             }
             if (!$mount) 
             {
