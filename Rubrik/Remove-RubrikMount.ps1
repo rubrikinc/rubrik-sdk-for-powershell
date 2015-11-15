@@ -92,7 +92,7 @@ function Remove-RubrikMount
             }
             try 
             {
-                Write-Verbose -Message "Removing mount with ID $_.RubrikID"
+                Write-Verbose -Message "Removing mount with ID $($_.RubrikID)"
                 $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method POST -Body (ConvertTo-Json -InputObject $body)
                 if ($r.StatusCode -ne '200') 
                 {
@@ -105,9 +105,6 @@ function Remove-RubrikMount
                 throw $_
             }
         }
-        
-        # Get the mount
-        
 
     } # End of process
 } # End of function
