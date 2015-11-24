@@ -12,6 +12,15 @@ function Remove-RubrikMount
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Remove-RubrikMount -VM "Prod-SQL"
+            This will remove any Instant Mounts found for a VM matching the name "Prod-SQL" in vSphere.
+            .EXAMPLE
+            Remove-RubrikMount -VM "Prod-SQL" -MountID 4
+            This will remove Instant Mount ID #4 from the VM matching the name "Prod-SQL" in vSphere. The Mount ID is appended to the end of the Instant Mount name.
+            .EXAMPLE
+            Remove-RubrikMount -RemoveAll
+            This will remove all Instant Mounts found for the Rubrik Cluster, and is handy as a way to "refresh" a test/dev environment.
     #>
 
     [CmdletBinding()]
@@ -20,10 +29,13 @@ function Remove-RubrikMount
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Remove all instant mounts for all VMs',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'The specific mount ID to remove',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [String]$MountID,
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Remove all instant mounts for all VMs',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [Switch]$RemoveAll,
-        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikServer
     )
@@ -36,7 +48,17 @@ function Remove-RubrikMount
             throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
         }
 
-        # are we removing one or multiple?
+        Write-Verbose -Message 'Validating user input of MountID'
+        if ($MountID -lt 0) 
+        {
+            throw 'Only positive integers are allowed for MountID'
+        }
+        if ($MountID -eq $null) 
+        {
+            $MountID = -1
+        }
+
+        Write-Verbose -Message 'Validating user input of VM selection'        
         if ($VM)
         {
             try
@@ -49,7 +71,7 @@ function Remove-RubrikMount
                 }
                 else 
                 {
-                    Write-Verbose -Message "Unmounting all mounts found for $VM"
+                    Write-Verbose -Message "Mounts found for $VM"
                 }
             }
             catch
@@ -69,7 +91,7 @@ function Remove-RubrikMount
                 }
                 else 
                 {
-                    Write-Verbose -Message 'Unmounting all mounts found for all VMs'
+                    Write-Verbose -Message 'Mounts found for all VMs'
                 }
             }
             catch
@@ -90,19 +112,24 @@ function Remove-RubrikMount
                 mountId = $_.RubrikID
                 force   = 'false'
             }
-            try 
+
+            Write-Verbose -Message 'Determing the MountID of the Instant Mount'
+            if ($MountID -eq ($_.MountName.split(' ')[-1]) -or $MountID -eq -1)
             {
-                Write-Verbose -Message "Removing mount with ID $($_.RubrikID)"
-                $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method POST -Body (ConvertTo-Json -InputObject $body)
-                if ($r.StatusCode -ne '200') 
+                try 
                 {
-                    throw 'Did not receive successful status code from Rubrik for Mount removal request'
+                    Write-Verbose -Message "Removing mount with ID $($_.RubrikID)"
+                    $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method POST -Body (ConvertTo-Json -InputObject $body)
+                    if ($r.StatusCode -ne '200') 
+                    {
+                        throw 'Did not receive successful status code from Rubrik for Mount removal request'
+                    }
+                    Write-Verbose -Message "Success: $($r.Content)"
                 }
-                Write-Verbose -Message "Success: $($r.Content)"
-            }
-            catch 
-            {
-                throw $_
+                catch 
+                {
+                    throw $_
+                }
             }
         }
 
