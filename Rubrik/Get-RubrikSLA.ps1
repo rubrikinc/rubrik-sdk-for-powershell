@@ -57,7 +57,7 @@ function Get-RubrikSLA
         }
         catch 
         {
-            throw 'Error connecting to Rubrik server'
+            throw $_
         }
 
         # Report the results
