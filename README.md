@@ -3,25 +3,38 @@ Community PowerShell Module for Rubrik
 
 This is a community project that provides a Windows PowerShell module for managing and monitoring Rubrik's Converged Data Management platform.
 
+# Requirements
+
+The code assumes that you've already deployed at least one Brik into your environment and have completed the initial configuration process. At a minimum, make sure you have installed the following:
+
+1. PowerShell version 4 or newer
+2. PowerCLI version 5.8 or newer
+
 # Installation
 
-The code assumes that you've already deployed at least one Brik into your environment and have completed the initial configuration process. Make sure you have PowerShell version 4 or higher installed on your workstation.
+This repository contains a folder named `Rubrik`. The folder needs to be installed into one of your PowerShell Module Paths.
 
-##### Option 1:
-
-1. Download the contents of this repository to your workstation.
-2. Run the `Install-Rubrik.ps1` script and follow the prompt to install the module into your `$Home` path.
-
-##### Option 2:
+##### Option 1: Automated Installation
 
 1. Download the contents of this repository to your workstation.
-2. Copy the contents of the `Rubrik` folder onto your workstation into the path `$Home\Documents\WindowsPowerShell\Modules\`
+2. Open a Powershell console with the -Run as Administrator- option.
+3. Run `Set-ExecutionPolicy` using the parameter `RemoteSigned` or `Bypass`.
+2. Run the `Install-Rubrik.ps1` script in the root of this repository and follow the prompt to install the module into your `$Home\Documents\WindowsPowerShell\Modules\` path.
+3. At the completion of the installation, the installer will run `Import-Module Rubrik` on your behalf.
 
-Launch PowerShell and make sure `Set-ExecutionPolicy` is set to `RemoteSigned` or `Bypass`. To load the module, use `Import-Module Rubrik`.
+##### Option 2: Manual Installation
+
+1. Download the contents of this repository to your workstation.
+2. Copy the contents of the `Rubrik` folder onto your workstation into the PowerShell Module Path `$Home\Documents\WindowsPowerShell\Modules\` or `C:\Program Files\WindowsPowerShell\Modules`
+2. Open a Powershell console with the -Run as Administrator- option.
+3. Run `Set-ExecutionPolicy` using the parameter `RemoteSigned` or `Bypass`.
+5. To load the module, use `Import-Module Rubrik`.
 
 # Usage Instructions
 
 To see all of the imported commands, use `Get-Command -Module Rubrik`.
+
+To see help for any single cmdlet, use `Get-Help <cmdlet>` combined with any of the optional parameters: `-Detailed` or `-Examples` or `-Full`
 
 # Future
 
