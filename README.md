@@ -17,7 +17,7 @@ This repository contains a folder named `Rubrik`. The folder needs to be install
 ##### Option 1: Automated Installation
 
 1. Download the contents of this repository to your workstation.
-2. Open a Powershell console with the -Run as Administrator- option.
+2. Open a Powershell console with the *Run as Administrator* option.
 3. Run `Set-ExecutionPolicy` using the parameter `RemoteSigned` or `Bypass`.
 2. Run the `Install-Rubrik.ps1` script in the root of this repository and follow the prompt to install the module into your `$Home\Documents\WindowsPowerShell\Modules\` path.
 3. At the completion of the installation, the installer will run `Import-Module Rubrik` on your behalf.
@@ -26,7 +26,7 @@ This repository contains a folder named `Rubrik`. The folder needs to be install
 
 1. Download the contents of this repository to your workstation.
 2. Copy the contents of the `Rubrik` folder onto your workstation into the PowerShell Module Path `$Home\Documents\WindowsPowerShell\Modules\` or `C:\Program Files\WindowsPowerShell\Modules`
-2. Open a Powershell console with the -Run as Administrator- option.
+2. Open a Powershell console with the *Run as Administrator* option.
 3. Run `Set-ExecutionPolicy` using the parameter `RemoteSigned` or `Bypass`.
 5. To load the module, use `Import-Module Rubrik`.
 
