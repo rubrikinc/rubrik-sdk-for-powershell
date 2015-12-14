@@ -30,8 +30,7 @@ function Remove-RubrikMount
         [ValidateNotNullorEmpty()]
         [String]$VM,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'The specific mount ID to remove',ValueFromPipeline = $true)]
-        [ValidateNotNullorEmpty()]
-        [String]$MountID,
+        [Int]$MountID,
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Remove all instant mounts for all VMs',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [Switch]$RemoveAll,
@@ -52,11 +51,12 @@ function Remove-RubrikMount
         if ($MountID -lt 0) 
         {
             throw 'Only positive integers are allowed for MountID'
-        }
-        if ($MountID -eq $null) 
+        }        
+        elseif ($MountID -eq '') 
         {
             $MountID = -1
         }
+        Write-Verbose -Message "MountID set to $MountID"
 
         Write-Verbose -Message 'Validating user input of VM selection'        
         if ($VM)
