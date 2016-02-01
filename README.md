@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/52cv3jshak2w7624?svg=true)](https://ci.appveyor.com/project/chriswahl/powershell-module)
+
 Community PowerShell Module for Rubrik
 ============================
 
