@@ -19,7 +19,7 @@ function Connect-Rubrik
             Connect-Rubrik -Server 192.168.1.1 -Username admin -Password (ConvertTo-SecureString "secret" -asplaintext -force)
             If you need to pass the password value in the cmdlet directly, use the ConvertTo-SecureString function.
             .EXAMPLE
-            Connect-Rubrik -Server 192.168.1.1 -Credentials (Get-Credential)
+            Connect-Rubrik -Server 192.168.1.1 -Credential (Get-Credential)
             Rather than passing a username and secure password, you can also opt to submit an entire set of credentials using the -Credentials parameter.
     #>
 
@@ -33,17 +33,17 @@ function Connect-Rubrik
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik password')]
         [SecureString]$Password,
         [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik credentials')]
-        [System.Management.Automation.CredentialAttribute()]$Credentials
+        [System.Management.Automation.CredentialAttribute()]$Credential
 
     )
 
     Process {
 
         Write-Verbose -Message 'Validating that login details were passed into username/password or credentials'
-        if ($Password -eq $null -and $Credentials -eq $null)
+        if ($Password -eq $null -and $Credential -eq $null)
         {
             Write-Warning -Message 'You did not submit a username, password, or credentials.'
-            $Credentials = Get-Credential -Message 'Please enter administrative credentials for your Rubrik cluster'
+            $Credential = Get-Credential -Message 'Please enter administrative credentials for your Rubrik cluster'
         }
 
         Write-Verbose -Message 'Allowing self-signed certificates'
@@ -64,14 +64,14 @@ function Connect-Rubrik
         $uri = 'https://'+$Server+':443/login'
 
         Write-Verbose -Message 'Build the JSON body for Basic Auth'
-        if ($Credentials -eq $null)
+        if ($Credential -eq $null)
         {
-            $Credentials = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $Username, $Password
+            $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $Username, $Password
         }
 
         $body = @{
-            userId   = $Credentials.UserName
-            password = $Credentials.GetNetworkCredential().Password
+            userId   = $Credential.UserName
+            password = $Credential.GetNetworkCredential().Password
         }
 
         Write-Verbose -Message 'Submit the token request'
