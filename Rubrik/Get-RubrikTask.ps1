@@ -16,11 +16,14 @@ function Get-RubrikTask
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Report Type')]
+        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Report Type (daily or weekly)')]
         [ValidateNotNullorEmpty()]
         [ValidatePattern('daily|weekly')]
         [String]$ReportType,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Export the results to a CSV file')]
+        [ValidateNotNullorEmpty()]
+        [Switch]$ToCSV,
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikServer
     )
@@ -52,7 +55,7 @@ function Get-RubrikTask
 
         Write-Verbose -Message 'Build the body'
         $body = @{
-            reportType = $ReportType
+            reportType = $ReportType.ToLower()
         }
 
         Write-Verbose -Message 'Submit the request'
@@ -66,7 +69,25 @@ function Get-RubrikTask
         }
 
         $global:result = (ConvertFrom-Json -InputObject $r.Content)
-        Write-Host "$($global:result.count) results have been saved to `$global:result as an array"
+        Write-Host -Object "$($global:result.count) results have been saved to `$global:result as an array"
+
+        if ($ToCSV)
+        {
+            Write-Verbose -Message 'Creating CSV'
+            $CSVfilename = 'rubrik-tasks-export-'+(Get-Date).Ticks+'.csv'
+            try 
+            {
+                foreach ($record in $global:result)
+                {
+                    $record | Export-Csv -Append -Path "$Home\Documents\$CSVfilename" -NoTypeInformation -Force
+                }
+                Write-Host -Object "CSV export written to $Home\Documents\$CSVfilename"
+            }
+            catch 
+            {
+                throw $_
+            }
+        }
 
     } # End of process
 } # End of function
