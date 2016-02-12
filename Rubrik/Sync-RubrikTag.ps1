@@ -26,21 +26,31 @@ function Sync-RubrikTag
 
     Process {
 
-        # Validate the Rubrik token exists
+        Write-Verbose -Message 'Validate the Rubrik token exists'
         if (-not $global:RubrikToken) 
         {
             throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
         }
+
+        Write-Verbose -Message 'Allowing self-signed certificates'
+        Add-Type -TypeDefinition @"
+	    using System.Net;
+	    using System.Security.Cryptography.X509Certificates;
+	    public class TrustAllCertsPolicy : ICertificatePolicy {
+	        public bool CheckValidationResult(
+	            ServicePoint srvPoint, X509Certificate certificate,
+	            WebRequest request, int certificateProblem) {
+	            return true;
+	        }
+	    }
+"@
+        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
         
-        # Gather the SLA Domains
+        Write-Verbose -Message 'Gather the SLA Domains'
         $sladomain = Get-RubrikSLA
 
-        # Query Rubrik for SLA Domain Information
-        $uri = 'https://'+$global:RubrikServer+':443/vm/list'
-
-        # Import modules or snapins
+        Write-Verbose -Message 'Importing required modules and snapins'
         $powercli = Get-PSSnapin -Name VMware.VimAutomation.Core -Registered
-
         try 
         {
             switch ($powercli.Version.Major) {
@@ -49,7 +59,7 @@ function Sync-RubrikTag
                 }
                 {
                     Import-Module -Name VMware.VimAutomation.Core -ErrorAction Stop
-                    Write-Host -Object 'PowerCLI 6+ module imported'
+                    Write-Verbose -Message 'PowerCLI 6+ module imported'
                 }
                 5
                 {
@@ -64,55 +74,42 @@ function Sync-RubrikTag
         }
         catch 
         {
-            throw 'Could not load the required VMware.VimAutomation.Core cmdlets'
+            throw $_
         }
 
-        
-        # Allow untrusted SSL certs
-        Add-Type -TypeDefinition @"
-	    using System.Net;
-	    using System.Security.Cryptography.X509Certificates;
-	    public class TrustAllCertsPolicy : ICertificatePolicy {
-	        public bool CheckValidationResult(
-	            ServicePoint srvPoint, X509Certificate certificate,
-	            WebRequest request, int certificateProblem) {
-	            return true;
-	        }
-	    }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
-
-
-        # Ignore self-signed SSL certificates for vCenter Server (optional)
+        Write-Verbose -Message 'Ignoring self-signed SSL certificates for vCenter Server (optional)'
         $null = Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -DisplayDeprecationWarnings:$false -Scope User -Confirm:$false
 
-        # Connect to vCenter
+        Write-Verbose -Message 'Connecting to vCenter'
         try 
         {
-            $null = Connect-VIServer -Server $vCenter -ErrorAction Stop
+            $null = Connect-VIServer -Server $vCenter -ErrorAction Stop -Session ($global:DefaultVIServers | Where-Object -FilterScript {
+                    $_.name -eq $vCenter
+            }).sessionId
         }
         catch 
         {
             throw 'Could not connect to vCenter'
         }
 
-        # Validate the tag category exists
+        Write-Verbose -Message 'Validate the tag category exists'
         $category_name = 'Rubrik_SLA'
         if (-not ((Get-TagCategory) -match $category_name)) 
         {
             New-TagCategory -Name $category_name -Description 'Rubrik SLA Domains' -Cardinality Single
         }
        
-        # Validate the tags exist
+        Write-Verbose -Message 'Validate the tags exist'
         foreach ($_ in $sladomain)
         {
             New-Tag -Name $_.name -Category $category_name -ErrorAction SilentlyContinue
         }
         
-        # Create the Unprotected assignment for VMs without an SLA Domain
+        Write-Verbose -Message 'Create the Unprotected assignment for VMs without an SLA Domain'
         New-Tag -Name 'Unprotected' -Category $category_name -ErrorAction SilentlyContinue
         
-        # Submit the request to determine SLA Domain assignments to VMs
+        Write-Verbose -Message 'Submit the request to determine SLA Domain assignments to VMs'
+        $uri = 'https://'+$global:RubrikServer+':443/vm'
         try 
         {
             $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
@@ -124,16 +121,16 @@ function Sync-RubrikTag
             throw "Error connecting to Rubrik server: $ErrorMessage"
         }
         
-        # Assign tags to the VMs that have SLA Domain assignments
+        Write-Verbose -Message 'Assign tags to the VMs that have SLA Domain assignments'
         foreach ($_ in $response)
         {
-            if ($_.slaDomainName) 
+            if ($_.effectiveSlaDomainName) 
             {
-                New-TagAssignment -Tag (Get-Tag -Name $_.slaDomainName) -Entity $_.name
+                New-TagAssignment -Tag (Get-Tag -Name $_.effectiveSlaDomainName) -Entity $_.name
             }
         }
 
-        # Disconnect from vCenter
+        Write-Verbose -Message 'Disconnect from vCenter'
         Disconnect-VIServer -Confirm:$false
 
     } # End of process
