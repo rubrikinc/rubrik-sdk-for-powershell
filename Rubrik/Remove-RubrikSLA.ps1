@@ -1,7 +1,7 @@
 ﻿#Requires -Version 3
 function Remove-RubrikSLA 
 {
-     <#  
+    <#  
             .SYNOPSIS
             Connects to Rubrik and removes SLA Domains
             .DESCRIPTION
@@ -50,10 +50,13 @@ function Remove-RubrikSLA
         $slaid = Get-RubrikSLA -SLA $SLA
 
         Write-Verbose -Message 'Determining if SLA Domain has zero VMs'
-        if ($slaid.numVms -ne 0) {throw "SLA Domain has $($slaid.numVms) protected - remove them and retry"}
+        if ($slaid.numVms -ne 0) 
+        {
+            throw "SLA Domain has $($slaid.numVms) VMs protected - remove them and retry."
+        }
         
         Write-Verbose -Message 'Build the URI'
-        $uri = 'https://'+$server+':443/slaDomain/'+$($slaid.id)
+        $uri = 'https://'+$Server+':443/slaDomain/'+$($slaid.id)
 
         Write-Verbose -Message 'Submit the request'
         try 

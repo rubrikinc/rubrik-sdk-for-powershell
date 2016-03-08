@@ -66,7 +66,7 @@ FormatsToProcess = @()
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','Move-RubrikMountVMDK','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Set-RubrikMount','Set-RubrikSLA','Sync-RubrikAttribute','Sync-RubrikTag','Get-RubrikTask')
+FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','Move-RubrikMountVMDK','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Remove-RubrikSLA','Set-RubrikMount','Set-RubrikSLA','Sync-RubrikAttribute','Sync-RubrikTag','Get-RubrikTask')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()
