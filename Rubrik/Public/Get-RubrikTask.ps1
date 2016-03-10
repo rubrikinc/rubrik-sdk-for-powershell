@@ -68,7 +68,9 @@ function Get-RubrikTask
             throw $_
         }
 
-        $global:result = (ConvertFrom-Json -InputObject $r.Content)
+        Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
+        [void][System.Reflection.Assembly]::LoadWithPartialName("System.Web.Extensions")
+        $global:result = ParseItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{MaxJsonLength=67108864}).DeserializeObject($r.Content))
         Write-Host -Object "$($global:result.count) results have been saved to `$global:result as an array"
 
         if ($ToCSV)
