@@ -163,12 +163,14 @@ function Move-RubrikMountVMDK
 
         Write-Verbose -Message 'Migrating the Mount VMDKs to VM'
         [array]$MountVMdisk = Get-HardDisk $MountVM
+        $MountedVMdiskFileNames = @()
         foreach ($_ in $MountVMdisk)
         {
             try
             {
                 $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
                 $null = New-HardDisk -VM $TargetVM -DiskPath $_.Filename
+                $MountedVMdiskFileNames += $_.Filename
             }
             catch
             {
@@ -198,7 +200,7 @@ function Move-RubrikMountVMDK
                 [array]$SourceVMdisk = Get-HardDisk $TargetVM
                 foreach ($_ in $SourceVMdisk)
                 {
-                    if ($_.Filename -eq $MountVMdisk.Filename)
+                    if ($MountedVMdiskFileNames -contains $_.Filename)
                     {
                         Write-Verbose -Message "Removing $_ from $TargetVM"
                         Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
