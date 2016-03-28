@@ -1,5 +1,7 @@
 install:
   - ps: cinst pester -y
+
+build_script:
   - ps: Copy-Item "C:\projects\powershell-module\Rubrik" "C:\Program Files\WindowsPowerShell\Modules"
 
 test_script:
