@@ -1,8 +1,10 @@
 install:
   - ps: cinst pester -y
 
-build_script:
+before_test:
   - ps: Copy-Item "C:\projects\powershell-module\Rubrik" "C:\Program Files\WindowsPowerShell\Modules"
+  - ps: gci "C:\Program Files\WindowsPowerShell\Modules"
+  - ps: gci "C:\Program Files\WindowsPowerShell\Modules\Rubrik"
 
 test_script:
   - ps: . .\Tests\Connect-Rubrik.Tests.ps1 -Test
