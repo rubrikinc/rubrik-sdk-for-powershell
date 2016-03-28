@@ -1,15 +1,27 @@
 ﻿# Initial Setup
 Import-Module -Name Rubrik -Force
 
-# Variables
+# Rubrik Test Cluster IP
 if ((Test-Path -Path $PSScriptRoot'\TestVars\test-ip.txt') -eq $true) 
 {
     [string]$global:cluster = Get-Content -Path $PSScriptRoot'\TestVars\test-ip.txt'
 }
+else 
+{
+    [string]$global:cluster = $env:RUBRIKCLUSTER
+}
+
+# Rubrik Test Cluster Credentials
 if ((Test-Path -Path $PSScriptRoot'\TestVars\test-cred.xml') -eq $true) 
 {
     $global:cred = Import-Clixml -Path $PSScriptRoot'\TestVars\test-cred.xml'
 }
+else 
+{
+    $global:cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($env:RUBRIKUSER, (ConvertTo-SecureString -AsPlainText -Force -String $env:RUBRIKPASS))
+}
+
+# Pester Tests
 
 Describe -Name 'Connectivity Tests' -Fixture {
     It -name 'Attempting to ping the Rubrik Test Cluster' -test {

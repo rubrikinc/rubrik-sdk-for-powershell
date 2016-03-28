@@ -1,7 +1,8 @@
-install:
-  - cinst pester -y
+clone_folder: $home\Documents\
 
-build: false
+install:
+  - ps: cinst pester -y
+  - ps: Copy-Item "$home\Documents\powershell-module\Rubrik" "$home\Documents\WindowsPowerShell\Modules"
 
 test_script:
   - ps: . .\Tests\Connect-Rubrik.Tests.ps1 -Test
