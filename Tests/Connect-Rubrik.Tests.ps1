@@ -1,5 +1,5 @@
-﻿# Initial Setup
-Import-Module -Name Rubrik -Force
+﻿# Import
+Import-Module "$PSScriptRoot\..\Rubrik" -Force
 
 # Rubrik Test Cluster IP
 if ((Test-Path -Path $PSScriptRoot'\TestVars\test-ip.txt') -eq $true) 
