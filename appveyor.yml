@@ -1,5 +1,7 @@
 install:
   - ps: cinst pester -y
 
+build: off
+
 test_script:
   - ps: . .\Tests\Connect-Rubrik.Tests.ps1 -Test
