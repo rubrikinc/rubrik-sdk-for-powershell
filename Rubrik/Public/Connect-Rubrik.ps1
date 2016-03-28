@@ -61,7 +61,7 @@ function Connect-Rubrik
         [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
 
         Write-Verbose -Message 'Build the URI'
-        $uri = 'https://'+$Server+':443/login'
+        $uri = 'https://'+$Server+'/login'
 
         Write-Verbose -Message 'Build the JSON body for Basic Auth'
         if ($Credential -eq $null)
