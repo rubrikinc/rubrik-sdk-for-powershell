@@ -1,5 +1,3 @@
-clone_folder: $home\Documents\
-
 install:
   - ps: cinst pester -y
   - ps: Copy-Item "C:\projects\powershell-module\Rubrik" "C:\Program Files\WindowsPowerShell\Modules"
