@@ -11,6 +11,7 @@ The code assumes that you've already deployed at least one Brik into your enviro
 
 1. PowerShell version 4 or newer
 2. PowerCLI version 5.8 or newer
+3. Rubrik cluster running version 2.0 or newer
 
 # Installation
 
@@ -31,6 +32,13 @@ This repository contains a folder named `Rubrik`. The folder needs to be install
 2. Open a Powershell console with the *Run as Administrator* option.
 3. Run `Set-ExecutionPolicy` using the parameter `RemoteSigned` or `Bypass`.
 5. To load the module, use `Import-Module Rubrik`.
+
+##### Option 3: PowerShell Gallery
+
+1. Ensure you have the [Windows Management Framework 5.0](https://www.microsoft.com/en-us/download/details.aspx?id=50395) or greater installed.
+2. Open a Powershell console with the *Run as Administrator* option.
+3. Run `Set-ExecutionPolicy` using the parameter `RemoteSigned` or `Bypass`.
+4. Run `Install-Module -Name Rubrik` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository.
 
 # Usage Instructions
 
