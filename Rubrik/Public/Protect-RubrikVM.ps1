@@ -1,11 +1,11 @@
 ﻿#Requires -Version 3
-function Set-RubrikSLA
+function Protect-RubrikVM
 {
     <#  
             .SYNOPSIS
             Connects to Rubrik and assigns an SLA to a virtual machine
             .DESCRIPTION
-            The Set-RubrikSLA cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values needed to protect workloads.
+            The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values needed to protect workloads.
             .NOTES
             Written by Chris Wahl for community usage
             Twitter: @ChrisWahl
