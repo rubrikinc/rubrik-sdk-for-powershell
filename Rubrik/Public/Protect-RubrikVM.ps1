@@ -12,6 +12,12 @@ function Protect-RubrikVM
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Protect-RubrikVM -VM 'Server1' -SLA 'Gold'
+            This will assign the Gold SLA Domain to a VM named Server1
+            .EXAMPLE
+            Protect-RubrikVM -VM 'Server1' -Unprotect
+            This will remove the SLA Domain assigned to Server1, thus rendering it unprotected
     #>
 
     [CmdletBinding()]
@@ -42,7 +48,15 @@ function Protect-RubrikVM
         Write-Verbose -Message 'Matching the SLA input to a valid Rubrik SLA Domain'
         try 
         {
-            $SLAmatch = Get-RubrikSLA -SLA $SLA
+            if ($Unprotect) 
+            {
+                $SLAmatch.id = 'UNPROTECTED'
+                $SLAmatch.name = 'Unprotected'
+            }
+            else 
+            {
+                $SLAmatch = Get-RubrikSLA -SLA $SLA
+            }
             if ($SLAmatch -eq $null)
             {
                 Write-Warning -Message "No matching SLA Domain found with the name `"$SLA`"`nThe following SLA Domains were found:"
