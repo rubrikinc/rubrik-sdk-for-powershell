@@ -39,26 +39,14 @@ function Connect-Rubrik
 
     Process {
 
+        UnblockSelfSignedCerts
+        
         Write-Verbose -Message 'Validating that login details were passed into username/password or credentials'
         if ($Password -eq $null -and $Credential -eq $null)
         {
             Write-Warning -Message 'You did not submit a username, password, or credentials.'
             $Credential = Get-Credential -Message 'Please enter administrative credentials for your Rubrik cluster'
         }
-
-        Write-Verbose -Message 'Allowing self-signed certificates'
-        Add-Type -TypeDefinition @"
-	    using System.Net;
-	    using System.Security.Cryptography.X509Certificates;
-	    public class TrustAllCertsPolicy : ICertificatePolicy {
-	        public bool CheckValidationResult(
-	            ServicePoint srvPoint, X509Certificate certificate,
-	            WebRequest request, int certificateProblem) {
-	            return true;
-	        }
-	    }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
 
         Write-Verbose -Message 'Build the URI'
         $uri = 'https://'+$Server+'/login'
@@ -107,6 +95,7 @@ function Connect-Rubrik
             token  = $token
             server = $Server
             header = $head
+            time   = (Get-Date)
         }
         
         Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'

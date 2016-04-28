@@ -23,33 +23,15 @@
         [Switch]$OptionalVar,
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikServer
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        Write-Verbose -Message 'Validate the Rubrik token exists'
-        if (-not $global:RubrikToken) 
-        {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
-
-        Write-Verbose -Message 'Allow untrusted SSL certs'
-        Add-Type -TypeDefinition @"
-	    using System.Net;
-	    using System.Security.Cryptography.X509Certificates;
-	    public class TrustAllCertsPolicy : ICertificatePolicy {
-	        public bool CheckValidationResult(
-	            ServicePoint srvPoint, X509Certificate certificate,
-	            WebRequest request, int certificateProblem) {
-	            return true;
-	        }
-	    }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
+        TestRubrikConnection
 
         Write-Verbose -Message 'Build the URI'
-        $uri = 'https://'+$Server+':443/!!!'
+        $uri = 'https://'+$Server+'/!!!'
 
         Write-Verbose -Message 'Build the body'
         $body = @{
@@ -59,7 +41,7 @@
         Write-Verbose -Message 'Submit the request'
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Post -Body (ConvertTo-Json -InputObject $body)
+            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
         }
         catch 
         {
