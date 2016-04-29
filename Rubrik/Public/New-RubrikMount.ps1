@@ -12,6 +12,9 @@ function New-RubrikMount
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            New-RubrikMount -VM 'Server1' -Date '05/04/2015 08:00'
+            This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older than 08:00 AM on May 4th, 2015
     #>
 
     [CmdletBinding()]
@@ -25,68 +28,36 @@ function New-RubrikMount
         [String]$Date,
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikServer
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        Write-Verbose -Message 'Validating the Rubrik API token exists'
-        if (-not $global:RubrikToken) 
-        {
-            Write-Warning -Message 'You are not connected to a Rubrik server. Using Connect-Rubrik cmdlet.'
-            Connect-Rubrik
-        }
+        TestRubrikConnection
 
         Write-Verbose -Message 'Query Rubrik for the list of protected VM details'
-        $uri = 'https://'+$global:RubrikServer+':443/vm?showArchived=false'
-        try 
-        {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
-            $result = (ConvertFrom-Json -InputObject $r.Content) | Where-Object -FilterScript {
-                $_.name -eq $VM
-            }
-            if (!$result) 
-            {
-                throw 'No VM found with that name.'
-            }
-            $vmid = $result.id
-            $hostid = $result.hostId
-        }
-        catch 
-        {
-            throw 'Error connecting to Rubrik server'
-        }
+        $hostid = (Get-RubrikVM -VM $VM).hostId
 
         Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
-        $uri = 'https://'+$global:RubrikServer+':443/snapshot?vm='+$vmid
-        try 
-        {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
-            $result = (ConvertFrom-Json -InputObject $r.Content)
-            if (!$result) 
-            {
-                throw 'No snapshots found for VM.'
-            }
-        }
-        catch 
-        {
-            throw 'Error connecting to Rubrik server'
-        }
+        $snapshots = Get-RubrikSnapshot -VM $VM
 
         Write-Verbose -Message 'Comparing backup dates to user date'
         $Date = $Date -as [datetime]
-        if (!$Date) {throw "You did not enter a valid date and time"}
-        foreach ($_ in $result)
+        if (!$Date) 
+        {
+            throw 'You did not enter a valid date and time'
+        }
+        foreach ($_ in $snapshots)
+        {
+            if ((Get-Date -Date $_.date) -lt (Get-Date $Date) -eq $true)
             {
-            if ((Get-Date $_.date) -lt (Get-Date $Date) -eq $true)
-                {
                 $vmsnapid = $_.id
                 break
-                }
             }
+        }
 
         Write-Verbose -Message 'Creating a Live Mount'
-        $uri = 'https://'+$global:RubrikServer+':443/job/type/mount'
+        $uri = 'https://'+$global:Server+'/job/type/mount'
 
         $body = @{
             snapshotId     = $vmsnapid
@@ -96,7 +67,7 @@ function New-RubrikMount
 
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Post -Body (ConvertTo-Json -InputObject $body)
+            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
             if ($r.StatusCode -ne '200') 
             {
                 throw 'Did not receive successful status code from Rubrik for Live Mount request'
@@ -105,7 +76,7 @@ function New-RubrikMount
         }
         catch 
         {
-            throw 'Error connecting to Rubrik server'
+            throw $_
         }
 
     } # End of process

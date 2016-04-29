@@ -29,26 +29,22 @@ function Protect-RubrikVM
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'The SLA Domain in Rubrik',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$SLA,
-        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Unprotect removes the SLA Domain assignment',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Removes the SLA Domain assignment',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
-        [Switch]$Unprotect,
+        [Switch]$DoNotProtect,
         [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikServer
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        Write-Verbose -Message 'Validating the Rubrik token exists'
-        if (-not $global:RubrikToken) 
-        {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
+        TestRubrikConnection
 
         Write-Verbose -Message 'Matching the SLA input to a valid Rubrik SLA Domain'
         try 
         {
-            if ($Unprotect) 
+            if ($DoNotProtect) 
             {
                 $SLAmatch.id = 'UNPROTECTED'
                 $SLAmatch.name = 'Unprotected'
@@ -70,34 +66,17 @@ function Protect-RubrikVM
         }
 
         Write-Verbose -Message 'Gathering VM ID value from Rubrik'
-        $uri = 'https://'+$global:RubrikServer+':443/vm?showArchived=false'
-        try 
-        {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
-            $result = (ConvertFrom-Json -InputObject $r.Content) | Where-Object -FilterScript {
-                $_.name -eq $VM
-            }
-            if (!$result) 
-            {
-                throw 'No VM found with that name.'
-            }
-            $vmid = $result.id
-            Write-Verbose -Message "Retrieved ID: $vmid"
-        }
-        catch 
-        {
-            throw $_
-        }
+        $vmid = (Get-RubrikVM -VM $VM).id
 
         Write-Verbose -Message 'Updating SLA Domain for the requested VM'
-        $uri = 'https://'+$global:RubrikServer+':443/vm/'+$vmid
+        $uri = 'https://'+$Server+'/vm/'+$vmid
         $body = @{
             slaDomainId = $SLAmatch.id
         }
         
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Body (ConvertTo-Json -InputObject $body) -Method Patch
+            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Body (ConvertTo-Json -InputObject $body) -Method Patch
             if ($r.StatusCode -ne '200') 
             {
                 throw $r.StatusDescription

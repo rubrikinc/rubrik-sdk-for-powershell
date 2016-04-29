@@ -31,61 +31,14 @@ function Move-RubrikMountVMDK
         [String]$Date,
         [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikServer
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        Write-Verbose -Message 'Validating the Rubrik API token exists'
-        if (-not $global:RubrikToken) 
-        {
-            Write-Warning -Message 'You are not connected to a Rubrik server. Using Connect-Rubrik cmdlet.'
-            Connect-Rubrik
-        }
+        TestRubrikConnection
 
-        Write-Verbose -Message 'Importing required modules and snapins'
-        $powercli = Get-PSSnapin -Name VMware.VimAutomation.Core -Registered
-        try 
-        {
-            switch ($powercli.Version.Major) {
-                {
-                    $_ -ge 6
-                }
-                {
-                    Import-Module -Name VMware.VimAutomation.Core -ErrorAction Stop
-                    Write-Verbose -Message 'PowerCLI 6+ module imported'
-                }
-                5
-                {
-                    Add-PSSnapin -Name VMware.VimAutomation.Core -ErrorAction Stop
-                    Write-Warning -Message 'PowerCLI 5 snapin added; recommend upgrading your PowerCLI version'
-                }
-                default 
-                {
-                    throw 'This script requires PowerCLI version 5 or later'
-                }
-            }
-        }
-        catch 
-        {
-            throw $_
-        }
-
-        
-        Write-Verbose -Message 'Allowing untrusted SSL certs'
-        Add-Type -TypeDefinition @"
-	    using System.Net;
-	    using System.Security.Cryptography.X509Certificates;
-	    public class TrustAllCertsPolicy : ICertificatePolicy {
-	        public bool CheckValidationResult(
-	            ServicePoint srvPoint, X509Certificate certificate,
-	            WebRequest request, int certificateProblem) {
-	            return true;
-	        }
-	    }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
-
+        ConnectTovCenter -vCenter $vCenter
 
         Write-Verbose -Message 'Creating an Instant Mount (clone) of the Source VM'
         New-RubrikMount -VM $SourceVM -Date $Date
@@ -123,19 +76,6 @@ function Move-RubrikMountVMDK
         }
         Write-Verbose -Message 'Mount is online. vSphere data loaded into the system.'
 
-        Write-Verbose -Message 'Ignoring self-signed SSL certificates for vCenter Server (optional)'
-        $null = Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -DisplayDeprecationWarnings:$false -Scope User -Confirm:$false
-
-        Write-Verbose -Message 'Connecting to vCenter'
-        try 
-        {
-            $null = Connect-VIServer -Server $vCenter -ErrorAction Stop
-        }
-        catch 
-        {
-            throw 'Could not connect to vCenter'
-        }
-    
         Write-Verbose -Message 'Gathering details on the Instant Mount'
         $MountVM = $null
         While ($MountVM.PowerState -ne 'PoweredOn')

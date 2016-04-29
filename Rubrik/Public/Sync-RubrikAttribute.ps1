@@ -21,10 +21,15 @@ function Sync-RubrikAnnotation
         [String]$vCenter,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'SLA Domain Name')]
         [ValidateNotNullorEmpty()]
-        [String]$SLA
+        [String]$SLA,
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
+        [ValidateNotNullorEmpty()]
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
+
+        TestRubrikConnection
 
         # Import modules or snapins
         $powercli = Get-PSSnapin -Name VMware.VimAutomation.Core -Registered
@@ -56,33 +61,13 @@ function Sync-RubrikAnnotation
         }
 
         
-        # Allow untrusted SSL certs
-        Add-Type -TypeDefinition @"
-	    using System.Net;
-	    using System.Security.Cryptography.X509Certificates;
-	    public class TrustAllCertsPolicy : ICertificatePolicy {
-	        public bool CheckValidationResult(
-	            ServicePoint srvPoint, X509Certificate certificate,
-	            WebRequest request, int certificateProblem) {
-	            return true;
-	        }
-	    }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
-
-        # Validate the Rubrik token exists
-        if (-not $global:RubrikToken) 
-        {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
-        
         # Query Rubrik for SLA Domain Information
-        $uri = 'https://'+$global:RubrikServer+':443/vm'
+        $uri = 'https://'+$Server+'/vm'
 
         # Submit the request
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
+            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Get
         }
         catch 
         {
@@ -91,10 +76,10 @@ function Sync-RubrikAnnotation
 
         # Report the results
         $result = ConvertFrom-Json -InputObject $r.Content 
-        if ($sla) 
+        if ($SLA) 
         {
             $result = $result | Where-Object -FilterScript {
-                $_.slaDomainName -match $sla
+                $_.slaDomainName -match $SLA
             }
         }
 
@@ -104,7 +89,7 @@ function Sync-RubrikAnnotation
         # Connect to vCenter
         try 
         {
-            $null = Connect-VIServer -Server $vcenter -ErrorAction Stop
+            $null = Connect-VIServer -Server $vCenter -ErrorAction Stop
         }
         catch 
         {

@@ -12,6 +12,9 @@ function Remove-RubrikSLA
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Remove-RubrikSLA -SLA 'Gold'
+            This will attempt to remove the Gold SLA Domain from Rubrik if there are no VMs being protected by the policy
     #>
 
     [CmdletBinding()]
@@ -21,30 +24,12 @@ function Remove-RubrikSLA
         [String]$SLA,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikServer
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        # Allow untrusted SSL certs
-        Add-Type -TypeDefinition @"
-	    using System.Net;
-	    using System.Security.Cryptography.X509Certificates;
-	    public class TrustAllCertsPolicy : ICertificatePolicy {
-	        public bool CheckValidationResult(
-	            ServicePoint srvPoint, X509Certificate certificate,
-	            WebRequest request, int certificateProblem) {
-	            return true;
-	        }
-	    }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
-
-        Write-Verbose -Message 'Validate the Rubrik token exists'
-        if (-not $global:RubrikToken) 
-        {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
+        TestRubrikConnection
 
         Write-Verbose -Message 'Gather the Rubrik SLA Domain ID value'
         $slaid = Get-RubrikSLA -SLA $SLA
@@ -56,12 +41,12 @@ function Remove-RubrikSLA
         }
         
         Write-Verbose -Message 'Build the URI'
-        $uri = 'https://'+$Server+':443/slaDomain/'+$($slaid.id)
+        $uri = 'https://'+$Server+'/slaDomain/'+$($slaid.id)
 
         Write-Verbose -Message 'Submit the request'
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Delete
+            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Delete
         }
         catch 
         {

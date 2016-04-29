@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.2.0'
+ModuleVersion = '1.0.3.0'
 
 # ID used to uniquely identify this module
 GUID = 'a4cb0e3e-b1fe-4da8-9c75-d445e5f96cfb'
@@ -66,7 +66,7 @@ FormatsToProcess = @()
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','Move-RubrikMountVMDK','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Remove-RubrikSLA','Set-RubrikMount','Protect-RubrikVM','Sync-RubrikAttribute','Sync-RubrikTag','Get-RubrikTask')
+FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','Move-RubrikMountVMDK','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Remove-RubrikSLA','Set-RubrikMount','Protect-RubrikVM','Sync-RubrikAttribute','Sync-RubrikTag','Get-RubrikTask','Get-RubrikVM','Get-RubrikSnapshot')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()
@@ -92,7 +92,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = 'Rubrik','Converged Data Management','CDM','Backup','Recovery','Data Protection'
+        Tags = 'Rubrik','Converged_Data_Management','CDM','Backup','Recovery','Data_Protection'
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/rubrikinc/PowerShell-Module/blob/master/LICENSE'
