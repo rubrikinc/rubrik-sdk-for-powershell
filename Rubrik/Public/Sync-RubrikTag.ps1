@@ -1,6 +1,4 @@
-﻿#requires -Modules Rubrik
-#requires -PSSnapin VMware.VimAutomation.Core
-#Requires -Version 2
+﻿#Requires -Version 2
 function Sync-RubrikTag
 {
     <#  

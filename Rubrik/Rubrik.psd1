@@ -92,7 +92,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = 'Rubrik','Converged Data Management','CDM','Backup','Recovery','Data Protection'
+        Tags = 'Rubrik','Converged_Data_Management','CDM','Backup','Recovery','Data_Protection'
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/rubrikinc/PowerShell-Module/blob/master/LICENSE'
