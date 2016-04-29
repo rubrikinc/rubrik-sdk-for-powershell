@@ -3,21 +3,26 @@
 Community PowerShell Module for Rubrik
 ============================
 
-This is a community project that provides a Windows PowerShell module for managing and monitoring Rubrik's Converged Data Management platform by way of the published RESTful APIs.
+This is a community project that provides a Windows PowerShell module for managing and monitoring Rubrik's Converged Data Management fabric by way of published RESTful APIs. If you're looking to perform interactive automation, setting up scheduled tasks, leverage an orchestration engine, or need ad-hoc operations, this module is intended to be valuable to your needs.
 
 # Requirements
 
-The code assumes that you've already deployed at least one Brik into your environment and have completed the initial configuration process. At a minimum, make sure you have installed the following:
+The code assumes that you've already deployed at least one Rubrik Brik into your environment and have completed the initial configuration process to form a cluster. At a minimum, make sure you have installed the following:
 
-1. PowerShell version 4 or newer
-2. PowerCLI version 5.8 or newer
-3. Rubrik cluster running version 2.0 or newer
+1. PowerShell version 4+
+2. [PowerCLI version 5.8+](https://my.vmware.com/group/vmware/get-download?downloadGroup=PCLI630R1)
+3. Rubrik version 2.0+
+4. (optional) [Windows Management Framework 5.0](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
+5. (optional) [Pester](https://github.com/pester/Pester)
 
 # Installation
 
-This repository contains a folder named `Rubrik`. The folder needs to be installed into one of your PowerShell Module Paths.
+This repository contains a folder named [`Rubrik`](https://github.com/rubrikinc/PowerShell-Module/tree/readme-work/Rubrik). The folder needs to be installed into one of your PowerShell Module Paths using one of the installation methods outlined in the next section. Common PowerShell module paths include:
 
-##### Option 1: Automated Installation
+1. Current User: `%USERPROFILE%\Documents\WindowsPowerShell\`
+2. All Users: `%WINDIR%\System32\WindowsPowerShell\v1.0\`
+
+##### Option 1: Installer Script
 
 1. Download the [latest release](https://github.com/rubrikinc/PowerShell-Module/releases/latest) or any pre-release build to your workstation.
 2. Open a Powershell console with the *Run as Administrator* option.
@@ -40,11 +45,27 @@ This repository contains a folder named `Rubrik`. The folder needs to be install
 3. Run `Set-ExecutionPolicy` using the parameter `RemoteSigned` or `Bypass`.
 4. Run `Install-Module -Name Rubrik` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository.
 
+Once installation is complete, you can validate that the module exists by running `Get-Module -ListAvailable Rubrik`.
+
 # Usage Instructions
 
-To see all of the imported commands, use `Get-Command -Module Rubrik`.
+1. To see all of the imported commands, use `Get-Command -Module Rubrik`.
+2. To see help for any single cmdlet, use `Get-Help <cmdlet>` combined with any of the optional parameters: `-Detailed` or `-Examples` or `-Full`
 
-To see help for any single cmdlet, use `Get-Help <cmdlet>` combined with any of the optional parameters: `-Detailed` or `-Examples` or `-Full`
+##### Connecting to a Rubrik Cluster
+
+To begin using the module, create a connection to a Rubrik cluster and retrieve a token. To do this, use `Connect-Rubrik` with the option of using a `-Credential` object or a combination of a `-Username` string and a `-Password` secure string. If no parameters are passed, the function will prompt for credentials. A successful connection will result in the following message being output: `You are now connected to the Rubrik API`.
+
+To review connection information, list the contents of `$RubrikConnection` to see the header, server, userid, and token details. Note that the token value is valid for the current session only and does expire.
+
+##### Using safe commands to gain comfort
+
+If you're new to PowerShell, it's worth using the `safe` commands - ones that do not alter data - to begin learning how the module works. Here are a few examples:
+
+1. `Get-RubrikMount` - Lists all active Live Mounts and Instant Recoveries known to the cluster.
+2. `Get-RubrikSLA` - Lists all SLA Domains.
+3. `Get-RubrikTask` - Lists all `daily` or `weekly` tasks executed by the cluster.
+4. `Get-RubrikVersion` - Lists the running version.
 
 # Future
 
