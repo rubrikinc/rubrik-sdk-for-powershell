@@ -3,7 +3,9 @@
 Community PowerShell Module for Rubrik
 ============================
 
-This is a community project that provides a Windows PowerShell module for managing and monitoring Rubrik's Converged Data Management fabric by way of published RESTful APIs. If you're looking to perform interactive automation, setting up scheduled tasks, leverage an orchestration engine, or need ad-hoc operations, this module is intended to be valuable to your needs.
+This is a community project that provides a Windows PowerShell module for managing and monitoring Rubrik's Converged Data Management fabric by way of published RESTful APIs. If you're looking to perform interactive automation, setting up scheduled tasks, leverage an orchestration engine, or need ad-hoc operations, this module is intended to be valuable to your needs. Below is a quick YouTube video that explains how to begin using the module.
+
+[![Watch the Tutorial on YouTube](http://i.imgur.com/MGHfunv.png)](https://www.youtube.com/watch?v=XJ6IaVhYWWY "Watch the Tutorial on YouTube")
 
 # Requirements
 
