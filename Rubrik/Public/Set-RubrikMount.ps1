@@ -1,4 +1,5 @@
-﻿#Requires -Version 2
+﻿#requires -PSSnapin VMware.VimAutomation.Core
+#Requires -Version 2
 function Set-RubrikMount
 {
     <#  
@@ -12,6 +13,9 @@ function Set-RubrikMount
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Set-RubrikMount -VM 'Server1' -vCenter 'VC1.example.com' -Portgroup 'Production-VLAN10'
+            This would change the network settings on Server1's Live Mount to the Production-VLAN10 portgroup and enable the network connection
     #>
 
     [CmdletBinding()]
@@ -19,66 +23,23 @@ function Set-RubrikMount
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
-        $VM,
+        [String]$VM,
         [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'vCenter FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$vCenter,
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Target Network Portgroup for VM')]
         [ValidateNotNullorEmpty()]
-        [String]$Portgroup
+        [String]$Portgroup,
+        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
+        [ValidateNotNullorEmpty()]
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        # Validate the Rubrik token exists
-        if (-not $global:RubrikToken) 
-        {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
+        TestRubrikConnection
 
-        Write-Verbose -Message 'Importing required modules and snapins'
-        $powercli = Get-PSSnapin -Name VMware.VimAutomation.Core -Registered
-        try 
-        {
-            switch ($powercli.Version.Major) {
-                {
-                    $_ -ge 6
-                }
-                {
-                    Import-Module -Name VMware.VimAutomation.Core -ErrorAction Stop
-                    Write-Verbose -Message 'PowerCLI 6+ module imported'
-                }
-                5
-                {
-                    Add-PSSnapin -Name VMware.VimAutomation.Core -ErrorAction Stop
-                    Write-Warning -Message 'PowerCLI 5 snapin added; recommend upgrading your PowerCLI version'
-                }
-                default 
-                {
-                    throw 'This script requires PowerCLI version 5 or later'
-                }
-            }
-        }
-        catch 
-        {
-            throw $_
-        }
-
-
-        Write-Verbose -Message 'Ignoring self-signed SSL certificates for vCenter Server (optional)'
-        $null = Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -DisplayDeprecationWarnings:$false -Scope User -Confirm:$false
-
-        Write-Verbose -Message 'Connecting to vCenter'
-        try 
-        {
-            $null = Connect-VIServer -Server $vCenter -ErrorAction Stop -Session ($global:DefaultVIServers | Where-Object -FilterScript {
-                    $_.name -eq $vCenter
-            }).sessionId
-        }
-        catch 
-        {
-            throw 'Could not connect to vCenter'
-        }
+        ConnectTovCenter -vCenter $vCenter
 
         Write-Verbose -Message "Gathering VM details from $VM"
         $Mount = Get-VM ((Get-RubrikMount -VM $VM).MountName)

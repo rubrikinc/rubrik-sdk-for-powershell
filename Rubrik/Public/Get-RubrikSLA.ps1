@@ -1,7 +1,7 @@
 ﻿#Requires -Version 3
 function Get-RubrikSLA 
 {
-     <#  
+    <#  
             .SYNOPSIS
             Connects to Rubrik and retrieves details on SLA Domain(s)
             .DESCRIPTION
@@ -13,6 +13,12 @@ function Get-RubrikSLA
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Get-RubrikSLA
+            Will return all known SLA Domains
+            .EXAMPLE
+            Get-RubrikSLA -SLA 'Gold'
+            Will return details on the SLA Domain named Gold
     #>
 
     [CmdletBinding()]
@@ -22,55 +28,35 @@ function Get-RubrikSLA
         [String]$SLA,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikServer
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        # Allow untrusted SSL certs
-        Add-Type -TypeDefinition @"
-	    using System.Net;
-	    using System.Security.Cryptography.X509Certificates;
-	    public class TrustAllCertsPolicy : ICertificatePolicy {
-	        public bool CheckValidationResult(
-	            ServicePoint srvPoint, X509Certificate certificate,
-	            WebRequest request, int certificateProblem) {
-	            return true;
-	        }
-	    }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
-
-        # Validate the Rubrik token exists
-        if (-not $global:RubrikToken) 
-        {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
+        TestRubrikConnection
         
-        # Build the URI
-        $uri = 'https://'+$server+':443/slaDomain'
+        Write-Verbose -Message 'Retrieving SLA Domains from Rubrik'
+        $uri = 'https://'+$Server+'/slaDomain'
 
-        # Submit the request
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
+            $result = ConvertFrom-Json -InputObject (Invoke-WebRequest -Uri $uri -Headers $Header -Method Get).Content
         }
         catch 
         {
             throw $_
         }
 
-        # Report the results
-        $result = ConvertFrom-Json -InputObject $r.Content 
-        if ($sla) 
+        Write-Verbose -Message 'Returning the SLA Domain results'
+        if ($SLA) 
         {
-            $result | Where-Object -FilterScript {
-                $_.name -match $sla
+            return $result | Where-Object -FilterScript {
+                $_.name -match $SLA
             }
         }
         else 
         {
-            $result
+            return $result
         }
 
     } # End of process

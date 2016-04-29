@@ -36,16 +36,12 @@ function Remove-RubrikMount
         [Switch]$RemoveAll,
         [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikServer
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        # Validate the Rubrik token exists
-        if (-not $global:RubrikToken) 
-        {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
+        TestRubrikConnection
 
         Write-Verbose -Message 'Validating user input of MountID'
         if ($MountID -lt 0) 
@@ -104,7 +100,7 @@ function Remove-RubrikMount
             throw 'Use -VM to select a single VM, or -RemoveAll to remove mounts from all VMs'
         }
 
-        $uri = 'https://'+$global:RubrikServer+':443/job/type/unmount'
+        $uri = 'https://'+$Server+'/job/type/unmount'
 
         foreach ($_ in $mounts)
         {
@@ -119,7 +115,7 @@ function Remove-RubrikMount
                 try 
                 {
                     Write-Verbose -Message "Removing mount with ID $($_.RubrikID)"
-                    $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method POST -Body (ConvertTo-Json -InputObject $body)
+                    $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method POST -Body (ConvertTo-Json -InputObject $body)
                     if ($r.StatusCode -ne '200') 
                     {
                         throw 'Did not receive successful status code from Rubrik for Mount removal request'

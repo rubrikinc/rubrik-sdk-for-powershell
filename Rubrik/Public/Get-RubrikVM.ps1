@@ -38,7 +38,7 @@ function Get-RubrikVM
         {
             $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Get
             $result = (ConvertFrom-Json -InputObject $r.Content) | Where-Object -FilterScript {
-                $_.name -eq $VM
+                $_.name -like $VM
             }
             if (!$result) 
             {

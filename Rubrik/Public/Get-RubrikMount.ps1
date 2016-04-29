@@ -12,6 +12,9 @@ function Get-RubrikMount
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Get-RubrikMount -VM Server1
+            Will return all Live Mounts found for Server1
     #>
 
     [CmdletBinding()]
@@ -22,27 +25,22 @@ function Get-RubrikMount
         [String]$VM,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikServer
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        # Validate the Rubrik token exists
-        if (-not $global:RubrikToken) 
-        {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
+        TestRubrikConnection
         
-        # Query Rubrik for SLA Domain Information
-        $uri = 'https://'+$global:RubrikServer+':443/mount'
+        Write-Verbose -Message 'Query Rubrik for any active live mounts'
+        $uri = 'https://'+$Server+'/mount'
 
-        # Submit the request
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Get
+            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Get
             $response = ConvertFrom-Json -InputObject $r.Content
             [array]$mount = $response | Where-Object -FilterScript {
-                $_.snapshot.virtualMachineName -like $VM
+                $_.sourcevirtualMachineName -like $VM
             }
             if (!$mount) 
             {
@@ -50,7 +48,6 @@ function Get-RubrikMount
             }
             else 
             {
-                # Send mount details to $result and console
                 Write-Verbose -Message "Found $($mount.count) mounts for $VM"
                 $result = $mount | Select-Object -Property @{
                     N = 'MountName'
@@ -78,13 +75,12 @@ function Get-RubrikMount
                         $_.id
                     }
                 }
-                $result
+                return $result
             }
         }
         catch 
         {
-            $ErrorMessage = $_.Exception.Message
-            throw "Error connecting to Rubrik server: $ErrorMessage"
+            throw $_
         }
 
 

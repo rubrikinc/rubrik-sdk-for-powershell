@@ -12,6 +12,12 @@ function Get-RubrikTask
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Get-RubrikTask -ReportType daily -ToCSV
+            This will gather all of the daily tasks from Rubrik and store them into a CSV file in the user's MyDocuments folder
+            .EXAMPLE
+            Get-RubrikTask -ReportType weekly
+            This will gather all of the daily tasks from Rubrik and display summary information on the console screen
     #>
 
     [CmdletBinding()]
@@ -25,33 +31,15 @@ function Get-RubrikTask
         [Switch]$ToCSV,
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikServer
+        [String]$Server = $global:RubrikConnection.server
     )
 
     Process {
 
-        # Validate the Rubrik token exists
-        if (-not $global:RubrikToken) 
-        {
-            throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
-        }
-
-        # Allow untrusted SSL certs
-        Add-Type -TypeDefinition @"
-	    using System.Net;
-	    using System.Security.Cryptography.X509Certificates;
-	    public class TrustAllCertsPolicy : ICertificatePolicy {
-	        public bool CheckValidationResult(
-	            ServicePoint srvPoint, X509Certificate certificate,
-	            WebRequest request, int certificateProblem) {
-	            return true;
-	        }
-	    }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object -TypeName TrustAllCertsPolicy
+        TestRubrikConnection
 
         Write-Verbose -Message 'Build the URI'
-        $uri = 'https://'+$Server+':443/report/backupJobs/detail'
+        $uri = 'https://'+$Server+'/report/backupJobs/detail'
 
         Write-Verbose -Message 'Build the body'
         $body = @{
@@ -61,7 +49,7 @@ function Get-RubrikTask
         Write-Verbose -Message 'Submit the request'
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method Post -Body (ConvertTo-Json -InputObject $body)
+            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
         }
         catch 
         {
@@ -69,8 +57,10 @@ function Get-RubrikTask
         }
 
         Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
-        [void][System.Reflection.Assembly]::LoadWithPartialName("System.Web.Extensions")
-        $global:result = ParseItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{MaxJsonLength=67108864}).DeserializeObject($r.Content))
+        [void][System.Reflection.Assembly]::LoadWithPartialName('System.Web.Extensions')
+        $global:result = ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
+                    MaxJsonLength = 67108864
+        }).DeserializeObject($r.Content))
         Write-Host -Object "$($global:result.count) results have been saved to `$global:result as an array"
 
         if ($ToCSV)
