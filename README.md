@@ -10,7 +10,7 @@ This is a community project that provides a Windows PowerShell module for managi
 The code assumes that you've already deployed at least one Rubrik Brik into your environment and have completed the initial configuration process to form a cluster. At a minimum, make sure you have installed the following:
 
 1. PowerShell version 4+
-2. [PowerCLI version 5.8+](https://my.vmware.com/group/vmware/get-download?downloadGroup=PCLI630R1)
+2. [PowerCLI version 5.8+](http://www.vmware.com/go/powercli)
 3. Rubrik version 2.0+
 4. (optional) [Windows Management Framework 5.0](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
 5. (optional) [Pester](https://github.com/pester/Pester)
