@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.2.0'
+ModuleVersion = '1.0.3.0'
 
 # ID used to uniquely identify this module
 GUID = 'a4cb0e3e-b1fe-4da8-9c75-d445e5f96cfb'
@@ -66,7 +66,7 @@ FormatsToProcess = @()
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','Move-RubrikMountVMDK','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Remove-RubrikSLA','Set-RubrikMount','Protect-RubrikVM','Sync-RubrikAttribute','Sync-RubrikTag','Get-RubrikTask','Get-RubrikVM')
+FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','Move-RubrikMountVMDK','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Remove-RubrikSLA','Set-RubrikMount','Protect-RubrikVM','Sync-RubrikAttribute','Sync-RubrikTag','Get-RubrikTask','Get-RubrikVM','Get-RubrikSnapshot')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()
