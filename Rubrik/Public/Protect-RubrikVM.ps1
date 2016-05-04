@@ -1,7 +1,7 @@
 ﻿#Requires -Version 3
 function Protect-RubrikVM
 {
-    <#  
+    <#
             .SYNOPSIS
             Connects to Rubrik and assigns an SLA to a virtual machine
             .DESCRIPTION
@@ -42,14 +42,15 @@ function Protect-RubrikVM
         TestRubrikConnection
 
         Write-Verbose -Message 'Matching the SLA input to a valid Rubrik SLA Domain'
-        try 
+        try
         {
-            if ($DoNotProtect) 
+            if ($DoNotProtect)
             {
+                $SLAmatch = @{}
                 $SLAmatch.id = 'UNPROTECTED'
                 $SLAmatch.name = 'Unprotected'
             }
-            else 
+            else
             {
                 $SLAmatch = Get-RubrikSLA -SLA $SLA
             }
@@ -60,7 +61,7 @@ function Protect-RubrikVM
                 break
             }
         }
-        catch 
+        catch
         {
             throw $_
         }
@@ -73,18 +74,18 @@ function Protect-RubrikVM
         $body = @{
             slaDomainId = $SLAmatch.id
         }
-        
-        try 
+
+        try
         {
             $r = Invoke-WebRequest -Uri $uri -Headers $Header -Body (ConvertTo-Json -InputObject $body) -Method Patch
-            if ($r.StatusCode -ne '200') 
+            if ($r.StatusCode -ne '200')
             {
                 throw $r.StatusDescription
             }
             $result = (ConvertFrom-Json -InputObject $r.Content)
             Write-Verbose -Message "$($result.name) set to $($result.slaDomain.name) SLA Domain"
         }
-        catch 
+        catch
         {
             throw $_
         }
