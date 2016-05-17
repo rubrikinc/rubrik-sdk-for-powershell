@@ -25,7 +25,7 @@ function Protect-TaggedVM
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'vSphere Tag',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Tag,
-        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'The SLA Domain in Rubrik',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'The SLA Domain in Rubrik',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$SLA,
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Removes the SLA Domain assignment',ValueFromPipeline = $true)]
@@ -43,6 +43,12 @@ function Protect-TaggedVM
         Write-Verbose -Message 'Matching the SLA input to a valid Rubrik SLA Domain'
         try
         {
+            if ($SLA -eq $null)
+            {
+                Write-Warning -Message "No matching SLA Domain found with the name `"$SLA`"`nThe following SLA Domains were found:"
+                Get-RubrikSLA | Select-Object -Property Name
+                break
+            }
             if ($DoNotProtect)
             {
                 $SLAmatch = @{}
@@ -51,13 +57,8 @@ function Protect-TaggedVM
             }
             else
             {
-                $SLAmatch = Get-RubrikSLA -SLA $SLA
-            }
-            if ($SLAmatch -eq $null)
-            {
-                Write-Warning -Message "No matching SLA Domain found with the name `"$SLA`"`nThe following SLA Domains were found:"
-                Get-RubrikSLA | Select-Object -Property Name
-                break
+                $SLAmatch = Get-RubrikSLA -SLA $SLA 
+                $SLAmatch = $SLA
             }
         }
         catch
@@ -70,7 +71,7 @@ function Protect-TaggedVM
         {
         Write-Verbose -Message 'Gathering VMs tagged from vCenter Inventory Service'
        
-        $vms = get-vm -tag $Tag
+        $vms = get-vm -tag $Tag -name SE-JBURRELL-WIN
         } 
         catch
         {
@@ -80,16 +81,25 @@ function Protect-TaggedVM
         Write-Verbose -Message 'VMs to be updated:'
 
         Foreach ($VM in $VMs) {
+            if ($DoNotProtect){
+             Write-host "Unassign $VM from SLA"
+            } else {
             Write-host  "Assign $VM to $SLA"
+            }
         }
 
         $Continue = Read-Host -Prompt 'Continue (Y/N)'
         if ($Continue -eq 'Y') {
-        Foreach ($VM in $VMs) {
-            Write-Host "Protecting $VM"
-            Protect-RubrikVM -VM $VM.Name -SLA $SLA
+         Foreach ($VM in $VMs) {
+            Write-Host "Assigning Proectiong to $VM"
+            
+            if ($DoNotProtect) {
+                Protect-RubrikVM -VM $VM.Name -DoNotProtect $true
+            } else {
+                Protect-RubrikVM -VM $VM.Name -SLA $SLA
+            }
+         }
 
-        }
         } else {
         Write-Verbose "Operation canceled"
         }
