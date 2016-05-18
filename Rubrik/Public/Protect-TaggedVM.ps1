@@ -71,7 +71,7 @@ function Protect-TaggedVM
         {
         Write-Verbose -Message 'Gathering VMs tagged from vCenter Inventory Service'
        
-        $vms = get-vm -tag $Tag -name SE-JBURRELL-WIN
+        $vms = get-vm -tag $Tag
         } 
         catch
         {
