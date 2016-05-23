@@ -30,11 +30,15 @@ function Remove-RubrikMount
         [ValidateNotNullorEmpty()]
         [String]$VM,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'The specific mount ID to remove',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
         [Int]$MountID,
-        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Remove all instant mounts for all VMs',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'The Rubrik ID value of the mount',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [String]$RubrikID,
+        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Remove all instant mounts for all VMs',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [Switch]$RemoveAll,
-        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
     )
@@ -95,9 +99,17 @@ function Remove-RubrikMount
                 throw $_
             }
         }
+        elseif ($RubrikID)
+        {
+            Write-Verbose -Message "Using a specific Rubrik Mount ID of $RubrikID"
+            [array]$mounts = @{
+                MountName = 'Manual_ID_Entry'
+                RubrikID  = $RubrikID
+            }
+        }
         else 
         {
-            throw 'Use -VM to select a single VM, or -RemoveAll to remove mounts from all VMs'
+            throw 'Use -VM to select a single VM, -RubrikID to specify a Rubrik Mount ID value, or -RemoveAll to remove mounts from all VMs'
         }
 
         $uri = 'https://'+$Server+'/job/type/unmount'
