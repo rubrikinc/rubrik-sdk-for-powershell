@@ -12,6 +12,9 @@ function Sync-RubrikTag
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Sync-RubrikTag -vCenter 'vcenter1.demo' -Category 'Rubrik'
+            This will validate or create a vSphere Category named Rubrik along with a Tag for each SLA Domain found in Rubrik
     #>
 
     [CmdletBinding()]
@@ -19,7 +22,10 @@ function Sync-RubrikTag
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'vCenter FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$vCenter,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'The vSphere Category name for the Rubrik SLA Tags')]
+        [ValidateNotNullorEmpty()]
+        [String]$Category,
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
     )
@@ -34,32 +40,19 @@ function Sync-RubrikTag
         $sladomain = Get-RubrikSLA
 
         Write-Verbose -Message 'Validate the tag category exists'
-        $category_name = 'Rubrik_SLA'
-        if (-not ((Get-TagCategory) -match $category_name)) 
+        if (-not ((Get-TagCategory) -eq $Category)) 
         {
-            New-TagCategory -Name $category_name -Description 'Rubrik SLA Domains' -Cardinality Single
+            New-TagCategory -Name $Category -Description 'Rubrik SLA Domains' -Cardinality Single
         }
        
         Write-Verbose -Message 'Validate the tags exist'
         foreach ($_ in $sladomain)
         {
-            New-Tag -Name $_.name -Category $category_name -ErrorAction SilentlyContinue
+            New-Tag -Name $_.name -Category $Category -ErrorAction SilentlyContinue
         }
         
-        Write-Verbose -Message 'Create the Unprotected assignment for VMs without an SLA Domain'
-        New-Tag -Name 'Unprotected' -Category $category_name -ErrorAction SilentlyContinue
-        
-        Write-Verbose -Message 'Submit the request to determine SLA Domain assignments to VMs'
-        $vmlist = Get-RubrikVM -VM *
-        
-        Write-Verbose -Message 'Assign tags to the VMs that have SLA Domain assignments'
-        foreach ($_ in $vmlist)
-        {
-            if ($_.effectiveSlaDomainName) 
-            {
-                New-TagAssignment -Tag (Get-Tag -Name $_.effectiveSlaDomainName) -Entity $_.name
-            }
-        }
+        Write-Verbose -Message 'Create the DoNotProtect assignment for VMs without an SLA Domain'
+        New-Tag -Name 'DoNotProtect' -Category $Category -ErrorAction SilentlyContinue
 
     } # End of process
 } # End of function
