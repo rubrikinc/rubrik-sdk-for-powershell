@@ -1,4 +1,5 @@
-﻿function Stop-RubrikVM
+﻿#requires -Version 3
+function Stop-RubrikVM
 {
     <#  
             .SYNOPSIS
@@ -18,11 +19,14 @@
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [String]$ID,
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
     )
@@ -32,7 +36,18 @@
         TestRubrikConnection
 
         Write-Verbose -Message 'Gathering the VM ID'
-        [string]$vmid = ((Get-RubrikVM -VM $VM).id)
+        if ($ID) 
+        {
+            [string]$vmid = $ID
+        }
+        elseif (!$VM) 
+        {
+            throw 'No VM requested'
+        }
+        else 
+        {
+            [string]$vmid = ((Get-RubrikVM -VM $VM).id)
+        }
 
         Write-Verbose -Message 'Powering off the VM'
         $uri = 'https://'+$Server+'/vm/power'
@@ -40,8 +55,8 @@
         try 
         {
             $body = @{
-            vmId = $vmid
-            powerState = $false
+                vmId       = $vmid
+                powerState = $false
             }
 
             $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
