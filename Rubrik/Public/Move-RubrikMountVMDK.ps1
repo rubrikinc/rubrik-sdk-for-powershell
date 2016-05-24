@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+﻿#Requires -Version 2
 function Move-RubrikMountVMDK
 {
     <#  
@@ -41,6 +41,7 @@ function Move-RubrikMountVMDK
         ConnectTovCenter -vCenter $vCenter
 
         Write-Verbose -Message 'Creating an Instant Mount (clone) of the Source VM'
+
         New-RubrikMount -VM $SourceVM -Date $Date
         Start-Sleep -Seconds 2
         [array]$mounts = Get-RubrikMount -VM $SourceVM
@@ -85,7 +86,9 @@ function Move-RubrikMountVMDK
         }
 
         Write-Verbose -Message 'Powering off the Instant Mount'
-        $null = Stop-VM -VM $MountVM -Confirm:$false
+        $moref = $MountVM.Id.Substring($MountVM.Id.IndexOf('-')+1)
+        $vmid = $mounts[$i].vCenterId + '-' + $moref
+        Stop-RubrikVM -ID $vmid
 
         Write-Verbose -Message 'Gathering details on the Target VM'
         if (!$TargetVM) 
@@ -148,26 +151,7 @@ function Move-RubrikMountVMDK
                 }
         
                 Write-Verbose -Message 'Deleting the Instant Mount'
-                $uri = 'https://'+$global:RubrikServer+':443/job/type/unmount'
-
-                $body = @{
-                    mountId = $mounts[0].RubrikID
-                    force   = 'false'
-                }
-
-                try 
-                {
-                    $r = Invoke-WebRequest -Uri $uri -Headers $global:RubrikHead -Method POST -Body (ConvertTo-Json -InputObject $body)
-                    if ($r.StatusCode -ne '200') 
-                    {
-                        throw 'Did not receive successful status code from Rubrik for Mount removal request'
-                    }
-                    Write-Verbose -Message "Success: $($r.Content)"
-                }
-                catch 
-                {
-                    throw 'Error connecting to Rubrik server'
-                }
+                Remove-RubrikMount -RubrikID $mounts[$i].RubrikID              
             }
             1 
             {

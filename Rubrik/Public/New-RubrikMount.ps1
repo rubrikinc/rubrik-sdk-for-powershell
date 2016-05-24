@@ -42,27 +42,26 @@ function New-RubrikMount
         $snapshots = Get-RubrikSnapshot -VM $VM
 
         Write-Verbose -Message 'Comparing backup dates to user date'
-        $Date = $Date -as [datetime]
-        if (!$Date) 
-        {
-            throw 'You did not enter a valid date and time'
-        }
+        $Date = ConvertFromLocalDate -Date $Date
+        
+        Write-Verbose -Message 'Finding snapshots that match the date value'
         foreach ($_ in $snapshots)
-        {
-            if ((Get-Date -Date $_.date) -lt (Get-Date $Date) -eq $true)
             {
+            if (([datetime]$_.date) -le ($Date) -eq $true)
+                {
                 $vmsnapid = $_.id
+                Write-Verbose -Message "Found matching snapshot with ID $vmsnapid"
                 break
+                }
             }
-        }
 
         Write-Verbose -Message 'Creating a Live Mount'
-        $uri = 'https://'+$global:Server+'/job/type/mount'
+        $uri = 'https://'+$Server+'/job/type/mount'
 
         $body = @{
             snapshotId     = $vmsnapid
             hostId         = $hostid
-            disableNetwork = 'true'
+            disableNetwork = $true
         }
 
         try 

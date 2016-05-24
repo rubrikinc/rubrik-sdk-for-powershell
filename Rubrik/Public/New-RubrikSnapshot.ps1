@@ -36,7 +36,7 @@ function New-RubrikSnapshot
         $vmid = (Get-RubrikVM -VM $VM).id
 
         Write-Verbose -Message 'Submit the request for an On-Demand Backup'
-        $uri = 'https://'+$Server+'/internal/job/type/backup'
+        $uri = 'https://'+$Server+'/job/type/backup'
 
         $body = @{
             vmId               = $vmid
