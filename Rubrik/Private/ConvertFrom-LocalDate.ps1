@@ -6,7 +6,7 @@ function ConvertFromLocalDate()
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true,HelpMessage = 'Date in your computer local date format',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true,HelpMessage = 'Date in your local time format',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Date
     )

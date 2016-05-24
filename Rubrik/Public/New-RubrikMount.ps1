@@ -23,7 +23,7 @@ function New-RubrikMount
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
-        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Backup date in MM/DD/YYYY HH:MM format',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Backup date in your local time format',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Date,
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
