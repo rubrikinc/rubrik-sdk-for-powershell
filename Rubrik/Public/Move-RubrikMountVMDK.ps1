@@ -26,7 +26,7 @@ function Move-RubrikMountVMDK
         [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'vCenter FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$vCenter,
-        [Parameter(Mandatory = $true,Position = 3,HelpMessage = 'Backup date in MM/DD/YYYY HH:MM format',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true,Position = 3,HelpMessage = 'Backup date in your local clock format format',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Date,
         [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
@@ -41,6 +41,7 @@ function Move-RubrikMountVMDK
         ConnectTovCenter -vCenter $vCenter
 
         Write-Verbose -Message 'Creating an Instant Mount (clone) of the Source VM'
+
         New-RubrikMount -VM $SourceVM -Date $Date
         Start-Sleep -Seconds 2
         [array]$mounts = Get-RubrikMount -VM $SourceVM

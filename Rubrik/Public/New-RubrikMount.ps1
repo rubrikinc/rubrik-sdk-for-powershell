@@ -23,7 +23,7 @@ function New-RubrikMount
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
-        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Backup date in MM/DD/YYYY HH:MM format',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Backup date in your local clock format',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Date,
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
@@ -42,15 +42,7 @@ function New-RubrikMount
         $snapshots = Get-RubrikSnapshot -VM $VM
 
         Write-Verbose -Message 'Comparing backup dates to user date'
-        try
-            {
-            [datetime]$Date = $Date
-            $Date = $Date.AddSeconds(59)
-            }
-        catch
-            {
-                throw 'You did not enter a valid date and time'
-            }
+        $Date = ConvertFromLocalDate -Date $Date
         
         Write-Verbose -Message 'Finding snapshots that match the date value'
         foreach ($_ in $snapshots)
