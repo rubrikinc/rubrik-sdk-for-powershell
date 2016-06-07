@@ -12,6 +12,15 @@ function Move-RubrikMountVMDK
             GitHub: chriswahl
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -vCenter '192.168.1.1'
+            This will create a Live Mount using the latest snapshot of the VM named SourceVM, power it off, and attach the VMDKs to the production version of the VM named SourceVM.
+            .EXAMPLE
+            Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -vCenter '192.168.1.1'
+            This will create a Live Mount using the latest snapshot of the VM named SourceVM, power it off, and attach the VMDKs to the production version of a different VM named TargetVM.
+            .EXAMPLE
+            Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -Date '01/30/2016 08:00' -vCenter '192.168.1.1'
+            This will create a Live Mount using the snapshot at or before 08:00am on Jan 30th 2016 of the VM named SourceVM, power it off, and attach the VMDKs to the production version of a different VM named TargetVM. Note that the data parameter will start at the time specified (in this case, 08:00am) and work backwards in time until it finds a snapshot. Precise timing is not required.
     #>
 
     [CmdletBinding()]
@@ -26,7 +35,7 @@ function Move-RubrikMountVMDK
         [Parameter(Mandatory = $true,Position = 2,HelpMessage = 'vCenter FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$vCenter,
-        [Parameter(Mandatory = $true,Position = 3,HelpMessage = 'Backup date in your local clock format format',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Backup date in your local clock format format',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Date,
         [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
@@ -40,8 +49,13 @@ function Move-RubrikMountVMDK
 
         ConnectTovCenter -vCenter $vCenter
 
-        Write-Verbose -Message 'Creating an Instant Mount (clone) of the Source VM'
+        if (!$Date) 
+        {
+            Write-Verbose -Message 'No date entered. Taking current time.'
+            $Date = Get-Date
+        }
 
+        Write-Verbose -Message 'Creating an Instant Mount (clone) of the Source VM'
         New-RubrikMount -VM $SourceVM -Date $Date
         Start-Sleep -Seconds 2
         [array]$mounts = Get-RubrikMount -VM $SourceVM
