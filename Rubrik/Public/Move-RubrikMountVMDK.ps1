@@ -21,6 +21,9 @@ function Move-RubrikMountVMDK
             .EXAMPLE
             Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -Date '01/30/2016 08:00' -vCenter '192.168.1.1'
             This will create a Live Mount using the snapshot at or before 08:00am on Jan 30th 2016 of the VM named SourceVM, power it off, and attach the VMDKs to the production version of a different VM named TargetVM. Note that the data parameter will start at the time specified (in this case, 08:00am) and work backwards in time until it finds a snapshot. Precise timing is not required.
+            .EXAMPLE
+            Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -vCenter '192.168.1.1' -ExcludeDisk @(0,1)
+            This will create a Live Mount using the latest snapshot of the VM named SourceVM, power it off, and attach all but the first two VMDKs to the production version of the VM named SourceVM. Note that for the "ExcludeDisk" array, 0 is the first disk and 1 is the second disk. To exclude the first and third disks, the value would be @(0,2). To exclude just the first disk, use @(0).
     #>
 
     [CmdletBinding()]
@@ -38,7 +41,10 @@ function Move-RubrikMountVMDK
         [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Backup date in your local clock format format',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Date,
-        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'An array of disks to exclude',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [Array]$ExcludeDisk,
+        [Parameter(Mandatory = $false,Position = 5,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
     )
@@ -121,18 +127,27 @@ function Move-RubrikMountVMDK
         Write-Verbose -Message 'Migrating the Mount VMDKs to VM'
         [array]$MountVMdisk = Get-HardDisk $MountVM
         $MountedVMdiskFileNames = @()
+        [int]$j = 0
         foreach ($_ in $MountVMdisk)
         {
-            try
+            if ($ExcludeDisk -contains $j)
             {
-                $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
-                $null = New-HardDisk -VM $TargetVM -DiskPath $_.Filename
-                $MountedVMdiskFileNames += $_.Filename
+                Write-Verbose -Message "Skipping Disk $j" -Verbose
             }
-            catch
+            else 
             {
-                throw 'Unable to attach VMDKs to the TargetVM'
+                try
+                {
+                    $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
+                    $null = New-HardDisk -VM $TargetVM -DiskPath $_.Filename
+                    $MountedVMdiskFileNames += $_.Filename
+                }
+                catch
+                {
+                    throw 'Unable to attach VMDKs to the TargetVM'
+                }
             }
+            $j++
         }
         
         Write-Verbose -Message 'Offering cleanup options'
@@ -164,8 +179,8 @@ function Move-RubrikMountVMDK
                     }
                 }
         
-                Write-Verbose -Message 'Deleting the Instant Mount'
-                Remove-RubrikMount -RubrikID $mounts[$i].RubrikID              
+                Write-Verbose -Message "Deleting the Instant Mount for $($mounts[$i].RubrikID)"
+                Remove-RubrikMount -RubrikID $($mounts[$i].RubrikID)
             }
             1 
             {
