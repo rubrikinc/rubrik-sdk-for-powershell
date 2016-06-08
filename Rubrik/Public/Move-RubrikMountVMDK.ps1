@@ -38,7 +38,10 @@ function Move-RubrikMountVMDK
         [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Backup date in your local clock format format',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Date,
-        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'An array of disks to exclude',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [Array]$ExcludeDisk,
+        [Parameter(Mandatory = $false,Position = 5,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
     )
@@ -121,18 +124,27 @@ function Move-RubrikMountVMDK
         Write-Verbose -Message 'Migrating the Mount VMDKs to VM'
         [array]$MountVMdisk = Get-HardDisk $MountVM
         $MountedVMdiskFileNames = @()
+        [int]$j = 0
         foreach ($_ in $MountVMdisk)
         {
-            try
+            if ($ExcludeDisk -contains $j)
             {
-                $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
-                $null = New-HardDisk -VM $TargetVM -DiskPath $_.Filename
-                $MountedVMdiskFileNames += $_.Filename
+                Write-Verbose -Message "Skipping Disk $j" -Verbose
             }
-            catch
+            else 
             {
-                throw 'Unable to attach VMDKs to the TargetVM'
+                try
+                {
+                    $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
+                    $null = New-HardDisk -VM $TargetVM -DiskPath $_.Filename
+                    $MountedVMdiskFileNames += $_.Filename
+                }
+                catch
+                {
+                    throw 'Unable to attach VMDKs to the TargetVM'
+                }
             }
+            $j++
         }
         
         Write-Verbose -Message 'Offering cleanup options'
@@ -164,8 +176,8 @@ function Move-RubrikMountVMDK
                     }
                 }
         
-                Write-Verbose -Message 'Deleting the Instant Mount'
-                Remove-RubrikMount -RubrikID $mounts[$i].RubrikID              
+                Write-Verbose -Message "Deleting the Instant Mount for $($mounts[$i].RubrikID)"
+                Remove-RubrikMount -RubrikID $($mounts[$i].RubrikID)
             }
             1 
             {
