@@ -25,13 +25,13 @@ function Get-RubrikSLA
     Param(
         [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'SLA Domain Name')]
         [ValidateNotNullorEmpty()]
-	[String]$SLA,
-	[Parameter(Mandatory = $false, Position = 1, HelpMessage = 'Specifies if you want to export your SLA Domain configuration')]
-	[ValidateNotNullOrEmpty()]
-	[Bool]$EnableExport = $false,
-	[Parameter(Mandatory = $false, Position = 2,HelpMessage = 'Full path of the file you want your SLA Domains configurations to be exported to. Default is the current user homedir')]
-	[ValidateNotNullOrEmpty()]
-	[String]$ExportPath,
+	 [String]$SLA,
+	 [Parameter(Mandatory = $false, Position = 1, HelpMessage = 'Specifies if you want to export your SLA Domain configuration')]
+	 [ValidateNotNullOrEmpty()]
+	 [Bool]$EnableExport = $false,
+	 [Parameter(Mandatory = $false, Position = 2,HelpMessage = 'Full path of the file you want your SLA Domains configurations to be exported to. Default is the current user homedir')]
+	 [ValidateNotNullOrEmpty()]
+	 [String]$ExportPath,
         [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
