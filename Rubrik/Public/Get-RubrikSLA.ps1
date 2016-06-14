@@ -25,12 +25,12 @@ function Get-RubrikSLA
     Param(
         [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'SLA Domain Name')]
         [ValidateNotNullorEmpty()]
-		[String]$SLA,
-		[Parameter(Mandatory = $false, Position = 1, HelpMessage = 'Specifies if you want to export your SLA Domain configuration')]
-		[switch]$EnableExport,
-		[Parameter(Mandatory = $false, Position = 2,HelpMessage = 'Full path of the file you want your SLA Domains configurations to be exported to. Default is the current user homedir')]
-		[ValidateNotNullOrEmpty()]
-		[String]$ExportPath,
+        [String]$SLA,
+        [Parameter(Mandatory = $false, Position = 1, HelpMessage = 'Specifies if you want to export your SLA Domain configuration')]
+        [Switch]$EnableExport,
+        [Parameter(Mandatory = $false, Position = 2,HelpMessage = 'Full path of the file you want your SLA Domains configurations to be exported to. Default is the current user homedir')]
+        [ValidateNotNullOrEmpty()]
+        [String]$ExportPath,
         [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
@@ -45,60 +45,53 @@ function Get-RubrikSLA
 
         try 
         {
-			$result = ConvertFrom-Json -InputObject (Invoke-WebRequest -Uri $uri -Headers $Header -Method Get).Content
+            $result = ConvertFrom-Json -InputObject (Invoke-WebRequest -Uri $uri -Headers $Header -Method Get).Content
 			
-			if ($EnableExport -and !$ExportPath)
-			{
-				$ExportPath = $env:userprofile + '\Rubrik_SLADomain_Configuration_' + $(Get-Date -Format o | foreach { $_ -replace ":", "." }) + '.json'
-			}
-				
-		}
-		catch
-		{
-			throw $_
-		}
+            if ($EnableExport -and !$ExportPath)
+            {
+                $ExportPath = $env:userprofile + '\Rubrik_SLADomain_Configuration_' + $(Get-Date -Format o | ForEach-Object -Process {
+                        $_ -replace ':', '.'
+                }) + '.json'
+            }
+        }
+        catch
+        {
+            throw $_
+        }
 		
-		Write-Verbose -Message 'Returning the SLA Domain results'
+        Write-Verbose -Message 'Returning the SLA Domain results'
         if ($SLA)
-		{
-			if ($EnableExport)
-			{
-				try
-				{
-					return $result | Where-Object -FilterScript {
-						$_.name -match $SLA
-					} | ConvertTo-Json | Out-File $ExportPath
-				}
-				catch
-				{
-					throw 'Could not write the configuration file at the specified path. Please check that the path is correct and that you have write access to the folder.'
-				}
-			}
-			else
-			{
-				return $result | Where-Object -FilterScript {
-					$_.name -match $SLA
-				}
-			}
-		}
-		else
-		{
-			if ($EnableExport)
-			{
-				try
-				{
-					return $result | ConvertTo-Json | Out-File $ExportPath
-				}
-				catch
-				{
-					throw 'Could not write the configuration file at the specified path. Please check that the path is correct and that you have write access to the folder.'
-				}
-			}
-			else
-			{
-				return $result
-			}
-		}
+        {
+            $SLAresult = $result |
+            Where-Object -FilterScript {
+                $_.name -match $SLA
+            }
+        }
+        else
+        {
+            $SLAresult = $result
+        }
+
+
+        if ($EnableExport)
+        {
+            Write-Verbose -Message "Exporting the SLA Domain results to $ExportPath"
+            try
+            {
+                $SLAresult |
+                ConvertTo-Json |
+                Out-File $ExportPath
+                Write-Warning -Message "Exported the SLA Domain results to $ExportPath"
+            }
+            catch
+            {
+                throw $_
+            }
+        }
+        else 
+        {
+            return $SLAresult
+        }
 		
-	} # End of process
+    } # End of process
 } # End of function
