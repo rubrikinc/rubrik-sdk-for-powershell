@@ -23,7 +23,12 @@ function Get-RubrikVM
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Required variable')]
+        [Alias('archiveStatusFilterOpt')]
+        [ValidateNotNullorEmpty()]
+        [ValidateSet("ALL", "ACTIVE", "RELIC")]
+        [String]$Filter = "ALL",
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
     )
@@ -33,7 +38,7 @@ function Get-RubrikVM
         TestRubrikConnection
 
         Write-Verbose -Message 'Gathering VM ID value from Rubrik'
-        $uri = 'https://'+$Server+'/vm?showArchived=false'
+        $uri = 'https://'+$Server+"/vm?archiveStatusFilterOpt=$Filter"
         try 
         {
             $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Get

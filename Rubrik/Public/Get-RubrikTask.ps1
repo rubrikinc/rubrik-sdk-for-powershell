@@ -24,7 +24,7 @@ function Get-RubrikTask
     Param(
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Report Type (daily or weekly)')]
         [ValidateNotNullorEmpty()]
-        [ValidatePattern('daily|weekly')]
+        [ValidateSet("daily", "weekly")]
         [String]$ReportType,
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Export the results to a CSV file')]
         [ValidateNotNullorEmpty()]
