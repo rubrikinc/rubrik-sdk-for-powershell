@@ -23,7 +23,7 @@ function Get-RubrikVM
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Required variable')]
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Filter used to find ACTIVE, RELIC, or ALL virtual machines. Defaults to ALL.')]
         [Alias('archiveStatusFilterOpt')]
         [ValidateNotNullorEmpty()]
         [ValidateSet("ALL", "ACTIVE", "RELIC")]
