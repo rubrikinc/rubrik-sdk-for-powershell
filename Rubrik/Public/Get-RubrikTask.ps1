@@ -91,7 +91,10 @@ function Get-RubrikTask
         }
 
         Write-Verbose -Message 'Validating that results were found'
-        if (!$result) {throw 'No results found'}
+        if (!$result) 
+        {
+            throw 'No results found'
+        }
 
         if ($ToCSV)
         {
