@@ -24,12 +24,16 @@ function Get-RubrikTask
     Param(
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Report Type (daily or weekly)')]
         [ValidateNotNullorEmpty()]
-        [ValidateSet("daily", "weekly")]
+        [ValidateSet('daily', 'weekly')]
         [String]$ReportType,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Export the results to a CSV file')]
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Status Type ')]
+        [ValidateNotNullorEmpty()]
+        [ValidateSet('Succeeded','Running','Failed','Canceled')]
+        [String]$StatusType,
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Export the results to a CSV file')]
         [ValidateNotNullorEmpty()]
         [Switch]$ToCSV,
-        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
     )
@@ -58,10 +62,39 @@ function Get-RubrikTask
 
         Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
         [void][System.Reflection.Assembly]::LoadWithPartialName('System.Web.Extensions')
-        $global:result = ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
+        $resultraw = ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
                     MaxJsonLength = 67108864
         }).DeserializeObject($r.Content))
-        Write-Host -Object "$($global:result.count) results have been saved to `$global:result as an array"
+
+        Write-Verbose -Message 'Counting unique status values'
+        [array]$StatusCount = $result.status |
+        Group-Object |
+        Select-Object -Property Count, Name
+        foreach ($_ in $StatusCount) 
+        {
+            Write-Verbose -Message "$($_.name): $($_.count)"
+        }
+
+        Write-Verbose -Message 'Determining if status filter is required'
+        if ($StatusType) 
+        {
+            Write-Verbose -Message "Filtering based on $StatusType status"
+            $result = $resultraw |
+            Where-Object -FilterScript {
+                $_.status -match $StatusType
+            }
+        }
+        else 
+        {
+            Write-Verbose -Message 'No status filter found'
+            $result = $restulraw
+        }
+
+        Write-Verbose -Message 'Validating that results were found'
+        if (!$result) 
+        {
+            throw 'No results found'
+        }
 
         if ($ToCSV)
         {
@@ -69,17 +102,19 @@ function Get-RubrikTask
             $CSVfilename = 'rubrik-tasks-export-'+(Get-Date).Ticks+'.csv'
             try 
             {
-                foreach ($record in $global:result)
+                foreach ($record in $result)
                 {
                     $record | Export-Csv -Append -Path "$Home\Documents\$CSVfilename" -NoTypeInformation -Force
                 }
-                Write-Host -Object "CSV export written to $Home\Documents\$CSVfilename"
+                Write-Verbose -Message "CSV export written to $Home\Documents\$CSVfilename" -Verbose
             }
             catch 
             {
                 throw $_
             }
         }
+
+        return $result
 
     } # End of process
 } # End of function
