@@ -20,7 +20,7 @@ function Protect-RubrikTag
             This will assign the Titanium SLA Domain to any VM tagged with Gold in the Rubrik category
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'vSphere Tag value',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
@@ -36,7 +36,7 @@ function Protect-RubrikTag
         [String]$vCenter,
         [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikConnection.server
+        [String]$Server = $global:rubrikConnection.server
     )
 
     Process {
@@ -51,12 +51,12 @@ function Protect-RubrikTag
             if ($SLA) 
             {
                 Write-Verbose -Message 'Using explicit SLA request from input'
-                $SLAid = Get-RubrikSLA -SLA $SLA
+                $slaid = Get-RubrikSLA -SLA $SLA
             }
             else 
             {
                 Write-Verbose -Message 'No explicit SLA requested; deferring to Tag name'
-                $SLAid = Get-RubrikSLA -SLA $Tag
+                $slaid = Get-RubrikSLA -SLA $Tag
             }
         }
         catch
@@ -93,8 +93,11 @@ function Protect-RubrikTag
         Write-Verbose -Message 'Submit the request'
         try 
         {
-            $uri = 'https://'+$Server+'/slaDomainAssign/'+$SLAid.id
-            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Patch -Body (ConvertTo-Json -InputObject $body)
+            if ($PSCmdlet.ShouldProcess("$Tag tagged objects","Assign $($slaid.name) SLA Domain"))
+            {
+                $uri = 'https://'+$Server+'/slaDomainAssign/'+$slaid.id
+                $r = Invoke-WebRequest -Uri $uri -Headers $header -Method Patch -Body (ConvertTo-Json -InputObject $body)
+            }
         }
         catch 
         {
