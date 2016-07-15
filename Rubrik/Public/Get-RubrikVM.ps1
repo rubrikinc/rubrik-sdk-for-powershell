@@ -26,8 +26,8 @@ function Get-RubrikVM
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Filter used to find ACTIVE, RELIC, or ALL virtual machines. Defaults to ALL.')]
         [Alias('archiveStatusFilterOpt')]
         [ValidateNotNullorEmpty()]
-        [ValidateSet("ALL", "ACTIVE", "RELIC")]
-        [String]$Filter = "ALL",
+        [ValidateSet('ALL', 'ACTIVE', 'RELIC')]
+        [String]$Filter = 'ALL',
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
