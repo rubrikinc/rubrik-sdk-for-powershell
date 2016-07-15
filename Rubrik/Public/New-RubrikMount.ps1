@@ -20,7 +20,7 @@ function New-RubrikMount
             This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older the current time (now)
     #>
 
-    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact='Low')]
+    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'Low')]
     Param(
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine to mount',ValueFromPipeline = $true)]
         [Alias('Name')]
@@ -55,14 +55,14 @@ function New-RubrikMount
         
         Write-Verbose -Message 'Finding snapshots that match the date value'
         foreach ($_ in $snapshots)
-            {
+        {
             if (([datetime]$_.date) -le ($Date) -eq $true)
-                {
+            {
                 $vmsnapid = $_.id
                 Write-Verbose -Message "Found matching snapshot with ID $vmsnapid"
                 break
-                }
             }
+        }
 
         Write-Verbose -Message 'Creating a Live Mount'
         $uri = 'https://'+$Server+'/job/type/mount'
@@ -75,13 +75,14 @@ function New-RubrikMount
 
         try 
         {
-            if ($PSCmdlet.ShouldProcess($VM,'Creating a new Live Mount')){
-            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
-            if ($r.StatusCode -ne '200') 
+            if ($PSCmdlet.ShouldProcess($VM,'Creating a new Live Mount'))
             {
-                throw 'Did not receive successful status code from Rubrik for Live Mount request'
-            }
-            return $($r.Content)
+                $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
+                if ($r.StatusCode -ne '200') 
+                {
+                    throw 'Did not receive successful status code from Rubrik for Live Mount request'
+                }
+                return $($r.Content)
             }
         }
         catch 
