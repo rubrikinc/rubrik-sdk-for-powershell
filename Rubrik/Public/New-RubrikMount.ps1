@@ -82,7 +82,7 @@ function New-RubrikMount
                 {
                     throw 'Did not receive successful status code from Rubrik for Live Mount request'
                 }
-                return $($r.Content)
+                return ($($r.Content)).Replace('"','')
             }
         }
         catch 
