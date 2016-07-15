@@ -42,6 +42,9 @@ function Get-RubrikTask
 
         TestRubrikConnection
 
+        $warningpreference = 'Inquire'
+        Write-Warning 'This function is deprecated; please use New-RubrikReport.'
+
         Write-Verbose -Message 'Build the URI'
         $uri = 'https://'+$Server+'/report/backupJobs/detail'
 
