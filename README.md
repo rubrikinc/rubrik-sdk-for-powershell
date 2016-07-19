@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/52cv3jshak2w7624?svg=true)](https://ci.appveyor.com/project/chriswahl/powershell-module)
+[![Build status](https://ci.appveyor.com/api/projects/status/52cv3jshak2w7624?svg=true)](https://ci.appveyor.com/project/chriswahl/powershell-module)   [![Documentation Status](http://readthedocs.org/projects/powershell-module/badge/?version=latest)](http://powershell-module.readthedocs.io/en/latest/?badge=latest)
 
 Community PowerShell Module for Rubrik
 ============================
