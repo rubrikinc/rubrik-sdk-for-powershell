@@ -1,3 +1,18 @@
+version: 1.0.6.{build}
+
+branches:
+  only:
+  - master
+
+environment:
+  NuGetApiKey:
+    secure: vPcmFNoIOhHHHo2LtrM0IKNcNwXYqmw2C6viMFZ8ea6BJ5SIXsAjJ0zUcKeT+w3p
+
+os: WMF 5
+
+skip_commits:
+  message: /updated readme.*|update readme.*s/
+
 install:
   - ps: cinst pester -y
 
