@@ -117,12 +117,12 @@ function Remove-RubrikMount
         foreach ($_ in $mounts)
         {
             $body = @{
-                mountId = $_.RubrikID
+                mountId = $_.id
                 force   = 'false'
             }
 
             Write-Verbose -Message 'Determing the MountID of the Instant Mount'
-            if ($MountID -eq ($_.MountName.split(' ')[-1]) -or $MountID -eq -1)
+            if ($MountID -eq ($_.virtualMachine.name.split(' ')[-1]) -or $MountID -eq -1)
             {
                 try 
                 {
