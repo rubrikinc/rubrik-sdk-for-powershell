@@ -32,7 +32,7 @@ function Remove-RubrikSLA
         TestRubrikConnection
 
         Write-Verbose -Message 'Gather the Rubrik SLA Domain ID value'
-        $slaid = Get-RubrikSLA -SLA $SLA
+        [array]$slaid = Get-RubrikSLA -SLA $SLA
 
         Write-Verbose -Message 'Determining if SLA Domain has zero VMs'
         if ($slaid.numVms -ne 0) 
@@ -40,8 +40,9 @@ function Remove-RubrikSLA
             throw "SLA Domain has $($slaid.numVms) VMs protected - remove them and retry."
         }
         
+        foreach ($_ in $slaid.id) {
         Write-Verbose -Message 'Build the URI'
-        $uri = 'https://'+$Server+'/slaDomain/'+$($slaid.id)
+        $uri = 'https://'+$Server+'/slaDomain/'+$_
 
         Write-Verbose -Message 'Submit the request'
         try 
@@ -51,6 +52,7 @@ function Remove-RubrikSLA
         catch 
         {
             throw $_
+        }
         }
 
     } # End of process
