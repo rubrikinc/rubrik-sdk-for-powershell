@@ -51,7 +51,7 @@ function Get-RubrikVM
             }
             if (!$result) 
             {
-                throw 'No VM found with that name.'
+                throw "No VM found with the name $VM"
             }
             Write-Verbose -Message "Retrieved ID: $result"
             return $result
