@@ -32,7 +32,10 @@ function Protect-RubrikVM
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Removes the SLA Domain assignment',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [Switch]$DoNotProtect,
-        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Inherits the SLA Domain assignment from a parent object',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [Switch]$Inherit,
+        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:rubrikConnection.server
     )
@@ -46,9 +49,17 @@ function Protect-RubrikVM
         {
             if ($DoNotProtect)
             {
+                Write-Verbose -Message 'Setting VM protection level to DO NOT PROTECT (block inheritence)'
                 $slaMatch = @{}
                 $slaMatch.id = 'UNPROTECTED'
                 $slaMatch.name = 'Unprotected'
+            }
+            elseif ($Inherit)
+            {
+                Write-Verbose -Message 'Setting VM protection level to INHERIT (from parent object)'
+                $slaMatch = @{}
+                $slaMatch.id = 'INHERIT'
+                $slaMatch.name = 'Inherit'
             }
             else
             {
@@ -56,7 +67,7 @@ function Protect-RubrikVM
             }
             if ($slaMatch -eq $null)
             {
-                throw 'Use either -SLA or -DoNotProtect to change the protection status of the VM'
+                throw 'Use either SLA, DoNotProtect, or Inherit to change the protection status of the VM'
             }
         }
         catch
