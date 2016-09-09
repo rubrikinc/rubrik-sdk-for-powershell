@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.6.0'
+ModuleVersion = '1.0.7.0'
 
 # ID used to uniquely identify this module
 GUID = 'a4cb0e3e-b1fe-4da8-9c75-d445e5f96cfb'
