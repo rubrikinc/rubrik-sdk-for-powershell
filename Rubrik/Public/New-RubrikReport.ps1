@@ -1,11 +1,11 @@
 ﻿#Requires -Version 3
-function Get-RubrikTask
+function New-RubrikReport
 {
     <#  
             .SYNOPSIS
             Connects to Rubrik to retrieve either daily or weekly task results
             .DESCRIPTION
-            The Get-RubrikTask cmdlet is used to retrieve all of the tasks that have been run by a Rubrik cluster. Use either 'daily' or 'weekly' for ReportType to define the reporting scope.
+            The New-RubrikReport cmdlet is used to retrieve all of the tasks that have been run by a Rubrik cluster. Use either 'daily' or 'weekly' for ReportType to define the reporting scope.
             .NOTES
             Written by Chris Wahl for community usage
             Twitter: @ChrisWahl
@@ -13,10 +13,10 @@ function Get-RubrikTask
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
             .EXAMPLE
-            Get-RubrikTask -ReportType daily -ToCSV
+            New-RubrikReport -ReportType daily -ToCSV
             This will gather all of the daily tasks from Rubrik and store them into a CSV file in the user's MyDocuments folder
             .EXAMPLE
-            Get-RubrikTask -ReportType weekly
+            New-RubrikReport -ReportType weekly
             This will gather all of the daily tasks from Rubrik and display summary information on the console screen
     #>
 
@@ -41,9 +41,6 @@ function Get-RubrikTask
     Process {
 
         TestRubrikConnection
-
-        $warningpreference = 'Inquire'
-        Write-Warning 'This function is deprecated; please use New-RubrikReport.'
 
         Write-Verbose -Message 'Build the URI'
         $uri = 'https://'+$Server+'/report/backupJobs/detail'

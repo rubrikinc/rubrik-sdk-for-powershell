@@ -20,7 +20,7 @@ function Protect-RubrikVM
             This will remove the SLA Domain assigned to Server1, thus rendering it unprotected
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact='High')]
     Param(
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
         [Alias('Name')]
@@ -32,9 +32,12 @@ function Protect-RubrikVM
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Removes the SLA Domain assignment',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [Switch]$DoNotProtect,
-        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Inherits the SLA Domain assignment from a parent object',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikConnection.server
+        [Switch]$Inherit,
+        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
+        [ValidateNotNullorEmpty()]
+        [String]$Server = $global:rubrikConnection.server
     )
 
     Process {
@@ -46,19 +49,25 @@ function Protect-RubrikVM
         {
             if ($DoNotProtect)
             {
-                $SLAmatch = @{}
-                $SLAmatch.id = 'UNPROTECTED'
-                $SLAmatch.name = 'Unprotected'
+                Write-Verbose -Message 'Setting VM protection level to DO NOT PROTECT (block inheritence)'
+                $slaMatch = @{}
+                $slaMatch.id = 'UNPROTECTED'
+                $slaMatch.name = 'Unprotected'
+            }
+            elseif ($Inherit)
+            {
+                Write-Verbose -Message 'Setting VM protection level to INHERIT (from parent object)'
+                $slaMatch = @{}
+                $slaMatch.id = 'INHERIT'
+                $slaMatch.name = 'Inherit'
             }
             else
             {
-                $SLAmatch = Get-RubrikSLA -SLA $SLA
+                $slaMatch = Get-RubrikSLA -SLA $SLA
             }
-            if ($SLAmatch -eq $null)
+            if ($slaMatch -eq $null)
             {
-                Write-Warning -Message "No matching SLA Domain found with the name `"$SLA`"`nThe following SLA Domains were found:"
-                Get-RubrikSLA | Select-Object -Property Name
-                break
+                throw 'Use either SLA, DoNotProtect, or Inherit to change the protection status of the VM'
             }
         }
         catch
@@ -72,18 +81,20 @@ function Protect-RubrikVM
         Write-Verbose -Message 'Updating SLA Domain for the requested VM'
         $uri = 'https://'+$Server+'/vm/'+$vmid
         $body = @{
-            slaDomainId = $SLAmatch.id
+            slaDomainId = $slaMatch.id
         }
 
         try
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Body (ConvertTo-Json -InputObject $body) -Method Patch
+            if ($PSCmdlet.ShouldProcess($VM,"Assign $SLA SLA Domain")){
+            $r = Invoke-WebRequest -Uri $uri -Headers $header -Body (ConvertTo-Json -InputObject $body) -Method Patch
             if ($r.StatusCode -ne '200')
             {
                 throw $r.StatusDescription
             }
             $result = (ConvertFrom-Json -InputObject $r.Content)
             Write-Verbose -Message "$($result.name) set to $($result.slaDomain.name) SLA Domain"
+            }
         }
         catch
         {

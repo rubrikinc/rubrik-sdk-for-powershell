@@ -89,8 +89,8 @@ function Connect-Rubrik
             'Authorization' = "Basic $auth"
         }
 
-        Write-Verbose -Message 'Storing all connection details into $global:RubrikConnection'
-        $global:RubrikConnection = @{
+        Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
+        $global:rubrikConnection = @{
             userId = (ConvertFrom-Json -InputObject $r.Content).userId
             token  = $token
             server = $Server
@@ -99,12 +99,7 @@ function Connect-Rubrik
         }
         
         Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'
-        [array]$global:RubrikConnections += $RubrikConnection
-
-        Write-Verbose -Message 'Storing all connection details into legacy global variables'
-        $global:RubrikServer = $Server
-        $global:RubrikToken = $token
-        $global:RubrikHead = $head
+        [array]$global:rubrikConnections += $rubrikConnection
 
     } # End of process
 } # End of function

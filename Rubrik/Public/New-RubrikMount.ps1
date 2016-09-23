@@ -15,15 +15,18 @@ function New-RubrikMount
             .EXAMPLE
             New-RubrikMount -VM 'Server1' -Date '05/04/2015 08:00'
             This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older than 08:00 AM on May 4th, 2015
+            .EXAMPLE
+            New-RubrikMount -VM 'Server1'
+            This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older the current time (now)
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'Low')]
     Param(
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine to mount',ValueFromPipeline = $true)]
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
-        [Parameter(Mandatory = $true,Position = 1,HelpMessage = 'Backup date in MM/DD/YYYY HH:MM format',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Backup date in your local clock format',ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [String]$Date,
         [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
@@ -35,6 +38,12 @@ function New-RubrikMount
 
         TestRubrikConnection
 
+        if (!$Date) 
+        {
+            Write-Verbose -Message 'No date entered. Taking current time.'
+            $Date = Get-Date
+        }
+
         Write-Verbose -Message 'Query Rubrik for the list of protected VM details'
         $hostid = (Get-RubrikVM -VM $VM).hostId
 
@@ -42,16 +51,15 @@ function New-RubrikMount
         $snapshots = Get-RubrikSnapshot -VM $VM
 
         Write-Verbose -Message 'Comparing backup dates to user date'
-        $Date = $Date -as [datetime]
-        if (!$Date) 
-        {
-            throw 'You did not enter a valid date and time'
-        }
+        $Date = ConvertFromLocalDate -Date $Date
+        
+        Write-Verbose -Message 'Finding snapshots that match the date value'
         foreach ($_ in $snapshots)
         {
-            if ((Get-Date -Date $_.date) -lt (Get-Date $Date) -eq $true)
+            if (([datetime]$_.date) -le ($Date) -eq $true)
             {
                 $vmsnapid = $_.id
+                Write-Verbose -Message "Found matching snapshot with ID $vmsnapid"
                 break
             }
         }
@@ -62,17 +70,20 @@ function New-RubrikMount
         $body = @{
             snapshotId     = $vmsnapid
             hostId         = $hostid
-            disableNetwork = 'true'
+            disableNetwork = $true
         }
 
         try 
         {
-            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
-            if ($r.StatusCode -ne '200') 
+            if ($PSCmdlet.ShouldProcess($VM,'Creating a new Live Mount'))
             {
-                throw 'Did not receive successful status code from Rubrik for Live Mount request'
+                $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
+                if ($r.StatusCode -ne '200') 
+                {
+                    throw 'Did not receive successful status code from Rubrik for Live Mount request'
+                }
+                return ($($r.Content)).Replace('"','')
             }
-            Write-Verbose -Message "Success: $($r.Content)"
         }
         catch 
         {

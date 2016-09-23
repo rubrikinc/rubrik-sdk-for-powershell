@@ -23,7 +23,15 @@ function Get-RubrikVM
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
         [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
+        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Filter used to find ACTIVE, RELIC, or ALL virtual machines. Defaults to ALL.')]
+        [Alias('archiveStatusFilterOpt')]
+        [ValidateNotNullorEmpty()]
+        [ValidateSet('ALL', 'ACTIVE', 'RELIC')]
+        [String]$Filter = 'ALL',
+        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'The SLA Domain in Rubrik',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [String]$SLA = '*',
+        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
         [ValidateNotNullorEmpty()]
         [String]$Server = $global:RubrikConnection.server
     )
@@ -33,16 +41,17 @@ function Get-RubrikVM
         TestRubrikConnection
 
         Write-Verbose -Message 'Gathering VM ID value from Rubrik'
-        $uri = 'https://'+$Server+'/vm?showArchived=false'
+        $uri = 'https://'+$Server+"/vm?archiveStatusFilterOpt=$Filter"
+
         try 
         {
             $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Get
             $result = (ConvertFrom-Json -InputObject $r.Content) | Where-Object -FilterScript {
-                $_.name -like $VM
+                $_.name -like $VM -and $_.effectiveSlaDomainName -like $SLA
             }
             if (!$result) 
             {
-                throw 'No VM found with that name.'
+                throw "No VM found with the name $VM"
             }
             Write-Verbose -Message "Retrieved ID: $result"
             return $result

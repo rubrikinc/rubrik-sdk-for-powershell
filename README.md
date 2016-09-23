@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/52cv3jshak2w7624?svg=true)](https://ci.appveyor.com/project/chriswahl/powershell-module)
+[![Build status](https://ci.appveyor.com/api/projects/status/52cv3jshak2w7624?svg=true)](https://ci.appveyor.com/project/chriswahl/powershell-module)   [![Documentation Status](http://readthedocs.org/projects/powershell-module/badge/?version=latest)](http://powershell-module.readthedocs.io/en/latest/?badge=latest)
 
 Community PowerShell Module for Rubrik
 ============================
@@ -77,7 +77,14 @@ A future release will offer API versioning and may also include formal support.
 
 # Contribution
 
-Create a fork of the project into your own repository. Make all your necessary changes and create a pull request with a description on what was added or removed and details explaining the changes in lines of code. If approved, project owners will merge it.
+Everyone is welcome to contribute to this project. Here are the steps involved:
+
+1. Create a fork of the project into your own repository.
+2. From your fork, create a new feature branch (other than master) that expresses your feature or enhancement.
+3. Make all your necessary changes in your feature branch.
+4. Create a pull request with a description on what was added or removed and details explaining the changes in lines of code.
+
+If approved, project owners will merge it.
 
 # Licensing
 
