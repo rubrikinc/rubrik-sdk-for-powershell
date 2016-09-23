@@ -41,9 +41,40 @@ function Protect-RubrikTag
 
     Process {
 
-        TestRubrikConnection
+# Static variables. Using MyDocuments var for those with redirected folders
+$Basepath = [Environment]::GetFolderPath('MyDocuments') + '\WindowsPowerShell\Modules'
+$UserPath = $Basepath+'\Rubrik\RubrikUser.txt'
+$PasswordPath = $Basepath+'\Rubrik\RubrikPassword.txt'
+       
+        Write-Verbose -Message 'Connecting to Rubrik API'
+        try 
+        {
+            TestRubrikConnection
+        }
+        catch 
+        {
+            Write-Verbose "No connetion to Rubrik API, trying stored credentials"
+            $user = Get-Content $UserPath 
+            $pass = Get-Content $PasswordPath | ConvertTo-SecureString
+            Connect-Rubrik -Server $Server -Username $user -Password $pass 
+        }
 
-        ConnectTovCenter -vCenter $vCenter
+        Write-Verbose -Message 'Connecting to vCenter'
+        try
+        {
+            if ($global:DefaultVIServers.Count -eq 0)
+            {
+                ConnectTovCenter -vCenter $vCenter
+            }
+            else 
+            {
+                Write-Verbose -Message "Already connected to $global:DefaultVIservers.Name"
+            }
+        }
+        catch 
+        {
+            throw $_
+        }
 
         Write-Verbose -Message 'Gathering the SLA Domain id'
         try 
@@ -81,10 +112,10 @@ function Protect-RubrikTag
         [array]$vmbulk = @()
         foreach ($_ in $vmlist)
         {
+            Write-Verbose $_.name -Verbose
             $vmbulk += 'VirtualMachine:::' + $VCuuid + '-' + $($_.moref.value)
-            Write-Verbose -Message "Found $($vmbulk.count) records" -Verbose
         }
-
+        Write-Verbose -Message "Found $($vmbulk.count) records" -Verbose
         Write-Verbose -Message 'Creating the array to mass assign the list of IDs'
         $body = @{
             managedIds = $vmbulk
