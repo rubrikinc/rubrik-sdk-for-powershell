@@ -57,7 +57,7 @@ function New-RubrikMount
         }
 
         Write-Verbose -Message 'Creating a Live Mount'
-        $uri = 'https://'+$global:Server+'/job/type/mount'
+        $uri = 'https://'+$Server+'/job/type/mount'
 
         $body = @{
             snapshotId     = $vmsnapid
