@@ -46,7 +46,12 @@ function Get-RubrikVM
         try 
         {
             $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Get
-            $result = (ConvertFrom-Json -InputObject $r.Content) | Where-Object -FilterScript {
+            Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
+            [void][System.Reflection.Assembly]::LoadWithPartialName('System.Web.Extensions')
+            $resultraw = ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
+                        MaxJsonLength = 67108864
+            }).DeserializeObject($r.Content))
+            $result = $resultraw | Where-Object -FilterScript {
                 $_.name -like $VM -and $_.effectiveSlaDomainName -like $SLA
             }
             if (!$result) 
