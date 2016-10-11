@@ -67,7 +67,7 @@ function New-RubrikReport
         }).DeserializeObject($r.Content))
 
         Write-Verbose -Message 'Counting unique status values'
-        [array]$StatusCount = $result.status |
+        [array]$StatusCount = $resultraw.status |
         Group-Object |
         Select-Object -Property Count, Name
         foreach ($_ in $StatusCount) 
@@ -87,7 +87,7 @@ function New-RubrikReport
         else 
         {
             Write-Verbose -Message 'No status filter found'
-            $result = $restulraw
+            $result = $resultraw
         }
 
         Write-Verbose -Message 'Validating that results were found'
