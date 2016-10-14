@@ -20,7 +20,7 @@ function Protect-RubrikVM
             This will remove the SLA Domain assigned to Server1, thus rendering it unprotected
     #>
 
-    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact='High')]
+    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
         [Alias('Name')]
@@ -76,29 +76,34 @@ function Protect-RubrikVM
         }
 
         Write-Verbose -Message 'Gathering VM ID value from Rubrik'
-        $vmid = (Get-RubrikVM -VM $VM).id
+        [array]$vmids = (Get-RubrikVM -VM $VM).id
 
-        Write-Verbose -Message 'Updating SLA Domain for the requested VM'
-        $uri = 'https://'+$Server+'/vm/'+$vmid
-        $body = @{
-            slaDomainId = $slaMatch.id
-        }
-
-        try
+        Write-Verbose -Message 'Walking through all IDs found'
+        foreach ($vmid in $vmids) 
         {
-            if ($PSCmdlet.ShouldProcess($VM,"Assign $SLA SLA Domain")){
-            $r = Invoke-WebRequest -Uri $uri -Headers $header -Body (ConvertTo-Json -InputObject $body) -Method Patch
-            if ($r.StatusCode -ne '200')
+            Write-Verbose -Message "Updating SLA Domain for ID $vmid"
+            $uri = 'https://'+$Server+'/vm/'+$vmid
+            $body = @{
+                slaDomainId = $slaMatch.id
+            }
+
+            try
             {
-                throw $r.StatusDescription
+                if ($PSCmdlet.ShouldProcess($vmid,"Assign $SLA SLA Domain"))
+                {
+                    $r = Invoke-WebRequest -Uri $uri -Headers $header -Body (ConvertTo-Json -InputObject $body) -Method Patch
+                    if ($r.StatusCode -ne '200')
+                    {
+                        throw $r.StatusDescription
+                    }
+                    $result = (ConvertFrom-Json -InputObject $r.Content)
+                    Write-Verbose -Message "$($result.name) set to $($result.slaDomain.name) SLA Domain"
+                }
             }
-            $result = (ConvertFrom-Json -InputObject $r.Content)
-            Write-Verbose -Message "$($result.name) set to $($result.slaDomain.name) SLA Domain"
+            catch
+            {
+                throw $_
             }
-        }
-        catch
-        {
-            throw $_
         }
 
 
