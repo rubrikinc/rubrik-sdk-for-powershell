@@ -19,10 +19,10 @@ function Get-RubrikVM
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
         [Alias('Name')]
         [ValidateNotNullorEmpty()]
-        [String]$VM,
+        [String]$VM = '*',
         [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Filter used to find ACTIVE, RELIC, or ALL virtual machines. Defaults to ALL.')]
         [Alias('archiveStatusFilterOpt')]
         [ValidateNotNullorEmpty()]
