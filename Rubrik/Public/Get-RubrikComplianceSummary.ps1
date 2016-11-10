@@ -15,8 +15,7 @@ function Get-RubrikComplianceSummary
     Process {
 
         TestRubrikConnection
-
-        Write-Verbose -Message 'Submit sla compliance state for all/one vms'
+        
         $uri = 'https://'+$Server+'/report/slaCompliance/summary'
 
 
