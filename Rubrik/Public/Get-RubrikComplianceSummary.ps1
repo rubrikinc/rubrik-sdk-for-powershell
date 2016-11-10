@@ -2,7 +2,19 @@
 function Get-RubrikComplianceSummary
 {
     <#  
-
+            .SYNOPSIS
+            Connects to Rubrik and retrieves protection complance summary
+            .DESCRIPTION
+            The Get-RubrikComplianceSummary return a short sumamry showing protected,unproteced and non compliant VMs
+            .NOTES
+            .LINK
+            https://github.com/rubrikinc/PowerShell-Module
+            .EXAMPLE
+            Get-RubrikComplianceSummary
+            Will return a sumamry like this:
+            compliantVmsCount nonCompliantVmsCount unprotectedVmsCount
+            ----------------- -------------------- -------------------
+              235                    0                 226
     #>
 
     [CmdletBinding()]
