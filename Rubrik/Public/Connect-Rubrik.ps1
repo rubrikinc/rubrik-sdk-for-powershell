@@ -111,7 +111,11 @@ function Connect-Rubrik
           Write-Verbose -Message "Successfully acquired token: $($content.token)"
           Write-Host -Object "You are now connected to the Rubrik API version $versionnum"
           break
-        }        
+        }
+        else
+        {
+        throw "Unable to connect to the cluster"
+        }
       }
       catch 
       {
