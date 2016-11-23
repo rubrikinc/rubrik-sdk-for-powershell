@@ -92,9 +92,9 @@ function Get-RubrikVM
     # Set the method
     $method = $resources.$api.Method
 
-    # Old v0 stuff
     try 
     {
+      Write-Verbose -Message "Submitting a request to $uri"
       $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method
       
       Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
@@ -105,7 +105,7 @@ function Get-RubrikVM
       
       # The v0 API doesn't have queries
       # This will manually filter the results if the user has provided inputs
-      if ($api -eq 0) 
+      if ($api -eq 'v0') 
       {
         # Optionally Finds a specific VM if the user has provided the $VM param
         if ($VM) 
@@ -122,9 +122,6 @@ function Get-RubrikVM
             $_.effectiveSlaDomainName -like $SLA
           }
         }
-      
-        # Return results from the v0 API
-        return $result
       }
       # Future APIs support SLA queries, but requires the SLA ID value
       # We'll just filter them locally to avoid another API call

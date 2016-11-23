@@ -109,7 +109,6 @@ function Connect-Rubrik
         if ($r.StatusCode -eq $version.SuccessCode -and $content.token -ne $null)
         {
           Write-Verbose -Message "Successfully acquired token: $($content.token)"
-          Write-Host -Object "You are now connected to the Rubrik API version $versionnum"
           break
         }
         else
@@ -146,6 +145,8 @@ function Connect-Rubrik
         
     Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'
     [array]$global:RubrikConnections += $rubrikConnection
+    
+    return $global:rubrikConnection
 
   } # End of process
 } # End of function
