@@ -10,18 +10,18 @@ function GetRubrikAPIData($endpoint)
         Body        = @('username', 'password')
         Method      = 'Post'
         SuccessCode = '200'
-        SuccessBody = @("userId","token")
+        SuccessMock = '{"userId": "11111111-2222-3333-4444-555555555555","token": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"}'
         FailureCode = '422'
-        Failurebody = @('errorType', 'message', 'cause')
+        FailureMock = '{"errorType":"user_error","message":"Incorrect Username/Password","cause":null}'
       }
       0 = @{
         URI         = '/login'
         Body        = @('userId', 'password')
         Method      = 'Post'
         SuccessCode = '200'
-        SuccessBody = @("status","description","userId","token")
+        SuccessMock = '{"status":"Success","description":"Successfully logged in","userId":"11111111-2222-3333-4444-555555555555","token":"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"}'
         FailureCode = '200'
-        FailureBody = @('status', 'description')
+        FailureMock = '{"status": "Failure","description": "Incorrect Username/Password"}'
       }
     }
   } # End of API
