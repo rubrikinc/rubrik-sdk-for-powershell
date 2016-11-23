@@ -1,36 +1,102 @@
 ﻿# Import
-Import-Module "$PSScriptRoot\..\Rubrik" -Force
+Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
 
-# Rubrik Test Cluster IP
-if ((Test-Path -Path $PSScriptRoot'\TestVars\test-ip.txt') -eq $true) 
-{
-    [string]$global:cluster = Get-Content -Path $PSScriptRoot'\TestVars\test-ip.txt'
-}
-else 
-{
-    [string]$global:cluster = $env:RUBRIKCLUSTER
-}
+# Pester
 
-# Rubrik Test Cluster Credentials
-if ((Test-Path -Path $PSScriptRoot'\TestVars\test-cred.xml') -eq $true) 
-{
-    $global:cred = Import-Clixml -Path $PSScriptRoot'\TestVars\test-cred.xml'
-}
-else 
-{
-    $global:cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($env:RUBRIKUSER, (ConvertTo-SecureString -AsPlainText -Force -String $env:RUBRIKPASS))
-}
+Describe -Name 'Connect-Rubrik Tests' -Fixture {
+  # Setup
+  $resources = GetRubrikAPIData -endpoint ('Login')
 
-# Pester Tests
-
-Describe -Name 'Connectivity Tests' -Fixture {
-    It -name 'Attempting to ping the Rubrik Test Cluster' -test {
-        $ping = Test-Connection -ComputerName $global:cluster.Split(':')[0] -Quiet
-        $ping | Should be $true
+  It -name 'Valid credentials to the v1 API' -test {
+    # Arrange    
+    Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
+      return @{
+        Content    = $resources[1].SuccessMock
+        StatusCode = $resources[1].SuccessCode
+      }
+    } `
+    -ParameterFilter {
+      $uri -match $resources[1].URI
     }
-
-    It -name 'Connects to a Rubrik Test Cluster and gathers a token' -test {
-        Connect-Rubrik -Server $global:cluster -Credential $global:cred
-        $($global:RubrikConnection.token) | Should Be $true
+    
+    # Act
+    Connect-Rubrik -Server '1.2.3.4' -Username test -Password ('test' | ConvertTo-SecureString -AsPlainText -Force)
+    $rubrikConnection.token | Should Be (ConvertFrom-Json -InputObject $resources[1].SuccessMock).token
+    
+    # Assert
+    Assert-VerifiableMocks
+  }
+  
+  It -name 'Invalid credentials to the v1 API' -test {
+    # Arrange    
+    Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
+      return @{
+        Content    = $resources[1].FailureMock
+        StatusCode = $resources[1].FailureCode
+      }
+    } `
+    -ParameterFilter {
+      $uri -match $resources[1].URI
     }
+    
+    # Act
+    try 
+    {
+      Connect-Rubrik -Server '1.2.3.4' -Username test -Password ('test' | ConvertTo-SecureString -AsPlainText -Force)
+    }
+    catch 
+    {
+      $_ | Should Be 'Unable to connect with any available API version'
+    }
+    
+    # Assert
+    Assert-VerifiableMocks
+  }
+  
+  
+  It -name 'Valid credentials to the v0 API' -test {
+    # Arrange    
+    Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
+      return @{
+        Content    = $resources[0].SuccessMock
+        StatusCode = $resources[0].SuccessCode
+      }
+    } `
+    -ParameterFilter {
+      $uri -notmatch $resources[1].URI
+    }
+    
+    # Act
+    Connect-Rubrik -Server '1.2.3.4' -Username test -Password ('test' | ConvertTo-SecureString -AsPlainText -Force)
+    $rubrikConnection.token | Should Be (ConvertFrom-Json -InputObject $resources[0].SuccessMock).token
+    
+    # Assert
+    Assert-VerifiableMocks
+  }
+  
+  It -name 'Invalid credentials to the v0 API' -test {
+    # Arrange    
+    Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
+      return @{
+        Content    = $resources[0].FailureMock
+        StatusCode = $resources[0].FailureCode
+      }
+    } `
+    -ParameterFilter {
+      $uri -notmatch $resources[1].URI
+    }
+    
+    # Act
+    try 
+    {
+      Connect-Rubrik -Server '1.2.3.4' -Username test -Password ('test' | ConvertTo-SecureString -AsPlainText -Force)
+    }
+    catch 
+    {
+      $_ | Should Be 'Unable to connect with any available API version'
+    }
+    
+    # Assert
+    Assert-VerifiableMocks
+  }
 }
