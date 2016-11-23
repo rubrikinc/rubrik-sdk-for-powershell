@@ -1,11 +1,14 @@
 ﻿# Import
 Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
+. "$(Split-Path -Parent -Path $PSScriptRoot)\Rubrik\Private\Get-RubrikAPIData.ps1"
+$resources = GetRubrikAPIData -endpoint ('Login')
 
 # Pester
 
 Describe -Name 'Connect-Rubrik Tests' -Fixture {
-  # Setup
-  $resources = GetRubrikAPIData -endpoint ('Login')
+  It -name 'Ensure that Resources are loaded' -test {
+    $resources | Should Not BeNullOrEmpty
+  }
 
   It -name 'Valid credentials to the v1 API' -test {
     # Arrange    
@@ -17,7 +20,7 @@ Describe -Name 'Connect-Rubrik Tests' -Fixture {
     } `
     -ParameterFilter {
       $uri -match $resources[1].URI
-    }
+    } -ModuleName Rubrik
     
     # Act
     Connect-Rubrik -Server '1.2.3.4' -Username test -Password ('test' | ConvertTo-SecureString -AsPlainText -Force)
@@ -37,7 +40,7 @@ Describe -Name 'Connect-Rubrik Tests' -Fixture {
     } `
     -ParameterFilter {
       $uri -match $resources[1].URI
-    }
+    } -ModuleName Rubrik
     
     # Act
     try 
@@ -64,7 +67,7 @@ Describe -Name 'Connect-Rubrik Tests' -Fixture {
     } `
     -ParameterFilter {
       $uri -notmatch $resources[1].URI
-    }
+    } -ModuleName Rubrik
     
     # Act
     Connect-Rubrik -Server '1.2.3.4' -Username test -Password ('test' | ConvertTo-SecureString -AsPlainText -Force)
@@ -84,7 +87,7 @@ Describe -Name 'Connect-Rubrik Tests' -Fixture {
     } `
     -ParameterFilter {
       $uri -notmatch $resources[1].URI
-    }
+    } -ModuleName Rubrik
     
     # Act
     try 
