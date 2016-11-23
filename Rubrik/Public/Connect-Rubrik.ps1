@@ -80,7 +80,7 @@ function Connect-Rubrik
     Write-Verbose -Message 'Determining which version of the API to use'
     $resources = GetRubrikAPIData -endpoint ('Login')
 
-    foreach ($versionnum in $resources.Keys)
+    foreach ($versionnum in $resources.Keys | Sort-Object -Descending)
     {
       # Load the version specific data from the resources array
       $version = $resources[$versionnum]
@@ -114,18 +114,19 @@ function Connect-Rubrik
         }
         else
         {
-        throw "Unable to connect to the cluster"
+          throw "Unable to connect to the cluster"
         }
       }
       catch 
       {
-        # Final throw for when all versions of the API have failed
-        if ($versionnum -eq 0) 
+      }
+    }
+    
+      # Final throw for when all versions of the API have failed
+        if ($content.token -eq $null) 
         {
           throw 'Unable to connect with any available API version'
         }
-      }
-    }
 
     Write-Verbose -Message 'Validate token and build Base64 Auth string'
     $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($($content.token)+':'))

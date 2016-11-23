@@ -10,36 +10,36 @@ Describe -Name 'Connect-Rubrik Tests' -Fixture {
     $resources | Should Not BeNullOrEmpty
   }
 
-  It -name 'Valid credentials to the v1 API' -test {
+  It -name '[v1] Valid credentials' -test {
     # Arrange    
     Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
       return @{
-        Content    = $resources[1].SuccessMock
-        StatusCode = $resources[1].SuccessCode
+        Content    = $resources.v1.SuccessMock
+        StatusCode = $resources.v1.SuccessCode
       }
     } `
     -ParameterFilter {
-      $uri -match $resources[1].URI
+      $uri -match $resource.v1.URI
     } -ModuleName Rubrik
     
     # Act
     Connect-Rubrik -Server '1.2.3.4' -Username test -Password ('test' | ConvertTo-SecureString -AsPlainText -Force)
-    $rubrikConnection.token | Should Be (ConvertFrom-Json -InputObject $resources[1].SuccessMock).token
+    $rubrikConnection.token | Should Be (ConvertFrom-Json -InputObject $resources.v1.SuccessMock).token
     
     # Assert
     Assert-VerifiableMocks
   }
   
-  It -name 'Invalid credentials to the v1 API' -test {
+  It -name '[v1] Invalid credentials' -test {
     # Arrange    
     Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
       return @{
-        Content    = $resources[1].FailureMock
-        StatusCode = $resources[1].FailureCode
+        Content    = $resources.v1.FailureMock
+        StatusCode = $resources.v1.FailureCode
       }
     } `
     -ParameterFilter {
-      $uri -match $resources[1].URI
+      $uri -match $resources.v1.URI
     } -ModuleName Rubrik
     
     # Act
@@ -57,36 +57,36 @@ Describe -Name 'Connect-Rubrik Tests' -Fixture {
   }
   
   
-  It -name 'Valid credentials to the v0 API' -test {
+  It -name '[v0] Valid credentials' -test {
     # Arrange    
     Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
       return @{
-        Content    = $resources[0].SuccessMock
-        StatusCode = $resources[0].SuccessCode
+        Content    = $resources.v0.SuccessMock
+        StatusCode = $resources.v0.SuccessCode
       }
     } `
     -ParameterFilter {
-      $uri -notmatch $resources[1].URI
+      $uri -notmatch $resources.v1.URI
     } -ModuleName Rubrik
     
     # Act
     Connect-Rubrik -Server '1.2.3.4' -Username test -Password ('test' | ConvertTo-SecureString -AsPlainText -Force)
-    $rubrikConnection.token | Should Be (ConvertFrom-Json -InputObject $resources[0].SuccessMock).token
+    $rubrikConnection.token | Should Be (ConvertFrom-Json -InputObject $resources.v0.SuccessMock).token
     
     # Assert
     Assert-VerifiableMocks
   }
   
-  It -name 'Invalid credentials to the v0 API' -test {
+  It -name '[v0] Invalid credentials' -test {
     # Arrange    
     Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
       return @{
-        Content    = $resources[0].FailureMock
-        StatusCode = $resources[0].FailureCode
+        Content    = $resources.v0.FailureMock
+        StatusCode = $resources.v0.FailureCode
       }
     } `
     -ParameterFilter {
-      $uri -notmatch $resources[1].URI
+      $uri -notmatch $resources.v1.URI
     } -ModuleName Rubrik
     
     # Act
