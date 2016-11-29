@@ -27,22 +27,26 @@ function New-RubrikMount
     [Alias('Name')]
     [ValidateNotNullorEmpty()]
     [String]$VM,
+    # An optional name for the Live Mount
+    # By default, will use the original VM name plus a date and instance number
+    [Parameter(Position = 1)]
+    [String]$MountName,
     # Date of the snapshot to use for the Live Mount
     # Format should match MM/DD/YY HH:MM
     # If no value is specified, will retrieve the last known shapshot
-    [Parameter(Position = 1,ValueFromPipeline = $true)]
+    [Parameter(Position = 2,ValueFromPipeline = $true)]
     [ValidateNotNullorEmpty()]
     [String]$Date,
     # Select the power state of the Live Mount
     # Defaults to $false (powered off)
-    [Parameter(Position = 2)]
+    [Parameter(Position = 3)]
     [Switch]$PowerOn,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 3)]
+    [Parameter(Position = 4)]
     [ValidateNotNullorEmpty()]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 4)]
+    [Parameter(Position = 5)]
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
@@ -94,6 +98,11 @@ function New-RubrikMount
       $resources.$api.body.disableNetwork = $true
       $resources.$api.body.removeNetworkDevices = $false
       $resources.$api.body.powerOn = [boolean]::Parse($PowerOn)
+    }
+    
+    if ($MountName) 
+    {
+      $body.Add($resources.$api.body.vmName,$MountName)
     }
         
     # Set the method
