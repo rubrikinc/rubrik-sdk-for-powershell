@@ -105,37 +105,26 @@ function Get-RubrikVM
       
       # The v0 API doesn't have queries
       # This will manually filter the results if the user has provided inputs
-      if ($api -eq 'v0') 
-      {
-        # Optionally Finds a specific VM if the user has provided the $VM param
-        if ($VM) 
-        {
-          $result = $result | Where-Object -FilterScript {
-            $_.name -like $VM
-          }
-        }      
-      
-        # Optionally finds a specific SLA if the user has provided the $SLA param
-        if ($SLA) 
-        {
-          $result = $result | Where-Object -FilterScript {
-            $_.effectiveSlaDomainName -like $SLA
-          }
-        }
-      }
-      # Future APIs support SLA queries, but requires the SLA ID value
-      # We'll just filter them locally to avoid another API call
-      else 
+      if ($api -ne 'v0') 
       {
         # Strip out the overhead
         $result = $result.data
-    
-        # Optionally finds a specific SLA if the user has provided the $SLA param
-        if ($SLA) 
-        {
-          $result = $result | Where-Object -FilterScript {
-            $_.effectiveSlaDomainName -like $SLA
-          }
+      }
+      
+      # Optionally Finds a specific VM if the user has provided the $VM param
+      # Using "eq" to avoid partial string matches
+      if ($VM) 
+      {
+        $result = $result | Where-Object -FilterScript {
+          $_.name -eq $VM
+        }
+      }      
+      
+      # Optionally finds a specific SLA if the user has provided the $SLA param
+      if ($SLA) 
+      {
+        $result = $result | Where-Object -FilterScript {
+          $_.effectiveSlaDomainName -like $SLA
         }
       }
       

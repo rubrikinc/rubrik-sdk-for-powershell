@@ -33,12 +33,16 @@ function New-RubrikMount
     [Parameter(Position = 1,ValueFromPipeline = $true)]
     [ValidateNotNullorEmpty()]
     [String]$Date,
-    # Rubrik server IP or FQDN
+    # Select the power state of the Live Mount
+    # Defaults to $false (powered off)
     [Parameter(Position = 2)]
+    [Switch]$PowerOn,
+    # Rubrik server IP or FQDN
+    [Parameter(Position = 3)]
     [ValidateNotNullorEmpty()]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 3)]
+    [Parameter(Position = 4)]
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
@@ -61,12 +65,16 @@ function New-RubrikMount
 
     Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
     $snapshots = Get-RubrikSnapshot -VM $VM
+    if ($api -ne 'v0')
+    {
+      $snapshots = $snapshots.data
+    }
 
     Write-Verbose -Message 'Comparing backup dates to user date'
     $Date = ConvertFromLocalDate -Date $Date
         
     Write-Verbose -Message 'Finding snapshots that match the date value'
-    foreach ($_ in $snapshots.data)
+    foreach ($_ in $snapshots)
     {
       if (([datetime]$_.date) -le ($Date) -eq $true)
       {
@@ -85,12 +93,11 @@ function New-RubrikMount
       $resources.$api.body.hostId = $hostid
       $resources.$api.body.disableNetwork = $true
       $resources.$api.body.removeNetworkDevices = $false
-      $resources.$api.body.powerOn = $false
+      $resources.$api.body.powerOn = [boolean]::Parse($PowerOn)
     }
         
     # Set the method
     $method = $resources.$api.Method
-
 
     try 
     {
@@ -99,7 +106,7 @@ function New-RubrikMount
         $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
         if ($r.StatusCode -ne $resources.$api.SuccessCode) 
         {
-          Write-Warning 'Did not receive successful status code from Rubrik for Live Mount request'
+          Write-Warning -Message 'Did not receive successful status code from Rubrik for Live Mount request'
           throw $_
         }
         ConvertFrom-Json -InputObject $r.Content
