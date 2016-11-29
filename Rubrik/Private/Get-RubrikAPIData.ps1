@@ -4,7 +4,7 @@
 function GetRubrikAPIData($endpoint)
 {
   $api = @{
-    Login = @{
+    Login               = @{
       v1 = @{
         URI         = '/api/v1/login'
         Body        = @('username', 'password')
@@ -24,7 +24,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = '{"status": "Failure","description": "Incorrect Username/Password"}'
       }
     }
-    VMwareVM = @{
+    VMwareVMGet         = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm'
         Body        = ''
@@ -34,8 +34,7 @@ function GetRubrikAPIData($endpoint)
         }
         Method      = 'Get'
         SuccessCode = '200'
-        SuccessMock = 
-@"
+        SuccessMock = @"
 {
 	"hasMore": true,
 	"data": [{
@@ -62,7 +61,7 @@ function GetRubrikAPIData($endpoint)
 		"isRelic": true
 	}]
 }
-"@                
+"@
         FailureCode = ''
         FailureMock = ''
       }
@@ -78,6 +77,58 @@ function GetRubrikAPIData($endpoint)
         SuccessMock = '{"id": "11111111-2222-3333-4444-555555555555-vm-666666","configuredSlaDomainName": "Test"}'
         FailureCode = '500'
         FailureMock = '{"status": "Failure"}'
+      }
+    }
+    VMwareVMSnapshotGet = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/{id}/snapshot'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = '404'
+        FailureMock = '{"message":"Could not find VirtualMachine with id=11111111-2222-3333-4444-555555555555-vm-6666"}'
+      }
+      v0 = @{
+        URI         = '/snapshot?vm={id}'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
+    VMwareVMMountPost   = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/mount'
+        Body        = @{
+          snapshotId           = 'snapshotId'
+          hostId               = 'hostId'
+          vmName               = 'vmName'
+          disableNetwork       = 'disableNetwork'
+          removeNetworkDevices = 'removeNetworkDevices'
+          powerOn              = 'powerOn'
+        }
+        Method      = 'Post'
+        SuccessCode = '202'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/job/type/mount'
+        Body        = @{
+          snapshotId           = 'snapshotId'
+          hostId               = 'hostId'
+          vmName               = 'vmName'
+          disableNetwork       = 'disableNetwork'
+          removeNetworkDevices = 'removeNetworkDevices'
+          powerOn              = 'powerOn'
+        }
+        Method      = 'Post'
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
       }
     }
   } # End of API

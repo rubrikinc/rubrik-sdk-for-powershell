@@ -51,7 +51,7 @@ function Get-RubrikVM
     TestRubrikConnection
         
     Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('VMwareVM')
+    $resources = GetRubrikAPIData -endpoint ('VMwareVMGet')
     
     Write-Verbose -Message 'Building the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
