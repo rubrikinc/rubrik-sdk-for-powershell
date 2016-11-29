@@ -22,16 +22,25 @@ function New-RubrikMount
 
     [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'Low')]
     Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine to mount',ValueFromPipeline = $true)]
-        [Alias('Name')]
-        [ValidateNotNullorEmpty()]
-        [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Backup date in your local clock format',ValueFromPipeline = $true)]
-        [ValidateNotNullorEmpty()]
-        [String]$Date,
-        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
-        [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikConnection.server
+    # Name of the virtual machine
+    [Parameter(Mandatory = $true,Position = 0,ValueFromPipeline = $true)]
+    [Alias('Name')]
+    [ValidateNotNullorEmpty()]
+    [String]$VM,
+    # Date of the snapshot to use for the Live Mount
+    # Format should match MM/DD/YY HH:MM
+    # If no value is specified, will retrieve the last known shapshot
+    [Parameter(Position = 1,ValueFromPipeline = $true)]
+    [ValidateNotNullorEmpty()]
+    [String]$Date,
+    # Rubrik server IP or FQDN
+    [Parameter(Position = 2)]
+    [ValidateNotNullorEmpty()]
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [Parameter(Position = 3)]
+    [ValidateNotNullorEmpty()]
+    [String]$api = $global:RubrikConnection.api
     )
 
     Process {
