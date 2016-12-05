@@ -4,17 +4,22 @@ function New-RubrikMount
   <#  
       .SYNOPSIS
       Create a new Live Mount from a protected VM
+      
       .DESCRIPTION
       The New-RubrikMount cmdlet is used to create a Live Mount (clone) of a protected VM and run it in an existing vSphere environment.
+      
       .NOTES
       Written by Chris Wahl for community usage
       Twitter: @ChrisWahl
       GitHub: chriswahl
+      
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
+      
       .EXAMPLE
       New-RubrikMount -VM 'Server1' -Date '05/04/2015 08:00'
       This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older than 08:00 AM on May 4th, 2015
+      
       .EXAMPLE
       New-RubrikMount -VM 'Server1'
       This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older the current time (now)

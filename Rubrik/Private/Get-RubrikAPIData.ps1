@@ -84,7 +84,26 @@ function GetRubrikAPIData($endpoint)
         URI         = '/api/v1/vmware/vm/{id}/snapshot'
         Method      = 'Get'
         SuccessCode = '200'
-        SuccessMock = ''
+        SuccessMock = @"
+{
+  "hasMore": false,
+  "data": [
+    {
+      "date": "2016-12-05T17:10:17Z",
+      "virtualMachineName": "TEST1",
+      "id": "11111111-2222-3333-4444-555555555555",
+      "consistencyLevel": "CRASH_CONSISTENT"
+    },
+    {
+      "date": "2016-12-05T13:06:35Z",
+      "virtualMachineName": "TEST1",
+      "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+      "consistencyLevel": "CRASH_CONSISTENT"
+    }
+  ],
+  "total": 2
+}
+"@        
         FailureCode = '404'
         FailureMock = '{"message":"Could not find VirtualMachine with id=11111111-2222-3333-4444-555555555555-vm-6666"}'
       }
@@ -110,7 +129,19 @@ function GetRubrikAPIData($endpoint)
         }
         Method      = 'Post'
         SuccessCode = '202'
-        SuccessMock = ''
+        SuccessMock = @"
+{
+  "requestId": "MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+  "status": "QUEUED",
+  "links": [
+    {
+      "href": "https://RVM15BS026030/api/v1/vmware/vm/request/MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+      "rel": "self",
+      "method": "GET"
+    }
+  ]
+}
+"@
         FailureCode = ''
         FailureMock = ''
       }

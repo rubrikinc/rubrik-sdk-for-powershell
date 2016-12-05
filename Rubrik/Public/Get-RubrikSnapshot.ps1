@@ -4,14 +4,18 @@ function Get-RubrikSnapshot
   <#  
       .SYNOPSIS
       Retrieves all of the snapshots (backups) for a given virtual machine
+      
       .DESCRIPTION
       The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for a protected virtual machine
+      
       .NOTES
       Written by Chris Wahl for community usage
       Twitter: @ChrisWahl
       GitHub: chriswahl
+      
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
+      
       .EXAMPLE
       Get-RubrikSnapshot -VM 'Server1'
       This will return an array of details for each snapshot (backup) for Server1
@@ -63,6 +67,10 @@ function Get-RubrikSnapshot
         if (!$result) 
         {
           throw 'No snapshots found for VM.'
+        }
+        elseif ($api -ne 'v0')
+        {
+          $result.data
         }
         else 
         {
