@@ -74,10 +74,6 @@ function New-RubrikMount
 
     Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
     $snapshots = Get-RubrikSnapshot -VM $VM
-    if ($api -ne 'v0')
-    {
-      $snapshots = $snapshots.data
-    }
 
     Write-Verbose -Message 'Comparing backup dates to user date'
     $Date = ConvertFromLocalDate -Date $Date
