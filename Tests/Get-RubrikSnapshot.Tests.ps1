@@ -23,6 +23,13 @@ Describe -Name 'Get-RubrikSnapshot Tests' -Fixture {
     } `
     -ModuleName Rubrik
     
+    Mock -CommandName Get-RubrikVM -Verifiable -MockWith {
+      return @{
+        id = '11111111-2222-3333-4444-555555555555-vm-666666'
+      }
+    } `
+    -ModuleName Rubrik
+    
     # Act
     (Get-RubrikSnapshot -VM 'TEST1' -api $api).Count | Should BeExactly 2
     (Get-RubrikSnapshot -VM 'TEST1' -api $api).virtualMachineName | Should BeExactly 'TEST1'

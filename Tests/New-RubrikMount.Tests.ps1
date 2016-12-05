@@ -24,7 +24,7 @@ Describe -Name 'New-RubrikMount Tests' -Fixture {
     -ModuleName Rubrik
     
     # Act
-    (New-RubrikMount -VM 'TEST1').requestId | Should BeExactly 'MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0'
+    (New-RubrikMount -VM 'TEST1' -api $api).requestId | Should BeExactly 'MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0'
     
     # Assert
     Assert-VerifiableMocks
