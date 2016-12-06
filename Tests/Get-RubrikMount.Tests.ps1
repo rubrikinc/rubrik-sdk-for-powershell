@@ -1,10 +1,10 @@
 ﻿# Import
 Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
 . "$(Split-Path -Parent -Path $PSScriptRoot)\Rubrik\Private\Get-RubrikAPIData.ps1"
-$resources = GetRubrikAPIData -endpoint ('VMwareVMGet')
+$resources = GetRubrikAPIData -endpoint ('VMwareVMMountGet')
 
 # Begin Pester tests
-Describe -Name 'Get-RubrikVM Tests' -Fixture {
+Describe -Name 'Get-RubrikMount Tests' -Fixture {
   # Test to make sure that resources were loaded
   It -name 'Ensure that Resources are loaded' -test {
     $resources | Should Not BeNullOrEmpty
@@ -16,25 +16,8 @@ Describe -Name 'Get-RubrikVM Tests' -Fixture {
     if ($resources.$api.SuccessMock) 
     {
       Context -Name "set to API $api" -Fixture {
-        It -name 'All VMs' -test {
-          # Arrange
-          Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
-            return @{
-              Content    = $resources.$api.SuccessMock
-              StatusCode = $resources.$api.SuccessCode
-            }
-          } `
-          -ModuleName Rubrik
-    
-          # Act
-          (Get-RubrikVM -api $api).count | Should BeExactly 2    
-    
-          # Assert
-          Assert-VerifiableMocks
-        }
-  
-        It -name 'Name and Filter Queries' -test {
-          # Arrange
+        It -name 'Count VMware Mounts' -test {
+          # Arrange    
           Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
             return @{
               Content    = $resources.$api.SuccessMock
@@ -47,25 +30,21 @@ Describe -Name 'Get-RubrikVM Tests' -Fixture {
           Switch ($api) {
             'v0' 
             {
-              $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock)[0].name
-              $value2 = 'RELIC'
-              $value3 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock)[0].effectiveSlaDomainName
+              $value1 = 2
             }
             default 
             {
-              $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).data[0].name
-              $value2 = 'RELIC'
-              $value3 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).data[0].effectiveSlaDomainName
+              $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).total
             }
           }
-          (Get-RubrikVM -VM $value1 -Filter $value2 -SLA $value3 -api $api).name | Should BeExactly $value1
+          (Get-RubrikMount -api $api).Count | Should BeExactly $value1
     
           # Assert
           Assert-VerifiableMocks
         }
-  
-        It -name 'Specific SLA' -test {
-          # Arrange
+        
+        It -name 'Supply VM Name, Retrieve VM ID' -test {
+          # Arrange    
           Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
             return @{
               Content    = $resources.$api.SuccessMock
@@ -78,15 +57,47 @@ Describe -Name 'Get-RubrikVM Tests' -Fixture {
           Switch ($api) {
             'v0' 
             {
-              $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock)[1].name
+              $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock)[0].sourceVirtualMachineName
+              $value2 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock)[0].sourceVirtualMachineId
             }
             default 
             {
-              $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).data[1].name
+              $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).data[0].sourceVirtualMachineName
+              $value2 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).data[0].sourceVirtualMachineId
             }
           }
-          
-          (Get-RubrikVM -SLA Unprotected -api $api).name | Should BeExactly $value1
+          (Get-RubrikMount -VM $value1 -api $api).sourceVirtualMachineId | Should BeExactly $value2
+    
+          # Assert
+          Assert-VerifiableMocks
+        }
+        
+        
+        It -name 'Supply Mount ID, Retrieve VM Name' -test {
+          # Arrange    
+          Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
+            return @{
+              Content    = $resources.$api.SuccessMock
+              StatusCode = $resources.$api.SuccessCode
+            }
+          } `
+          -ModuleName Rubrik
+    
+          # Act
+          Switch ($api) {
+            'v0' 
+            {
+              $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock)[1].Id
+              $value2 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock)[1].sourceVirtualMachineName
+            }
+            default 
+            {
+              $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).data[1].Id
+              $value2 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).data[1].sourceVirtualMachineName
+            }
+          }
+
+          (Get-RubrikMount -MountID $value1 -api $api).sourceVirtualMachineName | Should BeExactly $value2
     
           # Assert
           Assert-VerifiableMocks
@@ -95,3 +106,5 @@ Describe -Name 'Get-RubrikVM Tests' -Fixture {
     }
   }
 }
+
+ 

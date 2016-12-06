@@ -74,7 +74,31 @@ function GetRubrikAPIData($endpoint)
         }
         Method      = 'Get'
         SuccessCode = '200'
-        SuccessMock = '{"id": "11111111-2222-3333-4444-555555555555-vm-666666","configuredSlaDomainName": "Test"}'
+        SuccessMock = @"
+[{
+		"id": "11111111-2222-3333-4444-555555555555-vm-666666",
+		"name": "TEST1",
+		"configuredSlaDomainId": "d8a8430c-40de-4cb7-b834-bd0e7de40ed1",
+		"configuredSlaDomainName": "Gold",
+		"effectiveSlaDomainId": "d8a8430c-40de-4cb7-b834-bd0e7de40ed1",
+		"effectiveSlaDomainName": "Gold",
+		"isArchived": false,
+		"inheritedSlaName": "Gold",
+		"slaId": "d8a8430c-40de-4cb7-b834-bd0e7de40ed1",
+		"isRelic": false
+	}, {
+		"id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffff",
+		"name": "TEST2",
+		"configuredSlaDomainId": "INHERIT",
+		"configuredSlaDomainName": "Inherit",
+		"effectiveSlaDomainId": "UNPROTECTED",
+		"effectiveSlaDomainName": "Unprotected",
+		"isArchived": true,
+		"inheritedSlaName": "Unprotected",
+		"slaId": "INHERIT",
+		"isRelic": true
+	}]
+"@
         FailureCode = '500'
         FailureMock = '{"status": "Failure"}'
       }
@@ -111,7 +135,22 @@ function GetRubrikAPIData($endpoint)
         URI         = '/snapshot?vm={id}'
         Method      = 'Get'
         SuccessCode = '200'
-        SuccessMock = ''
+        SuccessMock = @"
+[
+    {
+      "date": "2016-12-05T17:10:17Z",
+      "virtualMachineName": "TEST1",
+      "id": "11111111-2222-3333-4444-555555555555",
+      "consistencyLevel": "CRASH_CONSISTENT"
+    },
+    {
+      "date": "2016-12-05T13:06:35Z",
+      "virtualMachineName": "TEST1",
+      "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+      "consistencyLevel": "CRASH_CONSISTENT"
+    }
+]
+"@
         FailureCode = ''
         FailureMock = ''
       }
@@ -135,7 +174,7 @@ function GetRubrikAPIData($endpoint)
   "status": "QUEUED",
   "links": [
     {
-      "href": "https://RVM15BS026030/api/v1/vmware/vm/request/MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+      "href": "https://RVM1111111111/api/v1/vmware/vm/request/MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
       "rel": "self",
       "method": "GET"
     }
@@ -157,11 +196,138 @@ function GetRubrikAPIData($endpoint)
         }
         Method      = 'Post'
         SuccessCode = '200'
+        SuccessMock = @"
+{
+  "requestId": "MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+  "status": "QUEUED",
+  "links": [
+    {
+      "href": "https://RVM1111111111/api/v1/vmware/vm/request/MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+      "rel": "self",
+      "method": "GET"
+    }
+  ]
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
+    VMwareVMMountGet    = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/mount'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+  "hasMore": false,
+  "data": [
+    {
+      "id": "11111111-2222-3333-4444-555555555555",
+      "snapshotDate": "2016-12-01T23:26:49+0000",
+      "sourceVirtualMachineId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-fff",
+      "sourceVirtualMachineName": "TEST1",
+      "isReady": 1
+    },
+    {
+      "id": "aaaaaaaa-2222-3333-4444-555555555555",
+      "snapshotDate": "2016-12-01T23:26:49+0000",
+      "sourceVirtualMachineId": "11111111-bbbb-cccc-dddd-eeeeeeeeeeee-vm-fff",
+      "sourceVirtualMachineName": "TEST2",
+      "isReady": 1
+    }
+  ],
+  "total": 2
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/mount'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+[
+  {
+      "id": "11111111-2222-3333-4444-555555555555",
+      "snapshotDate": "2016-12-01T23:26:49+0000",
+      "sourceVirtualMachineId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-fff",
+      "sourceVirtualMachineName": "TEST1",
+      "isReady": 1
+    },
+    {
+      "id": "aaaaaaaa-2222-3333-4444-555555555555",
+      "snapshotDate": "2016-12-01T23:26:49+0000",
+      "sourceVirtualMachineId": "11111111-bbbb-cccc-dddd-eeeeeeeeeeee-vm-fff",
+      "sourceVirtualMachineName": "TEST2",
+      "isReady": 1
+    }
+]
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
+    VMwareVMMountDelete = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/mount'
+        Params      = @{
+          MountID = 'mount_id'
+          Force   = 'force'
+        }
+        Method      = 'Delete'
+        SuccessCode = '202'
+        SuccessMock = @"
+{
+  "requestId": "UNMOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+  "status": "QUEUED",
+  "links": [
+    {
+      "href": "https://RVM1111111111/api/v1/vmware/vm/request/UNMOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+      "rel": "self",
+      "method": "GET"
+    }
+  ]
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/job/type/unmount'
+        Params      = @{
+          MountID = 'mountId'
+          Force   = 'force'
+        }        
+        Method      = 'Post'
+        SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
       }
     }
+    ClusterVersionGet = @{
+      v1 = @{
+        URI         = '/api/v1/cluster/{id}/version'
+        Params      = @{
+          id = 'id'
+        }
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = '"9.9.9~DA9-99"'
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/system/version'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = '"1.1.1~DA1-11"'
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }    
   } # End of API
   
   return $api.$endpoint

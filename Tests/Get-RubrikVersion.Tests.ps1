@@ -1,10 +1,10 @@
 ﻿# Import
 Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
 . "$(Split-Path -Parent -Path $PSScriptRoot)\Rubrik\Private\Get-RubrikAPIData.ps1"
-$resources = GetRubrikAPIData -endpoint ('VMwareVMMountPost')
+$resources = GetRubrikAPIData -endpoint ('ClusterVersionGet')
 
 # Begin Pester tests
-Describe -Name 'Get-RubrikSnapshot Tests' -Fixture {
+Describe -Name 'Get-RubrikVersion Tests' -Fixture {
   # Test to make sure that resources were loaded
   It -name 'Ensure that Resources are loaded' -test {
     $resources | Should Not BeNullOrEmpty
@@ -16,7 +16,7 @@ Describe -Name 'Get-RubrikSnapshot Tests' -Fixture {
     if ($resources.$api.SuccessMock) 
     {
       Context -Name "set to API $api" -Fixture {
-        It -name 'Create Live Mount' -test {
+        It -name 'Get Version' -test {
           # Arrange    
           Mock -CommandName Invoke-WebRequest -Verifiable -MockWith {
             return @{
@@ -27,8 +27,7 @@ Describe -Name 'Get-RubrikSnapshot Tests' -Fixture {
           -ModuleName Rubrik
     
           # Act
-          $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).requestId
-          (New-RubrikMount -VM 'Fake' -api $api).requestId | Should BeExactly $value1
+          Get-RubrikVersion -api $api | Should BeExactly (ConvertFrom-Json -InputObject $resources.$api.SuccessMock)
     
           # Assert
           Assert-VerifiableMocks
