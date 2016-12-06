@@ -384,6 +384,46 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
+    SLADomainAssignPost = @{
+      v1 = @{
+        URI         = '/api/v1/sla_domain/{id}/assign_sync'
+        Body      = @{
+          managedIds = 'managedIds'
+        }
+        Method      = 'Post'
+        SuccessCode = '204'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/slaDomainAssign/{id}'
+        Body        = @{
+          managedIds = 'managedIds'
+        }
+        Method      = 'Patch'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+    "statuses":  [
+                     {
+                         "id":  "VirtualMachine:::11111111-2222-3333-4444-555555555555-vm-66",
+                         "status":  "@{status=Success}"
+                     },
+                     {
+                         "id":  "VirtualMachine:::11111111-2222-3333-4444-555555555555-vm-77",
+                         "status":  "@{status=Success}"
+                     }
+                 ],
+    "jobs":  [
+                 "CALCULATE_EFFECTIVE_SLA_aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee_ffffffff-gggg-hhhh-iiii-jjjjjjjjjjjj:::0"
+             ]
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
   } # End of API
   
   return $api.$endpoint
