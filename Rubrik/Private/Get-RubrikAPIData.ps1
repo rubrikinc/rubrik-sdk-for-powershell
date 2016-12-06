@@ -327,7 +327,103 @@ function GetRubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       }
-    }    
+    }
+    SLADomainGet = @{
+      v1 = @{
+        URI         = '/api/v1/sla_domain'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+  "hasMore": false,
+  "data": [
+    {
+      "id": "11111111-2222-3333-4444-555555555555",
+      "name": "TEST1",
+      "numDbs": 11,
+      "numFilesets": 11,
+      "numLinuxHosts": 11,
+      "numVms": 11
+    },
+    {
+      "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+      "name": "TEST2",
+      "numDbs": 22,
+      "numFilesets": 22,
+      "numLinuxHosts": 22,
+      "numVms": 22
+    }
+  ],
+  "total": 2
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/slaDomain'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+[
+  {
+    "id": "11111111-2222-3333-4444-555555555555",
+    "name": "TEST1",
+    "numVms": 11,
+    "numSnapshots": 11
+  },
+  {
+    "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+    "name": "TEST2",
+    "numVms": 22,
+    "numSnapshots": 22
+  }
+]
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
+    SLADomainAssignPost = @{
+      v1 = @{
+        URI         = '/api/v1/sla_domain/{id}/assign_sync'
+        Body      = @{
+          managedIds = 'managedIds'
+        }
+        Method      = 'Post'
+        SuccessCode = '204'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/slaDomainAssign/{id}'
+        Body        = @{
+          managedIds = 'managedIds'
+        }
+        Method      = 'Patch'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+    "statuses":  [
+                     {
+                         "id":  "VirtualMachine:::11111111-2222-3333-4444-555555555555-vm-66",
+                         "status":  "@{status=Success}"
+                     },
+                     {
+                         "id":  "VirtualMachine:::11111111-2222-3333-4444-555555555555-vm-77",
+                         "status":  "@{status=Success}"
+                     }
+                 ],
+    "jobs":  [
+                 "CALCULATE_EFFECTIVE_SLA_aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee_ffffffff-gggg-hhhh-iiii-jjjjjjjjjjjj:::0"
+             ]
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
   } # End of API
   
   return $api.$endpoint
