@@ -162,6 +162,45 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
+  VMwareVMMountGet = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/mount'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+  "hasMore": false,
+  "data": [
+    {
+      "id": "11111111-2222-3333-4444-555555555555",
+      "snapshotDate": "2016-12-01T23:26:49+0000",
+      "sourceVirtualMachineId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-fff",
+      "sourceVirtualMachineName": "TEST1",
+      "isReady": 1
+    },
+    {
+      "id": "aaaaaaaa-2222-3333-4444-555555555555",
+      "snapshotDate": "2016-12-01T23:26:49+0000",
+      "sourceVirtualMachineId": "11111111-bbbb-cccc-dddd-eeeeeeeeeeee-vm-fff",
+      "sourceVirtualMachineName": "TEST2",
+      "isReady": 1
+    }
+  ],
+  "total": 2
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/mount'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
   } # End of API
   
   return $api.$endpoint
