@@ -24,7 +24,7 @@ function Get-RubrikSnapshot
   [CmdletBinding()]
   Param(
     # Name of the virtual machine    
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipeline = $true)]
+    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('Name')]
     [ValidateNotNullorEmpty()]
     [String]$VM,

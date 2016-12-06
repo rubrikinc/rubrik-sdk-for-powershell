@@ -32,12 +32,13 @@ function Get-RubrikMount
   [CmdletBinding()]
   Param(
     # Virtual Machine to inspect for mounts
-    [Parameter(Position = 0,ValueFromPipeline = $true)]
+    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('Name')]
     [ValidateNotNullorEmpty()]
     [String]$VM,
     # The Rubrik ID value of the mount
-    [Parameter(Position = 1,ValueFromPipeline = $true)]
+    [Parameter(Position = 1,ValueFromPipelineByPropertyName = $true)]
+    [Alias('id')]
     [ValidateNotNullorEmpty()]
     [String]$MountID,
     # Rubrik server IP or FQDN

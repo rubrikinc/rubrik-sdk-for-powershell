@@ -327,7 +327,63 @@ function GetRubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       }
-    }    
+    }
+    SLADomainGet = @{
+      v1 = @{
+        URI         = '/api/v1/sla_domain'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+  "hasMore": false,
+  "data": [
+    {
+      "id": "11111111-2222-3333-4444-555555555555",
+      "name": "TEST1",
+      "numDbs": 11,
+      "numFilesets": 11,
+      "numLinuxHosts": 11,
+      "numVms": 11
+    },
+    {
+      "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+      "name": "TEST2",
+      "numDbs": 22,
+      "numFilesets": 22,
+      "numLinuxHosts": 22,
+      "numVms": 22
+    }
+  ],
+  "total": 2
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/slaDomain'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+[
+  {
+    "id": "11111111-2222-3333-4444-555555555555",
+    "name": "TEST1",
+    "numVms": 11,
+    "numSnapshots": 11
+  },
+  {
+    "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+    "name": "TEST2",
+    "numVms": 22,
+    "numSnapshots": 22
+  }
+]
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
   } # End of API
   
   return $api.$endpoint
