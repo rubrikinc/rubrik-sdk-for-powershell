@@ -88,7 +88,7 @@ function Protect-RubrikVM
         $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
         if ($r.StatusCode -ne $resources.$api.SuccessCode) 
         {
-          Write-Warning -Message 'Did not receive successful status code from Rubrik for Live Mount request'
+          Write-Warning -Message 'Did not receive successful status code from Rubrik'
           throw $_
         }
         $response = ConvertFrom-Json -InputObject $r.Content
