@@ -70,11 +70,11 @@ function Get-RubrikSnapshot
         }
         elseif ($api -ne 'v0')
         {
-          $result.data
+          return $result.data
         }
         else 
         {
-          $result
+          return $result
         }
       }
       catch 

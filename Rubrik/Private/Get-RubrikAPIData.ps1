@@ -74,7 +74,31 @@ function GetRubrikAPIData($endpoint)
         }
         Method      = 'Get'
         SuccessCode = '200'
-        SuccessMock = '{"id": "11111111-2222-3333-4444-555555555555-vm-666666","configuredSlaDomainName": "Test"}'
+        SuccessMock = @"
+[{
+		"id": "11111111-2222-3333-4444-555555555555-vm-666666",
+		"name": "TEST1",
+		"configuredSlaDomainId": "d8a8430c-40de-4cb7-b834-bd0e7de40ed1",
+		"configuredSlaDomainName": "Gold",
+		"effectiveSlaDomainId": "d8a8430c-40de-4cb7-b834-bd0e7de40ed1",
+		"effectiveSlaDomainName": "Gold",
+		"isArchived": false,
+		"inheritedSlaName": "Gold",
+		"slaId": "d8a8430c-40de-4cb7-b834-bd0e7de40ed1",
+		"isRelic": false
+	}, {
+		"id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffff",
+		"name": "TEST2",
+		"configuredSlaDomainId": "INHERIT",
+		"configuredSlaDomainName": "Inherit",
+		"effectiveSlaDomainId": "UNPROTECTED",
+		"effectiveSlaDomainName": "Unprotected",
+		"isArchived": true,
+		"inheritedSlaName": "Unprotected",
+		"slaId": "INHERIT",
+		"isRelic": true
+	}]
+"@
         FailureCode = '500'
         FailureMock = '{"status": "Failure"}'
       }
@@ -111,7 +135,22 @@ function GetRubrikAPIData($endpoint)
         URI         = '/snapshot?vm={id}'
         Method      = 'Get'
         SuccessCode = '200'
-        SuccessMock = ''
+        SuccessMock = @"
+[
+    {
+      "date": "2016-12-05T17:10:17Z",
+      "virtualMachineName": "TEST1",
+      "id": "11111111-2222-3333-4444-555555555555",
+      "consistencyLevel": "CRASH_CONSISTENT"
+    },
+    {
+      "date": "2016-12-05T13:06:35Z",
+      "virtualMachineName": "TEST1",
+      "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+      "consistencyLevel": "CRASH_CONSISTENT"
+    }
+]
+"@
         FailureCode = ''
         FailureMock = ''
       }
@@ -157,7 +196,19 @@ function GetRubrikAPIData($endpoint)
         }
         Method      = 'Post'
         SuccessCode = '200'
-        SuccessMock = ''
+        SuccessMock = @"
+{
+  "requestId": "MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+  "status": "QUEUED",
+  "links": [
+    {
+      "href": "https://RVM1111111111/api/v1/vmware/vm/request/MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+      "rel": "self",
+      "method": "GET"
+    }
+  ]
+}
+"@
         FailureCode = ''
         FailureMock = ''
       }
@@ -256,6 +307,27 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
+    ClusterVersionGet = @{
+      v1 = @{
+        URI         = '/api/v1/cluster/{id}/version'
+        Params      = @{
+          id = 'id'
+        }
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = '"9.9.9~DA9-99"'
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/system/version'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = '"1.1.1~DA1-11"'
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }    
   } # End of API
   
   return $api.$endpoint
