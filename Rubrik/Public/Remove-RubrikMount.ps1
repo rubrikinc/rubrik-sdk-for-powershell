@@ -3,7 +3,7 @@ function Remove-RubrikMount
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and removes one or more instant mounts
+      Connects to Rubrik and removes one or more live mounts
             
       .DESCRIPTION
       The Remove-RubrikMount cmdlet is used to request the deletion of one or more instant mounts
@@ -17,40 +17,28 @@ function Remove-RubrikMount
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Remove-RubrikMount -VM "Prod-SQL"
-      This will remove any Instant Mounts found for a VM matching the name "Prod-SQL" in vSphere.
+      Remove-RubrikMount -MountID 11111111-2222-3333-4444-555555555555
+      This will a live mount with the ID of 11111111-2222-3333-4444-555555555555
             
       .EXAMPLE
-      Remove-RubrikMount -VM "Prod-SQL" -MountID 4
-      This will remove Instant Mount ID #4 from the VM matching the name "Prod-SQL" in vSphere. The Mount ID is appended to the end of the Instant Mount name.
-            
-      .EXAMPLE
-      Remove-RubrikMount -RemoveAll
-      This will remove all Instant Mounts found for the Rubrik Cluster, and is handy as a way to "refresh" a test/dev environment.
+      Get-RubrikMount -VM Server1 | Remove-RubrikMount
+      This will find and remove any live mount belonging to Server1
   #>
 
   [CmdletBinding()]
   Param(
-    # Name of the virtual machine
-    [Parameter(Position = 0,ValueFromPipeline = $true)]
-    [ValidateNotNullorEmpty()]
-    [Alias('Name')]
-    [String]$VM,
-    # The specific mount instance to remove
-    # Used when multiple mounts have been created from the same snapshot
-    [Parameter(Position = 1)]
-    [Int]$Instance,
     # The Rubrik ID value of the mount
-    [Parameter(Position = 2)]
+    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [Alias('id')]
     [String]$MountID,
-    # Switch to remove all instant mounts
-    [Parameter(Position = 3)]
-    [Switch]$RemoveAll,
+    # Force unmount to deal with situations where host has been moved
+    [Parameter(Position = 1)]
+    [Switch]$Force,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 4)]
+    [Parameter(Position = 2)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 5)]
+    [Parameter(Position = 3)]
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
@@ -58,99 +46,54 @@ function Remove-RubrikMount
   Process {
 
     TestRubrikConnection
+    
+    Write-Verbose -Message 'Determining which version of the API to use'
+    $resources = GetRubrikAPIData -endpoint ('VMwareVMMountDelete')
+    
+    Write-Verbose -Message 'Building the URI'
+    $uri = 'https://'+$Server+$resources.$api.URI
 
-    Write-Verbose -Message 'Validating user input of MountID'
-    if ($MountID -lt 0) 
+    # Newer versions of the API place the parameters into the URI
+    if ($api -ne 'v0')
     {
-      throw 'Only positive integers are allowed for MountID'
-    }        
-    elseif ($MountID -eq '') 
-    {
-      $MountID = -1
-    }
-    Write-Verbose -Message "MountID set to $MountID"
-
-    Write-Verbose -Message 'Validating user input of VM selection'        
-    if ($VM)
-    {
-      try
+      $uri += '?'+$resources.$api.Params.MountID+'='+$MountID
+      
+      # Optionally allow the user to force the delete
+      if ($Force)
       {
-        Write-Verbose -Message "Gathering mount details for $VM"
-        [array]$mounts = Get-RubrikMount -VM $VM
-        if (!$mounts)
-        {
-          throw "No mounts found for $VM"
-        }
-        else 
-        {
-          Write-Verbose -Message "Mounts found for $VM"
-        }
+        $uri += '&'+$resources.$api.Params.Force+'=true'
       }
-      catch
-      {
-        throw $_
-      }
-    }
-    elseif ($RemoveAll)
-    {
-      try
-      {
-        Write-Verbose -Message 'Gathering mount details for all VMs'
-        [array]$mounts = Get-RubrikMount -VM *
-        if (!$mounts)
-        {
-          throw 'No mounts found for any VMs'
-        }
-        else 
-        {
-          Write-Verbose -Message 'Mounts found for all VMs'
-        }
-      }
-      catch
-      {
-        throw $_
-      }
-    }
-    elseif ($RubrikID)
-    {
-      Write-Verbose -Message "Using a specific Rubrik Mount ID of $RubrikID"
-      [array]$mounts = @{
-        MountName = 'Manual_ID_Entry'
-        RubrikID  = $RubrikID
-      }
-    }
-    else 
-    {
-      throw 'Use -VM to select a single VM, -RubrikID to specify a Rubrik Mount ID value, or -RemoveAll to remove mounts from all VMs'
     }
 
-    $uri = 'https://'+$Server+'/job/type/unmount'
-
-    foreach ($_ in $mounts)
+    # Need to supply a body with parameters for the v0 API
+    # For the newer APIs, the body will simply remain $null
+    if ($api -eq 'v0')        
     {
       $body = @{
-        mountId = $_.id
-        force   = 'false'
+        $resources.$api.Params.MountID = $MountID
+        $resources.$api.Params.Force = [boolean]::Parse($Force)        
       }
+    }
 
-      Write-Verbose -Message 'Determing the MountID of the Instant Mount'
-      if ($MountID -eq ($_.virtualMachine.name.split(' ')[-1]) -or $MountID -eq -1)
+    # Set the method
+    $method = $resources.$api.Method
+
+    try 
+    {
+      if ($PSCmdlet.ShouldProcess($MountID,'Removing a Live Mount'))
       {
-        try 
+        $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
+        if ($r.StatusCode -ne $resources.$api.SuccessCode) 
         {
-          Write-Verbose -Message "Removing mount with ID $($_.RubrikID)"
-          $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method POST -Body (ConvertTo-Json -InputObject $body)
-          if ($r.StatusCode -ne '200') 
-          {
-            throw 'Did not receive successful status code from Rubrik for Mount removal request'
-          }
-          Write-Verbose -Message "Success: $($r.Content)"
-        }
-        catch 
-        {
+          Write-Warning -Message 'Did not receive a successful status code from Rubrik'
           throw $_
         }
+        ConvertFrom-Json -InputObject $r.Content
       }
+    }
+    catch 
+    {
+      throw $_
     }
 
   } # End of process

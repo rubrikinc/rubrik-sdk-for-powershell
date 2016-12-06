@@ -135,7 +135,7 @@ function GetRubrikAPIData($endpoint)
   "status": "QUEUED",
   "links": [
     {
-      "href": "https://RVM15BS026030/api/v1/vmware/vm/request/MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+      "href": "https://RVM1111111111/api/v1/vmware/vm/request/MOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
       "rel": "self",
       "method": "GET"
     }
@@ -162,7 +162,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-  VMwareVMMountGet = @{
+    VMwareVMMountGet    = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/mount'
         Method      = 'Get'
@@ -195,6 +195,61 @@ function GetRubrikAPIData($endpoint)
       v0 = @{
         URI         = '/mount'
         Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+[
+  {
+      "id": "11111111-2222-3333-4444-555555555555",
+      "snapshotDate": "2016-12-01T23:26:49+0000",
+      "sourceVirtualMachineId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-fff",
+      "sourceVirtualMachineName": "TEST1",
+      "isReady": 1
+    },
+    {
+      "id": "aaaaaaaa-2222-3333-4444-555555555555",
+      "snapshotDate": "2016-12-01T23:26:49+0000",
+      "sourceVirtualMachineId": "11111111-bbbb-cccc-dddd-eeeeeeeeeeee-vm-fff",
+      "sourceVirtualMachineName": "TEST2",
+      "isReady": 1
+    }
+]
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
+    VMwareVMMountDelete = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/mount'
+        Params      = @{
+          MountID = 'mount_id'
+          Force   = 'force'
+        }
+        Method      = 'Delete'
+        SuccessCode = '202'
+        SuccessMock = @"
+{
+  "requestId": "UNMOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+  "status": "QUEUED",
+  "links": [
+    {
+      "href": "https://RVM1111111111/api/v1/vmware/vm/request/UNMOUNT_SNAPSHOT_11111111-2222-3333-4444-555555555555_66666666-7777-8888-9999-000000000000:::0",
+      "rel": "self",
+      "method": "GET"
+    }
+  ]
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/job/type/unmount'
+        Params      = @{
+          MountID = 'mountId'
+          Force   = 'force'
+        }        
+        Method      = 'Post'
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''

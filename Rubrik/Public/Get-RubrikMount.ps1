@@ -58,10 +58,13 @@ function Get-RubrikMount
     
     Write-Verbose -Message 'Building the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
+    
+    # Set the method
+    $method = $resources.$api.Method
         
     try 
     {
-      $r = Invoke-WebRequest -Uri $uri -Headers $header -Method Get
+      $r = Invoke-WebRequest -Uri $uri -Headers $header -Method $method
       $mounts = ConvertFrom-Json -InputObject $r.Content
       
       # Strip out the overhead for the newer API
