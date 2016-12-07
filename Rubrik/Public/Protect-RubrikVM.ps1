@@ -91,11 +91,11 @@ function Protect-RubrikVM
           Write-Warning -Message 'Did not receive successful status code from Rubrik'
           throw $_
         }
-        $response = ConvertFrom-Json -InputObject $r.Content
         
         # Sync jobs do not respond
-        if ($response)
+        if ($r.Content)
         {
+          $response = ConvertFrom-Json -InputObject $r.Content
           return $response.statuses
         }
       }
