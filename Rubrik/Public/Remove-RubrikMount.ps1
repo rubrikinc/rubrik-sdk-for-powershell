@@ -25,7 +25,7 @@ function Remove-RubrikMount
       This will find and remove any live mount belonging to Server1
   #>
 
-  [CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # The Rubrik ID value of the mount
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
