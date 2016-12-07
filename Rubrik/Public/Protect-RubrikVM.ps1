@@ -83,7 +83,7 @@ function Protect-RubrikVM
 
     try
     {
-      if ($PSCmdlet.ShouldProcess($VM,"Assign $SLA SLA Domain"))
+      if ($PSCmdlet.ShouldProcess($VM,"Assign SLA Domain $slaid"))
       {
         $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
         if ($r.StatusCode -ne $resources.$api.SuccessCode) 
