@@ -424,6 +424,24 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
+    SLADomainDelete = @{
+      v1 = @{
+        URI         = '/api/v1/sla_domain/{id}'
+        Method      = 'Delete'
+        SuccessCode = '204'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/slaDomain/{id}'
+        Method      = 'Delete'
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }    
   } # End of API
   
   return $api.$endpoint
