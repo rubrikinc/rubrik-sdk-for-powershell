@@ -74,6 +74,11 @@ function Get-RubrikVM
     {
       $params += $($resources.$api.Params.Search)+'='+$VM
     }
+    
+    # Param #3 = Limit
+    # Optional limitation on the number of results returned
+    # By default, the API only returns a small subset of the objects
+    $params += 'limit=9999'
 
     # Build the optional params string for the query
     # Start by using a "?" for the first param, and then use an "&" for any additional params
