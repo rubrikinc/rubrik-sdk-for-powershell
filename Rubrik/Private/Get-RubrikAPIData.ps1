@@ -441,7 +441,47 @@ function GetRubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       }
-    }    
+    }
+    JobGet = @{
+      v1 = @{
+        URI         = '/api/internal/job/{id}'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+    "id":  "CREATE_SNAPSHOT_123456-vm-123:::11",
+    "status":  "SUCCEEDED",
+    "result":  "abcdef",
+    "startTime":  "2016-12-27T06:17:54+0000",
+    "endTime":  "2016-12-27T06:25:42+0000",
+    "jobType":  "CREATE_SNAPSHOT",
+    "nodeId":  "cluster:::RVM151S001111",
+    "isDisabled":  false
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/job/instance/{id}'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+    "id":  "CREATE_SNAPSHOT_123456-vm-123:::11",
+    "status":  "SUCCEEDED",
+    "result":  "abcdef",
+    "startTime":  "2016-12-27T06:17:54+0000",
+    "endTime":  "2016-12-27T06:25:42+0000",
+    "jobType":  "CREATE_SNAPSHOT",
+    "nodeId":  "cluster:::RVM151S001111",
+    "isDisabled":  false
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }      
   } # End of API
   
   return $api.$endpoint
