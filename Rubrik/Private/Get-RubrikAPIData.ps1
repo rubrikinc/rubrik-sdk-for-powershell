@@ -4,7 +4,7 @@
 function GetRubrikAPIData($endpoint)
 {
   $api = @{
-    Login               = @{
+    Login                     = @{
       v1 = @{
         URI         = '/api/v1/login'
         Body        = @('username', 'password')
@@ -24,7 +24,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = '{"status": "Failure","description": "Incorrect Username/Password"}'
       }
     }
-    VMwareVMGet         = @{
+    VMwareVMGet               = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm'
         Body        = ''
@@ -103,7 +103,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = '{"status": "Failure"}'
       }
     }
-    VMwareVMSnapshotGet = @{
+    VMwareVMSnapshotGet       = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/{id}/snapshot'
         Method      = 'Get'
@@ -155,7 +155,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    VMwareVMMountPost   = @{
+    VMwareVMMountPost         = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/mount'
         Body        = @{
@@ -213,7 +213,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    VMwareVMMountGet    = @{
+    VMwareVMMountGet          = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/mount'
         Method      = 'Get'
@@ -269,7 +269,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    VMwareVMMountDelete = @{
+    VMwareVMMountDelete       = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/mount'
         Params      = @{
@@ -307,7 +307,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    ClusterVersionGet = @{
+    ClusterVersionGet         = @{
       v1 = @{
         URI         = '/api/v1/cluster/{id}/version'
         Params      = @{
@@ -328,7 +328,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    SLADomainGet = @{
+    SLADomainGet              = @{
       v1 = @{
         URI         = '/api/v1/sla_domain'
         Method      = 'Get'
@@ -384,10 +384,10 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    SLADomainAssignPost = @{
+    SLADomainAssignPost       = @{
       v1 = @{
         URI         = '/api/v1/sla_domain/{id}/assign_sync'
-        Body      = @{
+        Body        = @{
           managedIds = 'managedIds'
         }
         Method      = 'Post'
@@ -424,7 +424,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    SLADomainDelete = @{
+    SLADomainDelete           = @{
       v1 = @{
         URI         = '/api/v1/sla_domain/{id}'
         Method      = 'Delete'
@@ -442,7 +442,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    JobGet = @{
+    JobGet                    = @{
       v1 = @{
         URI         = '/api/internal/job/{id}'
         Method      = 'Get'
@@ -481,7 +481,47 @@ function GetRubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       }
-    }      
+    }
+    ReportBackupJobsDetailGet = @{
+      v1 = @{
+        URI         = '/api/v1/report/backup_jobs/detail?report_type={id}'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+   "hasMore":false,
+   "data":[
+      {
+         "objectType":"Mssql",
+         "slaDomainId":"123456",
+         "durationInMillis":120000,
+         "slaDomainName":"Gold",
+         "location":"TEST1\\MSSQLSERVER",
+         "endTime":"2016-12-26T17:41:51Z",
+         "failureDescription":"Rubrik backup service at \u0027TEST1\u0027 returned error: Failed to take database snapshot, Error = VSS_E_BAD_STATE(0x80042301)",
+         "scheduledTime":"2016-12-26T17:34:01Z",
+         "objectId":"abcdef",
+         "status":"Failed",
+         "objectName":"DB1",
+         "jobType":"Backup",
+         "jobId":"MSSQL_DB_BACKUP_123456:::11",
+         "startTime":"2016-12-26T17:39:51Z"
+      }
+   ]
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/report/backupJobs/detail'
+        Method      = 'Post'
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
   } # End of API
   
   return $api.$endpoint
