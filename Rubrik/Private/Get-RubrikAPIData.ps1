@@ -522,6 +522,36 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
+    VMwareVMBackupPost = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/{id}/backup'
+        Method      = 'Post'
+        SuccessCode = '202'
+        SuccessMock = @"
+{
+    "requestId":  "CREATE_VMWARE_SNAPSHOT_123456:::0",
+    "status":  "QUEUED",
+    "links":  [
+                  {
+                      "href":  "https://RVM15BS011111/api/v1/vmware/vm/request/CREATE_VMWARE_SNAPSHOT_123456:::0",
+                      "rel":  "self",
+                      "method":  "GET"
+                  }
+              ]
+}
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/job/type/backup'
+        Method      = 'Post'
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }    
   } # End of API
   
   return $api.$endpoint
