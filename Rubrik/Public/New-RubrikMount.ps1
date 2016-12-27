@@ -28,7 +28,7 @@ function New-RubrikMount
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'Low')]
   Param(
     # Name of the virtual machine
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipeline = $true)]
+    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('Name')]
     [ValidateNotNullorEmpty()]
     [String]$VM,
@@ -39,7 +39,7 @@ function New-RubrikMount
     # Date of the snapshot to use for the Live Mount
     # Format should match MM/DD/YY HH:MM
     # If no value is specified, will retrieve the last known shapshot
-    [Parameter(Position = 2,ValueFromPipeline = $true)]
+    [Parameter(Position = 2,ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullorEmpty()]
     [String]$Date,
     # Select the power state of the Live Mount
