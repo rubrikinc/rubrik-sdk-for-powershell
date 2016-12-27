@@ -552,6 +552,32 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }    
+    VMwareVMMountPowerPost = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/mount/{id}/power'
+        Method      = 'Post'
+        Params      = @{
+          vmId = $null
+          powerStatus = 'powerStatus'
+          }
+        SuccessCode = '204'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/vm/power'
+        Method      = 'Post'
+        Params      = @{
+          vmId = 'vmId'
+          powerStatus = 'powerState'
+          }        
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }       
   } # End of API
   
   return $api.$endpoint
