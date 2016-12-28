@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.7.0'
+ModuleVersion = '3.0.0.0'
 
 # ID used to uniquely identify this module
 GUID = 'a4cb0e3e-b1fe-4da8-9c75-d445e5f96cfb'
@@ -24,7 +24,7 @@ Author = 'Chris Wahl'
 CompanyName = 'Rubrik'
 
 # Copyright statement for this module
-Copyright = '(c) 2015-2016 Rubrik, Inc. All rights reserved.'
+Copyright = '(c) 2015-2017 Rubrik, Inc. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'This is a community project that provides a Windows PowerShell module for managing and monitoring Rubrik''s Converged Data Management platform.'
@@ -66,7 +66,7 @@ FormatsToProcess = @()
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','Move-RubrikMountVMDK','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Remove-RubrikSLA','Set-RubrikMount','Protect-RubrikVM','Sync-RubrikAttribute','Sync-RubrikTag','New-RubrikReport','Get-RubrikVM','Get-RubrikSnapshot','Protect-RubrikTag','Stop-RubrikVM','Start-RubrikVM','Get-RubrikJob','Get-RubrikTask','Set-RubrikVM')
+FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Remove-RubrikSLA','Protect-RubrikVM','Sync-RubrikTag','New-RubrikReport','Get-RubrikVM','Get-RubrikSnapshot','Protect-RubrikTag','Stop-RubrikVM','Start-RubrikVM','Get-RubrikJob','Set-RubrikVM')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()

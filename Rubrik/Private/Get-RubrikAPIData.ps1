@@ -578,6 +578,48 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }                
+    VMwareVMPatch = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/{id}'
+        Method      = 'Patch'
+        Params      = @{
+          snapshotConsistencyMandate = 'snapshotConsistencyMandate'
+          maxNestedVsphereSnapshots = 'maxNestedVsphereSnapshots'
+          isVmPaused = 'isVmPaused'
+          preBackupScript = @{
+            scriptPath = 'scriptPath'
+            timeoutMs = 'timeoutMs'
+            failureHandling = 'failureHandling'
+            }
+          postSnapScript = @{
+            scriptPath = 'scriptPath'
+            timeoutMs = 'timeoutMs'
+            failureHandling = 'failureHandling'
+            }
+          postBackupScript = @{
+            scriptPath = 'scriptPath'
+            timeoutMs = 'timeoutMs'
+            failureHandling = 'failureHandling'
+            }
+          }
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+      v0 = @{
+        URI         = '/vm/{id}'
+        Method      = 'Patch'
+        Params      = @{
+          snapshotConsistencyMandate = 'snapshotConsistencyMandate'
+          maxNestedVsphereSnapshots = 'maxNestedVsphereSnapshots'
+          }      
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }  
   } # End of API
   
   return $api.$endpoint
