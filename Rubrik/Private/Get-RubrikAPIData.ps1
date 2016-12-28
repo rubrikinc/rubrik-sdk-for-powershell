@@ -386,12 +386,12 @@ function GetRubrikAPIData($endpoint)
     }
     SLADomainAssignPost       = @{
       v1 = @{
-        URI         = '/api/v1/sla_domain/{id}/assign_sync'
+        URI         = '/api/v1/sla_domain/{id}/assign'
         Body        = @{
           managedIds = 'managedIds'
         }
         Method      = 'Post'
-        SuccessCode = '204'
+        SuccessCode = '202'
         SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
@@ -577,7 +577,7 @@ function GetRubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       }
-    }       
+    }                
   } # End of API
   
   return $api.$endpoint

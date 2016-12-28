@@ -17,6 +17,11 @@ function ConnectTovCenter($vCenter)
 
   Write-Verbose -Message 'Ignoring self-signed SSL certificates for vCenter Server (optional)'
   $null = Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -DisplayDeprecationWarnings:$false -Scope User -Confirm:$false
+  
+  if ($vCenter -eq $null) 
+  {
+    $vCenter = $global:DefaultVIServer.Name
+  }
 
   Write-Verbose -Message 'Connecting to vCenter'
   try 
