@@ -41,13 +41,14 @@ function Set-RubrikVM
     # If this value is exceeded, backups will be prevented due to seeing too many existing snapshots
     # Keeping snapshots open on a virtual machine can adversely affect performance and increase consolidation times
     # Choices range from 0 - 4 snapshots
-    [ValidateRange(0,4)] 
     [Parameter(Position = 2)]
+    [ValidateRange(0,4)] 
     [int]$MaxNestedSnapshots,
     # Set to $true to enable backups for a particular virtual machine
     # Set to $false to disable backups for a particular virtual machine
     [Parameter(Position = 3)]
-    [bool]$PauseBackups,
+    [ValidateSet('True','False')]    
+    [String]$PauseBackups,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -77,6 +78,7 @@ function Set-RubrikVM
 
     if ($SnapConsistency)
     {
+      Write-Verbose -Message 'Adding snapshotConsistencyMandate to Body'
       $body.Add($resources.$api.Params.snapshotConsistencyMandate,$SnapConsistency)
     }
     if ($MaxNestedSnapshots)
@@ -84,10 +86,10 @@ function Set-RubrikVM
       Write-Verbose -Message 'Adding maxNestedVsphereSnapshots to Body'
       $body.Add($resources.$api.Params.maxNestedVsphereSnapshots,$MaxNestedSnapshots)
     }    
-    if ($PauseBackups -ne $null)
+    if ($PauseBackups)
     {
       Write-Verbose -Message 'Adding isVmPaused to Body'
-      $body.Add($resources.$api.Params.isVmPaused,$PauseBackups)
+      $body.Add($resources.$api.Params.isVmPaused,[System.Convert]::ToBoolean($PauseBackups))
     } 
     
     # If the $body variable is empty, no params were defined
