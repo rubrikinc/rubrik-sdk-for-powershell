@@ -49,4 +49,5 @@ Below is a quick YouTube video that explains how to begin using the module.
    :hidden:
    :caption: Workflow Examples
 
+   flow_audit
    flow_backup_validation
