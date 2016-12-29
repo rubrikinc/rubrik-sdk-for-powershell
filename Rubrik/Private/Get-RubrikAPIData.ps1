@@ -620,6 +620,24 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }  
+    SLADomainPost = @{
+      v1 = @{
+        URI         = '/api/v1/sla_domain'
+        Method      = 'Post'
+        Params      = @{
+          name = 'name'
+          frequencies = @{
+            timeUnit = 'timeUnit'
+            frequency = 'frequency'
+            retention = 'retention'
+            }
+          }
+        SuccessCode = '201'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }      
   } # End of API
   
   return $api.$endpoint

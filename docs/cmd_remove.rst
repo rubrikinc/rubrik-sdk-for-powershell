@@ -15,8 +15,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Remove-RubrikMount [-MountID] <String> [[-Force]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] 
-    [<CommonParameters>]
+    Remove-RubrikMount [-MountID] <String> [[-Force]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -85,8 +84,7 @@ SYNTAX
     
     
 DESCRIPTION
-    The Remove-RubrikSLA cmdlet will request that the Rubrik API delete an SLA Domain. The SLA Domain must have zero 
-    protected VMs in order to be successful.
+    The Remove-RubrikSLA cmdlet will request that the Rubrik API delete an SLA Domain. The SLA Domain must have zero protected VMs in order to be successful.
     
 
 PARAMETERS
