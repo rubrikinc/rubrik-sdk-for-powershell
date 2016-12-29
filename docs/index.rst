@@ -16,43 +16,32 @@ Below is a quick YouTube video that explains how to begin using the module.
 
 .. _available on GitHub: https://github.com/rubrikinc/PowerShell-Module
 
-The main documentation for the project is organized into a couple sections:
-
-* :ref:`user-docs`
-* :ref:`command-docs`
-* :ref:`workflow-docs`
-
-.. _user-docs:
-
 .. toctree::
    :maxdepth: 2
+   :hidden:
    :caption: User Documentation
 
    requirements
    installation
+   getting_started
    support
    contribution
    licensing  
    faq
 
-.. _command-docs:
-
 .. toctree::
    :maxdepth: 2
+   :hidden:
    :caption: Command Documentation
 
-   connect
-   sla_domain
-   snapshot
-   live_mount
-
-.. _workflow-docs:
+   cmd_connect
+   cmd_sla_domain
+   cmd_snapshot
+   cmd_live_mount
 
 .. toctree::
    :maxdepth: 2
+   :hidden:
    :caption: Workflow Examples
 
-   backup_validation
-
-   design
-   theme
+   flow_backup_validation
