@@ -35,9 +35,14 @@ Below is a quick YouTube video that explains how to begin using the module.
    :caption: Command Documentation
 
    cmd_connect
-   cmd_sla_domain
-   cmd_snapshot
-   cmd_live_mount
+   cmd_get
+   cmd_new
+   cmd_protect
+   cmd_remove
+   cmd_set
+   cmd_start
+   cmd_stop
+   cmd_sync
 
 .. toctree::
    :maxdepth: 2

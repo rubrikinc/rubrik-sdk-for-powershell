@@ -1,10 +1,11 @@
-Connect
-========================
+﻿Connect Commands
+=========================
 
 This page contains details on **Connect** commands.
 
 Connect-Rubrik
-------------------------
+-------------------------
+
 
 NAME
     Connect-Rubrik
@@ -30,58 +31,23 @@ PARAMETERS
     -Server <String>
         The IP or FQDN of any available Rubrik node within the cluster
         
-        Required?                    true
-        Position?                    1
-        Default value                
-        Accept pipeline input?       false
-        Accept wildcard characters?  false
-        
     -Username <String>
         Username with permissions to connect to the Rubrik cluster
         Optionally, use the Credential parameter
-        
-        Required?                    false
-        Position?                    2
-        Default value                
-        Accept pipeline input?       false
-        Accept wildcard characters?  false
         
     -Password <SecureString>
         Password for the Username provided
         Optionally, use the Credential parameter
         
-        Required?                    false
-        Position?                    3
-        Default value                
-        Accept pipeline input?       false
-        Accept wildcard characters?  false
-        
     -Credential <Object>
         Credentials with permission to connect to the Rubrik cluster
         Optionally, use the Username and Password parameters
-        
-        Required?                    false
-        Position?                    4
-        Default value                
-        Accept pipeline input?       false
-        Accept wildcard characters?  false
         
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
         OutBuffer, PipelineVariable, and OutVariable. For more information, see 
         about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
-    
-INPUTS
-    
-OUTPUTS
-    
-NOTES
-    
-    
-        Written by Chris Wahl for community usage
-        Twitter: @ChrisWahl
-        GitHub: chriswahl
     
     -------------------------- EXAMPLE 1 --------------------------
     
@@ -113,9 +79,11 @@ NOTES
     
     
     
-    
-RELATED LINKS
-    https://github.com/rubrikinc/PowerShell-Module
+REMARKS
+    To see the examples, type: "get-help Connect-Rubrik -examples".
+    For more information, type: "get-help Connect-Rubrik -detailed".
+    For technical information, type: "get-help Connect-Rubrik -full".
+    For online help, type: "get-help Connect-Rubrik -online"
 
 
 
