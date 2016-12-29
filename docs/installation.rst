@@ -3,8 +3,8 @@ Installation
 
 This repository contains a folder named `Rubrik`_. The folder needs to be installed into one of your PowerShell Module Paths using one of the installation methods outlined in the next section. Common PowerShell module paths include:
 
-1. Current User: `%USERPROFILE%\Documents\WindowsPowerShell\`
-2. All Users: `%WINDIR%\System32\WindowsPowerShell\v1.0\`
+1. Current User: ``%USERPROFILE%\Documents\WindowsPowerShell\``
+2. All Users: ``%WINDIR%\System32\WindowsPowerShell\v1.0\``
 
 Option 1: Installer Script
 ------------------------
