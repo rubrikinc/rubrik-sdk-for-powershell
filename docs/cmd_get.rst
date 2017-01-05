@@ -101,7 +101,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-RubrikMount -VM Server1
+    PS C:\>Get-RubrikMount -VM 'Server1'
     
     Will return all Live Mounts found for Server1
     
@@ -112,7 +112,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikMount -MountID 11111111-2222-3333-4444-555555555555
     
-    Will return all Live Mounts found for the Rubrik ID 1234567890
+    Will return all Live Mounts found for the Rubrik ID 11111111-2222-3333-4444-555555555555
     
     
     
