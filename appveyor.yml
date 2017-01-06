@@ -11,7 +11,7 @@ environment:
 os: WMF 5
 
 skip_commits:
-  message: /updated readme.*|update readme.*s/
+  message: /updated readme.*|update readme.*s|update docs.*|update appveyor.*/
 
 install:
   - ps: cinst pester -y
