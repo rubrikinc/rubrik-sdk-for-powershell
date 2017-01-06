@@ -75,10 +75,6 @@ function Move-RubrikMountVMDK
 
   Process {
 
-    TestRubrikConnection
-
-    ConnectTovCenter -vCenter $vCenter
-    
     if (!$Cleanup)
     {
       if (!$Date) 
