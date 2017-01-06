@@ -1,4 +1,5 @@
-﻿$verbs = (Get-Command -Module Rubrik).Verb | Select-Object -Unique
+﻿Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
+$verbs = (Get-Command -Module Rubrik).Verb | Select-Object -Unique
  
 foreach ($verb in $verbs)
 {

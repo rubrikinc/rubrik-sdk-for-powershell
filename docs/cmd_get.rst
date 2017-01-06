@@ -19,8 +19,7 @@ SYNTAX
     
     
 DESCRIPTION
-    The Get-RubrikJob cmdlet will accept a job ID value and return any information known about that specific 
-    job
+    The Get-RubrikJob cmdlet will accept a job ID value and return any information known about that specific job
     
 
 PARAMETERS
@@ -65,13 +64,12 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikMount [[-VM] <String>] [[-MountID] <String>] [[-Server] <String>] [[-api] <String>] 
-    [<CommonParameters>]
+    Get-RubrikMount [[-VM] <String>] [[-MountID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikMount cmdlet will accept a VM name and return details on any mount operations that are 
-    active within Rubrik
+    The Get-RubrikMount cmdlet will accept a VM name and return details on any mount operations that are active within 
+    Rubrik
     
 
 PARAMETERS
@@ -104,7 +102,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-RubrikMount -VM Server1
+    PS C:\>Get-RubrikMount -VM 'Server1'
     
     Will return all Live Mounts found for Server1
     
@@ -115,7 +113,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikMount -MountID 11111111-2222-3333-4444-555555555555
     
-    Will return all Live Mounts found for the Rubrik ID 1234567890
+    Will return all Live Mounts found for the Rubrik ID 11111111-2222-3333-4444-555555555555
     
     
     
@@ -125,6 +123,56 @@ REMARKS
     For more information, type: "get-help Get-RubrikMount -detailed".
     For technical information, type: "get-help Get-RubrikMount -full".
     For online help, type: "get-help Get-RubrikMount -online"
+
+Get-RubrikRequest
+-------------------------
+
+NAME
+    Get-RubrikRequest
+    
+SYNOPSIS
+    Connects to Rubrik and retrieves details on an async request
+    
+    
+SYNTAX
+    Get-RubrikRequest [-ID] <String> [-Server <String>] [-api <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikRequest cmdlet will pull details on a request that was submitted to the distributed task framework.
+    This is helpful for tracking the state (success, failure, running, etc.) of a request.
+    
+
+PARAMETERS
+    -ID <String>
+        SLA Domain Name
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikRequest -ID MOUNT_SNAPSHOT_123456789:::0
+    
+    Will return details about the request named "MOUNT_SNAPSHOT_123456789:::0"
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikRequest -examples".
+    For more information, type: "get-help Get-RubrikRequest -detailed".
+    For technical information, type: "get-help Get-RubrikRequest -full".
+    For online help, type: "get-help Get-RubrikRequest -online"
 
 Get-RubrikSLA
 -------------------------
@@ -141,8 +189,7 @@ SYNTAX
     
     
 DESCRIPTION
-    The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains. Information 
-    on each
+    The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains. Information on each
     domain will be reported to the console.
     
 
@@ -293,13 +340,12 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikVM [[-VM] <String>] [[-Filter] <String>] [[-SLA] <String>] [[-Server] <String>] [[-api] 
-    <String>] [<CommonParameters>]
+    Get-RubrikVM [[-VM] <String>] [[-Filter] <String>] [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of 
-    virtual machines
+    The Get-RubrikVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of virtual machines
     
 
 PARAMETERS

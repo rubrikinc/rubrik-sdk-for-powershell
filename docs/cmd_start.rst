@@ -15,13 +15,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Start-RubrikVM [-VM] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] 
-    [<CommonParameters>]
+    Start-RubrikVM [-VM] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Stop-RubrikVM cmdlet is used to send a power on request to any virtual machine visible to a Rubrik 
-    cluster.
+    The Stop-RubrikVM cmdlet is used to send a power on request to any virtual machine visible to a Rubrik cluster.
     
 
 PARAMETERS
