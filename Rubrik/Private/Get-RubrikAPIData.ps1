@@ -638,6 +638,16 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }      
+    VMwareVMRequestGet = @{
+      v1 = @{
+        URI         = '/api/v1/vmware/vm/request/{id}'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }          
   } # End of API
   
   return $api.$endpoint

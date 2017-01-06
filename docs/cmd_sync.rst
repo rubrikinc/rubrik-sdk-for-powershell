@@ -19,7 +19,8 @@ SYNTAX
     
     
 DESCRIPTION
-    The Sync-RubrikTag cmdlet will query Rubrik for all of the existing SLA Domains, and then create a tag for each one
+    The Sync-RubrikTag cmdlet will query Rubrik for all of the existing SLA Domains, and then create a tag 
+    for each one
     
 
 PARAMETERS
@@ -42,7 +43,8 @@ PARAMETERS
     
     PS C:\>Sync-RubrikTag -vCenter 'vcenter1.demo' -Category 'Rubrik'
     
-    This will validate or create a vSphere Category named Rubrik along with a Tag for each SLA Domain found in Rubrik
+    This will validate or create a vSphere Category named Rubrik along with a Tag for each SLA Domain found 
+    in Rubrik
     
     
     

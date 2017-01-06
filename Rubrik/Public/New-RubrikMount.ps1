@@ -42,17 +42,15 @@ function New-RubrikMount
     [Parameter(Position = 2,ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullorEmpty()]
     [String]$Date,
+    # ID of the host for the Live Mount to use
+    # Defaults to the hostId where the running virtual machine lives
+    [String]$HostID,
     # Select the power state of the Live Mount
     # Defaults to $false (powered off)
-    [Parameter(Position = 3)]
     [Switch]$PowerOn,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 4)]
-    [ValidateNotNullorEmpty()]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 5)]
-    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 
@@ -70,7 +68,10 @@ function New-RubrikMount
     }
 
     Write-Verbose -Message 'Query Rubrik for the list of protected VM details'
-    $hostid = (Get-RubrikVM -VM $VM).hostId
+    if (!$HostID)
+    {
+      $HostID = (Get-RubrikVM -VM $VM).hostId
+    }
 
     Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
     $snapshots = Get-RubrikSnapshot -VM $VM
@@ -95,7 +96,7 @@ function New-RubrikMount
     # Create the body
     $body = @{
       $resources.$api.body.snapshotId = $vmsnapid
-      $resources.$api.body.hostId = $hostid
+      $resources.$api.body.hostId = $HostID
       $resources.$api.body.disableNetwork = $true
       $resources.$api.body.removeNetworkDevices = $false
       $resources.$api.body.powerOn = [boolean]::Parse($PowerOn)
@@ -119,7 +120,8 @@ function New-RubrikMount
           Write-Warning -Message 'Did not receive successful status code from Rubrik for Live Mount request'
           throw $_
         }
-        ConvertFrom-Json -InputObject $r.Content
+        $response = ConvertFrom-Json -InputObject $r.Content
+        return $response
       }
     }
     catch 
