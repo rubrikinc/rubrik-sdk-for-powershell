@@ -1,8 +1,4 @@
-﻿$verbs = (Get-Command -Module Rubrik |
-  ForEach-Object -Process {
-    $_.Name.Split('-')[0]
-  } |
-Select-Object -Unique)
+﻿$verbs = (Get-Command -Module Rubrik).Verb | Select-Object -Unique
  
 foreach ($verb in $verbs)
 {

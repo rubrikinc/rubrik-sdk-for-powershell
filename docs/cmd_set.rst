@@ -15,11 +15,13 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-RubrikVM [-VM] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] [[-PauseBackups] <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+    Set-RubrikVM [-VM] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] 
+    [[-PauseBackups] <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Set-RubrikVM cmdlet is used to apply updated settings from a Rubrik cluster on any number of virtual machines
+    The Set-RubrikVM cmdlet is used to apply updated settings from a Rubrik cluster on any number of virtual 
+    machines
     
 
 PARAMETERS
@@ -33,7 +35,8 @@ PARAMETERS
     -MaxNestedSnapshots <Int32>
         The number of existing virtual machine snapshots allowed by Rubrik
         If this value is exceeded, backups will be prevented due to seeing too many existing snapshots
-        Keeping snapshots open on a virtual machine can adversely affect performance and increase consolidation times
+        Keeping snapshots open on a virtual machine can adversely affect performance and increase 
+        consolidation times
         Choices range from 0 - 4 snapshots
         
     -PauseBackups <String>
@@ -56,7 +59,8 @@ PARAMETERS
     
     PS C:\>Set-RubrikVM -VM 'Server1' -SnapConsistency AUTO
     
-    This will configure the backup consistency type for Server1 to Automatic (try for application consistency and fail to crash consistency).
+    This will configure the backup consistency type for Server1 to Automatic (try for application consistency 
+    and fail to crash consistency).
     
     
     
@@ -65,7 +69,8 @@ PARAMETERS
     
     PS C:\>(Get-RubrikVM -VM * -SLA 'Example').name | Set-RubrikVM -SnapConsistency AUTO
     
-    This will gather the name of all VMs belonging to the SLA Domain named Example and configure the backup consistency type to be crash consistent.
+    This will gather the name of all VMs belonging to the SLA Domain named Example and configure the backup 
+    consistency type to be crash consistent.
     
     
     

@@ -15,11 +15,13 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikTag [-Tag] <String> [-Category] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikTag [-Tag] <String> [-Category] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] 
+    <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Protect-RubrikTag cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster.
+    The Protect-RubrikTag cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik 
+    cluster.
     The SLA Domain contains all policy-driven values needed to protect workloads.
     Make sure you have PowerCLI installed and connect to the required vCenter Server.
     
@@ -85,16 +87,19 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikVM [-VM] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM [-VM] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
+    [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikVM [-VM] <String> [[-DoNotProtect]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM [-VM] <String> [[-DoNotProtect]] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
+    [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikVM [-VM] <String> [[-Inherit]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM [-VM] <String> [[-Inherit]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
-    The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values needed to 
-    protect workloads.
+    The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik 
+    cluster. The SLA Domain contains all policy-driven values needed to protect workloads.
     
 
 PARAMETERS
