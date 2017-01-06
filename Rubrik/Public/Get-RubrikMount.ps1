@@ -21,12 +21,12 @@ function Get-RubrikMount
       Will return all Live Mounts known to Rubrik
 
       .EXAMPLE
-      Get-RubrikMount -VM Server1
+      Get-RubrikMount -VM 'Server1'
       Will return all Live Mounts found for Server1
             
       .EXAMPLE
       Get-RubrikMount -MountID 11111111-2222-3333-4444-555555555555
-      Will return all Live Mounts found for the Rubrik ID 1234567890
+      Will return all Live Mounts found for the Rubrik ID 11111111-2222-3333-4444-555555555555
   #>
 
   [CmdletBinding()]
