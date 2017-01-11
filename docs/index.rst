@@ -24,6 +24,7 @@ Below is a quick YouTube video that explains how to begin using the module.
    requirements
    installation
    getting_started
+   module_architecture
    support
    contribution
    licensing  
