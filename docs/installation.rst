@@ -37,3 +37,26 @@ Once installation is complete, you can validate that the module exists by runnin
 .. _Rubrik: https://github.com/rubrikinc/PowerShell-Module/tree/master/Rubrik
 .. _latest release: https://github.com/rubrikinc/PowerShell-Module/releases/latest
 .. _Windows Management Framework 5.0: https://www.microsoft.com/en-us/download/details.aspx?id=50395
+
+Verification
+------------------------
+
+PowerShell will create a folder for each new version of any module you install. It's a good idea to check and see what version(s) you have installed and running in the session. To begin, let's see what versions of the Rubrik Module are installed:
+
+``Get-Module -ListAvailable Rubrik``
+
+The ``-ListAvailable`` switch will pull up all installed versions from any path found in ``$env:PSModulePath``. Check to make sure the version you wanted is installed. You can safely remove old versions, if desired.
+
+To see which version is currently loaded, use:
+
+``Get-Module Rubrik``
+
+If nothing is returned, you need to first load the module by using:
+
+``Import-Module Rubrik``
+
+If you wish to load a specific version, use:
+
+``Import-Module Rubrik -RequiredVersion #.#.#.#``
+
+Where "#.#.#.#" represents the version number.
