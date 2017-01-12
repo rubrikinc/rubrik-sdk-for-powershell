@@ -25,6 +25,14 @@ function Connect-Rubrik
       The prompt will request a secure password.
 
       .EXAMPLE
+      Connect-Rubrik -Server 192.168.1.1 -Username admin -PasswordFile C:\pwd.txt
+      
+      To create the password file:
+      Read-Host -AsSecureString | ConvertFrom-SecureString | Out-File '.\pwd.txt'
+      *********
+      -> NOTE: Secure this file by locking down permissions so that only the users running the script have read-only access to it.
+
+      .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Username admin -Password (ConvertTo-SecureString "secret" -asplaintext -force)
       If you need to pass the password value in the cmdlet directly, use the ConvertTo-SecureString function.
 

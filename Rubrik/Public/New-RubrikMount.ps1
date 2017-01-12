@@ -42,6 +42,8 @@ function New-RubrikMount
     [Parameter(Position = 2,ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullorEmpty()]
     [String]$Date,
+    # SnapshotID of the VM instead of searching for one by date
+    [String]$SnapshotID,
     # ID of the host for the Live Mount to use
     # Defaults to the hostId where the running virtual machine lives
     [String]$HostID,
@@ -58,14 +60,10 @@ function New-RubrikMount
 
     TestRubrikConnection
 
+    Import-Module C:\Users\eric.chang\Documents\WindowsPowerShell\Modules\Rubrik\Public\Get-RubrikSnapshotByDate.ps1
+
     Write-Verbose -Message 'Determining which version of the API to use'
     $resources = GetRubrikAPIData -endpoint ('VMwareVMMountPost')
-
-    if (!$Date) 
-    {
-      Write-Verbose -Message 'No date entered. Taking current time.'
-      $Date = Get-Date
-    }
 
     Write-Verbose -Message 'Query Rubrik for the list of protected VM details'
     if (!$HostID)
@@ -73,7 +71,26 @@ function New-RubrikMount
       $HostID = (Get-RubrikVM -VM $VM).hostId
     }
 
-    Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
+    if (!$Date -And !$SnapshotID)
+        {
+            Write-Verbose -Message 'No date entered. Taking current time.'
+            $Date = Get-Date
+            $vmsnapid = Get-RubrikSnapshotByDate($Date)
+        }
+        Elseif ($Date -And !$SnapshotID) {
+            $vmsnapid = Get-RubrikSnapshotByDate($Date)
+        }
+        Elseif ($Date -And $SnapshotID)
+        {
+            Read-Host "**ERROR: Can't define both Date and SnapshotID…" | Out-Null
+            exit
+        }
+        Else
+        { 
+            $vmsnapid = $SnapshotID
+        }
+
+    <#Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
     $snapshots = Get-RubrikSnapshot -VM $VM
 
     Write-Verbose -Message 'Comparing backup dates to user date'
@@ -89,6 +106,7 @@ function New-RubrikMount
         break
       }
     }
+    #>
 
     Write-Verbose -Message 'Building the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
