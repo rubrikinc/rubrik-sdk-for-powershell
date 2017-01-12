@@ -15,13 +15,12 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikMount [-VM] <String> [[-MountName] <String>] [[-Date] <String>] [-HostID <String>] [-PowerOn] [-Server 
-    <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikMount [-VM] <String> [[-MountName] <String>] [[-Date] <String>] [-HostID <String>] [-PowerOn] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
-    The New-RubrikMount cmdlet is used to create a Live Mount (clone) of a protected VM and run it in an existing 
-    vSphere environment.
+    The New-RubrikMount cmdlet is used to create a Live Mount (clone) of a protected VM and run it in an existing vSphere environment.
     
 
 PARAMETERS
@@ -65,8 +64,7 @@ PARAMETERS
     
     PS C:\>New-RubrikMount -VM 'Server1' -Date '05/04/2015 08:00'
     
-    This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal 
-    to or older than 08:00 AM on May 4th, 2015
+    This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older than 08:00 AM on May 4th, 2015
     
     
     
@@ -75,8 +73,7 @@ PARAMETERS
     
     PS C:\>New-RubrikMount -VM 'Server1'
     
-    This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal 
-    to or older the current time (now)
+    This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older the current time (now)
     
     
     
@@ -98,13 +95,12 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikReport [-ReportType] <String> [[-StatusType] <String>] [[-ToCSV]] [[-Server] <String>] [[-api] <String>] 
-    [<CommonParameters>]
+    New-RubrikReport [-ReportType] <String> [[-StatusType] <String>] [[-ToCSV]] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The New-RubrikReport cmdlet is used to retrieve all of the tasks that have been run by a Rubrik cluster. Use 
-    either 'daily' or 'weekly' for ReportType to define the reporting scope.
+    The New-RubrikReport cmdlet is used to retrieve all of the tasks that have been run by a Rubrik cluster. Use either 'daily' or 'weekly' for ReportType to define 
+    the reporting scope.
     
 
 PARAMETERS
@@ -164,14 +160,13 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikSLA [-SLA] <String> [-HourlyFrequency <Int32>] [-HourlyRetention <Int32>] [-DailyFrequency <Int32>] 
-    [-DailyRetention <Int32>] [-MonthlyFrequency <Int32>] [-MonthlyRetention <Int32>] [-YearlyFrequency <Int32>] 
-    [-YearlyRetention <Int32>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikSLA [-SLA] <String> [-HourlyFrequency <Int32>] [-HourlyRetention <Int32>] [-DailyFrequency <Int32>] [-DailyRetention <Int32>] [-MonthlyFrequency 
+    <Int32>] [-MonthlyRetention <Int32>] [-YearlyFrequency <Int32>] [-YearlyRetention <Int32>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
-    The New-RubrikSLA cmdlet will build a new SLA Domain to provide policy-driven control over protected objects 
-    within the Rubrik fabric.
+    The New-RubrikSLA cmdlet will build a new SLA Domain to provide policy-driven control over protected objects within the Rubrik fabric.
     
 
 PARAMETERS
@@ -222,8 +217,7 @@ PARAMETERS
     
     PS C:\>New-RubrikSLA -SLA Test1 -HourlyFrequency 4 -HourlyRetention 24
     
-    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups 
-    for 24 hours.
+    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours.
     
     
     
@@ -232,8 +226,7 @@ PARAMETERS
     
     PS C:\>New-RubrikSLA -SLA Test1 -HourlyFrequency 4 -HourlyRetention 24 -DailyFrequency 1 -DailyRetention 30
     
-    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups 
-    for 24 hours while also
+    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours while also
     keeping one backup per day for 30 days.
     
     
@@ -260,8 +253,8 @@ SYNTAX
     
     
 DESCRIPTION
-    The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific virtual machine. This will be 
-    taken by Rubrik and stored in the VM's chain of snapshots.
+    The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific virtual machine. This will be taken by Rubrik and stored in the VM's chain of 
+    snapshots.
     
 
 PARAMETERS

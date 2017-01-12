@@ -10,7 +10,7 @@ foreach ($verb in $verbs)
   $data += "This page contains details on **$verb** commands."
   $data += ''
   foreach ($help in (Get-Command -Module Rubrik | Where-Object -FilterScript {
-        $_.name -match $verb
+        $_.name -like "$verb-*"
   }))
   {
     $data += $help.Name
