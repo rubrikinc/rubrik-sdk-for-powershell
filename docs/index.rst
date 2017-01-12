@@ -24,7 +24,7 @@ Below is a quick YouTube video that explains how to begin using the module.
    requirements
    installation
    getting_started
-   module_architecture
+   project_architecture
    support
    contribution
    licensing  
@@ -37,6 +37,7 @@ Below is a quick YouTube video that explains how to begin using the module.
 
    cmd_connect
    cmd_get
+   cmd_move
    cmd_new
    cmd_protect
    cmd_remove
