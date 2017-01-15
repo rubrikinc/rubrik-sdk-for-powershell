@@ -68,8 +68,7 @@ SYNTAX
     
     
 DESCRIPTION
-    The Get-RubrikMount cmdlet will accept a VM name and return details on any mount operations that are active within 
-    Rubrik
+    The Get-RubrikMount cmdlet will accept a VM name and return details on any mount operations that are active within Rubrik
     
 
 PARAMETERS
@@ -248,8 +247,7 @@ SYNTAX
     
     
 DESCRIPTION
-    The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for a 
-    protected virtual machine
+    The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for a protected virtual machine
     
 
 PARAMETERS
@@ -340,8 +338,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikVM [[-VM] <String>] [[-Filter] <String>] [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] 
-    [<CommonParameters>]
+    Get-RubrikVM [[-VM] <String>] [[-Filter] <String>] [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION

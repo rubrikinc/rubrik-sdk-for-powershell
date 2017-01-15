@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+﻿#Requires -Version 3 -Module VMware.VimAutomation.Core
 function Move-RubrikMountVMDK
 {
   <#  
@@ -43,7 +43,7 @@ function Move-RubrikMountVMDK
       The file contains the TargetVM name, MountID value, and a list of all presented disks
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Source virtual machine to use as a Live Mount based on a previous backup
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipeline = $true,ParameterSetName = 'Create')]
@@ -74,6 +74,10 @@ function Move-RubrikMountVMDK
   )
 
   Process {
+
+    TestRubrikConnection
+
+    ConnectTovCenter -vCenter $vCenter    
 
     if (!$Cleanup)
     {
@@ -114,30 +118,33 @@ function Move-RubrikMountVMDK
       $TargetHost = Get-VMHost -VM $TargetVM
 
       Write-Verbose -Message 'Migrating the Mount VMDKs to VM'
-      [array]$MountVMdisk = Get-HardDisk $MountVM.name
-      $MountedVMdiskFileNames = @()
-      [int]$j = 0
-      foreach ($_ in $MountVMdisk)
+      if ($PSCmdlet.ShouldProcess($TargetVM,'Migrating Live Mount VMDK(s)'))
       {
-        if ($ExcludeDisk -contains $j)
+        [array]$MountVMdisk = Get-HardDisk $MountVM.name
+        $MountedVMdiskFileNames = @()
+        [int]$j = 0
+        foreach ($_ in $MountVMdisk)
         {
-          Write-Verbose -Message "Skipping Disk $j" -Verbose
-        }
-        else 
-        {
-          try
+          if ($ExcludeDisk -contains $j)
           {
-            $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
-            $null = New-HardDisk -VM $TargetVM -DiskPath $_.Filename
-            $MountedVMdiskFileNames += $_.Filename
-            Write-Verbose -Message "Migrated $($_.Filename) to $TargetVM"
+            Write-Verbose -Message "Skipping Disk $j" -Verbose
           }
-          catch
+          else 
           {
-            throw $_
+            try
+            {
+              $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
+              $null = New-HardDisk -VM $TargetVM -DiskPath $_.Filename
+              $MountedVMdiskFileNames += $_.Filename
+              Write-Verbose -Message "Migrated $($_.Filename) to $TargetVM"
+            }
+            catch
+            {
+              throw $_
+            }
           }
+          $j++
         }
-        $j++
       }
 
       $Diskfile = "$Home\Documents\"+$SourceVM+'_to_'+$TargetVM+'-'+(Get-Date).Ticks+'.txt'

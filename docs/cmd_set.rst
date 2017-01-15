@@ -15,8 +15,8 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-RubrikVM [-VM] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] [[-PauseBackups] 
-    <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+    Set-RubrikVM [-VM] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] [[-PauseBackups] <String>] [-Server <String>] [-api <String>] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
@@ -57,8 +57,7 @@ PARAMETERS
     
     PS C:\>Set-RubrikVM -VM 'Server1' -SnapConsistency AUTO
     
-    This will configure the backup consistency type for Server1 to Automatic (try for application consistency and fail 
-    to crash consistency).
+    This will configure the backup consistency type for Server1 to Automatic (try for application consistency and fail to crash consistency).
     
     
     
@@ -67,8 +66,7 @@ PARAMETERS
     
     PS C:\>(Get-RubrikVM -VM * -SLA 'Example').name | Set-RubrikVM -SnapConsistency AUTO
     
-    This will gather the name of all VMs belonging to the SLA Domain named Example and configure the backup 
-    consistency type to be crash consistent.
+    This will gather the name of all VMs belonging to the SLA Domain named Example and configure the backup consistency type to be crash consistent.
     
     
     

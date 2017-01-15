@@ -25,7 +25,7 @@ function New-RubrikMount
       This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older the current time (now)
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'Low')]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Name of the virtual machine
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]

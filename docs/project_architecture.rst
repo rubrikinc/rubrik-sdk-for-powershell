@@ -1,4 +1,4 @@
-Module Architecture
+Project Architecture
 ========================
 
 This page contains details on the artifacts found within the repository.
