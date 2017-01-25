@@ -3,11 +3,13 @@ function Sync-RubrikAnnotation
 {
   <#  
       .SYNOPSIS
-      Applies Rubrik SLA Domain information to VM Attributes using Custom Attributes in vCenter
+      Applies Rubrik SLA Domain information to VM Annotations using the Custom Attributes feature in vCenter
 
       .DESCRIPTION
-      The Sync-RubrikAttribute cmdlet will comb through all VMs currently being protected by Rubrik.
-      It will then create Custom Attribute buckets for Rubrik_SLA and Rubrik_Backups and assign details for each VM found in vCenter using Annotations.
+      The Sync-RubrikAnnotation cmdlet will comb through all VMs currently being protected by Rubrik.
+      It will then create Custom Attribute buckets for SLA Domain Name(s) and Snapshot counts and assign details for each VM found in vCenter using Annotations.
+      The attribute names can be specified using this function's parameters or left as the defaults. See the examples for more information.
+      Keep in mind that this only displays in the VMware vSphere Thick (C#) client, which is deprecated moving forward.
 
       .NOTES
       Written by Chris Wahl for community usage
