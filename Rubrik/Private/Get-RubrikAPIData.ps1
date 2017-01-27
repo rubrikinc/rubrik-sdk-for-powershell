@@ -4,8 +4,17 @@
 function GetRubrikAPIData($endpoint)
 {
   $api = @{
-    Login                     = @{
-      v1 = @{
+    Session                     = @{
+      'v1.1' = @{
+        URI         = '/api/v1/session'
+        Body        = @('username', 'password')
+        Method      = 'Post'
+        SuccessCode = '200'
+        SuccessMock = '{"userId": "11111111-2222-3333-4444-555555555555","token": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"}'
+        FailureCode = '422'
+        FailureMock = '{"errorType":"user_error","message":"Incorrect Username/Password","cause":null}'
+      }
+      'v1.0' = @{
         URI         = '/api/v1/login'
         Body        = @('username', 'password')
         Method      = 'Post'

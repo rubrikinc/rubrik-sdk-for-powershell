@@ -78,7 +78,7 @@ function Connect-Rubrik
     # Try to connect to the Rubrik node using different versions of the API
     # Essentially, we're just looping through newer-to-older Login endpoints to see which one exists
     Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('Login')
+    $resources = GetRubrikAPIData -endpoint ('Session')
 
     foreach ($versionnum in $resources.Keys | Sort-Object -Descending)
     {
@@ -90,19 +90,30 @@ function Connect-Rubrik
       # Create the URI
       $uri = 'https://'+$Server+$version.URI
       
-      # Create the body
-      $body = @{
-        $version.Body[0] = $Credential.UserName
-        $version.Body[1] = $Credential.GetNetworkCredential().Password
+      # Set the Method
+      $method = $version.Method      
+      
+      # For API version v0 and v1.0, create a body with the credentials
+      if ($versionnum -eq 'v0' -or $versionnum -eq 'v1.0') 
+      {
+        $body = @{
+          $version.Body[0] = $Credential.UserName
+          $version.Body[1] = $Credential.GetNetworkCredential().Password
+        }
+      }
+      # For API version v1.1 or greater, use a standard Basic Auth Base64 encoded header with username:password
+      else 
+      {
+        $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Credential.UserName+':'+$Credential.GetNetworkCredential().Password))
+        $head = @{
+          'Authorization' = "Basic $auth"
+        }      
       }
 
-      # Set the Method
-      $method = $version.Method
-      
       Write-Verbose -Message 'Submitting the request'
       try 
       {
-        $r = Invoke-WebRequest -Uri $uri -Method: $method -Body (ConvertTo-Json -InputObject $body)
+        $r = Invoke-WebRequest -Uri $uri -Method: $method -Body (ConvertTo-Json -InputObject $body) -Headers $head
         $content = (ConvertFrom-Json -InputObject $r.Content)
         # If we find a successful call code and also a token, we know the request was successful
         # Anything else will trigger a throw, which will cause the catch to break the current loop and try another version
@@ -113,24 +124,43 @@ function Connect-Rubrik
         }
         else
         {
-          throw "Unable to connect to the cluster"
+          throw 'Unable to connect to the cluster'
         }
       }
       catch 
       {
+
       }
     }
     
-      # Final throw for when all versions of the API have failed
-        if ($content.token -eq $null) 
-        {
-          throw 'Unable to connect with any available API version'
-        }
+    # Final throw for when all versions of the API have failed
+    if ($content.token -eq $null) 
+    {
+      throw 'Unable to connect with any available API version'
+    }
 
-    Write-Verbose -Message 'Validate token and build Base64 Auth string'
-    $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($($content.token)+':'))
-    $head = @{
-      'Authorization' = "Basic $auth"
+    # For API version v0 and v1.0, use a standard Basic Auth Base64 encoded header with token:$null
+    if ($versionnum -eq 'v0' -or $versionnum -eq 'v1.0') 
+    {
+      Write-Verbose -Message 'Validate token and build Base64 Auth string'
+      $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($($content.token)+':'))
+      $head = @{
+        'Authorization' = "Basic $auth"
+      }
+    }
+    # For API version v1.1 or greater, use Bearer and token
+    else 
+    {
+      $head = @{
+        'Authorization' = "Bearer $($content.token)"
+      }
+    }
+
+    # v1.0 uses a different auth method compared to v1.1
+    # If we find v1.1 is in use, reset the version number to 'v1' to match the remainder of v1 calls
+    if ($versionnum -match 'v1')
+    {
+      $versionnum = 'v1'
     }
 
     Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
@@ -146,7 +176,9 @@ function Connect-Rubrik
     Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'
     [array]$global:RubrikConnections += $rubrikConnection
     
-    return $global:rubrikConnection
+    $global:rubrikConnection.GetEnumerator() | Where-Object -FilterScript {
+      $_.name -notmatch 'token'
+    }
 
   } # End of process
 } # End of function
