@@ -25,6 +25,14 @@ function Connect-Rubrik
       The prompt will request a secure password.
 
       .EXAMPLE
+      Connect-Rubrik -Server 192.168.1.1 -Username admin -PasswordFile C:\pwd.txt
+      
+      To create the password file:
+      Read-Host -AsSecureString | ConvertFrom-SecureString | Out-File '.\pwd.txt'
+      *********
+      -> NOTE: Secure this file by locking down permissions so that only the users running the script have read-only access to it.
+
+      .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Username admin -Password (ConvertTo-SecureString "secret" -asplaintext -force)
       If you need to pass the password value in the cmdlet directly, use the ConvertTo-SecureString function.
 
@@ -46,12 +54,14 @@ function Connect-Rubrik
     # Password for the Username provided
     # Optionally, use the Credential parameter
     [Parameter(Position = 2)]
-    [SecureString]$Password,
+    [SecureString]$Password, 
+    # Copy secure text password in file and provide PATH to that file
+    [Parameter(Position = 3)]
+    [String]$PasswordFile,
     # Credentials with permission to connect to the Rubrik cluster
     # Optionally, use the Username and Password parameters
-    [Parameter(Position = 3)]
+    [Parameter(Position = 4)]
     [System.Management.Automation.CredentialAttribute()]$Credential
-
   )
 
   Process {
@@ -62,15 +72,19 @@ function Connect-Rubrik
     
     # Check to see if the user supplied any sort of credentials
     # If not, request credentials
+    # If the user supplied a username and secure password, convert them into a Credential object
     Write-Verbose -Message 'Validating that login details were passed into username/password or credentials'
-    if ($Password -eq $null -and $Credential -eq $null)
+    if ($Username -and $PasswordFile)
+    {
+      $Password = Get-Content $PasswordFile | ConvertTo-SecureString
+      $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $Username, $Password
+    }
+    elseif ($Password -eq $null -and $Credential -eq $null)
     {
       Write-Warning -Message 'You did not submit a username, password, or credentials.'
       $Credential = Get-Credential -Message 'Please enter administrative credentials for your Rubrik cluster'
     }
-
-    # If the user supplied a username and secure password, convert them into a Credential object
-    if ($Credential -eq $null)
+    elseif ($Credential -eq $null)
     {
       $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $Username, $Password
     }
