@@ -4,10 +4,9 @@
 function GetRubrikAPIData($endpoint)
 {
   $api = @{
-    Session                     = @{
+    Session                   = @{
       'v1.1' = @{
         URI         = '/api/v1/session'
-        Body        = @('username', 'password')
         Method      = 'Post'
         SuccessCode = '200'
         SuccessMock = '{"userId": "11111111-2222-3333-4444-555555555555","token": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"}'
@@ -23,7 +22,7 @@ function GetRubrikAPIData($endpoint)
         FailureCode = '422'
         FailureMock = '{"errorType":"user_error","message":"Incorrect Username/Password","cause":null}'
       }
-      v0 = @{
+      'v0' = @{
         URI         = '/login'
         Body        = @('userId', 'password')
         Method      = 'Post'
@@ -531,7 +530,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    VMwareVMBackupPost = @{
+    VMwareVMBackupPost        = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/{id}/backup'
         Method      = 'Post'
@@ -560,15 +559,15 @@ function GetRubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       }
-    }    
-    VMwareVMMountPowerPost = @{
+    }
+    VMwareVMMountPowerPost    = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/mount/{id}/power'
         Method      = 'Post'
         Params      = @{
-          vmId = $null
+          vmId        = $null
           powerStatus = 'powerStatus'
-          }
+        }
         SuccessCode = '204'
         SuccessMock = ''
         FailureCode = ''
@@ -578,39 +577,39 @@ function GetRubrikAPIData($endpoint)
         URI         = '/vm/power'
         Method      = 'Post'
         Params      = @{
-          vmId = 'vmId'
+          vmId        = 'vmId'
           powerStatus = 'powerState'
-          }        
+        }        
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
       }
-    }                
-    VMwareVMPatch = @{
+    }
+    VMwareVMPatch             = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/{id}'
         Method      = 'Patch'
         Params      = @{
           snapshotConsistencyMandate = 'snapshotConsistencyMandate'
-          maxNestedVsphereSnapshots = 'maxNestedVsphereSnapshots'
-          isVmPaused = 'isVmPaused'
-          preBackupScript = @{
-            scriptPath = 'scriptPath'
-            timeoutMs = 'timeoutMs'
+          maxNestedVsphereSnapshots  = 'maxNestedVsphereSnapshots'
+          isVmPaused                 = 'isVmPaused'
+          preBackupScript            = @{
+            scriptPath      = 'scriptPath'
+            timeoutMs       = 'timeoutMs'
             failureHandling = 'failureHandling'
-            }
-          postSnapScript = @{
-            scriptPath = 'scriptPath'
-            timeoutMs = 'timeoutMs'
-            failureHandling = 'failureHandling'
-            }
-          postBackupScript = @{
-            scriptPath = 'scriptPath'
-            timeoutMs = 'timeoutMs'
-            failureHandling = 'failureHandling'
-            }
           }
+          postSnapScript             = @{
+            scriptPath      = 'scriptPath'
+            timeoutMs       = 'timeoutMs'
+            failureHandling = 'failureHandling'
+          }
+          postBackupScript           = @{
+            scriptPath      = 'scriptPath'
+            timeoutMs       = 'timeoutMs'
+            failureHandling = 'failureHandling'
+          }
+        }
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''
@@ -621,33 +620,33 @@ function GetRubrikAPIData($endpoint)
         Method      = 'Patch'
         Params      = @{
           snapshotConsistencyMandate = 'snapshotConsistencyMandate'
-          maxNestedVsphereSnapshots = 'maxNestedVsphereSnapshots'
-          }      
+          maxNestedVsphereSnapshots  = 'maxNestedVsphereSnapshots'
+        }      
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
       }
-    }  
-    SLADomainPost = @{
+    }
+    SLADomainPost             = @{
       v1 = @{
         URI         = '/api/v1/sla_domain'
         Method      = 'Post'
         Params      = @{
-          name = 'name'
+          name        = 'name'
           frequencies = @{
-            timeUnit = 'timeUnit'
+            timeUnit  = 'timeUnit'
             frequency = 'frequency'
             retention = 'retention'
-            }
           }
+        }
         SuccessCode = '201'
         SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
       }
-    }      
-    VMwareVMRequestGet = @{
+    }
+    VMwareVMRequestGet        = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/request/{id}'
         Method      = 'Get'
@@ -656,7 +655,7 @@ function GetRubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       }
-    }          
+    }
   } # End of API
   
   return $api.$endpoint
