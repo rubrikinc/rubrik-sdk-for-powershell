@@ -1,4 +1,4 @@
-﻿#Requires -Version 3 -Module VMware.VimAutomation.Core
+﻿#Requires -Version 3
 function Move-RubrikMountVMDK
 {
   <#  
