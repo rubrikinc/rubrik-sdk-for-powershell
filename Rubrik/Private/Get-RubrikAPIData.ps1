@@ -656,6 +656,16 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
+    MSSQLDBGet        = @{
+      v1 = @{
+        URI         = '/api/v1/mssql/db'
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
   } # End of API
   
   return $api.$endpoint
