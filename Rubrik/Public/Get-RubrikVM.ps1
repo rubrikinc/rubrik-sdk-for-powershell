@@ -46,40 +46,30 @@ function Get-RubrikVM
     [String]$api = $global:RubrikConnection.api
   )
 
-  Process {
+  Begin {
 
     TestRubrikConnection
         
-    Write-Verbose -Message 'Determining which version of the API to use'
+    Write-Verbose -Message 'Gather API data'
     $resources = GetRubrikAPIData -endpoint ('VMwareVMGet')
-    
-    Write-Verbose -Message 'Building the URI'
+  
+  }
+
+  Process {
+
+    Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
 
     # Optional parameters for the query
     # We'll start with an empty array
     $params = @()
-
     # Param #1 = Filter
-    # Can filter results based on active, relic (archived), or all VMs
-    if ($Filter -and $resources.$api.Params.Filter -ne $null) 
-    {
-      $params += $($resources.$api.Params.Filter)+'='+$Filter
-    }
-    
+    $params += Test-Query -object $Filter -param $resources.$api.Params.Filter
     # Param #2 = Search
-    # Optional search filter if a VM is specified
-    # Otherwise, all VMs will be retrieved
-    if ($VM -and $resources.$api.Params.Search -ne $null) 
-    {
-      $params += $($resources.$api.Params.Search)+'='+$VM
-    }
-    
+    $params += Test-Query -object $VM -param $resources.$api.Params.Search
     # Param #3 = Limit
-    # Optional limitation on the number of results returned
-    # By default, the API only returns a small subset of the objects
     $params += 'limit=9999'
-
+    
     # Build the optional params string for the query
     # Start by using a "?" for the first param, and then use an "&" for any additional params
     foreach ($_ in $params)
