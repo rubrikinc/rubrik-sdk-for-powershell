@@ -28,7 +28,7 @@ Describe -Name 'Get-RubrikSnapshot Tests' -Fixture {
     
           # Act
           $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).requestId
-          (New-RubrikMount -VM 'Fake' -api $api).requestId | Should BeExactly $value1
+          (New-RubrikMount -VM 'Fake' -api $api -Confirm:$false).requestId | Should BeExactly $value1
     
           # Assert
           Assert-VerifiableMocks
