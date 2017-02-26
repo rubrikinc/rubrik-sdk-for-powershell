@@ -1,7 +1,7 @@
 ﻿<#
     Helper function to retrieve API data from Rubrik
 #>
-function GetRubrikAPIData($endpoint)
+function Get-RubrikAPIData($endpoint)
 {
   $api = @{
     Session                   = @{
@@ -39,8 +39,13 @@ function GetRubrikAPIData($endpoint)
         Params      = @{
           Filter = 'archive_status'
           Search = 'search_value'
-        }
+        }        
         Method      = 'Get'
+        Result      = 'data'
+        Filter      = @{
+          '$VM' = 'name'
+          '$SLA' = 'effectiveSlaDomainName'
+        }
         SuccessCode = '200'
         SuccessMock = @"
 {

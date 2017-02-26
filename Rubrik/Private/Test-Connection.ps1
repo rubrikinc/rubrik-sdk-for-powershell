@@ -7,50 +7,29 @@
   Write-Verbose -Message 'Validating the Rubrik token exists'
   if (-not $global:RubrikConnection.token) 
   {
-    throw 'You are not connected to a Rubrik server. Use Connect-Rubrik.'
+    Write-Warning -Message 'Please connect to only one Rubrik Cluster before running this command.'
+    throw 'A single connection with Connect-Rubrik is required.'
   }
   Write-Verbose -Message 'Found a Rubrik token for authentication'
   $script:Header = $global:RubrikConnection.header
 }
 
-function Test-VMwareConnection($vCenter)
+function Test-VMwareConnection()
 {
-  # Import all of the VMware Modules and then test to see if a vCenter connection exists
-  # Will throw an error and ask the user to connect if no session is found
+  # Must have only one vCenter connection open
+  # Potential future work: loop through all vCenter connections
+  # Code snipet blatantly stolen from Vester :)
 
-  Write-Verbose -Message 'Import required modules'
-  try 
+  If ($DefaultVIServers.Count -lt 1) 
   {
-    Get-Module -ListAvailable -Name 'VMware*' | Import-Module -ErrorAction Stop
+    Write-Warning -Message 'Please connect to vCenter before running this command.'
+    throw 'A single connection with Connect-VIServer is required.'
   }
-  catch 
+  ElseIf ($DefaultVIServers.Count -gt 1) 
   {
-    Write-Warning -Message 'PowerCLI version 6 or later required.'
-    Write-Warning -Message 'Visit: http://www.vmware.com/go/powercli'
-    throw $_
+    Write-Warning -Message 'Please connect to only one vCenter before running this command.'
+    Write-Warning -Message "Current connections:  $($DefaultVIServers -join ' / ')"
+    throw 'A single connection with Connect-VIServer is required.'
   }
-
-  Write-Verbose -Message 'Ignore self-signed SSL certificates for vCenter Server'
-  $null = Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -DisplayDeprecationWarnings:$false -Scope User -Confirm:$false
-  
-  if ($vCenter -eq $null -and $global:DefaultVIServer -ne $null) 
-  {
-    $vCenter = $global:DefaultVIServer.Name
-  }
-  else 
-  {
-    throw 'You are not connected to a vCenter Server'
-  }
-
-  Write-Verbose -Message 'Connect to vCenter'
-  try 
-  {
-    $null = Connect-VIServer -Server $vCenter -ErrorAction Stop -Session ($global:DefaultVIServers | Where-Object -FilterScript {
-        $_.name -eq $vCenter
-    }).sessionId
-  }
-  catch 
-  {
-    throw $_
-  }
+  Write-Verbose -Message "vCenter: $($DefaultVIServers.Name)"
 }

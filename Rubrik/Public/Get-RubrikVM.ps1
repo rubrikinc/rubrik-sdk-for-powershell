@@ -48,10 +48,10 @@ function Get-RubrikVM
 
   Begin {
 
-    TestRubrikConnection
+    Test-RubrikConnection
         
     Write-Verbose -Message 'Gather API data'
-    $resources = GetRubrikAPIData -endpoint ('VMwareVMGet')
+    $resources = Get-RubrikAPIData -endpoint ('VMwareVMGet')
   
   }
 
@@ -60,31 +60,13 @@ function Get-RubrikVM
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
 
-    # Optional parameters for the query
-    # We'll start with an empty array
+    Write-Verbose -Message 'Build the query parameters'
     $params = @()
-    # Param #1 = Filter
-    $params += Test-Query -object $Filter -param $resources.$api.Params.Filter
-    # Param #2 = Search
-    $params += Test-Query -object $VM -param $resources.$api.Params.Search
-    # Param #3 = Limit
-    $params += 'limit=9999'
-    
-    # Build the optional params string for the query
-    # Start by using a "?" for the first param, and then use an "&" for any additional params
-    foreach ($_ in $params)
-    {
-      if ($_ -eq $params[0]) 
-      {
-        $uri += '?'+$_
-      }
-      else 
-      {
-        $uri += '&'+$_
-      }
-    }      
+    $params += Test-QueryObject -object $Filter -location $resources.$api.Params.Filter -params $params
+    $params += Test-QueryObject -object $VM -location $resources.$api.Params.Search -params $params
+    $uri = New-QueryString -params $params -uri $uri -nolimit $true
 
-    # Set the method
+    Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
 
     try 
@@ -97,38 +79,18 @@ function Get-RubrikVM
       $result = ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
             MaxJsonLength = 67108864
       }).DeserializeObject($r.Content))
-      
-      # The v0 API doesn't have queries
-      # This will manually filter the results if the user has provided inputs
-      if ($api -ne 'v0') 
-      {
-        # Strip out the overhead
-        $result = $result.data
-      }
-      
-      # Optionally Finds a specific VM if the user has provided the $VM param
-      # Using "eq" to avoid partial string matches
-      if ($VM) 
-      {
-        $result = $result | Where-Object -FilterScript {
-          $_.name -eq $VM
-        }
-      }      
-      
-      # Optionally finds a specific SLA if the user has provided the $SLA param
-      if ($SLA) 
-      {
-        $result = $result | Where-Object -FilterScript {
-          $_.effectiveSlaDomainName -like $SLA
-        }
-      }
-      
-      return $result
     }
     catch 
     {
       throw $_
     }
+      
+    Write-Verbose "Formatting return value"
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
+    $result = Test-ReturnFilter -object $VM -location $resources.$api.Filter['$VM'] -result $result
+    $result = Test-ReturnFilter -object $SLA -location $resources.$api.Filter['$SLA'] -result $result
+    
+    return $result
 
   } # End of process
 } # End of function
