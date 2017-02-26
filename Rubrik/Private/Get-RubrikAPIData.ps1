@@ -664,7 +664,17 @@ function Get-RubrikAPIData($endpoint)
     MSSQLDBGet        = @{
       v1 = @{
         URI         = '/api/v1/mssql/db'
+        Body        = ''
+        Params      = @{
+          Filter = 'archive_status'
+          Search = 'search_value'
+        }         
         Method      = 'Get'
+        Result      = 'data'
+        Filter      = @{
+          '$Database' = 'name'
+          '$SLA' = 'effectiveSlaDomainName'
+        }
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''

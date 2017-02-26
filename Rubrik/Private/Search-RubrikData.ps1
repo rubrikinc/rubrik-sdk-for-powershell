@@ -76,7 +76,7 @@ function Test-ReturnFilter($object,$location,$result)
     # If it does exist, the results are filtered using the $object's value against the $location's key name
     # Example: Filtering an SLA Domain Name based on the "effectiveSlaDomainName" key/value pair
     return $result | Where-Object -FilterScript {
-      ($result).$location -eq $object
+      $_.$location -eq $object
     }
   }
   else
