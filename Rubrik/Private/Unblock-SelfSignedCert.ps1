@@ -2,7 +2,7 @@
     Helper function to allow self-signed certificates for HTTPS connections
     This is required when using RESTful API calls over PowerShell
 #>
-function UnblockSelfSignedCerts() 
+function Unblock-SelfSignedCert() 
 {
   Write-Verbose -Message 'Allowing self-signed certificates'
     

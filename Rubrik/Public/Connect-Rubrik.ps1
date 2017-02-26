@@ -54,31 +54,18 @@ function Connect-Rubrik
 
   )
 
+  Begin {
+
+    Unblock-SelfSignedCert
+        
+    Write-Verbose -Message 'Gather API data'
+    $resources = Get-RubrikAPIData -endpoint ('Session')
+  
+  }
+
   Process {
 
-    # Helper function to allow self-signed certificates for HTTPS connections
-    # This is required when using RESTful API calls over PowerShell
-    UnblockSelfSignedCerts
-    
-    # Check to see if the user supplied any sort of credentials
-    # If not, request credentials
-    Write-Verbose -Message 'Validating that login details were passed into username/password or credentials'
-    if ($Password -eq $null -and $Credential -eq $null)
-    {
-      Write-Warning -Message 'You did not submit a username, password, or credentials.'
-      $Credential = Get-Credential -Message 'Please enter administrative credentials for your Rubrik cluster'
-    }
-
-    # If the user supplied a username and secure password, convert them into a Credential object
-    if ($Credential -eq $null)
-    {
-      $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $Username, $Password
-    }
-
-    # Try to connect to the Rubrik node using different versions of the API
-    # Essentially, we're just looping through newer-to-older Login endpoints to see which one exists
-    Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('Session')
+    Test-RubrikCredential -Username $Username -Password $Password -Credential $([ref]$Credential)
 
     foreach ($versionnum in $resources.Keys | Sort-Object -Descending)
     {
