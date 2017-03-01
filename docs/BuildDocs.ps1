@@ -21,5 +21,5 @@ foreach ($verb in $verbs)
   }
 
   $data | Out-File -FilePath "$PSScriptRoot\cmd_$($verb.ToLower()).rst" -Encoding utf8
-  Write-Host "   cmd_$($verb.ToLower())"
+  Write-Output "   cmd_$($verb.ToLower())"
 }
