@@ -1,7 +1,7 @@
 ﻿# Import
 Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
 . "$(Split-Path -Parent -Path $PSScriptRoot)\Rubrik\Private\Get-RubrikAPIData.ps1"
-$resources = GetRubrikAPIData -endpoint ('SLADomainAssignPost')
+$resources = Get-RubrikAPIData -endpoint ('SLADomainAssignPost')
 
 # Begin Pester tests
 Describe -Name 'Protect-RubrikVM Tests' -Fixture {

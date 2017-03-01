@@ -1,7 +1,7 @@
 ﻿# Import
 Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
 . "$(Split-Path -Parent -Path $PSScriptRoot)\Rubrik\Private\Get-RubrikAPIData.ps1"
-$resources = GetRubrikAPIData -endpoint ('VMwareVMSnapshotGet')
+$resources = Get-RubrikAPIData -endpoint ('VMwareVMSnapshotGet')
 
 # Begin Pester tests
 Describe -Name 'Get-RubrikSnapshot Tests' -Fixture {

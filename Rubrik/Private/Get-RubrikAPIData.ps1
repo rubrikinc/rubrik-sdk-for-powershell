@@ -86,6 +86,11 @@ function Get-RubrikAPIData($endpoint)
           Search = ''
         }
         Method      = 'Get'
+        Result      = ''
+        Filter      = @{
+          '$VM' = 'name'
+          '$SLA' = 'effectiveSlaDomainName'
+        }        
         SuccessCode = '200'
         SuccessMock = @"
 [{

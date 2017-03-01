@@ -81,7 +81,7 @@ function New-RubrikMount
     $snapshots = Get-RubrikSnapshot -VM $VM
 
     Write-Verbose -Message 'Comparing backup dates to user date'
-    $Date = ConvertFromLocalDate -Date $Date
+    $Date = ConvertFrom-LocalDate -Date $Date
         
     Write-Verbose -Message 'Finding snapshots that match the date value'
     foreach ($_ in $snapshots)

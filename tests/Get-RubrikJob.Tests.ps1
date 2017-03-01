@@ -1,7 +1,7 @@
 ﻿# Import
 Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
 . "$(Split-Path -Parent -Path $PSScriptRoot)\Rubrik\Private\Get-RubrikAPIData.ps1"
-$resources = GetRubrikAPIData -endpoint ('JobGet')
+$resources = Get-RubrikAPIData -endpoint ('JobGet')
 
 # Begin Pester tests
 Describe -Name 'Get-RubrikJob Tests' -Fixture {
