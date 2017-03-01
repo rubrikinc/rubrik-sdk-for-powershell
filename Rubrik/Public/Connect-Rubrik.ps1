@@ -65,7 +65,7 @@ function Connect-Rubrik
 
   Process {
 
-    Test-RubrikCredential -Username $Username -Password $Password -Credential $([ref]$Credential)
+    $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
 
     foreach ($versionnum in $resources.Keys | Sort-Object -Descending)
     {

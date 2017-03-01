@@ -17,8 +17,8 @@ function Get-RubrikDatabase
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      !!!!!!!!!!!!!!!!!!!!!!!!!!Get-RubrikVM -VM 'Server1'
-      This will return the ID of the virtual machine named Server1
+      Get-RubrikDatabase -Name 'DB1'
+      This will return the ID of the database named DB1
   #>
 
   [CmdletBinding()]

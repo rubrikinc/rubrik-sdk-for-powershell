@@ -38,12 +38,16 @@ function Get-RubrikSnapshot
     [String]$api = $global:RubrikConnection.api
   )
 
-  Process {
+  Begin {
 
-    TestRubrikConnection
-    
-    Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('VMwareVMSnapshotGet')
+    Test-RubrikConnection
+        
+    Write-Verbose -Message 'Gather API data'
+    $resources = Get-RubrikAPIData -endpoint ('VMwareVMSnapshotGet')
+  
+  }
+
+  Process {
 
     Write-Verbose -Message 'Query Rubrik for the list of protected VM details'
     $vmids = (Get-RubrikVM -VM $VM).id
@@ -51,12 +55,12 @@ function Get-RubrikSnapshot
     # Possible to have multiple results for a VM name.
     foreach ($vmid in $vmids)
     {
-      Write-Verbose -Message 'Building the URI'
+      Write-Verbose -Message 'Build the URI'
       $uri = 'https://'+$Server+$resources.$api.URI
       # Replace the placeholder of {id} with the actual VM ID
       $uri = $uri -replace '{id}', $vmid
         
-      # Set the method
+      Write-Verbose -Message 'Build the method'
       $method = $resources.$api.Method
 
       Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'

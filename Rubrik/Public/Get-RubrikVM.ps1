@@ -82,7 +82,7 @@ function Get-RubrikVM
       throw $_
     }
       
-    Write-Verbose "Formatting return value"
+    Write-Verbose -Message 'Formatting return value'
     $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
     $result = Test-ReturnFilter -object $VM -location $resources.$api.Filter['$VM'] -result $result
     $result = Test-ReturnFilter -object $SLA -location $resources.$api.Filter['$SLA'] -result $result

@@ -33,11 +33,14 @@ function Sync-RubrikTag
     [String]$api = $global:RubrikConnection.api
   )
 
+  Begin {
+
+    Test-RubrikConnection
+    Test-VMwareConnection
+  
+  }
+
   Process {
-
-    TestRubrikConnection
-
-    ConnectTovCenter -vCenter $vCenter
         
     Write-Verbose -Message 'Gather the SLA Domains'
     $sladomain = Get-RubrikSLA
