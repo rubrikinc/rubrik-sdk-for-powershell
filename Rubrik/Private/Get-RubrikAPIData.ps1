@@ -4,16 +4,8 @@
 function GetRubrikAPIData($endpoint)
 {
   $api = @{
-    Session                   = @{
-      'v1.1' = @{
-        URI         = '/api/v1/session'
-        Method      = 'Post'
-        SuccessCode = '200'
-        SuccessMock = '{"userId": "11111111-2222-3333-4444-555555555555","token": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"}'
-        FailureCode = '422'
-        FailureMock = '{"errorType":"user_error","message":"Incorrect Username/Password","cause":null}'
-      }
-      'v1.0' = @{
+    Login                     = @{
+      v1 = @{
         URI         = '/api/v1/login'
         Body        = @('username', 'password')
         Method      = 'Post'
@@ -22,7 +14,7 @@ function GetRubrikAPIData($endpoint)
         FailureCode = '422'
         FailureMock = '{"errorType":"user_error","message":"Incorrect Username/Password","cause":null}'
       }
-      'v0' = @{
+      v0 = @{
         URI         = '/login'
         Body        = @('userId', 'password')
         Method      = 'Post'
@@ -111,6 +103,81 @@ function GetRubrikAPIData($endpoint)
         FailureMock = '{"status": "Failure"}'
       }
     }
+       UnmanagedObject               = @{
+      v1 = @{
+        URI         = '/api/internal/unmanaged_object'
+        Body        = ''
+        Params      = @{
+          Search = 'search_value'
+          Filter = 'object_type'
+        }
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+  "hasMore": true,
+  "data": [
+    {
+      "id": "209a93f5-bf4e-4228-965e-8e6e684cbaa2-vm-94",
+      "name": "VUM1",
+      "objectType": "VirtualMachine",
+      "physicalLocation": [
+        {
+          "managedId": "vCenter:::209a93f5-bf4e-4228-965e-8e6e684cbaa2",
+          "name": "vcsa1.rubrik.demo"
+        },
+        {
+          "managedId": "DataCenter:::209a93f5-bf4e-4228-965e-8e6e684cbaa2-datacenter-2",
+          "name": "Santa Clara"
+        },
+        {
+          "managedId": "ComputeCluster:::209a93f5-bf4e-4228-965e-8e6e684cbaa2-domain-c44",
+          "name": "Old Mgmt"
+        },
+        {
+          "managedId": "VmwareHost:::209a93f5-bf4e-4228-965e-8e6e684cbaa2-host-10347",
+          "name": "esxm03.rubrik.demo"
+        }
+      ],
+      "unmanagedStatus": "Relic",
+      "unmanagedSnapshotCount": 48,
+      "localStorage": 1928366779,
+      "archiveStorage": 1404044423
+    },
+    {
+      "id": "f6a2122c-584b-4048-9cfb-030ab3cfdc34-vm-118",
+      "name": "SE-CCHOW-WIN",
+      "objectType": "VirtualMachine",
+      "physicalLocation": [
+        {
+          "managedId": "vCenter:::f6a2122c-584b-4048-9cfb-030ab3cfdc34",
+          "name": "demovcsa.rubrik.demo"
+        },
+        {
+          "managedId": "DataCenter:::f6a2122c-584b-4048-9cfb-030ab3cfdc34-datacenter-21",
+          "name": "Santa Clara"
+        },
+        {
+          "managedId": "ComputeCluster:::f6a2122c-584b-4048-9cfb-030ab3cfdc34-domain-c26",
+          "name": "Demo"
+        },
+        {
+          "managedId": "VmwareHost:::f6a2122c-584b-4048-9cfb-030ab3cfdc34-host-70449",
+          "name": "esx14.rubrik.demo"
+        }
+      ],
+      "unmanagedStatus": "Relic",
+      "unmanagedSnapshotCount": 51,
+      "localStorage": 2247130648,
+      "archiveStorage": 1056496800
+    }
+}]
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+  }
+
     VMwareVMSnapshotGet       = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/{id}/snapshot'
@@ -530,7 +597,7 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    VMwareVMBackupPost        = @{
+    VMwareVMBackupPost = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/{id}/backup'
         Method      = 'Post'
@@ -559,15 +626,15 @@ function GetRubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       }
-    }
-    VMwareVMMountPowerPost    = @{
+    }    
+    VMwareVMMountPowerPost = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/mount/{id}/power'
         Method      = 'Post'
         Params      = @{
-          vmId        = $null
+          vmId = $null
           powerStatus = 'powerStatus'
-        }
+          }
         SuccessCode = '204'
         SuccessMock = ''
         FailureCode = ''
@@ -577,39 +644,39 @@ function GetRubrikAPIData($endpoint)
         URI         = '/vm/power'
         Method      = 'Post'
         Params      = @{
-          vmId        = 'vmId'
+          vmId = 'vmId'
           powerStatus = 'powerState'
-        }        
+          }        
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
       }
-    }
-    VMwareVMPatch             = @{
+    }                
+    VMwareVMPatch = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/{id}'
         Method      = 'Patch'
         Params      = @{
           snapshotConsistencyMandate = 'snapshotConsistencyMandate'
-          maxNestedVsphereSnapshots  = 'maxNestedVsphereSnapshots'
-          isVmPaused                 = 'isVmPaused'
-          preBackupScript            = @{
-            scriptPath      = 'scriptPath'
-            timeoutMs       = 'timeoutMs'
+          maxNestedVsphereSnapshots = 'maxNestedVsphereSnapshots'
+          isVmPaused = 'isVmPaused'
+          preBackupScript = @{
+            scriptPath = 'scriptPath'
+            timeoutMs = 'timeoutMs'
             failureHandling = 'failureHandling'
-          }
-          postSnapScript             = @{
-            scriptPath      = 'scriptPath'
-            timeoutMs       = 'timeoutMs'
+            }
+          postSnapScript = @{
+            scriptPath = 'scriptPath'
+            timeoutMs = 'timeoutMs'
             failureHandling = 'failureHandling'
-          }
-          postBackupScript           = @{
-            scriptPath      = 'scriptPath'
-            timeoutMs       = 'timeoutMs'
+            }
+          postBackupScript = @{
+            scriptPath = 'scriptPath'
+            timeoutMs = 'timeoutMs'
             failureHandling = 'failureHandling'
+            }
           }
-        }
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''
@@ -620,33 +687,33 @@ function GetRubrikAPIData($endpoint)
         Method      = 'Patch'
         Params      = @{
           snapshotConsistencyMandate = 'snapshotConsistencyMandate'
-          maxNestedVsphereSnapshots  = 'maxNestedVsphereSnapshots'
-        }      
+          maxNestedVsphereSnapshots = 'maxNestedVsphereSnapshots'
+          }      
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
       }
-    }
-    SLADomainPost             = @{
+    }  
+    SLADomainPost = @{
       v1 = @{
         URI         = '/api/v1/sla_domain'
         Method      = 'Post'
         Params      = @{
-          name        = 'name'
+          name = 'name'
           frequencies = @{
-            timeUnit  = 'timeUnit'
+            timeUnit = 'timeUnit'
             frequency = 'frequency'
             retention = 'retention'
+            }
           }
-        }
         SuccessCode = '201'
         SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
       }
-    }
-    VMwareVMRequestGet        = @{
+    }      
+    VMwareVMRequestGet = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/request/{id}'
         Method      = 'Get'
@@ -655,7 +722,51 @@ function GetRubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       }
+    } 
+       MSSQLDBGet               = @{
+      v1 = @{
+        URI         = '/api/v1/mssql/db'
+        Body        = ''
+        Params      = @{
+          Filter = 'instance_id','sla_domain_id','primary_cluster_id','archive_status'
+        }
+        Method      = 'Get'
+        SuccessCode = '200'
+        SuccessMock = @"
+{
+  "hasMore": false,
+  "data": [
+    {
+      "databaseUuid": "1ac0a705-d045-4373-adc1-af2da2ee0868",
+      "hostId": "f149d394-2127-476d-85a4-2acc04bd5536",
+      "hostname": "SE-JBAILLEY-WIN",
+      "id": "1ac0a705-d045-4373-adc1-af2da2ee0868@a25e9ca0-aab0-49ee-ac06-c868090e950c",
+      "instanceId": "a25e9ca0-aab0-49ee-ac06-c868090e950c",
+      "instanceName": "SQLRUBRIK",
+      "isRelic": false,
+      "managedId": "MssqlDatabase:::1ac0a705-d045-4373-adc1-af2da2ee0868",
+      "primaryClusterId": "5fca952e-d332-4419-bb96-8339d9beb3ac",
+      "isArchived": false,
+      "localStorage": 1430762,
+      "archiveStorage": 2017481,
+      "copyOnly": false,
+      "logBackupFrequencyInSeconds": 600,
+      "logBackupRetentionHours": 168,
+      "name": "model",
+      "recoveryModel": "FULL",
+      "slaDomainId": "d8a8430c-40de-4cb7-b834-bd0e7de40ed1",
+      "slaDomainName": "Gold",
+      "snappableId": "763fe225-c5d3-46b9-8942-fe57fef85529",
+      "snapshotCount": 46,
+      "state": "ONLINE",
+      "hasPermissions": true
     }
+"@
+        FailureCode = ''
+        FailureMock = ''
+      }
+    } 
+             
   } # End of API
   
   return $api.$endpoint
