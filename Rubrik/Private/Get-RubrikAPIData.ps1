@@ -678,7 +678,7 @@ function Get-RubrikAPIData($endpoint)
         Result      = 'data'
         Filter      = @{
           '$Database' = 'name'
-          '$SLA' = 'slaDomainName'
+          '$SLA' = 'effectiveSlaDomainName'
         }
         SuccessCode = '200'
         SuccessMock = ''
