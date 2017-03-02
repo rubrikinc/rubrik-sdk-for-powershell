@@ -35,17 +35,16 @@ function Protect-RubrikDatabase
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('id')]
     [ValidateNotNullorEmpty()]
-    [String]$Database,
+    [String]$DatabaseID,
     # The SLA Domain in Rubrik
     [Parameter(Position = 1,ParameterSetName = 'SLA_Explicit')]
     [String]$SLA,
     # Removes the SLA Domain assignment
     [Parameter(Position = 2,ParameterSetName = 'SLA_Unprotected')]
     [Switch]$DoNotProtect,
-    # NOT YET IMPLEMENTED
     # Inherits the SLA Domain assignment from a parent object
-    #[Parameter(Position = 3,ParameterSetName = 'SLA_Inherit')]
-    #[Switch]$Inherit,
+    [Parameter(Position = 3,ParameterSetName = 'SLA_Inherit')]
+    [Switch]$Inherit,
     # Rubrik server IP or FQDN
     [Parameter(Position = 4)]
     [String]$Server = $global:RubrikConnection.server,
@@ -65,35 +64,29 @@ function Protect-RubrikDatabase
 
   Process {
     
-    Write-Verbose -Message 'Determining the SLA Domain id'
-    if ($SLA) 
-    {
-      $slaid = (Get-RubrikSLA -SLA $SLA).id
-    }
-    if ($Inherit) 
-    {
-      $slaid = 'INHERIT'
-    }
-    if ($DoNotProtect) 
-    {
-      $slaid = 'UNPROTECTED'
-    }
-    
+    $slaid = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+   
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
     # Replace the placeholder of {id} with the actual database ID
-    $uri = $uri -replace '{id}', $Database
+    $uri = $uri -replace '{id}', $DatabaseID
     
     Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
     
     Write-Verbose -Message 'Build the body'
     $body = @{}
-    $body.Add($resources.$api.Body.SLA,$SnapConsistency)
+    $body.Add($resources.$api.Body.SLA,$slaid)
+    
+    Write-Verbose -Message 'Describe database detail for confirm'
+    $databaseDetail = Get-RubrikDatabase -id $DatabaseID
+    $confirmMessage = $databaseDetail.(($resources.$api.Filter['$Host']).Split(".")[0]).(($resources.$api.Filter['$Host']).Split(".")[-1])+"\"
+    $confirmMessage += $databaseDetail.($resources.$api.Filter['$Instance'])+"\"
+    $confirmMessage += $databaseDetail.($resources.$api.Filter['$Database'])
 
     try
     {
-      if ($PSCmdlet.ShouldProcess($Database,"Assign SLA Domain $slaid"))
+      if ($PSCmdlet.ShouldProcess($confirmMessage,"Assign SLA Domain $SLA"))
       {
         $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
         if ($r.StatusCode -ne $resources.$api.SuccessCode) 

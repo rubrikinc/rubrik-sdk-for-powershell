@@ -40,7 +40,9 @@ function Get-RubrikDatabase
     # Name of the database instance
     [String]$Instance,    
     # Name of the database host
-    #[String]$Host,
+    [String]$Host,
+    # Database id
+    [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -61,6 +63,10 @@ function Get-RubrikDatabase
 
     Write-Verbose -Message 'Building the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
+    if ($id) 
+    {
+      $uri += "/$id"
+    }
 
     Write-Verbose -Message 'Build the query parameters'
     $params = @()
@@ -84,13 +90,15 @@ function Get-RubrikDatabase
       throw $_
     }    
       
-    Write-Verbose -Message 'Formatting return value'
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
-    $result = Test-ReturnFilter -object $Database -location $resources.$api.Filter['$Database'] -result $result
-    $result = Test-ReturnFilter -object $SLA -location $resources.$api.Filter['$SLA'] -result $result
-    $result = Test-ReturnFilter -object $Instance -location $resources.$api.Filter['$Instance'] -result $result
-    # Not working yet
-    #$result = Test-ReturnFilter -object $Host -location $resources.$api.Filter['$Host'] -result $result
+    if (!$id) 
+    {
+      Write-Verbose -Message 'Formatting return value'
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
+      $result = Test-ReturnFilter -object $Database -location $resources.$api.Filter['$Database'] -result $result
+      $result = Test-ReturnFilter -object $SLA -location $resources.$api.Filter['$SLA'] -result $result
+      $result = Test-ReturnFilter -object $Instance -location $resources.$api.Filter['$Instance'] -result $result
+      $result = Test-ReturnFilter -object $Host -location $resources.$api.Filter['$Host'] -result $result
+    }
     
     return $result
 
