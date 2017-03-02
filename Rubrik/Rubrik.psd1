@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '3.1.0.1'
+ModuleVersion = '3.1.0.2'
 
 # ID used to uniquely identify this module
 GUID = 'a4cb0e3e-b1fe-4da8-9c75-d445e5f96cfb'
@@ -66,7 +66,7 @@ FormatsToProcess = @()
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Remove-RubrikSLA','Protect-RubrikVM','Sync-RubrikTag','New-RubrikReport','Get-RubrikVM','Get-RubrikSnapshot','Protect-RubrikTag','Stop-RubrikVM','Start-RubrikVM','Get-RubrikJob','Set-RubrikVM','New-RubrikSLA','Get-RubrikRequest','Move-RubrikMountVMDK','Sync-RubrikAnnotation','Get-RubrikDatabase')
+FunctionsToExport = @('Connect-Rubrik','Get-RubrikMount','Get-RubrikSLA','Get-RubrikVersion','New-RubrikMount','New-RubrikSnapshot','Remove-RubrikMount','Remove-RubrikSLA','Protect-RubrikVM','Sync-RubrikTag','New-RubrikReport','Get-RubrikVM','Get-RubrikSnapshot','Protect-RubrikTag','Stop-RubrikVM','Start-RubrikVM','Get-RubrikJob','Set-RubrikVM','New-RubrikSLA','Get-RubrikRequest','Move-RubrikMountVMDK','Sync-RubrikAnnotation','Get-RubrikDatabase','Protect-RubrikDatabase')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()

@@ -666,7 +666,7 @@ function Get-RubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    MSSQLDBGet        = @{
+    MSSQLDBGet                = @{
       v1 = @{
         URI         = '/api/v1/mssql/db'
         Body        = ''
@@ -678,13 +678,38 @@ function Get-RubrikAPIData($endpoint)
         Result      = 'data'
         Filter      = @{
           '$Database' = 'name'
-          '$SLA' = 'effectiveSlaDomainName'
+          '$SLA'      = 'effectiveSlaDomainName'
+          '$Host'     = 'rootProperties.rootName'
+          '$Instance' = 'instanceName'
         }
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
       }
+    }
+    MSSQLDBPatch              = @{
+      v1 = @{
+        URI         = '/api/v1/mssql/db/{id}'
+        Body        = @{
+          SLA               = 'configuredSlaDomainId'
+          LogBackupSeconds  = 'logBackupFrequencyInSeconds'
+          LogRetentionHours = 'logRetentionHours'
+          CopyOnly          = 'copyOnly'
+          MaxDataStreams    = 'maxDataStreams'
+        }    
+        Params      = ''    
+        Method      = 'Patch'
+        Result      = 'data'
+        Filter      = @{
+          '$Database' = 'name'
+          '$SLA'    = 'effectiveSlaDomainName'
+        }
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      } 
     }
   } # End of API
   

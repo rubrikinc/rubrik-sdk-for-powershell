@@ -36,12 +36,14 @@ function Get-RubrikDatabase
     # SLA Domain policy
     [Parameter(Position = 2,ValueFromPipeline = $true)]
     [Alias('sla_domain_id')]    
-    [String]$SLA,        
+    [String]$SLA,
+    # Name of the database instance
+    [String]$Instance,    
+    # Name of the database host
+    #[String]$Host,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 3)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 4)]
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
@@ -86,6 +88,9 @@ function Get-RubrikDatabase
     $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
     $result = Test-ReturnFilter -object $Database -location $resources.$api.Filter['$Database'] -result $result
     $result = Test-ReturnFilter -object $SLA -location $resources.$api.Filter['$SLA'] -result $result
+    $result = Test-ReturnFilter -object $Instance -location $resources.$api.Filter['$Instance'] -result $result
+    # Not working yet
+    #$result = Test-ReturnFilter -object $Host -location $resources.$api.Filter['$Host'] -result $result
     
     return $result
 
