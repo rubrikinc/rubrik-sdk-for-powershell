@@ -3,9 +3,70 @@
 
 This page contains details on **Get** commands.
 
-Get-RubrikJob
+Get-RubrikDatabase
 -------------------------
 
+
+NAME
+    Get-RubrikDatabase
+    
+SYNOPSIS
+    Retrieves details on one or more databases known to a Rubrik cluster
+    
+    
+SYNTAX
+    Get-RubrikDatabase [[-Database] <String>] [[-Filter] <String>] [[-SLA] <String>] [-Instance <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikDatabase cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of databases
+    
+
+PARAMETERS
+    -Database <String>
+        Name of the database
+        If no value is specified, will retrieve information on all databases
+        
+    -Filter <String>
+        Filter results based on active, relic (removed), or all databases
+        
+    -SLA <String>
+        SLA Domain policy
+        
+    -Instance <String>
+        Name of the database instance
+        
+    -Server <String>
+        Name of the database host
+        [String]$Host,
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikDatabase -Name 'DB1'
+    
+    This will return the ID of the database named DB1
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikDatabase -examples".
+    For more information, type: "get-help Get-RubrikDatabase -detailed".
+    For technical information, type: "get-help Get-RubrikDatabase -full".
+    For online help, type: "get-help Get-RubrikDatabase -online"
+
+Get-RubrikJob
+-------------------------
 
 NAME
     Get-RubrikJob

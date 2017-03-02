@@ -15,8 +15,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Move-RubrikMountVMDK [-SourceVM] <String> [-TargetVM] <String> [[-Date] <String>] [[-ExcludeDisk] <Array>] [-Server <String>] [-api <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Move-RubrikMountVMDK [-SourceVM] <String> [-TargetVM] <String> [[-Date] <String>] [[-ExcludeDisk] <Array>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     Move-RubrikMountVMDK [-Cleanup <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     

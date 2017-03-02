@@ -3,9 +3,87 @@
 
 This page contains details on **Protect** commands.
 
-Protect-RubrikTag
+Protect-RubrikDatabase
 -------------------------
 
+
+NAME
+    Protect-RubrikDatabase
+    
+SYNOPSIS
+    Connects to Rubrik and assigns an SLA to a database
+    
+    
+SYNTAX
+    Protect-RubrikDatabase [-Database] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    Protect-RubrikDatabase [-Database] <String> [[-DoNotProtect]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Protect-RubrikDatabase cmdlet will update a database's SLA Domain assignment within the Rubrik cluster.
+    The SLA Domain contains all policy-driven values needed to protect workloads.
+    Note that this function requires the Database ID value, not the name of the database, since database names are not unique across hosts.
+    It is suggested that you first use Get-RubrikDatabase to narrow down the one or more database / instance / hosts to protect, and then pipe the results to Protect-RubrikDatabase.
+    You will be asked to confirm each database you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
+    
+
+PARAMETERS
+    -Database <String>
+        Database ID
+        
+    -SLA <String>
+        The SLA Domain in Rubrik
+        
+    -DoNotProtect [<SwitchParameter>]
+        Removes the SLA Domain assignment
+        
+    -Server <String>
+        NOT YET IMPLEMENTED
+        Inherits the SLA Domain assignment from a parent object
+        [Parameter(Position = 3,ParameterSetName = 'SLA_Inherit')]
+        [Switch]$Inherit,
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    -WhatIf [<SwitchParameter>]
+        
+    -Confirm [<SwitchParameter>]
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikDatabase "DB1" | Protect-RubrikDatabase -SLA 'Gold'
+    
+    This will assign the Gold SLA Domain to any database named "DB1"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikDatabase "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -SLA 'Gold' -Confirm:$False
+    
+    This will assign the Gold SLA Domain to any database named "DB1" residing on an instance named "MSSQLSERVER" without asking for confirmation
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Protect-RubrikDatabase -examples".
+    For more information, type: "get-help Protect-RubrikDatabase -detailed".
+    For technical information, type: "get-help Protect-RubrikDatabase -full".
+    For online help, type: "get-help Protect-RubrikDatabase -online"
+
+Protect-RubrikTag
+-------------------------
 
 NAME
     Protect-RubrikTag
@@ -93,8 +171,7 @@ SYNTAX
     
     
 DESCRIPTION
-    The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values 
-    needed to protect workloads.
+    The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values needed to protect workloads.
     
 
 PARAMETERS

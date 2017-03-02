@@ -6,7 +6,11 @@ function Protect-RubrikDatabase
       Connects to Rubrik and assigns an SLA to a database
             
       .DESCRIPTION
-      The Protect-RubrikDatabase cmdlet will update a database's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values needed to protect workloads.
+      The Protect-RubrikDatabase cmdlet will update a database's SLA Domain assignment within the Rubrik cluster.
+      The SLA Domain contains all policy-driven values needed to protect workloads.
+      Note that this function requires the Database ID value, not the name of the database, since database names are not unique across hosts.
+      It is suggested that you first use Get-RubrikDatabase to narrow down the one or more database / instance / hosts to protect, and then pipe the results to Protect-RubrikDatabase.
+      You will be asked to confirm each database you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
             
       .NOTES
       Written by Chris Wahl for community usage
@@ -17,15 +21,19 @@ function Protect-RubrikDatabase
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Protect-RubrikDatabase -Database 'Server1' -SLA 'Gold'
-      This will assign the Gold SLA Domain to a VM named Server1
+      Get-RubrikDatabase "DB1" | Protect-RubrikDatabase -SLA 'Gold'
+      This will assign the Gold SLA Domain to any database named "DB1"
+
+      .EXAMPLE
+      Get-RubrikDatabase "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -SLA 'Gold' -Confirm:$False
+      This will assign the Gold SLA Domain to any database named "DB1" residing on an instance named "MSSQLSERVER" without asking for confirmation
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Database ID
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('Name')]
+    [Alias('id')]
     [ValidateNotNullorEmpty()]
     [String]$Database,
     # The SLA Domain in Rubrik
@@ -80,9 +88,8 @@ function Protect-RubrikDatabase
     $method = $resources.$api.Method
     
     Write-Verbose -Message 'Build the body'
-    $body = @{
-      $resource.$api.Body.SLA = $slaid
-    }
+    $body = @{}
+    $body.Add($resources.$api.Body.SLA,$SnapConsistency)
 
     try
     {

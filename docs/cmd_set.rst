@@ -15,8 +15,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-RubrikVM [-VM] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] [[-PauseBackups] <String>] [-Server <String>] [-api <String>] 
-    [<CommonParameters>]
+    Set-RubrikVM [-VM] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] [[-PauseBackups] <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
     
     
 DESCRIPTION
