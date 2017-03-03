@@ -15,9 +15,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikDatabase [-Database] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase [-DatabaseID] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikDatabase [-Database] <String> [[-DoNotProtect]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase [-DatabaseID] <String> [[-DoNotProtect]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    Protect-RubrikDatabase [-DatabaseID] <String> [[-Inherit]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -29,7 +31,7 @@ DESCRIPTION
     
 
 PARAMETERS
-    -Database <String>
+    -DatabaseID <String>
         Database ID
         
     -SLA <String>
@@ -38,11 +40,10 @@ PARAMETERS
     -DoNotProtect [<SwitchParameter>]
         Removes the SLA Domain assignment
         
-    -Server <String>
-        NOT YET IMPLEMENTED
+    -Inherit [<SwitchParameter>]
         Inherits the SLA Domain assignment from a parent object
-        [Parameter(Position = 3,ParameterSetName = 'SLA_Inherit')]
-        [Switch]$Inherit,
+        
+    -Server <String>
         Rubrik server IP or FQDN
         
     -api <String>
@@ -163,19 +164,23 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikVM [-VM] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM [-VMID] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikVM [-VM] <String> [[-DoNotProtect]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM [-VMID] <String> [[-DoNotProtect]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikVM [-VM] <String> [[-Inherit]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM [-VMID] <String> [[-Inherit]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values needed to protect workloads.
+    The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster.
+    The SLA Domain contains all policy-driven values needed to protect workloads.
+    Note that this function requires the virtual machine ID value, not the name of the virtual machine, since virtual machine names are not unique across clusters.
+    It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machine to protect, and then pipe the results to Protect-RubrikVM.
+    You will be asked to confirm each virtual machine you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
     
 
 PARAMETERS
-    -VM <String>
+    -VMID <String>
         Virtual machine name
         
     -SLA <String>
@@ -205,9 +210,19 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Protect-RubrikVM -VM 'Server1' -SLA 'Gold'
+    PS C:\>Get-RubrikVM "VM1" | Protect-RubrikVM -SLA 'Gold'
     
-    This will assign the Gold SLA Domain to a VM named Server1
+    This will assign the Gold SLA Domain to any virtual machine named "VM1"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikVM "VM1" -Filter ACTIVE -SLA Silver | Protect-RubrikVM -SLA 'Gold' -Confirm:$False
+    
+    This will assign the Gold SLA Domain to any virtual machine named "VM1" that is marked as ACTIVE and currently assigned to the Silver SLA Domain
+    without asking for confirmation
     
     
     

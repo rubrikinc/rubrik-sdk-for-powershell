@@ -15,7 +15,8 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikDatabase [[-Database] <String>] [[-Filter] <String>] [[-SLA] <String>] [-Instance <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+    Get-RubrikDatabase [[-Database] <String>] [[-Filter] <String>] [[-SLA] <String>] [-Instance <String>] [-Host <String>] [-id <String>] [-Server <String>] [-api <String>] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
@@ -36,9 +37,13 @@ PARAMETERS
     -Instance <String>
         Name of the database instance
         
-    -Server <String>
+    -Host <String>
         Name of the database host
-        [String]$Host,
+        
+    -id <String>
+        Database id
+        
+    -Server <String>
         Rubrik server IP or FQDN
         
     -api <String>
@@ -399,7 +404,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikVM [[-VM] <String>] [[-Filter] <String>] [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikVM [[-VM] <String>] [[-Relic] <String>] [[-SLA] <String>] [-VMID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -411,11 +416,14 @@ PARAMETERS
         Name of the virtual machine
         If no value is specified, will retrieve information on all virtual machines
         
-    -Filter <String>
+    -Relic <String>
         Filter results based on active, relic (removed), or all virtual machines
         
     -SLA <String>
         SLA Domain policy
+        
+    -VMID <String>
+        Virtual machine id
         
     -Server <String>
         Rubrik server IP or FQDN
