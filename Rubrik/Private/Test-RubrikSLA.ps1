@@ -3,7 +3,12 @@
   Write-Verbose -Message 'Determining the SLA Domain id'
   if ($SLA) 
   {
-    return (Get-RubrikSLA -SLA $SLA).id
+    $slaid = (Get-RubrikSLA -SLA $SLA).id
+    if ($slaid -eq $null) 
+    {
+      throw "No SLA Domains were found that match $SLA"
+    }
+    return $slaid
   }
   if ($Inherit) 
   {

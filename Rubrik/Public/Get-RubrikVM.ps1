@@ -26,22 +26,23 @@ function Get-RubrikVM
     # Name of the virtual machine
     # If no value is specified, will retrieve information on all virtual machines
     [Parameter(Position = 0,ValueFromPipeline = $true)]
-    [Alias('Name','search_value')]
+    [Alias('name','search_value')]
     [String]$VM,
     # Filter results based on active, relic (removed), or all virtual machines
     [Parameter(Position = 1)]
-    [Alias('archiveStatusFilterOpt','archive_status')]
-    [ValidateSet('ACTIVE', 'RELIC')]
-    [String]$Filter,
+    [Alias('archive_status','effective_sla_domain_id')]
+    [ValidateSet('True', 'False')]
+    [String]$Relic,
     # SLA Domain policy
     [Parameter(Position = 2,ValueFromPipeline = $true)]
     [Alias('sla_domain_id')]    
-    [String]$SLA,        
+    [String]$SLA,  
+    # Virtual machine id
+    [Alias('id')]
+    [String]$VMID,          
     # Rubrik server IP or FQDN
-    [Parameter(Position = 3)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 4)]
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
@@ -59,11 +60,16 @@ function Get-RubrikVM
 
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
-
+    if ($VMID) 
+    {
+      $uri += "/$VMID"
+    }
+    
     Write-Verbose -Message 'Build the query parameters'
     $params = @()
-    $params += Test-QueryObject -object $Filter -location $resources.$api.Params.Filter -params $params
+    $params += Test-QueryObject -object $Relic -location $resources.$api.Params.Filter -params $params
     $params += Test-QueryObject -object $VM -location $resources.$api.Params.Search -params $params
+    $params += Test-QueryObject -object (Test-RubrikSLA -SLA $SLA) -location $resources.$api.Params.SLA -params $params
     $uri = New-QueryString -params $params -uri $uri -nolimit $true
 
     Write-Verbose -Message 'Build the method'
@@ -81,11 +87,12 @@ function Get-RubrikVM
     {
       throw $_
     }
-      
-    Write-Verbose -Message 'Formatting return value'
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
-    $result = Test-ReturnFilter -object $VM -location $resources.$api.Filter['$VM'] -result $result
-    $result = Test-ReturnFilter -object $SLA -location $resources.$api.Filter['$SLA'] -result $result
+
+    if (!$VMID) 
+    {      
+      Write-Verbose -Message 'Formatting return value'
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
+    }
     
     return $result
 
