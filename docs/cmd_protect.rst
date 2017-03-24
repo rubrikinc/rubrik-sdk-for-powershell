@@ -15,11 +15,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikDatabase [-DatabaseID] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase [-DatabaseID] <String> [[-SLA] <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikDatabase [-DatabaseID] <String> [[-DoNotProtect]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase [-DatabaseID] <String> [[-DoNotProtect]] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikDatabase [-DatabaseID] <String> [[-Inherit]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase [-DatabaseID] <String> [[-Inherit]] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -82,6 +82,80 @@ REMARKS
     For more information, type: "get-help Protect-RubrikDatabase -detailed".
     For technical information, type: "get-help Protect-RubrikDatabase -full".
     For online help, type: "get-help Protect-RubrikDatabase -online"
+
+Protect-RubrikFileset
+-------------------------
+
+NAME
+    Protect-RubrikFileset
+    
+SYNOPSIS
+    Connects to Rubrik and assigns an SLA to a fileset
+    
+    
+SYNTAX
+    Protect-RubrikFileset [-FilesetID] <String> [[-SLA] <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    Protect-RubrikFileset [-FilesetID] <String> [[-DoNotProtect]] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Protect-RubrikFileset cmdlet will update a fileset's SLA Domain assignment within the Rubrik cluster.
+    The SLA Domain contains all policy-driven values needed to protect data.
+    Note that this function requires the fileset ID value, not the name of the fileset, since fileset names are not unique across clusters.
+    It is suggested that you first use Get-RubrikFileset to narrow down the one or more filesets to protect, and then pipe the results to Protect-RubrikFileset.
+    You will be asked to confirm each fileset you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
+    
+
+PARAMETERS
+    -FilesetID <String>
+        Fileset ID
+        
+    -SLA <String>
+        The SLA Domain in Rubrik
+        
+    -DoNotProtect [<SwitchParameter>]
+        Removes the SLA Domain assignment
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    -WhatIf [<SwitchParameter>]
+        
+    -Confirm [<SwitchParameter>]
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikFileset 'C_Drive' | Protect-RubrikFileset -SLA 'Gold'
+    
+    This will assign the Gold SLA Domain to any fileset named "C_Drive"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Gold' -Confirm:$False
+    
+    This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" without asking for confirmation
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Protect-RubrikFileset -examples".
+    For more information, type: "get-help Protect-RubrikFileset -detailed".
+    For technical information, type: "get-help Protect-RubrikFileset -full".
+    For online help, type: "get-help Protect-RubrikFileset -online"
 
 Protect-RubrikTag
 -------------------------
@@ -181,7 +255,7 @@ DESCRIPTION
 
 PARAMETERS
     -VMID <String>
-        Virtual machine name
+        Virtual machine ID
         
     -SLA <String>
         The SLA Domain in Rubrik
