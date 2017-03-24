@@ -55,22 +55,26 @@ function Set-RubrikVM
     [String]$api = $global:RubrikConnection.api
   )
 
+  Begin {
+
+    Test-RubrikConnection
+        
+    Write-Verbose -Message 'Gather API data'
+    $resources = Get-RubrikAPIData -endpoint ('VMwareVMPatch')
+  
+  }
+
   Process {
-
-    TestRubrikConnection
-
-    Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('VMwareVMPatch')
 
     Write-Verbose -Message 'Gathering VM ID value from Rubrik'
     $vmid = (Get-RubrikVM -VM $VM).id
 
-    Write-Verbose -Message 'Building the URI'
+    Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
     # Replace the placeholder of {id} with the actual VM ID
     $uri = $uri -replace '{id}', $vmid
     
-    # Set the method
+    Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
     
     Write-Verbose -Message 'Defining a body variable for required API params'

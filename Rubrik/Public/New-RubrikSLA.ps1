@@ -55,14 +55,18 @@ function New-RubrikSLA
     [String]$api = $global:RubrikConnection.api
   )
 
+  Begin {
+
+    Test-RubrikConnection
+        
+    Write-Verbose -Message 'Gather API data'
+    $resources = Get-RubrikAPIData -endpoint ('SLADomainPost')
+  
+  }
+
   Process {
 
-    TestRubrikConnection
-        
-    Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('SLADomainPost')
-
-    Write-Verbose -Message 'Building the URI'
+    Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
 
     Write-Verbose -Message 'Build the body'
@@ -120,7 +124,7 @@ function New-RubrikSLA
       throw 'You did not specify any frequency and retention values'
     }
 
-    # Set the method
+    Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
 
     Write-Verbose -Message 'Submit the request'

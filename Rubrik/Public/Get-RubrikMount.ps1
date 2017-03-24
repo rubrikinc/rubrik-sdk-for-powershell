@@ -50,17 +50,21 @@ function Get-RubrikMount
     [String]$api = $global:RubrikConnection.api
   )
 
+  Begin {
+
+    Test-RubrikConnection
+        
+    Write-Verbose -Message 'Gather API data'
+    $resources = Get-RubrikAPIData -endpoint ('VMwareVMMountGet')
+  
+  }
+
   Process {
 
-    TestRubrikConnection
-    
-    Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('VMwareVMMountGet')
-    
-    Write-Verbose -Message 'Building the URI'
+    Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
     
-    # Set the method
+    Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
         
     try 
@@ -93,7 +97,6 @@ function Get-RubrikMount
       }
 
       return $mounts
-      
     }
     catch 
     {

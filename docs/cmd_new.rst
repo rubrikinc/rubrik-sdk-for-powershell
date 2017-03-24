@@ -99,8 +99,8 @@ SYNTAX
     
     
 DESCRIPTION
-    The New-RubrikReport cmdlet is used to retrieve all of the tasks that have been run by a Rubrik cluster. Use either 'daily' or 'weekly' for ReportType to define 
-    the reporting scope.
+    The New-RubrikReport cmdlet is used to retrieve all of the tasks that have been run by a Rubrik cluster. Use either 'daily' or 'weekly' for ReportType to define the reporting 
+    scope.
     
 
 PARAMETERS
@@ -160,9 +160,8 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikSLA [-SLA] <String> [-HourlyFrequency <Int32>] [-HourlyRetention <Int32>] [-DailyFrequency <Int32>] [-DailyRetention <Int32>] [-MonthlyFrequency 
-    <Int32>] [-MonthlyRetention <Int32>] [-YearlyFrequency <Int32>] [-YearlyRetention <Int32>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] 
-    [<CommonParameters>]
+    New-RubrikSLA [-SLA] <String> [-HourlyFrequency <Int32>] [-HourlyRetention <Int32>] [-DailyFrequency <Int32>] [-DailyRetention <Int32>] [-MonthlyFrequency <Int32>] 
+    [-MonthlyRetention <Int32>] [-YearlyFrequency <Int32>] [-YearlyRetention <Int32>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -253,8 +252,7 @@ SYNTAX
     
     
 DESCRIPTION
-    The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific virtual machine. This will be taken by Rubrik and stored in the VM's chain of 
-    snapshots.
+    The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific virtual machine. This will be taken by Rubrik and stored in the VM's chain of snapshots.
     
 
 PARAMETERS

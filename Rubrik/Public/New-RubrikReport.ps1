@@ -49,19 +49,23 @@ function New-RubrikReport
     [String]$api = $global:RubrikConnection.api
   )
 
-  Process {
+  Begin {
 
-    TestRubrikConnection
+    Test-RubrikConnection
         
-    Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('ReportBackupJobsDetailGet')
+    Write-Verbose -Message 'Gather API data'
+    $resources = Get-RubrikAPIData -endpoint ('ReportBackupJobsDetailGet')
+  
+  }
+
+  Process {
         
-    Write-Verbose -Message 'Building the URI'
+    Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
     # Replace the placeholder of {id} with the actual VM ID
     $uri = $uri -replace '{id}', $ReportType.ToLower()
         
-    # Set the method
+    Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
 
     # v0 API Body is required since the call is a POST

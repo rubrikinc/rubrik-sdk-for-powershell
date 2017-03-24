@@ -1,7 +1,7 @@
 ﻿<#
     Helper function to retrieve API data from Rubrik
 #>
-function GetRubrikAPIData($endpoint)
+function Get-RubrikAPIData($endpoint)
 {
   $api = @{
     Session                   = @{
@@ -37,10 +37,16 @@ function GetRubrikAPIData($endpoint)
         URI         = '/api/v1/vmware/vm'
         Body        = ''
         Params      = @{
-          Filter = 'archive_status'
-          Search = 'search_value'
-        }
+          Filter = 'is_relic'
+          Search = 'name'
+          SLA    = 'effective_sla_domain_id'
+        }        
         Method      = 'Get'
+        Result      = 'data'
+        Filter      = @{
+          '$VM' = 'name'
+          '$SLA' = 'effectiveSlaDomainName'
+        }
         SuccessCode = '200'
         SuccessMock = @"
 {
@@ -55,7 +61,7 @@ function GetRubrikAPIData($endpoint)
 		"isArchived": false,
 		"inheritedSlaName": "Gold",
 		"slaId": "d8a8430c-40de-4cb7-b834-bd0e7de40ed1",
-		"isRelic": false
+		"isRelic": true
 	}, {
 		"id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffff",
 		"name": "TEST2",
@@ -66,7 +72,7 @@ function GetRubrikAPIData($endpoint)
 		"isArchived": true,
 		"inheritedSlaName": "Unprotected",
 		"slaId": "INHERIT",
-		"isRelic": true
+		"isRelic": false
 	}]
 }
 "@
@@ -81,6 +87,11 @@ function GetRubrikAPIData($endpoint)
           Search = ''
         }
         Method      = 'Get'
+        Result      = ''
+        Filter      = @{
+          '$VM' = 'name'
+          '$SLA' = 'effectiveSlaDomainName'
+        }        
         SuccessCode = '200'
         SuccessMock = @"
 [{
@@ -392,46 +403,6 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    SLADomainAssignPost       = @{
-      v1 = @{
-        URI         = '/api/v1/sla_domain/{id}/assign'
-        Body        = @{
-          managedIds = 'managedIds'
-        }
-        Method      = 'Post'
-        SuccessCode = '202'
-        SuccessMock = ''
-        FailureCode = ''
-        FailureMock = ''
-      }
-      v0 = @{
-        URI         = '/slaDomainAssign/{id}'
-        Body        = @{
-          managedIds = 'managedIds'
-        }
-        Method      = 'Patch'
-        SuccessCode = '200'
-        SuccessMock = @"
-{
-    "statuses":  [
-                     {
-                         "id":  "VirtualMachine:::11111111-2222-3333-4444-555555555555-vm-66",
-                         "status":  "@{status=Success}"
-                     },
-                     {
-                         "id":  "VirtualMachine:::11111111-2222-3333-4444-555555555555-vm-77",
-                         "status":  "@{status=Success}"
-                     }
-                 ],
-    "jobs":  [
-                 "CALCULATE_EFFECTIVE_SLA_aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee_ffffffff-gggg-hhhh-iiii-jjjjjjjjjjjj:::0"
-             ]
-}
-"@
-        FailureCode = ''
-        FailureMock = ''
-      }
-    }
     SLADomainDelete           = @{
       v1 = @{
         URI         = '/api/v1/sla_domain/{id}'
@@ -589,8 +560,8 @@ function GetRubrikAPIData($endpoint)
     VMwareVMPatch             = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/{id}'
-        Method      = 'Patch'
-        Params      = @{
+        Body        = @{
+          SLA                        = 'configuredSlaDomainId'
           snapshotConsistencyMandate = 'snapshotConsistencyMandate'
           maxNestedVsphereSnapshots  = 'maxNestedVsphereSnapshots'
           isVmPaused                 = 'isVmPaused'
@@ -610,6 +581,14 @@ function GetRubrikAPIData($endpoint)
             failureHandling = 'failureHandling'
           }
         }
+        Method      = 'Patch'
+        Result      = 'data'
+        Filter      = @{
+          '$VM'       = 'name'
+          '$SLA'      = 'effectiveSlaDomainName'
+          '$Host'     = 'hostName'
+          '$Cluster'  = 'clusterName'
+        }        
         SuccessCode = '200'
         SuccessMock = ''
         FailureCode = ''
@@ -656,6 +635,53 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
+    MSSQLDBGet                = @{
+      v1 = @{
+        URI         = '/api/v1/mssql/db'
+        Body        = ''
+        Params      = @{
+          Filter = 'archive_status'
+          Search = 'search_value'
+        }         
+        Method      = 'Get'
+        Result      = 'data'
+        Filter      = @{
+          '$Database' = 'name'
+          '$SLA'      = 'effectiveSlaDomainName'
+          '$Host'     = 'rootProperties.rootName'
+          '$Instance' = 'instanceName'
+        }
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
+    }
+    MSSQLDBPatch              = @{
+      v1 = @{
+        URI         = '/api/v1/mssql/db/{id}'
+        Body        = @{
+          SLA               = 'configuredSlaDomainId'
+          LogBackupSeconds  = 'logBackupFrequencyInSeconds'
+          LogRetentionHours = 'logRetentionHours'
+          CopyOnly          = 'copyOnly'
+          MaxDataStreams    = 'maxDataStreams'
+        }    
+        Params      = ''    
+        Method      = 'Patch'
+        Result      = 'data'
+        Filter      = @{
+          '$Database' = 'name'
+          '$SLA'      = 'effectiveSlaDomainName'
+          '$Host'     = 'rootProperties.rootName'
+          '$Instance' = 'instanceName'
+        }
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      } 
+    }   
   } # End of API
   
   return $api.$endpoint

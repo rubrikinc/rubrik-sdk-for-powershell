@@ -73,11 +73,14 @@ function Move-RubrikMountVMDK
     [String]$api = $global:RubrikConnection.api
   )
 
+  Begin {
+
+    Test-RubrikConnection
+    Test-VMwareConnection
+  
+  }
+
   Process {
-
-    TestRubrikConnection
-
-    ConnectTovCenter -vCenter $vCenter    
 
     if (!$Cleanup)
     {

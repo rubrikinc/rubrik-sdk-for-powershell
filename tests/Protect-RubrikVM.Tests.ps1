@@ -1,7 +1,7 @@
 ﻿# Import
 Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
 . "$(Split-Path -Parent -Path $PSScriptRoot)\Rubrik\Private\Get-RubrikAPIData.ps1"
-$resources = GetRubrikAPIData -endpoint ('SLADomainAssignPost')
+$resources = Get-RubrikAPIData -endpoint ('VMwareVMPatch')
 
 # Begin Pester tests
 Describe -Name 'Protect-RubrikVM Tests' -Fixture {
@@ -28,7 +28,7 @@ Describe -Name 'Protect-RubrikVM Tests' -Fixture {
     
           # Act
           $value1 = (ConvertFrom-Json -InputObject $resources.$api.SuccessMock).statuses.id
-          (Protect-RubrikVM -VM 'Fake' -SLA 'Fake' -Confirm:$false -api $api).Count | Should BeExactly $value1.Count
+          (Protect-RubrikVM -VMID 'Fake' -DoNotProtect -Confirm:$false -api $api).Count | Should BeExactly $value1.Count
     
           # Assert
           Assert-VerifiableMocks

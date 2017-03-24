@@ -60,11 +60,14 @@ function Sync-RubrikAnnotation
     [String]$api = $global:RubrikConnection.api
   )
 
-  Process {
+  Begin {
 
-    TestRubrikConnection
-        
-    ConnectTovCenter -vCenter $vCenter
+    Test-RubrikConnection
+    Test-VMwareConnection
+      
+  }
+
+  Process {
 
     Write-Verbose -Message "Ensuring vCenter has attributes for $SLAAnnotationName and $BackupAnnotationName"
     New-CustomAttribute -Name $SLAAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue

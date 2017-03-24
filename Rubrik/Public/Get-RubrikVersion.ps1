@@ -32,21 +32,25 @@ function Get-RubrikVersion
     [String]$api = $global:RubrikConnection.api
   )
 
-  Process {
+  Begin {
 
-    TestRubrikConnection
+    Test-RubrikConnection
+        
+    Write-Verbose -Message 'Gather API data'
+    $resources = Get-RubrikAPIData -endpoint ('ClusterVersionGet')
+  
+  }
+
+  Process {
     
-    Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('ClusterVersionGet')
-    
-    Write-Verbose -Message 'Building the URI'
+    Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
     if ($api -ne 'v0') 
     {
       $uri = $uri -replace '{id}', 'me'
     }
 
-    # Set the method
+    Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
 
     try 

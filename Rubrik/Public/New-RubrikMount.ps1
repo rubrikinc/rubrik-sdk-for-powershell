@@ -54,12 +54,16 @@ function New-RubrikMount
     [String]$api = $global:RubrikConnection.api
   )
 
+  Begin {
+
+    Test-RubrikConnection
+        
+    Write-Verbose -Message 'Gather API data'
+    $resources = Get-RubrikAPIData -endpoint ('VMwareVMMountPost')
+  
+  }
+
   Process {
-
-    TestRubrikConnection
-
-    Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('VMwareVMMountPost')
 
     if (!$Date) 
     {
@@ -77,7 +81,7 @@ function New-RubrikMount
     $snapshots = Get-RubrikSnapshot -VM $VM
 
     Write-Verbose -Message 'Comparing backup dates to user date'
-    $Date = ConvertFromLocalDate -Date $Date
+    $Date = ConvertFrom-LocalDate -Date $Date
         
     Write-Verbose -Message 'Finding snapshots that match the date value'
     foreach ($_ in $snapshots)
@@ -90,7 +94,7 @@ function New-RubrikMount
       }
     }
 
-    Write-Verbose -Message 'Building the URI'
+    Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
     
     # Create the body
@@ -107,7 +111,7 @@ function New-RubrikMount
       $body.Add($resources.$api.body.vmName,$MountName)
     }
         
-    # Set the method
+    Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
 
     try 

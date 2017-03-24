@@ -25,7 +25,7 @@ function Remove-RubrikMount
       This will find and remove any live mount belonging to Server1
   #>
 
-[CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # The Rubrik ID value of the mount
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
@@ -43,14 +43,18 @@ function Remove-RubrikMount
     [String]$api = $global:RubrikConnection.api
   )
 
-  Process {
+  Begin {
 
-    TestRubrikConnection
+    Test-RubrikConnection
+        
+    Write-Verbose -Message 'Gather API data'
+    $resources = Get-RubrikAPIData -endpoint ('VMwareVMMountDelete')
+  
+  }
+
+  Process {
     
-    Write-Verbose -Message 'Determining which version of the API to use'
-    $resources = GetRubrikAPIData -endpoint ('VMwareVMMountDelete')
-    
-    Write-Verbose -Message 'Building the URI'
+    Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
 
     # Newer versions of the API place the parameters into the URI
@@ -75,7 +79,7 @@ function Remove-RubrikMount
       }
     }
 
-    # Set the method
+    Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
 
     try 
