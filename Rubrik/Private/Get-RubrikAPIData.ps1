@@ -584,10 +584,10 @@ function Get-RubrikAPIData($endpoint)
         Method      = 'Patch'
         Result      = 'data'
         Filter      = @{
-          '$VM'       = 'name'
-          '$SLA'      = 'effectiveSlaDomainName'
-          '$Host'     = 'hostName'
-          '$Cluster'  = 'clusterName'
+          '$VM'    = 'name'
+          '$SLA'   = 'effectiveSlaDomainName'
+          '$Host'  = 'hostName'
+          '$Cluster' = 'clusterName'
         }        
         SuccessCode = '200'
         SuccessMock = ''
@@ -647,8 +647,8 @@ function Get-RubrikAPIData($endpoint)
         Result      = 'data'
         Filter      = @{
           '$Database' = 'name'
-          '$SLA'      = 'effectiveSlaDomainName'
-          '$Host'     = 'rootProperties.rootName'
+          '$SLA'    = 'effectiveSlaDomainName'
+          '$Host'   = 'rootProperties.rootName'
           '$Instance' = 'instanceName'
         }
         SuccessCode = '200'
@@ -672,8 +672,8 @@ function Get-RubrikAPIData($endpoint)
         Result      = 'data'
         Filter      = @{
           '$Database' = 'name'
-          '$SLA'      = 'effectiveSlaDomainName'
-          '$Host'     = 'rootProperties.rootName'
+          '$SLA'    = 'effectiveSlaDomainName'
+          '$Host'   = 'rootProperties.rootName'
           '$Instance' = 'instanceName'
         }
         SuccessCode = '200'
@@ -682,15 +682,15 @@ function Get-RubrikAPIData($endpoint)
         FailureMock = ''
       } 
     }
-    FilesetGet              = @{
+    FilesetGet                = @{
       v1 = @{
         URI         = '/api/v1/fileset'
         Body        = ''   
         Params      = @{
-          Filter = 'is_relic'
-          Search = 'name'
+          Filter     = 'is_relic'
+          Search     = 'name'
           SearchHost = 'host_name'
-          SLA    = 'effective_sla_domain_id'
+          SLA        = 'effective_sla_domain_id'
         }     
         Method      = 'Get'
         Result      = 'data'
@@ -700,7 +700,23 @@ function Get-RubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       } 
-    }    
+    }
+    FilesetPatch              = @{
+      v1 = @{
+        URI         = '/api/v1/fileset/{id}'
+        Body        = @{
+          SLA = 'configuredSlaDomainId'
+        }
+        Params      = ''
+        Method      = 'Patch'
+        Result      = 'data'
+        Filter      = ''
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      } 
+    }
   } # End of API
   
   return $api.$endpoint

@@ -46,10 +46,8 @@ function Protect-RubrikDatabase
     [Parameter(Position = 3,ParameterSetName = 'SLA_Inherit')]
     [Switch]$Inherit,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 4)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 5)]
     [String]$api = $global:RubrikConnection.api
   )
 
