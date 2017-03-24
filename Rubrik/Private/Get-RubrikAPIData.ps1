@@ -681,7 +681,26 @@ function Get-RubrikAPIData($endpoint)
         FailureCode = ''
         FailureMock = ''
       } 
-    }   
+    }
+    FilesetGet              = @{
+      v1 = @{
+        URI         = '/api/v1/fileset'
+        Body        = ''   
+        Params      = @{
+          Filter = 'is_relic'
+          Search = 'name'
+          SearchHost = 'host_name'
+          SLA    = 'effective_sla_domain_id'
+        }     
+        Method      = 'Get'
+        Result      = 'data'
+        Filter      = ''
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      } 
+    }    
   } # End of API
   
   return $api.$endpoint
