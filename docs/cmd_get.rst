@@ -15,8 +15,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikDatabase [[-Database] <String>] [[-Filter] <String>] [[-SLA] <String>] [-Instance <String>] [-Host <String>] [-id <String>] [-Server <String>] [-api <String>] 
-    [<CommonParameters>]
+    Get-RubrikDatabase [[-Database] <String>] [[-Filter] <String>] [[-SLA] <String>] [-Instance <String>] [-Host <String>] [-id <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -69,6 +68,106 @@ REMARKS
     For more information, type: "get-help Get-RubrikDatabase -detailed".
     For technical information, type: "get-help Get-RubrikDatabase -full".
     For online help, type: "get-help Get-RubrikDatabase -online"
+
+Get-RubrikFileset
+-------------------------
+
+NAME
+    Get-RubrikFileset
+    
+SYNOPSIS
+    Retrieves details on one or more filesets known to a Rubrik cluster
+    
+    
+SYNTAX
+    Get-RubrikFileset [[-Fileset] <String>] [[-Relic] <String>] [[-SLA] <String>] [-HostName <String>] [-FilesetID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikFileset cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of filesets
+    A number of parameters exist to help narrow down the specific fileset desired
+    Note that a fileset name is not required; you can use params (such as HostName and SLA) to do lookup matching filesets
+    
+
+PARAMETERS
+    -Fileset <String>
+        Name of the fileset
+        If no value is specified, will retrieve information on all filesets
+        
+    -Relic <String>
+        Filter results based on active, relic (removed), or all filesets
+        
+    -SLA <String>
+        SLA Domain policy
+        
+    -HostName <String>
+        Name of the host using a fileset
+        
+    -FilesetID <String>
+        Fileset id
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikFileset -Name 'C_Drive'
+    
+    This will return details on the fileset named "C_Drive" assigned to any hosts
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikFileset -Name 'C_Drive' -HostName 'Server1'
+    
+    This will return details on the fileset named "C_Drive" assigned to only the "Server1" host
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikFileset -Fileset 'C_Drive' -SLA Gold
+    
+    This will return details on the fileset named "C_Drive" assigned to any hosts with an SLA Domain matching "Gold"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 4 --------------------------
+    
+    PS C:\>Get-RubrikFileset -FilesetID Fileset:::111111-2222-3333-4444-555555555555
+    
+    This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 5 --------------------------
+    
+    PS C:\>Get-RubrikFileset -Relic False -SLA Bronze
+    
+    This will return any fileset that is not a relic (still active) using the SLA Domain matching "Bronze"
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikFileset -examples".
+    For more information, type: "get-help Get-RubrikFileset -detailed".
+    For technical information, type: "get-help Get-RubrikFileset -full".
+    For online help, type: "get-help Get-RubrikFileset -online"
 
 Get-RubrikJob
 -------------------------
@@ -130,16 +229,19 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikMount [[-VM] <String>] [[-MountID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikMount [[-VMID] <String>] [[-MountID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikMount cmdlet will accept a VM name and return details on any mount operations that are active within Rubrik
+    The Get-RubrikMount cmdlet will accept a VM id and return details on any mount operations that are active within Rubrik
+    Due to the nature of names not being unique
+    Note that this function requires the VM ID value, not the name of the virtual machine, since virtual machine names are not unique.
+    It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machines you wish to query, and then pipe the results to Get-RubrikMount.
     
 
 PARAMETERS
-    -VM <String>
-        Virtual Machine to inspect for mounts
+    -VMID <String>
+        Virtual Machine ID to inspect for mounts
         
     -MountID <String>
         The Rubrik ID value of the mount
@@ -167,7 +269,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-RubrikMount -VM 'Server1'
+    PS C:\>Get-RubrikVM -VM 'Server1' | Get-RubrikMount
     
     Will return all Live Mounts found for Server1
     
@@ -178,7 +280,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikMount -MountID 11111111-2222-3333-4444-555555555555
     
-    Will return all Live Mounts found for the Rubrik ID 11111111-2222-3333-4444-555555555555
+    Will return details on a live mount matching the id of "11111111-2222-3333-4444-555555555555"
     
     
     
