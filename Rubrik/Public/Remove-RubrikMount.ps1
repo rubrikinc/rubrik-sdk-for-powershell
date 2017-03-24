@@ -56,28 +56,13 @@ function Remove-RubrikMount
     
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
+    # Replace the placeholder of {id} with the actual fileset ID
+    $uri = $uri -replace '{id}', $MountID
 
-    # Newer versions of the API place the parameters into the URI
-    if ($api -ne 'v0')
-    {
-      $uri += '?'+$resources.$api.Params.MountID+'='+$MountID
-      
-      # Optionally allow the user to force the delete
-      if ($Force)
-      {
-        $uri += '&'+$resources.$api.Params.Force+'=true'
-      }
-    }
-
-    # Need to supply a body with parameters for the v0 API
-    # For the newer APIs, the body will simply remain $null
-    if ($api -eq 'v0')        
-    {
-      $body = @{
-        $resources.$api.Params.MountID = $MountID
-        $resources.$api.Params.Force = [boolean]::Parse($Force)        
-      }
-    }
+    Write-Verbose -Message 'Build the query parameters'
+    $params = @()
+    $params += Test-QueryObject -object ([boolean]::Parse($Force)) -location $resources.$api.Params.Force -params $params
+    $uri = New-QueryString -params $params -uri $uri -nolimit $false    
 
     Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
