@@ -6,7 +6,9 @@ function Get-RubrikDatabase
       Retrieves details on one or more databases known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikDatabase cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of databases
+      The Get-RubrikDatabase cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of databases.
+      To narrow down the results, use the host and instance parameters to limit your search to a smaller group of objects.
+      Alternatively, supply the Rubrik database ID to return only one specific database.
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -17,31 +19,41 @@ function Get-RubrikDatabase
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikDatabase -Name 'DB1'
-      This will return the ID of the database named DB1
+      Get-RubrikDatabase -Database 'DB1' -SLA Gold
+      This will return details on all databases named DB1 protected by the Gold SLA Domain on any known host or instance.
+
+      .EXAMPLE
+      Get-RubrikDatabase -Host 'Host1' -Instance 'MSSQLSERVER' -Database 'DB1'
+      This will return details on a database named "DB1" living on an instance named "MSSQLSERVER" on the host named "Host1".
+
+      .EXAMPLE
+      Get-RubrikDatabase -Relic
+      This will return all removed databases that were formerly protected by Rubrik.
+
+      .EXAMPLE
+      Get-RubrikDatabase -id 'MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
+      This will return details on a single database matching the Rubrik ID of "MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+      Note that the database ID is globally unique and is often handy to know if tracking a specific database for longer workflows,
+      whereas some values are not unique (such as nearly all hosts having one or more databases named "model") and more difficult to track by name.
   #>
 
   [CmdletBinding()]
   Param(
-    # Name of the database
-    # If no value is specified, will retrieve information on all databases
-    [Parameter(Position = 0,ValueFromPipeline = $true)]
+    # Name of the database (alias: 'name')
+    # Default: Will retrieve information on all known databases
+    # Pipeline: Accepted by property name
+    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('Name')]
     [String]$Database,
-    # Filter results based on active, relic (removed), or all databases
-    [Parameter(Position = 1)]
-    [Alias('archiveStatusFilterOpt','archive_status')]
-    [ValidateSet('ACTIVE', 'RELIC')]
-    [String]$Filter,
-    # SLA Domain policy
-    [Parameter(Position = 2,ValueFromPipeline = $true)]
-    [Alias('sla_domain_id')]    
+    # Filter results to include only relic (removed) databases
+    [Switch]$Relic,
+    # SLA Domain policy assigned to the database
     [String]$SLA,
     # Name of the database instance
     [String]$Instance,    
     # Name of the database host
     [String]$Host,
-    # Database id
+    # Rubrik's database id value
     [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -69,10 +81,10 @@ function Get-RubrikDatabase
     }
 
     Write-Verbose -Message 'Build the query parameters'
-    $params = @()
-    $params += Test-QueryObject -object $Filter -location $resources.$api.Params.Filter -params $params
-    $params += Test-QueryObject -object $Database -location $resources.$api.Params.Search -params $params
-    $uri = New-QueryString -params $params -uri $uri -nolimit $true
+    $query = @()
+    $query += Test-QueryObject -object ([boolean]::Parse($Relic)) -location $resources.$api.Query.Relic -query $query
+    $query += Test-QueryObject -object (Test-RubrikSLA -SLA $SLA) -location $resources.$api.Query.SLA -query $query    
+    $uri = New-QueryString -query $query -uri $uri -nolimit $true
 
     Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
@@ -98,6 +110,12 @@ function Get-RubrikDatabase
       $result = Test-ReturnFilter -object $SLA -location $resources.$api.Filter['$SLA'] -result $result
       $result = Test-ReturnFilter -object $Instance -location $resources.$api.Filter['$Instance'] -result $result
       $result = Test-ReturnFilter -object $Host -location $resources.$api.Filter['$Host'] -result $result
+    }
+    
+    if (!$id) 
+    {      
+      Write-Verbose -Message 'Formatting return value'
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
     }
     
     return $result

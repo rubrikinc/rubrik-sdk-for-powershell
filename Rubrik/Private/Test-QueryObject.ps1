@@ -1,4 +1,4 @@
-﻿function Test-QueryObject($object,$location,$params)
+﻿function Test-QueryObject($object,$location,$query)
 {
   # The Test-QueryObject function is used to build a custom query string for supported endpoints
   # $object = The parent function's variable holding the user generated query data

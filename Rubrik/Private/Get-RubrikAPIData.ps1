@@ -36,8 +36,8 @@ function Get-RubrikAPIData($endpoint)
       v1 = @{
         URI         = '/api/v1/vmware/vm'
         Body        = ''
-        Params      = @{
-          Filter = 'is_relic'
+        Query      = @{
+          Relic = 'is_relic'
           Search = 'name'
           SLA    = 'effective_sla_domain_id'
         }        
@@ -617,9 +617,10 @@ function Get-RubrikAPIData($endpoint)
       v1 = @{
         URI         = '/api/v1/mssql/db'
         Body        = ''
-        Params      = @{
-          Filter = 'archive_status'
-          Search = 'search_value'
+        Query      = @{
+          Relic = 'is_relic'
+          Instance = 'instance_id'
+          SLA = 'effective_sla_domain_id'
         }         
         Method      = 'Get'
         Result      = 'data'
@@ -664,8 +665,8 @@ function Get-RubrikAPIData($endpoint)
       v1 = @{
         URI         = '/api/v1/fileset'
         Body        = ''   
-        Params      = @{
-          Filter     = 'is_relic'
+        Query      = @{
+          Relic     = 'is_relic'
           Search     = 'name'
           SearchHost = 'host_name'
           SLA        = 'effective_sla_domain_id'

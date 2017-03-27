@@ -18,28 +18,31 @@ function Get-RubrikVM
 
       .EXAMPLE
       Get-RubrikVM -VM 'Server1'
-      This will return the ID of the virtual machine named Server1
+      This will return details on all virtual machines named "Server1".
+
+      .EXAMPLE
+      Get-RubrikVM -VM 'Server1' -SLA Gold
+      This will return details on all virtual machines named "Server1" that are protected by the Gold SLA Domain.
+
+      .EXAMPLE
+      Get-RubrikVM -Relic
+      This will return all removed virtual machines that were formerly protected by Rubrik.
   #>
 
   [CmdletBinding()]
   Param(
-    # Name of the virtual machine
-    # If no value is specified, will retrieve information on all virtual machines
-    [Parameter(Position = 0,ValueFromPipeline = $true)]
-    [Alias('name','search_value')]
+    # Name of the virtual machine (alias: 'name')
+    # Default: Will retrieve information on all known virtual machines
+    # Pipeline: Accepted by property name
+    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [Alias('Name')]
     [String]$VM,
-    # Filter results based on active, relic (removed), or all virtual machines
-    [Parameter(Position = 1)]
-    [Alias('archive_status','effective_sla_domain_id')]
-    [ValidateSet('True', 'False')]
-    [String]$Relic,
-    # SLA Domain policy
-    [Parameter(Position = 2,ValueFromPipeline = $true)]
-    [Alias('sla_domain_id')]    
-    [String]$SLA,  
+    # Filter results to include only relic (removed) virtual machines
+    [Switch]$Relic,
+    # SLA Domain policy assigned to the virtual machine
+    [String]$SLA, 
     # Virtual machine id
-    [Alias('id')]
-    [String]$VMID,          
+    [String]$id,          
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -60,17 +63,17 @@ function Get-RubrikVM
 
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
-    if ($VMID) 
+    if ($id) 
     {
-      $uri += "/$VMID"
+      $uri += "/$id"
     }
     
     Write-Verbose -Message 'Build the query parameters'
-    $params = @()
-    $params += Test-QueryObject -object $Relic -location $resources.$api.Params.Filter -params $params
-    $params += Test-QueryObject -object $VM -location $resources.$api.Params.Search -params $params
-    $params += Test-QueryObject -object (Test-RubrikSLA -SLA $SLA) -location $resources.$api.Params.SLA -params $params
-    $uri = New-QueryString -params $params -uri $uri -nolimit $true
+    $query = @()
+    $query += Test-QueryObject -object $Relic -location $resources.$api.Query.Relic -params $query
+    $query += Test-QueryObject -object $VM -location $resources.$api.Query.Search -params $query
+    $query += Test-QueryObject -object (Test-RubrikSLA -SLA $SLA) -location $resources.$api.Query.SLA -params $query
+    $uri = New-QueryString -query $query -uri $uri -nolimit $true
 
     Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
@@ -88,7 +91,7 @@ function Get-RubrikVM
       throw $_
     }
 
-    if (!$VMID) 
+    if (!$id) 
     {      
       Write-Verbose -Message 'Formatting return value'
       $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result

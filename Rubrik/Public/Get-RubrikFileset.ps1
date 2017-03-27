@@ -19,11 +19,11 @@ function Get-RubrikFileset
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikFileset -Name 'C_Drive' 
+      Get-RubrikFileset -Fileset 'C_Drive' 
       This will return details on the fileset named "C_Drive" assigned to any hosts
 
       .EXAMPLE
-      Get-RubrikFileset -Name 'C_Drive' -HostName 'Server1'
+      Get-RubrikFileset -Fileset 'C_Drive' -HostName 'Server1'
       This will return details on the fileset named "C_Drive" assigned to only the "Server1" host
 
       .EXAMPLE
@@ -35,30 +35,26 @@ function Get-RubrikFileset
       This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
 
       .EXAMPLE
-      Get-RubrikFileset -Relic False -SLA Bronze
-      This will return any fileset that is not a relic (still active) using the SLA Domain matching "Bronze"
+      Get-RubrikFileset -Relic
+      This will return all removed filesets that were formerly protected by Rubrik.
   #>
 
   [CmdletBinding()]
   Param(
-    # Name of the fileset
-    # If no value is specified, will retrieve information on all filesets
-    [Parameter(Position = 0,ValueFromPipeline = $true)]
+    # Name of the fileset (alias: 'name')
+    # Default: Will retrieve information on all known filesets
+    # Pipeline: Accepted by property name
+    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('Name')]
     [String]$Fileset,
-    # Filter results based on active, relic (removed), or all filesets
-    [Parameter(Position = 1)]
-    [ValidateSet('True', 'False')]
-    [String]$Relic,
-    # SLA Domain policy
-    [Parameter(Position = 2,ValueFromPipeline = $true)]
-    [Alias('sla_domain_id')]    
+    # Filter results to include only relic (removed) filesets
+    [Switch]$Relic,
+    # SLA Domain policy assigned to the database
     [String]$SLA,
     # Name of the host using a fileset
     [String]$HostName,
-    # Fileset id
-    [Alias('id')]
-    [String]$FilesetID,     
+    # Rubrik's fileset id
+    [String]$id,     
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -79,18 +75,18 @@ function Get-RubrikFileset
 
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
-    if ($FilesetID) 
+    if ($id) 
     {
-      $uri += "/$FilesetID"
+      $uri += "/$id"
     }
     
     Write-Verbose -Message 'Build the query parameters'
-    $params = @()
-    $params += Test-QueryObject -object $Relic -location $resources.$api.Params.Filter -params $params
-    $params += Test-QueryObject -object $Fileset -location $resources.$api.Params.Search -params $params
-    $params += Test-QueryObject -object $HostName -location $resources.$api.Params.SearchHost -params $params
-    $params += Test-QueryObject -object (Test-RubrikSLA -SLA $SLA) -location $resources.$api.Params.SLA -params $params
-    $uri = New-QueryString -params $params -uri $uri -nolimit $true
+    $query = @()
+    $query += Test-QueryObject -object $Relic -location $resources.$api.Query.Relic -query $query
+    $query += Test-QueryObject -object $Fileset -location $resources.$api.Query.Search -query $query
+    $query += Test-QueryObject -object $HostName -location $resources.$api.Query.SearchHost -query $query
+    $query += Test-QueryObject -object (Test-RubrikSLA -SLA $SLA) -location $resources.$api.Query.SLA -query $query
+    $uri = New-QueryString -query $query -uri $uri -nolimit $true
 
     Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
@@ -108,7 +104,7 @@ function Get-RubrikFileset
       throw $_
     }
 
-    if (!$FilesetID) 
+    if (!$id) 
     {      
       Write-Verbose -Message 'Formatting return value'
       $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
