@@ -122,58 +122,25 @@ function Get-RubrikAPIData($endpoint)
         FailureMock = '{"status": "Failure"}'
       }
     }
-    VMwareVMSnapshotGet       = @{
+    GenericSnapshotGet       = @{
       v1 = @{
-        URI         = '/api/v1/vmware/vm/{id}/snapshot'
+        URI         = @{
+          MSSQL = '/api/v1/mssql/db/{id}/snapshot'
+          VMware = '/api/v1/vmware/vm/{id}/snapshot'
+        }
         Method      = 'Get'
+        Result      = 'data'   
+        Filter      = @{
+          '$CloudState'   = 'cloudState'
+          '$OnDemandSnapshot'  = 'isOnDemandSnapshot'
+          '$Date'    = 'date'          
+        }               
         SuccessCode = '200'
-        SuccessMock = @"
-{
-  "hasMore": false,
-  "data": [
-    {
-      "date": "2016-12-05T17:10:17Z",
-      "virtualMachineName": "TEST1",
-      "id": "11111111-2222-3333-4444-555555555555",
-      "consistencyLevel": "CRASH_CONSISTENT"
-    },
-    {
-      "date": "2016-12-05T13:06:35Z",
-      "virtualMachineName": "TEST1",
-      "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-      "consistencyLevel": "CRASH_CONSISTENT"
-    }
-  ],
-  "total": 2
-}
-"@        
-        FailureCode = '404'
-        FailureMock = '{"message":"Could not find VirtualMachine with id=11111111-2222-3333-4444-555555555555-vm-6666"}'
-      }
-      v0 = @{
-        URI         = '/snapshot?vm={id}'
-        Method      = 'Get'
-        SuccessCode = '200'
-        SuccessMock = @"
-[
-    {
-      "date": "2016-12-05T17:10:17Z",
-      "virtualMachineName": "TEST1",
-      "id": "11111111-2222-3333-4444-555555555555",
-      "consistencyLevel": "CRASH_CONSISTENT"
-    },
-    {
-      "date": "2016-12-05T13:06:35Z",
-      "virtualMachineName": "TEST1",
-      "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-      "consistencyLevel": "CRASH_CONSISTENT"
-    }
-]
-"@
+        SuccessMock = ''   
         FailureCode = ''
         FailureMock = ''
       }
-    }
+    }         
     VMwareVMMountPost         = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/mount'
@@ -232,10 +199,10 @@ function Get-RubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
-    VMwareVMMountGet          = @{
+    VMwareVMSnapshotMountGet          = @{
       v1 = @{
         URI         = '/api/v1/vmware/vm/snapshot/mount'
-        Params      = @{
+        Query      = @{
           VMID   = 'vm_id'
         }
         Method      = 'Get'
@@ -311,6 +278,7 @@ function Get-RubrikAPIData($endpoint)
           id = 'id'
         }
         Method      = 'Get'
+        Result      = 'version'
         SuccessCode = '200'
         SuccessMock = '"9.9.9~DA9-99"'
         FailureCode = ''
@@ -329,54 +297,12 @@ function Get-RubrikAPIData($endpoint)
       v1 = @{
         URI         = '/api/v1/sla_domain'
         Method      = 'Get'
+        Filter      = @{
+          '$SLA'   = 'name'
+        } 
+        Result      = 'data'
         SuccessCode = '200'
-        SuccessMock = @"
-{
-  "hasMore": false,
-  "data": [
-    {
-      "id": "11111111-2222-3333-4444-555555555555",
-      "name": "TEST1",
-      "numDbs": 11,
-      "numFilesets": 11,
-      "numLinuxHosts": 11,
-      "numVms": 11
-    },
-    {
-      "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-      "name": "TEST2",
-      "numDbs": 22,
-      "numFilesets": 22,
-      "numLinuxHosts": 22,
-      "numVms": 22
-    }
-  ],
-  "total": 2
-}
-"@
-        FailureCode = ''
-        FailureMock = ''
-      }
-      v0 = @{
-        URI         = '/slaDomain'
-        Method      = 'Get'
-        SuccessCode = '200'
-        SuccessMock = @"
-[
-  {
-    "id": "11111111-2222-3333-4444-555555555555",
-    "name": "TEST1",
-    "numVms": 11,
-    "numSnapshots": 11
-  },
-  {
-    "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-    "name": "TEST2",
-    "numVms": 22,
-    "numSnapshots": 22
-  }
-]
-"@
+        SuccessMock = ''
         FailureCode = ''
         FailureMock = ''
       }
@@ -395,46 +321,6 @@ function Get-RubrikAPIData($endpoint)
         Method      = 'Delete'
         SuccessCode = '200'
         SuccessMock = ''
-        FailureCode = ''
-        FailureMock = ''
-      }
-    }
-    JobGet                    = @{
-      v1 = @{
-        URI         = '/api/internal/job/{id}'
-        Method      = 'Get'
-        SuccessCode = '200'
-        SuccessMock = @"
-{
-    "id":  "CREATE_SNAPSHOT_123456-vm-123:::11",
-    "status":  "SUCCEEDED",
-    "result":  "abcdef",
-    "startTime":  "2016-12-27T06:17:54+0000",
-    "endTime":  "2016-12-27T06:25:42+0000",
-    "jobType":  "CREATE_SNAPSHOT",
-    "nodeId":  "cluster:::RVM151S001111",
-    "isDisabled":  false
-}
-"@
-        FailureCode = ''
-        FailureMock = ''
-      }
-      v0 = @{
-        URI         = '/job/instance/{id}'
-        Method      = 'Get'
-        SuccessCode = '200'
-        SuccessMock = @"
-{
-    "id":  "CREATE_SNAPSHOT_123456-vm-123:::11",
-    "status":  "SUCCEEDED",
-    "result":  "abcdef",
-    "startTime":  "2016-12-27T06:17:54+0000",
-    "endTime":  "2016-12-27T06:25:42+0000",
-    "jobType":  "CREATE_SNAPSHOT",
-    "nodeId":  "cluster:::RVM151S001111",
-    "isDisabled":  false
-}
-"@
         FailureCode = ''
         FailureMock = ''
       }

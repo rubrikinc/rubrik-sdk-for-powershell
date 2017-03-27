@@ -27,11 +27,11 @@ function Get-RubrikRequest
     # SLA Domain Name
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipeline = $true)]
     [ValidateNotNullorEmpty()]
-    [Alias('requestId')]
-    [String]$ID,
+    [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 
@@ -48,27 +48,26 @@ function Get-RubrikRequest
     
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
-    # Replace the placeholder of {id} with the actual VM ID
-    $uri = $uri -replace '{id}', $ID
+    $uri = $uri -replace '{id}', $id
     
     Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
-        
-    try
+    
+    try 
     {
-      $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
-      if ($r.StatusCode -ne $resources.$api.SuccessCode) 
-      {
-        Write-Warning -Message 'Did not receive successful status code from Rubrik'
-        throw $_
-      }
-      $response = ConvertFrom-Json -InputObject $r.Content
-      return $response
+      Write-Verbose -Message "Submitting a request to $uri"
+      $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method
+      
+      Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
+      $result = ExpandPayload -response $r
     }
-    catch
+    catch 
     {
       throw $_
-    }
+    }    
+
+    $response = ConvertFrom-Json -InputObject $r.Content
+    return $response
 		
   } # End of process
 } # End of function

@@ -112,12 +112,6 @@ function Get-RubrikDatabase
       $result = Test-ReturnFilter -object $Host -location $resources.$api.Filter['$Host'] -result $result
     }
     
-    if (!$id) 
-    {      
-      Write-Verbose -Message 'Formatting return value'
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
-    }
-    
     return $result
 
   } # End of process

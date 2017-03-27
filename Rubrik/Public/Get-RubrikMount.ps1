@@ -21,33 +21,32 @@ function Get-RubrikMount
             
       .EXAMPLE
       Get-RubrikMount
-      Will return all Live Mounts known to Rubrik
+      This will return details on all mounted virtual machines.
 
       .EXAMPLE
       Get-RubrikVM -VM 'Server1' | Get-RubrikMount
-      Will return all Live Mounts found for Server1
-            
+      Will return all mounts found mathcing the virtual machine name of 'Server1'.
+
       .EXAMPLE
-      Get-RubrikMount -MountID 11111111-2222-3333-4444-555555555555
-      Will return details on a live mount matching the id of "11111111-2222-3333-4444-555555555555"
+      Get-RubrikMount -id '11111111-2222-3333-4444-555555555555'
+      This will return details on mount id "11111111-2222-3333-4444-555555555555".
+                  
+      .EXAMPLE
+      Get-RubrikMount -VMID 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
+      This will return details for any mounts found using the virtual machine id of 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' as a base reference.
   #>
 
   [CmdletBinding()]
   Param(
-    # Virtual Machine ID to inspect for mounts
+    # Rubrik's mount id value
     [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('id')]
     [ValidateNotNullorEmpty()]
-    [String]$VMID,
+    [String]$id,
     # The Rubrik ID value of the mount
-    [Parameter(Position = 1,ValueFromPipelineByPropertyName = $true)]
-    [ValidateNotNullorEmpty()]
-    [String]$MountID,
+    [String]$VMID,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 2)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 3)]
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
@@ -57,7 +56,7 @@ function Get-RubrikMount
     Test-RubrikConnection
         
     Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('VMwareVMMountGet')
+    $resources = Get-RubrikAPIData -endpoint ('VMwareVMSnapshotMountGet')
   
   }
 
@@ -65,15 +64,15 @@ function Get-RubrikMount
 
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
-    if ($MountID) 
+    if ($id) 
     {
-      $uri += "/$MountID"
+      $uri += "/$id"
     }
     
     Write-Verbose -Message 'Build the query parameters'
-    $params = @()
-    $params += Test-QueryObject -object $VMID -location $resources.$api.Params.VMID -params $params
-    $uri = New-QueryString -params $params -uri $uri -nolimit $true    
+    $query = @()
+    $query += Test-QueryObject -object $VMID -location $resources.$api.Query.VMID -query $query
+    $uri = New-QueryString -query $query -uri $uri -nolimit $true    
 
     Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
@@ -91,11 +90,10 @@ function Get-RubrikMount
       throw $_
     }
       
-    if (!$MountID)
+    if (!$id)
     {
       Write-Verbose -Message 'Formatting return value'
       $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
-
     }           
 
     return $result

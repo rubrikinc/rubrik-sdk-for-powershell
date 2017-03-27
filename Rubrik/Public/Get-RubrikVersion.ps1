@@ -24,10 +24,8 @@ function Get-RubrikVersion
   [CmdletBinding()]
   Param(
     # Rubrik server IP or FQDN
-    [Parameter(Position = 0)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 1)]
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
@@ -45,25 +43,27 @@ function Get-RubrikVersion
     
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
-    if ($api -ne 'v0') 
-    {
-      $uri = $uri -replace '{id}', 'me'
-    }
+    $uri = $uri -replace '{id}', 'me'
 
     Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
-
+    
     try 
     {
-      Write-Verbose -Message 'Query Rubrik for SLA Domain Information'  
+      Write-Verbose -Message "Submitting a request to $uri"
       $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method
-      $result = (ConvertFrom-Json -InputObject $r.Content)
-      return $result
+      
+      Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
+      $result = ExpandPayload -response $r
     }
     catch 
     {
       throw $_
-    }
+    }    
+
+    $result = (ConvertFrom-Json -InputObject $r.Content)
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
+    return $result
 
 
   } # End of process

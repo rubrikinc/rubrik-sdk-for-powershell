@@ -6,8 +6,8 @@ function Get-RubrikSLA
       Connects to Rubrik and retrieves details on SLA Domain(s)
             
       .DESCRIPTION
-      The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains. Information on each
-      domain will be reported to the console.
+      The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains.
+      Information on each domain will be reported to the console.
             
       .NOTES
       Written by Chris Wahl for community usage
@@ -28,15 +28,18 @@ function Get-RubrikSLA
 
   [CmdletBinding()]
   Param(
-    # SLA Domain Name
+    # Name of the SLA Domain (alias: 'name')
+    # Default: Will retrieve information on all known SLA Domains
+    # Pipeline: Accepted by property name
     [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('Name')]
     [String]$SLA,
+    # SLA Domain id
+    [String]$id, 
     # Rubrik server IP or FQDN
-    [Parameter(Position = 2)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 3)]
+    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 
@@ -53,36 +56,35 @@ function Get-RubrikSLA
 
     Write-Verbose -Message 'Build the URI'
     $uri = 'https://'+$Server+$resources.$api.URI
+    if ($id) 
+    {
+      $uri += "/$id"
+    }
     
     Write-Verbose -Message 'Build the method'
     $method = $resources.$api.Method
         
     try 
     {
-      $r = Invoke-WebRequest -Uri $uri -Headers $header -Method $method
-      $response = ConvertFrom-Json -InputObject $r.Content
+      Write-Verbose -Message "Submitting a request to $uri"
+      $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method
       
-      # Strip out the overhead for the newer APIs
-      if ($api -ne 'v0')
-      {
-        $response = $response.data
-      }
-      
-      # Optionally filter out the results for a specific SLA Domain
-      if ($SLA)
-      {
-        Write-Verbose -Message "Filtering results for $SLA"
-        [array]$response = $response | Where-Object -FilterScript {
-          $_.name -eq $SLA
-        }
-      }
-      
-      return $response
+      Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
+      $result = ExpandPayload -response $r
     }
-    catch
+    catch 
     {
       throw $_
-    }   
+    }
+
+    if (!$id) 
+    {      
+      Write-Verbose -Message 'Formatting return value'
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
+      $result = Test-ReturnFilter -object $SLA -location $resources.$api.Filter['$SLA'] -result $result
+    }
+    
+    return $result   
 		
   } # End of process
 } # End of function
