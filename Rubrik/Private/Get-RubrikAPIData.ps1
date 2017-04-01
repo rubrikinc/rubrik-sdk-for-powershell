@@ -73,6 +73,23 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       } 
     }
+    'Get-RubrikFilesetTemplate'   = @{
+      v1 = @{
+        Description = 'Retrieve summary information for all fileset templates, including: ID and name of the fileset template, fileset template creation timestamp, array of the included filepaths, array of the excluded filepaths.'
+        Function    = 'Get-RubrikFilesetTemplate'
+        URI         = '/api/v1/fileset_template'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          primary_cluster_id    = 'primary_cluster_id'
+          operating_system_type = 'operating_system_type'
+          name                  = 'name'
+        }
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
+      } 
+    }
     FilesetIDPatch                = @{
       v1 = @{
         Description = 'Update a Fileset with the specified properties.'
@@ -345,4 +362,5 @@ function Get-RubrikAPIData($endpoint)
   } # End of API
   
   return $api.$endpoint
+  
 } # End of function

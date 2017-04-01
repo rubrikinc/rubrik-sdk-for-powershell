@@ -104,7 +104,7 @@ function Connect-Rubrik
         $content = (ConvertFrom-Json -InputObject $r.Content)
         # If we find a successful call code and also a token, we know the request was successful
         # Anything else will trigger a throw, which will cause the catch to break the current loop and try another version
-        if ($r.StatusCode -eq $version.SuccessCode -and $content.token -ne $null)
+        if ($r.StatusCode -eq $version.Success -and $content.token -ne $null)
         {
           Write-Verbose -Message "Successfully acquired token: $($content.token)"
           break
