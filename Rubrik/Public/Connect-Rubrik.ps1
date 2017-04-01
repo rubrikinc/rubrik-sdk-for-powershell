@@ -80,8 +80,8 @@ function Connect-Rubrik
       # Set the Method
       $method = $version.Method      
       
-      # For API version v0 and v1.0, create a body with the credentials
-      if ($versionnum -eq 'v0' -or $versionnum -eq 'v1.0') 
+      # For API version v1.0, create a body with the credentials
+      if ($versionnum -eq 'v1.0') 
       {
         $body = @{
           $version.Body[0] = $Credential.UserName
@@ -126,8 +126,8 @@ function Connect-Rubrik
       throw 'Unable to connect with any available API version'
     }
 
-    # For API version v0 and v1.0, use a standard Basic Auth Base64 encoded header with token:$null
-    if ($versionnum -eq 'v0' -or $versionnum -eq 'v1.0') 
+    # For API version v1.0, use a standard Basic Auth Base64 encoded header with token:$null
+    if ($versionnum -eq 'v1.0') 
     {
       Write-Verbose -Message 'Validate token and build Base64 Auth string'
       $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($($content.token)+':'))
