@@ -39,20 +39,21 @@ function Get-RubrikDatabase
 
   [CmdletBinding()]
   Param(
-    # Name of the database (alias: 'name')
-    # Default: Will retrieve information on all known databases
-    # Pipeline: Accepted by property name
-    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('Name')]
-    [String]$Database,
+    # Name of the database
+    [Alias('Database')]
+    [String]$Name,
     # Filter results to include only relic (removed) databases
+    [Alias('is_relic')]
     [Switch]$Relic,
     # SLA Domain policy assigned to the database
     [String]$SLA,
     # Name of the database instance
     [String]$Instance,    
     # Name of the database host
-    [String]$Host,
+    [String]$Hostname,
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Alias('primary_cluster_id')]
+    [String]$PrimaryClusterID,    
     # Rubrik's database id value
     [String]$id,
     # Rubrik server IP or FQDN
@@ -62,56 +63,34 @@ function Get-RubrikDatabase
     [String]$api = $global:RubrikConnection.api
   )
 
-  Begin {
+    Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('MSSQLDBGet')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
-  
+
   Process {
 
-    Write-Verbose -Message 'Building the URI'
-    $uri = 'https://'+$Server+$resources.$api.URI
-    if ($id) 
-    {
-      $uri += "/$id"
-    }
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    Write-Verbose -Message 'Build the query parameters'
-    $query = @()
-    $query += Test-QueryObject -object ([boolean]::Parse($Relic)) -location $resources.$api.Query.Relic -query $query
-    $query += Test-QueryObject -object (Test-RubrikSLA -SLA $SLA) -location $resources.$api.Query.SLA -query $query    
-    $uri = New-QueryString -query $query -uri $uri -nolimit $true
-
-    Write-Verbose -Message 'Build the method'
-    $method = $resources.$api.Method
-
-    try 
-    {
-      Write-Verbose -Message "Submitting a request to $uri"
-      $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method
-      
-      Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
-      $result = ExpandPayload -response $r
-    }
-    catch 
-    {
-      throw $_
-    }    
-      
-    if (!$id) 
-    {
-      Write-Verbose -Message 'Formatting return value'
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
-      $result = Test-ReturnFilter -object $Database -location $resources.$api.Filter['$Database'] -result $result
-      $result = Test-ReturnFilter -object $SLA -location $resources.$api.Filter['$SLA'] -result $result
-      $result = Test-ReturnFilter -object $Instance -location $resources.$api.Filter['$Instance'] -result $result
-      $result = Test-ReturnFilter -object $Host -location $resources.$api.Filter['$Host'] -result $result
-    }
-    
     return $result
 
   } # End of process

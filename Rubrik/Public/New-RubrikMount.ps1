@@ -30,7 +30,6 @@ function New-RubrikMount
     # Name of the virtual machine
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('Name')]
-    [ValidateNotNullorEmpty()]
     [String]$VM,
     # An optional name for the Live Mount
     # By default, will use the original VM name plus a date and instance number
@@ -39,9 +38,7 @@ function New-RubrikMount
     # Date of the snapshot to use for the Live Mount
     # Format should match MM/DD/YY HH:MM
     # If no value is specified, will retrieve the last known shapshot
-    [Parameter(Position = 2,ValueFromPipelineByPropertyName = $true)]
-    [ValidateNotNullorEmpty()]
-    [String]$Date,
+    [Datetime]$Date,
     # ID of the host for the Live Mount to use
     # Defaults to the hostId where the running virtual machine lives
     [String]$HostID,
@@ -56,10 +53,21 @@ function New-RubrikMount
 
   Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('VMwareVMMountPost')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
 

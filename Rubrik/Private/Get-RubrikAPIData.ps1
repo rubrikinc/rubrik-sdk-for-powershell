@@ -104,7 +104,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       } 
     }
-    GenericSnapshotGet            = @{
+    'Get-RubrikSnapshot'            = @{
       v1 = @{
         Description = 'Retrieve information for all snapshots for a VM'
         URI         = @{
@@ -123,7 +123,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    MSSQLDBGet                    = @{
+    'Get-RubrikDatabase'                    = @{
       v1 = @{
         Description = 'Returns a list of summary information for Microsoft SQL databases.'
         URI         = '/api/v1/mssql/db'
@@ -137,10 +137,10 @@ function Get-RubrikAPIData($endpoint)
         }
         Result      = 'data'
         Filter      = @{
-          '$Database' = 'name'
-          '$SLA'    = 'effectiveSlaDomainName'
-          '$Host'   = 'rootProperties.rootName'
-          '$Instance' = 'instanceName'
+          'Name' = 'name'
+          'SLA'    = 'effectiveSlaDomainName'
+          'Hostname'   = 'rootProperties.rootName'
+          'Instance' = 'instanceName'
         }
         Success     = '200'
       }
@@ -272,7 +272,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }      
     }
-    VMwareVMSnapshotIDMountPost   = @{
+    'New-RubrikMount'   = @{
       v1 = @{
         Description = 'Create a live mount request with given configuration'
         URI         = '/api/v1/vmware/vm/snapshot/{id}/mount'
@@ -291,7 +291,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
-    VMwareVMSnapshotMountGet      = @{
+    'Get-RubrikMount'      = @{
       v1 = @{
         Description = 'Retrieve information for all live mounts'
         URI         = '/api/v1/vmware/vm/snapshot/mount'

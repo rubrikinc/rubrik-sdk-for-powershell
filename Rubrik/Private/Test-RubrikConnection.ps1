@@ -4,7 +4,7 @@
   # If no token is found, this will throw an error and halt the script
   # Otherwise, the token is loaded into the script's $Header var
   
-  Write-Verbose -Message 'Validating the Rubrik token exists'
+  Write-Verbose -Message 'Validate the Rubrik token exists'
   if (-not $global:RubrikConnection.token) 
   {
     Write-Warning -Message 'Please connect to only one Rubrik Cluster before running this command.'

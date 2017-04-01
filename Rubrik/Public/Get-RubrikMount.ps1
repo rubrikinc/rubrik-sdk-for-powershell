@@ -51,50 +51,33 @@ function Get-RubrikMount
     [String]$api = $global:RubrikConnection.api
   )
 
-  Begin {
+    Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('VMwareVMSnapshotMountGet')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
 
   Process {
 
-    Write-Verbose -Message 'Build the URI'
-    $uri = 'https://'+$Server+$resources.$api.URI
-    if ($id) 
-    {
-      $uri += "/$id"
-    }
-    
-    Write-Verbose -Message 'Build the query parameters'
-    $query = @()
-    $query += Test-QueryObject -object $VMID -location $resources.$api.Query.VMID -query $query
-    $uri = New-QueryString -query $query -uri $uri -nolimit $true    
-
-    Write-Verbose -Message 'Build the method'
-    $method = $resources.$api.Method
-        
-    try 
-    {
-      Write-Verbose -Message "Submitting a request to $uri"
-      $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method
-      
-      Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
-      $result = ExpandPayload -response $r
-    }          
-    catch 
-    {
-      throw $_
-    }
-      
-    if (!$id)
-    {
-      Write-Verbose -Message 'Formatting return value'
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
-    }           
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
     return $result
 
