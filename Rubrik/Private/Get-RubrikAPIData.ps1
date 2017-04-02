@@ -38,7 +38,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    ClusterIDVersionGet           = @{
+    'Get-RubrikVersion'           = @{
       v1 = @{
         Description = 'Retrieves software version of the Rubrik cluster'
         URI         = '/api/v1/cluster/{id}/version'
@@ -168,7 +168,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       } 
     }
-    SLADomainGet                  = @{
+    'Get-RubrikSLA'                  = @{
       v1 = @{
         Description = 'Retrieve summary information for all SLA Domains'
         URI         = '/api/v1/sla_domain'
@@ -179,7 +179,7 @@ function Get-RubrikAPIData($endpoint)
         }
         Result      = 'data'
         Filter      = @{
-          '$SLA' = 'name'
+          'Name' = 'name'
         }
         Success     = '200'
       }
@@ -215,21 +215,21 @@ function Get-RubrikAPIData($endpoint)
         Success     = '201'
       }
     }
-    VMwareVMGet                   = @{
+    'Get-RubrikVM'                   = @{
       v1 = @{
         Description = 'Get summary of all the VMs'
         URI         = '/api/v1/vmware/vm'
         Method      = 'Get'
         Body        = ''
         Query       = @{
-          Relic  = 'is_relic'
-          Search = 'name'
-          SLA    = 'effective_sla_domain_id'
+          is_relic  = 'is_relic'
+          name = 'name'
+          effective_sla_domain_id    = 'effective_sla_domain_id'
         }
         Result      = 'data'
         Filter      = @{
-          '$VM' = 'name'
-          '$SLA' = 'effectiveSlaDomainName'
+          'Name' = 'name'
+          'SLA' = 'effectiveSlaDomainName'
         }
         Success     = '200'
       }
@@ -349,7 +349,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    VMwareVMRequestIDGet          = @{
+    'Get-RubrikRequest'          = @{
       v1 = @{
         Description = 'Get details about a vmware vm related async request'
         URI         = '/api/v1/vmware/vm/request/{id}'
