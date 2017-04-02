@@ -320,7 +320,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
-    VMwareVMIDSnapshotPost        = @{
+    'New-RubrikSnapshot'        = @{
       v1 = @{
         Description = 'Create an on-demand snapshot for the given VM ID'
         URI         = '/api/v1/vmware/vm/{id}/snapshot'
@@ -332,11 +332,11 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }      
     }
-    VMwareVMSnapshotMountIDPost   = @{
+    'Start-RubrikVM'   = @{
       v1 = @{
         Description = 'Power given live-mounted vm on/off'
         URI         = '/api/v1/vmware/vm/snapshot/mount/{id}'
-        Method      = 'Post'
+        Method      = 'Patch'
         Body        = @{
           powerStatus = 'powerStatus'
         }
@@ -346,6 +346,20 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Stop-RubrikVM'   = @{
+      v1 = @{
+        Description = 'Power given live-mounted vm on/off'
+        URI         = '/api/v1/vmware/vm/snapshot/mount/{id}'
+        Method      = 'Patch'
+        Body        = @{
+          powerStatus = 'powerStatus'
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }    
     'Get-RubrikRequest'          = @{
       v1 = @{
         Description = 'Get details about a vmware vm related async request'

@@ -27,7 +27,16 @@
         if (((Get-Variable -Name $param.Name).Value) -ne '' -and (((Get-Variable -Name $param.Name).Value).IsPresent) -ne $false) 
         {
           Write-Verbose -Message "Adding $body to body string"
-          $bodystring.Add($body,(Get-Variable -Name $param.Name).Value)
+          # For Switch type parameters
+          if (((Get-Variable -Name $param.Name).Value.IsPresent) -eq $true) 
+          {
+            $bodystring.Add($body,$true)
+          }
+          # For all other parameters
+          else 
+          {
+            $bodystring.Add($body,(Get-Variable -Name $param.Name).Value)
+          }
         }
       }
     }

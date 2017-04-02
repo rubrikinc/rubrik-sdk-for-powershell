@@ -17,79 +17,53 @@ function Start-RubrikVM
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Start-RubrikVM -VM 'Server1'
-      This will send a power on request to Server1
+      Get-RubrikVM 'Server1' | Start-RubrikVM
+      This will send a power on request to "Server1"
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # Virtual machine name
+    # Mount id
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('Name')]
-    [ValidateNotNullorEmpty()]
-    [String]$VM,
+    [String]$id,
+    [Alias('powerStatus')]
+    [Bool]$PowerState = $true,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 1)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 2)]
     [String]$api = $global:RubrikConnection.api
   )
 
   Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('VMwareVMMountPowerPost')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
 
   Process {
 
-    Write-Verbose -Message 'Gathering the live mount VM ID and building the body'
-    Switch ($api) {
-      'v0' 
-      {
-        $vmid = ((Get-RubrikMount -VM $VM).virtualMachine.id)
-        $body = @{
-          $resources.$api.Params.vmId = $vmid
-          $resources.$api.Params.powerStatus = $true
-        }
-      }
-      default 
-      {
-        $vmid = ((Get-RubrikMount -VM $VM).id)
-        $body = @{
-          $resources.$api.Params.powerStatus = $true
-        } 
-      }
-    }
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    Write-Verbose -Message 'Build the URI'
-    $uri = 'https://'+$Server+$resources.$api.URI
-    # Replace the placeholder of {id} with the actual VM ID
-    $uri = $uri -replace '{id}', $vmid
-    
-    Write-Verbose -Message 'Build the method'
-    $method = $resources.$api.Method
-
-    try
-    {
-      if ($PSCmdlet.ShouldProcess($VM,'Power off live mount'))
-      {
-        $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
-        if ($r.StatusCode -ne $resources.$api.SuccessCode) 
-        {
-          Write-Warning -Message 'Did not receive successful status code from Rubrik'
-          throw $_
-        }
-      }
-    }
-    catch
-    {
-      throw $_
-    }
+    return $result
 
   } # End of process
 } # End of function
