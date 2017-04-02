@@ -29,61 +29,44 @@ function Remove-RubrikMount
   Param(
     # The Rubrik ID value of the mount
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('id')]
-    [String]$MountID,
-    # Force unmount to deal with situations where host has been moved
-    [Parameter(Position = 1)]
+    [String]$id,
+    # Force unmount to deal with situations where host has been moved.
     [Switch]$Force,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 2)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 3)]
-    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 
-  Begin {
+    Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('VMwareVMMountDelete')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
 
   Process {
-    
-    Write-Verbose -Message 'Build the URI'
-    $uri = 'https://'+$Server+$resources.$api.URI
-    # Replace the placeholder of {id} with the actual fileset ID
-    $uri = $uri -replace '{id}', $MountID
 
-    Write-Verbose -Message 'Build the query parameters'
-    $params = @()
-    $params += Test-QueryObject -object ([boolean]::Parse($Force)) -location $resources.$api.Params.Force -params $params
-    $uri = New-QueryString -params $params -uri $uri -nolimit $false    
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    Write-Verbose -Message 'Build the method'
-    $method = $resources.$api.Method
-
-    try 
-    {
-      if ($PSCmdlet.ShouldProcess($MountID,'Removing a Live Mount'))
-      {
-        $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
-        if ($r.StatusCode -ne $resources.$api.SuccessCode) 
-        {
-          Write-Warning -Message 'Did not receive a successful status code from Rubrik'
-          throw $_
-        }
-        ConvertFrom-Json -InputObject $r.Content
-      }
-    }
-    catch 
-    {
-      throw $_
-    }
+    return $result
 
   } # End of process
 } # End of function

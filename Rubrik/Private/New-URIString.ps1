@@ -7,7 +7,7 @@
 
   Write-Verbose -Message 'Build the URI'
   # If we find {id} in the path, replace it with the $id value  
-  if ($endpoint -contains '{id}')
+  if ($endpoint.Contains('{id}'))
   {
     $uri = ('https://'+$server+$endpoint) -replace '{id}', $id
   }

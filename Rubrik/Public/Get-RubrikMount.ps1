@@ -38,11 +38,11 @@ function Get-RubrikMount
 
   [CmdletBinding()]
   Param(
-    # Rubrik's mount id value
+    # Rubrik's id of the mount
     [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullorEmpty()]
     [String]$id,
-    # The Rubrik ID value of the mount
+    # Filters live mounts by VM ID
     [String]$VMID,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,

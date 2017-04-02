@@ -303,11 +303,13 @@ function Get-RubrikAPIData($endpoint)
           limit  = 'limit'
         }
         Result      = 'data'
-        Filter      = ''
+        Filter      = @{
+          'VMID'    = 'vmId'
+        }
         Success     = '200'
       }
     }
-    VMwareVMSnapshotMountIDDelete = @{
+    'Remove-RubrikMount' = @{
       v1 = @{
         Description = 'Create a request to delete a live mount'
         URI         = '/api/v1/vmware/vm/snapshot/mount/{id}'

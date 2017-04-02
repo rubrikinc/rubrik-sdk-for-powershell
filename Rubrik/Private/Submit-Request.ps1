@@ -6,15 +6,18 @@
   # $method = The action (method) to perform on the endpoint
   # $body = Any optional body data being submitted to the endpoint
 
-  try 
+  if ($PSCmdlet.ShouldProcess($id,$resources.Description))
   {
-    Write-Verbose -Message 'Submitting the request'
-    # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
-    $result = ExpandPayload -response (Invoke-WebRequest -Uri $uri -Headers $header -Method $($resources.Method) -Body $body)
-  }
-  catch 
-  {
-    throw $_
+    try 
+    {
+      Write-Verbose -Message 'Submitting the request'
+      # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
+      $result = ExpandPayload -response (Invoke-WebRequest -Uri $uri -Headers $header -Method $($resources.Method) -Body $body)
+    }
+    catch 
+    {
+      throw $_
+    }
   }
     
   return $result
