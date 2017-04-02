@@ -92,7 +92,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       } 
     }
-    FilesetIDPatch                = @{
+    'Protect-RubrikFileset'                = @{
       v1 = @{
         Description = 'Update a Fileset with the specified properties.'
         URI         = '/api/v1/fileset/{id}'
@@ -231,7 +231,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    VMwareVMIDPatch               = @{
+    'Protect-RubrikVM'               = @{
       v1 = @{
         Description = 'Update VM with specified properties'
         URI         = '/api/v1/vmware/vm/{id}'
