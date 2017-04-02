@@ -50,7 +50,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    FilesetGet                    = @{
+    'Get-RubrikFileset'                    = @{
       v1 = @{
         Description = 'Retrieve summary information for each fileset. Optionally, filter the retrieved information.'
         URI         = '/api/v1/fileset'
@@ -69,7 +69,9 @@ function Get-RubrikAPIData($endpoint)
           host_name               = 'host_name'
         }
         Result      = 'data'
-        Filter      = ''
+        Filter      = @{
+          'SLA' = 'effectiveSlaDomainName'
+        }
         Success     = '200'
       } 
     }
@@ -145,7 +147,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    MSSQLDBIDPatch                = @{
+    'Protect-RubrikDatabase'                = @{
       v1 = @{
         Description = 'Update a Microsoft SQL database with the specified properties.'
         URI         = '/api/v1/mssql/db/{id}'
@@ -157,14 +159,9 @@ function Get-RubrikAPIData($endpoint)
           maxDataStreams              = 'maxDataStreams'
           configuredSlaDomainId       = 'configuredSlaDomainId'
         }
-        Query       = 'Parameters to use in the URI query'
+        Query       = ''
         Result      = 'data'
-        Filter      = @{
-          '$Database' = 'name'
-          '$SLA'    = 'effectiveSlaDomainName'
-          '$Host'   = 'rootProperties.rootName'
-          '$Instance' = 'instanceName'
-        }
+        Filter      = ''
         Success     = '200'
       } 
     }
