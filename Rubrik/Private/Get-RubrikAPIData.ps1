@@ -181,7 +181,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    SLADomainIDDelete             = @{
+    'Remove-RubrikSLA'             = @{
       v1 = @{
         Description = 'Delete an SLA Domain from a Rubrik cluster'
         URI         = '/api/v1/sla_domain/{id}'
