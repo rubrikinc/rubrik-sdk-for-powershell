@@ -656,6 +656,19 @@ function GetRubrikAPIData($endpoint)
         FailureMock = ''
       }
     }
+    BlackoutPatch             = @{
+      v1 = @{
+        URI         = '/api/internal/blackout_window'
+        Method      = 'Patch'
+        Params      = @{
+          isGlobalBlackoutActive = 'isGlobalBlackoutActive'
+          }
+        }
+        SuccessCode = '200'
+        SuccessMock = ''
+        FailureCode = ''
+        FailureMock = ''
+      }
   } # End of API
   
   return $api.$endpoint
