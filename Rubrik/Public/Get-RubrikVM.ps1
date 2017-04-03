@@ -41,7 +41,10 @@ function Get-RubrikVM
     # SLA Domain policy assigned to the virtual machine
     [String]$SLA, 
     # Virtual machine id
-    [String]$id,          
+    [String]$id,
+    # SLA id value
+    [Alias('effective_sla_domain_id')]
+    [String]$SLAID,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -69,6 +72,10 @@ function Get-RubrikVM
   }
 
   Process {
+
+    #region One-off
+    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri

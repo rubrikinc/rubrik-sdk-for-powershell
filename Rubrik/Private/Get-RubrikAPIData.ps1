@@ -369,6 +369,18 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+  'Protect-RubrikTag'          = @{
+      v1 = @{
+        Description = 'Assign managed entities to the specified SLA Domain. The assignment event runs synchronously.'
+        URI         = '/api/internal/sla_domain/{id}/assign'
+        Method      = 'Post'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '204'
+      }
+    } 
   } # End of API
   
   return $api.$endpoint

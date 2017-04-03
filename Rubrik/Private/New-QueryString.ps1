@@ -8,7 +8,8 @@
   if ($nolimit -eq $true) 
   {
     # When $nolimit is set to $true the limit query value is added to the $params array as the final item
-    $params += 'limit=9999'
+    Write-Verbose -Message 'Query = Found limit flag'
+    $query += 'limit=9999'
   }
 
   # TODO: It seems like there's a more elegant way to do this logic, but this code is stable and functional.

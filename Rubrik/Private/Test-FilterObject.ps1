@@ -9,6 +9,7 @@
   {
     if ((Get-Variable -Name $param -ErrorAction SilentlyContinue).Value -ne $null)
     {
+      Write-Verbose -Message "Filter match = $param"
       $result = Test-ReturnFilter -object (Get-Variable -Name $param).Value -location $filter[$param] -result $result
     }
   }

@@ -15,20 +15,24 @@ function Remove-RubrikMount
             
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
+
+      .EXAMPLE
+      Remove-RubrikMount -id '11111111-2222-3333-4444-555555555555'
+      This will remove mount id "11111111-2222-3333-4444-555555555555".
             
       .EXAMPLE
-      Remove-RubrikMount -MountID 11111111-2222-3333-4444-555555555555
-      This will a live mount with the ID of 11111111-2222-3333-4444-555555555555
-            
+      Get-RubrikMount | Remove-RubrikMount
+      This will remove all mounted virtual machines.
+
       .EXAMPLE
-      Get-RubrikMount -VM Server1 | Remove-RubrikMount
-      This will find and remove any live mount belonging to Server1
+      Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id | Remove-RubrikMount
+      This will remove any mounts found using the virtual machine named "Server1" as a base reference.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # The Rubrik ID value of the mount
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Force unmount to deal with situations where host has been moved.
     [Switch]$Force,
@@ -62,6 +66,7 @@ function Remove-RubrikMount
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)        
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

@@ -57,6 +57,9 @@ function Get-RubrikDatabase
     # Rubrik's database id value
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
+    # SLA id value
+    [Alias('effective_sla_domain_id')]
+    [String]$SLAID,     
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -85,6 +88,10 @@ function Get-RubrikDatabase
   }
 
   Process {
+
+    #region One-off
+    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri

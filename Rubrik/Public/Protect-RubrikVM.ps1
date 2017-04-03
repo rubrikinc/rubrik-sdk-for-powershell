@@ -25,24 +25,24 @@ function Protect-RubrikVM
       This will assign the Gold SLA Domain to any virtual machine named "VM1"
 
       .EXAMPLE
-      Get-RubrikVM "VM1" -Filter ACTIVE -SLA Silver | Protect-RubrikVM -SLA 'Gold' -Confirm:$False
-      This will assign the Gold SLA Domain to any virtual machine named "VM1" that is marked as ACTIVE and currently assigned to the Silver SLA Domain
+      Get-RubrikVM "VM1" -SLA Silver | Protect-RubrikVM -SLA 'Gold' -Confirm:$False
+      This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
       without asking for confirmation
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Virtual machine ID
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # The SLA Domain in Rubrik
-    [Parameter(Position = 1,ParameterSetName = 'SLA_Explicit')]
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
     [String]$SLA,
     # Removes the SLA Domain assignment
-    [Parameter(Position = 2,ParameterSetName = 'SLA_Unprotected')]
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
     [Switch]$DoNotProtect,
     # Inherits the SLA Domain assignment from a parent object
-    [Parameter(Position = 3,ParameterSetName = 'SLA_Inherit')]
+    [Parameter(ParameterSetName = 'SLA_Inherit')]
     [Switch]$Inherit,
     # SLA id value
     [Alias('configuredSlaDomainId')]
@@ -75,8 +75,9 @@ function Protect-RubrikVM
 
   Process {
 
-    # One-off
+    #region One-off
     $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    #endregion One-off
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri

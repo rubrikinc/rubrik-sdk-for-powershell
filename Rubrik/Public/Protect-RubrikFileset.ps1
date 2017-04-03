@@ -32,13 +32,13 @@ function Protect-RubrikFileset
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Fileset ID
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # The SLA Domain in Rubrik
-    [Parameter(Position = 1,ParameterSetName = 'SLA_Explicit')]
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
     [String]$SLA,
     # Removes the SLA Domain assignment
-    [Parameter(Position = 2,ParameterSetName = 'SLA_Unprotected')]
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
     [Switch]$DoNotProtect,
     # SLA id value
     [Alias('configuredSlaDomainId')]
@@ -71,8 +71,9 @@ function Protect-RubrikFileset
 
   Process {
 
-    # One-off
+    #region One-off
     $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    #endregion One-off
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
