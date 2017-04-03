@@ -18,7 +18,15 @@ function Get-RubrikFilesetTemplate
 
       .EXAMPLE
       Get-RubrikFilesetTemplate -Name 'Template1'
-      This will return details on all fileset templates named "Template1".
+      This will return details on all fileset templates named "Template1"
+
+      .EXAMPLE
+      Get-RubrikFilesetTemplate -OperatingSystemType 'Linux'
+      This will return details on all fileset templates that can be used against a Linux operating system type
+
+      .EXAMPLE
+      Get-RubrikFilesetTemplate -id '11111111-2222-3333-4444-555555555555'
+      This will return details on the fileset template matching id "11111111-2222-3333-4444-555555555555"
   #>
 
   [CmdletBinding()]
@@ -34,6 +42,7 @@ function Get-RubrikFilesetTemplate
     [Alias('operating_system_type')]
     [String]$OperatingSystemType,
     # The ID of the fileset template
+    [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -66,6 +75,7 @@ function Get-RubrikFilesetTemplate
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

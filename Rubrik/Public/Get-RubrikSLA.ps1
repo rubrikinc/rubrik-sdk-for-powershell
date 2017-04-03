@@ -22,7 +22,7 @@ function Get-RubrikSLA
       Will return all known SLA Domains
             
       .EXAMPLE
-      Get-RubrikSLA -SLA 'Gold'
+      Get-RubrikSLA -Name 'Gold'
       Will return details on the SLA Domain named Gold
   #>
 
@@ -32,6 +32,7 @@ function Get-RubrikSLA
     [Alias('SLA')]
     [String]$Name,
     # SLA Domain id
+    [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [String]$id, 
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -63,6 +64,7 @@ function Get-RubrikSLA
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

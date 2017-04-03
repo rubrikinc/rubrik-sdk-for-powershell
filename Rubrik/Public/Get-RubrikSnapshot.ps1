@@ -34,7 +34,7 @@ function Get-RubrikSnapshot
   [CmdletBinding()]
   Param(
     # Rubrik id of the protected object
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Filter results based on where in the cloud the snapshot lives
     [Int]$CloudState,
@@ -49,7 +49,7 @@ function Get-RubrikSnapshot
     [String]$api = $global:RubrikConnection.api
   )
 
-Begin {
+  Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -71,32 +71,35 @@ Begin {
 
   Process {
 
+    #region One-off
     Write-Verbose -Message 'Build the URI'
     Switch -Wildcard ($id)
     {
       'VirtualMachine*'
       {
         Write-Verbose -Message 'Loading VMware API data'
-        $uri = 'https://'+$Server+$resources.URI.VMware
+        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
       }
       'MssqlDatabase*'
       {
         Write-Verbose -Message 'Loading MSSQL API data'
-        $uri = 'https://'+$Server+$resources.URI.MSSQL
+        $uri = ('https://'+$Server+$resources.URI.MSSQL) -replace '{id}', $id
       }
     }
-    $uri = $uri -replace '{id}', $id
+    #endregion
 
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    
-    Write-Verbose -Message 'Formatting return value'
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-ReturnFilter -object $CloudState -location $resources.Filter['$CloudState'] -result $result
-    $result = Test-ReturnFilter -object ([boolean]::Parse($OnDemandSnapshot)) -location $resources.Filter['$OnDemandSnapshot'] -result $result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    
+    #region One-off
     if ($Date) 
     {
-      $result = Test-ReturnFilter -object (Test-DateDifference -date $($result.date) -compare $Date) -location $resources.Filter['$Date'] -result $result
+      $result = Test-ReturnFilter -object (Test-DateDifference -date $($result.date) -compare $Date) -location 'date' -result $result
     }
+    #endregion
     
     return $result
 

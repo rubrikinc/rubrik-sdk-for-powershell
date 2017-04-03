@@ -17,11 +17,11 @@ function Get-RubrikVM
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM -VM 'Server1'
+      Get-RubrikVM -Name 'Server1'
       This will return details on all virtual machines named "Server1".
 
       .EXAMPLE
-      Get-RubrikVM -VM 'Server1' -SLA Gold
+      Get-RubrikVM -Name 'Server1' -SLA Gold
       This will return details on all virtual machines named "Server1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
@@ -72,6 +72,7 @@ function Get-RubrikVM
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

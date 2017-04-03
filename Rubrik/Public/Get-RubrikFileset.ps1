@@ -19,19 +19,19 @@ function Get-RubrikFileset
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikFileset -Fileset 'C_Drive' 
+      Get-RubrikFileset -Name 'C_Drive' 
       This will return details on the fileset named "C_Drive" assigned to any hosts
 
       .EXAMPLE
-      Get-RubrikFileset -Fileset 'C_Drive' -HostName 'Server1'
+      Get-RubrikFileset -Name 'C_Drive' -HostName 'Server1'
       This will return details on the fileset named "C_Drive" assigned to only the "Server1" host
 
       .EXAMPLE
-      Get-RubrikFileset -Fileset 'C_Drive' -SLA Gold
+      Get-RubrikFileset -Name 'C_Drive' -SLA Gold
       This will return details on the fileset named "C_Drive" assigned to any hosts with an SLA Domain matching "Gold"
 
       .EXAMPLE
-      Get-RubrikFileset -FilesetID Fileset:::111111-2222-3333-4444-555555555555
+      Get-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
       This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
 
       .EXAMPLE
@@ -56,6 +56,7 @@ function Get-RubrikFileset
     [Alias('template_id')]
     [String]$TemplateID,
     # Rubrik's fileset id
+    [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [String]$id,     
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,

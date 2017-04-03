@@ -16,7 +16,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = 'The expected HTTP status code for a successful call'
       }
     }
-    Session                       = @{
+    'Connect-Rubrik'                       = @{
       'v1.1' = @{
         Description = 'Create a new login session'
         URI         = '/api/v1/session'
@@ -118,9 +118,8 @@ function Get-RubrikAPIData($endpoint)
         Query       = ''
         Result      = 'data'
         Filter      = @{
-          '$CloudState'     = 'cloudState'
-          '$OnDemandSnapshot' = 'isOnDemandSnapshot'
-          '$Date'           = 'date'
+          'CloudState'     = 'cloudState'
+          'OnDemandSnapshot' = 'isOnDemandSnapshot'
         }
         Success     = '200'
       }
@@ -300,9 +299,7 @@ function Get-RubrikAPIData($endpoint)
           limit  = 'limit'
         }
         Result      = 'data'
-        Filter      = @{
-          'VMID'    = 'vmId'
-        }
+        Filter      = ''
         Success     = '200'
       }
     }

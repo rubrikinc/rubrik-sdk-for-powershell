@@ -19,11 +19,11 @@ function Get-RubrikDatabase
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikDatabase -Database 'DB1' -SLA Gold
+      Get-RubrikDatabase -Name 'DB1' -SLA Gold
       This will return details on all databases named DB1 protected by the Gold SLA Domain on any known host or instance.
 
       .EXAMPLE
-      Get-RubrikDatabase -Host 'Host1' -Instance 'MSSQLSERVER' -Database 'DB1'
+      Get-RubrikDatabase -Name 'DB1' -Host 'Host1' -Instance 'MSSQLSERVER'
       This will return details on a database named "DB1" living on an instance named "MSSQLSERVER" on the host named "Host1".
 
       .EXAMPLE
@@ -55,6 +55,7 @@ function Get-RubrikDatabase
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,    
     # Rubrik's database id value
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -87,6 +88,7 @@ function Get-RubrikDatabase
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

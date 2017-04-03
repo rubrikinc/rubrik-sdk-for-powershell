@@ -24,12 +24,12 @@ function Get-RubrikMount
       This will return details on all mounted virtual machines.
 
       .EXAMPLE
-      Get-RubrikVM -VM 'Server1' | Get-RubrikMount
-      Will return all mounts found mathcing the virtual machine name of 'Server1'.
-
-      .EXAMPLE
       Get-RubrikMount -id '11111111-2222-3333-4444-555555555555'
       This will return details on mount id "11111111-2222-3333-4444-555555555555".
+
+      .EXAMPLE
+      Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id
+      This will return details for any mounts found using the id value from a virtual machine named "Server1" as a base reference.
                   
       .EXAMPLE
       Get-RubrikMount -VMID 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
@@ -39,10 +39,10 @@ function Get-RubrikMount
   [CmdletBinding()]
   Param(
     # Rubrik's id of the mount
-    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [ValidateNotNullorEmpty()]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Filters live mounts by VM ID
+    [Alias('vm_id')]
     [String]$VMID,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -75,6 +75,7 @@ function Get-RubrikMount
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
