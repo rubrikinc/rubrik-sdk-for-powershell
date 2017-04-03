@@ -6,8 +6,8 @@ function Get-RubrikSLA
       Connects to Rubrik and retrieves details on SLA Domain(s)
             
       .DESCRIPTION
-      The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains. Information on each
-      domain will be reported to the console.
+      The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains.
+      Information on each domain will be reported to the console.
             
       .NOTES
       Written by Chris Wahl for community usage
@@ -22,67 +22,54 @@ function Get-RubrikSLA
       Will return all known SLA Domains
             
       .EXAMPLE
-      Get-RubrikSLA -SLA 'Gold'
+      Get-RubrikSLA -Name 'Gold'
       Will return details on the SLA Domain named Gold
   #>
 
   [CmdletBinding()]
   Param(
-    # SLA Domain Name
-    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('Name')]
-    [String]$SLA,
+    # Name of the SLA Domain
+    [Alias('SLA')]
+    [String]$Name,
+    # SLA Domain id
+    [Parameter(ValueFromPipelineByPropertyName = $true)]    
+    [String]$id, 
     # Rubrik server IP or FQDN
-    [Parameter(Position = 2)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 3)]
     [String]$api = $global:RubrikConnection.api
   )
 
   Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('SLADomainGet')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
 
   Process {
 
-    Write-Verbose -Message 'Build the URI'
-    $uri = 'https://'+$Server+$resources.$api.URI
-    
-    Write-Verbose -Message 'Build the method'
-    $method = $resources.$api.Method
-        
-    try 
-    {
-      $r = Invoke-WebRequest -Uri $uri -Headers $header -Method $method
-      $response = ConvertFrom-Json -InputObject $r.Content
-      
-      # Strip out the overhead for the newer APIs
-      if ($api -ne 'v0')
-      {
-        $response = $response.data
-      }
-      
-      # Optionally filter out the results for a specific SLA Domain
-      if ($SLA)
-      {
-        Write-Verbose -Message "Filtering results for $SLA"
-        [array]$response = $response | Where-Object -FilterScript {
-          $_.name -eq $SLA
-        }
-      }
-      
-      return $response
-    }
-    catch
-    {
-      throw $_
-    }   
-		
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+
+    return $result
+
   } # End of process
 } # End of function

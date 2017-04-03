@@ -17,22 +17,21 @@ function New-RubrikSLA
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      New-RubrikSLA -SLA Test1 -HourlyFrequency 4 -HourlyRetention 24
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours.
 
       .EXAMPLE
-      New-RubrikSLA -SLA Test1 -HourlyFrequency 4 -HourlyRetention 24 -DailyFrequency 1 -DailyRetention 30
-      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours while also
-      keeping one backup per day for 30 days.
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24 -DailyFrequency 1 -DailyRetention 30
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours
+      while also keeping one backup per day for 30 days.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # SLA Domain Name
-    [Parameter(Mandatory = $true,Position = 0)]
-    [Alias('Name')]
-    [ValidateNotNullorEmpty()]
-    [String]$SLA,
+    [Parameter(Mandatory = $true)]
+    [Alias('SLA')]
+    [String]$Name,
     # Hourly frequency to take backups
     [int]$HourlyFrequency,
     # Number of hours to retain the hourly backups
@@ -55,23 +54,35 @@ function New-RubrikSLA
     [String]$api = $global:RubrikConnection.api
   )
 
-  Begin {
+    Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('SLADomainPost')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
 
   Process {
 
-    Write-Verbose -Message 'Build the URI'
-    $uri = 'https://'+$Server+$resources.$api.URI
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
 
+    #region One-off
     Write-Verbose -Message 'Build the body'
     $body = @{
-      $resources.$api.Params.name = $SLA
+      $resources.Body.name = $Name
       frequencies = @()
     }
     
@@ -81,9 +92,9 @@ function New-RubrikSLA
     if ($HourlyFrequency -and $HourlyRetention)
     { 
       $body.frequencies += @{
-        $resources.$api.Params.frequencies.timeUnit = 'Hourly'
-        $resources.$api.Params.frequencies.frequency = $HourlyFrequency
-        $resources.$api.Params.frequencies.retention = $HourlyRetention
+        $resources.Body.frequencies.timeUnit = 'Hourly'
+        $resources.Body.frequencies.frequency = $HourlyFrequency
+        $resources.Body.frequencies.retention = $HourlyRetention
       }
       [bool]$ParamValidation = $true
     }
@@ -91,9 +102,9 @@ function New-RubrikSLA
     if ($DailyFrequency -and $DailyRetention)
     { 
       $body.frequencies += @{
-        $resources.$api.Params.frequencies.timeUnit = 'Daily'
-        $resources.$api.Params.frequencies.frequency = $DailyFrequency
-        $resources.$api.Params.frequencies.retention = $DailyRetention
+        $resources.Body.frequencies.timeUnit = 'Daily'
+        $resources.Body.frequencies.frequency = $DailyFrequency
+        $resources.Body.frequencies.retention = $DailyRetention
       }
       [bool]$ParamValidation = $true
     }    
@@ -101,9 +112,9 @@ function New-RubrikSLA
     if ($MonthlyFrequency -and $MonthlyRetention)
     { 
       $body.frequencies += @{
-        $resources.$api.Params.frequencies.timeUnit = 'Monthly'
-        $resources.$api.Params.frequencies.frequency = $MonthlyFrequency
-        $resources.$api.Params.frequencies.retention = $MonthlyRetention
+        $resources.Body.frequencies.timeUnit = 'Monthly'
+        $resources.Body.frequencies.frequency = $MonthlyFrequency
+        $resources.Body.frequencies.retention = $MonthlyRetention
       }
       [bool]$ParamValidation = $true
     }  
@@ -111,9 +122,9 @@ function New-RubrikSLA
     if ($YearlyFrequency -and $YearlyRetention)
     { 
       $body.frequencies += @{
-        $resources.$api.Params.frequencies.timeUnit = 'Yearly'
-        $resources.$api.Params.frequencies.frequency = $YearlyFrequency
-        $resources.$api.Params.frequencies.retention = $YearlyRetention
+        $resources.Body.frequencies.timeUnit = 'Yearly'
+        $resources.Body.frequencies.frequency = $YearlyFrequency
+        $resources.Body.frequencies.retention = $YearlyRetention
       }
       [bool]$ParamValidation = $true
     } 
@@ -122,31 +133,17 @@ function New-RubrikSLA
     if ($ParamValidation -ne $true) 
     {
       throw 'You did not specify any frequency and retention values'
-    }
+    }    
+    
+    $body = ConvertTo-Json $body
+    Write-Verbose -Message "Body = $body"
+    #endregion
 
-    Write-Verbose -Message 'Build the method'
-    $method = $resources.$api.Method
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    Write-Verbose -Message 'Submit the request'
-    try
-    {
-      if ($PSCmdlet.ShouldProcess($SLA,'creating SLA Domain'))
-      {
-        $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
-        if ($r.StatusCode -ne $resources.$api.SuccessCode) 
-        {
-          Write-Warning -Message 'Did not receive successful status code from Rubrik'
-          throw $_
-        }
-        $response = ConvertFrom-Json -InputObject $r.Content
-        return $response.statuses
-      }
-    }
-    catch
-    {
-      throw $_
-    }
-
+    return $result
 
   } # End of process
 } # End of function

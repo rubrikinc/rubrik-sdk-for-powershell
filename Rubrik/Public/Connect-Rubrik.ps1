@@ -58,8 +58,13 @@ function Connect-Rubrik
 
     Unblock-SelfSignedCert
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('Session')
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
+        
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function)
   
   }
 
@@ -80,8 +85,8 @@ function Connect-Rubrik
       # Set the Method
       $method = $version.Method      
       
-      # For API version v0 and v1.0, create a body with the credentials
-      if ($versionnum -eq 'v0' -or $versionnum -eq 'v1.0') 
+      # For API version v1.0, create a body with the credentials
+      if ($versionnum -eq 'v1.0') 
       {
         $body = @{
           $version.Body[0] = $Credential.UserName
@@ -104,7 +109,7 @@ function Connect-Rubrik
         $content = (ConvertFrom-Json -InputObject $r.Content)
         # If we find a successful call code and also a token, we know the request was successful
         # Anything else will trigger a throw, which will cause the catch to break the current loop and try another version
-        if ($r.StatusCode -eq $version.SuccessCode -and $content.token -ne $null)
+        if ($r.StatusCode -eq $version.Success -and $content.token -ne $null)
         {
           Write-Verbose -Message "Successfully acquired token: $($content.token)"
           break
@@ -126,8 +131,8 @@ function Connect-Rubrik
       throw 'Unable to connect with any available API version'
     }
 
-    # For API version v0 and v1.0, use a standard Basic Auth Base64 encoded header with token:$null
-    if ($versionnum -eq 'v0' -or $versionnum -eq 'v1.0') 
+    # For API version v1.0, use a standard Basic Auth Base64 encoded header with token:$null
+    if ($versionnum -eq 'v1.0') 
     {
       Write-Verbose -Message 'Validate token and build Base64 Auth string'
       $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($($content.token)+':'))

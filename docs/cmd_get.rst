@@ -15,32 +15,39 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikDatabase [[-Database] <String>] [[-Filter] <String>] [[-SLA] <String>] [-Instance <String>] [-Host <String>] [-id <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+    Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikDatabase cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of databases
+    The Get-RubrikDatabase cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of databases.
+    To narrow down the results, use the host and instance parameters to limit your search to a smaller group of objects.
+    Alternatively, supply the Rubrik database ID to return only one specific database.
     
 
 PARAMETERS
-    -Database <String>
+    -Name <String>
         Name of the database
-        If no value is specified, will retrieve information on all databases
         
-    -Filter <String>
-        Filter results based on active, relic (removed), or all databases
+    -Relic [<SwitchParameter>]
+        Filter results to include only relic (removed) databases
         
     -SLA <String>
-        SLA Domain policy
+        SLA Domain policy assigned to the database
         
     -Instance <String>
         Name of the database instance
         
-    -Host <String>
+    -Hostname <String>
         Name of the database host
         
+    -PrimaryClusterID <String>
+        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+        
     -id <String>
-        Database id
+        Rubrik's database id value
+        
+    -SLAID <String>
+        SLA id value
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -56,9 +63,38 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Get-RubrikDatabase -Name 'DB1'
+    PS C:\>Get-RubrikDatabase -Name 'DB1' -SLA Gold
     
-    This will return the ID of the database named DB1
+    This will return details on all databases named DB1 protected by the Gold SLA Domain on any known host or instance.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikDatabase -Name 'DB1' -Host 'Host1' -Instance 'MSSQLSERVER'
+    
+    This will return details on a database named "DB1" living on an instance named "MSSQLSERVER" on the host named "Host1".
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikDatabase -Relic
+    
+    This will return all removed databases that were formerly protected by Rubrik.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 4 --------------------------
+    
+    PS C:\>Get-RubrikDatabase -id 'MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
+    
+    This will return details on a single database matching the Rubrik ID of "MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+    Note that the database ID is globally unique and is often handy to know if tracking a specific database for longer workflows,
+    whereas some values are not unique (such as nearly all hosts having one or more databases named "model") and more difficult to track by name.
     
     
     
@@ -80,7 +116,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikFileset [[-Fileset] <String>] [[-Relic] <String>] [[-SLA] <String>] [-HostName <String>] [-FilesetID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+    Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -90,21 +126,26 @@ DESCRIPTION
     
 
 PARAMETERS
-    -Fileset <String>
+    -Name <String>
         Name of the fileset
-        If no value is specified, will retrieve information on all filesets
         
-    -Relic <String>
-        Filter results based on active, relic (removed), or all filesets
+    -Relic [<SwitchParameter>]
+        Filter results to include only relic (removed) filesets
         
     -SLA <String>
-        SLA Domain policy
+        SLA Domain policy assigned to the database
         
     -HostName <String>
         Name of the host using a fileset
         
-    -FilesetID <String>
-        Fileset id
+    -TemplateID <String>
+        Filter the summary information based on the ID of a fileset template.
+        
+    -id <String>
+        Rubrik's fileset id
+        
+    -SLAID <String>
+        SLA id value
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -138,7 +179,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 3 --------------------------
     
-    PS C:\>Get-RubrikFileset -Fileset 'C_Drive' -SLA Gold
+    PS C:\>Get-RubrikFileset -Name 'C_Drive' -SLA Gold
     
     This will return details on the fileset named "C_Drive" assigned to any hosts with an SLA Domain matching "Gold"
     
@@ -147,7 +188,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 4 --------------------------
     
-    PS C:\>Get-RubrikFileset -FilesetID Fileset:::111111-2222-3333-4444-555555555555
+    PS C:\>Get-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
     
     This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
     
@@ -156,9 +197,9 @@ PARAMETERS
     
     -------------------------- EXAMPLE 5 --------------------------
     
-    PS C:\>Get-RubrikFileset -Relic False -SLA Bronze
+    PS C:\>Get-RubrikFileset -Relic
     
-    This will return any fileset that is not a relic (still active) using the SLA Domain matching "Bronze"
+    This will return all removed filesets that were formerly protected by Rubrik.
     
     
     
@@ -169,27 +210,36 @@ REMARKS
     For technical information, type: "get-help Get-RubrikFileset -full".
     For online help, type: "get-help Get-RubrikFileset -online"
 
-Get-RubrikJob
+Get-RubrikFilesetTemplate
 -------------------------
 
 NAME
-    Get-RubrikJob
+    Get-RubrikFilesetTemplate
     
 SYNOPSIS
-    Connects to Rubrik and retrieves details on a back-end job
+    Retrieves details on one or more fileset templates known to a Rubrik cluster
     
     
 SYNTAX
-    Get-RubrikJob [-id] <String> [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikFilesetTemplate [[-Name] <String>] [[-PrimaryClusterID] <String>] [[-OperatingSystemType] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikJob cmdlet will accept a job ID value and return any information known about that specific job
+    The Get-RubrikFilesetTemplate cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of fileset templates
     
 
 PARAMETERS
+    -Name <String>
+        Retrieve fileset templates with a name matching the provided name. The search is performed as a case-insensitive infix search.
+        
+    -PrimaryClusterID <String>
+        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+        
+    -OperatingSystemType <String>
+        Filter the summary information based on the operating system type of the fileset. Accepted values: 'Windows', 'Linux'
+        
     -id <String>
-        Rubrik job ID value
+        The ID of the fileset template
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -205,18 +255,36 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Get-RubrikJob -ID 'MOUNT_SNAPSHOT_1234567890:::0'
+    PS C:\>Get-RubrikFilesetTemplate -Name 'Template1'
     
-    Will return details on the job ID MOUNT_SNAPSHOT_1234567890:::0
+    This will return details on all fileset templates named "Template1"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikFilesetTemplate -OperatingSystemType 'Linux'
+    
+    This will return details on all fileset templates that can be used against a Linux operating system type
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikFilesetTemplate -id '11111111-2222-3333-4444-555555555555'
+    
+    This will return details on the fileset template matching id "11111111-2222-3333-4444-555555555555"
     
     
     
     
 REMARKS
-    To see the examples, type: "get-help Get-RubrikJob -examples".
-    For more information, type: "get-help Get-RubrikJob -detailed".
-    For technical information, type: "get-help Get-RubrikJob -full".
-    For online help, type: "get-help Get-RubrikJob -online"
+    To see the examples, type: "get-help Get-RubrikFilesetTemplate -examples".
+    For more information, type: "get-help Get-RubrikFilesetTemplate -detailed".
+    For technical information, type: "get-help Get-RubrikFilesetTemplate -full".
+    For online help, type: "get-help Get-RubrikFilesetTemplate -online"
 
 Get-RubrikMount
 -------------------------
@@ -229,7 +297,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikMount [[-VMID] <String>] [[-MountID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikMount [[-id] <String>] [[-VMID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -240,11 +308,11 @@ DESCRIPTION
     
 
 PARAMETERS
-    -VMID <String>
-        Virtual Machine ID to inspect for mounts
+    -id <String>
+        Rubrik's id of the mount
         
-    -MountID <String>
-        The Rubrik ID value of the mount
+    -VMID <String>
+        Filters live mounts by VM ID
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -262,25 +330,34 @@ PARAMETERS
     
     PS C:\>Get-RubrikMount
     
-    Will return all Live Mounts known to Rubrik
+    This will return details on all mounted virtual machines.
     
     
     
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-RubrikVM -VM 'Server1' | Get-RubrikMount
+    PS C:\>Get-RubrikMount -id '11111111-2222-3333-4444-555555555555'
     
-    Will return all Live Mounts found for Server1
+    This will return details on mount id "11111111-2222-3333-4444-555555555555".
     
     
     
     
     -------------------------- EXAMPLE 3 --------------------------
     
-    PS C:\>Get-RubrikMount -MountID 11111111-2222-3333-4444-555555555555
+    PS C:\>Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id
     
-    Will return details on a live mount matching the id of "11111111-2222-3333-4444-555555555555"
+    This will return details for any mounts found using the id value from a virtual machine named "Server1" as a base reference.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 4 --------------------------
+    
+    PS C:\>Get-RubrikMount -VMID 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
+    
+    This will return details for any mounts found using the virtual machine id of 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' as a base reference.
     
     
     
@@ -302,7 +379,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikRequest [-ID] <String> [-Server <String>] [-api <String>] [<CommonParameters>]
+    Get-RubrikRequest [-id] <String> [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -311,7 +388,7 @@ DESCRIPTION
     
 
 PARAMETERS
-    -ID <String>
+    -id <String>
         SLA Domain Name
         
     -Server <String>
@@ -328,7 +405,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Get-RubrikRequest -ID MOUNT_SNAPSHOT_123456789:::0
+    PS C:\>Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0'
     
     Will return details about the request named "MOUNT_SNAPSHOT_123456789:::0"
     
@@ -352,17 +429,20 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikSLA [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikSLA [[-Name] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains. Information on each
-    domain will be reported to the console.
+    The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains.
+    Information on each domain will be reported to the console.
     
 
 PARAMETERS
-    -SLA <String>
-        SLA Domain Name
+    -Name <String>
+        Name of the SLA Domain
+        
+    -id <String>
+        SLA Domain id
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -387,7 +467,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-RubrikSLA -SLA 'Gold'
+    PS C:\>Get-RubrikSLA -Name 'Gold'
     
     Will return details on the SLA Domain named Gold
     
@@ -407,20 +487,31 @@ NAME
     Get-RubrikSnapshot
     
 SYNOPSIS
-    Retrieves all of the snapshots (backups) for a given virtual machine
+    Retrieves all of the snapshots (backups) for any given object
     
     
 SYNTAX
-    Get-RubrikSnapshot [-VM] <String> [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikSnapshot [-id] <String> [[-CloudState] <Int32>] [-OnDemandSnapshot] [[-Date] <DateTime>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for a protected virtual machine
+    The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for any protected object
+    The correct API call will be made based on the object id submitted
+    Multiple objects can be piped into this function so long as they contain the id required for lookup
     
 
 PARAMETERS
-    -VM <String>
-        Name of the virtual machine
+    -id <String>
+        Rubrik id of the protected object
+        
+    -CloudState <Int32>
+        Filter results based on where in the cloud the snapshot lives
+        
+    -OnDemandSnapshot [<SwitchParameter>]
+        Filter results to show only snapshots that were created on demand
+        
+    -Date <DateTime>
+        Date of the snapshot
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -436,9 +527,27 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Get-RubrikSnapshot -VM 'Server1'
+    PS C:\>Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
     
-    This will return an array of details for each snapshot (backup) for Server1
+    This will return all snapshot (backup) data for the virtual machine id of "VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
+    
+    This will return the closest matching snapshot to March 21st, 2017 for any virtual machine named "Server1"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
+    
+    This will return the details on any on-demand (user initiated) snapshot to for any database named "DB1"
     
     
     
@@ -460,7 +569,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikVersion [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikVersion [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -468,6 +577,9 @@ DESCRIPTION
     
 
 PARAMETERS
+    -id <String>
+        ID of the Rubrik cluster or me for self
+        
     -Server <String>
         Rubrik server IP or FQDN
         
@@ -506,7 +618,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikVM [[-VM] <String>] [[-Relic] <String>] [[-SLA] <String>] [-VMID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+    Get-RubrikVM [[-Name] <String>] [-Relic] [-SLA <String>] [-id <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -514,18 +626,20 @@ DESCRIPTION
     
 
 PARAMETERS
-    -VM <String>
+    -Name <String>
         Name of the virtual machine
-        If no value is specified, will retrieve information on all virtual machines
         
-    -Relic <String>
-        Filter results based on active, relic (removed), or all virtual machines
+    -Relic [<SwitchParameter>]
+        Filter results to include only relic (removed) virtual machines
         
     -SLA <String>
-        SLA Domain policy
+        SLA Domain policy assigned to the virtual machine
         
-    -VMID <String>
+    -id <String>
         Virtual machine id
+        
+    -SLAID <String>
+        SLA id value
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -541,9 +655,27 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Get-RubrikVM -VM 'Server1'
+    PS C:\>Get-RubrikVM -Name 'Server1'
     
-    This will return the ID of the virtual machine named Server1
+    This will return details on all virtual machines named "Server1".
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikVM -Name 'Server1' -SLA Gold
+    
+    This will return details on all virtual machines named "Server1" that are protected by the Gold SLA Domain.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikVM -Relic
+    
+    This will return all removed virtual machines that were formerly protected by Rubrik.
     
     
     

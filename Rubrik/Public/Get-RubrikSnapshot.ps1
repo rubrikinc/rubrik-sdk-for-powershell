@@ -3,10 +3,12 @@ function Get-RubrikSnapshot
 {
   <#  
       .SYNOPSIS
-      Retrieves all of the snapshots (backups) for a given virtual machine
+      Retrieves all of the snapshots (backups) for any given object
       
       .DESCRIPTION
-      The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for a protected virtual machine
+      The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for any protected object
+      The correct API call will be made based on the object id submitted
+      Multiple objects can be piped into this function so long as they contain the id required for lookup
       
       .NOTES
       Written by Chris Wahl for community usage
@@ -17,75 +19,89 @@ function Get-RubrikSnapshot
       https://github.com/rubrikinc/PowerShell-Module
       
       .EXAMPLE
-      Get-RubrikSnapshot -VM 'Server1'
-      This will return an array of details for each snapshot (backup) for Server1
+      Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
+      This will return all snapshot (backup) data for the virtual machine id of "VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345"
+
+      .EXAMPLE
+      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
+      This will return the closest matching snapshot to March 21st, 2017 for any virtual machine named "Server1"
+
+      .EXAMPLE
+      Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
+      This will return the details on any on-demand (user initiated) snapshot to for any database named "DB1"
   #>
 
   [CmdletBinding()]
   Param(
-    # Name of the virtual machine    
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('Name')]
-    [ValidateNotNullorEmpty()]
-    [String]$VM,
+    # Rubrik id of the protected object
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
+    # Filter results based on where in the cloud the snapshot lives
+    [Int]$CloudState,
+    # Filter results to show only snapshots that were created on demand
+    [Switch]$OnDemandSnapshot,
+    # Date of the snapshot
+    [Datetime]$Date,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 1)]
-    [ValidateNotNullorEmpty()]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 2)]
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 
   Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('VMwareVMSnapshotGet')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
 
   Process {
 
-    Write-Verbose -Message 'Query Rubrik for the list of protected VM details'
-    $vmids = (Get-RubrikVM -VM $VM).id
-    
-    # Possible to have multiple results for a VM name.
-    foreach ($vmid in $vmids)
+    #region One-off
+    Write-Verbose -Message 'Build the URI'
+    Switch -Wildcard ($id)
     {
-      Write-Verbose -Message 'Build the URI'
-      $uri = 'https://'+$Server+$resources.$api.URI
-      # Replace the placeholder of {id} with the actual VM ID
-      $uri = $uri -replace '{id}', $vmid
-        
-      Write-Verbose -Message 'Build the method'
-      $method = $resources.$api.Method
-
-      Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
-      try 
+      'VirtualMachine*'
       {
-        $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method
-        $result = (ConvertFrom-Json -InputObject $r.Content)
-        if (!$result) 
-        {
-          throw 'No snapshots found for VM.'
-        }
-        elseif ($api -ne 'v0')
-        {
-          return $result.data
-        }
-        else 
-        {
-          return $result
-        }
+        Write-Verbose -Message 'Loading VMware API data'
+        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
       }
-      catch 
+      'MssqlDatabase*'
       {
-        throw $_
+        Write-Verbose -Message 'Loading MSSQL API data'
+        $uri = ('https://'+$Server+$resources.URI.MSSQL) -replace '{id}', $id
       }
     }
+    #endregion
+
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    
+    #region One-off
+    if ($Date) 
+    {
+      $result = Test-ReturnFilter -object (Test-DateDifference -date $($result.date) -compare $Date) -location 'date' -result $result
+    }
+    #endregion
+    
+    return $result
 
   } # End of process
 } # End of function

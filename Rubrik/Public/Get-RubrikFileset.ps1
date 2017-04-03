@@ -27,38 +27,40 @@ function Get-RubrikFileset
       This will return details on the fileset named "C_Drive" assigned to only the "Server1" host
 
       .EXAMPLE
-      Get-RubrikFileset -Fileset 'C_Drive' -SLA Gold
+      Get-RubrikFileset -Name 'C_Drive' -SLA Gold
       This will return details on the fileset named "C_Drive" assigned to any hosts with an SLA Domain matching "Gold"
 
       .EXAMPLE
-      Get-RubrikFileset -FilesetID Fileset:::111111-2222-3333-4444-555555555555
+      Get-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
       This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
 
       .EXAMPLE
-      Get-RubrikFileset -Relic False -SLA Bronze
-      This will return any fileset that is not a relic (still active) using the SLA Domain matching "Bronze"
+      Get-RubrikFileset -Relic
+      This will return all removed filesets that were formerly protected by Rubrik.
   #>
 
   [CmdletBinding()]
   Param(
     # Name of the fileset
-    # If no value is specified, will retrieve information on all filesets
-    [Parameter(Position = 0,ValueFromPipeline = $true)]
-    [Alias('Name')]
-    [String]$Fileset,
-    # Filter results based on active, relic (removed), or all filesets
-    [Parameter(Position = 1)]
-    [ValidateSet('True', 'False')]
-    [String]$Relic,
-    # SLA Domain policy
-    [Parameter(Position = 2,ValueFromPipeline = $true)]
-    [Alias('sla_domain_id')]    
+    [Alias('Fileset')]
+    [String]$Name,
+    # Filter results to include only relic (removed) filesets
+    [Alias('is_relic')]
+    [Switch]$Relic,
+    # SLA Domain policy assigned to the database
     [String]$SLA,
     # Name of the host using a fileset
+    [Alias('host_name')]
     [String]$HostName,
-    # Fileset id
-    [Alias('id')]
-    [String]$FilesetID,     
+    # Filter the summary information based on the ID of a fileset template.
+    [Alias('template_id')]
+    [String]$TemplateID,
+    # Rubrik's fileset id
+    [Parameter(ValueFromPipelineByPropertyName = $true)]    
+    [String]$id,
+    # SLA id value
+    [Alias('effective_sla_domain_id')]
+    [String]$SLAID,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -68,52 +70,37 @@ function Get-RubrikFileset
 
   Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('FilesetGet')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
-  
+
   Process {
 
-    Write-Verbose -Message 'Build the URI'
-    $uri = 'https://'+$Server+$resources.$api.URI
-    if ($FilesetID) 
-    {
-      $uri += "/$FilesetID"
-    }
-    
-    Write-Verbose -Message 'Build the query parameters'
-    $params = @()
-    $params += Test-QueryObject -object $Relic -location $resources.$api.Params.Filter -params $params
-    $params += Test-QueryObject -object $Fileset -location $resources.$api.Params.Search -params $params
-    $params += Test-QueryObject -object $HostName -location $resources.$api.Params.SearchHost -params $params
-    $params += Test-QueryObject -object (Test-RubrikSLA -SLA $SLA) -location $resources.$api.Params.SLA -params $params
-    $uri = New-QueryString -params $params -uri $uri -nolimit $true
+    #region One-off
+    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    #endregion
 
-    Write-Verbose -Message 'Build the method'
-    $method = $resources.$api.Method
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    try 
-    {
-      Write-Verbose -Message "Submitting a request to $uri"
-      $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method
-      
-      Write-Verbose -Message 'Convert JSON content to PSObject (Max 64MB)'
-      $result = ExpandPayload -response $r
-    }
-    catch 
-    {
-      throw $_
-    }
-
-    if (!$FilesetID) 
-    {      
-      Write-Verbose -Message 'Formatting return value'
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.$api.Result
-    }
-    
     return $result
 
   } # End of process

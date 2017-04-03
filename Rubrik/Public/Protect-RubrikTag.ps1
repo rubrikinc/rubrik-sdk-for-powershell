@@ -25,68 +25,81 @@ function Protect-RubrikTag
       .EXAMPLE
       Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -SLA 'Titanium'
       This will assign the Titanium SLA Domain to any VM tagged with Gold in the Rubrik category
+
+      .EXAMPLE
+      Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -DoNotProtect
+      This will remove protection from any VM tagged with Gold in the Rubrik category
+
+      .EXAMPLE
+      Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -Inherit
+      This will flag any VM tagged with Gold in the Rubrik category to inherit the SLA Domain of its parent object
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # vSphere Tag
-    [Parameter(Mandatory = $true,Position = 0)]
-    [ValidateNotNullorEmpty()]
+    [Parameter(Mandatory = $true)]
     [String]$Tag,
     # vSphere Tag Category
-    [Parameter(Mandatory = $true,Position = 1)]
-    [ValidateNotNullorEmpty()]
+    [Parameter(Mandatory = $true)]
     [String]$Category,
-    # Rubrik SLA Domain
-    [Parameter(Position = 2)]
-    [ValidateNotNullorEmpty()]
+    # The SLA Domain in Rubrik
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
     [String]$SLA,
+    # Removes the SLA Domain assignment
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
+    [Switch]$DoNotProtect,
+    # Inherits the SLA Domain assignment from a parent object
+    [Parameter(ParameterSetName = 'SLA_Inherit')]
+    [Switch]$Inherit,
     # Rubrik server IP or FQDN
-    [Parameter(Position = 3)]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(Position = 4)]
     [String]$api = $global:RubrikConnection.api
   )
 
   Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # Check to ensure that a session to the vSphere Center Server exists and load the needed header data for authentication
+    Test-VMwareConnection
+
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('SLADomainAssignPost')
-  
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
+
   }
 
   Process {
 
-    Test-VMwareConnection
-
+    #region One-off
     Write-Verbose -Message 'Gathering the SLA Domain id'
-    try 
+    if (!$SLA -and !$Inherit -and !$DoNotProtect) 
     {
-      if ($SLA) 
-      {
-        Write-Verbose -Message 'Using explicit SLA request from input'
-        $slaid = (Get-RubrikSLA -SLA $SLA).id
-      }
-      else 
-      {
-        Write-Verbose -Message 'No explicit SLA requested; deferring to Tag name'
-        $slaid = (Get-RubrikSLA -SLA $Tag).id
-      }
+      $SLA = $Tag
     }
-    catch
-    {
-      throw $_
-    }
-
+    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect    
+    
     Write-Verbose -Message "Gathering a list of VMs associated with Category $Category and Tag $Tag"
     try 
     {
       $vmlist = Get-VM -Tag (Get-Tag -Name $Tag -Category $Category) | Get-View
       # This will pull out the vCenter UUID assigned to the parent vCenter Server by Rubrik
-      $vcuuid = (Get-RubrikVM -VM $vmlist[0].Name).vCenterId
+      # Reset switches to prevent Get-RubrikVM from picking them up (must be a better way?)
+      $DoNotProtect = $false    
+      $Inherit = $false
+      $vcuuid = ((Get-RubrikVM -VM ($vmlist[0].Name)).vCenterId) -replace 'vCenter:::', ''
     }
     catch
     {
@@ -100,37 +113,24 @@ function Protect-RubrikTag
       $vmbulk += 'VirtualMachine:::' + $vcuuid + '-' + $($_.moref.value)
       Write-Verbose -Message "Found $($vmbulk.count) records"
     }
+    #endregion
+       
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $SLAID
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
 
+    #region One-off
     Write-Verbose -Message 'Creating the array to mass assign the list of IDs'
     $body = @{
       managedIds = $vmbulk
     }
-        
-    Write-Verbose -Message 'Build the URI'
-    $uri = 'https://'+$Server+$resources.$api.URI
-    # Replace the placeholder of {id} with the actual VM ID
-    $uri = $uri -replace '{id}', $slaid
-    
-    Write-Verbose -Message 'Build the method'
-    $method = $resources.$api.Method
+    $body = ConvertTo-Json -InputObject $body
+    #endregion
 
-    Write-Verbose -Message 'Submit the request'
-    try 
-    {
-      if ($PSCmdlet.ShouldProcess("$($vmbulk.count) $Tag tagged object(s)","Assign $($slaid.name) SLA Domain"))
-      {
-        $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
-        if ($r.StatusCode -ne $resources.$api.SuccessCode) 
-        {
-          Write-Warning -Message 'Did not receive successful status code from Rubrik'
-          throw $_
-        }
-      }
-    }
-    catch 
-    {
-      throw $_
-    }
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+
+    return $result
 
   } # End of process
 } # End of function

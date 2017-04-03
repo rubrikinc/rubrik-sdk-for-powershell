@@ -5,7 +5,8 @@
   # $result = The unformatted API response content
   # $location = The key/value pair that contains the name of the key holding the response content's data
 
-  if ($location) 
+  Write-Verbose -Message 'Formatting return value'
+  if ($location -and ($result).$location -ne $null) 
   {
     # The $location check assumes that not all endpoints will require findng (and removing) a parent key
     # If one does exist, this extracts the value so that the $result data is consistent across API versions

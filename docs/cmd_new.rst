@@ -15,7 +15,7 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikMount [-VM] <String> [[-MountName] <String>] [[-Date] <String>] [-HostID <String>] [-PowerOn] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikMount [-id] <String> [[-HostID] <String>] [[-MountName] <String>] [[-DatastoreName] <String>] [-DisableNetwork] [-RemoveNetworkDevices] [-PowerState] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -23,25 +23,26 @@ DESCRIPTION
     
 
 PARAMETERS
-    -VM <String>
-        Name of the virtual machine
-        
-    -MountName <String>
-        An optional name for the Live Mount
-        By default, will use the original VM name plus a date and instance number
-        
-    -Date <String>
-        Date of the snapshot to use for the Live Mount
-        Format should match MM/DD/YY HH:MM
-        If no value is specified, will retrieve the last known shapshot
+    -id <String>
+        Rubrik id of the snapshot
         
     -HostID <String>
-        ID of the host for the Live Mount to use
-        Defaults to the hostId where the running virtual machine lives
+        ID of host for the mount to use
         
-    -PowerOn [<SwitchParameter>]
-        Select the power state of the Live Mount
-        Defaults to $false (powered off)
+    -MountName <String>
+        Name of the mounted VM
+        
+    -DatastoreName <String>
+        Name of the data store to use/create on the host
+        
+    -DisableNetwork [<SwitchParameter>]
+        Whether the network should be disabled on mount.This should be set true to avoid ip conflict in case of static IPs.
+        
+    -RemoveNetworkDevices [<SwitchParameter>]
+        Whether the network devices should be removed on mount.
+        
+    -PowerState [<SwitchParameter>]
+        Whether the VM should be powered on after mount.
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -61,18 +62,31 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>New-RubrikMount -VM 'Server1' -Date '05/04/2015 08:00'
+    PS C:\>New-RubrikMount -id '11111111-2222-3333-4444-555555555555'
     
-    This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older than 08:00 AM on May 4th, 2015
+    This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555"
+    The original virtual machine's name will be used along with a date and index number suffix
+    The virtual machine will be powered on upon completion of the mount operation
     
     
     
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>New-RubrikMount -VM 'Server1'
+    PS C:\>New-RubrikMount -id '11111111-2222-3333-4444-555555555555' -MountName 'Mount1' -PowerState:$false
     
-    This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older the current time (now)
+    This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555" and name the mounted virtual machine "Mount1"
+    The virtual machine will NOT be powered on upon completion of the mount operation
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/01/2017 01:00' | New-RubrikMount -MountName 'Mount1' -DisableNetwork
+    
+    This will create a new mount based on the closet snapshot found on March 1st, 2017 @ 01:00 AM and name the mounted virtual machine "Mount1"
+    The virtual machine will be powered on upon completion of the mount operation
     
     
     
@@ -82,70 +96,6 @@ REMARKS
     For more information, type: "get-help New-RubrikMount -detailed".
     For technical information, type: "get-help New-RubrikMount -full".
     For online help, type: "get-help New-RubrikMount -online"
-
-New-RubrikReport
--------------------------
-
-NAME
-    New-RubrikReport
-    
-SYNOPSIS
-    Connects to Rubrik to retrieve either daily or weekly task results
-    
-    
-SYNTAX
-    New-RubrikReport [-ReportType] <String> [[-StatusType] <String>] [[-ToCSV]] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
-    
-    
-DESCRIPTION
-    The New-RubrikReport cmdlet is used to retrieve all of the tasks that have been run by a Rubrik cluster. Use either 'daily' or 'weekly' for ReportType to define the reporting scope.
-    
-
-PARAMETERS
-    -ReportType <String>
-        Report Type (daily or weekly)
-        
-    -StatusType <String>
-        Status Type
-        
-    -ToCSV [<SwitchParameter>]
-        Export the results to a CSV file
-        
-    -Server <String>
-        Rubrik server IP or FQDN
-        
-    -api <String>
-        API version
-        
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
-        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    PS C:\>New-RubrikReport -ReportType daily -ToCSV
-    
-    This will gather all of the daily tasks from Rubrik and store them into a CSV file in the user's MyDocuments folder
-    
-    
-    
-    
-    -------------------------- EXAMPLE 2 --------------------------
-    
-    PS C:\>New-RubrikReport -ReportType weekly
-    
-    This will gather all of the daily tasks from Rubrik and display summary information on the console screen
-    
-    
-    
-    
-REMARKS
-    To see the examples, type: "get-help New-RubrikReport -examples".
-    For more information, type: "get-help New-RubrikReport -detailed".
-    For technical information, type: "get-help New-RubrikReport -full".
-    For online help, type: "get-help New-RubrikReport -online"
 
 New-RubrikSLA
 -------------------------
@@ -158,8 +108,8 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikSLA [-SLA] <String> [-HourlyFrequency <Int32>] [-HourlyRetention <Int32>] [-DailyFrequency <Int32>] [-DailyRetention <Int32>] [-MonthlyFrequency <Int32>] [-MonthlyRetention <Int32>] [-YearlyFrequency <Int32>] [-YearlyRetention <Int32>] 
-    [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] <Int32>] [[-DailyFrequency] <Int32>] [[-DailyRetention] <Int32>] [[-MonthlyFrequency] <Int32>] [[-MonthlyRetention] <Int32>] [[-YearlyFrequency] <Int32>] 
+    [[-YearlyRetention] <Int32>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -167,7 +117,7 @@ DESCRIPTION
     
 
 PARAMETERS
-    -SLA <String>
+    -Name <String>
         SLA Domain Name
         
     -HourlyFrequency <Int32>
@@ -212,7 +162,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>New-RubrikSLA -SLA Test1 -HourlyFrequency 4 -HourlyRetention 24
+    PS C:\>New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24
     
     This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours.
     
@@ -221,10 +171,10 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>New-RubrikSLA -SLA Test1 -HourlyFrequency 4 -HourlyRetention 24 -DailyFrequency 1 -DailyRetention 30
+    PS C:\>New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24 -DailyFrequency 1 -DailyRetention 30
     
-    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours while also
-    keeping one backup per day for 30 days.
+    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours
+    while also keeping one backup per day for 30 days.
     
     
     
@@ -246,7 +196,7 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikSnapshot [-VM] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikSnapshot [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -254,8 +204,8 @@ DESCRIPTION
     
 
 PARAMETERS
-    -VM <String>
-        Virtual machine name
+    -id <String>
+        Virtual machine id
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -275,9 +225,9 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>New-RubrikSnapshot -VM 'Server1'
+    PS C:\>Get-RubrikVM 'Server1' | New-RubrikSnapshot
     
-    This will trigger an on-demand backup for the virtual machine named Server1
+    This will trigger an on-demand backup for the virtual machine named "Server1"
     
     
     
