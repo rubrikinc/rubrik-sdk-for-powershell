@@ -15,7 +15,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Start-RubrikVM [-VM] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Start-RubrikVM [-id] <String> [-PowerState <Boolean>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -23,8 +23,10 @@ DESCRIPTION
     
 
 PARAMETERS
-    -VM <String>
-        Virtual machine name
+    -id <String>
+        Mount id
+        
+    -PowerState <Boolean>
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -44,9 +46,9 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Start-RubrikVM -VM 'Server1'
+    PS C:\>Get-RubrikVM 'Server1' | Start-RubrikVM
     
-    This will send a power on request to Server1
+    This will send a power on request to "Server1"
     
     
     

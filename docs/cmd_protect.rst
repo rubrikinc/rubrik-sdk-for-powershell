@@ -15,11 +15,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikDatabase [-DatabaseID] <String> [[-SLA] <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikDatabase [-DatabaseID] <String> [[-DoNotProtect]] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikDatabase [-DatabaseID] <String> [[-Inherit]] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase -id <String> [-Inherit] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -31,7 +31,7 @@ DESCRIPTION
     
 
 PARAMETERS
-    -DatabaseID <String>
+    -id <String>
         Database ID
         
     -SLA <String>
@@ -42,6 +42,9 @@ PARAMETERS
         
     -Inherit [<SwitchParameter>]
         Inherits the SLA Domain assignment from a parent object
+        
+    -SLAID <String>
+        SLA id value
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -94,9 +97,9 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikFileset [-FilesetID] <String> [[-SLA] <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikFileset -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikFileset [-FilesetID] <String> [[-DoNotProtect]] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikFileset -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -108,7 +111,7 @@ DESCRIPTION
     
 
 PARAMETERS
-    -FilesetID <String>
+    -id <String>
         Fileset ID
         
     -SLA <String>
@@ -116,6 +119,9 @@ PARAMETERS
         
     -DoNotProtect [<SwitchParameter>]
         Removes the SLA Domain assignment
+        
+    -SLAID <String>
+        SLA id value
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -168,7 +174,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikTag [-Tag] <String> [-Category] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikTag -Tag <String> -Category <String> [-SLA <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    Protect-RubrikTag -Tag <String> -Category <String> [-DoNotProtect] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    Protect-RubrikTag -Tag <String> -Category <String> [-Inherit] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -185,7 +195,13 @@ PARAMETERS
         vSphere Tag Category
         
     -SLA <String>
-        Rubrik SLA Domain
+        The SLA Domain in Rubrik
+        
+    -DoNotProtect [<SwitchParameter>]
+        Removes the SLA Domain assignment
+        
+    -Inherit [<SwitchParameter>]
+        Inherits the SLA Domain assignment from a parent object
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -221,6 +237,24 @@ PARAMETERS
     
     
     
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -DoNotProtect
+    
+    This will remove protection from any VM tagged with Gold in the Rubrik category
+    
+    
+    
+    
+    -------------------------- EXAMPLE 4 --------------------------
+    
+    PS C:\>Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -Inherit
+    
+    This will flag any VM tagged with Gold in the Rubrik category to inherit the SLA Domain of its parent object
+    
+    
+    
+    
 REMARKS
     To see the examples, type: "get-help Protect-RubrikTag -examples".
     For more information, type: "get-help Protect-RubrikTag -detailed".
@@ -238,11 +272,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikVM [-VMID] <String> [[-SLA] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikVM [-VMID] <String> [[-DoNotProtect]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikVM [-VMID] <String> [[-Inherit]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM -id <String> [-Inherit] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -254,7 +288,7 @@ DESCRIPTION
     
 
 PARAMETERS
-    -VMID <String>
+    -id <String>
         Virtual machine ID
         
     -SLA <String>
@@ -265,6 +299,9 @@ PARAMETERS
         
     -Inherit [<SwitchParameter>]
         Inherits the SLA Domain assignment from a parent object
+        
+    -SLAID <String>
+        SLA id value
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -293,9 +330,9 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-RubrikVM "VM1" -Filter ACTIVE -SLA Silver | Protect-RubrikVM -SLA 'Gold' -Confirm:$False
+    PS C:\>Get-RubrikVM "VM1" -SLA Silver | Protect-RubrikVM -SLA 'Gold' -Confirm:$False
     
-    This will assign the Gold SLA Domain to any virtual machine named "VM1" that is marked as ACTIVE and currently assigned to the Silver SLA Domain
+    This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
     without asking for confirmation
     
     

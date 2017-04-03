@@ -15,7 +15,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Remove-RubrikMount [-MountID] <String> [[-Force]] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Remove-RubrikMount [-id] <String> [-Force] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -23,11 +23,11 @@ DESCRIPTION
     
 
 PARAMETERS
-    -MountID <String>
+    -id <String>
         The Rubrik ID value of the mount
         
     -Force [<SwitchParameter>]
-        Force unmount to deal with situations where host has been moved
+        Force unmount to deal with situations where host has been moved.
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -47,18 +47,27 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Remove-RubrikMount -MountID 11111111-2222-3333-4444-555555555555
+    PS C:\>Remove-RubrikMount -id '11111111-2222-3333-4444-555555555555'
     
-    This will a live mount with the ID of 11111111-2222-3333-4444-555555555555
+    This will remove mount id "11111111-2222-3333-4444-555555555555".
     
     
     
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-RubrikMount -VM Server1 | Remove-RubrikMount
+    PS C:\>Get-RubrikMount | Remove-RubrikMount
     
-    This will find and remove any live mount belonging to Server1
+    This will remove all mounted virtual machines.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id | Remove-RubrikMount
+    
+    This will remove any mounts found using the virtual machine named "Server1" as a base reference.
     
     
     
@@ -80,11 +89,12 @@ SYNOPSIS
     
     
 SYNTAX
-    Remove-RubrikSLA [[-id] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Remove-RubrikSLA [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Remove-RubrikSLA cmdlet will request that the Rubrik API delete an SLA Domain. The SLA Domain must have zero protected VMs in order to be successful.
+    The Remove-RubrikSLA cmdlet will request that the Rubrik API delete an SLA Domain.
+    The SLA Domain must have zero protected objects (VMs, filesets, databases, etc.) in order to be successful.
     
 
 PARAMETERS
@@ -111,7 +121,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikSLA -SLA 'Gold' | Remove-RubrikSLA
     
-    This will attempt to remove the Gold SLA Domain from Rubrik if there are no VMs being protected by the policy
+    This will attempt to remove the Gold SLA Domain from Rubrik if there are no objects being protected by the policy
     
     
     
