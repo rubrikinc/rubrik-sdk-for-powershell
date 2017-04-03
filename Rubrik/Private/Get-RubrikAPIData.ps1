@@ -192,7 +192,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '204'
       }
     }
-    SLADomainPost                 = @{
+    'New-RubrikSLA'                 = @{
       v1 = @{
         Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
         URI         = '/api/v1/sla_domain'
