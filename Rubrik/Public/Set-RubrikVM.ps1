@@ -17,38 +17,34 @@ function Set-RubrikVM
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Set-RubrikVM -VM 'Server1' -SnapConsistency AUTO
-      This will configure the backup consistency type for Server1 to Automatic (try for application consistency and fail to crash consistency).
+      Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups:$false
+      This will pause backups on any virtual machine named "Server1"
 
       .EXAMPLE
-      (Get-RubrikVM -VM * -SLA 'Example').name | Set-RubrikVM -SnapConsistency AUTO
-      This will gather the name of all VMs belonging to the SLA Domain named Example and configure the backup consistency type to be crash consistent.
+      Get-RubrikVM -SLA Platinum | Set-RubrikVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 -UseArrayIntegration 
+      This will find all virtual machines in the Platinum SLA Domain and set their snapshot consistency to crash consistent (no application quiescence)
+      while also limiting the number of active hypervisor snapshots to 2 and enable storage array (SAN) snapshots for ingest
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # Virtual machine name
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('Name')]
-    [ValidateNotNullorEmpty()]
-    [String]$VM,
-    # Backup consistency type
-    # Choices are AUTO or CRASH_CONSISTENT
-    [Parameter(Position = 1)]
+    # Virtual machine ID
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
+    # Consistency level mandated for this VM
     [ValidateSet('APP_CONSISTENT', 'CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','INCONSISTENT','VSS_CONSISTENT')]
+    [Alias('snapshotConsistencyMandate')]
     [String]$SnapConsistency,
-    # The number of existing virtual machine snapshots allowed by Rubrik
-    # If this value is exceeded, backups will be prevented due to seeing too many existing snapshots
-    # Keeping snapshots open on a virtual machine can adversely affect performance and increase consolidation times
-    # Choices range from 0 - 4 snapshots
-    [Parameter(Position = 2)]
+    # The number of existing virtual machine snapshots allowed by Rubrik. Choices range from 0 - 4 snapshots.
     [ValidateRange(0,4)] 
+    [Alias('maxNestedVsphereSnapshots')]
     [int]$MaxNestedSnapshots,
-    # Set to $true to enable backups for a particular virtual machine
-    # Set to $false to disable backups for a particular virtual machine
-    [Parameter(Position = 3)]
-    [ValidateSet('True','False')]    
-    [String]$PauseBackups,
+    # Whether to pause or resume backups/archival for this VM.
+    [Alias('isVmPaused')]
+    [Switch]$PauseBackups,
+    # User setting to dictate whether to use storage array snaphots for ingest. This setting only makes sense for VMs where array based ingest is possible.
+    [Alias('isArrayIntegrationEnabled')]
+    [Switch]$UseArrayIntegration,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -57,67 +53,34 @@ function Set-RubrikVM
 
   Begin {
 
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-    Write-Verbose -Message 'Gather API data'
-    $resources = Get-RubrikAPIData -endpoint ('VMwareVMPatch')
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
   
   }
 
   Process {
 
-    Write-Verbose -Message 'Gathering VM ID value from Rubrik'
-    $vmid = (Get-RubrikVM -VM $VM).id
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    Write-Verbose -Message 'Build the URI'
-    $uri = 'https://'+$Server+$resources.$api.URI
-    # Replace the placeholder of {id} with the actual VM ID
-    $uri = $uri -replace '{id}', $vmid
-    
-    Write-Verbose -Message 'Build the method'
-    $method = $resources.$api.Method
-    
-    Write-Verbose -Message 'Defining a body variable for required API params'
-    $body = @{}
-
-    if ($SnapConsistency)
-    {
-      Write-Verbose -Message 'Adding snapshotConsistencyMandate to Body'
-      $body.Add($resources.$api.Params.snapshotConsistencyMandate,$SnapConsistency)
-    }
-    if ($MaxNestedSnapshots)
-    {
-      Write-Verbose -Message 'Adding maxNestedVsphereSnapshots to Body'
-      $body.Add($resources.$api.Params.maxNestedVsphereSnapshots,$MaxNestedSnapshots)
-    }    
-    if ($PauseBackups)
-    {
-      Write-Verbose -Message 'Adding isVmPaused to Body'
-      $body.Add($resources.$api.Params.isVmPaused,[System.Convert]::ToBoolean($PauseBackups))
-    } 
-    
-    # If the $body variable is empty, no params were defined
-    if ($body.Keys.Count -eq 0)
-    {
-      throw 'No parameters were defined.'
-    }
-
-    try
-    {
-      if ($PSCmdlet.ShouldProcess($VM,'Modifying settings'))
-      {
-        $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method $method -Body (ConvertTo-Json -InputObject $body)
-        if ($r.StatusCode -ne $resources.$api.SuccessCode) 
-        {
-          Write-Warning -Message 'Did not receive successful status code from Rubrik'
-          throw $_
-        }
-      }
-    }
-    catch
-    {
-      throw $_
-    }
+    return $result
 
   } # End of process
 } # End of function

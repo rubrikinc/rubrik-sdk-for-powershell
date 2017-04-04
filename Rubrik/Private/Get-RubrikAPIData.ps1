@@ -302,26 +302,7 @@ function Get-RubrikAPIData($endpoint)
         URI         = '/api/v1/vmware/vm/{id}'
         Method      = 'Patch'
         Body        = @{
-          snapshotConsistencyMandate = 'snapshotConsistencyMandate'
-          maxNestedVsphereSnapshots  = 'maxNestedVsphereSnapshots'
           configuredSlaDomainId      = 'configuredSlaDomainId'
-          isVmPaused                 = 'isVmPaused'
-          preBackupScript            = @{
-            scriptPath      = 'scriptPath'
-            timeoutMs       = 'timeoutMs'
-            failureHandling = 'failureHandling'
-          }
-          postSnapScript             = @{
-            scriptPath      = 'scriptPath'
-            timeoutMs       = 'timeoutMs'
-            failureHandling = 'failureHandling'
-          }
-          postBackupScript           = @{
-            scriptPath      = 'scriptPath'
-            timeoutMs       = 'timeoutMs'
-            failureHandling = 'failureHandling'
-          }
-          isArrayIntegrationEnabled  = 'isArrayIntegrationEnabled'
         }
         Query       = ''
         Result      = ''
@@ -390,11 +371,29 @@ function Get-RubrikAPIData($endpoint)
     }
     'Set-RubrikVM'          = @{
       v1 = @{
-        Description = 'Power given live-mounted vm on/off'
-        URI         = '/api/v1/vmware/vm/snapshot/mount/{id}'
+        Description = 'Update VM with specified properties'
+        URI         = '/api/v1/vmware/vm/{id}'
         Method      = 'Patch'
         Body        = @{
-          powerStatus = 'powerStatus'
+          snapshotConsistencyMandate = 'snapshotConsistencyMandate'
+          maxNestedVsphereSnapshots  = 'maxNestedVsphereSnapshots'
+          isVmPaused                 = 'isVmPaused'
+          preBackupScript            = @{
+            scriptPath      = 'scriptPath'
+            timeoutMs       = 'timeoutMs'
+            failureHandling = 'failureHandling'
+          }
+          postSnapScript             = @{
+            scriptPath      = 'scriptPath'
+            timeoutMs       = 'timeoutMs'
+            failureHandling = 'failureHandling'
+          }
+          postBackupScript           = @{
+            scriptPath      = 'scriptPath'
+            timeoutMs       = 'timeoutMs'
+            failureHandling = 'failureHandling'
+          }
+          isArrayIntegrationEnabled  = 'isArrayIntegrationEnabled'
         }
         Query       = ''
         Result      = ''
