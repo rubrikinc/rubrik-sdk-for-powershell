@@ -110,6 +110,7 @@ function Get-RubrikAPIData($endpoint)
       v1 = @{
         Description = 'Retrieve information for all snapshots for a VM'
         URI         = @{
+          Fileset = '/api/v1/fileset/{id}/snapshot'
           MSSQL  = '/api/v1/mssql/db/{id}/snapshot'
           VMware = '/api/v1/vmware/vm/{id}/snapshot'
         }
@@ -319,10 +320,16 @@ function Get-RubrikAPIData($endpoint)
     }
     'New-RubrikSnapshot'        = @{
       v1 = @{
-        Description = 'Create an on-demand snapshot for the given VM ID'
-        URI         = '/api/v1/vmware/vm/{id}/snapshot'
+        Description = 'Create an on-demand snapshot for the given object ID'
+        URI         = @{
+          Fileset = '/api/v1/fileset/{id}/snapshot'
+          MSSQL  = '/api/v1/mssql/db/{id}/snapshot'
+          VMware = '/api/v1/vmware/vm/{id}/snapshot'
+        }
         Method      = 'Post'
-        Body        = ''
+        Body        = @{
+          forceFullSnapshot = 'forceFullSnapshot'
+        }
         Query       = ''
         Result      = ''
         Filter      = ''
