@@ -24,19 +24,15 @@
       # If the parameter name or alias matches the body option name, build a body string
       if ($param.Name -eq $body -or $param.Aliases -eq $body)
       {
-        if (((Get-Variable -Name $param.Name).Value) -ne '' -and (((Get-Variable -Name $param.Name).Value).IsPresent) -ne $false) 
+        # Switch variable types
+        if ((Get-Variable -Name $param.Name).Value.GetType().Name -eq 'SwitchParameter')
         {
-          Write-Verbose -Message "Adding $body to body string"
-          # For Switch type parameters
-          if (((Get-Variable -Name $param.Name).Value.IsPresent) -eq $true) 
-          {
-            $bodystring.Add($body,$true)
-          }
-          # For all other parameters
-          else 
-          {
-            $bodystring.Add($body,(Get-Variable -Name $param.Name).Value)
-          }
+          $bodystring.Add($body,(Get-Variable -Name $param.Name).Value.IsPresent)
+        }
+        # All other variable types
+        elseif ((Get-Variable -Name $param.Name).Value -ne $null)
+        {
+          $bodystring.Add($body,(Get-Variable -Name $param.Name).Value)
         }
       }
     }

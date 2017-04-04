@@ -388,6 +388,20 @@ function Get-RubrikAPIData($endpoint)
         Success     = '204'
       }
     } 
+    'Set-RubrikBlackout'             = @{
+      v1 = @{
+        Description = 'Whether to start or stop the global blackout window.'
+        URI         = '/api/internal/blackout_window'
+        Method      = 'Patch'
+        Body        = @{
+          isGlobalBlackoutActive = 'isGlobalBlackoutActive'
+          }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }
   } # End of API
   
   return $api.$endpoint
