@@ -3,10 +3,10 @@ function New-RubrikSnapshot
 {
   <#  
       .SYNOPSIS
-      Takes a Rubrik snapshot of a virtual machine
+      Takes an on-demand Rubrik snapshot of a protected object
 
       .DESCRIPTION
-      The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific virtual machine. This will be taken by Rubrik and stored in the VM's chain of snapshots.
+      The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific object (virtual machine, database, fileset, etc.)
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -18,14 +18,25 @@ function New-RubrikSnapshot
 
       .EXAMPLE
       Get-RubrikVM 'Server1' | New-RubrikSnapshot
-      This will trigger an on-demand backup for the virtual machine named "Server1"
+      This will trigger an on-demand backup for any virtual machine named "Server1"
+
+      .EXAMPLE
+      Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot 
+      This will trigger an on-demand backup for any fileset named "C_Drive"
+
+      .EXAMPLE
+      Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull
+      This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # Virtual machine id
+    # Rubrik's id of the object
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
+    # Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
+    [Alias('forceFullSnapshot')]
+    [Switch]$ForceFull,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -54,13 +65,34 @@ function New-RubrikSnapshot
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    #region One-off
+    Write-Verbose -Message 'Build the URI'
+    Switch -Wildcard ($id)
+    {
+      'Fileset:::*'
+      {
+        Write-Verbose -Message 'Loading Fileset API data'
+        $uri = ('https://'+$Server+$resources.URI.Fileset) -replace '{id}', $id
+      }
+      'MssqlDatabase:::*'
+      {
+        Write-Verbose -Message 'Loading MSSQL API data'
+        $uri = ('https://'+$Server+$resources.URI.MSSQL) -replace '{id}', $id
+      }
+      'VirtualMachine:::*'
+      {
+        Write-Verbose -Message 'Loading VMware API data'
+        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
+      }
+    }
+    #endregion
+
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-
+    
     return $result
 
   } # End of process

@@ -75,15 +75,20 @@ function Get-RubrikSnapshot
     Write-Verbose -Message 'Build the URI'
     Switch -Wildcard ($id)
     {
-      'VirtualMachine*'
+      'Fileset:::*'
       {
-        Write-Verbose -Message 'Loading VMware API data'
-        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
+        Write-Verbose -Message 'Loading Fileset API data'
+        $uri = ('https://'+$Server+$resources.URI.Fileset) -replace '{id}', $id
       }
-      'MssqlDatabase*'
+      'MssqlDatabase:::*'
       {
         Write-Verbose -Message 'Loading MSSQL API data'
         $uri = ('https://'+$Server+$resources.URI.MSSQL) -replace '{id}', $id
+      }
+      'VirtualMachine:::*'
+      {
+        Write-Verbose -Message 'Loading VMware API data'
+        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
       }
     }
     #endregion
