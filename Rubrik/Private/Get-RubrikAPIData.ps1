@@ -4,7 +4,7 @@
 function Get-RubrikAPIData($endpoint)
 {
   $api = @{
-    Example                       = @{
+    Example                   = @{
       v1 = @{
         Description = 'Details about the API endpoint'
         URI         = 'The URI expressed as /api/v#/endpoint'
@@ -16,7 +16,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = 'The expected HTTP status code for a successful call'
       }
     }
-    'Connect-Rubrik'                       = @{
+    'Connect-Rubrik'          = @{
       'v1.1' = @{
         Description = 'Create a new login session'
         URI         = '/api/v1/session'
@@ -38,19 +38,29 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikVersion'           = @{
+    'Get-RubrikDatabase'      = @{
       v1 = @{
-        Description = 'Retrieves software version of the Rubrik cluster'
-        URI         = '/api/v1/cluster/{id}/version'
+        Description = 'Returns a list of summary information for Microsoft SQL databases.'
+        URI         = '/api/v1/mssql/db'
         Method      = 'Get'
         Body        = ''
-        Query       = ''
-        Result      = 'version'
-        Filter      = ''
+        Query       = @{
+          instance_id             = 'instance_id'
+          effective_sla_domain_id = 'effective_sla_domain_id'
+          primary_cluster_id      = 'primary_cluster_id'
+          is_relic                = 'is_relic'
+        }
+        Result      = 'data'
+        Filter      = @{
+          'Name'   = 'name'
+          'SLA'    = 'effectiveSlaDomainName'
+          'Hostname' = 'rootProperties.rootName'
+          'Instance' = 'instanceName'
+        }
         Success     = '200'
       }
     }
-    'Get-RubrikFileset'                    = @{
+    'Get-RubrikFileset'       = @{
       v1 = @{
         Description = 'Retrieve summary information for each fileset. Optionally, filter the retrieved information.'
         URI         = '/api/v1/fileset'
@@ -75,7 +85,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       } 
     }
-    'Get-RubrikFilesetTemplate'   = @{
+    'Get-RubrikFilesetTemplate' = @{
       v1 = @{
         Description = 'Retrieve summary information for all fileset templates, including: ID and name of the fileset template, fileset template creation timestamp, array of the included filepaths, array of the excluded filepaths.'
         Function    = 'Get-RubrikFilesetTemplate'
@@ -92,80 +102,35 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       } 
     }
-    'Protect-RubrikFileset'                = @{
+    'Get-RubrikMount'         = @{
       v1 = @{
-        Description = 'Update a Fileset with the specified properties.'
-        URI         = '/api/v1/fileset/{id}'
-        Method      = 'Patch'
-        Body        = @{
-          configuredSlaDomainId = 'configuredSlaDomainId'
-        }
-        Query       = ''
-        Result      = 'data'
-        Filter      = ''
-        Success     = '200'
-      } 
-    }
-    'Get-RubrikSnapshot'            = @{
-      v1 = @{
-        Description = 'Retrieve information for all snapshots for a VM'
-        URI         = @{
-          Fileset = '/api/v1/fileset/{id}/snapshot'
-          MSSQL  = '/api/v1/mssql/db/{id}/snapshot'
-          VMware = '/api/v1/vmware/vm/{id}/snapshot'
-        }
-        Method      = 'Get'
-        Body        = ''
-        Query       = ''
-        Result      = 'data'
-        Filter      = @{
-          'CloudState'     = 'cloudState'
-          'OnDemandSnapshot' = 'isOnDemandSnapshot'
-        }
-        Success     = '200'
-      }
-    }
-    'Get-RubrikDatabase'                    = @{
-      v1 = @{
-        Description = 'Returns a list of summary information for Microsoft SQL databases.'
-        URI         = '/api/v1/mssql/db'
+        Description = 'Retrieve information for all live mounts'
+        URI         = '/api/v1/vmware/vm/snapshot/mount'
         Method      = 'Get'
         Body        = ''
         Query       = @{
-          instance_id             = 'instance_id'
-          effective_sla_domain_id = 'effective_sla_domain_id'
-          primary_cluster_id      = 'primary_cluster_id'
-          is_relic                = 'is_relic'
+          vm_id  = 'vm_id'
+          offset = 'offset'
+          limit  = 'limit'
         }
-        Result      = 'data'
-        Filter      = @{
-          'Name' = 'name'
-          'SLA'    = 'effectiveSlaDomainName'
-          'Hostname'   = 'rootProperties.rootName'
-          'Instance' = 'instanceName'
-        }
-        Success     = '200'
-      }
-    }
-    'Protect-RubrikDatabase'                = @{
-      v1 = @{
-        Description = 'Update a Microsoft SQL database with the specified properties.'
-        URI         = '/api/v1/mssql/db/{id}'
-        Method      = 'Patch'
-        Body        = @{
-          logBackupFrequencyInSeconds = 'logBackupFrequencyInSeconds'
-          logRetentionHours           = 'logRetentionHours'
-          copyOnly                    = 'copyOnly'
-          maxDataStreams              = 'maxDataStreams'
-          configuredSlaDomainId       = 'configuredSlaDomainId'
-        }
-        Query       = ''
         Result      = 'data'
         Filter      = ''
         Success     = '200'
-      } 
+      }
     }
-    'Get-RubrikSLA'                  = @{
+    'Get-RubrikRequest'       = @{
+      v1 = @{
+        Description = 'Get details about a vmware vm related async request'
+        URI         = '/api/v1/vmware/vm/request/{id}'
+        Method      = 'Get'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }
+    'Get-RubrikSLA'           = @{
       v1 = @{
         Description = 'Retrieve summary information for all SLA Domains'
         URI         = '/api/v1/sla_domain'
@@ -181,19 +146,76 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Remove-RubrikSLA'             = @{
+    'Get-RubrikSnapshot'      = @{
       v1 = @{
-        Description = 'Delete an SLA Domain from a Rubrik cluster'
-        URI         = '/api/v1/sla_domain/{id}'
-        Method      = 'Delete'
+        Description = 'Retrieve information for all snapshots for a VM'
+        URI         = @{
+          Fileset = '/api/v1/fileset/{id}/snapshot'
+          MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
+          VMware  = '/api/v1/vmware/vm/{id}/snapshot'
+        }
+        Method      = 'Get'
         Body        = ''
+        Query       = ''
+        Result      = 'data'
+        Filter      = @{
+          'CloudState'     = 'cloudState'
+          'OnDemandSnapshot' = 'isOnDemandSnapshot'
+        }
+        Success     = '200'
+      }
+    }
+    'Get-RubrikVersion'       = @{
+      v1 = @{
+        Description = 'Retrieves software version of the Rubrik cluster'
+        URI         = '/api/v1/cluster/{id}/version'
+        Method      = 'Get'
+        Body        = ''
+        Query       = ''
+        Result      = 'version'
+        Filter      = ''
+        Success     = '200'
+      }
+    }
+    'Get-RubrikVM'            = @{
+      v1 = @{
+        Description = 'Get summary of all the VMs'
+        URI         = '/api/v1/vmware/vm'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          is_relic                = 'is_relic'
+          name                    = 'name'
+          effective_sla_domain_id = 'effective_sla_domain_id'
+        }
+        Result      = 'data'
+        Filter      = @{
+          'Name' = 'name'
+          'SLA' = 'effectiveSlaDomainName'
+        }
+        Success     = '200'
+      }
+    }
+    'New-RubrikMount'         = @{
+      v1 = @{
+        Description = 'Create a live mount request with given configuration'
+        URI         = '/api/v1/vmware/vm/snapshot/{id}/mount'
+        Method      = 'Post'
+        Body        = @{
+          hostId               = 'hostId'
+          vmName               = 'vmName'
+          dataStoreName        = 'dataStoreName'
+          disableNetwork       = 'disableNetwork'
+          removeNetworkDevices = 'removeNetworkDevices'
+          powerOn              = 'powerOn'
+        }
         Query       = ''
         Result      = ''
         Filter      = ''
-        Success     = '204'
+        Success     = '202'
       }
     }
-    'New-RubrikSLA'                 = @{
+    'New-RubrikSLA'           = @{
       v1 = @{
         Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
         URI         = '/api/v1/sla_domain'
@@ -212,26 +234,69 @@ function Get-RubrikAPIData($endpoint)
         Success     = '201'
       }
     }
-    'Get-RubrikVM'                   = @{
+    'New-RubrikSnapshot'      = @{
       v1 = @{
-        Description = 'Get summary of all the VMs'
-        URI         = '/api/v1/vmware/vm'
-        Method      = 'Get'
-        Body        = ''
-        Query       = @{
-          is_relic  = 'is_relic'
-          name = 'name'
-          effective_sla_domain_id    = 'effective_sla_domain_id'
+        Description = 'Create an on-demand snapshot for the given object ID'
+        URI         = @{
+          Fileset = '/api/v1/fileset/{id}/snapshot'
+          MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
+          VMware  = '/api/v1/vmware/vm/{id}/snapshot'
         }
+        Method      = 'Post'
+        Body        = @{
+          forceFullSnapshot = 'forceFullSnapshot'
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '202'
+      }      
+    }
+    'Protect-RubrikDatabase'  = @{
+      v1 = @{
+        Description = 'Update a Microsoft SQL database with the specified properties.'
+        URI         = '/api/v1/mssql/db/{id}'
+        Method      = 'Patch'
+        Body        = @{
+          logBackupFrequencyInSeconds = 'logBackupFrequencyInSeconds'
+          logRetentionHours           = 'logRetentionHours'
+          copyOnly                    = 'copyOnly'
+          maxDataStreams              = 'maxDataStreams'
+          configuredSlaDomainId       = 'configuredSlaDomainId'
+        }
+        Query       = ''
         Result      = 'data'
-        Filter      = @{
-          'Name' = 'name'
-          'SLA' = 'effectiveSlaDomainName'
-        }
+        Filter      = ''
         Success     = '200'
+      } 
+    }
+    'Protect-RubrikFileset'   = @{
+      v1 = @{
+        Description = 'Update a Fileset with the specified properties.'
+        URI         = '/api/v1/fileset/{id}'
+        Method      = 'Patch'
+        Body        = @{
+          configuredSlaDomainId = 'configuredSlaDomainId'
+        }
+        Query       = ''
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
+      } 
+    }
+    'Protect-RubrikTag'       = @{
+      v1 = @{
+        Description = 'Assign managed entities to the specified SLA Domain. The assignment event runs synchronously.'
+        URI         = '/api/internal/sla_domain/{id}/assign'
+        Method      = 'Post'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '204'
       }
     }
-    'Protect-RubrikVM'               = @{
+    'Protect-RubrikVM'        = @{
       v1 = @{
         Description = 'Update VM with specified properties'
         URI         = '/api/v1/vmware/vm/{id}'
@@ -269,42 +334,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }      
     }
-    'New-RubrikMount'   = @{
-      v1 = @{
-        Description = 'Create a live mount request with given configuration'
-        URI         = '/api/v1/vmware/vm/snapshot/{id}/mount'
-        Method      = 'Post'
-        Body        = @{
-          hostId               = 'hostId'
-          vmName               = 'vmName'
-          dataStoreName        = 'dataStoreName'
-          disableNetwork       = 'disableNetwork'
-          removeNetworkDevices = 'removeNetworkDevices'
-          powerOn              = 'powerOn'
-        }
-        Query       = ''
-        Result      = ''
-        Filter      = ''
-        Success     = '202'
-      }
-    }
-    'Get-RubrikMount'      = @{
-      v1 = @{
-        Description = 'Retrieve information for all live mounts'
-        URI         = '/api/v1/vmware/vm/snapshot/mount'
-        Method      = 'Get'
-        Body        = ''
-        Query       = @{
-          vm_id  = 'vm_id'
-          offset = 'offset'
-          limit  = 'limit'
-        }
-        Result      = 'data'
-        Filter      = ''
-        Success     = '200'
-      }
-    }
-    'Remove-RubrikMount' = @{
+    'Remove-RubrikMount'      = @{
       v1 = @{
         Description = 'Create a request to delete a live mount'
         URI         = '/api/v1/vmware/vm/snapshot/mount/{id}'
@@ -318,25 +348,33 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
-    'New-RubrikSnapshot'        = @{
+    'Remove-RubrikSLA'        = @{
       v1 = @{
-        Description = 'Create an on-demand snapshot for the given object ID'
-        URI         = @{
-          Fileset = '/api/v1/fileset/{id}/snapshot'
-          MSSQL  = '/api/v1/mssql/db/{id}/snapshot'
-          VMware = '/api/v1/vmware/vm/{id}/snapshot'
-        }
-        Method      = 'Post'
+        Description = 'Delete an SLA Domain from a Rubrik cluster'
+        URI         = '/api/v1/sla_domain/{id}'
+        Method      = 'Delete'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '204'
+      }
+    }
+    'Set-RubrikBlackout'      = @{
+      v1 = @{
+        Description = 'Whether to start or stop the global blackout window.'
+        URI         = '/api/internal/blackout_window'
+        Method      = 'Patch'
         Body        = @{
-          forceFullSnapshot = 'forceFullSnapshot'
+          isGlobalBlackoutActive = 'isGlobalBlackoutActive'
         }
         Query       = ''
         Result      = ''
         Filter      = ''
-        Success     = '202'
-      }      
+        Success     = '200'
+      }
     }
-    'Start-RubrikVM'   = @{
+    'Set-RubrikMount'          = @{
       v1 = @{
         Description = 'Power given live-mounted vm on/off'
         URI         = '/api/v1/vmware/vm/snapshot/mount/{id}'
@@ -350,7 +388,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Stop-RubrikVM'   = @{
+    'Set-RubrikVM'          = @{
       v1 = @{
         Description = 'Power given live-mounted vm on/off'
         URI         = '/api/v1/vmware/vm/snapshot/mount/{id}'
@@ -364,46 +402,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }    
-    'Get-RubrikRequest'          = @{
-      v1 = @{
-        Description = 'Get details about a vmware vm related async request'
-        URI         = '/api/v1/vmware/vm/request/{id}'
-        Method      = 'Get'
-        Body        = ''
-        Query       = ''
-        Result      = ''
-        Filter      = ''
-        Success     = '200'
-      }
-    }
-  'Protect-RubrikTag'          = @{
-      v1 = @{
-        Description = 'Assign managed entities to the specified SLA Domain. The assignment event runs synchronously.'
-        URI         = '/api/internal/sla_domain/{id}/assign'
-        Method      = 'Post'
-        Body        = ''
-        Query       = ''
-        Result      = ''
-        Filter      = ''
-        Success     = '204'
-      }
-    } 
-    'Set-RubrikBlackout'             = @{
-      v1 = @{
-        Description = 'Whether to start or stop the global blackout window.'
-        URI         = '/api/internal/blackout_window'
-        Method      = 'Patch'
-        Body        = @{
-          isGlobalBlackoutActive = 'isGlobalBlackoutActive'
-          }
-        Query       = ''
-        Result      = ''
-        Filter      = ''
-        Success     = '200'
-      }
-    }
   } # End of API
   
   return $api.$endpoint
-  
 } # End of function
