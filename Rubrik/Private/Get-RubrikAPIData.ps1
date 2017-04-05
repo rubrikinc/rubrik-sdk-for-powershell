@@ -165,6 +165,22 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Get-RubrikUnmanagedObject' = @{
+      v1 = @{
+        Description = 'Get summary of all the objects with unmanaged snapshots'
+        URI         = '/api/internal/unmanaged_object'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          search_value = 'search_value'
+          unmanaged_status = 'unmanaged_status'
+          object_type = 'object_type'
+        }
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
+      }
+    }
     'Get-RubrikVersion'       = @{
       v1 = @{
         Description = 'Retrieves software version of the Rubrik cluster'

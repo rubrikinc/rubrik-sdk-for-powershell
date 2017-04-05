@@ -1,0 +1,94 @@
+﻿#requires -Version 3
+function Get-RubrikUnmanagedObject
+{
+  <#  
+      .SYNOPSIS
+      Retrieves details on one or more filesets known to a Rubrik cluster
+
+      .DESCRIPTION
+      The Get-RubrikFileset cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of filesets
+      A number of parameters exist to help narrow down the specific fileset desired
+      Note that a fileset name is not required; you can use params (such as HostName and SLA) to do lookup matching filesets
+
+      .NOTES
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
+
+      .LINK
+      https://github.com/rubrikinc/PowerShell-Module
+
+      .EXAMPLE
+      Get-RubrikFileset -Name 'C_Drive' 
+      This will return details on the fileset named "C_Drive" assigned to any hosts
+
+      .EXAMPLE
+      Get-RubrikFileset -Name 'C_Drive' -HostName 'Server1'
+      This will return details on the fileset named "C_Drive" assigned to only the "Server1" host
+
+      .EXAMPLE
+      Get-RubrikFileset -Name 'C_Drive' -SLA Gold
+      This will return details on the fileset named "C_Drive" assigned to any hosts with an SLA Domain matching "Gold"
+
+      .EXAMPLE
+      Get-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
+      This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
+
+      .EXAMPLE
+      Get-RubrikFileset -Relic
+      This will return all removed filesets that were formerly protected by Rubrik.
+  #>
+
+  [CmdletBinding()]
+  Param(
+    # Search object by object name.
+    [Alias('search_value')]
+    [String]$Name,
+    # Filter by the type of the object. If not specified, will return all objects. Valid attributes are Protected, Relic and Unprotected
+    [Alias('unmanaged_status')]
+    [ValidateSet('Protected','Relic','Unprotected')]
+    [String]$Status,
+    # The type of the unmanaged object. This may be VirtualMachine, MssqlDatabase, or Fileset
+    [Alias('object_type')]
+    [ValidateSet('VirtualMachine','MssqlDatabase','Fileset')]
+    [String]$Type,
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [ValidateNotNullorEmpty()]
+    [String]$api = $global:RubrikConnection.api
+  )
+
+  Begin {
+
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
+    Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
+        
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
+  
+  }
+
+  Process {
+
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+
+    return $result
+
+  } # End of process
+} # End of function
