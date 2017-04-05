@@ -1,12 +1,13 @@
 ﻿#requires -Version 3
-function Set-RubrikVM
+function Get-RubrikUnmanagedObject
 {
   <#  
       .SYNOPSIS
-      Applies settings on one or more virtual machines known to a Rubrik cluster
+      Retrieves details on one or more unmanaged objects known to a Rubrik cluster
 
       .DESCRIPTION
-      The Set-RubrikVM cmdlet is used to apply updated settings from a Rubrik cluster on any number of virtual machines
+      The Get-RubrikUnmanagedObject cmdlet is used to pull details on any unmanaged objects that has been stored in the cluster
+      In most cases, this will be on-demand snapshots that are associated with an object (virtual machine, fileset, database, etc.)
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -17,37 +18,31 @@ function Set-RubrikVM
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups:$false
-      This will pause backups on any virtual machine named "Server1"
+      Get-RubrikUnmanagedObject -Type 'WindowsFileset'
+      This will return details on any filesets applied to Windows Servers that have unmanaged snapshots associated
 
       .EXAMPLE
-      Get-RubrikVM -SLA Platinum | Set-RubrikVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 -UseArrayIntegration 
-      This will find all virtual machines in the Platinum SLA Domain and set their snapshot consistency to crash consistent (no application quiescence)
-      while also limiting the number of active hypervisor snapshots to 2 and enable storage array (SAN) snapshots for ingest
+      Get-RubrikUnmanagedObject -Status 'Unprotected' -Name 'Server1'
+      This will return details on any objects named "Server1" that are currently unprotected and have unmanaged snapshots associated
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding()]
   Param(
-    # Virtual machine ID
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
-    [String]$id,
-    # Consistency level mandated for this VM
-    [ValidateSet('APP_CONSISTENT', 'CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','INCONSISTENT','VSS_CONSISTENT')]
-    [Alias('snapshotConsistencyMandate')]
-    [String]$SnapConsistency,
-    # The number of existing virtual machine snapshots allowed by Rubrik. Choices range from 0 - 4 snapshots.
-    [ValidateRange(0,4)] 
-    [Alias('maxNestedVsphereSnapshots')]
-    [int]$MaxNestedSnapshots,
-    # Whether to pause or resume backups/archival for this VM.
-    [Alias('isVmPaused')]
-    [Switch]$PauseBackups,
-    # User setting to dictate whether to use storage array snaphots for ingest. This setting only makes sense for VMs where array based ingest is possible.
-    [Alias('isArrayIntegrationEnabled')]
-    [Switch]$UseArrayIntegration,
+    # Search object by object name.
+    [Alias('search_value')]
+    [String]$Name,
+    # Filter by the type of the object. If not specified, will return all objects. Valid attributes are Protected, Relic and Unprotected
+    [Alias('unmanaged_status')]
+    [ValidateSet('Protected','Relic','Unprotected')]
+    [String]$Status,
+    # The type of the unmanaged object. This may be VirtualMachine, MssqlDatabase, LinuxFileset, or WindowsFileset.
+    [Alias('object_type')]
+    [ValidateSet('VirtualMachine','MssqlDatabase','LinuxFileset','WindowsFileset')]
+    [String]$Type,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 

@@ -1,12 +1,12 @@
 ﻿#requires -Version 3
-function Start-RubrikVM
+function Set-RubrikMount
 {
   <#  
       .SYNOPSIS
-      Powers on a live mounted virtual machine within a connected Rubrik vCenter.
+      Powers on/off a live mounted virtual machine within a connected Rubrik vCenter.
 
       .DESCRIPTION
-      The Stop-RubrikVM cmdlet is used to send a power on request to any virtual machine visible to a Rubrik cluster.
+      The Set-RubrikMount cmdlet is used to send a power on request to mounted virtual machine visible to a Rubrik cluster.
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -17,8 +17,12 @@ function Start-RubrikVM
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM 'Server1' | Start-RubrikVM
+      Get-RubrikMount -id '11111111-2222-3333-4444-555555555555' | Set-RubrikMount -PowerOn:$true
       This will send a power on request to "Server1"
+
+      .EXAMPLE
+      Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id | Set-RubrikMount -PowerOn:$false
+      This will send a power off request to "Server1"
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -26,8 +30,9 @@ function Start-RubrikVM
     # Mount id
     [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
+    # Configuration for the change power status request
     [Alias('powerStatus')]
-    [Bool]$PowerState = $true,
+    [Switch]$PowerOn,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

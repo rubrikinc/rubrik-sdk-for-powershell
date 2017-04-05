@@ -1,12 +1,13 @@
-﻿#requires -Version 3
-function Stop-RubrikVM
+﻿#Requires -Version 3
+function Remove-RubrikUnmanagedObject
 {
   <#  
       .SYNOPSIS
-      Powers off a live mounted virtual machine within a connected Rubrik vCenter.
+      Removes one or more unmanaged objects known to a Rubrik cluster
 
       .DESCRIPTION
-      The Stop-RubrikVM cmdlet is used to send a power off request to any virtual machine visible to a Rubrik cluster.
+      The Remove-RubrikUnmanagedObject cmdlet is used to remove unmanaged objects that have been stored in the cluster
+      In most cases, this will be on-demand snapshots that are associated with an object (virtual machine, fileset, database, etc.)
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -17,24 +18,35 @@ function Stop-RubrikVM
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM 'Server1' | Stop-RubrikVM
-      This will send a power off request to "Server1"
+      Get-RubrikUnmanagedObject | Remove-RubrikUnmanagedObject
+      This will remove all unmanaged objects from the cluster
+
+      .EXAMPLE
+      Get-RubrikUnmanagedObject -Type 'WindowsFileset' | Remove-RubrikUnmanagedObject -Confirm:$false
+      This will remove any unmanaged objects related to filesets applied to Windows Servers and supress confirmation for each activity
+
+      .EXAMPLE
+      Get-RubrikUnmanagedObject -Status 'Unprotected' -Name 'Server1' | Remove-RubrikUnmanagedObject
+      This will remove any unmanaged objects associated with any workload named "Server1" that is currently unprotected
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # Mount id
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName = $true)]
+    # The id of the unmanaged object.
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Alias('objectId')]
     [String]$id,
-    [Alias('powerStatus')]
-    [Bool]$PowerState = $false,
+    # The type of the unmanaged object. This may be VirtualMachine, MssqlDatabase, LinuxFileset, or WindowsFileset.
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Alias('objectType')]
+    [String]$Type,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api
   )
 
-  Begin {
+    Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -56,9 +68,9 @@ function Stop-RubrikVM
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = New-URIString -server $Server -endpoint ($resources.URI)
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)        
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
