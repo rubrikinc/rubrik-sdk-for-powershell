@@ -3,12 +3,12 @@ function Get-RubrikUnmanagedObject
 {
   <#  
       .SYNOPSIS
-      Retrieves details on one or more filesets known to a Rubrik cluster
+      Retrieves details on one or more unmanaged objects known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikFileset cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of filesets
-      A number of parameters exist to help narrow down the specific fileset desired
-      Note that a fileset name is not required; you can use params (such as HostName and SLA) to do lookup matching filesets
+      The Get-RubrikUnmanagedObject cmdlet is used to pull details on any unmanaged objects that has been stored in the cluster
+      In most cases, this will be on-demand snapshots that are associated with an object (virtual machine, fileset, database, etc.)
+      but are not under management of an SLA Domain policy
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -19,24 +19,12 @@ function Get-RubrikUnmanagedObject
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikFileset -Name 'C_Drive' 
-      This will return details on the fileset named "C_Drive" assigned to any hosts
+      Get-RubrikUnmanagedObject -Type 'WindowsFileset'
+      This will return details on any filesets applied to Windows Servers that have unmanaged snapshots associated
 
       .EXAMPLE
-      Get-RubrikFileset -Name 'C_Drive' -HostName 'Server1'
-      This will return details on the fileset named "C_Drive" assigned to only the "Server1" host
-
-      .EXAMPLE
-      Get-RubrikFileset -Name 'C_Drive' -SLA Gold
-      This will return details on the fileset named "C_Drive" assigned to any hosts with an SLA Domain matching "Gold"
-
-      .EXAMPLE
-      Get-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
-      This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
-
-      .EXAMPLE
-      Get-RubrikFileset -Relic
-      This will return all removed filesets that were formerly protected by Rubrik.
+      Get-RubrikUnmanagedObject -Status 'Unprotected' -Name 'Server1'
+      This will return details on any objects named "Server1" that are currently unprotected and have unmanaged snapshots associated
   #>
 
   [CmdletBinding()]
@@ -48,9 +36,9 @@ function Get-RubrikUnmanagedObject
     [Alias('unmanaged_status')]
     [ValidateSet('Protected','Relic','Unprotected')]
     [String]$Status,
-    # The type of the unmanaged object. This may be VirtualMachine, MssqlDatabase, or Fileset
+    # The type of the unmanaged object. This may be VirtualMachine, MssqlDatabase, LinuxFileset, or WindowsFileset.
     [Alias('object_type')]
-    [ValidateSet('VirtualMachine','MssqlDatabase','Fileset')]
+    [ValidateSet('VirtualMachine','MssqlDatabase','LinuxFileset','WindowsFileset')]
     [String]$Type,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
