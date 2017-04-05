@@ -270,7 +270,7 @@ function Get-RubrikAPIData($endpoint)
     }
     'Protect-RubrikDatabase'  = @{
       v1 = @{
-        Description = 'Update a Microsoft SQL database with the specified properties.'
+        Description = 'Update a Microsoft SQL database with the specified SLA Domain.'
         URI         = '/api/v1/mssql/db/{id}'
         Method      = 'Patch'
         Body        = @{
@@ -288,7 +288,7 @@ function Get-RubrikAPIData($endpoint)
     }
     'Protect-RubrikFileset'   = @{
       v1 = @{
-        Description = 'Update a Fileset with the specified properties.'
+        Description = 'Update a Fileset with the specified SLA Domain.'
         URI         = '/api/v1/fileset/{id}'
         Method      = 'Patch'
         Body        = @{
@@ -314,7 +314,7 @@ function Get-RubrikAPIData($endpoint)
     }
     'Protect-RubrikVM'        = @{
       v1 = @{
-        Description = 'Update VM with specified properties'
+        Description = 'Update a VM with the specified SLA Domain.'
         URI         = '/api/v1/vmware/vm/{id}'
         Method      = 'Patch'
         Body        = @{
@@ -357,6 +357,25 @@ function Get-RubrikAPIData($endpoint)
         Success     = '204'
       }
     }
+    'Remove-RubrikUnmanagedObject'      = @{
+      v1 = @{
+        Description = 'Bulk delete all unmanaged snapshots for the objects specified by objectId/objectType pairings.'
+        URI         = '/api/internal/unmanaged_object/snapshot/bulk_delete'
+        Method      = 'Post'
+        Body        = @{
+          objectDefinitions = @(
+            @{
+              objectId = 'objectId'
+              objectType = 'objectType'
+            }
+          )
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }    
     'Set-RubrikBlackout'      = @{
       v1 = @{
         Description = 'Whether to start or stop the global blackout window.'

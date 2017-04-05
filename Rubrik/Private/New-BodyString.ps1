@@ -16,23 +16,58 @@
   # Note: Keys are used to search in case the value changes in the future across different API versions
   foreach ($body in $bodykeys)
   {
-    # Walk through all of the parameters defined in the function
-    # Both the parameter name and parameter alias are used to match against a body option
-    # It is suggested to make the parameter name "human friendly" and set an alias corresponding to the body option name
-    foreach ($param in $parameters)
+    # Array Object
+    if ($resources.Body.$body.GetType().BaseType.Name -eq 'Array')
     {
-      # If the parameter name or alias matches the body option name, build a body string
-      if ($param.Name -eq $body -or $param.Aliases -eq $body)
+      $bodyarray = $resources.Body.$body.Keys
+      $arraystring = @{}
+      foreach ($arrayitem in $bodyarray) 
       {
-        # Switch variable types
-        if ((Get-Variable -Name $param.Name).Value.GetType().Name -eq 'SwitchParameter')
+        # Walk through all of the parameters defined in the function
+        # Both the parameter name and parameter alias are used to match against a body option
+        # It is suggested to make the parameter name "human friendly" and set an alias corresponding to the body option name
+        foreach ($param in $parameters)
         {
-          $bodystring.Add($body,(Get-Variable -Name $param.Name).Value.IsPresent)
+          # If the parameter name or alias matches the body option name, build a body string
+          if ($param.Name -eq $arrayitem -or $param.Aliases -eq $arrayitem)
+          {
+            # Switch variable types
+            if ((Get-Variable -Name $param.Name).Value.GetType().Name -eq 'SwitchParameter')
+            {
+              $arraystring.Add($arrayitem,(Get-Variable -Name $param.Name).Value.IsPresent)
+            }
+            # All other variable types
+            elseif ((Get-Variable -Name $param.Name).Value -ne $null)
+            {
+              $arraystring.Add($arrayitem,(Get-Variable -Name $param.Name).Value)
+            }
+          }
         }
-        # All other variable types
-        elseif ((Get-Variable -Name $param.Name).Value -ne $null)
+      }
+      $bodystring.Add($body,@($arraystring))
+    }
+
+    # Non-Array Object
+    else 
+    {
+      # Walk through all of the parameters defined in the function
+      # Both the parameter name and parameter alias are used to match against a body option
+      # It is suggested to make the parameter name "human friendly" and set an alias corresponding to the body option name
+      foreach ($param in $parameters)
+      {
+        # If the parameter name or alias matches the body option name, build a body string
+        if ($param.Name -eq $body -or $param.Aliases -eq $body)
         {
-          $bodystring.Add($body,(Get-Variable -Name $param.Name).Value)
+          # Switch variable types
+          if ((Get-Variable -Name $param.Name).Value.GetType().Name -eq 'SwitchParameter')
+          {
+            $bodystring.Add($body,(Get-Variable -Name $param.Name).Value.IsPresent)
+          }
+          # All other variable types
+          elseif ((Get-Variable -Name $param.Name).Value -ne $null)
+          {
+            $bodystring.Add($body,(Get-Variable -Name $param.Name).Value)
+          }
         }
       }
     }
