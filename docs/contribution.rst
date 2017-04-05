@@ -45,7 +45,11 @@ Once data for the endpoint is stored, the function template should work in most 
 Building a Query
 ------------------------
 
-For many endpoints, a query is constructed using the endpoint's path. This is fairly common when using the ``id`` value. Below, let's look at ``Get-RubrikDatabase`` and how it builds a query. There are 4 different parameters available for the query: ``instance_id``, ``effective_sla_domain_id``, ``primary_cluster_id``, and ``is_relic``. By placing these objects in the Query section, we've informed the function that they are available. Note that the key and value match because this is the first version of the API; should the parameter name change in the future, the value would change to match it, but the key would remain static to avoid re-writing anything in the function itself.
+For many endpoints, a query is constructed using the endpoint's path. This is fairly common when using the ``id`` value.
+
+Below, let's look at ``Get-RubrikDatabase`` and how it builds a query. There are 4 different parameters available for the query: ``instance_id``, ``effective_sla_domain_id``, ``primary_cluster_id``, and ``is_relic``. By placing these objects in the Query section, we've informed the function that they are available.
+
+Note that the key and value match because this is the first version of the API; should the parameter name change in the future, the value would change to match it, but the key would remain static to avoid re-writing anything in the function itself.
 
 .. code:: PowerShell
 
@@ -72,7 +76,9 @@ For many endpoints, a query is constructed using the endpoint's path. This is fa
       }
     }    
 
-The parameter names aren't very user friendly. In order to use friendly parameter names within the function, a relationship is created using an alias. Below are the parameters available in the ``Get-RubrikDatabase`` function. Notice how the ``[Switch]$Relic`` switch has an alias of ``[Alias('is_relic')]`` to match the API's parameter? This creates a relationship so that the function knows to build a query using the value of this parameter. In this case, if the user sets the switch to $true, the ``is_relic`` query will be added to the path. The same goes for ``$PrimaryClusterID`` and ``$SLAID``.
+The parameter names aren't very user friendly. In order to use friendly parameter names within the function, a relationship is created using an alias. Below are the parameters available in the ``Get-RubrikDatabase`` function. Notice how the ``[Switch]$Relic`` switch has an alias of ``[Alias('is_relic')]`` to match the API's parameter? This creates a relationship so that the function knows to build a query using the value of this parameter.
+
+In this case, if the user sets the switch to $true, the ``is_relic`` query will be added to the path. The same goes for ``$PrimaryClusterID`` and ``$SLAID``.
 
 .. code:: PowerShell
 
@@ -165,7 +171,9 @@ And here's the PowerShell code to see the body parameter aliases. See how ``[Str
 Building a Filter
 ------------------------
 
-Not every API endpoint has the ability to filter results as desired. In those cases, the filter section of the API data is used to provide additional result filtering for the user. Let's take a peek at ``Get-RubrikVM`` as an example. Notice how the filter section is different from the query and body sections. The filter keys correspond to the function's actual parameter names. The values correspond to the keys found in the result data. This relationship is used to filter specific key/value pairs in the result for user driven filter criteria.
+Not every API endpoint has the ability to filter results as desired. In those cases, the filter section of the API data is used to provide additional result filtering for the user.
+
+Let's take a peek at ``Get-RubrikVM`` as an example. Notice how the filter section is different from the query and body sections. The filter keys correspond to the function's actual parameter names. The values correspond to the keys found in the result data. This relationship is used to filter specific key/value pairs in the result for user driven filter criteria.
 
 .. code:: PowerShell
 
@@ -189,7 +197,9 @@ Not every API endpoint has the ability to filter results as desired. In those ca
       }
     }
 
-Let's take the ``'SLA' = 'effectiveSlaDomainName'`` as an example: a user enters a friendly SLA Domain name into the ``$SLA`` parameter. When the results come back from the endpoint, this friendly name is compared against the results. PowerShell looks at the ``effectiveSlaDomainName`` key and filters out anything that doesn't match. If the user entered the word "Gold", the function would filter out any results that aren't part of the "Gold" SLA Domain. There is no need to create an alias because the actual parameter name is used (without the ``$`` symbol).
+Let's take the ``'SLA' = 'effectiveSlaDomainName'`` as an example: a user enters a friendly SLA Domain name into the ``$SLA`` parameter. When the results come back from the endpoint, this friendly name is compared against the results. PowerShell looks at the ``effectiveSlaDomainName`` key and filters out anything that doesn't match. If the user entered the word "Gold", the function would filter out any results that aren't part of the "Gold" SLA Domain.
+
+There is no need to create an alias because the actual parameter name is used (without the ``$`` symbol).
 
 .. code:: PowerShell
 

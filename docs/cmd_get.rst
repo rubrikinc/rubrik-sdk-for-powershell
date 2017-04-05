@@ -15,7 +15,8 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
@@ -557,6 +558,71 @@ REMARKS
     For more information, type: "get-help Get-RubrikSnapshot -detailed".
     For technical information, type: "get-help Get-RubrikSnapshot -full".
     For online help, type: "get-help Get-RubrikSnapshot -online"
+
+Get-RubrikUnmanagedObject
+-------------------------
+
+NAME
+    Get-RubrikUnmanagedObject
+    
+SYNOPSIS
+    Retrieves details on one or more unmanaged objects known to a Rubrik cluster
+    
+    
+SYNTAX
+    Get-RubrikUnmanagedObject [[-Name] <String>] [[-Status] <String>] [[-Type] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikUnmanagedObject cmdlet is used to pull details on any unmanaged objects that has been stored in the cluster
+    In most cases, this will be on-demand snapshots that are associated with an object (virtual machine, fileset, database, etc.)
+    
+
+PARAMETERS
+    -Name <String>
+        Search object by object name.
+        
+    -Status <String>
+        Filter by the type of the object. If not specified, will return all objects. Valid attributes are Protected, Relic and Unprotected
+        
+    -Type <String>
+        The type of the unmanaged object. This may be VirtualMachine, MssqlDatabase, LinuxFileset, or WindowsFileset.
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikUnmanagedObject -Type 'WindowsFileset'
+    
+    This will return details on any filesets applied to Windows Servers that have unmanaged snapshots associated
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikUnmanagedObject -Status 'Unprotected' -Name 'Server1'
+    
+    This will return details on any objects named "Server1" that are currently unprotected and have unmanaged snapshots associated
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikUnmanagedObject -examples".
+    For more information, type: "get-help Get-RubrikUnmanagedObject -detailed".
+    For technical information, type: "get-help Get-RubrikUnmanagedObject -full".
+    For online help, type: "get-help Get-RubrikUnmanagedObject -online"
 
 Get-RubrikVersion
 -------------------------

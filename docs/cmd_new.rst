@@ -15,7 +15,8 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikMount [-id] <String> [[-HostID] <String>] [[-MountName] <String>] [[-DatastoreName] <String>] [-DisableNetwork] [-RemoveNetworkDevices] [-PowerState] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikMount [-id] <String> [[-HostID] <String>] [[-MountName] <String>] [[-DatastoreName] <String>] [-DisableNetwork] [-RemoveNetworkDevices] [-PowerState] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
+    [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -108,8 +109,8 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] <Int32>] [[-DailyFrequency] <Int32>] [[-DailyRetention] <Int32>] [[-MonthlyFrequency] <Int32>] [[-MonthlyRetention] <Int32>] [[-YearlyFrequency] <Int32>] 
-    [[-YearlyRetention] <Int32>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] <Int32>] [[-DailyFrequency] <Int32>] [[-DailyRetention] <Int32>] [[-MonthlyFrequency] <Int32>] [[-MonthlyRetention] <Int32>] 
+    [[-YearlyFrequency] <Int32>] [[-YearlyRetention] <Int32>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -192,20 +193,23 @@ NAME
     New-RubrikSnapshot
     
 SYNOPSIS
-    Takes a Rubrik snapshot of a virtual machine
+    Takes an on-demand Rubrik snapshot of a protected object
     
     
 SYNTAX
-    New-RubrikSnapshot [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikSnapshot [-id] <String> [-ForceFull] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific virtual machine. This will be taken by Rubrik and stored in the VM's chain of snapshots.
+    The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific object (virtual machine, database, fileset, etc.)
     
 
 PARAMETERS
     -id <String>
-        Virtual machine id
+        Rubrik's id of the object
+        
+    -ForceFull [<SwitchParameter>]
+        Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -227,7 +231,25 @@ PARAMETERS
     
     PS C:\>Get-RubrikVM 'Server1' | New-RubrikSnapshot
     
-    This will trigger an on-demand backup for the virtual machine named "Server1"
+    This will trigger an on-demand backup for any virtual machine named "Server1"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot
+    
+    This will trigger an on-demand backup for any fileset named "C_Drive"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull
+    
+    This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
     
     
     
