@@ -64,7 +64,6 @@ function Get-RubrikFileset
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 

@@ -322,12 +322,7 @@ function Get-RubrikAPIData($endpoint)
         }
         Query       = ''
         Result      = ''
-        Filter      = @{
-          '$VM'    = 'name'
-          '$SLA'   = 'effectiveSlaDomainName'
-          '$Host'  = 'hostName'
-          '$Cluster' = 'clusterName'
-        }
+        Filter      = ''
         Success     = '200'
       }      
     }
