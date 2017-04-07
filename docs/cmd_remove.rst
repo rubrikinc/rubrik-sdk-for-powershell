@@ -78,6 +78,77 @@ REMARKS
     For technical information, type: "get-help Remove-RubrikMount -full".
     For online help, type: "get-help Remove-RubrikMount -online"
 
+Remove-RubrikReport
+-------------------------
+
+NAME
+    Remove-RubrikReport
+    
+SYNOPSIS
+    Removes one or more reports created in Rubrik Envision
+    
+    
+SYNTAX
+    Remove-RubrikReport [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Remove-RubrikReport cmdlet is used to delete any number of Rubrik Envision reports
+    
+
+PARAMETERS
+    -id <String>
+        The Rubrik ID value of the report
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    -WhatIf [<SwitchParameter>]
+        
+    -Confirm [<SwitchParameter>]
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikReport | Remove-RubrikReport -Confirm:$true
+    
+    This will delete all reports and force confirmation for each delete operation
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikReport -Name 'SLA' -Type Custom | Remove-RubrikReport
+    
+    This will delete all custom reports that contain the string "SLA"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikReport -id '11111111-2222-3333-4444-555555555555' | Remove-RubrikReport -Confirm:$false
+    
+    This will delete the report id "11111111-2222-3333-4444-555555555555" without confirmation
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Remove-RubrikReport -examples".
+    For more information, type: "get-help Remove-RubrikReport -detailed".
+    For technical information, type: "get-help Remove-RubrikReport -full".
+    For online help, type: "get-help Remove-RubrikReport -online"
+
 Remove-RubrikSLA
 -------------------------
 

@@ -369,6 +369,79 @@ REMARKS
     For technical information, type: "get-help Get-RubrikMount -full".
     For online help, type: "get-help Get-RubrikMount -online"
 
+Get-RubrikReport
+-------------------------
+
+NAME
+    Get-RubrikReport
+    
+SYNOPSIS
+    Retrieves details on one or more reports created in Rubrik Envision
+    
+    
+SYNTAX
+    Get-RubrikReport [[-Name] <String>] [[-Type] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikReport cmdlet is used to pull information on any number of Rubrik Envision reports
+    
+
+PARAMETERS
+    -Name <String>
+        Filter the returned reports based off their name.
+        
+    -Type <String>
+        Filter the returned reports based off the reports type. Options are Canned and Custom.
+        
+    -id <String>
+        The ID of the report.
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikReport
+    
+    This will return details on all reports
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikReport -Name 'SLA' -Type Custom
+    
+    This will return details on all custom reports that contain the string "SLA"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikReport -id '11111111-2222-3333-4444-555555555555'
+    
+    This will return details on the report id "11111111-2222-3333-4444-555555555555"
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikReport -examples".
+    For more information, type: "get-help Get-RubrikReport -detailed".
+    For technical information, type: "get-help Get-RubrikReport -full".
+    For online help, type: "get-help Get-RubrikReport -online"
+
 Get-RubrikRequest
 -------------------------
 
