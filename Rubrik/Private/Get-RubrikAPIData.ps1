@@ -118,6 +118,21 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Get-RubrikReport'       = @{
+      v1 = @{
+        Description = 'Retrieve summary information for each report.'
+        URI         = '/api/internal/report'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          report_type = 'report_type'
+          search_text = 'search_text'
+        }
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
+      }
+    }    
     'Get-RubrikRequest'       = @{
       v1 = @{
         Description = 'Get details about a vmware vm related async request'
@@ -340,6 +355,18 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
+    'Remove-RubrikReport'      = @{
+      v1 = @{
+        Description = 'Delete a specific report specified by reportId'
+        URI         = '/api/internal/report/{id}'
+        Method      = 'Delete'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '204'
+      }
+    }    
     'Remove-RubrikSLA'        = @{
       v1 = @{
         Description = 'Delete an SLA Domain from a Rubrik cluster'
