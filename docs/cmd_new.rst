@@ -15,12 +15,14 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikMount [-id] <String> [[-HostID] <String>] [[-MountName] <String>] [[-DatastoreName] <String>] [-DisableNetwork] [-RemoveNetworkDevices] [-PowerState] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    New-RubrikMount [-id] <String> [[-HostID] <String>] [[-MountName] <String>] [[-DatastoreName] <String>] 
+    [-DisableNetwork] [-RemoveNetworkDevices] [-PowerOn] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
-    The New-RubrikMount cmdlet is used to create a Live Mount (clone) of a protected VM and run it in an existing vSphere environment.
+    The New-RubrikMount cmdlet is used to create a Live Mount (clone) of a protected VM and run it in an existing 
+    vSphere environment.
     
 
 PARAMETERS
@@ -37,12 +39,13 @@ PARAMETERS
         Name of the data store to use/create on the host
         
     -DisableNetwork [<SwitchParameter>]
-        Whether the network should be disabled on mount.This should be set true to avoid ip conflict in case of static IPs.
+        Whether the network should be disabled on mount.This should be set true to avoid ip conflict in case of 
+        static IPs.
         
     -RemoveNetworkDevices [<SwitchParameter>]
         Whether the network devices should be removed on mount.
         
-    -PowerState [<SwitchParameter>]
+    -PowerOn [<SwitchParameter>]
         Whether the VM should be powered on after mount.
         
     -Server <String>
@@ -67,27 +70,32 @@ PARAMETERS
     
     This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555"
     The original virtual machine's name will be used along with a date and index number suffix
-    The virtual machine will be powered on upon completion of the mount operation
+    The virtual machine will NOT be powered on upon completion of the mount operation
     
     
     
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>New-RubrikMount -id '11111111-2222-3333-4444-555555555555' -MountName 'Mount1' -PowerState:$false
+    PS C:\>New-RubrikMount -id '11111111-2222-3333-4444-555555555555' -MountName 'Mount1' -PowerOn 
+    -RemoveNetworkDevices
     
-    This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555" and name the mounted virtual machine "Mount1"
-    The virtual machine will NOT be powered on upon completion of the mount operation
+    This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555" and name the mounted 
+    virtual machine "Mount1"
+    The virtual machine will be powered on upon completion of the mount operation but without any virtual network 
+    adapters
     
     
     
     
     -------------------------- EXAMPLE 3 --------------------------
     
-    PS C:\>Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/01/2017 01:00' | New-RubrikMount -MountName 'Mount1' -DisableNetwork
+    PS C:\>Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/01/2017 01:00' | New-RubrikMount -MountName 
+    'Mount1' -DisableNetwork
     
-    This will create a new mount based on the closet snapshot found on March 1st, 2017 @ 01:00 AM and name the mounted virtual machine "Mount1"
-    The virtual machine will be powered on upon completion of the mount operation
+    This will create a new mount based on the closet snapshot found on March 1st, 2017 @ 01:00 AM and name the 
+    mounted virtual machine "Mount1"
+    The virtual machine will NOT be powered on upon completion of the mount operation
     
     
     
@@ -109,12 +117,15 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] <Int32>] [[-DailyFrequency] <Int32>] [[-DailyRetention] <Int32>] [[-MonthlyFrequency] <Int32>] [[-MonthlyRetention] <Int32>] 
-    [[-YearlyFrequency] <Int32>] [[-YearlyRetention] <Int32>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] <Int32>] [[-DailyFrequency] 
+    <Int32>] [[-DailyRetention] <Int32>] [[-MonthlyFrequency] <Int32>] [[-MonthlyRetention] <Int32>] 
+    [[-YearlyFrequency] <Int32>] [[-YearlyRetention] <Int32>] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
+    [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    The New-RubrikSLA cmdlet will build a new SLA Domain to provide policy-driven control over protected objects within the Rubrik fabric.
+    The New-RubrikSLA cmdlet will build a new SLA Domain to provide policy-driven control over protected objects 
+    within the Rubrik fabric.
     
 
 PARAMETERS
@@ -165,7 +176,8 @@ PARAMETERS
     
     PS C:\>New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24
     
-    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours.
+    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups 
+    for 24 hours.
     
     
     
@@ -174,7 +186,8 @@ PARAMETERS
     
     PS C:\>New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24 -DailyFrequency 1 -DailyRetention 30
     
-    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours
+    This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups 
+    for 24 hours
     while also keeping one backup per day for 30 days.
     
     
@@ -197,11 +210,13 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikSnapshot [-id] <String> [-ForceFull] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikSnapshot [-id] <String> [-ForceFull] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
-    The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific object (virtual machine, database, fileset, etc.)
+    The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific object (virtual machine, 
+    database, fileset, etc.)
     
 
 PARAMETERS
@@ -249,7 +264,8 @@ PARAMETERS
     
     PS C:\>Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull
     
-    This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
+    This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than 
+    an incremental.
     
     
     

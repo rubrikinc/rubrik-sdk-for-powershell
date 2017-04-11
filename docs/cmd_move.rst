@@ -15,13 +15,16 @@ SYNOPSIS
     
     
 SYNTAX
-    Move-RubrikMountVMDK [-SourceVM] <String> [-TargetVM] <String> [[-Date] <String>] [[-ExcludeDisk] <Array>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Move-RubrikMountVMDK [-SourceVM] <String> [-TargetVM] <String> [[-Date] <String>] [[-ExcludeDisk] <Array>] 
+    [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Move-RubrikMountVMDK [-Cleanup <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Move-RubrikMountVMDK [-Cleanup <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
-    The Move-RubrikMountVMDK cmdlet is used to attach VMDKs from a Live Mount to another VM, typically for restore or testing purposes.
+    The Move-RubrikMountVMDK cmdlet is used to attach VMDKs from a Live Mount to another VM, typically for restore 
+    or testing purposes.
     
 
 PARAMETERS
@@ -41,7 +44,8 @@ PARAMETERS
         
     -Cleanup <String>
         The path to a cleanup file to remove the live mount and presented disks
-        The cleanup file is created each time the command is run and stored in the $HOME path as a text file with a random number value
+        The cleanup file is created each time the command is run and stored in the $HOME path as a text file with a 
+        random number value
         The file contains the TargetVM name, MountID value, and a list of all presented disks
         
     -Server <String>
@@ -76,7 +80,8 @@ PARAMETERS
     
     This will create a Live Mount using the January 30th 08:00AM snapshot of the VM named "SourceVM"
     The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
-    Note: The Date parameter will start at the time specified (in this case, 08:00am) and work backwards in time until it finds a snapshot.
+    Note: The Date parameter will start at the time specified (in this case, 08:00am) and work backwards in time 
+    until it finds a snapshot.
     Precise timing is not required.
     
     
@@ -88,7 +93,8 @@ PARAMETERS
     
     This will create a Live Mount using the latest snapshot of the VM named "SourceVM"
     Disk 0 and 1 (the first and second disks) would be excluded from presentation to the VM named "TargetVM"
-    Note: that for the "ExcludeDisk" array, the format is @(#,#,#,...) where each # represents a disk starting with 0.
+    Note: that for the "ExcludeDisk" array, the format is @(#,#,#,...) where each # represents a disk starting with 
+    0.
     Example: To exclude the first and third disks, the value would be @(0,2).
     Example: To exclude just the first disk, use @(0).
     

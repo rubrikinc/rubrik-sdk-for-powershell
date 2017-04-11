@@ -64,7 +64,7 @@
             $bodystring.Add($body,(Get-Variable -Name $param.Name).Value.IsPresent)
           }
           # All other variable types
-          elseif ((Get-Variable -Name $param.Name).Value -ne $null)
+          elseif ((Get-Variable -Name $param.Name).Value -ne $null -and (Get-Variable -Name $param.Name).Value -ne "")
           {
             $bodystring.Add($body,(Get-Variable -Name $param.Name).Value)
           }

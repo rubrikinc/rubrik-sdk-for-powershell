@@ -20,17 +20,17 @@ function New-RubrikMount
       New-RubrikMount -id '11111111-2222-3333-4444-555555555555'
       This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555"
       The original virtual machine's name will be used along with a date and index number suffix
-      The virtual machine will be powered on upon completion of the mount operation
+      The virtual machine will NOT be powered on upon completion of the mount operation
       
       .EXAMPLE
-      New-RubrikMount -id '11111111-2222-3333-4444-555555555555' -MountName 'Mount1' -PowerState:$false
+      New-RubrikMount -id '11111111-2222-3333-4444-555555555555' -MountName 'Mount1' -PowerOn -RemoveNetworkDevices
       This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555" and name the mounted virtual machine "Mount1"
-      The virtual machine will NOT be powered on upon completion of the mount operation
+      The virtual machine will be powered on upon completion of the mount operation but without any virtual network adapters
 
       .EXAMPLE
       Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/01/2017 01:00' | New-RubrikMount -MountName 'Mount1' -DisableNetwork
       This will create a new mount based on the closet snapshot found on March 1st, 2017 @ 01:00 AM and name the mounted virtual machine "Mount1"
-      The virtual machine will be powered on upon completion of the mount operation
+      The virtual machine will NOT be powered on upon completion of the mount operation
 
   #>
 
@@ -51,8 +51,7 @@ function New-RubrikMount
     # Whether the network devices should be removed on mount.
     [Switch]$RemoveNetworkDevices,
     # Whether the VM should be powered on after mount.
-    [Alias('powerOn')]
-    [Switch]$PowerState,
+    [Switch]$PowerOn,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
