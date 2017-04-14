@@ -23,7 +23,9 @@ else
         # Start by importing the manifest to determine the version, then add 1 to the revision
         $manifest = Test-ModuleManifest -Path $manifestPath
         [System.Version]$version = $manifest.Version
+        Write-Output "Old Version: $newVersion"
         [String]$newVersion = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, $version.Build, ($version.Revision+1))
+        Write-Output "New Version: $newVersion"
 
         # Update the manifest with the new version value and fix the weird string replace bug
         $functionList = ((Get-ChildItem -Path .\Rubrik\Public).BaseName)
