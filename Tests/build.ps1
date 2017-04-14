@@ -3,7 +3,15 @@ Write-Host -Object ''
 
 # Make sure we're using the Master branch and that it's not a pull request
 # Environmental Variables Guide: https://www.appveyor.com/docs/environment-variables/
-if ($env:APPVEYOR_REPO_BRANCH -eq 'master' -and $env:APPVEYOR_PULL_REQUEST_NUMBER -eq 0)
+if ($env:APPVEYOR_REPO_BRANCH -ne 'master') 
+{
+    Write-Warning -Message "Skipping version increment and publish for branch $env:APPVEYOR_REPO_BRANCH"
+}
+elseif ($env:APPVEYOR_PULL_REQUEST_NUMBER -gt 0)
+{
+    Write-Warning -Message "Skipping version increment and publish for pull request #$env:APPVEYOR_PULL_REQUEST_NUMBER"
+}
+else
 {
     # We're going to add 1 to the revision value since a new commit has been merged to Master
     # This means that the major / minor / build values will be consistent across GitHub and the Gallery
