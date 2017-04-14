@@ -52,7 +52,8 @@ else
     Catch 
     {
         # Sad panda; it broke
-        throw "Publishing update $version to the PowerShell Gallery failed."
+        Write-Warning "Publishing update $version to the PowerShell Gallery failed."
+        throw $_
     }
 
     # Publish the new version back to Master on GitHub
@@ -71,6 +72,7 @@ else
     Catch 
     {
         # Sad panda; it broke
-        throw "Publishing update $version to GitHub failed."
+        Write-Warning "Publishing update $version to GitHub failed."
+        throw $_
     }
 }
