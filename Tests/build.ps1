@@ -26,8 +26,11 @@ else
         [String]$newVersion = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, $version.Build, ($version.Revision+1))
 
         # Update the manifest with the new version value and fix the weird string replace bug
-        Update-ModuleManifest -Path $manifestPath -ModuleVersion $newVersion
+        $functionList = ((Get-ChildItem -Path .\Rubrik\Public).BaseName)
+        Update-ModuleManifest -Path $manifestPath -ModuleVersion $newVersion -FunctionsToExport $functionList
         (Get-Content -Path $manifestPath) -replace 'PSGet_Rubrik', 'Rubrik' | Set-Content -Path $manifestPath
+        (Get-Content -Path $manifestPath) -replace 'FunctionsToExport = ', 'FunctionsToExport = @(' | Set-Content -Path $manifestPath -Force
+        (Get-Content -Path $manifestPath) -replace "$($functionList[-1])'", "$($functionList[-1])')" | Set-Content -Path $manifestPath -Force
     }
     catch
     {
@@ -59,7 +62,8 @@ else
         # Note that "update version" is included in the appveyor.yml file's "skip a build" regex to avoid a loop
         $env:Path += ";$env:ProgramFiles\Git\cmd"
         Import-Module posh-git -ErrorAction Stop
-        git add .
+        git checkout master
+        git add --all
         git commit -s -m "Update version to $version"
         git push
         Write-Host "Rubrik PowerShell Module version $version published to GitHub." -ForegroundColor Cyan

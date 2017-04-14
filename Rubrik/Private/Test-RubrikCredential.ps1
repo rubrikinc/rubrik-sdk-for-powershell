@@ -1,4 +1,4 @@
-﻿function Test-RubrikCredential($Username,$Password,$Credential)
+﻿function Test-RubrikCredential($Username,[SecureString]$Password,$Credential)
 {
   Write-Verbose -Message 'Validate credential'  
   if ($Credential)

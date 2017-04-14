@@ -69,17 +69,17 @@ PowerShellVersion = '4.0'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Connect-Rubrik', 'Get-RubrikMount', 'Get-RubrikSLA', 
-               'Get-RubrikVersion', 'New-RubrikMount', 'New-RubrikSnapshot', 
-               'Remove-RubrikMount', 'Remove-RubrikSLA', 'Protect-RubrikVM', 
-               'Sync-RubrikTag', 'Get-RubrikVM', 'Get-RubrikSnapshot', 
-               'Protect-RubrikTag', 'Set-RubrikMount', 'Set-RubrikVM', 'New-RubrikSLA', 
-               'Get-RubrikRequest', 'Move-RubrikMountVMDK', 'Sync-RubrikAnnotation', 
-               'Get-RubrikDatabase', 'Protect-RubrikDatabase', 'Get-RubrikFileset', 
-               'Protect-RubrikFileset', 'Get-RubrikFilesetTemplate', 
-               'Set-RubrikBlackout', 'Get-RubrikUnmanagedObject', 
-               'Remove-RubrikUnmanagedObject', 'Get-RubrikReport', 
-               'Remove-RubrikReport'
+FunctionsToExport = @('Connect-Rubrik', 'Get-RubrikDatabase', 'Get-RubrikFileset', 
+               'Get-RubrikFilesetTemplate', 'Get-RubrikMount', 'Get-RubrikReport', 
+               'Get-RubrikRequest', 'Get-RubrikSLA', 'Get-RubrikSnapshot', 
+               'Get-RubrikUnmanagedObject', 'Get-RubrikVersion', 'Get-RubrikVM', 
+               'Move-RubrikMountVMDK', 'New-RubrikMount', 'New-RubrikSLA', 
+               'New-RubrikSnapshot', 'Protect-RubrikDatabase', 
+               'Protect-RubrikFileset', 'Protect-RubrikTag', 'Protect-RubrikVM', 
+               'Remove-RubrikMount', 'Remove-RubrikReport', 'Remove-RubrikSLA', 
+               'Remove-RubrikUnmanagedObject', 'Set-RubrikBlackout', 
+               'Set-RubrikMount', 'Set-RubrikVM', 'Sync-RubrikAnnotation', 
+               'Sync-RubrikTag')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
