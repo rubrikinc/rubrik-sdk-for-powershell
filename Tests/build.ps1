@@ -23,7 +23,7 @@ else
         # Start by importing the manifest to determine the version, then add 1 to the revision
         $manifest = Test-ModuleManifest -Path $manifestPath
         [System.Version]$version = $manifest.Version
-        Write-Output "Old Version: $newVersion"
+        Write-Output "Old Version: $version"
         [String]$newVersion = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, $version.Build, ($version.Revision+1))
         Write-Output "New Version: $newVersion"
 
@@ -49,12 +49,12 @@ else
             ErrorAction = 'Stop'
         }
         Publish-Module @PM
-        Write-Host "Rubrik PowerShell Module version $version published to the PowerShell Gallery." -ForegroundColor Cyan
+        Write-Host "Rubrik PowerShell Module version $newVersion published to the PowerShell Gallery." -ForegroundColor Cyan
     }
     Catch 
     {
         # Sad panda; it broke
-        Write-Warning "Publishing update $version to the PowerShell Gallery failed."
+        Write-Warning "Publishing update $newVersion to the PowerShell Gallery failed."
         throw $_
     }
 
@@ -67,14 +67,15 @@ else
         Import-Module posh-git -ErrorAction Stop
         git checkout master
         git add --all
-        git commit -s -m "Update version to $version"
-        git push
-        Write-Host "Rubrik PowerShell Module version $version published to GitHub." -ForegroundColor Cyan
+        git status
+        git commit -s -m "Update version to $newVersion"
+        git push origin master
+        Write-Host "Rubrik PowerShell Module version $newVersion published to GitHub." -ForegroundColor Cyan
     }
     Catch 
     {
         # Sad panda; it broke
-        Write-Warning "Publishing update $version to GitHub failed."
+        Write-Warning "Publishing update $newVersion to GitHub failed."
         throw $_
     }
 }
