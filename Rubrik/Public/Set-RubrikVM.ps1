@@ -17,7 +17,7 @@ function Set-RubrikVM
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups:$false
+      Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups
       This will pause backups on any virtual machine named "Server1"
 
       .EXAMPLE
