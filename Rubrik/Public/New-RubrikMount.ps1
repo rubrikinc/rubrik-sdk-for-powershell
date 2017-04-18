@@ -47,7 +47,7 @@ function New-RubrikMount
     # Name of the data store to use/create on the host 
     [String]$DatastoreName,
     # Whether the network should be disabled on mount.This should be set true to avoid ip conflict in case of static IPs. 
-    [Switch]$DisableNetwork,
+    [Bool]$DisableNetwork,
     # Whether the network devices should be removed on mount.
     [Switch]$RemoveNetworkDevices,
     # Whether the VM should be powered on after mount.

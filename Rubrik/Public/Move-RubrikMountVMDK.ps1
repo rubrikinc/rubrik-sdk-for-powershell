@@ -93,17 +93,17 @@ function Move-RubrikMountVMDK
       $HostID = (Get-RubrikVM -VM $TargetVM).hostId
 
       Write-Verbose -Message "Creating a powered off Live Mount of $SourceVM"
-      $mount = New-RubrikMount -VM $SourceVM -Date $Date -HostID $HostID
+      $mount = Get-RubrikVM $SourceVM | Get-RubrikSnapshot -Date $Date | New-RubrikMount -HostID $HostID -Verbose
     
-      Write-Verbose -Message "Waiting for request $($mount.requestId) to complete"
-      while ((Get-RubrikRequest -ID $mount.requestId).status -ne 'SUCCEEDED')
+      Write-Verbose -Message "Waiting for request $($mount.id) to complete"
+      while ((Get-RubrikRequest -ID $mount.id).status -ne 'SUCCEEDED')
       {
         Start-Sleep -Seconds 1
       }
     
       Write-Verbose -Message 'Live Mount is now available'
       Write-Verbose -Message 'Gathering Live Mount ID value'
-      foreach ($link in ((Get-RubrikRequest -ID $mount.requestId).links))
+      foreach ($link in ((Get-RubrikRequest -ID $mount.id).links))
       {
         # There are two links - the request (self) and result
         # This will filter the values to just the result
@@ -115,7 +115,7 @@ function Move-RubrikMountVMDK
       }
 
       Write-Verbose -Message 'Gathering details on the Live Mount'
-      $MountVM = (Get-RubrikMount -MountID $MountID).virtualMachine
+      $MountVM = Get-RubrikVM -id (Get-RubrikMount -id $MountID).mountedVmId
 
       Write-Verbose -Message 'Gathering details on the Target VM'
       $TargetHost = Get-VMHost -VM $TargetVM
@@ -184,7 +184,7 @@ function Move-RubrikMountVMDK
       }
         
       Write-Verbose -Message "Deleting the Live Mount named $($MountVM.name)"
-      Remove-RubrikMount -MountID $MountID -Confirm:$false
+      Remove-RubrikMount -id $MountID -Confirm:$false
     }
 
   } # End of process

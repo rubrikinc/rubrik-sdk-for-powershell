@@ -32,7 +32,7 @@ function Set-RubrikMount
     [String]$id,
     # Configuration for the change power status request
     [Alias('powerStatus')]
-    [Switch]$PowerOn,
+    [Bool]$PowerOn,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

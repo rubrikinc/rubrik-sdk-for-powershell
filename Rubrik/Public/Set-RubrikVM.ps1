@@ -41,10 +41,10 @@ function Set-RubrikVM
     [int]$MaxNestedSnapshots,
     # Whether to pause or resume backups/archival for this VM.
     [Alias('isVmPaused')]
-    [Switch]$PauseBackups,
+    [Bool]$PauseBackups,
     # User setting to dictate whether to use storage array snaphots for ingest. This setting only makes sense for VMs where array based ingest is possible.
     [Alias('isArrayIntegrationEnabled')]
-    [Switch]$UseArrayIntegration,
+    [Bool]$UseArrayIntegration,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
