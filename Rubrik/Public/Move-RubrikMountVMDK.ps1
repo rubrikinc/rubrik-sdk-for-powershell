@@ -93,7 +93,7 @@ function Move-RubrikMountVMDK
       $HostID = (Get-RubrikVM -VM $TargetVM).hostId
 
       Write-Verbose -Message "Creating a powered off Live Mount of $SourceVM"
-      $mount = Get-RubrikVM $SourceVM | Get-RubrikSnapshot -Date $Date | New-RubrikMount -HostID $HostID -Verbose
+      $mount = Get-RubrikVM $SourceVM | Get-RubrikSnapshot -Date $Date | New-RubrikMount -HostID $HostID
     
       Write-Verbose -Message "Waiting for request $($mount.id) to complete"
       while ((Get-RubrikRequest -ID $mount.id).status -ne 'SUCCEEDED')
