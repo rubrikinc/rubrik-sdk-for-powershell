@@ -66,16 +66,16 @@ FormatsToProcess = @()
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Connect-Rubrik', 'Get-RubrikDatabase', 'Get-RubrikFileset', 
-               'Get-RubrikFilesetTemplate', 'Get-RubrikMount', 'Get-RubrikReport', 
-               'Get-RubrikRequest', 'Get-RubrikSLA', 'Get-RubrikSnapshot', 
-               'Get-RubrikUnmanagedObject', 'Get-RubrikVersion', 'Get-RubrikVM', 
-               'Move-RubrikMountVMDK', 'New-RubrikMount', 'New-RubrikSLA', 
-               'New-RubrikSnapshot', 'Protect-RubrikDatabase', 
-               'Protect-RubrikFileset', 'Protect-RubrikTag', 'Protect-RubrikVM', 
-               'Remove-RubrikMount', 'Remove-RubrikReport', 'Remove-RubrikSLA', 
-               'Remove-RubrikUnmanagedObject', 'Set-RubrikBlackout', 
-               'Set-RubrikMount', 'Set-RubrikVM', 'Sync-RubrikAnnotation', 
+FunctionsToExport = @('Connect-Rubrik', 'Export-RubrikDatabase', 'Get-RubrikDatabase', 'Get-RubrikFileset',
+               'Get-RubrikFilesetTemplate', 'Get-RubrikMount', 'Get-RubrikReport',
+               'Get-RubrikRequest', 'Get-RubrikSLA', 'Get-RubrikSnapshot',
+               'Get-RubrikUnmanagedObject', 'Get-RubrikVersion', 'Get-RubrikVM',
+               'Move-RubrikMountVMDK', 'New-RubrikMount', 'New-RubrikSLA',
+               'New-RubrikSnapshot', 'Protect-RubrikDatabase',
+               'Protect-RubrikFileset', 'Protect-RubrikTag', 'Protect-RubrikVM',
+               'Remove-RubrikMount', 'Remove-RubrikReport', 'Remove-RubrikSLA',
+               'Remove-RubrikUnmanagedObject', 'Set-RubrikBlackout',
+               'Set-RubrikMount', 'Set-RubrikVM', 'Sync-RubrikAnnotation',
                'Sync-RubrikTag')
 
 # Cmdlets to export from this module
@@ -120,7 +120,7 @@ PrivateData = @{
         # ExternalModuleDependencies = ''
 
     } # End of PSData hashtable
-    
+
  } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
@@ -130,4 +130,3 @@ PrivateData = @{
 # DefaultCommandPrefix = ''
 
 }
-
