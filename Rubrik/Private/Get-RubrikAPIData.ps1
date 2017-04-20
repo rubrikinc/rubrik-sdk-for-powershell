@@ -38,6 +38,26 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Export-RubrikDatabase'      = @{
+      v1 = @{
+        Description = 'Export MSSQL Database from Rubrik to Destination Instance.'
+        URI         = '/api/v1/mssql/db/{id}/export'
+        Method      = 'Post'
+        Body        = @{
+          targetInstanceId   = 'targetInstanceId'
+          targetDatabaseName = 'targetDatabaseName'
+          recoveryPoint      = @{
+                timestampMs  = 'timestampMs'
+             }
+          finishRecovery     = 'finishRecovery'
+          maxDataStreams     = 'maxDataStreams'
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '202'
+      }
+    }
     'Get-RubrikDatabase'      = @{
       v1 = @{
         Description = 'Returns a list of summary information for Microsoft SQL databases.'
@@ -83,7 +103,7 @@ function Get-RubrikAPIData($endpoint)
           'SLA' = 'effectiveSlaDomainName'
         }
         Success     = '200'
-      } 
+      }
     }
     'Get-RubrikFilesetTemplate' = @{
       v1 = @{
@@ -100,7 +120,7 @@ function Get-RubrikAPIData($endpoint)
         Result      = 'data'
         Filter      = ''
         Success     = '200'
-      } 
+      }
     }
     'Get-RubrikMount'         = @{
       v1 = @{
@@ -132,7 +152,7 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '200'
       }
-    }    
+    }
     'Get-RubrikRequest'       = @{
       v1 = @{
         Description = 'Get details about a vmware vm related async request'
@@ -281,7 +301,7 @@ function Get-RubrikAPIData($endpoint)
         Result      = ''
         Filter      = ''
         Success     = '202'
-      }      
+      }
     }
     'Protect-RubrikDatabase'  = @{
       v1 = @{
@@ -299,7 +319,7 @@ function Get-RubrikAPIData($endpoint)
         Result      = 'data'
         Filter      = ''
         Success     = '200'
-      } 
+      }
     }
     'Protect-RubrikFileset'   = @{
       v1 = @{
@@ -313,7 +333,7 @@ function Get-RubrikAPIData($endpoint)
         Result      = 'data'
         Filter      = ''
         Success     = '200'
-      } 
+      }
     }
     'Protect-RubrikTag'       = @{
       v1 = @{
@@ -339,7 +359,7 @@ function Get-RubrikAPIData($endpoint)
         Result      = ''
         Filter      = ''
         Success     = '200'
-      }      
+      }
     }
     'Remove-RubrikMount'      = @{
       v1 = @{
@@ -366,7 +386,7 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '204'
       }
-    }    
+    }
     'Remove-RubrikSLA'        = @{
       v1 = @{
         Description = 'Delete an SLA Domain from a Rubrik cluster'
@@ -397,7 +417,7 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '200'
       }
-    }    
+    }
     'Set-RubrikBlackout'      = @{
       v1 = @{
         Description = 'Whether to start or stop the global blackout window.'
@@ -457,8 +477,8 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '200'
       }
-    }    
+    }
   } # End of API
-  
+
   return $api.$endpoint
 } # End of function
