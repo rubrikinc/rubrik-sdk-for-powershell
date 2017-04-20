@@ -15,16 +15,13 @@ SYNOPSIS
     
     
 SYNTAX
-    Sync-RubrikAnnotation [[-SLA] <String>] [[-SLAAnnotationName] <String>] [[-BackupAnnotationName] <String>] 
-    [-Server <String>] [-api <String>] [<CommonParameters>]
+    Sync-RubrikAnnotation [[-SLA] <String>] [[-SLAAnnotationName] <String>] [[-BackupAnnotationName] <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
     
     
 DESCRIPTION
     The Sync-RubrikAnnotation cmdlet will comb through all VMs currently being protected by Rubrik.
-    It will then create Custom Attribute buckets for SLA Domain Name(s) and Snapshot counts and assign details for 
-    each VM found in vCenter using Annotations.
-    The attribute names can be specified using this function's parameters or left as the defaults. See the examples 
-    for more information.
+    It will then create Custom Attribute buckets for SLA Domain Name(s) and Snapshot counts and assign details for each VM found in vCenter using Annotations.
+    The attribute names can be specified using this function's parameters or left as the defaults. See the examples for more information.
     Keep in mind that this only displays in the VMware vSphere Thick (C#) client, which is deprecated moving forward.
     
 
@@ -57,8 +54,7 @@ PARAMETERS
     
     PS C:\>Sync-RubrikAnnotation
     
-    This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count 
-    annotations
+    This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count annotations
     using the defaults of "Rubrik_SLA" and "Rubrik_Backups" respectively.
     
     
@@ -68,8 +64,7 @@ PARAMETERS
     
     PS C:\>Sync-RubrikAnnotation -SLA Silver
     
-    This will find all VMs being protected with a Rubrik SLA Domain Name of "Silver" and update their SLA and 
-    snapshot count annotations
+    This will find all VMs being protected with a Rubrik SLA Domain Name of "Silver" and update their SLA and snapshot count annotations
     using the defaults of "Rubrik_SLA" and "Rubrik_Backups" respectively.
     
     
@@ -79,8 +74,7 @@ PARAMETERS
     
     PS C:\>Sync-RubrikAnnotation -SLAAnnotationName 'Backup-Policy' -BackupAnnotationName 'Backup-Snapshots'
     
-    This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count 
-    annotations
+    This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count annotations
     using the custom values of "Backup-Policy" and "Backup-Snapshots" respectively.
     
     
@@ -107,8 +101,7 @@ SYNTAX
     
     
 DESCRIPTION
-    The Sync-RubrikTag cmdlet will query Rubrik for all of the existing SLA Domains, and then create a tag for each 
-    one
+    The Sync-RubrikTag cmdlet will query Rubrik for all of the existing SLA Domains, and then create a tag for each one
     
 
 PARAMETERS

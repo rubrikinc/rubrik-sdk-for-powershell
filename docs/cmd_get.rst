@@ -15,16 +15,13 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>] 
-    [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] 
-    [<CommonParameters>]
+    Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] 
+    [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikDatabase cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of 
-    databases.
-    To narrow down the results, use the host and instance parameters to limit your search to a smaller group of 
-    objects.
+    The Get-RubrikDatabase cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of databases.
+    To narrow down the results, use the host and instance parameters to limit your search to a smaller group of objects.
     Alternatively, supply the Rubrik database ID to return only one specific database.
     
 
@@ -45,8 +42,7 @@ PARAMETERS
         Name of the database host
         
     -PrimaryClusterID <String>
-        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** 
-        as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
         
     -id <String>
         Rubrik's database id value
@@ -70,8 +66,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikDatabase -Name 'DB1' -SLA Gold
     
-    This will return details on all databases named DB1 protected by the Gold SLA Domain on any known host or 
-    instance.
+    This will return details on all databases named DB1 protected by the Gold SLA Domain on any known host or instance.
     
     
     
@@ -80,8 +75,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikDatabase -Name 'DB1' -Host 'Host1' -Instance 'MSSQLSERVER'
     
-    This will return details on a database named "DB1" living on an instance named "MSSQLSERVER" on the host named 
-    "Host1".
+    This will return details on a database named "DB1" living on an instance named "MSSQLSERVER" on the host named "Host1".
     
     
     
@@ -99,12 +93,9 @@ PARAMETERS
     
     PS C:\>Get-RubrikDatabase -id 'MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
     
-    This will return details on a single database matching the Rubrik ID of 
-    "MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
-    Note that the database ID is globally unique and is often handy to know if tracking a specific database for 
-    longer workflows,
-    whereas some values are not unique (such as nearly all hosts having one or more databases named "model") and 
-    more difficult to track by name.
+    This will return details on a single database matching the Rubrik ID of "MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+    Note that the database ID is globally unique and is often handy to know if tracking a specific database for longer workflows,
+    whereas some values are not unique (such as nearly all hosts having one or more databases named "model") and more difficult to track by name.
     
     
     
@@ -126,15 +117,14 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>] 
-    [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
     The Get-RubrikFileset cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of filesets
     A number of parameters exist to help narrow down the specific fileset desired
-    Note that a fileset name is not required; you can use params (such as HostName and SLA) to do lookup matching 
-    filesets
+    Note that a fileset name is not required; you can use params (such as HostName and SLA) to do lookup matching filesets
     
 
 PARAMETERS
@@ -233,27 +223,22 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikFilesetTemplate [[-Name] <String>] [[-PrimaryClusterID] <String>] [[-OperatingSystemType] <String>] 
-    [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikFilesetTemplate [[-Name] <String>] [[-PrimaryClusterID] <String>] [[-OperatingSystemType] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikFilesetTemplate cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of 
-    fileset templates
+    The Get-RubrikFilesetTemplate cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of fileset templates
     
 
 PARAMETERS
     -Name <String>
-        Retrieve fileset templates with a name matching the provided name. The search is performed as a 
-        case-insensitive infix search.
+        Retrieve fileset templates with a name matching the provided name. The search is performed as a case-insensitive infix search.
         
     -PrimaryClusterID <String>
-        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** 
-        as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
         
     -OperatingSystemType <String>
-        Filter the summary information based on the operating system type of the fileset. Accepted values: 
-        'Windows', 'Linux'
+        Filter the summary information based on the operating system type of the fileset. Accepted values: 'Windows', 'Linux'
         
     -id <String>
         The ID of the fileset template
@@ -318,13 +303,10 @@ SYNTAX
     
     
 DESCRIPTION
-    The Get-RubrikMount cmdlet will accept a VM id and return details on any mount operations that are active within 
-    Rubrik
+    The Get-RubrikMount cmdlet will accept a VM id and return details on any mount operations that are active within Rubrik
     Due to the nature of names not being unique
-    Note that this function requires the VM ID value, not the name of the virtual machine, since virtual machine 
-    names are not unique.
-    It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machines you wish to 
-    query, and then pipe the results to Get-RubrikMount.
+    Note that this function requires the VM ID value, not the name of the virtual machine, since virtual machine names are not unique.
+    It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machines you wish to query, and then pipe the results to Get-RubrikMount.
     
 
 PARAMETERS
@@ -368,8 +350,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id
     
-    This will return details for any mounts found using the id value from a virtual machine named "Server1" as a 
-    base reference.
+    This will return details for any mounts found using the id value from a virtual machine named "Server1" as a base reference.
     
     
     
@@ -378,8 +359,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikMount -VMID 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
     
-    This will return details for any mounts found using the virtual machine id of 
-    'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' as a base reference.
+    This will return details for any mounts found using the virtual machine id of 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' as a base reference.
     
     
     
@@ -401,8 +381,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikReport [[-Name] <String>] [[-Type] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] 
-    [<CommonParameters>]
+    Get-RubrikReport [[-Name] <String>] [[-Type] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -587,13 +566,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikSnapshot [-id] <String> [[-CloudState] <Int32>] [-OnDemandSnapshot] [[-Date] <DateTime>] [[-Server] 
-    <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikSnapshot [-id] <String> [[-CloudState] <Int32>] [-OnDemandSnapshot] [[-Date] <DateTime>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for any 
-    protected object
+    The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for any protected object
     The correct API call will be made based on the object id submitted
     Multiple objects can be piped into this function so long as they contain the id required for lookup
     
@@ -627,8 +604,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
     
-    This will return all snapshot (backup) data for the virtual machine id of 
-    "VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345"
+    This will return all snapshot (backup) data for the virtual machine id of "VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345"
     
     
     
@@ -668,15 +644,12 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikUnmanagedObject [[-Name] <String>] [[-Status] <String>] [[-Type] <String>] [[-Server] <String>] 
-    [[-api] <String>] [<CommonParameters>]
+    Get-RubrikUnmanagedObject [[-Name] <String>] [[-Status] <String>] [[-Type] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikUnmanagedObject cmdlet is used to pull details on any unmanaged objects that has been stored in 
-    the cluster
-    In most cases, this will be on-demand snapshots that are associated with an object (virtual machine, fileset, 
-    database, etc.)
+    The Get-RubrikUnmanagedObject cmdlet is used to pull details on any unmanaged objects that has been stored in the cluster
+    In most cases, this will be on-demand snapshots that are associated with an object (virtual machine, fileset, database, etc.)
     
 
 PARAMETERS
@@ -684,8 +657,7 @@ PARAMETERS
         Search object by object name.
         
     -Status <String>
-        Filter by the type of the object. If not specified, will return all objects. Valid attributes are Protected, 
-        Relic and Unprotected
+        Filter by the type of the object. If not specified, will return all objects. Valid attributes are Protected, Relic and Unprotected
         
     -Type <String>
         The type of the unmanaged object. This may be VirtualMachine, MssqlDatabase, LinuxFileset, or WindowsFileset.
@@ -715,8 +687,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikUnmanagedObject -Status 'Unprotected' -Name 'Server1'
     
-    This will return details on any objects named "Server1" that are currently unprotected and have unmanaged 
-    snapshots associated
+    This will return details on any objects named "Server1" that are currently unprotected and have unmanaged snapshots associated
     
     
     
@@ -787,13 +758,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikVM [[-Name] <String>] [-Relic] [-SLA <String>] [-id <String>] [-SLAID <String>] [-Server <String>] 
-    [-api <String>] [<CommonParameters>]
+    Get-RubrikVM [[-Name] <String>] [-Relic] [-SLA <String>] [-id <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Get-RubrikVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of virtual 
-    machines
+    The Get-RubrikVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of virtual machines
     
 
 PARAMETERS

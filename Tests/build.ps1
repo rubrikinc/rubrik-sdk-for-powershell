@@ -40,6 +40,11 @@ else
         throw $_
     }
 
+    # Update the docs
+    Write-Host "Building new documentation" -ForegroundColor Yellow
+    . .\docs\BuildDocs.ps1
+    Write-Host -Object ''
+
     # Publish the new version to the PowerShell Gallery
     Try 
     {

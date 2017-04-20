@@ -15,25 +15,19 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikDatabase -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] 
-    [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikDatabase -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] 
-    [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikDatabase -id <String> [-Inherit] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Protect-RubrikDatabase -id <String> [-Inherit] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
     The Protect-RubrikDatabase cmdlet will update a database's SLA Domain assignment within the Rubrik cluster.
     The SLA Domain contains all policy-driven values needed to protect workloads.
-    Note that this function requires the Database ID value, not the name of the database, since database names are 
-    not unique across hosts.
-    It is suggested that you first use Get-RubrikDatabase to narrow down the one or more database / instance / hosts 
-    to protect, and then pipe the results to Protect-RubrikDatabase.
-    You will be asked to confirm each database you wish to protect, or you can use -Confirm:$False to skip 
-    confirmation checks.
+    Note that this function requires the Database ID value, not the name of the database, since database names are not unique across hosts.
+    It is suggested that you first use Get-RubrikDatabase to narrow down the one or more database / instance / hosts to protect, and then pipe the results to Protect-RubrikDatabase.
+    You will be asked to confirm each database you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
     
 
 PARAMETERS
@@ -81,8 +75,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikDatabase "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -SLA 'Gold' -Confirm:$False
     
-    This will assign the Gold SLA Domain to any database named "DB1" residing on an instance named "MSSQLSERVER" 
-    without asking for confirmation
+    This will assign the Gold SLA Domain to any database named "DB1" residing on an instance named "MSSQLSERVER" without asking for confirmation
     
     
     
@@ -104,22 +97,17 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikFileset -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] 
-    [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikFileset -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikFileset -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] 
-    [-WhatIf] [-Confirm] [<CommonParameters>]
+    Protect-RubrikFileset -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
     The Protect-RubrikFileset cmdlet will update a fileset's SLA Domain assignment within the Rubrik cluster.
     The SLA Domain contains all policy-driven values needed to protect data.
-    Note that this function requires the fileset ID value, not the name of the fileset, since fileset names are not 
-    unique across clusters.
-    It is suggested that you first use Get-RubrikFileset to narrow down the one or more filesets to protect, and 
-    then pipe the results to Protect-RubrikFileset.
-    You will be asked to confirm each fileset you wish to protect, or you can use -Confirm:$False to skip 
-    confirmation checks.
+    Note that this function requires the fileset ID value, not the name of the fileset, since fileset names are not unique across clusters.
+    It is suggested that you first use Get-RubrikFileset to narrow down the one or more filesets to protect, and then pipe the results to Protect-RubrikFileset.
+    You will be asked to confirm each fileset you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
     
 
 PARAMETERS
@@ -164,8 +152,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Gold' -Confirm:$False
     
-    This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" without 
-    asking for confirmation
+    This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" without asking for confirmation
     
     
     
@@ -187,14 +174,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikTag -Tag <String> -Category <String> [-SLA <String>] [-Server <String>] [-api <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Protect-RubrikTag -Tag <String> -Category <String> [-SLA <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikTag -Tag <String> -Category <String> [-DoNotProtect] [-Server <String>] [-api <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Protect-RubrikTag -Tag <String> -Category <String> [-DoNotProtect] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikTag -Tag <String> -Category <String> [-Inherit] [-Server <String>] [-api <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Protect-RubrikTag -Tag <String> -Category <String> [-Inherit] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -288,25 +272,19 @@ SYNOPSIS
     
     
 SYNTAX
-    Protect-RubrikVM -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikVM -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
-    Protect-RubrikVM -id <String> [-Inherit] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Protect-RubrikVM -id <String> [-Inherit] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
     The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster.
     The SLA Domain contains all policy-driven values needed to protect workloads.
-    Note that this function requires the virtual machine ID value, not the name of the virtual machine, since 
-    virtual machine names are not unique across clusters.
-    It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machine to protect, and 
-    then pipe the results to Protect-RubrikVM.
-    You will be asked to confirm each virtual machine you wish to protect, or you can use -Confirm:$False to skip 
-    confirmation checks.
+    Note that this function requires the virtual machine ID value, not the name of the virtual machine, since virtual machine names are not unique across clusters.
+    It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machine to protect, and then pipe the results to Protect-RubrikVM.
+    You will be asked to confirm each virtual machine you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
     
 
 PARAMETERS
@@ -354,8 +332,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikVM "VM1" -SLA Silver | Protect-RubrikVM -SLA 'Gold' -Confirm:$False
     
-    This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver 
-    SLA Domain
+    This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
     without asking for confirmation
     
     

@@ -15,8 +15,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Remove-RubrikMount [-id] <String> [-Force] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] 
-    [<CommonParameters>]
+    Remove-RubrikMount [-id] <String> [-Force] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -90,8 +89,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Remove-RubrikReport [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] 
-    [<CommonParameters>]
+    Remove-RubrikReport [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -216,14 +214,12 @@ SYNOPSIS
     
     
 SYNTAX
-    Remove-RubrikUnmanagedObject [-id] <String> [-Type] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Remove-RubrikUnmanagedObject [-id] <String> [-Type] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
     The Remove-RubrikUnmanagedObject cmdlet is used to remove unmanaged objects that have been stored in the cluster
-    In most cases, this will be on-demand snapshots that are associated with an object (virtual machine, fileset, 
-    database, etc.)
+    In most cases, this will be on-demand snapshots that are associated with an object (virtual machine, fileset, database, etc.)
     
 
 PARAMETERS
@@ -262,8 +258,7 @@ PARAMETERS
     
     PS C:\>Get-RubrikUnmanagedObject -Type 'WindowsFileset' | Remove-RubrikUnmanagedObject -Confirm:$false
     
-    This will remove any unmanaged objects related to filesets applied to Windows Servers and supress confirmation 
-    for each activity
+    This will remove any unmanaged objects related to filesets applied to Windows Servers and supress confirmation for each activity
     
     
     

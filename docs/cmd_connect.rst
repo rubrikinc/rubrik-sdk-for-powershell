@@ -15,13 +15,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Connect-Rubrik [-Server] <String> [[-Username] <String>] [[-Password] <SecureString>] [[-Credential] <Object>] 
-    [<CommonParameters>]
+    Connect-Rubrik [-Server] <String> [[-Username] <String>] [[-Password] <SecureString>] [[-Credential] <Object>] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Connect-Rubrik function is used to connect to the Rubrik RESTful API and supply credentials to the /login 
-    method.
+    The Connect-Rubrik function is used to connect to the Rubrik RESTful API and supply credentials to the /login method.
     Rubrik then returns a unique token to represent the user's credentials for subsequent calls.
     Acquire a token before running other Rubrik cmdlets.
     Note that you can pass a username and password or an entire set of credentials.
@@ -61,8 +59,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Connect-Rubrik -Server 192.168.1.1 -Username admin -Password (ConvertTo-SecureString "secret" 
-    -asplaintext -force)
+    PS C:\>Connect-Rubrik -Server 192.168.1.1 -Username admin -Password (ConvertTo-SecureString "secret" -asplaintext -force)
     
     If you need to pass the password value in the cmdlet directly, use the ConvertTo-SecureString function.
     
@@ -73,8 +70,7 @@ PARAMETERS
     
     PS C:\>Connect-Rubrik -Server 192.168.1.1 -Credential (Get-Credential)
     
-    Rather than passing a username and secure password, you can also opt to submit an entire set of credentials 
-    using the -Credentials parameter.
+    Rather than passing a username and secure password, you can also opt to submit an entire set of credentials using the -Credentials parameter.
     
     
     

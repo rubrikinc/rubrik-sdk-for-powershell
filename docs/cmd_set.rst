@@ -68,20 +68,18 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-RubrikMount [-id] <String> [-PowerOn] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] 
-    [<CommonParameters>]
+    Set-RubrikMount [-id] <String> [-PowerOn <Boolean>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Set-RubrikMount cmdlet is used to send a power on request to mounted virtual machine visible to a Rubrik 
-    cluster.
+    The Set-RubrikMount cmdlet is used to send a power on request to mounted virtual machine visible to a Rubrik cluster.
     
 
 PARAMETERS
     -id <String>
         Mount id
         
-    -PowerOn [<SwitchParameter>]
+    -PowerOn <Boolean>
         Configuration for the change power status request
         
     -Server <String>
@@ -135,8 +133,8 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-RubrikVM [-id] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] [-PauseBackups] 
-    [-UseArrayIntegration] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Set-RubrikVM [-id] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] [[-PauseBackups] <Boolean>] [[-UseArrayIntegration] <Boolean>] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
+    [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -153,12 +151,11 @@ PARAMETERS
     -MaxNestedSnapshots <Int32>
         The number of existing virtual machine snapshots allowed by Rubrik. Choices range from 0 - 4 snapshots.
         
-    -PauseBackups [<SwitchParameter>]
+    -PauseBackups <Boolean>
         Whether to pause or resume backups/archival for this VM.
         
-    -UseArrayIntegration [<SwitchParameter>]
-        User setting to dictate whether to use storage array snaphots for ingest. This setting only makes sense for 
-        VMs where array based ingest is possible.
+    -UseArrayIntegration <Boolean>
+        User setting to dictate whether to use storage array snaphots for ingest. This setting only makes sense for VMs where array based ingest is possible.
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -178,7 +175,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups:$false
+    PS C:\>Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups
     
     This will pause backups on any virtual machine named "Server1"
     
@@ -187,13 +184,10 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-RubrikVM -SLA Platinum | Set-RubrikVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 
-    -UseArrayIntegration
+    PS C:\>Get-RubrikVM -SLA Platinum | Set-RubrikVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 -UseArrayIntegration
     
-    This will find all virtual machines in the Platinum SLA Domain and set their snapshot consistency to crash 
-    consistent (no application quiescence)
-    while also limiting the number of active hypervisor snapshots to 2 and enable storage array (SAN) snapshots for 
-    ingest
+    This will find all virtual machines in the Platinum SLA Domain and set their snapshot consistency to crash consistent (no application quiescence)
+    while also limiting the number of active hypervisor snapshots to 2 and enable storage array (SAN) snapshots for ingest
     
     
     
