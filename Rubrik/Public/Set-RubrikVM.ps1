@@ -32,7 +32,7 @@ function Set-RubrikVM
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Consistency level mandated for this VM
-    [ValidateSet('APP_CONSISTENT', 'CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','INCONSISTENT','VSS_CONSISTENT')]
+    [ValidateSet('AUTOMATIC','APP_CONSISTENT','CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','VSS_CONSISTENT','INCONSISTENT')]
     [Alias('snapshotConsistencyMandate')]
     [String]$SnapConsistency,
     # The number of existing virtual machine snapshots allowed by Rubrik. Choices range from 0 - 4 snapshots.
@@ -73,6 +73,10 @@ function Set-RubrikVM
 
   Process {
 
+    #region one-off
+    $SnapConsistency = $SnapConsistency -replace 'AUTOMATIC','UNKNOWN'
+    #endregion
+    
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
