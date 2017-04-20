@@ -36,6 +36,7 @@ Below is a quick YouTube video that explains how to begin using the module.
    :caption: Command Documentation
 
    cmd_connect
+   cmd_export
    cmd_get
    cmd_move
    cmd_new
