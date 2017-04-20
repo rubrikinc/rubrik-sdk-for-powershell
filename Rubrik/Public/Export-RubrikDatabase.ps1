@@ -3,32 +3,20 @@ function Export-RubrikDatabase
 {
   <#
       .SYNOPSIS
-      Connects to Rubrik exports a database to an SQL instance
+      Connects to Rubrik exports a database to a MSSQL instance
 
       .DESCRIPTION
-      The Export-RubrikDatabase command will accept the following baseline vari
-      in order to request a database export to an SQL instance:
-
-      id (string) - Rubrik identifier of database to be exported
-         (MssqlDatabase:::30290af0-9522-44ef-98ab-b2e2bfb59ccb)
-      targetInstanceId (string)- Rubrik identifier of MSSQL instance to export to
-      targetDatabaseName (string) - Name to give database upon export
-      finishRecovery (switch) - Keep database in recovery mode after export
-      maxDataStreams (int) - Number of parallel streams to copy data
-      timestampMs (int) - Recovery Point desired in the form of Epoch
-                          with Milliseconds
-
+      The Export-RubrikDatabase command will request a database export from a Rubrik Cluster to a MSSQL instance
 
       .NOTES
       Written by Pete Milanese for community usage
       Twitter: @pmilano1
       GitHub: pmilano1
 
+      .EXAMPLE
+      Export-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -targetInstanceId MssqlInstance:::0085b247-e718-4177-869f-e3ae1f7bb503 -targetDatabaseName ReportServer -finishRecovery -maxDataStreams 4 -timestampMs 1492661627000
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
-
-      .EXAMPLE
-      Set-RubrikBlackout -Set [true/false]
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -40,7 +28,7 @@ function Export-RubrikDatabase
     [int]$maxDataStreams,
     # Recovery Point desired in the form of Epoch with Milliseconds
     [int64]$timestampMs,
-    # Keep database in recovery mode after export
+    # Take database out of recovery mode after export
     [Switch]$finishRecovery,
     # Rubrik identifier of MSSQL instance to export to
     [string]$targetInstanceId,
