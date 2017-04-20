@@ -11,26 +11,16 @@ NAME
     Export-RubrikDatabase
     
 SYNOPSIS
-    Connects to Rubrik exports a database to an SQL instance
+    Connects to Rubrik exports a database to a MSSQL instance
     
     
 SYNTAX
-    Export-RubrikDatabase [-id] <String> [[-maxDataStreams] <Int32>] [[-timestampMs] <Int64>] [-finishRecovery] [[-targetInstanceId] <String>] [[-targetDatabaseName] <String>] [[-Server] <String>] [[-api] 
-    <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Export-RubrikDatabase [-id] <String> [[-maxDataStreams] <Int32>] [[-timestampMs] <Int64>] [-finishRecovery] [[-targetInstanceId] <String>] [[-targetDatabaseName] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
+    [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    The Export-RubrikDatabase command will accept the following baseline vari
-    in order to request a database export to an SQL instance:
-    
-    id (string) - Rubrik identifier of database to be exported
-       (MssqlDatabase:::30290af0-9522-44ef-98ab-b2e2bfb59ccb)
-    targetInstanceId (string)- Rubrik identifier of MSSQL instance to export to
-    targetDatabaseName (string) - Name to give database upon export
-    finishRecovery (switch) - Keep database in recovery mode after export
-    maxDataStreams (int) - Number of parallel streams to copy data
-    timestampMs (int) - Recovery Point desired in the form of Epoch
-                        with Milliseconds
+    The Export-RubrikDatabase command will request a database export from a Rubrik Cluster to a MSSQL instance
     
 
 PARAMETERS
@@ -44,7 +34,7 @@ PARAMETERS
         Recovery Point desired in the form of Epoch with Milliseconds
         
     -finishRecovery [<SwitchParameter>]
-        Keep database in recovery mode after export
+        Take database out of recovery mode after export
         
     -targetInstanceId <String>
         Rubrik identifier of MSSQL instance to export to
@@ -70,7 +60,8 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Set-RubrikBlackout -Set [true/false]
+    PS C:\>Export-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -targetInstanceId MssqlInstance:::0085b247-e718-4177-869f-e3ae1f7bb503 -targetDatabaseName ReportServer -finishRecovery -maxDataStreams 4 
+    -timestampMs 1492661627000
     
     
     
@@ -82,6 +73,7 @@ REMARKS
     For more information, type: "get-help Export-RubrikDatabase -detailed".
     For technical information, type: "get-help Export-RubrikDatabase -full".
     For online help, type: "get-help Export-RubrikDatabase -online"
+
 
 
 

@@ -78,6 +78,7 @@ REMARKS
     For technical information, type: "get-help Remove-RubrikMount -full".
     For online help, type: "get-help Remove-RubrikMount -online"
 
+
 Remove-RubrikReport
 -------------------------
 
@@ -149,6 +150,7 @@ REMARKS
     For technical information, type: "get-help Remove-RubrikReport -full".
     For online help, type: "get-help Remove-RubrikReport -online"
 
+
 Remove-RubrikSLA
 -------------------------
 
@@ -202,6 +204,7 @@ REMARKS
     For more information, type: "get-help Remove-RubrikSLA -detailed".
     For technical information, type: "get-help Remove-RubrikSLA -full".
     For online help, type: "get-help Remove-RubrikSLA -online"
+
 
 Remove-RubrikUnmanagedObject
 -------------------------
@@ -277,6 +280,7 @@ REMARKS
     For more information, type: "get-help Remove-RubrikUnmanagedObject -detailed".
     For technical information, type: "get-help Remove-RubrikUnmanagedObject -full".
     For online help, type: "get-help Remove-RubrikUnmanagedObject -online"
+
 
 
 

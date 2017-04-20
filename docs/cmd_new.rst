@@ -15,8 +15,8 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikMount [-id] <String> [[-HostID] <String>] [[-MountName] <String>] [[-DatastoreName] <String>] [[-DisableNetwork] <Boolean>] [-RemoveNetworkDevices] [-PowerOn] [[-Server] <String>] [[-api] 
-    <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikMount [-id] <String> [[-HostID] <String>] [[-MountName] <String>] [[-DatastoreName] <String>] [[-DisableNetwork] <Boolean>] [-RemoveNetworkDevices] [-PowerOn] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
+    [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -98,6 +98,7 @@ REMARKS
     For technical information, type: "get-help New-RubrikMount -full".
     For online help, type: "get-help New-RubrikMount -online"
 
+
 New-RubrikSLA
 -------------------------
 
@@ -109,8 +110,8 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] <Int32>] [[-DailyFrequency] <Int32>] [[-DailyRetention] <Int32>] [[-MonthlyFrequency] <Int32>] [[-MonthlyRetention] <Int32>] 
-    [[-YearlyFrequency] <Int32>] [[-YearlyRetention] <Int32>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] <Int32>] [[-DailyFrequency] <Int32>] [[-DailyRetention] <Int32>] [[-MonthlyFrequency] <Int32>] [[-MonthlyRetention] <Int32>] [[-YearlyFrequency] 
+    <Int32>] [[-YearlyRetention] <Int32>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -186,6 +187,7 @@ REMARKS
     For technical information, type: "get-help New-RubrikSLA -full".
     For online help, type: "get-help New-RubrikSLA -online"
 
+
 New-RubrikSnapshot
 -------------------------
 
@@ -259,6 +261,7 @@ REMARKS
     For more information, type: "get-help New-RubrikSnapshot -detailed".
     For technical information, type: "get-help New-RubrikSnapshot -full".
     For online help, type: "get-help New-RubrikSnapshot -online"
+
 
 
 

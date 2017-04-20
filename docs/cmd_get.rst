@@ -15,8 +15,8 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] 
-    [[-api] <String>] [<CommonParameters>]
+    Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
@@ -106,6 +106,7 @@ REMARKS
     For technical information, type: "get-help Get-RubrikDatabase -full".
     For online help, type: "get-help Get-RubrikDatabase -online"
 
+
 Get-RubrikFileset
 -------------------------
 
@@ -117,8 +118,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] 
-    [<CommonParameters>]
+    Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -212,6 +212,7 @@ REMARKS
     For technical information, type: "get-help Get-RubrikFileset -full".
     For online help, type: "get-help Get-RubrikFileset -online"
 
+
 Get-RubrikFilesetTemplate
 -------------------------
 
@@ -287,6 +288,7 @@ REMARKS
     For more information, type: "get-help Get-RubrikFilesetTemplate -detailed".
     For technical information, type: "get-help Get-RubrikFilesetTemplate -full".
     For online help, type: "get-help Get-RubrikFilesetTemplate -online"
+
 
 Get-RubrikMount
 -------------------------
@@ -370,6 +372,7 @@ REMARKS
     For technical information, type: "get-help Get-RubrikMount -full".
     For online help, type: "get-help Get-RubrikMount -online"
 
+
 Get-RubrikReport
 -------------------------
 
@@ -443,6 +446,7 @@ REMARKS
     For technical information, type: "get-help Get-RubrikReport -full".
     For online help, type: "get-help Get-RubrikReport -online"
 
+
 Get-RubrikRequest
 -------------------------
 
@@ -492,6 +496,7 @@ REMARKS
     For more information, type: "get-help Get-RubrikRequest -detailed".
     For technical information, type: "get-help Get-RubrikRequest -full".
     For online help, type: "get-help Get-RubrikRequest -online"
+
 
 Get-RubrikSLA
 -------------------------
@@ -554,6 +559,7 @@ REMARKS
     For more information, type: "get-help Get-RubrikSLA -detailed".
     For technical information, type: "get-help Get-RubrikSLA -full".
     For online help, type: "get-help Get-RubrikSLA -online"
+
 
 Get-RubrikSnapshot
 -------------------------
@@ -633,6 +639,7 @@ REMARKS
     For technical information, type: "get-help Get-RubrikSnapshot -full".
     For online help, type: "get-help Get-RubrikSnapshot -online"
 
+
 Get-RubrikUnmanagedObject
 -------------------------
 
@@ -698,6 +705,7 @@ REMARKS
     For technical information, type: "get-help Get-RubrikUnmanagedObject -full".
     For online help, type: "get-help Get-RubrikUnmanagedObject -online"
 
+
 Get-RubrikVersion
 -------------------------
 
@@ -746,6 +754,7 @@ REMARKS
     For more information, type: "get-help Get-RubrikVersion -detailed".
     For technical information, type: "get-help Get-RubrikVersion -full".
     For online help, type: "get-help Get-RubrikVersion -online"
+
 
 Get-RubrikVM
 -------------------------
@@ -825,6 +834,7 @@ REMARKS
     For more information, type: "get-help Get-RubrikVM -detailed".
     For technical information, type: "get-help Get-RubrikVM -full".
     For online help, type: "get-help Get-RubrikVM -online"
+
 
 
 

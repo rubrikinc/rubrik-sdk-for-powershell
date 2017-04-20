@@ -57,6 +57,7 @@ REMARKS
     For technical information, type: "get-help Set-RubrikBlackout -full".
     For online help, type: "get-help Set-RubrikBlackout -online"
 
+
 Set-RubrikMount
 -------------------------
 
@@ -122,6 +123,7 @@ REMARKS
     For technical information, type: "get-help Set-RubrikMount -full".
     For online help, type: "get-help Set-RubrikMount -online"
 
+
 Set-RubrikVM
 -------------------------
 
@@ -133,8 +135,8 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-RubrikVM [-id] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] [[-PauseBackups] <Boolean>] [[-UseArrayIntegration] <Boolean>] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Set-RubrikVM [-id] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>] [[-PauseBackups] <Boolean>] [[-UseArrayIntegration] <Boolean>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
@@ -197,6 +199,7 @@ REMARKS
     For more information, type: "get-help Set-RubrikVM -detailed".
     For technical information, type: "get-help Set-RubrikVM -full".
     For online help, type: "get-help Set-RubrikVM -online"
+
 
 
 
