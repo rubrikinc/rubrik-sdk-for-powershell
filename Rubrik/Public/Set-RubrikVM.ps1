@@ -32,7 +32,7 @@ function Set-RubrikVM
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Consistency level mandated for this VM
-    [ValidateSet('AUTOMATIC','APP_CONSISTENT','CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','VSS_CONSISTENT','INCONSISTENT')]
+    [ValidateSet('AUTOMATIC','APP_CONSISTENT','CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','VSS_CONSISTENT','INCONSISTENT','UNKNOWN')]
     [Alias('snapshotConsistencyMandate')]
     [String]$SnapConsistency,
     # The number of existing virtual machine snapshots allowed by Rubrik. Choices range from 0 - 4 snapshots.
