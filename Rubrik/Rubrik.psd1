@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '3.1.0.19'
+ModuleVersion = '3.1.0.20'
 
 # ID used to uniquely identify this module
 GUID = 'a4cb0e3e-b1fe-4da8-9c75-d445e5f96cfb'
@@ -112,7 +112,7 @@ PrivateData = @{
         ProjectUri = 'https://github.com/rubrikinc/PowerShell-Module'
 
         # A URL to an icon representing this module.
-        # IconUri = ''
+        IconUri = 'http://i.imgur.com/Zbdd4Ko.jpg'
 
         # ReleaseNotes of this module
         # ReleaseNotes = ''
