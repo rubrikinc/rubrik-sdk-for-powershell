@@ -157,6 +157,7 @@ function Connect-Rubrik
 
     Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
     $global:rubrikConnection = @{
+      id     = $content.id
       userId = $content.userId
       token  = $content.token
       server = $Server

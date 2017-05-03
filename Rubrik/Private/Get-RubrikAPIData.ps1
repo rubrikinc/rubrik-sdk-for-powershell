@@ -38,6 +38,18 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Disconnect-Rubrik'                   = @{
+      v1 = @{
+        Description = 'Closes a user session and invalidates the session token'
+        URI         = '/api/v1/session/{id}'
+        Method      = 'Delete'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '204'
+      }
+    }    
     'Export-RubrikDatabase'      = @{
       v1 = @{
         Description = 'Export MSSQL Database from Rubrik to Destination Instance.'
