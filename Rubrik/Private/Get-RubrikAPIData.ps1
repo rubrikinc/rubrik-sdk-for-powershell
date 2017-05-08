@@ -58,6 +58,20 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
+    'Export-RubrikReport'       = @{
+      v1 = @{
+        Description = 'Get the link to a CSV file for a report.'
+        URI         = '/api/internal/report/{id}/download_csv'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          timezone_offset = 'timezone_offset'
+        }
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
+      }
+    }
     'Get-RubrikDatabase'      = @{
       v1 = @{
         Description = 'Returns a list of summary information for Microsoft SQL databases.'
