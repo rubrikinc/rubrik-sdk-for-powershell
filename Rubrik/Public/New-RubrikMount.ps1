@@ -1,94 +1,93 @@
 #Requires -Version 3
 function New-RubrikMount
 {
-    <#  
-            .SYNOPSIS
-            Create a new Live Mount from a protected VM
-            .DESCRIPTION
-            The New-RubrikMount cmdlet is used to create a Live Mount (clone) of a protected VM and run it in an existing vSphere environment.
-            .NOTES
-            Written by Chris Wahl for community usage
-            Twitter: @ChrisWahl
-            GitHub: chriswahl
-            .LINK
-            https://github.com/rubrikinc/PowerShell-Module
-            .EXAMPLE
-            New-RubrikMount -VM 'Server1' -Date '05/04/2015 08:00'
-            This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older than 08:00 AM on May 4th, 2015
-            .EXAMPLE
-            New-RubrikMount -VM 'Server1'
-            This will create a new Live Mount for the virtual machine named Server1 based on the first snapshot that is equal to or older the current time (now)
-    #>
+  <#  
+      .SYNOPSIS
+      Create a new Live Mount from a protected VM
+      
+      .DESCRIPTION
+      The New-RubrikMount cmdlet is used to create a Live Mount (clone) of a protected VM and run it in an existing vSphere environment.
+      
+      .NOTES
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
+      
+      .LINK
+      https://github.com/rubrikinc/PowerShell-Module
 
-    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'Low')]
-    Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine to mount',ValueFromPipeline = $true)]
-        [Alias('Name')]
-        [ValidateNotNullorEmpty()]
-        [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Backup date in your local clock format',ValueFromPipeline = $true)]
-        [ValidateNotNullorEmpty()]
-        [String]$Date,
-        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Rubrik FQDN or IP address')]
-        [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikConnection.server
-    )
+      .EXAMPLE
+      New-RubrikMount -id '11111111-2222-3333-4444-555555555555'
+      This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555"
+      The original virtual machine's name will be used along with a date and index number suffix
+      The virtual machine will NOT be powered on upon completion of the mount operation
+      
+      .EXAMPLE
+      New-RubrikMount -id '11111111-2222-3333-4444-555555555555' -MountName 'Mount1' -PowerOn -RemoveNetworkDevices
+      This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555" and name the mounted virtual machine "Mount1"
+      The virtual machine will be powered on upon completion of the mount operation but without any virtual network adapters
 
-    Process {
+      .EXAMPLE
+      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/01/2017 01:00' | New-RubrikMount -MountName 'Mount1' -DisableNetwork
+      This will create a new mount based on the closet snapshot found on March 1st, 2017 @ 01:00 AM and name the mounted virtual machine "Mount1"
+      The virtual machine will NOT be powered on upon completion of the mount operation
 
-        TestRubrikConnection
+  #>
 
-        if (!$Date) 
-        {
-            Write-Verbose -Message 'No date entered. Taking current time.'
-            $Date = Get-Date
-        }
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  Param(
+    # Rubrik id of the snapshot
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
+    # ID of host for the mount to use 
+    [String]$HostID,
+    # Name of the mounted VM 
+    [Alias('vmName')]
+    [String]$MountName,
+    # Name of the data store to use/create on the host 
+    [String]$DatastoreName,
+    # Whether the network should be disabled on mount.This should be set true to avoid ip conflict in case of static IPs. 
+    [Bool]$DisableNetwork,
+    # Whether the network devices should be removed on mount.
+    [Switch]$RemoveNetworkDevices,
+    # Whether the VM should be powered on after mount.
+    [Switch]$PowerOn,
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [String]$api = $global:RubrikConnection.api
+  )
 
-        Write-Verbose -Message 'Query Rubrik for the list of protected VM details'
-        $hostid = (Get-RubrikVM -VM $VM).hostId
+  Begin {
 
-        Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
-        $snapshots = Get-RubrikSnapshot -VM $VM
-
-        Write-Verbose -Message 'Comparing backup dates to user date'
-        $Date = ConvertFromLocalDate -Date $Date
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
+    Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-        Write-Verbose -Message 'Finding snapshots that match the date value'
-        foreach ($_ in $snapshots)
-        {
-            if (([datetime]$_.date) -le ($Date) -eq $true)
-            {
-                $vmsnapid = $_.id
-                Write-Verbose -Message "Found matching snapshot with ID $vmsnapid"
-                break
-            }
-        }
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
+  
+  }
 
-        Write-Verbose -Message 'Creating a Live Mount'
-        $uri = 'https://'+$Server+'/job/type/mount'
+  Process {
 
-        $body = @{
-            snapshotId     = $vmsnapid
-            hostId         = $hostid
-            disableNetwork = $true
-        }
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-        try 
-        {
-            if ($PSCmdlet.ShouldProcess($VM,'Creating a new Live Mount'))
-            {
-                $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
-                if ($r.StatusCode -ne '200') 
-                {
-                    throw 'Did not receive successful status code from Rubrik for Live Mount request'
-                }
-                return ($($r.Content)).Replace('"','')
-            }
-        }
-        catch 
-        {
-            throw $_
-        }
+    return $result
 
-    } # End of process
+  } # End of process
 } # End of function

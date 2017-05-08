@@ -1,59 +1,68 @@
 ﻿#Requires -Version 3
 function Remove-RubrikSLA 
 {
-    <#  
-            .SYNOPSIS
-            Connects to Rubrik and removes SLA Domains
-            .DESCRIPTION
-            The Remove-RubrikSLA cmdlet will request that the Rubrik API delete an SLA Domain. The SLA Domain must have zero protected VMs in order to be successful.
-            .NOTES
-            Written by Chris Wahl for community usage
-            Twitter: @ChrisWahl
-            GitHub: chriswahl
-            .LINK
-            https://github.com/rubrikinc/PowerShell-Module
-            .EXAMPLE
-            Remove-RubrikSLA -SLA 'Gold'
-            This will attempt to remove the Gold SLA Domain from Rubrik if there are no VMs being protected by the policy
-    #>
+  <#  
+      .SYNOPSIS
+      Connects to Rubrik and removes SLA Domains
+            
+      .DESCRIPTION
+      The Remove-RubrikSLA cmdlet will request that the Rubrik API delete an SLA Domain.
+      The SLA Domain must have zero protected objects (VMs, filesets, databases, etc.) in order to be successful.
+            
+      .NOTES
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
+            
+      .LINK
+      https://github.com/rubrikinc/PowerShell-Module
+            
+      .EXAMPLE
+      Get-RubrikSLA -SLA 'Gold' | Remove-RubrikSLA
+      This will attempt to remove the Gold SLA Domain from Rubrik if there are no objects being protected by the policy
+  #>
 
-    [CmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'SLA Domain Name')]
-        [ValidateNotNullorEmpty()]
-        [String]$SLA,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
-        [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikConnection.server
-    )
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  Param(
+    # SLA Domain id
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [String]$api = $global:RubrikConnection.api
+  )
 
-    Process {
+  Begin {
 
-        TestRubrikConnection
-
-        Write-Verbose -Message 'Gather the Rubrik SLA Domain ID value'
-        [array]$slaid = Get-RubrikSLA -SLA $SLA
-
-        Write-Verbose -Message 'Determining if SLA Domain has zero VMs'
-        if ($slaid.numVms -ne 0) 
-        {
-            throw "SLA Domain has $($slaid.numVms) VMs protected - remove them and retry."
-        }
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
+    Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-        foreach ($_ in $slaid.id) {
-        Write-Verbose -Message 'Build the URI'
-        $uri = 'https://'+$Server+'/slaDomain/'+$_
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
+  
+  }
 
-        Write-Verbose -Message 'Submit the request'
-        try 
-        {
-            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Delete
-        }
-        catch 
-        {
-            throw $_
-        }
-        }
+  Process {
 
-    } # End of process
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+
+    return $result
+
+  } # End of process
 } # End of function

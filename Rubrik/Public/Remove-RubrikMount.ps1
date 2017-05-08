@@ -1,145 +1,77 @@
 ﻿#Requires -Version 3
 function Remove-RubrikMount
 {
-    <#  
-            .SYNOPSIS
-            Connects to Rubrik and removes one or more instant mounts
-            .DESCRIPTION
-            The Remove-RubrikMount cmdlet is used to request the deletion of one or more instant mounts
-            .NOTES
-            Written by Chris Wahl for community usage
-            Twitter: @ChrisWahl
-            GitHub: chriswahl
-            .LINK
-            https://github.com/rubrikinc/PowerShell-Module
-            .EXAMPLE
-            Remove-RubrikMount -VM "Prod-SQL"
-            This will remove any Instant Mounts found for a VM matching the name "Prod-SQL" in vSphere.
-            .EXAMPLE
-            Remove-RubrikMount -VM "Prod-SQL" -MountID 4
-            This will remove Instant Mount ID #4 from the VM matching the name "Prod-SQL" in vSphere. The Mount ID is appended to the end of the Instant Mount name.
-            .EXAMPLE
-            Remove-RubrikMount -RemoveAll
-            This will remove all Instant Mounts found for the Rubrik Cluster, and is handy as a way to "refresh" a test/dev environment.
-    #>
+  <#  
+      .SYNOPSIS
+      Connects to Rubrik and removes one or more live mounts
+            
+      .DESCRIPTION
+      The Remove-RubrikMount cmdlet is used to request the deletion of one or more instant mounts
+            
+      .NOTES
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
+            
+      .LINK
+      https://github.com/rubrikinc/PowerShell-Module
 
-    [CmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'Virtual Machine to inspect for mounts',ValueFromPipeline = $true)]
-        [Alias('Name')]
-        [ValidateNotNullorEmpty()]
-        [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'The specific mount ID to remove',ValueFromPipeline = $true)]
-        [ValidateNotNullorEmpty()]
-        [Int]$MountID,
-        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'The Rubrik ID value of the mount',ValueFromPipeline = $true)]
-        [ValidateNotNullorEmpty()]
-        [String]$RubrikID,
-        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Remove all instant mounts for all VMs',ValueFromPipeline = $true)]
-        [ValidateNotNullorEmpty()]
-        [Switch]$RemoveAll,
-        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
-        [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikConnection.server
-    )
+      .EXAMPLE
+      Remove-RubrikMount -id '11111111-2222-3333-4444-555555555555'
+      This will remove mount id "11111111-2222-3333-4444-555555555555".
+            
+      .EXAMPLE
+      Get-RubrikMount | Remove-RubrikMount
+      This will remove all mounted virtual machines.
 
-    Process {
+      .EXAMPLE
+      Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id | Remove-RubrikMount
+      This will remove any mounts found using the virtual machine named "Server1" as a base reference.
+  #>
 
-        TestRubrikConnection
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  Param(
+    # The Rubrik ID value of the mount
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
+    # Force unmount to deal with situations where host has been moved.
+    [Switch]$Force,
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [String]$api = $global:RubrikConnection.api
+  )
 
-        Write-Verbose -Message 'Validating user input of MountID'
-        if ($MountID -lt 0) 
-        {
-            throw 'Only positive integers are allowed for MountID'
-        }        
-        elseif ($MountID -eq '') 
-        {
-            $MountID = -1
-        }
-        Write-Verbose -Message "MountID set to $MountID"
+    Begin {
 
-        Write-Verbose -Message 'Validating user input of VM selection'        
-        if ($VM)
-        {
-            try
-            {
-                Write-Verbose -Message "Gathering mount details for $VM"
-                [array]$mounts = Get-RubrikMount -VM $VM
-                if (!$mounts)
-                {
-                    throw "No mounts found for $VM"
-                }
-                else 
-                {
-                    Write-Verbose -Message "Mounts found for $VM"
-                }
-            }
-            catch
-            {
-                throw $_
-            }
-        }
-        elseif ($RemoveAll)
-        {
-            try
-            {
-                Write-Verbose -Message 'Gathering mount details for all VMs'
-                [array]$mounts = Get-RubrikMount -VM *
-                if (!$mounts)
-                {
-                    throw 'No mounts found for any VMs'
-                }
-                else 
-                {
-                    Write-Verbose -Message 'Mounts found for all VMs'
-                }
-            }
-            catch
-            {
-                throw $_
-            }
-        }
-        elseif ($RubrikID)
-        {
-            Write-Verbose -Message "Using a specific Rubrik Mount ID of $RubrikID"
-            [array]$mounts = @{
-                MountName = 'Manual_ID_Entry'
-                RubrikID  = $RubrikID
-            }
-        }
-        else 
-        {
-            throw 'Use -VM to select a single VM, -RubrikID to specify a Rubrik Mount ID value, or -RemoveAll to remove mounts from all VMs'
-        }
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
+    Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
+        
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
+  
+  }
 
-        $uri = 'https://'+$Server+'/job/type/unmount'
+  Process {
 
-        foreach ($_ in $mounts)
-        {
-            $body = @{
-                mountId = $_.id
-                force   = 'false'
-            }
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)        
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-            Write-Verbose -Message 'Determing the MountID of the Instant Mount'
-            if ($MountID -eq ($_.virtualMachine.name.split(' ')[-1]) -or $MountID -eq -1)
-            {
-                try 
-                {
-                    Write-Verbose -Message "Removing mount with ID $($_.RubrikID)"
-                    $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method POST -Body (ConvertTo-Json -InputObject $body)
-                    if ($r.StatusCode -ne '200') 
-                    {
-                        throw 'Did not receive successful status code from Rubrik for Mount removal request'
-                    }
-                    Write-Verbose -Message "Success: $($r.Content)"
-                }
-                catch 
-                {
-                    throw $_
-                }
-            }
-        }
+    return $result
 
-    } # End of process
+  } # End of process
 } # End of function

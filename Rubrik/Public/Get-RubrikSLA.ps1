@@ -1,97 +1,75 @@
 ﻿#Requires -Version 3
 function Get-RubrikSLA 
 {
-    <#  
-            .SYNOPSIS
-            Connects to Rubrik and retrieves details on SLA Domain(s)
-            .DESCRIPTION
-            The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains. Information on each
-            domain will be reported to the console.
-            .NOTES
-            Written by Chris Wahl for community usage
-            Twitter: @ChrisWahl
-            GitHub: chriswahl
-            .LINK
-            https://github.com/rubrikinc/PowerShell-Module
-            .EXAMPLE
-            Get-RubrikSLA
-            Will return all known SLA Domains
-            .EXAMPLE
-            Get-RubrikSLA -SLA 'Gold'
-            Will return details on the SLA Domain named Gold
-    #>
+  <#  
+      .SYNOPSIS
+      Connects to Rubrik and retrieves details on SLA Domain(s)
+            
+      .DESCRIPTION
+      The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains.
+      Information on each domain will be reported to the console.
+            
+      .NOTES
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
+            
+      .LINK
+      https://github.com/rubrikinc/PowerShell-Module
+            
+      .EXAMPLE
+      Get-RubrikSLA
+      Will return all known SLA Domains
+            
+      .EXAMPLE
+      Get-RubrikSLA -Name 'Gold'
+      Will return details on the SLA Domain named Gold
+  #>
 
-    [CmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'SLA Domain Name')]
-        [ValidateNotNullorEmpty()]
-        [String]$SLA,
-        [Parameter(Mandatory = $false, Position = 1, HelpMessage = 'Specifies if you want to export your SLA Domain configuration')]
-        [Switch]$EnableExport,
-        [Parameter(Mandatory = $false, Position = 2,HelpMessage = 'Full path of the file you want your SLA Domains configurations to be exported to. Default is the current user homedir')]
-        [ValidateNotNullOrEmpty()]
-        [String]$ExportPath,
-        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Rubrik FQDN or IP address')]
-        [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikConnection.server
-    )
+  [CmdletBinding()]
+  Param(
+    # Name of the SLA Domain
+    [Alias('SLA')]
+    [String]$Name,
+    # SLA Domain id
+    [Parameter(ValueFromPipelineByPropertyName = $true)]    
+    [String]$id, 
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [String]$api = $global:RubrikConnection.api
+  )
 
-    Process {
+  Begin {
 
-        TestRubrikConnection
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
+    Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
         
-        Write-Verbose -Message 'Retrieving SLA Domains from Rubrik'
-        $uri = 'https://'+$Server+'/slaDomain'
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
+  
+  }
 
-        try 
-        {
-            $result = ConvertFrom-Json -InputObject (Invoke-WebRequest -Uri $uri -Headers $Header -Method Get).Content
-			
-            if ($EnableExport -and !$ExportPath)
-            {
-                $ExportPath = $env:userprofile + '\Rubrik_SLADomain_Configuration_' + $(Get-Date -Format o | ForEach-Object -Process {
-                        $_ -replace ':', '.'
-                }) + '.json'
-            }
-        }
-        catch
-        {
-            throw $_
-        }
-		
-        Write-Verbose -Message 'Returning the SLA Domain results'
-        if ($SLA)
-        {
-            $SLAresult = $result |
-            Where-Object -FilterScript {
-                $_.name -match $SLA
-            }
-        }
-        else
-        {
-            $SLAresult = $result
-        }
+  Process {
 
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-        if ($EnableExport)
-        {
-            Write-Verbose -Message "Exporting the SLA Domain results to $ExportPath"
-            try
-            {
-                $SLAresult |
-                ConvertTo-Json |
-                Out-File $ExportPath
-                Write-Warning -Message "Exported the SLA Domain results to $ExportPath"
-            }
-            catch
-            {
-                throw $_
-            }
-        }
-        else 
-        {
-            return $SLAresult
-        }
-		
-    } # End of process
+    return $result
+
+  } # End of process
 } # End of function

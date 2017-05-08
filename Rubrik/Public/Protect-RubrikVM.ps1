@@ -1,106 +1,92 @@
 ﻿#Requires -Version 3
 function Protect-RubrikVM
 {
-    <#
-            .SYNOPSIS
-            Connects to Rubrik and assigns an SLA to a virtual machine
-            .DESCRIPTION
-            The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values needed to protect workloads.
-            .NOTES
-            Written by Chris Wahl for community usage
-            Twitter: @ChrisWahl
-            GitHub: chriswahl
-            .LINK
-            https://github.com/rubrikinc/PowerShell-Module
-            .EXAMPLE
-            Protect-RubrikVM -VM 'Server1' -SLA 'Gold'
-            This will assign the Gold SLA Domain to a VM named Server1
-            .EXAMPLE
-            Protect-RubrikVM -VM 'Server1' -Unprotect
-            This will remove the SLA Domain assigned to Server1, thus rendering it unprotected
-    #>
+  <#
+      .SYNOPSIS
+      Connects to Rubrik and assigns an SLA to a virtual machine
+            
+      .DESCRIPTION
+      The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster.
+      The SLA Domain contains all policy-driven values needed to protect workloads.
+      Note that this function requires the virtual machine ID value, not the name of the virtual machine, since virtual machine names are not unique across clusters.
+      It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machine to protect, and then pipe the results to Protect-RubrikVM.
+      You will be asked to confirm each virtual machine you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
+            
+      .NOTES
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
+            
+      .LINK
+      https://github.com/rubrikinc/PowerShell-Module
+            
+      .EXAMPLE
+      Get-RubrikVM "VM1" | Protect-RubrikVM -SLA 'Gold'
+      This will assign the Gold SLA Domain to any virtual machine named "VM1"
 
-    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact='High')]
-    Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
-        [Alias('Name')]
-        [ValidateNotNullorEmpty()]
-        [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'The SLA Domain in Rubrik',ValueFromPipeline = $true)]
-        [ValidateNotNullorEmpty()]
-        [String]$SLA,
-        [Parameter(Mandatory = $false,Position = 2,HelpMessage = 'Removes the SLA Domain assignment',ValueFromPipeline = $true)]
-        [ValidateNotNullorEmpty()]
-        [Switch]$DoNotProtect,
-        [Parameter(Mandatory = $false,Position = 3,HelpMessage = 'Inherits the SLA Domain assignment from a parent object',ValueFromPipeline = $true)]
-        [ValidateNotNullorEmpty()]
-        [Switch]$Inherit,
-        [Parameter(Mandatory = $false,Position = 4,HelpMessage = 'Rubrik FQDN or IP address')]
-        [ValidateNotNullorEmpty()]
-        [String]$Server = $global:rubrikConnection.server
-    )
+      .EXAMPLE
+      Get-RubrikVM "VM1" -SLA Silver | Protect-RubrikVM -SLA 'Gold' -Confirm:$False
+      This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
+      without asking for confirmation
+  #>
 
-    Process {
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  Param(
+    # Virtual machine ID
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
+    # The SLA Domain in Rubrik
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
+    [String]$SLA,
+    # Removes the SLA Domain assignment
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
+    [Switch]$DoNotProtect,
+    # Inherits the SLA Domain assignment from a parent object
+    [Parameter(ParameterSetName = 'SLA_Inherit')]
+    [Switch]$Inherit,
+    # SLA id value
+    [Alias('configuredSlaDomainId')]
+    [String]$SLAID,    
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [String]$api = $global:RubrikConnection.api
+  )
 
-        TestRubrikConnection
+  Begin {
 
-        Write-Verbose -Message 'Matching the SLA input to a valid Rubrik SLA Domain'
-        try
-        {
-            if ($DoNotProtect)
-            {
-                Write-Verbose -Message 'Setting VM protection level to DO NOT PROTECT (block inheritence)'
-                $slaMatch = @{}
-                $slaMatch.id = 'UNPROTECTED'
-                $slaMatch.name = 'Unprotected'
-            }
-            elseif ($Inherit)
-            {
-                Write-Verbose -Message 'Setting VM protection level to INHERIT (from parent object)'
-                $slaMatch = @{}
-                $slaMatch.id = 'INHERIT'
-                $slaMatch.name = 'Inherit'
-            }
-            else
-            {
-                $slaMatch = Get-RubrikSLA -SLA $SLA
-            }
-            if ($slaMatch -eq $null)
-            {
-                throw 'Use either SLA, DoNotProtect, or Inherit to change the protection status of the VM'
-            }
-        }
-        catch
-        {
-            throw $_
-        }
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
+    Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
+        
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
+  
+  }
 
-        Write-Verbose -Message 'Gathering VM ID value from Rubrik'
-        $vmid = (Get-RubrikVM -VM $VM).id
+  Process {
 
-        Write-Verbose -Message 'Updating SLA Domain for the requested VM'
-        $uri = 'https://'+$Server+'/vm/'+$vmid
-        $body = @{
-            slaDomainId = $slaMatch.id
-        }
+    #region One-off
+    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    #endregion One-off
 
-        try
-        {
-            if ($PSCmdlet.ShouldProcess($VM,"Assign $SLA SLA Domain")){
-            $r = Invoke-WebRequest -Uri $uri -Headers $header -Body (ConvertTo-Json -InputObject $body) -Method Patch
-            if ($r.StatusCode -ne '200')
-            {
-                throw $r.StatusDescription
-            }
-            $result = (ConvertFrom-Json -InputObject $r.Content)
-            Write-Verbose -Message "$($result.name) set to $($result.slaDomain.name) SLA Domain"
-            }
-        }
-        catch
-        {
-            throw $_
-        }
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
+    return $result
 
-    } # End of process
+  } # End of process
 } # End of function

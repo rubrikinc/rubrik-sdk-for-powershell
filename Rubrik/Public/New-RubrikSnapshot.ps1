@@ -1,58 +1,99 @@
 #Requires -Version 3
 function New-RubrikSnapshot
 {
-    <#  
-            .SYNOPSIS
-            Takes a Rubrik snapshot of a virtual machine
-            .DESCRIPTION
-            The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific virtual machine. This will be taken by Rubrik and stored in the VM's chain of snapshots.
-            .NOTES
-            Written by Chris Wahl for community usage
-            Twitter: @ChrisWahl
-            GitHub: chriswahl
-            .LINK
-            https://github.com/rubrikinc/PowerShell-Module
-            .EXAMPLE
-            New-RubrikSnapshot -VM 'Server1'
-            This will trigger an on-demand backup for the virtual machine named Server1
-    #>
+  <#  
+      .SYNOPSIS
+      Takes an on-demand Rubrik snapshot of a protected object
 
-    [CmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine to backup',ValueFromPipeline = $true)]
-        [Alias('Name')]
-        [ValidateNotNullorEmpty()]
-        [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
-        [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikConnection.server
-    )
+      .DESCRIPTION
+      The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific object (virtual machine, database, fileset, etc.)
 
-    Process {
+      .NOTES
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
 
-        TestRubrikConnection
+      .LINK
+      https://github.com/rubrikinc/PowerShell-Module
 
-        Write-Verbose -Message 'Gathering VM ID value from Rubrik'
-        $vmid = (Get-RubrikVM -VM $VM).id
+      .EXAMPLE
+      Get-RubrikVM 'Server1' | New-RubrikSnapshot
+      This will trigger an on-demand backup for any virtual machine named "Server1"
 
-        Write-Verbose -Message 'Submit the request for an On-Demand Backup'
-        $uri = 'https://'+$Server+'/job/type/backup'
+      .EXAMPLE
+      Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot 
+      This will trigger an on-demand backup for any fileset named "C_Drive"
 
-        $body = @{
-            vmId               = $vmid
-            isOnDemandSnapshot = 'true'
-        }
+      .EXAMPLE
+      Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull
+      This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
+  #>
 
-        try 
-        {
-            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Post -Body (ConvertTo-Json -InputObject $body)
-            Write-Verbose -Message $r.Content
-        }
-        catch 
-        {
-            throw $_
-        }
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  Param(
+    # Rubrik's id of the object
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
+    # Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
+    [Alias('forceFullSnapshot')]
+    [Switch]$ForceFull,
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [String]$api = $global:RubrikConnection.api
+  )
 
+  Begin {
 
-    } # End of process
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
+    Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
+        
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
+  
+  }
+
+  Process {
+
+    #region One-off
+    Write-Verbose -Message 'Build the URI'
+    Switch -Wildcard ($id)
+    {
+      'Fileset:::*'
+      {
+        Write-Verbose -Message 'Loading Fileset API data'
+        $uri = ('https://'+$Server+$resources.URI.Fileset) -replace '{id}', $id
+      }
+      'MssqlDatabase:::*'
+      {
+        Write-Verbose -Message 'Loading MSSQL API data'
+        $uri = ('https://'+$Server+$resources.URI.MSSQL) -replace '{id}', $id
+      }
+      'VirtualMachine:::*'
+      {
+        Write-Verbose -Message 'Loading VMware API data'
+        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
+      }
+    }
+    #endregion
+
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    
+    return $result
+
+  } # End of process
 } # End of function

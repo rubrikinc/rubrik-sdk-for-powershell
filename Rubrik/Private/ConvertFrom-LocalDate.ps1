@@ -1,7 +1,7 @@
 <#
 Helper function to convert a local format string to datetime
 #>
-function ConvertFromLocalDate()
+function ConvertFrom-LocalDate()
 {
 
     [CmdletBinding()]

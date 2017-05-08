@@ -1,55 +1,112 @@
-﻿function Get-RubrikSnapshot
+﻿#Requires -Version 3
+function Get-RubrikSnapshot
 {
-    <#  
-            .SYNOPSIS
-            Retrieves all of the snapshots (backups) for a given virtual machine
-            .DESCRIPTION
-            The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for a protected virtual machine
-            .NOTES
-            Written by Chris Wahl for community usage
-            Twitter: @ChrisWahl
-            GitHub: chriswahl
-            .LINK
-            https://github.com/rubrikinc/PowerShell-Module
-            .EXAMPLE
-            Get-RubrikSnapshot -VM 'Server1'
-            This will return an array of details for each snapshot (backup) for Server1
-    #>
+  <#  
+      .SYNOPSIS
+      Retrieves all of the snapshots (backups) for any given object
+      
+      .DESCRIPTION
+      The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for any protected object
+      The correct API call will be made based on the object id submitted
+      Multiple objects can be piped into this function so long as they contain the id required for lookup
+      
+      .NOTES
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
+      
+      .LINK
+      https://github.com/rubrikinc/PowerShell-Module
+      
+      .EXAMPLE
+      Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
+      This will return all snapshot (backup) data for the virtual machine id of "VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345"
 
-    [CmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $true,Position = 0,HelpMessage = 'Virtual Machine',ValueFromPipeline = $true)]
-        [Alias('Name')]
-        [ValidateNotNullorEmpty()]
-        [String]$VM,
-        [Parameter(Mandatory = $false,Position = 1,HelpMessage = 'Rubrik FQDN or IP address')]
-        [ValidateNotNullorEmpty()]
-        [String]$Server = $global:RubrikConnection.server
-    )
+      .EXAMPLE
+      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
+      This will return the closest matching snapshot to March 21st, 2017 for any virtual machine named "Server1"
 
-    Process {
+      .EXAMPLE
+      Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
+      This will return the details on any on-demand (user initiated) snapshot to for any database named "DB1"
+  #>
 
-        TestRubrikConnection
+  [CmdletBinding()]
+  Param(
+    # Rubrik id of the protected object
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
+    # Filter results based on where in the cloud the snapshot lives
+    [Int]$CloudState,
+    # Filter results to show only snapshots that were created on demand
+    [Switch]$OnDemandSnapshot,
+    # Date of the snapshot
+    [Datetime]$Date,
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [ValidateNotNullorEmpty()]
+    [String]$api = $global:RubrikConnection.api
+  )
 
-        Write-Verbose -Message 'Query Rubrik for the list of protected VM details'
-        $vmid = (Get-RubrikVM -VM $VM).id
+  Begin {
 
-        Write-Verbose -Message 'Query Rubrik for the protected VM snapshot list'
-        $uri = 'https://'+$Server+'/snapshot?vm='+$vmid
-        try 
-        {
-            $r = Invoke-WebRequest -Uri $uri -Headers $Header -Method Get
-            $result = (ConvertFrom-Json -InputObject $r.Content)
-            if (!$result) 
-            {
-                throw 'No snapshots found for VM.'
-            }
-            else {return $result}
-        }
-        catch 
-        {
-            throw $_
-        }
+    # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
+    # If a command needs to be run with each iteration or pipeline input, place it in the Process section
+    
+    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
+    Test-RubrikConnection
+    
+    # API data references the name of the function
+    # For convenience, that name is saved here to $function
+    $function = $MyInvocation.MyCommand.Name
+        
+    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+    Write-Verbose -Message "Gather API Data for $function"
+    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Description: $($resources.Description)"
+  
+  }
 
-    } # End of process
+  Process {
+
+    #region One-off
+    Write-Verbose -Message 'Build the URI'
+    Switch -Wildcard ($id)
+    {
+      'Fileset:::*'
+      {
+        Write-Verbose -Message 'Loading Fileset API data'
+        $uri = ('https://'+$Server+$resources.URI.Fileset) -replace '{id}', $id
+      }
+      'MssqlDatabase:::*'
+      {
+        Write-Verbose -Message 'Loading MSSQL API data'
+        $uri = ('https://'+$Server+$resources.URI.MSSQL) -replace '{id}', $id
+      }
+      'VirtualMachine:::*'
+      {
+        Write-Verbose -Message 'Loading VMware API data'
+        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
+      }
+    }
+    #endregion
+
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    
+    #region One-off
+    if ($Date) 
+    {
+      $result = Test-ReturnFilter -object (Test-DateDifference -date $($result.date) -compare $Date) -location 'date' -result $result
+    }
+    #endregion
+    
+    return $result
+
+  } # End of process
 } # End of function
