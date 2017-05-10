@@ -19,6 +19,10 @@ function Export-RubrikReport
       .EXAMPLE
       Export-RubrikReport -id '11111111-2222-3333-4444-555555555555' -timezone_offset 120
       This will return the link to a CSV file for report id "11111111-2222-3333-4444-555555555555"
+
+      .EXAMPLE
+      Get-RubrikReport -Name 'Protection Tasks Details' | Export-RubrikReport
+      This will return the link to a CSV file for report named "Protection Tasks Details"
   #>
 
   [CmdletBinding()]
@@ -27,8 +31,9 @@ function Export-RubrikReport
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Timezone offset from UTC in minutes.	
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
-    [String]$timezone_offset,
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Alias('timezone_offset')]
+    [String]$TimezoneOffset,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
