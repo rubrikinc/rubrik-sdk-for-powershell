@@ -77,7 +77,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Export-RubrikDatabase', 'Get-RubrikData
                'Remove-RubrikReport', 'Remove-RubrikSLA', 
                'Remove-RubrikUnmanagedObject', 'Set-RubrikBlackout', 
                'Set-RubrikMount', 'Set-RubrikVM', 'Sync-RubrikAnnotation', 
-               'Sync-RubrikTag','Disconnect-Rubrik')
+               'Sync-RubrikTag','Disconnect-Rubrik','Export-RubrikReport')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()

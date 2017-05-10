@@ -23,10 +23,14 @@ function Disconnect-Rubrik
 
     [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
     Param(
-        # The IP or FQDN of any available Rubrik node within the cluster
-        [Parameter(Mandatory = $true,Position = 0)]
-        [ValidateNotNullorEmpty()]
-        [String]$Server
+    # Session id
+    [Parameter(ValueFromPipelineByPropertyName = $true)]    
+    [String]$id = 'me',    
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
+    # API version
+    [ValidateNotNullorEmpty()]
+    [String]$api = $global:RubrikConnection.api
     )
 
     Begin {
@@ -40,22 +44,6 @@ function Disconnect-Rubrik
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-
-        #region On-off
-        foreach ($session in $RubrikConnections)
-        {
-            if ($session.server -eq $Server)
-            {
-                $id = $session.id
-                [String]$api = $session.api
-                Write-Verbose -Message "Found session $id"
-            }
-        }
-        if (!$id)
-        {
-            throw "No session information found for server $Server"
-        }            
-        #endregion
         
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
@@ -63,7 +51,7 @@ function Disconnect-Rubrik
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
   
-    }
+  }
 
     Process {
 
