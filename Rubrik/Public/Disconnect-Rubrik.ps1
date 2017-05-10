@@ -1,28 +1,37 @@
 ﻿#requires -Version 3
 function Disconnect-Rubrik
 {
-    <#  
-            .SYNOPSIS
-            {required: high level overview}
+  <#  
+      .SYNOPSIS
+      Disconnects from a Rubrik cluster
 
-            .DESCRIPTION
-            {required: more detailed description of the function's purpose}
+      .DESCRIPTION
+      The Disconnect-Rubrik function is used to disconnect from a Rubrik cluster.
+      This is done by supplying the bearer token and requesting that the session be deleted.
 
-            .NOTES
-            Written by {required}
-            Twitter: {optional}
-            GitHub: {optional}
-            Any other links you'd like here
+      .NOTES
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
 
-            .LINK
-            https://github.com/rubrikinc/PowerShell-Module
+      .LINK
+      https://github.com/rubrikinc/PowerShell-Module
 
-            .EXAMPLE
-            {required: show one or more examples using the function}
-    #>
+      .EXAMPLE
+      Disconnect-Rubrik -Confirm:$false
+      This will close the current session and invalidate the current session token without prompting for confirmation
 
-    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
-    Param(
+      .EXAMPLE
+      $rubrikConnection = $RubrikConnections[1]
+      Disconnect-Rubrik
+      This will close the second session and invalidate the second session token
+      Note: The $rubrikConnections variable holds session details on all established sessions
+            The $rubrikConnection variable holds the current, active session
+            If you wish to change sessions, simply update the value of $rubrikConnection to another session held within $rubrikConnections
+  #>
+
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  Param(
     # Session id
     [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [String]$id = 'me',    
@@ -31,9 +40,9 @@ function Disconnect-Rubrik
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
-    )
+  )
 
-    Begin {
+  Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -53,16 +62,16 @@ function Disconnect-Rubrik
   
   }
 
-    Process {
+  Process {
 
-        $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-        $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-        $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-        $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-        $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-        $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-        return $result
+    return $result
 
-    } # End of process
+  } # End of process
 } # End of function
