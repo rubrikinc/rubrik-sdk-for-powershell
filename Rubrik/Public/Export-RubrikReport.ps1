@@ -24,10 +24,10 @@ function Export-RubrikReport
   [CmdletBinding()]
   Param(
     # ID of the report.	
-	[Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-	# Timezone offset from UTC in minutes.	
-	[Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    # Timezone offset from UTC in minutes.	
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$timezone_offset,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
