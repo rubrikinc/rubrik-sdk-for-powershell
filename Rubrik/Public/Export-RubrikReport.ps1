@@ -33,7 +33,7 @@ function Export-RubrikReport
     # Timezone offset from UTC in minutes.	
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [Alias('timezone_offset')]
-    [String]$TimezoneOffset,
+    [String]$TimezoneOffset = 0,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
