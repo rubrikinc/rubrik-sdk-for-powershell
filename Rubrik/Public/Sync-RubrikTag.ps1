@@ -17,7 +17,7 @@ function Sync-RubrikTag
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Sync-RubrikTag -vCenter 'vcenter1.demo' -Category 'Rubrik'
+      Sync-RubrikTag -Server 'vcenter1.demo' -Category 'Rubrik'
       This will validate or create a vSphere Category named Rubrik along with a Tag for each SLA Domain found in Rubrik
   #>
 
