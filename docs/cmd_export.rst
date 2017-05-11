@@ -75,5 +75,67 @@ REMARKS
     For online help, type: "get-help Export-RubrikDatabase -online"
 
 
+Export-RubrikReport
+-------------------------
+
+NAME
+    Export-RubrikReport
+    
+SYNOPSIS
+    Retrieves link to a CSV file for a Rubrik Envision report
+    
+    
+SYNTAX
+    Export-RubrikReport [-id] <String> [[-TimezoneOffset] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Export-RubrikReport cmdlet is used to pull the link to a CSV file for a Rubrik Envision report
+    
+
+PARAMETERS
+    -id <String>
+        ID of the report.
+        
+    -TimezoneOffset <String>
+        Timezone offset from UTC in minutes.
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Export-RubrikReport -id '11111111-2222-3333-4444-555555555555' -timezone_offset 120
+    
+    This will return the link to a CSV file for report id "11111111-2222-3333-4444-555555555555"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikReport -Name 'Protection Tasks Details' | Export-RubrikReport
+    
+    This will return the link to a CSV file for report named "Protection Tasks Details"
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Export-RubrikReport -examples".
+    For more information, type: "get-help Export-RubrikReport -detailed".
+    For technical information, type: "get-help Export-RubrikReport -full".
+    For online help, type: "get-help Export-RubrikReport -online"
+
+
 
 
