@@ -38,6 +38,18 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Disconnect-Rubrik'                   = @{
+      v1 = @{
+        Description = 'Closes a user session and invalidates the session token'
+        URI         = '/api/v1/session/{id}'
+        Method      = 'Delete'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '204'
+      }
+    }    
     'Export-RubrikDatabase'      = @{
       v1 = @{
         Description = 'Export MSSQL Database from Rubrik to Destination Instance.'
@@ -56,6 +68,20 @@ function Get-RubrikAPIData($endpoint)
         Result      = ''
         Filter      = ''
         Success     = '202'
+      }
+    }
+    'Export-RubrikReport'       = @{
+      v1 = @{
+        Description = 'Get the link to a CSV file for a report.'
+        URI         = '/api/internal/report/{id}/download_csv'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          timezone_offset = 'timezone_offset'
+        }
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
       }
     }
     'Get-RubrikDatabase'      = @{
