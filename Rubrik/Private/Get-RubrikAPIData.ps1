@@ -148,6 +148,22 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Get-RubrikHost'            = @{
+      v1 = @{
+        Description = 'Retrieve summary information for all hosts that are registered with a Rubrik cluster'
+        URI         = '/api/v1/host'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          operating_system_type  = 'operating_system_type'
+          primary_cluster_id = 'primary_cluster_id'
+          hostname  = 'hostname'          
+        }
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
+      }
+    }
     'Get-RubrikMount'         = @{
       v1 = @{
         Description = 'Retrieve information for all live mounts'
@@ -273,6 +289,21 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'New-RubrikHost'         = @{
+      v1 = @{
+        Description = 'Register a host'
+        URI         = '/api/v1/host'
+        Method      = 'Post'
+        Body        = @{
+          hostname               = 'hostname'
+          hasAgent               = 'hasAgent'
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '201'
+      }
+    }
     'New-RubrikMount'         = @{
       v1 = @{
         Description = 'Create a live mount request with given configuration'
@@ -387,6 +418,18 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Remove-RubrikHost'      = @{
+      v1 = @{
+        Description = 'Delete host by specifying the host ID'
+        URI         = '/api/v1/host/{id}'
+        Method      = 'Delete'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '204'
+      }
+    }    
     'Remove-RubrikMount'      = @{
       v1 = @{
         Description = 'Create a request to delete a live mount'
