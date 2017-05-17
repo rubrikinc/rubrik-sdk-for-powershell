@@ -3,9 +3,72 @@
 
 This page contains details on **Remove** commands.
 
-Remove-RubrikMount
+Remove-RubrikHost
 -------------------------
 
+
+NAME
+    Remove-RubrikHost
+    
+SYNOPSIS
+    Delete host by specifying the host ID.
+    
+    
+SYNTAX
+    Remove-RubrikHost [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Remove-RubrikHost cmdlet is used to remove a host registered with the Rubrik cluster.
+    
+
+PARAMETERS
+    -id <String>
+        The Rubrik ID value of the host
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    -WhatIf [<SwitchParameter>]
+        
+    -Confirm [<SwitchParameter>]
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikHost -Name 'Server1.example.com' | Remove-RubrikHost
+    
+    This will remove a host that matches the name "Server1.example.com"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Remove-RubrikHost -id 'Host:::111111-2222-3333-4444-555555555555'
+    
+    This will specifically remove the host id matching "Host:::111111-2222-3333-4444-555555555555"
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Remove-RubrikHost -examples".
+    For more information, type: "get-help Remove-RubrikHost -detailed".
+    For technical information, type: "get-help Remove-RubrikHost -full".
+    For online help, type: "get-help Remove-RubrikHost -online"
+
+
+Remove-RubrikMount
+-------------------------
 
 NAME
     Remove-RubrikMount

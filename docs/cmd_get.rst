@@ -290,6 +290,93 @@ REMARKS
     For online help, type: "get-help Get-RubrikFilesetTemplate -online"
 
 
+Get-RubrikHost
+-------------------------
+
+NAME
+    Get-RubrikHost
+    
+SYNOPSIS
+    Retrieve summary information for all hosts that are registered with a Rubrik cluster.
+    
+    
+SYNTAX
+    Get-RubrikHost [[-Name] <String>] [[-Type] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikHost cmdlet is used to retrive information on one or more hosts that are being protected with the Rubrik Backup Service or directly as with the case of NAS shares.
+    
+
+PARAMETERS
+    -Name <String>
+        Retrieve hosts with a host name matching the provided name. The search type is infix
+        
+    -Type <String>
+        Filter the summary information based on the operating system type. Accepted values are 'Windows', 'Linux', 'ANY', 'NONE'. Use NONE to only return information for hosts templates that do not have operating system type 
+        set. Use ANY to only return information for hosts that have operating system type set.
+        
+    -PrimaryClusterID <String>
+        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+        
+    -id <String>
+        ID of the registered host
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikHost
+    
+    This will return all known hosts
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikHost -Hostname 'Server1'
+    
+    This will return details on any hostname matching "Server1"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikHost -Type 'Windows' -PrimaryClusterID 'local'
+    
+    This will return details on all Windows hosts that are being protected by the local Rubrik cluster
+    
+    
+    
+    
+    -------------------------- EXAMPLE 4 --------------------------
+    
+    PS C:\>Get-RubrikHost -id 'Host:::111111-2222-3333-4444-555555555555'
+    
+    This will return details specifically for the host id matching "Host:::111111-2222-3333-4444-555555555555"
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikHost -examples".
+    For more information, type: "get-help Get-RubrikHost -detailed".
+    For technical information, type: "get-help Get-RubrikHost -full".
+    For online help, type: "get-help Get-RubrikHost -online"
+
+
 Get-RubrikMount
 -------------------------
 

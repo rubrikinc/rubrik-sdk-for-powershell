@@ -3,9 +3,76 @@
 
 This page contains details on **New** commands.
 
-New-RubrikMount
+New-RubrikHost
 -------------------------
 
+
+NAME
+    New-RubrikHost
+    
+SYNOPSIS
+    Registers a host with a Rubrik cluster.
+    
+    
+SYNTAX
+    New-RubrikHost [-Name] <String> [[-HasAgent] <Boolean>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The New-RubrikHost cmdlet is used to register a host with the Rubrik cluster. This could be a host leveraging the Rubrik Backup Service or directly as with the case of NAS shares.
+    
+
+PARAMETERS
+    -Name <String>
+        The IPv4 address of the host or the resolvable hostname of the host
+        
+    -HasAgent <Boolean>
+        Set to $false to register a host that will be accessed through network shares
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    -WhatIf [<SwitchParameter>]
+        
+    -Confirm [<SwitchParameter>]
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>New-RubrikHost -Name 'Server1.example.com'
+    
+    This will register a host that resolves to the name "Server1.example.com"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>New-RubrikHost -Name 'NAS.example.com' -HasAgent $false
+    
+    This will register a host that resolves to the name "NAS.example.com" without using the Rubrik Backup Service
+    In this case, the example host is a NAS share.
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help New-RubrikHost -examples".
+    For more information, type: "get-help New-RubrikHost -detailed".
+    For technical information, type: "get-help New-RubrikHost -full".
+    For online help, type: "get-help New-RubrikHost -online"
+
+
+New-RubrikMount
+-------------------------
 
 NAME
     New-RubrikMount
