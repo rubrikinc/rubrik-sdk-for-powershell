@@ -280,6 +280,8 @@ function Get-RubrikAPIData($endpoint)
           is_relic                = 'is_relic'
           name                    = 'name'
           effective_sla_domain_id = 'effective_sla_domain_id'
+          sla_assignment = 'sla_assignment'
+          primary_cluster_id = 'primary_cluster_id'          
         }
         Result      = 'data'
         Filter      = @{
@@ -418,6 +420,18 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Remove-RubrikFileset'      = @{
+      v1 = @{
+        Description = 'Delete a fileset by specifying the fileset ID'
+        URI         = '/api/v1/fileset/{id}'
+        Method      = 'Delete'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '204'
+      }
+    }        
     'Remove-RubrikHost'      = @{
       v1 = @{
         Description = 'Delete host by specifying the host ID'
