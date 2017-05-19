@@ -1,12 +1,12 @@
 ﻿#requires -Version 3
-function Get-RubrikVM
+function Remove-RubrikFileset
 {
   <#  
       .SYNOPSIS
-      Retrieves details on one or more virtual machines known to a Rubrik cluster
+      Delete a fileset by specifying the fileset ID
 
       .DESCRIPTION
-      The Get-RubrikVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of virtual machines
+      The Remove-RubrikFileset cmdlet is used to remove a fileset registered with the Rubrik cluster.
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -17,40 +17,19 @@ function Get-RubrikVM
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM -Name 'Server1'
-      This will return details on all virtual machines named "Server1".
+      Get-RubrikFileset -Name 'C_Drive' | Remove-RubrikHost
+      This will remove any fileset that matches the name "C_Drive"
 
       .EXAMPLE
-      Get-RubrikVM -Name 'Server1' -SLA Gold
-      This will return details on all virtual machines named "Server1" that are protected by the Gold SLA Domain.
-
-      .EXAMPLE
-      Get-RubrikVM -Relic
-      This will return all removed virtual machines that were formerly protected by Rubrik.
+      Remove-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
+      This will specifically remove the fileset id matching "Fileset:::111111-2222-3333-4444-555555555555"
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # Name of the virtual machine
-    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('VM')]
-    [String]$Name,
-    # Filter results to include only relic (removed) virtual machines
-    [Alias('is_relic')]    
-    [Switch]$Relic,
-    # SLA Domain policy assigned to the virtual machine
-    [String]$SLA, 
-    # Filter by SLA Domain assignment type
-    [ValidateSet('Derived', 'Direct','Unassigned')]
-    [String]$SLAAssignment,     
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
-    [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,        
-    # Virtual machine id
+    # The Rubrik ID value of the fileset
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    # SLA id value
-    [Alias('effective_sla_domain_id')]
-    [String]$SLAID,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -79,13 +58,9 @@ function Get-RubrikVM
 
   Process {
 
-    #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
-    #endregion
-
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

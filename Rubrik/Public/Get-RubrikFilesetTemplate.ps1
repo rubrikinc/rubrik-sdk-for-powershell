@@ -34,13 +34,13 @@ function Get-RubrikFilesetTemplate
     # Retrieve fileset templates with a name matching the provided name. The search is performed as a case-insensitive infix search.
     [Alias('FilesetTemplate')]
     [String]$Name,
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
-    [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,
     # Filter the summary information based on the operating system type of the fileset. Accepted values: 'Windows', 'Linux'
     [ValidateSet('Windows', 'Linux')]
     [Alias('operating_system_type')]
     [String]$OperatingSystemType,
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Alias('primary_cluster_id')]
+    [String]$PrimaryClusterID,    
     # The ID of the fileset template
     [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [String]$id,

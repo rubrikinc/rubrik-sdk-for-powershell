@@ -31,6 +31,9 @@ function Get-RubrikSLA
     # Name of the SLA Domain
     [Alias('SLA')]
     [String]$Name,
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Alias('primary_cluster_id')]
+    [String]$PrimaryClusterID,    
     # SLA Domain id
     [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [String]$id, 
