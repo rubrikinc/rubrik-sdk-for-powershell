@@ -3,9 +3,72 @@
 
 This page contains details on **Remove** commands.
 
-Remove-RubrikHost
+Remove-RubrikFileset
 -------------------------
 
+
+NAME
+    Remove-RubrikFileset
+    
+SYNOPSIS
+    Delete a fileset by specifying the fileset ID
+    
+    
+SYNTAX
+    Remove-RubrikFileset [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Remove-RubrikFileset cmdlet is used to remove a fileset registered with the Rubrik cluster.
+    
+
+PARAMETERS
+    -id <String>
+        The Rubrik ID value of the fileset
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    -WhatIf [<SwitchParameter>]
+        
+    -Confirm [<SwitchParameter>]
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikFileset -Name 'C_Drive' | Remove-RubrikHost
+    
+    This will remove any fileset that matches the name "C_Drive"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Remove-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
+    
+    This will specifically remove the fileset id matching "Fileset:::111111-2222-3333-4444-555555555555"
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Remove-RubrikFileset -examples".
+    For more information, type: "get-help Remove-RubrikFileset -detailed".
+    For technical information, type: "get-help Remove-RubrikFileset -full".
+    For online help, type: "get-help Remove-RubrikFileset -online"
+
+
+Remove-RubrikHost
+-------------------------
 
 NAME
     Remove-RubrikHost

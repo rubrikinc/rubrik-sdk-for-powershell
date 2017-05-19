@@ -118,7 +118,8 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] 
+    [<CommonParameters>]
     
     
 DESCRIPTION
@@ -142,6 +143,9 @@ PARAMETERS
         
     -TemplateID <String>
         Filter the summary information based on the ID of a fileset template.
+        
+    -PrimaryClusterID <String>
+        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
         
     -id <String>
         Rubrik's fileset id
@@ -224,7 +228,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikFilesetTemplate [[-Name] <String>] [[-PrimaryClusterID] <String>] [[-OperatingSystemType] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikFilesetTemplate [[-Name] <String>] [[-OperatingSystemType] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -235,11 +239,11 @@ PARAMETERS
     -Name <String>
         Retrieve fileset templates with a name matching the provided name. The search is performed as a case-insensitive infix search.
         
-    -PrimaryClusterID <String>
-        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
-        
     -OperatingSystemType <String>
         Filter the summary information based on the operating system type of the fileset. Accepted values: 'Windows', 'Linux'
+        
+    -PrimaryClusterID <String>
+        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
         
     -id <String>
         The ID of the fileset template
@@ -596,7 +600,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikSLA [[-Name] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikSLA [[-Name] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -607,6 +611,9 @@ DESCRIPTION
 PARAMETERS
     -Name <String>
         Name of the SLA Domain
+        
+    -PrimaryClusterID <String>
+        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
         
     -id <String>
         SLA Domain id
@@ -854,7 +861,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikVM [[-Name] <String>] [-Relic] [-SLA <String>] [-id <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+    Get-RubrikVM [[-Name] <String>] [-Relic] [-SLA <String>] [-SLAAssignment <String>] [-PrimaryClusterID <String>] [-id <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -870,6 +877,12 @@ PARAMETERS
         
     -SLA <String>
         SLA Domain policy assigned to the virtual machine
+        
+    -SLAAssignment <String>
+        Filter by SLA Domain assignment type
+        
+    -PrimaryClusterID <String>
+        Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
         
     -id <String>
         Virtual machine id
