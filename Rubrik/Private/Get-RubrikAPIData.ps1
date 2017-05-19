@@ -261,11 +261,11 @@ function Get-RubrikAPIData($endpoint)
     'Get-RubrikVersion'       = @{
       v1 = @{
         Description = 'Retrieves software version of the Rubrik cluster'
-        URI         = '/api/v1/cluster/{id}/version'
+        URI         = '/api/v1/cluster/{id}'
         Method      = 'Get'
         Body        = ''
         Query       = ''
-        Result      = 'version'
+        Result      = ''
         Filter      = ''
         Success     = '200'
       }
