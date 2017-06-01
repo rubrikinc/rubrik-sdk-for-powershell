@@ -197,7 +197,7 @@ function Get-RubrikAPIData($endpoint)
     }
     'Get-RubrikRequest'       = @{
       v1 = @{
-        Description = 'Get details about a async request. Defaults to VMWare.'
+        Description = 'Get details about an async request. Defaults to VMWare.'
         URI         = @{
             VMWare = '/api/v1/vmware/vm/request/{id}'
             MSSQL  = '/api/v1/mssql/request/{id}'

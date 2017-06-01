@@ -59,7 +59,6 @@ function Get-RubrikRequest
       'MSSQL*'
       {
         $uri = New-URIString -server $Server -endpoint $resources.URI.MSSQL -id $id
-
       }
       default
       {
