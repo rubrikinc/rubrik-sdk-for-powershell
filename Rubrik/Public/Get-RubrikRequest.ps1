@@ -28,6 +28,7 @@ function Get-RubrikRequest
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # The type of request
+    [Parameter(Mandatory = $true)]
     [ValidateSet('fileset','mssql','vmware/vm')]
     [String]$Type,    
     # Rubrik server IP or FQDN
