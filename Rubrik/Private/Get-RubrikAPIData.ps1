@@ -198,11 +198,7 @@ function Get-RubrikAPIData($endpoint)
     'Get-RubrikRequest'          = @{
       v1 = @{
         Description = 'Get details about an async request.'
-        URI         = @{
-          Fileset = '/api/v1/fileset/request/{id}'
-          MSSQL   = '/api/v1/mssql/request/{id}'
-          VMware  = '/api/v1/vmware/vm/request/{id}'
-        }
+        URI         = '/api/v1/{type}/request/{id}'
         Method      = 'Get'
         Body        = ''
         Query       = ''

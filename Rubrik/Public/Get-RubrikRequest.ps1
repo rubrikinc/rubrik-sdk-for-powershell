@@ -18,15 +18,18 @@ function Get-RubrikRequest
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0'
-      Will return details about the request named "MOUNT_SNAPSHOT_123456789:::0"
+      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
+      Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
   #>
 
   [CmdletBinding()]
   Param(
-    # SLA Domain Name
+    # ID of an asynchronous request
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
+    # The type of request
+    [ValidateSet('fileset','mssql','vmware/vm')]
+    [String]$Type,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -54,6 +57,12 @@ function Get-RubrikRequest
   }
 
   Process {
+
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+
+    #region one-off
+    $uri = $uri -replace '{type}', $Type
+    #endregion
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
