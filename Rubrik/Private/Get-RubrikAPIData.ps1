@@ -359,6 +359,7 @@ function Get-RubrikAPIData($endpoint)
         Method      = 'Post'
         Body        = @{
           forceFullSnapshot = 'forceFullSnapshot'
+          slaId = 'slaId'
         }
         Query       = ''
         Result      = ''
