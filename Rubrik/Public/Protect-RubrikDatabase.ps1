@@ -35,7 +35,7 @@ function Protect-RubrikDatabase
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # The SLA Domain in Rubrik
-    [Parameter(,ParameterSetName = 'SLA_Explicit')]
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
     [String]$SLA,
     # Removes the SLA Domain assignment
     [Parameter(ParameterSetName = 'SLA_Unprotected')]
