@@ -71,28 +71,6 @@ function Get-RubrikSnapshot
 
   Process {
 
-    #region One-off
-    Write-Verbose -Message 'Build the URI'
-    Switch -Wildcard ($id)
-    {
-      'Fileset:::*'
-      {
-        Write-Verbose -Message 'Loading Fileset API data'
-        $uri = ('https://'+$Server+$resources.URI.Fileset) -replace '{id}', $id
-      }
-      'MssqlDatabase:::*'
-      {
-        Write-Verbose -Message 'Loading MSSQL API data'
-        $uri = ('https://'+$Server+$resources.URI.MSSQL) -replace '{id}', $id
-      }
-      'VirtualMachine:::*'
-      {
-        Write-Verbose -Message 'Loading VMware API data'
-        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
-      }
-    }
-    #endregion
-
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body

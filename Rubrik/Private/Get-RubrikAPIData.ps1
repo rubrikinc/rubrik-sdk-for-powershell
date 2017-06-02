@@ -4,7 +4,7 @@
 function Get-RubrikAPIData($endpoint)
 {
   $api = @{
-    Example                   = @{
+    Example                      = @{
       v1 = @{
         Description = 'Details about the API endpoint'
         URI         = 'The URI expressed as /api/v#/endpoint'
@@ -16,7 +16,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = 'The expected HTTP status code for a successful call'
       }
     }
-    'Connect-Rubrik'          = @{
+    'Connect-Rubrik'             = @{
       'v1.1' = @{
         Description = 'Create a new login session'
         URI         = '/api/v1/session'
@@ -38,7 +38,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Disconnect-Rubrik'                   = @{
+    'Disconnect-Rubrik'          = @{
       v1 = @{
         Description = 'Closes a user session and invalidates the session token'
         URI         = '/api/v1/session/{id}'
@@ -49,7 +49,7 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '204'
       }
-    }    
+    }
     'Export-RubrikDatabase'      = @{
       v1 = @{
         Description = 'Export MSSQL Database from Rubrik to Destination Instance.'
@@ -59,8 +59,8 @@ function Get-RubrikAPIData($endpoint)
           targetInstanceId   = 'targetInstanceId'
           targetDatabaseName = 'targetDatabaseName'
           recoveryPoint      = @{
-                timestampMs  = 'timestampMs'
-             }
+            timestampMs = 'timestampMs'
+          }
           finishRecovery     = 'finishRecovery'
           maxDataStreams     = 'maxDataStreams'
         }
@@ -70,7 +70,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
-    'Export-RubrikReport'       = @{
+    'Export-RubrikReport'        = @{
       v1 = @{
         Description = 'Get the link to a CSV file for a report.'
         URI         = '/api/internal/report/{id}/download_csv'
@@ -84,7 +84,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikDatabase'      = @{
+    'Get-RubrikDatabase'         = @{
       v1 = @{
         Description = 'Returns a list of summary information for Microsoft SQL databases.'
         URI         = '/api/v1/mssql/db'
@@ -106,7 +106,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikFileset'       = @{
+    'Get-RubrikFileset'          = @{
       v1 = @{
         Description = 'Retrieve summary information for each fileset. Optionally, filter the retrieved information.'
         URI         = '/api/v1/fileset'
@@ -131,7 +131,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikFilesetTemplate' = @{
+    'Get-RubrikFilesetTemplate'  = @{
       v1 = @{
         Description = 'Retrieve summary information for all fileset templates, including: ID and name of the fileset template, fileset template creation timestamp, array of the included filepaths, array of the excluded filepaths.'
         Function    = 'Get-RubrikFilesetTemplate'
@@ -148,23 +148,23 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikHost'            = @{
+    'Get-RubrikHost'             = @{
       v1 = @{
         Description = 'Retrieve summary information for all hosts that are registered with a Rubrik cluster'
         URI         = '/api/v1/host'
         Method      = 'Get'
         Body        = ''
         Query       = @{
-          operating_system_type  = 'operating_system_type'
-          primary_cluster_id = 'primary_cluster_id'
-          hostname  = 'hostname'          
+          operating_system_type = 'operating_system_type'
+          primary_cluster_id    = 'primary_cluster_id'
+          hostname              = 'hostname'
         }
         Result      = 'data'
         Filter      = ''
         Success     = '200'
       }
     }
-    'Get-RubrikMount'         = @{
+    'Get-RubrikMount'            = @{
       v1 = @{
         Description = 'Retrieve information for all live mounts'
         URI         = '/api/v1/vmware/vm/snapshot/mount'
@@ -180,7 +180,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikReport'       = @{
+    'Get-RubrikReport'           = @{
       v1 = @{
         Description = 'Retrieve summary information for each report.'
         URI         = '/api/internal/report'
@@ -195,13 +195,14 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikRequest'       = @{
+    'Get-RubrikRequest'          = @{
       v1 = @{
-        Description = 'Get details about an async request. Defaults to VMWare.'
+        Description = 'Get details about an async request.'
         URI         = @{
-            VMWare = '/api/v1/vmware/vm/request/{id}'
-            MSSQL  = '/api/v1/mssql/request/{id}'
-            }
+          Fileset = '/api/v1/fileset/request/{id}'
+          MSSQL   = '/api/v1/mssql/request/{id}'
+          VMware  = '/api/v1/vmware/vm/request/{id}'
+        }
         Method      = 'Get'
         Body        = ''
         Query       = ''
@@ -210,7 +211,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikSLA'           = @{
+    'Get-RubrikSLA'              = @{
       v1 = @{
         Description = 'Retrieve summary information for all SLA Domains'
         URI         = '/api/v1/sla_domain'
@@ -226,7 +227,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikSnapshot'      = @{
+    'Get-RubrikSnapshot'         = @{
       v1 = @{
         Description = 'Retrieve information for all snapshots for a VM'
         URI         = @{
@@ -245,23 +246,23 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikUnmanagedObject' = @{
+    'Get-RubrikUnmanagedObject'  = @{
       v1 = @{
         Description = 'Get summary of all the objects with unmanaged snapshots'
         URI         = '/api/internal/unmanaged_object'
         Method      = 'Get'
         Body        = ''
         Query       = @{
-          search_value = 'search_value'
+          search_value     = 'search_value'
           unmanaged_status = 'unmanaged_status'
-          object_type = 'object_type'
+          object_type      = 'object_type'
         }
         Result      = 'data'
         Filter      = ''
         Success     = '200'
       }
     }
-    'Get-RubrikVersion'       = @{
+    'Get-RubrikVersion'          = @{
       v1 = @{
         Description = 'Retrieves software version of the Rubrik cluster'
         URI         = '/api/v1/cluster/{id}'
@@ -273,7 +274,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikVM'            = @{
+    'Get-RubrikVM'               = @{
       v1 = @{
         Description = 'Get summary of all the VMs'
         URI         = '/api/v1/vmware/vm'
@@ -283,8 +284,8 @@ function Get-RubrikAPIData($endpoint)
           is_relic                = 'is_relic'
           name                    = 'name'
           effective_sla_domain_id = 'effective_sla_domain_id'
-          sla_assignment = 'sla_assignment'
-          primary_cluster_id = 'primary_cluster_id'          
+          sla_assignment          = 'sla_assignment'
+          primary_cluster_id      = 'primary_cluster_id'
         }
         Result      = 'data'
         Filter      = @{
@@ -294,14 +295,14 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'New-RubrikHost'         = @{
+    'New-RubrikHost'             = @{
       v1 = @{
         Description = 'Register a host'
         URI         = '/api/v1/host'
         Method      = 'Post'
         Body        = @{
-          hostname               = 'hostname'
-          hasAgent               = 'hasAgent'
+          hostname = 'hostname'
+          hasAgent = 'hasAgent'
         }
         Query       = ''
         Result      = ''
@@ -309,7 +310,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '201'
       }
     }
-    'New-RubrikMount'         = @{
+    'New-RubrikMount'            = @{
       v1 = @{
         Description = 'Create a live mount request with given configuration'
         URI         = '/api/v1/vmware/vm/snapshot/{id}/mount'
@@ -328,7 +329,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
-    'New-RubrikSLA'           = @{
+    'New-RubrikSLA'              = @{
       v1 = @{
         Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
         URI         = '/api/v1/sla_domain'
@@ -347,7 +348,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '201'
       }
     }
-    'New-RubrikSnapshot'      = @{
+    'New-RubrikSnapshot'         = @{
       v1 = @{
         Description = 'Create an on-demand snapshot for the given object ID'
         URI         = @{
@@ -365,7 +366,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
-    'Protect-RubrikDatabase'  = @{
+    'Protect-RubrikDatabase'     = @{
       v1 = @{
         Description = 'Update a Microsoft SQL database with the specified SLA Domain.'
         URI         = '/api/v1/mssql/db/{id}'
@@ -383,7 +384,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Protect-RubrikFileset'   = @{
+    'Protect-RubrikFileset'      = @{
       v1 = @{
         Description = 'Update a Fileset with the specified SLA Domain.'
         URI         = '/api/v1/fileset/{id}'
@@ -397,7 +398,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Protect-RubrikTag'       = @{
+    'Protect-RubrikTag'          = @{
       v1 = @{
         Description = 'Assign managed entities to the specified SLA Domain. The assignment event runs synchronously.'
         URI         = '/api/internal/sla_domain/{id}/assign'
@@ -409,13 +410,13 @@ function Get-RubrikAPIData($endpoint)
         Success     = '204'
       }
     }
-    'Protect-RubrikVM'        = @{
+    'Protect-RubrikVM'           = @{
       v1 = @{
         Description = 'Update a VM with the specified SLA Domain.'
         URI         = '/api/v1/vmware/vm/{id}'
         Method      = 'Patch'
         Body        = @{
-          configuredSlaDomainId      = 'configuredSlaDomainId'
+          configuredSlaDomainId = 'configuredSlaDomainId'
         }
         Query       = ''
         Result      = ''
@@ -423,7 +424,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Remove-RubrikFileset'      = @{
+    'Remove-RubrikFileset'       = @{
       v1 = @{
         Description = 'Delete a fileset by specifying the fileset ID'
         URI         = '/api/v1/fileset/{id}'
@@ -434,8 +435,8 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '204'
       }
-    }        
-    'Remove-RubrikHost'      = @{
+    }
+    'Remove-RubrikHost'          = @{
       v1 = @{
         Description = 'Delete host by specifying the host ID'
         URI         = '/api/v1/host/{id}'
@@ -446,8 +447,8 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '204'
       }
-    }    
-    'Remove-RubrikMount'      = @{
+    }
+    'Remove-RubrikMount'         = @{
       v1 = @{
         Description = 'Create a request to delete a live mount'
         URI         = '/api/v1/vmware/vm/snapshot/mount/{id}'
@@ -461,7 +462,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
-    'Remove-RubrikReport'      = @{
+    'Remove-RubrikReport'        = @{
       v1 = @{
         Description = 'Delete a specific report specified by reportId'
         URI         = '/api/internal/report/{id}'
@@ -473,7 +474,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '204'
       }
     }
-    'Remove-RubrikSLA'        = @{
+    'Remove-RubrikSLA'           = @{
       v1 = @{
         Description = 'Delete an SLA Domain from a Rubrik cluster'
         URI         = '/api/v1/sla_domain/{id}'
@@ -485,7 +486,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '204'
       }
     }
-    'Remove-RubrikUnmanagedObject'      = @{
+    'Remove-RubrikUnmanagedObject' = @{
       v1 = @{
         Description = 'Bulk delete all unmanaged snapshots for the objects specified by objectId/objectType pairings.'
         URI         = '/api/internal/unmanaged_object/snapshot/bulk_delete'
@@ -493,7 +494,7 @@ function Get-RubrikAPIData($endpoint)
         Body        = @{
           objectDefinitions = @(
             @{
-              objectId = 'objectId'
+              objectId   = 'objectId'
               objectType = 'objectType'
             }
           )
@@ -504,7 +505,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Set-RubrikBlackout'      = @{
+    'Set-RubrikBlackout'         = @{
       v1 = @{
         Description = 'Whether to start or stop the global blackout window.'
         URI         = '/api/internal/blackout_window'
@@ -518,7 +519,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Set-RubrikMount'          = @{
+    'Set-RubrikMount'            = @{
       v1 = @{
         Description = 'Power given live-mounted vm on/off'
         URI         = '/api/v1/vmware/vm/snapshot/mount/{id}'
@@ -532,7 +533,7 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Set-RubrikVM'          = @{
+    'Set-RubrikVM'               = @{
       v1 = @{
         Description = 'Update VM with specified properties'
         URI         = '/api/v1/vmware/vm/{id}'
