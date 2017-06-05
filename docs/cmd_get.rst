@@ -549,7 +549,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-RubrikRequest [-id] <String> [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    Get-RubrikRequest [-id] <String> [-Type] <String> [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -559,7 +559,10 @@ DESCRIPTION
 
 PARAMETERS
     -id <String>
-        SLA Domain Name
+        ID of an asynchronous request
+        
+    -Type <String>
+        The type of request
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -575,9 +578,9 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0'
+    PS C:\>Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
     
-    Will return details about the request named "MOUNT_SNAPSHOT_123456789:::0"
+    Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
     
     
     
