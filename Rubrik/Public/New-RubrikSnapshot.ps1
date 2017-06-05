@@ -21,8 +21,8 @@ function New-RubrikSnapshot
       This will trigger an on-demand backup for any virtual machine named "Server1"
 
       .EXAMPLE
-      Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot 
-      This will trigger an on-demand backup for any fileset named "C_Drive"
+      Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot -SLA 'Gold'
+      This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain
 
       .EXAMPLE
       Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull
@@ -34,9 +34,20 @@ function New-RubrikSnapshot
     # Rubrik's id of the object
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
+    # The SLA Domain in Rubrik
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
+    [String]$SLA,
+    # Removes the SLA Domain assignment
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
+    [Switch]$DoNotProtect,
+    # Inherits the SLA Domain assignment from a parent object
+    [Parameter(ParameterSetName = 'SLA_Inherit')]
+    [Switch]$Inherit,    
     # Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
     [Alias('forceFullSnapshot')]
     [Switch]$ForceFull,
+    # SLA id value
+    [String]$SLAID,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -66,26 +77,8 @@ function New-RubrikSnapshot
   Process {
 
     #region One-off
-    Write-Verbose -Message 'Build the URI'
-    Switch -Wildcard ($id)
-    {
-      'Fileset:::*'
-      {
-        Write-Verbose -Message 'Loading Fileset API data'
-        $uri = ('https://'+$Server+$resources.URI.Fileset) -replace '{id}', $id
-      }
-      'MssqlDatabase:::*'
-      {
-        Write-Verbose -Message 'Loading MSSQL API data'
-        $uri = ('https://'+$Server+$resources.URI.MSSQL) -replace '{id}', $id
-      }
-      'VirtualMachine:::*'
-      {
-        Write-Verbose -Message 'Loading VMware API data'
-        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
-      }
-    }
-    #endregion
+    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    #endregion One-off
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
