@@ -96,14 +96,14 @@ function Move-RubrikMountVMDK
       $mount = Get-RubrikVM $SourceVM | Get-RubrikSnapshot -Date $Date | New-RubrikMount -HostID $HostID
     
       Write-Verbose -Message "Waiting for request $($mount.id) to complete"
-      while ((Get-RubrikRequest -ID $mount.id).status -ne 'SUCCEEDED')
+      while ((Get-RubrikRequest -ID $mount.id -Type "vmware/vm").status -ne 'SUCCEEDED')
       {
         Start-Sleep -Seconds 1
       }
     
       Write-Verbose -Message 'Live Mount is now available'
       Write-Verbose -Message 'Gathering Live Mount ID value'
-      foreach ($link in ((Get-RubrikRequest -ID $mount.id).links))
+      foreach ($link in ((Get-RubrikRequest -ID $mount.id -Type "vmware/vm").links))
       {
         # There are two links - the request (self) and result
         # This will filter the values to just the result
