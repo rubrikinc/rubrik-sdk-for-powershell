@@ -266,7 +266,11 @@ SYNOPSIS
     
     
 SYNTAX
-    New-RubrikSnapshot [-id] <String> [-ForceFull] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    New-RubrikSnapshot -id <String> [-SLA <String>] [-ForceFull] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    New-RubrikSnapshot -id <String> [-DoNotProtect] [-ForceFull] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    New-RubrikSnapshot -id <String> [-Inherit] [-ForceFull] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -277,8 +281,20 @@ PARAMETERS
     -id <String>
         Rubrik's id of the object
         
+    -SLA <String>
+        The SLA Domain in Rubrik
+        
+    -DoNotProtect [<SwitchParameter>]
+        Removes the SLA Domain assignment
+        
+    -Inherit [<SwitchParameter>]
+        Inherits the SLA Domain assignment from a parent object
+        
     -ForceFull [<SwitchParameter>]
         Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
+        
+    -SLAID <String>
+        SLA id value
         
     -Server <String>
         Rubrik server IP or FQDN
@@ -307,9 +323,9 @@ PARAMETERS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\>Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot
+    PS C:\>Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot -SLA 'Gold'
     
-    This will trigger an on-demand backup for any fileset named "C_Drive"
+    This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain
     
     
     

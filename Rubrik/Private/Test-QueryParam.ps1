@@ -4,6 +4,38 @@
   # $querykeys = All of the query options available to the endpoint
   # $parameters = All of the parameter options available within the parent function
   # $uri = The endpoint's URI
+  
+  # For functions that can address multiple different endpoints based on the $id value
+  # If there are multiple URIs referenced in the API resources, we know this is true
+  if (($resources.URI).count -ge 2)
+  {  
+    Write-Verbose -Message "Multiple URIs detected. Selecting URI based on $id"
+    Switch -Wildcard ($id)
+    {
+      'Fileset:::*'
+      {
+        Write-Verbose -Message 'Loading Fileset API data'
+        $uri = ('https://'+$Server+$resources.URI.Fileset) -replace '{id}', $id
+      }
+      'MssqlDatabase:::*'
+      {
+        Write-Verbose -Message 'Loading MSSQL API data'
+        $uri = ('https://'+$Server+$resources.URI.MSSQL) -replace '{id}', $id
+      }
+      'VirtualMachine:::*'
+      {
+        Write-Verbose -Message 'Loading VMware API data'
+        $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
+      }
+      default
+      {
+        throw 'The supplied id value has no matching endpoint'
+      }
+    }
+    
+    # This ends the logic statement without running the rest of this private function
+    return $uri
+  }
 
   Write-Verbose -Message 'Build the query parameters'
   $querystring = @()

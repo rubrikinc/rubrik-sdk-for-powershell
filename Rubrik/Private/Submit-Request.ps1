@@ -16,9 +16,20 @@
     }
     catch 
     {
-      throw $_
+      switch ($_)
+      {
+        'Route not defined.'
+        {
+          Write-Warning -Message "The endpoint supplied to Rubrik is invalid. Likely this is due to an incompatible version of the API or references pointing to a non-existent endpoint. The URI passed was: $uri" -Verbose
+          throw $_.Exception
+        }
+        default
+        {
+          throw $_
+        }
+      }
     }
-  }
     
-  return $result
+    return $result
+  }
 }
