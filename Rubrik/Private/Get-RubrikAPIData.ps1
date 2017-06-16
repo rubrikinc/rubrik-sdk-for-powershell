@@ -496,6 +496,20 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
+    'Remove-RubrikDatabaseMount'         = @{
+      v1 = @{
+        Description = 'Create a request to delete a database live mount'
+        URI         = '/api/v1/mssql/db/mount/{id}'
+        Method      = 'Delete'
+        Body        = ''
+        Query       = @{
+          force = 'force'
+        }
+        Result      = ''
+        Filter      = ''
+        Success     = '202'
+      }
+    }
     'Remove-RubrikReport'        = @{
       v1 = @{
         Description = 'Delete a specific report specified by reportId'
