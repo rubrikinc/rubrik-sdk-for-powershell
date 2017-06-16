@@ -26,8 +26,8 @@ function Export-RubrikDatabase
       Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database. New file paths are 
       in the $targetfiles array:
 
-      $targetfiles += @{logicalName='BAR_1';exportPath='E:\SQLFiles\Data\BAREXP\';newFilename='BAREXP_1.mdf'}
-       $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\';newFilename='BAREXP_LOG.ldf'}
+      $targetfiles += @{logicalName='BAR_1';exportPath='E:\SQLFiles\Data\BAREXP\'}
+       $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
       
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
