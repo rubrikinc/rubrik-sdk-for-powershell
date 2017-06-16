@@ -13,8 +13,22 @@ function Export-RubrikDatabase
       Twitter: @pmilano1
       GitHub: pmilano1
 
+      Modified by Mike Fal
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
+
       .EXAMPLE
       Export-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -targetInstanceId MssqlInstance:::0085b247-e718-4177-869f-e3ae1f7bb503 -targetDatabaseName ReportServer -finishRecovery -maxDataStreams 4 -timestampMs 1492661627000
+      
+      .EXAMPLE
+      Export-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase $db).latestRecoveryPoint) -targetInstanceId $db2.instanceId -targetDatabaseName 'BAR_EXP' -targetFilePaths $targetfiles -maxDataStreams 1
+
+      Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database. New file paths are 
+      in the $targetfiles array:
+
+      $targetfiles += @{logicalName='BAR_1';exportPath='E:\SQLFiles\Data\BAREXP\';newFilename='BAREXP_1.mdf'}
+       $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\';newFilename='BAREXP_LOG.ldf'}
+      
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
   #>
@@ -27,7 +41,11 @@ function Export-RubrikDatabase
     # Number of parallel streams to copy data
     [int]$maxDataStreams,
     # Recovery Point desired in the form of Epoch with Milliseconds
+    [Parameter(ParameterSetName='Recovery_timestamp')]
     [int64]$timestampMs,
+    # Recovery Point desired in the form of DateTime value
+    [Parameter(ParameterSetName='Recovery_DateTime')]
+    [datetime]$recoveryDateTime,
     # Take database out of recovery mode after export
     [Switch]$finishRecovery,
     # Rubrik identifier of MSSQL instance to export to
@@ -37,7 +55,9 @@ function Export-RubrikDatabase
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [String]$api = $global:RubrikConnection.api
+    [String]$api = $global:RubrikConnection.api,
+    #Optional Export File Hash table Array
+    [PSCustomObject[]] $targetFilePaths
   )
 
     Begin {
@@ -48,6 +68,13 @@ function Export-RubrikDatabase
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
 
+    #Set epoch for recovery time calculations
+    $epoch = ([datetime]'1/1/1970')
+
+    #If recoveryDateTime, convert to epoch milliseconds
+    if($recoveryDateTime){  
+      $timestampMs = (New-TimeSpan -Start $epoch -End $recoveryDateTime.ToUniversalTime()).TotalMilliseconds
+    } 
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
@@ -74,6 +101,7 @@ function Export-RubrikDatabase
       $resources.Body.finishRecovery = $finishRecovery.IsPresent
       $resources.Body.maxDataStreams = $maxDataStreams
       recoveryPoint = @()
+      targetFilePaths = $targetFilePaths
     }
     $body.recoveryPoint += @{
           $resources.Body.recoveryPoint.timestampMs = $timestampMs
