@@ -6,7 +6,7 @@ function New-RubrikDatabaseMount
       Create a new Live Mount from a protected database
       
       .DESCRIPTION
-      The New-RubrikMount cmdlet is used to create a Live Mount (clone) of a protected database and run it in an existing database environment.
+      The New-RubrikDatabaseMount cmdlet is used to create a Live Mount (clone) of a protected database and run it in an existing database environment.
       
       .NOTES
       Written by Mike Fal for community usage from New-RubrikMount
@@ -17,7 +17,10 @@ function New-RubrikDatabaseMount
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
+      New-RubrikDatabaseMount -id $db.id -targetInstanceId $db.instanceId -mountedDatabaseName 'BAR-LM' -recoveryDateTime (Get-date (Get-RubrikDatabase -id $db.id).latestRecoveryPoint)
+      Creates a new database mount named BAR on the same instance as the source database, using the most recent recovery time for the database. 
       
+      $db=Get-RubrikDatabase -HostName FOO -Instance MSSQLSERVER -Database BAR
 
   #>
 

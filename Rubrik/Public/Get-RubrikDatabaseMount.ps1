@@ -3,37 +3,39 @@ function Get-RubrikDatabaseMount
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves details on mounts for a VM
+      Connects to Rubrik and retrieves details on mounts for a SQL Server Database
             
       .DESCRIPTION
-      The Get-RubrikMount cmdlet will accept a VM id and return details on any mount operations that are active within Rubrik
-      Due to the nature of names not being unique
-      Note that this function requires the VM ID value, not the name of the virtual machine, since virtual machine names are not unique.
-      It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machines you wish to query, and then pipe the results to Get-RubrikMount.
-            
+      The Get-RubrikMount cmdlet will accept one of several different query parameters
+      and retireve the database Live Mount information for that criteria.
+
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
+      Written by Mike FAl for community usage
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
             
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Get-RubrikMount
-      This will return details on all mounted virtual machines.
+      Get-RubrikDatabaseMount
+      This will return details on all mounted databases.
 
       .EXAMPLE
-      Get-RubrikMount -id '11111111-2222-3333-4444-555555555555'
+      Get-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'
       This will return details on mount id "11111111-2222-3333-4444-555555555555".
 
       .EXAMPLE
-      Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id
-      This will return details for any mounts found using the id value from a virtual machine named "Server1" as a base reference.
+      Get-RubrikDatabaseMount -source_database_id (Get-RubrikDatabase -HostName FOO -Instance MSSQLSERVER -Database BAR).id
+      This will return details for any mounts found using the id value from a database named BAR on the FOO default instance.
                   
       .EXAMPLE
-      Get-RubrikMount -VMID 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
-      This will return details for any mounts found using the virtual machine id of 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' as a base reference.
+      Get-RubrikDatabaseMount -source_database_name BAR
+      This returns any mounts where the source database is named BAR.
+
+      .EXAMPLE
+      Get-RubrikDatabaseMount -mounted_database_name BAR_LM
+      This returns any mounts with the name BAR_LM
   #>
 
   [CmdletBinding()]
