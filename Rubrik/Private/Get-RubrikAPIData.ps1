@@ -180,6 +180,25 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Get-RubrikDatabaseMount'            = @{
+      v1 = @{
+        Description = 'Retrieve information for all live mounts for databases'
+        URI         = '/api/v1/mssql/db/mount'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          source_database_id = 'source_database_id'
+          source_database_name = 'source_database_name'
+          target_instance_id = 'target_instance_id'
+          mounted_database_name = 'mounted_database_name'
+          offset = 'offset'
+          limit  = 'limit'
+        }
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
+      }
+    }
     'Get-RubrikReport'           = @{
       v1 = @{
         Description = 'Retrieve summary information for each report.'
