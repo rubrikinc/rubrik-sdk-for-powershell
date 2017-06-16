@@ -325,6 +325,24 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
+    'New-RubrikDatabaseMount'            = @{
+      v1 = @{
+        Description = 'Create a live mount request with given configuration'
+        URI         = '/api/v1/mssql/db/{id}/mount'
+        Method      = 'Post'
+        Body        = @{
+          targetInstanceId     = 'targetInstanceId'
+          mountedDatabaseName  = 'mountedDatabaseName'
+          recoveryPoint = @{
+              timestampMs = 'timestampMs'
+          }
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '202'
+      }
+    }
     'New-RubrikSLA'              = @{
       v1 = @{
         Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
