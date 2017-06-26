@@ -99,10 +99,14 @@ function Export-RubrikDatabase
       $resources.Body.targetInstanceId = $targetInstanceId
       $resources.Body.targetDatabaseName = $targetDatabaseName
       $resources.Body.finishRecovery = $finishRecovery.IsPresent
-      $resources.Body.maxDataStreams = $maxDataStreams
       recoveryPoint = @()
       targetFilePaths = $targetFilePaths
     }
+
+    if($maxDataStreams){
+      $body.Add($resources.Body.maxDataStreams,"$maxDataStreams")
+    }
+
     $body.recoveryPoint += @{
           $resources.Body.recoveryPoint.timestampMs = $timestampMs
           }
