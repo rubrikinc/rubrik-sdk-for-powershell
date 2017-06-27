@@ -19,6 +19,7 @@ function ConvertTo-EpochMS{
       .EXAMPLE
       ConvertTo-EpochMS -DateTimeValue (Get-Date)
 #>
+[CmdletBinding()]
 param(
     [DateTime]$DateTimeValue
 )
