@@ -44,17 +44,17 @@ function Get-RubrikDatabaseMount
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$Id,
     # Filters live mounts by database source id
-    [Alias('SourceDatabaseId')]
-    [String]$Source_Database_Id,
+    [Alias('Source_Database_Id')]
+    [String]$SourceDatabaseId,
     # Filters live mounts by database source name
     [Alias('SourceDatabaseName')]
-    [String]$Source_Database_Name, 
+    [String]$SourceDatabaseName, 
     # Filters live mounts by database source name
-    [Alias('TargetInstanceId')]
-    [String]$Target_Instance_Id, 
+    [Alias('Target_Instance_Id')]
+    [String]$TargetInstanceId, 
     # Filters live mounts by database source name
-    [Alias('MountedDatabaseName','TargetDatabaseName')]
-    [String]$Mounted_Database_Name,
+    [Alias('Mounted_Database_Name','MountName')]
+    [String]$MountedDatabaseName,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

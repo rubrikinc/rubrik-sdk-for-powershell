@@ -47,7 +47,7 @@ function Export-RubrikDatabase
     [Parameter(ParameterSetName='Recovery_DateTime')]
     [datetime]$RecoveryDateTime,
     # Take database out of recovery mode after export
-    [Switch]$inishRecovery,
+    [Switch]$FinishRecovery,
     # Rubrik identifier of MSSQL instance to export to
     [string]$TargetInstanceId,
     # Name to give database upon export
