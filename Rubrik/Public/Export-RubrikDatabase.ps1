@@ -37,27 +37,27 @@ function Export-RubrikDatabase
   Param(
     # Rubrik identifier of database to be exported
     [Parameter(Mandatory = $true)]
-    [String]$id,
+    [String]$Id,
     # Number of parallel streams to copy data
-    [int]$maxDataStreams,
+    [int]$MaxDataStreams,
     # Recovery Point desired in the form of Epoch with Milliseconds
     [Parameter(ParameterSetName='Recovery_timestamp')]
-    [int64]$timestampMs,
+    [int64]$TimestampMs,
     # Recovery Point desired in the form of DateTime value
     [Parameter(ParameterSetName='Recovery_DateTime')]
-    [datetime]$recoveryDateTime,
+    [datetime]$RecoveryDateTime,
     # Take database out of recovery mode after export
-    [Switch]$finishRecovery,
+    [Switch]$inishRecovery,
     # Rubrik identifier of MSSQL instance to export to
-    [string]$targetInstanceId,
+    [string]$TargetInstanceId,
     # Name to give database upon export
-    [string]$targetDatabaseName,
+    [string]$TargetDatabaseName,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api,
     #Optional Export File Hash table Array
-    [PSCustomObject[]] $targetFilePaths
+    [PSCustomObject[]] $TargetFilePaths
   )
 
     Begin {
@@ -68,12 +68,9 @@ function Export-RubrikDatabase
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
 
-    #Set epoch for recovery time calculations
-    $epoch = ([datetime]'1/1/1970')
-
     #If recoveryDateTime, convert to epoch milliseconds
     if($recoveryDateTime){  
-      $timestampMs = (New-TimeSpan -Start $epoch -End $recoveryDateTime.ToUniversalTime()).TotalMilliseconds
+      $TimestampMs = ConvertTo-EpochMS -DateTimeValue $RecoveryDateTime
     } 
     # API data references the name of the function
     # For convenience, that name is saved here to $function
@@ -89,26 +86,26 @@ function Export-RubrikDatabase
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $Id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
 
 
     #region One-off
     Write-Verbose -Message "Build the body"
     $body = @{
-      $resources.Body.targetInstanceId = $targetInstanceId
-      $resources.Body.targetDatabaseName = $targetDatabaseName
-      $resources.Body.finishRecovery = $finishRecovery.IsPresent
+      $resources.Body.targetInstanceId = $TargetInstanceId
+      $resources.Body.targetDatabaseName = $TargetDatabaseName
+      $resources.Body.finishRecovery = $FinishRecovery.IsPresent
       recoveryPoint = @()
-      targetFilePaths = $targetFilePaths
+      targetFilePaths = $TargetFilePaths
     }
 
-    if($maxDataStreams){
-      $body.Add($resources.Body.maxDataStreams,"$maxDataStreams")
+    if($MaxDataStreams){
+      $body.Add($resources.Body.maxDataStreams,"$MaxDataStreams")
     }
 
     $body.recoveryPoint += @{
-          $resources.Body.recoveryPoint.timestampMs = $timestampMs
+          $resources.Body.recoveryPoint.timestampMs = $TimestampMs
           }
     $body = ConvertTo-Json $body
     Write-Verbose -Message "Body = $body"

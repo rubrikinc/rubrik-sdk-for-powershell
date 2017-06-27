@@ -31,16 +31,16 @@ function New-RubrikDatabaseMount
     [String]$id,
     # ID of Instance to use for the mount
     [Alias('InstanceId')]
-    [String]$targetInstanceId,
+    [String]$TargetInstanceId,
     # Name of the mounted database
     [Alias('DatabaseName')]
-    [String]$mountedDatabaseName,
+    [String]$MountedDatabaseName,
     # Recovery Point desired in the form of Epoch with Milliseconds
     [Parameter(ParameterSetName='Recovery_timestamp')]
-    [int64]$timestampMs,
+    [int64]$TimestampMs,
     # Recovery Point desired in the form of DateTime value
     [Parameter(ParameterSetName='Recovery_DateTime')]
-    [datetime]$recoveryDateTime,
+    [datetime]$RecoveryDateTime,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -60,8 +60,7 @@ function New-RubrikDatabaseMount
 
     #If recoveryDateTime, convert to epoch milliseconds
     if($recoveryDateTime){  
-      $epoch = ([datetime]'1/1/1970')
-      $timestampMs = (New-TimeSpan -Start $epoch -End $recoveryDateTime.ToUniversalTime()).TotalMilliseconds
+      $TimestampMs = ConvertTo-EpochMS -DateTimeValue $RecoveryDateTime
     } 
 
     # API data references the name of the function

@@ -9,15 +9,15 @@ function Remove-RubrikDatabaseMount
       The Remove-RubrikDatabaseMount cmdlet is used to request the deletion of one or more instant database mounts
             
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
+      Written by Mike Fal for community usage
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
             
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Remove-RubrikMount -id '11111111-2222-3333-4444-555555555555'
+      Remove-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'
       This will remove mount id "11111111-2222-3333-4444-555555555555".
             
       .EXAMPLE

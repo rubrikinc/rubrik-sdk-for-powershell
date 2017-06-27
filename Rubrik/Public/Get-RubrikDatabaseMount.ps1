@@ -10,7 +10,7 @@ function Get-RubrikDatabaseMount
       and retireve the database Live Mount information for that criteria.
 
       .NOTES
-      Written by Mike FAl for community usage
+      Written by Mike Fal for community usage
       Twitter: @Mike_Fal
       GitHub: MikeFal
             
@@ -42,15 +42,19 @@ function Get-RubrikDatabaseMount
   Param(
     # Rubrik's id of the mount
     [Parameter(ValueFromPipelineByPropertyName = $true)]
-    [String]$id,
+    [String]$Id,
     # Filters live mounts by database source id
-    [String]$source_database_id,
+    [Alias('SourceDatabaseId')]
+    [String]$Source_Database_Id,
     # Filters live mounts by database source name
-    [String]$source_database_name, 
+    [Alias('SourceDatabaseName')]
+    [String]$Source_Database_Name, 
     # Filters live mounts by database source name
-    [String]$target_instance_id, 
+    [Alias('TargetInstanceId')]
+    [String]$Target_Instance_Id, 
     # Filters live mounts by database source name
-    [String]$mounted_database_name,
+    [Alias('MountedDatabaseName','TargetDatabaseName')]
+    [String]$Mounted_Database_Name,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -80,7 +84,7 @@ function Get-RubrikDatabaseMount
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $Id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
