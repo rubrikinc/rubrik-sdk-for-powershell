@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '3.1.0.28'
+ModuleVersion = '3.1.0.29'
 
 # ID used to uniquely identify this module
 GUID = 'a4cb0e3e-b1fe-4da8-9c75-d445e5f96cfb'
@@ -67,19 +67,20 @@ FormatsToProcess = @()
 
 # Functions to export from this module
 FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
-               'Export-RubrikReport', 'Get-RubrikDatabase', 'Get-RubrikFileset', 
+               'Export-RubrikReport', 'Get-RubrikDatabase', 
+               'Get-RubrikDatabaseMount', 'Get-RubrikFileset', 
                'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 'Get-RubrikMount', 
                'Get-RubrikReport', 'Get-RubrikRequest', 'Get-RubrikSLA', 
                'Get-RubrikSnapshot', 'Get-RubrikUnmanagedObject', 
                'Get-RubrikVersion', 'Get-RubrikVM', 'Move-RubrikMountVMDK', 
-               'New-RubrikHost', 'New-RubrikMount', 'New-RubrikSLA', 
-               'New-RubrikSnapshot', 'Protect-RubrikDatabase', 
+               'New-RubrikDatabaseMount', 'New-RubrikHost', 'New-RubrikMount', 
+               'New-RubrikSLA', 'New-RubrikSnapshot', 'Protect-RubrikDatabase', 
                'Protect-RubrikFileset', 'Protect-RubrikTag', 'Protect-RubrikVM', 
-               'Remove-RubrikFileset', 'Remove-RubrikHost', 'Remove-RubrikMount', 
-               'Remove-RubrikReport', 'Remove-RubrikSLA', 
-               'Remove-RubrikUnmanagedObject', 'Set-RubrikBlackout', 
-               'Set-RubrikMount', 'Set-RubrikVM', 'Sync-RubrikAnnotation', 
-               'Sync-RubrikTag','Get-RubrikDatabaseMount','New-RubrikDatabaseMount','Remove-RubrikDatabaseMount')
+               'Remove-RubrikDatabaseMount', 'Remove-RubrikFileset', 
+               'Remove-RubrikHost', 'Remove-RubrikMount', 'Remove-RubrikReport', 
+               'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
+               'Set-RubrikBlackout', 'Set-RubrikMount', 'Set-RubrikVM', 
+               'Sync-RubrikAnnotation', 'Sync-RubrikTag')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()
