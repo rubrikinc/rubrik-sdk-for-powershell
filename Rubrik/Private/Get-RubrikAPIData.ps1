@@ -84,28 +84,6 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
-    'Get-RubrikDatabase'         = @{
-      v1 = @{
-        Description = 'Returns a list of summary information for Microsoft SQL databases.'
-        URI         = '/api/v1/mssql/db'
-        Method      = 'Get'
-        Body        = ''
-        Query       = @{
-          instance_id             = 'instance_id'
-          effective_sla_domain_id = 'effective_sla_domain_id'
-          primary_cluster_id      = 'primary_cluster_id'
-          is_relic                = 'is_relic'
-        }
-        Result      = 'data'
-        Filter      = @{
-          'Name'   = 'name'
-          'SLA'    = 'effectiveSlaDomainName'
-          'Hostname' = 'rootProperties.rootName'
-          'Instance' = 'instanceName'
-        }
-        Success     = '200'
-      }
-    }
     'Get-RubrikFileset'          = @{
       v1 = @{
         Description = 'Retrieve summary information for each fileset. Optionally, filter the retrieved information.'
@@ -142,6 +120,47 @@ function Get-RubrikAPIData($endpoint)
           primary_cluster_id    = 'primary_cluster_id'
           operating_system_type = 'operating_system_type'
           name                  = 'name'
+        }
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
+      }
+    }
+    'Get-RubrikDatabase'         = @{
+      v1 = @{
+        Description = 'Returns a list of summary information for Microsoft SQL databases.'
+        URI         = '/api/v1/mssql/db'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          instance_id             = 'instance_id'
+          effective_sla_domain_id = 'effective_sla_domain_id'
+          primary_cluster_id      = 'primary_cluster_id'
+          is_relic                = 'is_relic'
+        }
+        Result      = 'data'
+        Filter      = @{
+          'Name'   = 'name'
+          'SLA'    = 'effectiveSlaDomainName'
+          'Hostname' = 'rootProperties.rootName'
+          'Instance' = 'instanceName'
+        }
+        Success     = '200'
+      }
+    }
+    'Get-RubrikDatabaseMount'            = @{
+      v1 = @{
+        Description = 'Retrieve information for all live mounts for databases'
+        URI         = '/api/v1/mssql/db/mount'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          source_database_id = 'source_database_id'
+          source_database_name = 'source_database_name'
+          target_instance_id = 'target_instance_id'
+          mounted_database_name = 'mounted_database_name'
+          offset = 'offset'
+          limit  = 'limit'
         }
         Result      = 'data'
         Filter      = ''
@@ -291,6 +310,24 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'New-RubrikDatabaseMount'            = @{
+      v1 = @{
+        Description = 'Create a live mount request with given configuration'
+        URI         = '/api/v1/mssql/db/{id}/mount'
+        Method      = 'Post'
+        Body        = @{
+          targetInstanceId     = 'targetInstanceId'
+          mountedDatabaseName  = 'mountedDatabaseName'
+          recoveryPoint = @{
+              timestampMs = 'timestampMs'
+          }
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '202'
+      }
+    }
     'New-RubrikHost'             = @{
       v1 = @{
         Description = 'Register a host'
@@ -419,6 +456,20 @@ function Get-RubrikAPIData($endpoint)
         Result      = ''
         Filter      = ''
         Success     = '200'
+      }
+    }
+    'Remove-RubrikDatabaseMount'         = @{
+      v1 = @{
+        Description = 'Create a request to delete a database live mount'
+        URI         = '/api/v1/mssql/db/mount/{id}'
+        Method      = 'Delete'
+        Body        = ''
+        Query       = @{
+          force = 'force'
+        }
+        Result      = ''
+        Filter      = ''
+        Success     = '202'
       }
     }
     'Remove-RubrikFileset'       = @{
