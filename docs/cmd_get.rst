@@ -107,6 +107,106 @@ REMARKS
     For online help, type: "get-help Get-RubrikDatabase -online"
 
 
+Get-RubrikDatabaseMount
+-------------------------
+
+NAME
+    Get-RubrikDatabaseMount
+    
+SYNOPSIS
+    Connects to Rubrik and retrieves details on mounts for a SQL Server Database
+    
+    
+SYNTAX
+    Get-RubrikDatabaseMount [[-Id] <String>] [[-SourceDatabaseId] <String>] [[-SourceDatabaseName] <String>] [[-TargetInstanceId] <String>] [[-MountedDatabaseName] <String>] [[-Server] <String>] [[-api] <String>] 
+    [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikMount cmdlet will accept one of several different query parameters
+    and retireve the database Live Mount information for that criteria.
+    
+
+PARAMETERS
+    -Id <String>
+        Rubrik's id of the mount
+        
+    -SourceDatabaseId <String>
+        Filters live mounts by database source id
+        
+    -SourceDatabaseName <String>
+        Filters live mounts by database source name
+        
+    -TargetInstanceId <String>
+        Filters live mounts by database source name
+        
+    -MountedDatabaseName <String>
+        Filters live mounts by database source name
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseMount
+    
+    This will return details on all mounted databases.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'
+    
+    This will return details on mount id "11111111-2222-3333-4444-555555555555".
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseMount -source_database_id (Get-RubrikDatabase -HostName FOO -Instance MSSQLSERVER -Database BAR).id
+    
+    This will return details for any mounts found using the id value from a database named BAR on the FOO default instance.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 4 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseMount -source_database_name BAR
+    
+    This returns any mounts where the source database is named BAR.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 5 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseMount -mounted_database_name BAR_LM
+    
+    This returns any mounts with the name BAR_LM
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikDatabaseMount -examples".
+    For more information, type: "get-help Get-RubrikDatabaseMount -detailed".
+    For technical information, type: "get-help Get-RubrikDatabaseMount -full".
+    For online help, type: "get-help Get-RubrikDatabaseMount -online"
+
+
 Get-RubrikFileset
 -------------------------
 

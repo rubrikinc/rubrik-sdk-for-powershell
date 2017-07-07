@@ -3,9 +3,84 @@
 
 This page contains details on **Remove** commands.
 
-Remove-RubrikFileset
+Remove-RubrikDatabaseMount
 -------------------------
 
+
+NAME
+    Remove-RubrikDatabaseMount
+    
+SYNOPSIS
+    Connects to Rubrik and removes one or more database live mounts
+    
+    
+SYNTAX
+    Remove-RubrikDatabaseMount [-id] <String> [-Force] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Remove-RubrikDatabaseMount cmdlet is used to request the deletion of one or more instant database mounts
+    
+
+PARAMETERS
+    -id <String>
+        The Rubrik ID value of the mount
+        
+    -Force [<SwitchParameter>]
+        Force unmount to deal with situations where host has been moved.
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    -WhatIf [<SwitchParameter>]
+        
+    -Confirm [<SwitchParameter>]
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Remove-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'
+    
+    This will remove mount id "11111111-2222-3333-4444-555555555555".
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseMount | Remove-RubrikDatabaseMount
+    
+    This will remove all mounted databases.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseMount -source_database_name 'BAR' | Remove-RubrikDatabaseMount
+    
+    This will remove any mounts found using the datase name as a base reference.
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Remove-RubrikDatabaseMount -examples".
+    For more information, type: "get-help Remove-RubrikDatabaseMount -detailed".
+    For technical information, type: "get-help Remove-RubrikDatabaseMount -full".
+    For online help, type: "get-help Remove-RubrikDatabaseMount -online"
+
+
+Remove-RubrikFileset
+-------------------------
 
 NAME
     Remove-RubrikFileset

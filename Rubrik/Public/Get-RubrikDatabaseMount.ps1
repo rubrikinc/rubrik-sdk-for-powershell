@@ -47,7 +47,7 @@ function Get-RubrikDatabaseMount
     [Alias('Source_Database_Id')]
     [String]$SourceDatabaseId,
     # Filters live mounts by database source name
-    [Alias('SourceDatabaseName')]
+    [Alias('Source_Database_Name')]
     [String]$SourceDatabaseName, 
     # Filters live mounts by database source name
     [Alias('Target_Instance_Id')]
