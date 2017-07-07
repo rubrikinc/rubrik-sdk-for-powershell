@@ -15,8 +15,11 @@ SYNOPSIS
     
     
 SYNTAX
-    Export-RubrikDatabase [-id] <String> [[-maxDataStreams] <Int32>] [[-timestampMs] <Int64>] [-finishRecovery] [[-targetInstanceId] <String>] [[-targetDatabaseName] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] 
-    [-Confirm] [<CommonParameters>]
+    Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-TimestampMs <Int64>] [-FinishRecovery] [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>] [-TargetFilePaths 
+    <PSObject[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryDateTime <DateTime>] [-FinishRecovery] [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>] [-TargetFilePaths 
+    <PSObject[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -24,22 +27,25 @@ DESCRIPTION
     
 
 PARAMETERS
-    -id <String>
+    -Id <String>
         Rubrik identifier of database to be exported
         
-    -maxDataStreams <Int32>
+    -MaxDataStreams <Int32>
         Number of parallel streams to copy data
         
-    -timestampMs <Int64>
+    -TimestampMs <Int64>
         Recovery Point desired in the form of Epoch with Milliseconds
         
-    -finishRecovery [<SwitchParameter>]
+    -RecoveryDateTime <DateTime>
+        Recovery Point desired in the form of DateTime value
+        
+    -FinishRecovery [<SwitchParameter>]
         Take database out of recovery mode after export
         
-    -targetInstanceId <String>
+    -TargetInstanceId <String>
         Rubrik identifier of MSSQL instance to export to
         
-    -targetDatabaseName <String>
+    -TargetDatabaseName <String>
         Name to give database upon export
         
     -Server <String>
@@ -47,6 +53,9 @@ PARAMETERS
         
     -api <String>
         API version
+        
+    -TargetFilePaths <PSObject[]>
+        Optional Export File Hash table Array
         
     -WhatIf [<SwitchParameter>]
         
@@ -64,6 +73,19 @@ PARAMETERS
     -timestampMs 1492661627000
     
     
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Export-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase $db).latestRecoveryPoint) -targetInstanceId $db2.instanceId -targetDatabaseName 'BAR_EXP' -targetFilePaths $targetfiles -maxDataStreams 1
+    
+    Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database. New file paths are 
+    in the $targetfiles array:
+    
+    $targetfiles += @{logicalName='BAR_1';exportPath='E:\SQLFiles\Data\BAREXP\'}
+     $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
     
     
     

@@ -121,14 +121,15 @@ function Connect-Rubrik
       }
       catch 
       {
-
+        Write-Verbose $_
+        Write-Verbose $_.Exception.InnerException.Message
       }
     }
     
     # Final throw for when all versions of the API have failed
     if ($content.token -eq $null) 
     {
-      throw 'Unable to connect with any available API version'
+      throw 'Unable to connect with any available API version. Check $Error for details or use the Verbose parameter.'
     }
 
     # For API version v1.0, use a standard Basic Auth Base64 encoded header with token:$null
