@@ -279,7 +279,7 @@ function Get-RubrikAPIData($endpoint)
     }
     'Get-RubrikVersion'          = @{
       v1 = @{
-        Description = 'Retrieves software version of the Rubrik cluster'
+        Description = 'Retrieve public information about the Rubrik cluster'
         URI         = '/api/v1/cluster/{id}'
         Method      = 'Get'
         Body        = ''
@@ -289,6 +289,30 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Get-RubrikSoftwareVersion'          = @{
+      v1 = @{
+        Description = 'Retrieves software version of the Rubrik cluster'
+        URI         = '/api/v1/cluster/{id}/version'
+        Method      = 'Get'
+        Body        = ''
+        Query       = ''
+        Result      = 'version'
+        Filter      = ''
+        Success     = '200'
+      }
+    }    
+    'Get-RubrikAPIVersion'          = @{
+      v1 = @{
+        Description = 'Retrieves software version of the Rubrik cluster'
+        URI         = '/api/v1/cluster/{id}/api_version'
+        Method      = 'Get'
+        Body        = ''
+        Query       = ''
+        Result      = 'apiVersion'
+        Filter      = ''
+        Success     = '200'
+      }
+    }     
     'Get-RubrikVM'               = @{
       v1 = @{
         Description = 'Get summary of all the VMs'
