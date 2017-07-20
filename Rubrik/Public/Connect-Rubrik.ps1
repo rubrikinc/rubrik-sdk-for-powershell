@@ -121,15 +121,15 @@ function Connect-Rubrik
       }
       catch 
       {
-        Write-Verbose $_
-        Write-Verbose $_.Exception.InnerException.Message
+        Write-Verbose -Message $_
+        Write-Verbose -Message $_.Exception.InnerException.Message
       }
     }
     
     # Final throw for when all versions of the API have failed
     if ($content.token -eq $null) 
     {
-      throw 'Unable to connect with any available API version. Check $Error for details or use the Verbose parameter.'
+      throw 'Unable to connect with any available API version. Check $Error for details or use the -Verbose parameter.'
     }
 
     # For API version v1.0, use a standard Basic Auth Base64 encoded header with token:$null
@@ -158,13 +158,14 @@ function Connect-Rubrik
 
     Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
     $global:rubrikConnection = @{
-      id     = $content.id
-      userId = $content.userId
-      token  = $content.token
-      server = $Server
-      header = $head
-      time   = (Get-Date)
-      api    = $versionnum
+      id      = $content.id
+      userId  = $content.userId
+      token   = $content.token
+      server  = $Server
+      header  = $head
+      time    = (Get-Date)
+      api     = $versionnum
+      version = Get-RubrikSoftwareVersion
     }
         
     Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'
