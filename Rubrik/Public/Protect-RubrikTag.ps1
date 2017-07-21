@@ -94,7 +94,7 @@ function Protect-RubrikTag
       # Reset switches to prevent Get-RubrikVM from picking them up (must be a better way?)
       $DoNotProtect = $false    
       $Inherit = $false
-      $vcuuid = ((Get-RubrikVM -VM ($vmlist[0].Name))[0].vCenterId) -replace 'vCenter:::', ''
+      $vcuuid = ((Get-RubrikVM -VM ($vmlist[0].Name) -PrimaryClusterID 'local').vCenterId) -replace 'vCenter:::', ''
     }
     catch
     {

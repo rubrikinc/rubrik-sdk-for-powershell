@@ -165,7 +165,7 @@ function Connect-Rubrik
       header  = $head
       time    = (Get-Date)
       api     = $versionnum
-      version = Get-RubrikSoftwareVersion
+      version = Get-RubrikSoftwareVersion -Server $Server
     }
         
     Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'
