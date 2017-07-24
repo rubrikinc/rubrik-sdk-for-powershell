@@ -3,9 +3,59 @@
 
 This page contains details on **Get** commands.
 
-Get-RubrikDatabase
+Get-RubrikAPIVersion
 -------------------------
 
+
+NAME
+    Get-RubrikAPIVersion
+    
+SYNOPSIS
+    Connects to Rubrik and retrieves the current API version
+    
+    
+SYNTAX
+    Get-RubrikAPIVersion [-Server] <String> [[-id] <String>] [[-api] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikVersion cmdlet will retrieve the API version actively running on the system. This does not require authentication.
+    
+
+PARAMETERS
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -id <String>
+        ID of the Rubrik cluster or me for self
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikAPIVersion -Server 192.168.1.100
+    
+    This will return the running API version on the Rubrik cluster reachable at the address 192.168.1.100
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikAPIVersion -examples".
+    For more information, type: "get-help Get-RubrikAPIVersion -detailed".
+    For technical information, type: "get-help Get-RubrikAPIVersion -full".
+    For online help, type: "get-help Get-RubrikAPIVersion -online"
+
+
+Get-RubrikDatabase
+-------------------------
 
 NAME
     Get-RubrikDatabase
@@ -835,6 +885,56 @@ REMARKS
     For more information, type: "get-help Get-RubrikSnapshot -detailed".
     For technical information, type: "get-help Get-RubrikSnapshot -full".
     For online help, type: "get-help Get-RubrikSnapshot -online"
+
+
+Get-RubrikSoftwareVersion
+-------------------------
+
+NAME
+    Get-RubrikSoftwareVersion
+    
+SYNOPSIS
+    Connects to Rubrik and retrieves the current software version
+    
+    
+SYNTAX
+    Get-RubrikSoftwareVersion [-Server] <String> [[-id] <String>] [[-api] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikVersion cmdlet will retrieve the version of code that is actively running on the system. This does not require authentication.
+    
+
+PARAMETERS
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -id <String>
+        ID of the Rubrik cluster or me for self
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikSoftwareVersion -Server 192.168.1.100
+    
+    This will return the running software version on the Rubrik cluster reachable at the address 192.168.1.100
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikSoftwareVersion -examples".
+    For more information, type: "get-help Get-RubrikSoftwareVersion -detailed".
+    For technical information, type: "get-help Get-RubrikSoftwareVersion -full".
+    For online help, type: "get-help Get-RubrikSoftwareVersion -online"
 
 
 Get-RubrikUnmanagedObject
