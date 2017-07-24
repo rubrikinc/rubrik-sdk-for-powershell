@@ -16,6 +16,7 @@
   # Note: Keys are used to search in case the value changes in the future across different API versions
   foreach ($body in $bodykeys)
   {
+    Write-Verbose "Adding $body..."
     # Array Object
     if ($resources.Body.$body.GetType().BaseType.Name -eq 'Array')
     {
