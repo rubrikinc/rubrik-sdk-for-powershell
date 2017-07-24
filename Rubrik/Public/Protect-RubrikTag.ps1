@@ -19,7 +19,7 @@ function Protect-RubrikTag
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik'
+      Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -SLA 'Gold'
       This will assign the Gold SLA Domain to any VM tagged with Gold in the Rubrik category
 
       .EXAMPLE
@@ -84,12 +84,7 @@ function Protect-RubrikTag
   Process {
 
     #region One-off
-    Write-Verbose -Message 'Gathering the SLA Domain id'
-    if (!$SLA -and !$Inherit -and !$DoNotProtect) 
-    {
-      $SLA = $Tag
-    }
-    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect    
+    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
     
     Write-Verbose -Message "Gathering a list of VMs associated with Category $Category and Tag $Tag"
     try 
@@ -99,7 +94,7 @@ function Protect-RubrikTag
       # Reset switches to prevent Get-RubrikVM from picking them up (must be a better way?)
       $DoNotProtect = $false    
       $Inherit = $false
-      $vcuuid = ((Get-RubrikVM -VM ($vmlist[0].Name)).vCenterId) -replace 'vCenter:::', ''
+      $vcuuid = ((Get-RubrikVM -VM ($vmlist[0].Name) -PrimaryClusterID 'local').vCenterId) -replace 'vCenter:::', ''
     }
     catch
     {

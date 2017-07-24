@@ -79,8 +79,9 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Remove-RubrikDatabaseMount', 'Remove-RubrikFileset', 
                'Remove-RubrikHost', 'Remove-RubrikMount', 'Remove-RubrikReport', 
                'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
-               'Set-RubrikBlackout', 'Set-RubrikMount', 'Set-RubrikVM', 
-               'Sync-RubrikAnnotation', 'Sync-RubrikTag')
+               'Restore-RubrikDatabase',
+               'Set-RubrikBlackout', 'Set-RubrikMount', 'Set-RubrikVM', 'Set-RubrikDatabase',
+               'Sync-RubrikAnnotation', 'Sync-RubrikTag','Get-RubrikAPIVersion','Get-RubrikSoftwareVersion')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()
