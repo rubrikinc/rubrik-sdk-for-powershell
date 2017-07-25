@@ -1,34 +1,29 @@
-﻿#Requires -Version 3
-function Export-RubrikDatabase
+#Requires -Version 3
+function Restore-RubrikDatabase
 {
   <#
       .SYNOPSIS
-      Connects to Rubrik exports a database to a MSSQL instance
+      Connects to Rubrik and restores a MSSQL database
 
       .DESCRIPTION
-      The Export-RubrikDatabase command will request a database export from a Rubrik Cluster to a MSSQL instance
+      The Restore-RubrikDatabase command will request a database restore from a Rubrik Cluster to a MSSQL instance. This
+      is an inplace restore, meaning it will overwrite the existing asset.
 
       .NOTES
-      Written by Pete Milanese for community usage
-      Twitter: @pmilano1
-      GitHub: pmilano1
-
-      Modified by Mike Fal
+      Written by Mike Fal
       Twitter: @Mike_Fal
       GitHub: MikeFal
 
       .EXAMPLE
-      Export-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -targetInstanceId MssqlInstance:::0085b247-e718-4177-869f-e3ae1f7bb503 -targetDatabaseName ReportServer -finishRecovery -maxDataStreams 4 -timestampMs 1492661627000
+      Restore-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -targetInstanceId MssqlInstance:::0085b247-e718-4177-869f-e3ae1f7bb503 -FinishRecovery -maxDataStreams 4 -timestampMs 1492661627000
       
+      Restore database to declared epoch ms timestamp.
+
       .EXAMPLE
-      Export-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase $db).latestRecoveryPoint) -targetInstanceId $db2.instanceId -targetDatabaseName 'BAR_EXP' -targetFilePaths $targetfiles -maxDataStreams 1
+      Restore-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase $db).latestRecoveryPoint) -maxDataStreams 1 -FinishRecovery
 
-      Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database. New file paths are 
-      in the $targetfiles array:
+      Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database.
 
-      $targetfiles += @{logicalName='BAR_1';exportPath='E:\SQLFiles\Data\BAREXP\'}
-       $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
-      
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
   #>
@@ -46,18 +41,12 @@ function Export-RubrikDatabase
     # Recovery Point desired in the form of DateTime value
     [Parameter(ParameterSetName='Recovery_DateTime')]
     [datetime]$RecoveryDateTime,
-    # Take database out of recovery mode after export
+    # If FinishRecover is true, fully recover the database
     [Switch]$FinishRecovery,
-    # Rubrik identifier of MSSQL instance to export to
-    [string]$TargetInstanceId,
-    # Name to give database upon export
-    [string]$TargetDatabaseName,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [String]$api = $global:RubrikConnection.api,
-    #Optional Export File Hash table Array
-    [PSCustomObject[]] $TargetFilePaths
+    [String]$api = $global:RubrikConnection.api
   )
 
     Begin {
@@ -93,11 +82,8 @@ function Export-RubrikDatabase
     #region One-off
     Write-Verbose -Message "Build the body"
     $body = @{
-      $resources.Body.targetInstanceId = $TargetInstanceId
-      $resources.Body.targetDatabaseName = $TargetDatabaseName
       $resources.Body.finishRecovery = $FinishRecovery.IsPresent
       recoveryPoint = @()
-      targetFilePaths = $TargetFilePaths
     }
 
     if($MaxDataStreams){

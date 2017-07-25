@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.2'
+ModuleVersion = '4.0.0.3'
 
 # ID used to uniquely identify this module
 GUID = 'a4cb0e3e-b1fe-4da8-9c75-d445e5f96cfb'
@@ -66,21 +66,48 @@ FormatsToProcess = @()
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
-               'Export-RubrikReport', 'Get-RubrikAPIVersion', 'Get-RubrikDatabase', 
-               'Get-RubrikDatabaseMount', 'Get-RubrikFileset', 
-               'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 'Get-RubrikMount', 
-               'Get-RubrikReport', 'Get-RubrikRequest', 'Get-RubrikSLA', 
-               'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
-               'Get-RubrikUnmanagedObject', 'Get-RubrikVersion', 'Get-RubrikVM', 
-               'Move-RubrikMountVMDK', 'New-RubrikDatabaseMount', 'New-RubrikHost', 
-               'New-RubrikMount', 'New-RubrikSLA', 'New-RubrikSnapshot', 
-               'Protect-RubrikDatabase', 'Protect-RubrikFileset', 
-               'Protect-RubrikTag', 'Protect-RubrikVM', 'Remove-RubrikDatabaseMount', 
-               'Remove-RubrikFileset', 'Remove-RubrikHost', 'Remove-RubrikMount', 
-               'Remove-RubrikReport', 'Remove-RubrikSLA', 
-               'Remove-RubrikUnmanagedObject', 'Set-RubrikBlackout', 
-               'Set-RubrikMount', 'Set-RubrikVM', 'Sync-RubrikAnnotation', 
+FunctionsToExport = @('Connect-Rubrik', 
+               'Disconnect-Rubrik', 
+               'Export-RubrikDatabase', 
+               'Export-RubrikReport',
+               'Get-RubrikAPIVersion', 
+               'Get-RubrikDatabase', 
+               'Get-RubrikDatabaseMount', 
+               'Get-RubrikFileset', 
+               'Get-RubrikFilesetTemplate', 
+               'Get-RubrikHost', 
+               'Get-RubrikMount', 
+               'Get-RubrikReport', 
+               'Get-RubrikRequest', 
+               'Get-RubrikSLA', 
+               'Get-RubrikSnapshot', 
+               'Get-RubrikSoftwareVersion', 
+               'Get-RubrikUnmanagedObject', 
+               'Get-RubrikVersion', 
+               'Get-RubrikVM', 
+               'Move-RubrikMountVMDK', 
+               'New-RubrikDatabaseMount', 
+               'New-RubrikHost', 
+               'New-RubrikMount', 
+               'New-RubrikSLA', 
+               'New-RubrikSnapshot', 
+               'Protect-RubrikDatabase', 
+               'Protect-RubrikFileset', 
+               'Protect-RubrikTag', 
+               'Protect-RubrikVM', 
+               'Remove-RubrikDatabaseMount', 
+               'Remove-RubrikFileset', 
+               'Remove-RubrikHost', 
+               'Remove-RubrikMount', 
+               'Remove-RubrikReport', 
+               'Remove-RubrikSLA', 
+               'Remove-RubrikUnmanagedObject',
+               'Restore-RubrikDatabase', 
+               'Set-RubrikBlackout', 
+               'Set-RubrikDatabase',
+               'Set-RubrikMount', 
+               'Set-RubrikVM', 
+               'Sync-RubrikAnnotation', 
                'Sync-RubrikTag')
 
 # Cmdlets to export from this module

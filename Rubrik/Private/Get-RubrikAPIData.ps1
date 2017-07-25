@@ -577,6 +577,24 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Restore-RubrikDatabase' = @{
+      v1 = @{
+        Description = 'Export MSSQL Database from Rubrik to Destination Instance.'
+        URI         = '/api/v1/mssql/db/{id}/restore'
+        Method      = 'Post'
+        Body        = @{
+          recoveryPoint      = @{
+            timestampMs = 'timestampMs'
+          }
+          finishRecovery     = 'finishRecovery'
+          maxDataStreams     = 'maxDataStreams'
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '202'
+      }
+    }
     'Set-RubrikBlackout'         = @{
       v1 = @{
         Description = 'Whether to start or stop the global blackout window.'
@@ -584,6 +602,24 @@ function Get-RubrikAPIData($endpoint)
         Method      = 'Patch'
         Body        = @{
           isGlobalBlackoutActive = 'isGlobalBlackoutActive'
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }
+    'Set-RubrikDatabase'         = @{
+      v1 = @{
+        Description = 'Updates Rubrik database settings.'
+        URI         = '/api/v1/mssql/db/{id}'
+        Method      = 'Patch'
+        Body        = @{
+          logBackupFrequencyInSeconds = "logBackupFrequencyInSeconds"
+          logRetentionHours = "logRetentionHours"
+          copyOnly = "copyOnly"
+          maxDataStreams = "maxDataStreams"
+          configuredSlaDomainId = "configuredSlaDomainId"   
         }
         Query       = ''
         Result      = ''
