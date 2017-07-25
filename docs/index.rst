@@ -43,6 +43,7 @@ Below is a quick YouTube video that explains how to begin using the module.
    cmd_new
    cmd_protect
    cmd_remove
+   cmd_restore
    cmd_set
    cmd_start
    cmd_stop
