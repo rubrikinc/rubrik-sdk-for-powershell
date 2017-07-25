@@ -86,7 +86,7 @@ function Restore-RubrikDatabase
     }
 
     if($MaxDataStreams){
-      $body.Add($resources.Body.maxDataStreams,"$MaxDataStreams")
+      $body.Add($resources.Body.maxDataStreams,$MaxDataStreams)
     }
 
     $body.recoveryPoint += @{
