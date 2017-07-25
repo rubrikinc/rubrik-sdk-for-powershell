@@ -17,11 +17,15 @@ function Set-RubrikDatabase
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-.
+      Set-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -LogBackupFrequencyInSeconds 900
+
+      Set the target database's log backup interval to 15 minutes (900 seconds)
 
       .EXAMPLE
+      Get-RubrikDatabase -HostName Foo -Instance MSSQLSERVER | Set-RubrikDatabase -SLA 'Silver' -CopyOnly 
 
-      .EXAMPLE
+      Set all databases on host FOO to use SLA Silver and be copy only.
+
   #>
 
    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -34,7 +38,7 @@ function Set-RubrikDatabase
     #Number of hours backups will be retained in Rubrik
     [int]$LogRetentionHours,
     #Boolean declaration for copy only backups on the database.
-    [bool]$CopyOnly,
+    [Switch]$CopyOnly,
     #Number of max data streams Rubrik will use to back up the database
     [int]$MaxDataStreams,
     #SLA Domain ID for the database
