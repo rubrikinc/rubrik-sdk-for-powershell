@@ -108,7 +108,8 @@ FunctionsToExport = @('Connect-Rubrik',
                'Set-RubrikMount', 
                'Set-RubrikVM', 
                'Sync-RubrikAnnotation', 
-               'Sync-RubrikTag')
+               'Sync-RubrikTag',
+               'New-RubrikReport')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()

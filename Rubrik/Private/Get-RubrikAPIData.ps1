@@ -386,6 +386,21 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
+    'New-RubrikReport'            = @{
+      v1 = @{
+        Description = 'Create a new report by specifying one of the report templates'
+        URI         = '/api/internal/report'
+        Method      = 'Post'
+        Body        = @{
+          name               = 'name'
+          reportTemplate     = 'reportTemplate'
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '201'
+      }
+    }    
     'New-RubrikSLA'              = @{
       v1 = @{
         Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
