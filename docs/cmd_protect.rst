@@ -223,7 +223,7 @@ PARAMETERS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik'
+    PS C:\>Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -SLA 'Gold'
     
     This will assign the Gold SLA Domain to any VM tagged with Gold in the Rubrik category
     
