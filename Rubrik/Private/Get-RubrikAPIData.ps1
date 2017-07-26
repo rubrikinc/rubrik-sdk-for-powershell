@@ -656,6 +656,51 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Set-RubrikReport'            = @{
+      v1 = @{
+        Description = 'Update a specific report. The report''s name, chart parameters, filters and table can be updated. If successful, this will automatically trigger an async job to refresh the report content.'
+        URI         = '/api/internal/report/{id}'
+        Method      = 'Patch'
+        Body        = @{
+          name  = 'name'
+          filters = @{
+            slaDomain = 'slaDomain'
+            objects = 'objects'
+            objectType = 'objectType'
+            objectLocation = 'objectLocation'            
+            clusterLocation = 'clusterLocation'
+            taskType = 'taskType'
+            complianceStatus = 'complianceStatus'
+            dateConfig = @{
+              beforeDate = 'beforeDate'
+              afterDate = 'afterDate'
+              period = 'period'
+            }
+          }
+          chart0 = @{
+            id = 'id'
+            name = 'name'
+            chartType = 'chartType'
+            attribute = 'attribute'
+            measure = 'measure' 
+          }
+          chart1 = @{
+            id = 'id'
+            name = 'name'
+            chartType = 'chartType'
+            attribute = 'attribute'
+            measure = 'measure' 
+          }
+          table = @{
+            columns = 'columns'
+          }
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }    
     'Set-RubrikVM'               = @{
       v1 = @{
         Description = 'Update VM with specified properties'
