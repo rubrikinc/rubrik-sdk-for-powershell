@@ -226,6 +226,26 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Get-RubrikReportData'           = @{
+      v1 = @{
+        Description = 'Retrieve table data for a specific report'
+        URI         = '/api/internal/report/{id}/table'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          search_value = 'search_value'
+          sla_domain_id = 'sla_domain_id'
+          task_type = 'task_type'
+          task_status = 'task_status'
+          object_type = 'object_type'
+          compliance_status = 'compliance_status'
+          cluster_location = 'cluster_location'
+        }
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }    
     'Get-RubrikRequest'          = @{
       v1 = @{
         Description = 'Get details about an async request.'

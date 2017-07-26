@@ -1,35 +1,38 @@
 ﻿#requires -Version 3
-function New-RubrikReport
+function Get-RubrikReportData
 {
   <#  
       .SYNOPSIS
-      Create a new report by specifying one of the report templates
+      Retrieve table data for a specific Envision report
 
       .DESCRIPTION
-      The New-RubrikReport cmdlet is used to create a new Envision report by specifying one of the canned report templates
+      The Get-RubrikReportData cmdlet is used to pull table data from a specific Envision report
 
       .NOTES
       Written by Chris Wahl for community usage
       Twitter: @ChrisWahl
       GitHub: chriswahl
-      
+
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      New-RubrikReport -Name 'Report1' -ReportTemplate 'ProtectionTasksDetails'
-      This will create a new report named "Report1" by using the "ProtectionTasksDetails" report template
+      Get-RubrikReportData XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      This will return details on all reports
   #>
 
   [CmdletBinding()]
   Param(
-    # The name of the report
-    [Parameter(Mandatory = $true)]
+    # The ID of the report
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]    
+    [String]$id,
+    # Search table data by object name
+    [Alias('search_value')]
     [String]$Name,
-    # The template this report is based on
-    [Parameter(Mandatory = $true)]    
-    [ValidateSet('ProtectionTasksDetails','ProtectionTasksSummary','SystemCapacity','SlaComplianceSummary')]
-    [String]$ReportTemplate,
+    # Filter table data on task type
+    [ValidateSet('Archival','Backup')]
+    [Alias('task_type')]
+    [String]$TaskType,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -60,7 +63,7 @@ function New-RubrikReport
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
