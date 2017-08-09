@@ -118,6 +118,20 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Get-RubrikDatabaseFiles'         = @{
+      v1 = @{
+        Description = 'Returns a list of files for the database.'
+        URI         = '/api/internal/mssql/db/{id}/restore_files'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          time = 'time'
+        }
+        Result      = 'data'
+        Filter      = ''
+        Success     = '200'
+      }
+    }
     'Get-RubrikDatabaseMount'            = @{
       v1 = @{
         Description = 'Retrieve information for all live mounts for databases'
