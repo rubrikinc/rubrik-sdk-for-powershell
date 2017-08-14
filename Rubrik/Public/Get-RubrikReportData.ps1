@@ -17,8 +17,12 @@ function Get-RubrikReportData
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikReportData XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-      This will return details on all reports
+      Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData
+      This will return table data from the "SLA Compliance Summary" report
+
+      .EXAMPLE
+      Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance'
+      This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"
   #>
 
   [CmdletBinding()]
@@ -30,9 +34,18 @@ function Get-RubrikReportData
     [Alias('search_value')]
     [String]$Name,
     # Filter table data on task type
-    [ValidateSet('Archival','Backup')]
     [Alias('task_type')]
     [String]$TaskType,
+    # Filter table data on task status
+    [Alias('task_status')]
+    [String]$TaskStatus,
+    # Filter table data on object type
+    [Alias('object_type')]
+    [String]$ObjectType,
+    # Filter table data on compliance status
+    [Alias('compliance_status')]
+    [ValidateSet('InCompliance','NonCompliance')]
+    [String]$ComplianceStatus,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
