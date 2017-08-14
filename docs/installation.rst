@@ -1,7 +1,9 @@
 Installation
 ========================
 
-This repository contains a folder named `Rubrik`_. The folder needs to be installed into one of your PowerShell Module Paths using one of the installation methods outlined in the next section. To see the full list of available PowerShell Module paths, use ``$env:PSModulePath.split(';')`` in a PowerShell console. Common PowerShell module paths include:
+This repository contains a folder named `Rubrik`_. The folder needs to be installed into one of your PowerShell Module Paths using one of the installation methods outlined in the next section. To see the full list of available PowerShell Module paths, use ``$env:PSModulePath.split(';')`` in a PowerShell console.
+
+Common PowerShell module paths include:
 
 1. Current User: ``%USERPROFILE%\Documents\WindowsPowerShell\Modules\``
 2. All Users: ``%WINDIR%\System32\WindowsPowerShell\v1.0\Modules\``
@@ -19,7 +21,7 @@ Option 2: Manual Installation
 ------------------------
 
 1. Download the `master branch`_ to your workstation.
-2. Copy the contents of the *Rubrik* folder onto your workstation into the PowerShell Module Path ``$Home\Documents\WindowsPowerShell\Modules\`` or ``C:\Program Files\WindowsPowerShell\Modules`` or ``$env:OneDrive\Documents\WindowsPowerShell\``.
+2. Copy the contents of the *Rubrik* folder onto your workstation into the desired PowerShell Module path.
 3. Open a Powershell console with the *Run as Administrator* option.
 4. Run ``Set-ExecutionPolicy`` using the parameter *RemoteSigned* or *Bypass*.
 5. To load the module, use ``Import-Module Rubrik``.
