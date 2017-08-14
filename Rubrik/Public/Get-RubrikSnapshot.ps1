@@ -27,6 +27,10 @@ function Get-RubrikSnapshot
       This will return the closest matching snapshot to March 21st, 2017 for any virtual machine named "Server1"
 
       .EXAMPLE
+      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date (Get-Date)
+      This will return the closest matching snapshot to the current date and time for any virtual machine named "Server1"
+
+      .EXAMPLE
       Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
       This will return the details on any on-demand (user initiated) snapshot to for any database named "DB1"
   #>
