@@ -9,7 +9,7 @@ This repository contains a folder named `Rubrik`_. The folder needs to be instal
 Option 1: Installer Script
 ------------------------
 
-1. Download the `latest release`_ or any pre-release build to your workstation.
+1. Download the `master branch`_ to your workstation.
 2. Open a Powershell console with the *Run as Administrator* option.
 3. Run ``Set-ExecutionPolicy`` using the parameter *RemoteSigned* or *Bypass*.
 4. Run the ``Install-Rubrik.ps1`` script in the root of this repository and follow the prompt to install the module into your ``$Home\Documents\WindowsPowerShell\Modules\`` path.
@@ -18,7 +18,7 @@ Option 1: Installer Script
 Option 2: Manual Installation
 ------------------------
 
-1. Download the `latest release`_ or any pre-release build to your workstation.
+1. Download the `master branch`_ to your workstation.
 2. Copy the contents of the *Rubrik* folder onto your workstation into the PowerShell Module Path ``$Home\Documents\WindowsPowerShell\Modules\`` or ``C:\Program Files\WindowsPowerShell\Modules``
 3. Open a Powershell console with the *Run as Administrator* option.
 4. Run ``Set-ExecutionPolicy`` using the parameter *RemoteSigned* or *Bypass*.
@@ -35,7 +35,7 @@ Option 3: PowerShell Gallery
 Once installation is complete, you can validate that the module exists by running ``Get-Module -ListAvailable Rubrik``.
 
 .. _Rubrik: https://github.com/rubrikinc/PowerShell-Module/tree/master/Rubrik
-.. _latest release: https://github.com/rubrikinc/PowerShell-Module/releases/latest
+.. _master branch: https://github.com/rubrikinc/PowerShell-Module
 .. _Windows Management Framework 5.0: https://www.microsoft.com/en-us/download/details.aspx?id=50395
 
 Verification
