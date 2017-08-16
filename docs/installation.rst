@@ -17,14 +17,21 @@ Option 1: PowerShell Gallery (Recommended)
 3. Run ``Set-ExecutionPolicy`` using the parameter *RemoteSigned* or *Bypass*.
 4. Run ``Install-Module -Name Rubrik -Scope CurrentUser`` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository.
 
-Option 2: Manual Installation
+Option 2: Installer Script
+------------------------
+
+1. Download the `master branch`_ to your workstation.
+2. Open a Powershell console with the *Run as Administrator* option.
+3. Run ``Set-ExecutionPolicy`` using the parameter *RemoteSigned* or *Bypass*.
+4. Run the ``Install-Rubrik.ps1`` script in the root of this repository and follow the prompts to install, upgrade, or delete your Rubrik Module contents.
+
+Option 3: Manual Installation
 ------------------------
 
 1. Download the `master branch`_ to your workstation.
 2. Copy the contents of the *Rubrik* folder onto your workstation into the desired PowerShell Module path.
 3. Open a Powershell console with the *Run as Administrator* option.
 4. Run ``Set-ExecutionPolicy`` using the parameter *RemoteSigned* or *Bypass*.
-5. To load the module, use ``Import-Module Rubrik``.
 
 Once installation is complete, you can validate that the module exists by running ``Get-Module -ListAvailable Rubrik``.
 
