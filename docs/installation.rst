@@ -6,7 +6,7 @@ This repository contains a folder named `Rubrik`_. The folder needs to be instal
 Common PowerShell module paths include:
 
 1. Current User: ``%USERPROFILE%\Documents\WindowsPowerShell\Modules\``
-2. All Users: ``%WINDIR%\System32\WindowsPowerShell\v1.0\Modules\``
+2. All Users: ``%ProgramFiles%\WindowsPowerShell\Modules\``
 3. OneDrive: ``$env:OneDrive\Documents\WindowsPowerShell\Modules\``
 
 Option 1: PowerShell Gallery (Recommended)
