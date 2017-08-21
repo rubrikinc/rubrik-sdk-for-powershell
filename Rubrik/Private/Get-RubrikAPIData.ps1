@@ -226,6 +226,26 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Get-RubrikReportData'           = @{
+      v1 = @{
+        Description = 'Retrieve table data for a specific report'
+        URI         = '/api/internal/report/{id}/table'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          search_value = 'search_value'
+          sla_domain_id = 'sla_domain_id'
+          task_type = 'task_type'
+          task_status = 'task_status'
+          object_type = 'object_type'
+          compliance_status = 'compliance_status'
+          cluster_location = 'cluster_location'
+        }
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }    
     'Get-RubrikRequest'          = @{
       v1 = @{
         Description = 'Get details about an async request.'
@@ -386,6 +406,21 @@ function Get-RubrikAPIData($endpoint)
         Success     = '202'
       }
     }
+    'New-RubrikReport'            = @{
+      v1 = @{
+        Description = 'Create a new report by specifying one of the report templates'
+        URI         = '/api/internal/report'
+        Method      = 'Post'
+        Body        = @{
+          name               = 'name'
+          reportTemplate     = 'reportTemplate'
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '201'
+      }
+    }    
     'New-RubrikSLA'              = @{
       v1 = @{
         Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
@@ -641,6 +676,51 @@ function Get-RubrikAPIData($endpoint)
         Success     = '200'
       }
     }
+    'Set-RubrikReport'            = @{
+      v1 = @{
+        Description = 'Update a specific report. The report''s name, chart parameters, filters and table can be updated. If successful, this will automatically trigger an async job to refresh the report content.'
+        URI         = '/api/internal/report/{id}'
+        Method      = 'Patch'
+        Body        = @{
+          name  = 'name'
+          filters = @{
+            slaDomain = 'slaDomain'
+            objects = 'objects'
+            objectType = 'objectType'
+            objectLocation = 'objectLocation'            
+            clusterLocation = 'clusterLocation'
+            taskType = 'taskType'
+            complianceStatus = 'complianceStatus'
+            dateConfig = @{
+              beforeDate = 'beforeDate'
+              afterDate = 'afterDate'
+              period = 'period'
+            }
+          }
+          chart0 = @{
+            id = 'id'
+            name = 'name'
+            chartType = 'chartType'
+            attribute = 'attribute'
+            measure = 'measure' 
+          }
+          chart1 = @{
+            id = 'id'
+            name = 'name'
+            chartType = 'chartType'
+            attribute = 'attribute'
+            measure = 'measure' 
+          }
+          table = @{
+            columns = 'columns'
+          }
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }    
     'Set-RubrikVM'               = @{
       v1 = @{
         Description = 'Update VM with specified properties'
