@@ -688,6 +688,80 @@ REMARKS
     For online help, type: "get-help Get-RubrikReport -online"
 
 
+Get-RubrikReportData
+-------------------------
+
+NAME
+    Get-RubrikReportData
+    
+SYNOPSIS
+    Retrieve table data for a specific Envision report
+    
+    
+SYNTAX
+    Get-RubrikReportData [-id] <String> [[-Name] <String>] [[-TaskType] <String>] [[-TaskStatus] <String>] [[-ObjectType] <String>] [[-ComplianceStatus] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikReportData cmdlet is used to pull table data from a specific Envision report
+    
+
+PARAMETERS
+    -id <String>
+        The ID of the report
+        
+    -Name <String>
+        Search table data by object name
+        
+    -TaskType <String>
+        Filter table data on task type
+        
+    -TaskStatus <String>
+        Filter table data on task status
+        
+    -ObjectType <String>
+        Filter table data on object type
+        
+    -ComplianceStatus <String>
+        Filter table data on compliance status
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData
+    
+    This will return table data from the "SLA Compliance Summary" report
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance'
+    
+    This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikReportData -examples".
+    For more information, type: "get-help Get-RubrikReportData -detailed".
+    For technical information, type: "get-help Get-RubrikReportData -full".
+    For online help, type: "get-help Get-RubrikReportData -online"
+
+
 Get-RubrikRequest
 -------------------------
 
@@ -872,6 +946,15 @@ PARAMETERS
     
     
     -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date (Get-Date)
+    
+    This will return the closest matching snapshot to the current date and time for any virtual machine named "Server1"
+    
+    
+    
+    
+    -------------------------- EXAMPLE 4 --------------------------
     
     PS C:\>Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
     

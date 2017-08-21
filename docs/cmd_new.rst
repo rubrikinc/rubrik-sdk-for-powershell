@@ -236,6 +236,59 @@ REMARKS
     For online help, type: "get-help New-RubrikMount -online"
 
 
+New-RubrikReport
+-------------------------
+
+NAME
+    New-RubrikReport
+    
+SYNOPSIS
+    Create a new report by specifying one of the report templates
+    
+    
+SYNTAX
+    New-RubrikReport [-Name] <String> [-ReportTemplate] <String> [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The New-RubrikReport cmdlet is used to create a new Envision report by specifying one of the canned report templates
+    
+
+PARAMETERS
+    -Name <String>
+        The name of the report
+        
+    -ReportTemplate <String>
+        The template this report is based on
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>New-RubrikReport -Name 'Report1' -ReportTemplate 'ProtectionTasksDetails'
+    
+    This will create a new report named "Report1" by using the "ProtectionTasksDetails" report template
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help New-RubrikReport -examples".
+    For more information, type: "get-help New-RubrikReport -detailed".
+    For technical information, type: "get-help New-RubrikReport -full".
+    For online help, type: "get-help New-RubrikReport -online"
+
+
 New-RubrikSLA
 -------------------------
 
