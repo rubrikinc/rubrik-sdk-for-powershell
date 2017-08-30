@@ -1,55 +1,54 @@
-﻿#Requires -Version 3
-function Get-RubrikSnapshot
+﻿#requires -Version 3
+function Get-RubrikReportData
 {
   <#  
       .SYNOPSIS
-      Retrieves all of the snapshots (backups) for any given object
-      
+      Retrieve table data for a specific Envision report
+
       .DESCRIPTION
-      The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for any protected object
-      The correct API call will be made based on the object id submitted
-      Multiple objects can be piped into this function so long as they contain the id required for lookup
-      
+      The Get-RubrikReportData cmdlet is used to pull table data from a specific Envision report
+
       .NOTES
       Written by Chris Wahl for community usage
       Twitter: @ChrisWahl
       GitHub: chriswahl
-      
+
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
-      
-      .EXAMPLE
-      Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
-      This will return all snapshot (backup) data for the virtual machine id of "VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345"
 
       .EXAMPLE
-      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
-      This will return the closest matching snapshot to March 21st, 2017 for any virtual machine named "Server1"
+      Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData
+      This will return table data from the "SLA Compliance Summary" report
 
       .EXAMPLE
-      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date (Get-Date)
-      This will return the closest matching snapshot to the current date and time for any virtual machine named "Server1"
-
-      .EXAMPLE
-      Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
-      This will return the details on any on-demand (user initiated) snapshot to for any database named "DB1"
+      Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance'
+      This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"
   #>
 
   [CmdletBinding()]
   Param(
-    # Rubrik id of the protected object
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    # The ID of the report
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]    
     [String]$id,
-    # Filter results based on where in the cloud the snapshot lives
-    [Int]$CloudState,
-    # Filter results to show only snapshots that were created on demand
-    [Switch]$OnDemandSnapshot,
-    # Date of the snapshot
-    [Datetime]$Date,
+    # Search table data by object name
+    [Alias('search_value')]
+    [String]$Name,
+    # Filter table data on task type
+    [Alias('task_type')]
+    [String]$TaskType,
+    # Filter table data on task status
+    [Alias('task_status')]
+    [String]$TaskStatus,
+    # Filter table data on object type
+    [Alias('object_type')]
+    [String]$ObjectType,
+    # Filter table data on compliance status
+    [Alias('compliance_status')]
+    [ValidateSet('InCompliance','NonCompliance')]
+    [String]$ComplianceStatus,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 
@@ -75,19 +74,13 @@ function Get-RubrikSnapshot
 
   Process {
 
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    
-    #region One-off
-    if ($Date) 
-    {
-      $result = Test-ReturnFilter -object (Test-DateDifference -date $($result.date) -compare $Date) -location 'date' -result $result
-    }
-    #endregion
-    
+
     return $result
 
   } # End of process
