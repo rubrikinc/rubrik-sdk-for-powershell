@@ -77,8 +77,15 @@ function Set-RubrikDatabase
 
     #region One-off
     if($SLA){
-      $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+      $SLAID = (Get-RubrikSLA -Name $SLA).id
     }
+    
+    #If the following params are 0, remove from body (invalid values)
+    $intparams = @('LogBackupFrequencyInSeconds','LogRetentionHours','MaxDataStreams')
+    foreach($p in $intparams){
+      if((Get-Variable -Name $p).Value -eq 0){$resources.Body.Remove($p)}
+    }
+
     #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id

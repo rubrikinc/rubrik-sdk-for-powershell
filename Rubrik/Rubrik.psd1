@@ -68,7 +68,7 @@ FormatsToProcess = @()
 # Functions to export from this module
 FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
                'Export-RubrikReport', 'Get-RubrikAPIVersion', 'Get-RubrikDatabase', 
-               'Get-RubrikDatabaseMount', 'Get-RubrikFileset', 
+               'Get-RubrikDatabaseFiles','Get-RubrikDatabaseMount', 'Get-RubrikFileset', 
                'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 'Get-RubrikMount', 
                'Get-RubrikReport', 'Get-RubrikReportData', 'Get-RubrikRequest', 
                'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
