@@ -9,7 +9,10 @@
   {
     return $null
   }
-  
+
+  $setParameters = $pscmdlet.MyInvocation.BoundParameters
+  Write-Verbose -Message "List of set parameters: $($setParameters.GetEnumerator())"
+
   Write-Verbose -Message 'Build the body parameters'
   $bodystring = @{}
   # Walk through all of the available body options presented by the endpoint
@@ -30,6 +33,7 @@
         foreach ($param in $parameters)
         {
           # If the parameter name or alias matches the body option name, build a body string
+          
           if ($param.Name -eq $arrayitem -or $param.Aliases -eq $arrayitem)
           {
             # Switch variable types
@@ -57,7 +61,7 @@
       foreach ($param in $parameters)
       {
         # If the parameter name or alias matches the body option name, build a body string
-        if ($param.Name -eq $body -or $param.Aliases -eq $body)
+        if (($param.Name -eq $body -or $param.Aliases -eq $body) -and $setParameters.ContainsKey($param.Name))
         {
           # Switch variable types
           if ((Get-Variable -Name $param.Name).Value.GetType().Name -eq 'SwitchParameter')
