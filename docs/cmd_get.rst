@@ -157,6 +157,86 @@ REMARKS
     For online help, type: "get-help Get-RubrikDatabase -online"
 
 
+Get-RubrikDatabaseFiles
+-------------------------
+
+NAME
+    Get-RubrikDatabaseFiles
+    
+SYNOPSIS
+    Connects to Rubrik and retrieves all the data files for a SQL Server Database snapshot
+    
+    
+SYNTAX
+    Get-RubrikDatabaseFiles [[-Id] <String>] [[-RecoveryDateTime] <DateTime>] [[-time] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The Get-RubrikDatabaseFiles cmdlet will return all the available databasem files for a database 
+    snapshot. This is based on the recovery time for the database, as file locations could change
+    between snapshots and log backups. If no date time is provided, the database's latest recovery
+    point will be used
+    
+    ***WARNING***
+    This is based on an internal endpoint and is subject to change by the REST API team.
+    
+
+PARAMETERS
+    -Id <String>
+        Rubrik's id of the mount
+        
+    -RecoveryDateTime <DateTime>
+        Recovery Point desired in the form of DateTime value
+        
+    -time <String>
+        Recovery Point desired in the form of a UTC string (yyyy-MM-ddTHH:mm:ss)
+        
+    -Server <String>
+        Rubrik server IP or FQDN
+        
+    -api <String>
+        API version
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseFiles -id '11111111-2222-3333-4444-555555555555'
+    
+    This will return files for database id  "11111111-2222-3333-4444-555555555555".
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555' -RecoveryDateTime (Get-Date).AddDays(-1)
+    
+    This will return details on mount id "11111111-2222-3333-4444-555555555555" from a recovery point one day ago, assuming that recovery point exists.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS C:\>Get-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555' -time '2017-08-08T01:15:00Z'
+    
+    This will return details on mount id "11111111-2222-3333-4444-555555555555" from UTC '2017-08-08 01:15:00', assuming that recovery point exists.
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "get-help Get-RubrikDatabaseFiles -examples".
+    For more information, type: "get-help Get-RubrikDatabaseFiles -detailed".
+    For technical information, type: "get-help Get-RubrikDatabaseFiles -full".
+    For online help, type: "get-help Get-RubrikDatabaseFiles -online"
+
+
 Get-RubrikDatabaseMount
 -------------------------
 
