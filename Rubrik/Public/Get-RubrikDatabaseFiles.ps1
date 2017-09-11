@@ -58,7 +58,7 @@ function Get-RubrikDatabaseFiles
     
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    if($RecoveryDateTime){$time = $RecoveryDateTime.ToUniversalTime().ToString('yyyy-dd-MMTHH:mm:ssZ')}
+    if($RecoveryDateTime){$time = $RecoveryDateTime.ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')}
 
     # API data references the name of the function
     # For convenience, that name is saved here to $function
