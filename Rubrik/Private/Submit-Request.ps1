@@ -1,4 +1,4 @@
-﻿function Submit-Request($uri,$header,$method,$body)
+﻿function Submit-Request($uri,$header,$method = $($resources.Method) ,$body)
 {
   # The Submit-Request function is used to send data to an endpoint and then format the response for further use
   # $uri = The endpoint's URI
@@ -12,7 +12,7 @@
     {
       Write-Verbose -Message 'Submitting the request'
       # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
-      $result = ExpandPayload -response (Invoke-WebRequest -Uri $uri -Headers $header -Method $($resources.Method) -Body $body)
+      $result = ExpandPayload -response (Invoke-WebRequest -Uri $uri -Headers $header -Method $method -Body $body)
     }
     catch 
     {
