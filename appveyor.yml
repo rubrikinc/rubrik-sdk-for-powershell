@@ -46,6 +46,7 @@ test_script:
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GitHubKey):x-oauth-basic@github.com`n"
   - git config --global user.email "github@wahlnetwork.com"
   - git config --global user.name "Chris Wahl"  
+  - git config --global core.autocrlf true
   - ps: . .\Tests\build.ps1
 
 # Post a status update in Slack
