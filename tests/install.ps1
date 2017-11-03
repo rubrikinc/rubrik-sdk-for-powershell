@@ -1,5 +1,5 @@
-﻿[string]$PowerShellModules = @("Pester", "posh-git", "platyPS")
-[string]$PackageProviders = @('NuGet', 'PowerShellGet')
+﻿[string[]]$PowerShellModules = @("Pester", "posh-git", "platyPS")
+[string[]]$PackageProviders = @('NuGet', 'PowerShellGet')
 
 # Line break for readability in AppVeyor console
 Write-Host -Object ''
