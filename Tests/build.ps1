@@ -42,7 +42,8 @@ else
 
     # Update the docs
     Write-Host "Building new documentation" -ForegroundColor Yellow
-    #. .\docs\BuildDocs.ps1
+    Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
+    New-MarkdownHelp -Module Rubrik -OutputFolder '.\docs\commands\' -Force
     Write-Host -Object ''
 
     # Publish the new version to the PowerShell Gallery
