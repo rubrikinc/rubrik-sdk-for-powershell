@@ -31,10 +31,7 @@ environment:
 
 # Install NuGet to interact with the PowerShell Gallery
 install:
-- ps: |
-    Install-PackageProvider -Name NuGet -Force | Out-Null
-    Install-Module -Name Pester -Force
-    Install-Module -Name posh-git -Force
+  - ps: . .\tests\install.ps1
 
 # Invoke Pester to run all of the unit tests, then save the results into XML in order to populate the AppVeyor tests section
 # If any of the tests fail, consider the pipeline failed
@@ -47,7 +44,7 @@ test_script:
   - git config --global user.email "github@wahlnetwork.com"
   - git config --global user.name "Chris Wahl"  
   - git config --global core.autocrlf true
-  - ps: . .\Tests\build.ps1
+  - ps: . .\tests\build.ps1
 
 # Post a status update in Slack
 # The "secure:" value is the Appveyor encryption of my Slack API token
