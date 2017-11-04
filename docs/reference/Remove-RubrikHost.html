@@ -1,0 +1,1096 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Remove Rubrik Host · Community PowerShell Module for Rubrik</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Chris Wahl">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Remove-RubrikMount.html" />
+    
+    
+    <link rel="prev" href="Remove-RubrikFileset.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">User Documentation</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../documentation/requirements.html">
+            
+                <a href="../documentation/requirements.html">
+            
+                    
+                    Requirements
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../documentation/installation.html">
+            
+                <a href="../documentation/installation.html">
+            
+                    
+                    Installation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../documentation/getting_started.html">
+            
+                <a href="../documentation/getting_started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../documentation/project_architecture.html">
+            
+                <a href="../documentation/project_architecture.html">
+            
+                    
+                    Project Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../documentation/support.html">
+            
+                <a href="../documentation/support.html">
+            
+                    
+                    Support
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../documentation/contribution.html">
+            
+                <a href="../documentation/contribution.html">
+            
+                    
+                    Contribution
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../documentation/licensing.html">
+            
+                <a href="../documentation/licensing.html">
+            
+                    
+                    Licensing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../documentation/faq.html">
+            
+                <a href="../documentation/faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Command Documentation</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../workflow/readme.html">
+            
+                <a href="../workflow/readme.html">
+            
+                    
+                    Workflow
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../workflow/flow_audit.html">
+            
+                <a href="../workflow/flow_audit.html">
+            
+                    
+                    Flow Audit
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="readme.html">
+            
+                <a href="readme.html">
+            
+                    
+                    Reference
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.2.1" data-path="Connect-Rubrik.html">
+            
+                <a href="Connect-Rubrik.html">
+            
+                    
+                    Connect Rubrik
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2" data-path="Disconnect-Rubrik.html">
+            
+                <a href="Disconnect-Rubrik.html">
+            
+                    
+                    Disconnect Rubrik
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.3" data-path="Export-RubrikDatabase.html">
+            
+                <a href="Export-RubrikDatabase.html">
+            
+                    
+                    Export Rubrik Database
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.4" data-path="Export-RubrikReport.html">
+            
+                <a href="Export-RubrikReport.html">
+            
+                    
+                    Export Rubrik Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.5" data-path="Get-RubrikAPIVersion.html">
+            
+                <a href="Get-RubrikAPIVersion.html">
+            
+                    
+                    Get Rubrik API Version
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.6" data-path="Get-RubrikDatabase.html">
+            
+                <a href="Get-RubrikDatabase.html">
+            
+                    
+                    Get Rubrik Database
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.7" data-path="Get-RubrikDatabaseFiles.html">
+            
+                <a href="Get-RubrikDatabaseFiles.html">
+            
+                    
+                    Get Rubrik Database Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.8" data-path="Get-RubrikDatabaseMount.html">
+            
+                <a href="Get-RubrikDatabaseMount.html">
+            
+                    
+                    Get Rubrik Database Mount
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.9" data-path="Get-RubrikFileset.html">
+            
+                <a href="Get-RubrikFileset.html">
+            
+                    
+                    Get Rubrik Fileset
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.10" data-path="Get-RubrikFilesetTemplate.html">
+            
+                <a href="Get-RubrikFilesetTemplate.html">
+            
+                    
+                    Get Rubrik Fileset Template
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.11" data-path="Get-RubrikHost.html">
+            
+                <a href="Get-RubrikHost.html">
+            
+                    
+                    Get Rubrik Host
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.12" data-path="Get-RubrikMount.html">
+            
+                <a href="Get-RubrikMount.html">
+            
+                    
+                    Get Rubrik Mount
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.13" data-path="Get-RubrikReport.html">
+            
+                <a href="Get-RubrikReport.html">
+            
+                    
+                    Get Rubrik Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.14" data-path="Get-RubrikReportData.html">
+            
+                <a href="Get-RubrikReportData.html">
+            
+                    
+                    Get Rubrik Report Data
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.15" data-path="Get-RubrikRequest.html">
+            
+                <a href="Get-RubrikRequest.html">
+            
+                    
+                    Get Rubrik Request
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.16" data-path="Get-RubrikSLA.html">
+            
+                <a href="Get-RubrikSLA.html">
+            
+                    
+                    Get Rubrik SLA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.17" data-path="Get-RubrikSnapshot.html">
+            
+                <a href="Get-RubrikSnapshot.html">
+            
+                    
+                    Get Rubrik Snapshot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.18" data-path="Get-RubrikSoftwareVersion.html">
+            
+                <a href="Get-RubrikSoftwareVersion.html">
+            
+                    
+                    Get Rubrik Software Version
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.19" data-path="Get-RubrikUnmanagedObject.html">
+            
+                <a href="Get-RubrikUnmanagedObject.html">
+            
+                    
+                    Get Rubrik Unmanaged Object
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.20" data-path="Get-RubrikVersion.html">
+            
+                <a href="Get-RubrikVersion.html">
+            
+                    
+                    Get Rubrik Version
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.21" data-path="Get-RubrikVM.html">
+            
+                <a href="Get-RubrikVM.html">
+            
+                    
+                    Get Rubrik VM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.22" data-path="Invoke-RubrikRESTCall.html">
+            
+                <a href="Invoke-RubrikRESTCall.html">
+            
+                    
+                    Invoke Rubrik REST Call
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.23" data-path="Move-RubrikMountVMDK.html">
+            
+                <a href="Move-RubrikMountVMDK.html">
+            
+                    
+                    Move Rubrik Mount VMDK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.24" data-path="New-RubrikDatabaseMount.html">
+            
+                <a href="New-RubrikDatabaseMount.html">
+            
+                    
+                    New Rubrik Database Mount
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.25" data-path="New-RubrikHost.html">
+            
+                <a href="New-RubrikHost.html">
+            
+                    
+                    New Rubrik Host
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.26" data-path="New-RubrikMount.html">
+            
+                <a href="New-RubrikMount.html">
+            
+                    
+                    New Rubrik Mount
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.27" data-path="New-RubrikReport.html">
+            
+                <a href="New-RubrikReport.html">
+            
+                    
+                    New Rubrik Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.28" data-path="New-RubrikSLA.html">
+            
+                <a href="New-RubrikSLA.html">
+            
+                    
+                    New Rubrik SLA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.29" data-path="New-RubrikSnapshot.html">
+            
+                <a href="New-RubrikSnapshot.html">
+            
+                    
+                    New Rubrik Snapshot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.30" data-path="Protect-RubrikDatabase.html">
+            
+                <a href="Protect-RubrikDatabase.html">
+            
+                    
+                    Protect Rubrik Database
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.31" data-path="Protect-RubrikFileset.html">
+            
+                <a href="Protect-RubrikFileset.html">
+            
+                    
+                    Protect Rubrik Fileset
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.32" data-path="Protect-RubrikTag.html">
+            
+                <a href="Protect-RubrikTag.html">
+            
+                    
+                    Protect Rubrik Tag
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.33" data-path="Protect-RubrikVM.html">
+            
+                <a href="Protect-RubrikVM.html">
+            
+                    
+                    Protect Rubrik VM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.34" data-path="Remove-RubrikDatabaseMount.html">
+            
+                <a href="Remove-RubrikDatabaseMount.html">
+            
+                    
+                    Remove Rubrik Database Mount
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.35" data-path="Remove-RubrikFileset.html">
+            
+                <a href="Remove-RubrikFileset.html">
+            
+                    
+                    Remove Rubrik Fileset
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.2.36" data-path="Remove-RubrikHost.html">
+            
+                <a href="Remove-RubrikHost.html">
+            
+                    
+                    Remove Rubrik Host
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.37" data-path="Remove-RubrikMount.html">
+            
+                <a href="Remove-RubrikMount.html">
+            
+                    
+                    Remove Rubrik Mount
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.38" data-path="Remove-RubrikReport.html">
+            
+                <a href="Remove-RubrikReport.html">
+            
+                    
+                    Remove Rubrik Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.39" data-path="Remove-RubrikSLA.html">
+            
+                <a href="Remove-RubrikSLA.html">
+            
+                    
+                    Remove Rubrik SLA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.40" data-path="Remove-RubrikUnmanagedObject.html">
+            
+                <a href="Remove-RubrikUnmanagedObject.html">
+            
+                    
+                    Remove Rubrik Unmanaged Object
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.41" data-path="Restore-RubrikDatabase.html">
+            
+                <a href="Restore-RubrikDatabase.html">
+            
+                    
+                    Restore Rubrik Database
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.42" data-path="Set-RubrikBlackout.html">
+            
+                <a href="Set-RubrikBlackout.html">
+            
+                    
+                    Set Rubrik Blackout
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.43" data-path="Set-RubrikDatabase.html">
+            
+                <a href="Set-RubrikDatabase.html">
+            
+                    
+                    Set Rubrik Database
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.44" data-path="Set-RubrikMount.html">
+            
+                <a href="Set-RubrikMount.html">
+            
+                    
+                    Set Rubrik Mount
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.45" data-path="Set-RubrikVM.html">
+            
+                <a href="Set-RubrikVM.html">
+            
+                    
+                    Set Rubrik VM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.46" data-path="Sync-RubrikAnnotation.html">
+            
+                <a href="Sync-RubrikAnnotation.html">
+            
+                    
+                    Sync Rubrik Annotation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.47" data-path="Sync-RubrikTag.html">
+            
+                <a href="Sync-RubrikTag.html">
+            
+                    
+                    Sync Rubrik Tag
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Remove Rubrik Host</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="remove-rubrikhost">Remove-RubrikHost</h1>
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Delete host by specifying the host ID.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code>Remove-RubrikHost [-id] &lt;String&gt; [[-Server] &lt;String&gt;] [[-api] &lt;String&gt;] [-WhatIf] [-Confirm]
+</code></pre><h2 id="description">DESCRIPTION</h2>
+<p>The Remove-RubrikHost cmdlet is used to remove a host registered with the Rubrik cluster.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="--------------------------example-1---------------------------">-------------------------- EXAMPLE 1 --------------------------</h3>
+<pre><code>Get-RubrikHost -Name &apos;Server1.example.com&apos; | Remove-RubrikHost
+</code></pre><p>This will remove a host that matches the name &quot;Server1.example.com&quot;</p>
+<h3 id="--------------------------example-2---------------------------">-------------------------- EXAMPLE 2 --------------------------</h3>
+<pre><code>Remove-RubrikHost -id &apos;Host:::111111-2222-3333-4444-555555555555&apos;
+</code></pre><p>This will specifically remove the host id matching &quot;Host:::111111-2222-3333-4444-555555555555&quot;</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="id">-id</h3>
+<p>The Rubrik ID value of the host</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">Type:</span> String
+Parameter Sets: (All)
+<span class="hljs-attr">Aliases:</span> 
+
+<span class="hljs-attr">Required:</span> <span class="hljs-literal">True</span>
+<span class="hljs-attr">Position:</span> <span class="hljs-number">1</span>
+Default value: None
+Accept pipeline input: <span class="hljs-literal">True</span> (ByPropertyName)
+Accept wildcard characters: <span class="hljs-literal">False</span>
+</code></pre>
+<h3 id="server">-Server</h3>
+<p>Rubrik server IP or FQDN</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">Type:</span> String
+Parameter Sets: (All)
+<span class="hljs-attr">Aliases:</span> 
+
+<span class="hljs-attr">Required:</span> <span class="hljs-literal">False</span>
+<span class="hljs-attr">Position:</span> <span class="hljs-number">2</span>
+Default value: $global:RubrikConnection.server
+Accept pipeline input: <span class="hljs-literal">False</span>
+Accept wildcard characters: <span class="hljs-literal">False</span>
+</code></pre>
+<h3 id="api">-api</h3>
+<p>API version</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">Type:</span> String
+Parameter Sets: (All)
+<span class="hljs-attr">Aliases:</span> 
+
+<span class="hljs-attr">Required:</span> <span class="hljs-literal">False</span>
+<span class="hljs-attr">Position:</span> <span class="hljs-number">3</span>
+Default value: $global:RubrikConnection.api
+Accept pipeline input: <span class="hljs-literal">False</span>
+Accept wildcard characters: <span class="hljs-literal">False</span>
+</code></pre>
+<h3 id="whatif">-WhatIf</h3>
+<p>Shows what would happen if the cmdlet runs.
+The cmdlet is not run.</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">Type:</span> SwitchParameter
+Parameter Sets: (All)
+<span class="hljs-attr">Aliases:</span> wi
+
+<span class="hljs-attr">Required:</span> <span class="hljs-literal">False</span>
+<span class="hljs-attr">Position:</span> Named
+Default value: None
+Accept pipeline input: <span class="hljs-literal">False</span>
+Accept wildcard characters: <span class="hljs-literal">False</span>
+</code></pre>
+<h3 id="confirm">-Confirm</h3>
+<p>Prompts you for confirmation before running the cmdlet.</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">Type:</span> SwitchParameter
+Parameter Sets: (All)
+<span class="hljs-attr">Aliases:</span> cf
+
+<span class="hljs-attr">Required:</span> <span class="hljs-literal">False</span>
+<span class="hljs-attr">Position:</span> Named
+Default value: None
+Accept pipeline input: <span class="hljs-literal">False</span>
+Accept wildcard characters: <span class="hljs-literal">False</span>
+</code></pre>
+<h2 id="inputs">INPUTS</h2>
+<h2 id="outputs">OUTPUTS</h2>
+<h2 id="notes">NOTES</h2>
+<p>Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl</p>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://github.com/rubrikinc/PowerShell-Module" target="_blank">https://github.com/rubrikinc/PowerShell-Module</a></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Remove-RubrikFileset.html" class="navigation navigation-prev " aria-label="Previous page: Remove Rubrik Fileset">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Remove-RubrikMount.html" class="navigation navigation-next " aria-label="Next page: Remove Rubrik Mount">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"external help file":"Rubrik-help.xml","Module Name":"Rubrik","online version":"https://github.com/rubrikinc/PowerShell-Module","schema":"2.0.0","title":"Remove Rubrik Host","level":"2.2.36","depth":2,"next":{"title":"Remove Rubrik Mount","level":"2.2.37","depth":2,"path":"reference/Remove-RubrikMount.md","ref":"reference/Remove-RubrikMount.md","articles":[]},"previous":{"title":"Remove Rubrik Fileset","level":"2.2.35","depth":2,"path":"reference/Remove-RubrikFileset.md","ref":"reference/Remove-RubrikFileset.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters-small"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"expandable-chapters-small":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Chris Wahl","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Community PowerShell Module for Rubrik","language":"en","gitbook":"*","description":"PowerShell module for managing and monitoring Rubrik's Cloud Data Management fabric by way of published RESTful APIs"},"file":{"path":"reference/Remove-RubrikHost.md","mtime":"2017-11-04T00:45:52.937Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-04T00:46:30.024Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

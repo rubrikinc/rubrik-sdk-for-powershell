@@ -1,0 +1,7 @@
+{
+    "title": "Community PowerShell Module for Rubrik",
+    "description": "PowerShell module for managing and monitoring Rubrik's Cloud Data Management fabric by way of published RESTful APIs",
+    "author": "Chris Wahl",
+    "language": "en",
+    "plugins": ["expandable-chapters-small"]
+}
