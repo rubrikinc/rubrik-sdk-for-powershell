@@ -1,5 +1,7 @@
-﻿[string[]]$PowerShellModules = @("Pester", "posh-git", "platyPS")
+﻿[string[]]$PowerShellModules = @("Pester", "posh-git", "platyPS", "InvokeBuild")
 [string[]]$PackageProviders = @('NuGet', 'PowerShellGet')
+[string[]]$ChocolateyPackages = @('nodejs', 'calibre')
+[string[]]$NodeModules = @('gitbook-cli', 'gitbook-summary')
 
 # Line break for readability in AppVeyor console
 Write-Host -Object ''
@@ -18,3 +20,12 @@ ForEach ($Module in $PowerShellModules) {
     }
     Import-Module $Module
 }
+
+# Install Chocolatey
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Install Chocolatey packages
+ForEach ($Package in $ChocolateyPackages) {choco install $Package -y}
+
+# Install Node packages
+ForEach ($Module in $NodeModules) {npm install -g $Module}

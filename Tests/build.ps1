@@ -40,10 +40,12 @@ else
         throw $_
     }
 
-    # Update the docs
-    Write-Host "Building new documentation" -ForegroundColor Yellow
+    # Create new markdown and XML help files
+    Write-Host "Building new function documentation" -ForegroundColor Yellow
     Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
     New-MarkdownHelp -Module Rubrik -OutputFolder '.\docs\commands\' -Force
+    New-ExternalHelp -Path '.\docs\commands\' -OutputPath '.\Rubrik\en-US\' -Force
+    . .\tests\docs.ps1
     Write-Host -Object ''
 
     # Publish the new version to the PowerShell Gallery
