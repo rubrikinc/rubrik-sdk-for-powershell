@@ -14,9 +14,10 @@ Creates a new Rubrik SLA Domain
 
 ```
 New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] <Int32>]
- [[-DailyFrequency] <Int32>] [[-DailyRetention] <Int32>] [[-MonthlyFrequency] <Int32>]
- [[-MonthlyRetention] <Int32>] [[-YearlyFrequency] <Int32>] [[-YearlyRetention] <Int32>] [[-Server] <String>]
- [[-api] <String>] [-WhatIf] [-Confirm]
+ [[-DailyFrequency] <Int32>] [[-DailyRetention] <Int32>] [[-WeeklyFrequency] <Int32>]
+ [[-WeeklyRetention] <Int32>] [[-MonthlyFrequency] <Int32>] [[-MonthlyRetention] <Int32>]
+ [[-YearlyFrequency] <Int32>] [[-YearlyRetention] <Int32>] [[-Server] <String>] [[-api] <String>] [-WhatIf]
+ [-Confirm]
 ```
 
 ## DESCRIPTION
@@ -116,6 +117,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -WeeklyFrequency
+Weekly frequency to take backups
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 6
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WeeklyRetention
+Number of weeks to retain the weekly backups
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 7
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -MonthlyFrequency
 Monthly frequency to take backups
 
@@ -125,7 +156,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 6
+Position: 8
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -140,7 +171,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 7
+Position: 9
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -155,7 +186,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 8
+Position: 10
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -170,7 +201,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 9
+Position: 11
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -185,7 +216,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 10
+Position: 12
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -200,7 +231,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 11
+Position: 13
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
