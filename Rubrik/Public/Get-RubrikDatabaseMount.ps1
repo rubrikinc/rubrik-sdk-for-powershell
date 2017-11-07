@@ -53,7 +53,7 @@ function Get-RubrikDatabaseMount
     [Alias('Target_Instance_Id')]
     [String]$TargetInstanceId, 
     # Filters live mounts by database source name
-    [Alias('Mounted_Database_Name','MountName')]
+    [Alias('mounted_database_name')]
     [String]$MountedDatabaseName,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,

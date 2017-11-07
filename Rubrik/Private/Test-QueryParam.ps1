@@ -37,7 +37,7 @@
     return $uri
   }
 
-  Write-Verbose -Message 'Build the query parameters'
+  Write-Verbose -Message "Build the query parameters for $($querykeys -join ',')"
   $querystring = @()
   # Walk through all of the available query options presented by the endpoint
   # Note: Keys are used to search in case the value changes in the future across different API versions
