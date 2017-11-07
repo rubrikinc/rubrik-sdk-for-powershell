@@ -1,4 +1,4 @@
-﻿Function Test-RubrikSLA($SLA,$Inherit,$DoNotProtect)
+﻿Function Test-RubrikSLA($SLA,$Inherit,$DoNotProtect,$Mandatory)
 {
   Write-Verbose -Message 'Determining the SLA Domain id'
   if ($SLA) 
@@ -17,6 +17,10 @@
   if ($DoNotProtect) 
   {
     return 'UNPROTECTED'
+  }
+  if ($Mandatory)
+  {
+    throw 'No SLA information was entered.'
   }
 }
     

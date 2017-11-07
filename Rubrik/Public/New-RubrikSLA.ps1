@@ -40,6 +40,10 @@ function New-RubrikSLA
     [int]$DailyFrequency,
     # Number of days to retain the daily backups
     [int]$DailyRetention,
+    # Weekly frequency to take backups
+    [int]$WeeklyFrequency,
+    # Number of weeks to retain the weekly backups
+    [int]$WeeklyRetention,
     # Monthly frequency to take backups
     [int]$MonthlyFrequency,
     # Number of months to retain the monthly backups
@@ -105,6 +109,17 @@ function New-RubrikSLA
         $resources.Body.frequencies.timeUnit = 'Daily'
         $resources.Body.frequencies.frequency = $DailyFrequency
         $resources.Body.frequencies.retention = $DailyRetention
+      }
+      [bool]$ParamValidation = $true
+    }    
+
+    if ($WeeklyFrequency -and $WeeklyRetention)
+    { 
+      Write-Warning -Message 'Weekly SLA configurations are not yet supported in the Rubrik web UI.'
+      $body.frequencies += @{
+        $resources.Body.frequencies.timeUnit = 'Weekly'
+        $resources.Body.frequencies.frequency = $WeeklyFrequency
+        $resources.Body.frequencies.retention = $WeeklyRetention
       }
       [bool]$ParamValidation = $true
     }    

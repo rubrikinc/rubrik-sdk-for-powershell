@@ -30,7 +30,7 @@ function Protect-RubrikVM
       without asking for confirmation
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="None")]
   Param(
     # Virtual machine ID
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
@@ -46,7 +46,7 @@ function Protect-RubrikVM
     [Switch]$Inherit,
     # SLA id value
     [Alias('configuredSlaDomainId')]
-    [String]$SLAID,    
+    [String]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$true),    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -74,11 +74,7 @@ function Protect-RubrikVM
   }
 
   Process {
-
-    #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
-    #endregion One-off
-
+    
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

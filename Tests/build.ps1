@@ -24,7 +24,7 @@ else
         $manifest = Test-ModuleManifest -Path $manifestPath
         [System.Version]$version = $manifest.Version
         Write-Output "Old Version: $version"
-        [String]$newVersion = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, $version.Build, ($version.Revision+1))
+        [String]$newVersion = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, $version.Build, $env:APPVEYOR_BUILD_NUMBER)
         Write-Output "New Version: $newVersion"
 
         # Update the manifest with the new version value and fix the weird string replace bug
@@ -40,9 +40,12 @@ else
         throw $_
     }
 
-    # Update the docs
-    Write-Host "Building new documentation" -ForegroundColor Yellow
-    . .\docs\BuildDocs.ps1
+    # Create new markdown and XML help files
+    Write-Host "Building new function documentation" -ForegroundColor Yellow
+    Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
+    New-MarkdownHelp -Module Rubrik -OutputFolder '.\docs\commands\' -Force
+    New-ExternalHelp -Path '.\docs\commands\' -OutputPath '.\Rubrik\en-US\' -Force
+    . .\tests\docs.ps1
     Write-Host -Object ''
 
     # Publish the new version to the PowerShell Gallery
