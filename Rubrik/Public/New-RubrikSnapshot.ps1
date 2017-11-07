@@ -17,15 +17,15 @@ function New-RubrikSnapshot
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM 'Server1' | New-RubrikSnapshot
-      This will trigger an on-demand backup for any virtual machine named "Server1"
+      Get-RubrikVM 'Server1' | New-RubrikSnapshot -Inherit
+      This will trigger an on-demand backup for any virtual machine named "Server1" using the existing SLA domain
 
       .EXAMPLE
       Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot -SLA 'Gold'
       This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain
 
       .EXAMPLE
-      Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull
+      Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -Inherit
       This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
   #>
 

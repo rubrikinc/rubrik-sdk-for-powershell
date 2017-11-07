@@ -47,6 +47,7 @@ function Get-RubrikVM
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
     # Virtual machine id
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # SLA id value
     [Alias('effective_sla_domain_id')]
