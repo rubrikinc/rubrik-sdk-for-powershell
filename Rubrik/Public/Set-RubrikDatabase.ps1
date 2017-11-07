@@ -34,13 +34,16 @@ function Set-RubrikDatabase
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     #Number of seconds between log backups if db is in FULL or BULK_LOGGED
-    [int]$LogBackupFrequencyInSeconds,
+    #NOTE: Default of -1 is used to get around ints defaulting as 0
+    [int]$LogBackupFrequencyInSeconds = -1,
     #Number of hours backups will be retained in Rubrik
-    [int]$LogRetentionHours,
+    #NOTE: Default of -1 is used to get around ints defaulting as 0
+    [int]$LogRetentionHours = -1,
     #Boolean declaration for copy only backups on the database.
     [Switch]$CopyOnly,
     #Number of max data streams Rubrik will use to back up the database
-    [int]$MaxDataStreams,
+    #NOTE: Default of -1 is used to get around ints defaulting as 0
+    [int]$MaxDataStreams = -1,
     #SLA Domain ID for the database
     [Alias('ConfiguredSlaDomainId')]
     [string]$SLAID,
@@ -80,10 +83,10 @@ function Set-RubrikDatabase
       $SLAID = (Get-RubrikSLA -Name $SLA).id
     }
     
-    #If the following params are 0, remove from body (invalid values)
+    #If the following params are -1, remove from body (invalid values)
     $intparams = @('LogBackupFrequencyInSeconds','LogRetentionHours','MaxDataStreams')
     foreach($p in $intparams){
-      if((Get-Variable -Name $p).Value -eq 0){$resources.Body.Remove($p)}
+      if((Get-Variable -Name $p).Value -eq -1){$resources.Body.Remove($p)}
     }
 
     #endregion
