@@ -37,10 +37,10 @@ The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific 
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-RubrikVM 'Server1' | New-RubrikSnapshot
+Get-RubrikVM 'Server1' | New-RubrikSnapshot -Inherit
 ```
 
-This will trigger an on-demand backup for any virtual machine named "Server1"
+This will trigger an on-demand backup for any virtual machine named "Server1" using the existing SLA domain
 
 ### -------------------------- EXAMPLE 2 --------------------------
 ```
@@ -51,7 +51,7 @@ This will trigger an on-demand backup for any fileset named "C_Drive" using the 
 
 ### -------------------------- EXAMPLE 3 --------------------------
 ```
-Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull
+Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -Inherit
 ```
 
 This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.

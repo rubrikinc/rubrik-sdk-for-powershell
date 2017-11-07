@@ -126,7 +126,7 @@ Filters live mounts by database source name
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: Mounted_Database_Name, MountName
+Aliases: mounted_database_name
 
 Required: False
 Position: 5

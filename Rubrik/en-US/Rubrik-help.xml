@@ -1575,7 +1575,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="Mounted_Database_Name, MountName">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="mounted_database_name">
           <maml:name>MountedDatabaseName</maml:name>
           <maml:Description>
             <maml:para>Filters live mounts by database source name</maml:para>
@@ -1662,7 +1662,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="Mounted_Database_Name, MountName">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="mounted_database_name">
         <maml:name>MountedDatabaseName</maml:name>
         <maml:Description>
           <maml:para>Filters live mounts by database source name</maml:para>
@@ -4026,7 +4026,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>id</maml:name>
           <maml:Description>
             <maml:para>Virtual machine id</maml:para>
@@ -4137,7 +4137,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>id</maml:name>
         <maml:Description>
           <maml:para>Virtual machine id</maml:para>
@@ -6576,9 +6576,9 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-RubrikVM 'Server1' | New-RubrikSnapshot</dev:code>
+        <dev:code>Get-RubrikVM 'Server1' | New-RubrikSnapshot -Inherit</dev:code>
         <dev:remarks>
-          <maml:para>This will trigger an on-demand backup for any virtual machine named "Server1"</maml:para>
+          <maml:para>This will trigger an on-demand backup for any virtual machine named "Server1" using the existing SLA domain</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -6590,7 +6590,7 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull</dev:code>
+        <dev:code>Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -Inherit</dev:code>
         <dev:remarks>
           <maml:para>This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.</maml:para>
         </dev:remarks>
@@ -9944,26 +9944,26 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LogBackupFrequencyInSeconds</maml:name>
           <maml:Description>
-            <maml:para>Number of seconds between log backups if db is in FULL or BULK_LOGGED</maml:para>
+            <maml:para>Number of seconds between log backups if db is in FULL or BULK_LOGGED NOTE: Default of -1 is used to get around ints defaulting as 0</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
+          <dev:defaultValue>-1</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LogRetentionHours</maml:name>
           <maml:Description>
-            <maml:para>Number of hours backups will be retained in Rubrik</maml:para>
+            <maml:para>Number of hours backups will be retained in Rubrik NOTE: Default of -1 is used to get around ints defaulting as 0</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
+          <dev:defaultValue>-1</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>CopyOnly</maml:name>
@@ -9979,14 +9979,14 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>MaxDataStreams</maml:name>
           <maml:Description>
-            <maml:para>Number of max data streams Rubrik will use to back up the database</maml:para>
+            <maml:para>Number of max data streams Rubrik will use to back up the database NOTE: Default of -1 is used to get around ints defaulting as 0</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
+          <dev:defaultValue>-1</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="ConfiguredSlaDomainId">
           <maml:name>SLAID</maml:name>
@@ -10076,26 +10076,26 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>LogBackupFrequencyInSeconds</maml:name>
         <maml:Description>
-          <maml:para>Number of seconds between log backups if db is in FULL or BULK_LOGGED</maml:para>
+          <maml:para>Number of seconds between log backups if db is in FULL or BULK_LOGGED NOTE: Default of -1 is used to get around ints defaulting as 0</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
+        <dev:defaultValue>-1</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>LogRetentionHours</maml:name>
         <maml:Description>
-          <maml:para>Number of hours backups will be retained in Rubrik</maml:para>
+          <maml:para>Number of hours backups will be retained in Rubrik NOTE: Default of -1 is used to get around ints defaulting as 0</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
+        <dev:defaultValue>-1</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>CopyOnly</maml:name>
@@ -10112,14 +10112,14 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>MaxDataStreams</maml:name>
         <maml:Description>
-          <maml:para>Number of max data streams Rubrik will use to back up the database</maml:para>
+          <maml:para>Number of max data streams Rubrik will use to back up the database NOTE: Default of -1 is used to get around ints defaulting as 0</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
+        <dev:defaultValue>-1</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="ConfiguredSlaDomainId">
         <maml:name>SLAID</maml:name>

@@ -56,6 +56,7 @@ Accept wildcard characters: False
 
 ### -LogBackupFrequencyInSeconds
 Number of seconds between log backups if db is in FULL or BULK_LOGGED
+NOTE: Default of -1 is used to get around ints defaulting as 0
 
 ```yaml
 Type: Int32
@@ -64,13 +65,14 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -LogRetentionHours
 Number of hours backups will be retained in Rubrik
+NOTE: Default of -1 is used to get around ints defaulting as 0
 
 ```yaml
 Type: Int32
@@ -79,7 +81,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -101,6 +103,7 @@ Accept wildcard characters: False
 
 ### -MaxDataStreams
 Number of max data streams Rubrik will use to back up the database
+NOTE: Default of -1 is used to get around ints defaulting as 0
 
 ```yaml
 Type: Int32
@@ -109,7 +112,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
