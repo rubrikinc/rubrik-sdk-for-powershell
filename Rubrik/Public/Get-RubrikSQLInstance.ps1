@@ -9,10 +9,9 @@ function Get-RubrikSQLInstance
       Returns internal Rubrik object that represents a SQL Server instance. This 
 
       .NOTES
-      Written by {required}
-      Twitter: {optional}
-      GitHub: {optional}
-      Any other links you'd like here
+      Written by Mike Fal for community usage
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
 
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
