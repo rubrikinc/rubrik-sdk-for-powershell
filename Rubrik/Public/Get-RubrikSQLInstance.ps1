@@ -17,7 +17,17 @@ function Get-RubrikSQLInstance
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      Get-RubrikSQLInstance -Name MSSQLSERVER
+      Retrieve all default SQL instances managed by Rubrik
+
+      .EXAMPLE
+      Get-RubrikSQLInstance -ServerInstance msf-sql2016
+      Retrieve the default SQL instance on host msf-sql2016
+
+      .EXAMPLE
+      Get-RubrikSQLInstance -Hostname msf-sql2016
+      Retrieves all the SQL instances on host msf-sql2016
+
   #>
 
   [CmdletBinding()]
