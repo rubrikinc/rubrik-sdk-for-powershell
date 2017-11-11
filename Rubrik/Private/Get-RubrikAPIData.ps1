@@ -318,6 +318,24 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '200'
       }
+    }
+    'Get-RubrikSQLInstance'         = @{
+      v1 = @{
+        Description = 'Returns a list of summary information for Microsoft SQL instances.'
+        URI         = '/api/v1/mssql/instance'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          instance_id             = 'instance_id'
+        }
+        Result      = 'data'
+        Filter      = @{
+          'Name'   = 'name'
+          'SLA'    = 'configuredSlaDomainName'
+          'Hostname' = 'rootProperties.rootName'
+        }
+        Success     = '200'
+      }
     }    
     'Get-RubrikUnmanagedObject'  = @{
       v1 = @{
