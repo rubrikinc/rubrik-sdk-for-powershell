@@ -51,6 +51,8 @@ function Get-RubrikDatabase
     [String]$Instance,    
     # Name of the database host
     [String]$Hostname,
+    #ServerInstance name (combined hostname\instancename)
+    [String]$ServerInstance,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,    
@@ -84,6 +86,14 @@ function Get-RubrikDatabase
     $resources = (Get-RubrikAPIData -endpoint $function).$api
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
+
+    #region one-off
+    if($ServerInstance){
+      $SIobj = ConvertFrom-SqlServerInstance $ServerInstance
+      $Hostname = $SIobj.hostname
+      $Instance = $SIobj.instancename
+    }
+    #endregion
   
   }
 
