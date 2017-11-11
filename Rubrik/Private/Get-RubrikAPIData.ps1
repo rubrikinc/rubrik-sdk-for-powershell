@@ -752,6 +752,24 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '200'
       }
+    }
+    'Set-RubrikSQLInstance'         = @{
+      v1 = @{
+        Description = 'Updates Rubrik database settings.'
+        URI         = '/api/v1/mssql/instance/{id}'
+        Method      = 'Patch'
+        Body        = @{
+          logBackupFrequencyInSeconds = "logBackupFrequencyInSeconds"
+          logRetentionHours = "logRetentionHours"
+          copyOnly = "copyOnly"
+          maxDataStreams = "maxDataStreams"
+          configuredSlaDomainId = "configuredSlaDomainId"   
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
     }    
     'Set-RubrikVM'               = @{
       v1 = @{
