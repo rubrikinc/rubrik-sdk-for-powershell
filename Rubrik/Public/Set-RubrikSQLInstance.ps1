@@ -33,9 +33,6 @@ function Set-RubrikSQLInstance
     [int]$LogRetentionHours = -1,
     #Boolean declaration for copy only backups on the instance.
     [Switch]$CopyOnly,
-    #Number of max data streams Rubrik will use to back up the instance
-    #NOTE: Default of -1 is used to get around ints defaulting as 0
-    [int]$MaxDataStreams = -1,
     #SLA Domain ID for the database
     [Alias('ConfiguredSlaDomainId')]
     [string]$SLAID,
@@ -73,7 +70,7 @@ function Set-RubrikSQLInstance
       }
       
       #If the following params are -1, remove from body (invalid values)
-      $intparams = @('LogBackupFrequencyInSeconds','LogRetentionHours','MaxDataStreams')
+      $intparams = @('LogBackupFrequencyInSeconds','LogRetentionHours'
       foreach($p in $intparams){
         if((Get-Variable -Name $p).Value -eq -1){$resources.Body.Remove($p)}
       }
