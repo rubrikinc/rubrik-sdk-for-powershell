@@ -80,7 +80,7 @@ function Set-RubrikDatabase
 
     #region One-off
     if($SLA){
-      $SLAID = (Get-RubrikSLA -Name $SLA).id
+      $SLAID = Test-RubrikSLA $SLA
     }
     
     #If the following params are -1, remove from body (invalid values)

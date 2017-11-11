@@ -17,10 +17,10 @@ function Set-RubrikSQLInstance
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      Set-RubrikSQLInstance
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik's database id value
     [Parameter(ValueFromPipelineByPropertyName = $true)]
@@ -69,7 +69,7 @@ function Set-RubrikSQLInstance
 
     #region One-off
     if($SLA){
-        $SLAID = (Get-RubrikSLA -Name $SLA).id
+        $SLAID = Test-RubrikSLA $SLA
       }
       
       #If the following params are -1, remove from body (invalid values)
