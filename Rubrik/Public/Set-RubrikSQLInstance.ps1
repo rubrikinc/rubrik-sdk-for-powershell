@@ -1,12 +1,12 @@
 #requires -Version 3
-function Set-RubrikDatabase
+function Set-RubrikSQLInstance
 {
   <#  
       .SYNOPSIS
-      Sets Rubrik database properties
+      Sets SQL Instance properties
 
       .DESCRIPTION
-      The Set-RubrikDatabase cmdlet is used to update certain settings for a Rubrik database.
+      The Set-RubrikSQLInstance cmdlet is used to update certain settings for a Rubrik SQL instance.
 
       .NOTES
       Written by Mike Fal for community usage
@@ -17,33 +17,22 @@ function Set-RubrikDatabase
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Set-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -LogBackupFrequencyInSeconds 900
-
-      Set the target database's log backup interval to 15 minutes (900 seconds)
-
-      .EXAMPLE
-      Get-RubrikDatabase -HostName Foo -Instance MSSQLSERVER | Set-RubrikDatabase -SLA 'Silver' -CopyOnly 
-
-      Set all databases on host FOO to use SLA Silver and be copy only.
-
+      Set-RubrikSQLInstance
   #>
 
-   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik's database id value
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    #Number of seconds between log backups if db is in FULL or BULK_LOGGED
+    #Number of seconds between log backups if db s are in FULL or BULK_LOGGED
     #NOTE: Default of -1 is used to get around ints defaulting as 0
     [int]$LogBackupFrequencyInSeconds = -1,
     #Number of hours backups will be retained in Rubrik
     #NOTE: Default of -1 is used to get around ints defaulting as 0
     [int]$LogRetentionHours = -1,
-    #Boolean declaration for copy only backups on the database.
+    #Boolean declaration for copy only backups on the instance.
     [Switch]$CopyOnly,
-    #Number of max data streams Rubrik will use to back up the database
-    #NOTE: Default of -1 is used to get around ints defaulting as 0
-    [int]$MaxDataStreams = -1,
     #SLA Domain ID for the database
     [Alias('ConfiguredSlaDomainId')]
     [string]$SLAID,
@@ -56,7 +45,8 @@ function Set-RubrikDatabase
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
-    Begin {
+
+  Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -73,26 +63,27 @@ function Set-RubrikDatabase
     $resources = (Get-RubrikAPIData -endpoint $function).$api
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
+
+    #region One-off
+    if($SLA){
+        $SLAID = Test-RubrikSLA $SLA
+      }
+      
+      #If the following params are -1, remove from body (invalid values)
+      $intparams = @('LogBackupFrequencyInSeconds','LogRetentionHours'
+      foreach($p in $intparams){
+        if((Get-Variable -Name $p).Value -eq -1){$resources.Body.Remove($p)}
+      }
+  
+      #endregion
   
   }
 
   Process {
 
-    #region One-off
-    if($SLA){
-      $SLAID = Test-RubrikSLA $SLA
-    }
-    
-    #If the following params are -1, remove from body (invalid values)
-    $intparams = @('LogBackupFrequencyInSeconds','LogRetentionHours','MaxDataStreams')
-    foreach($p in $intparams){
-      if((Get-Variable -Name $p).Value -eq -1){$resources.Body.Remove($p)}
-    }
-
-    #endregion
-
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

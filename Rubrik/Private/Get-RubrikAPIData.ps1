@@ -318,6 +318,24 @@ function Get-RubrikAPIData($endpoint)
         Filter      = ''
         Success     = '200'
       }
+    }
+    'Get-RubrikSQLInstance'         = @{
+      v1 = @{
+        Description = 'Returns a list of summary information for Microsoft SQL instances.'
+        URI         = '/api/v1/mssql/instance'
+        Method      = 'Get'
+        Body        = ''
+        Query       = @{
+          instance_id             = 'instance_id'
+        }
+        Result      = 'data'
+        Filter      = @{
+          'Name'   = 'name'
+          'SLA'    = 'configuredSlaDomainName'
+          'Hostname' = 'rootProperties.rootName'
+        }
+        Success     = '200'
+      }
     }    
     'Get-RubrikUnmanagedObject'  = @{
       v1 = @{
@@ -728,6 +746,24 @@ function Get-RubrikAPIData($endpoint)
           table = @{
             columns = 'columns'
           }
+        }
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }
+    'Set-RubrikSQLInstance'         = @{
+      v1 = @{
+        Description = 'Updates Rubrik database settings.'
+        URI         = '/api/v1/mssql/instance/{id}'
+        Method      = 'Patch'
+        Body        = @{
+          logBackupFrequencyInSeconds = "logBackupFrequencyInSeconds"
+          logRetentionHours = "logRetentionHours"
+          copyOnly = "copyOnly"
+          maxDataStreams = "maxDataStreams"
+          configuredSlaDomainId = "configuredSlaDomainId"   
         }
         Query       = ''
         Result      = ''
