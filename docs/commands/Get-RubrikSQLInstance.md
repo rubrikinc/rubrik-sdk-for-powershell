@@ -5,84 +5,58 @@ online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
-# Get-RubrikDatabase
+# Get-RubrikSQLInstance
 
 ## SYNOPSIS
-Retrieves details on one or more databases known to a Rubrik cluster
+Gets internal Rubrik object that represents a SQL Server instance
 
 ## SYNTAX
 
 ```
-Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>]
- [[-ServerInstance] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>]
- [[-Server] <String>] [[-api] <String>]
+Get-RubrikSQLInstance [[-Name] <String>] [[-SLA] <String>] [[-Hostname] <String>] [[-ServerInstance] <String>]
+ [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>]
 ```
 
 ## DESCRIPTION
-The Get-RubrikDatabase cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of databases.
-To narrow down the results, use the host and instance parameters to limit your search to a smaller group of objects.
-Alternatively, supply the Rubrik database ID to return only one specific database.
+Returns internal Rubrik object that represents a SQL Server instance.
+This
 
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-RubrikDatabase -Name 'DB1' -SLA Gold
+Get-RubrikSQLInstance -Name MSSQLSERVER
 ```
 
-This will return details on all databases named DB1 protected by the Gold SLA Domain on any known host or instance.
+Retrieve all default SQL instances managed by Rubrik
 
 ### -------------------------- EXAMPLE 2 --------------------------
 ```
-Get-RubrikDatabase -Name 'DB1' -Host 'Host1' -Instance 'MSSQLSERVER'
+Get-RubrikSQLInstance -ServerInstance msf-sql2016
 ```
 
-This will return details on a database named "DB1" living on an instance named "MSSQLSERVER" on the host named "Host1".
+Retrieve the default SQL instance on host msf-sql2016
 
 ### -------------------------- EXAMPLE 3 --------------------------
 ```
-Get-RubrikDatabase -Relic
+Get-RubrikSQLInstance -Hostname msf-sql2016
 ```
 
-This will return all removed databases that were formerly protected by Rubrik.
-
-### -------------------------- EXAMPLE 4 --------------------------
-```
-Get-RubrikDatabase -id 'MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
-```
-
-This will return details on a single database matching the Rubrik ID of "MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
-Note that the database ID is globally unique and is often handy to know if tracking a specific database for longer workflows,
-whereas some values are not unique (such as nearly all hosts having one or more databases named "model") and more difficult to track by name.
+Retrieves all the SQL instances on host msf-sql2016
 
 ## PARAMETERS
 
 ### -Name
-Name of the database
+Name of the instance
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: Database
+Aliases: InstanceName
 
 Required: False
 Position: 1
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Relic
-Filter results to include only relic (removed) databases
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: is_relic
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -102,21 +76,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Instance
-Name of the database instance
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Hostname
 Name of the database host
 
@@ -126,7 +85,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 4
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -141,7 +100,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 5
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -157,7 +116,7 @@ Parameter Sets: (All)
 Aliases: primary_cluster_id
 
 Required: False
-Position: 6
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -172,7 +131,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 7
+Position: 6
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -184,10 +143,10 @@ SLA id value
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: effective_sla_domain_id
+Aliases: 
 
 Required: False
-Position: 8
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -202,7 +161,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 9
+Position: 8
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -217,7 +176,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 10
+Position: 9
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -228,9 +187,9 @@ Accept wildcard characters: False
 ## OUTPUTS
 
 ## NOTES
-Written by Chris Wahl for community usage
-Twitter: @ChrisWahl
-GitHub: chriswahl
+Written by Mike Fal for community usage
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
