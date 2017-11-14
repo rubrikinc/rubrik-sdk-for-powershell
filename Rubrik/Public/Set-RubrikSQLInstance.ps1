@@ -69,13 +69,12 @@ function Set-RubrikSQLInstance
         $SLAID = Test-RubrikSLA $SLA
       }
       
-      #If the following params are -1, remove from body (invalid values)
-      $intparams = @('LogBackupFrequencyInSeconds','LogRetentionHours'
-      foreach($p in $intparams){
-        if((Get-Variable -Name $p).Value -eq -1){$resources.Body.Remove($p)}
-      }
-  
-      #endregion
+    #If the following params are -1, remove from body (invalid values)
+    $intparams = @('LogBackupFrequencyInSeconds','LogRetentionHours')
+    foreach($p in $intparams){
+      if((Get-Variable -Name $p).Value -eq -1){$resources.Body.Remove($p)}
+    }     
+    #endregion
   
   }
 
