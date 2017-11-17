@@ -62,17 +62,17 @@ function Protect-RubrikTag
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # Check to ensure that a session to the vSphere Center Server exists and load the needed header data for authentication
     Test-VMwareConnection
 
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = (Get-RubrikAPIData -endpoint $function).$api
@@ -85,20 +85,27 @@ function Protect-RubrikTag
 
     #region One-off
     $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
-    
+
     Write-Verbose -Message "Gathering a list of VMs associated with Category $Category and Tag $Tag"
-    try 
+    try
     {
       $vmlist = Get-VM -Tag (Get-Tag -Name $Tag -Category $Category) | Get-View
       # This will pull out the vCenter UUID assigned to the parent vCenter Server by Rubrik
       # Reset switches to prevent Get-RubrikVM from picking them up (must be a better way?)
-      $DoNotProtect = $false    
+      $DoNotProtect = $false
       $Inherit = $false
-      $vcuuid = ((Get-RubrikVM -VM ($vmlist[0].Name) -PrimaryClusterID 'local').vCenterId) -replace 'vCenter:::', ''
+      if ($vmlist.count -gt 0) {
+        $vcuuid = ((Get-RubrikVM -VM ($vmlist[0].Name) -PrimaryClusterID 'local').vCenterId) -replace 'vCenter:::', ''
+      }
     }
     catch
     {
       throw $_
+    }
+
+    if ($vmlist.count -eq 0) {
+      Write-Verbose -Message "No VMs found with Category $Category and Tag $Tag"
+      return $null
     }
 
     Write-Verbose -Message 'Building an array of Rubrik Managed IDs'
@@ -109,7 +116,7 @@ function Protect-RubrikTag
       Write-Verbose -Message "Found $($vmbulk.count) records"
     }
     #endregion
-       
+
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $SLAID
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
 
