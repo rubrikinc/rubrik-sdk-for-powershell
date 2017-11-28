@@ -1,4 +1,4 @@
-# Line break for readability in AppVeyor console
+﻿# Line break for readability in AppVeyor console
 Write-Host -Object ''
 
 # Make sure we're using the Master branch and that it's not a pull request
@@ -78,7 +78,7 @@ else
             git checkout master
             git add --all
             git status
-        git commit -s -m "Update version to $newVersion"
+            git commit -s -m "Update version to $newVersion [ci skip]"
             git push origin master
             Write-Host "Rubrik PowerShell Module version $newVersion published to GitHub." -ForegroundColor Cyan
         }
