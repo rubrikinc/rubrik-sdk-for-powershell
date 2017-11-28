@@ -44,6 +44,7 @@ test_script:
   - git config --global user.email "github@wahlnetwork.com"
   - git config --global user.name "Chris Wahl"  
   - git config --global core.autocrlf true
+  - git config --global core.safecrlf false
   - ps: . .\tests\build.ps1
 
 # Post a status update in Slack
