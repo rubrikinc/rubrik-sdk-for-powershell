@@ -27,7 +27,7 @@ install:
   - pwsh -f "./tests/install.ps1"
 
 script:
-  - pwsh -c { Invoke-Pester -Path ".\tests" -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru }
+  - pwsh -c { Invoke-Pester -Path "./tests" -OutputFormat NUnitXml -OutputFile TestsResults.xml }
   - pwsh -f "./tests/build.ps1"
 
 notifications:
