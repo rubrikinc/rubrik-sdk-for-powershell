@@ -1,0 +1,35 @@
+#                 Documentation: https://docs.travis-ci.com
+# Environmental Variables Guide: https://docs.travis-ci.com/user/environment-variables/
+#                YAML Validator: https://lint.travis-ci.org/
+
+language: generic
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: false
+      addons:
+        apt:
+          sources:
+            - sourceline: "deb [arch=amd64] https://packages.microsoft.com/ubuntu/14.04/prod trusty main"
+              key_url: "https://packages.microsoft.com/keys/microsoft.asc"
+          packages:
+            - powershell
+    - os: osx
+      osx_image: xcode9.1
+      before_install:
+        - brew tap caskroom/cask
+        - brew cask install powershell
+  fast_finish: true
+
+install:
+  - pwsh -f "./tests/install.ps1"
+
+script:
+  - pwsh -c "$res = Invoke-Pester -Path ".\tests" -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru"
+  - pwsh -f "./tests/build.ps1"
+
+notifications:
+  slack:
+    secure: # insert encrypted string here (reference: https://docs.travis-ci.com/user/notifications/#Configuring-slack-notifications)
