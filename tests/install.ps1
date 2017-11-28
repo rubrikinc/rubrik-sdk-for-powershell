@@ -21,11 +21,14 @@ ForEach ($Module in $PowerShellModules) {
     Import-Module $Module
 }
 
-# Install Chocolatey
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+If ($env:APPVEYOR -eq $true)
+{
+    # Install Chocolatey
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Install Chocolatey packages
-ForEach ($Package in $ChocolateyPackages) {choco install $Package -y --no-progress}
+    # Install Chocolatey packages
+    ForEach ($Package in $ChocolateyPackages) {choco install $Package -y --no-progress}
+}
 
 # Install Node packages
 ForEach ($Module in $NodeModules) {npm install -g $Module}
