@@ -1,4 +1,4 @@
-﻿[string[]]$PowerShellModules = @("Pester", "posh-git", "platyPS", "InvokeBuild")
+﻿[string[]]$PowerShellModules = @("Pester", "posh-git", "platyPS")
 [string[]]$PackageProviders = @('NuGet', 'PowerShellGet')
 [string[]]$ChocolateyPackages = @('nodejs', 'calibre')
 [string[]]$NodeModules = @('gitbook-cli', 'gitbook-summary')
