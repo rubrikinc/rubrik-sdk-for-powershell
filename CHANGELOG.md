@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Track `user_error` responses in the `Submit-Request` private function
 * The `Get-RubrikSnapshot` function supports HyperV VMs.
 
 ### Deprecated
