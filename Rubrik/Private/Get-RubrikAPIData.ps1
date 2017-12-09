@@ -337,7 +337,19 @@ function Get-RubrikAPIData($endpoint)
         }
         Success     = '200'
       }
-    }    
+    }
+    'Get-RubrikSupportTunnel' = @{
+      v1 = @{
+        Description = 'To be used by Admin to check status of the support tunnel.'
+        URI         = '/api/internal/node/me/support_tunnel'
+        Method      = 'Get'
+        Body        = ''
+        Query       = ''
+        Result      = ''
+        Filter      = ''
+        Success     = '200'
+      }
+    }     
     'Get-RubrikUnmanagedObject'  = @{
       v1 = @{
         Description = 'Get summary of all the objects with unmanaged snapshots'

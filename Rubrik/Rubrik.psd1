@@ -73,7 +73,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikMount', 'Get-RubrikReport', 'Get-RubrikReportData', 
                'Get-RubrikRequest', 'Get-RubrikSLA', 'Get-RubrikSnapshot', 
                'Get-RubrikSoftwareVersion', 'Get-RubrikSQLInstance', 
-               'Get-RubrikUnmanagedObject', 'Get-RubrikVersion', 'Get-RubrikVM', 
+               'Get-RubrikUnmanagedObject', 'Get-RubrikVersion', 'Get-RubrikVM', 'Get-RubrikSupportTunnel', 
                'Invoke-RubrikRESTCall', 'Move-RubrikMountVMDK', 
                'New-RubrikDatabaseMount', 'New-RubrikHost', 'New-RubrikMount', 
                'New-RubrikReport', 'New-RubrikSLA', 'New-RubrikSnapshot', 
