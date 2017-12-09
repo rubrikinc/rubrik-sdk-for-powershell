@@ -27,6 +27,11 @@
         Write-Verbose -Message 'Loading VMware API data'
         $uri = ('https://'+$Server+$resources.URI.VMware) -replace '{id}', $id
       }
+      'HypervVirtualMachine:::*'
+      {
+        Write-Verbose -Message 'Loading HyperV API data'
+        $uri = ('https://'+$Server+$resources.URI.HyperV) -replace '{id}', $id
+      }
       default
       {
         throw 'The supplied id value has no matching endpoint'

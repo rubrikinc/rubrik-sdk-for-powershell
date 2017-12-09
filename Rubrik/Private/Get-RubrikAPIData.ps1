@@ -295,6 +295,7 @@ function Get-RubrikAPIData($endpoint)
           Fileset = '/api/v1/fileset/{id}/snapshot'
           MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
           VMware  = '/api/v1/vmware/vm/{id}/snapshot'
+          HyperV  = '/api/internal/hyperv/vm/{id}/snapshot'
         }
         Method      = 'Get'
         Body        = ''
