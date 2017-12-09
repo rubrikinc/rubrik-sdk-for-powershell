@@ -30,6 +30,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * [GitHub Issue Template](https://github.com/rubrikinc/PowerShell-Module/commit/ca0a7fc1864c42162236b4e68af6f44d07f0a164).
 * [Invoke-RubrikRESTCall](https://github.com/rubrikinc/PowerShell-Module/pull/118).
 
+### Changed
+
+* The `Get-RubrikSnapshot` function supports HyperV VMs.
+
 ### Deprecated
 
 * Dynamic documentation using ReadTheDocs and reStructuredText.
