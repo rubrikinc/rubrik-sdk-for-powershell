@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* `Set-RubrikSupportTunnel` - Modifies the configuration of the Support Tunnel.
+* `Get-RubrikSupportTunnel` - Checks the status of the Support Tunnel.
 * This Changelog - moving forward, related changes will be documented here in an easy to read format for human eyeballs.
 * Dynamic documentation creation via GitBook.
 * [GitHub Pull Request Template](https://github.com/rubrikinc/PowerShell-Module/pull/135).
@@ -32,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Track `user_error` responses in the `Submit-Request` private function
 * The `Get-RubrikSnapshot` function supports HyperV VMs.
 
 ### Deprecated
