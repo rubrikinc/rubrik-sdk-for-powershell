@@ -3967,6 +3967,96 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-RubrikSupportTunnel</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>RubrikSupportTunnel</command:noun>
+      <maml:description>
+        <maml:para>Checks the status of the Support Tunnel</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Get-RubrikSupportTunnel cmdlet is used to query the Rubrik cluster to determine the status of the Support Tunnel This tunnel is used by Rubrik's support team for providing remote assistance and is toggled on or off by the cluster administrator</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-RubrikSupportTunnel</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik server IP or FQDN</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>api</maml:name>
+          <maml:Description>
+            <maml:para>API version</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Rubrik server IP or FQDN</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>api</maml:name>
+        <maml:Description>
+          <maml:para>API version</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-RubrikSupportTunnel</dev:code>
+        <dev:remarks>
+          <maml:para>This will return details on the configuration of the Support Tunnel for the currently connected Rubrik cluster</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
+        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-RubrikUnmanagedObject</command:name>
       <command:verb>Get</command:verb>
       <command:noun>RubrikUnmanagedObject</command:noun>
@@ -10980,6 +11070,158 @@
         <dev:code>Set-RubrikSQLInstance</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
+        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Set-RubrikSupportTunnel</command:name>
+      <command:verb>Set</command:verb>
+      <command:noun>RubrikSupportTunnel</command:noun>
+      <maml:description>
+        <maml:para>Sets the configuration of the Support Tunnel</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Set-RubrikSupportTunnel cmdlet is used to update a Rubrik cluster's Support Tunnel configuration This tunnel is used by Rubrik's support team for providing remote assistance and is toggled on or off by the cluster administrator</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-RubrikSupportTunnel</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="isTunnelEnabled">
+          <maml:name>EnableTunnel</maml:name>
+          <maml:Description>
+            <maml:para>Status of the Support Tunnel. Choose $true to enable or $false to disable.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="inactivityTimeoutInSeconds">
+          <maml:name>Timeout</maml:name>
+          <maml:Description>
+            <maml:para>Tunnel inactivity timeout in seconds. Only valid when setting $EnableTunnel to $true.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik server IP or FQDN</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>api</maml:name>
+          <maml:Description>
+            <maml:para>API version</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="isTunnelEnabled">
+        <maml:name>EnableTunnel</maml:name>
+        <maml:Description>
+          <maml:para>Status of the Support Tunnel. Choose $true to enable or $false to disable.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="inactivityTimeoutInSeconds">
+        <maml:name>Timeout</maml:name>
+        <maml:Description>
+          <maml:para>Tunnel inactivity timeout in seconds. Only valid when setting $EnableTunnel to $true.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Rubrik server IP or FQDN</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>api</maml:name>
+        <maml:Description>
+          <maml:para>API version</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Set-RubrikSupportTunnel -EnableTunnel $false</dev:code>
+        <dev:remarks>
+          <maml:para>This will disable the Support Tunnel for the Rubrik cluster</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Set-RubrikSupportTunnel -EnableTunnel $true</dev:code>
+        <dev:remarks>
+          <maml:para>This will enable the Support Tunnel for the Rubrik cluster and set the inactivity timeout to infinite (no timeout)</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Set-RubrikSupportTunnel -EnableTunnel $true -Timeout 100</dev:code>
+        <dev:remarks>
+          <maml:para>This will enable the Support Tunnel for the Rubrik cluster and set the inactivity timeout to 100 seconds</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
