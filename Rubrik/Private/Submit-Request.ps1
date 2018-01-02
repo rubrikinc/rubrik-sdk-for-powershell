@@ -10,6 +10,10 @@
   {
     try 
     {
+      Write-Verbose -Message 'Forcing TLS 1.2'
+      #Force TLS 1.2
+      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+      
       Write-Verbose -Message 'Submitting the request'
       # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
       $result = ExpandPayload -response (Invoke-WebRequest -Uri $uri -Headers $header -Method $method -Body $body)
