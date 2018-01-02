@@ -14,7 +14,7 @@ Retrieves details on one or more fileset templates known to a Rubrik cluster
 
 ```
 Get-RubrikFilesetTemplate [[-Name] <String>] [[-OperatingSystemType] <String>] [[-PrimaryClusterID] <String>]
- [[-id] <String>] [[-Server] <String>] [[-api] <String>]
+ [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -22,21 +22,21 @@ The Get-RubrikFilesetTemplate cmdlet is used to pull a detailed data set from a 
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-RubrikFilesetTemplate -Name 'Template1'
 ```
 
 This will return details on all fileset templates named "Template1"
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-RubrikFilesetTemplate -OperatingSystemType 'Linux'
 ```
 
 This will return details on all fileset templates that can be used against a Linux operating system type
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Get-RubrikFilesetTemplate -id '11111111-2222-3333-4444-555555555555'
 ```
@@ -99,7 +99,7 @@ The ID of the fileset template
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -114,7 +114,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 5
@@ -129,7 +129,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 6
@@ -137,6 +137,10 @@ Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

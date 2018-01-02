@@ -15,12 +15,13 @@ Moves the VMDKs from a Live Mount to another VM
 ### Create
 ```
 Move-RubrikMountVMDK [-SourceVM] <String> [-TargetVM] <String> [[-Date] <String>] [[-ExcludeDisk] <Array>]
- [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
+ [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Destroy
 ```
 Move-RubrikMountVMDK [-Cleanup <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,7 +29,7 @@ The Move-RubrikMountVMDK cmdlet is used to attach VMDKs from a Live Mount to ano
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM'
 ```
@@ -36,7 +37,7 @@ Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM'
 This will create a Live Mount using the latest snapshot of the VM named "SourceVM"
 The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -Date '01/30/2016 08:00'
 ```
@@ -46,7 +47,7 @@ The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
 Note: The Date parameter will start at the time specified (in this case, 08:00am) and work backwards in time until it finds a snapshot.
 Precise timing is not required.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -ExcludeDisk @(0,1)
 ```
@@ -57,7 +58,7 @@ Note: that for the "ExcludeDisk" array, the format is @(#,#,#,...) where each # 
 Example: To exclude the first and third disks, the value would be @(0,2).
 Example: To exclude just the first disk, use @(0).
 
-### -------------------------- EXAMPLE 4 --------------------------
+### EXAMPLE 4
 ```
 Move-RubrikMountVMDK -Cleanup 'C:\Users\Person1\Documents\SourceVM_to_TargetVM-1234567890.txt'
 ```
@@ -89,7 +90,7 @@ Target virtual machine to attach the Live Mount disk(s)
 ```yaml
 Type: String
 Parameter Sets: Create
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -105,7 +106,7 @@ Will use the current date and time if no value is specified
 ```yaml
 Type: String
 Parameter Sets: Create
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -121,7 +122,7 @@ By default, all disks will be presented
 ```yaml
 Type: Array
 Parameter Sets: Create
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -138,7 +139,7 @@ The file contains the TargetVM name, MountID value, and a list of all presented 
 ```yaml
 Type: String
 Parameter Sets: Destroy
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -153,7 +154,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -168,7 +169,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -207,6 +208,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

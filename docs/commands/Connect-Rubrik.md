@@ -14,6 +14,7 @@ Connects to Rubrik and retrieves a token value for authentication
 
 ```
 Connect-Rubrik [-Server] <String> [[-Username] <String>] [[-Password] <SecureString>] [[-Credential] <Object>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,7 +25,7 @@ Note that you can pass a username and password or an entire set of credentials.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Connect-Rubrik -Server 192.168.1.1 -Username admin
 ```
@@ -32,14 +33,14 @@ Connect-Rubrik -Server 192.168.1.1 -Username admin
 This will connect to Rubrik with a username of "admin" to the IP address 192.168.1.1.
 The prompt will request a secure password.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Connect-Rubrik -Server 192.168.1.1 -Username admin -Password (ConvertTo-SecureString "secret" -asplaintext -force)
 ```
 
 If you need to pass the password value in the cmdlet directly, use the ConvertTo-SecureString function.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Connect-Rubrik -Server 192.168.1.1 -Credential (Get-Credential)
 ```
@@ -54,7 +55,7 @@ The IP or FQDN of any available Rubrik node within the cluster
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -70,7 +71,7 @@ Optionally, use the Credential parameter
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -86,7 +87,7 @@ Optionally, use the Credential parameter
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -102,7 +103,7 @@ Optionally, use the Username and Password parameters
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -110,6 +111,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

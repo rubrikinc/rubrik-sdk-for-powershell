@@ -15,19 +15,19 @@ Takes an on-demand Rubrik snapshot of a protected object
 ### SLA_Explicit
 ```
 New-RubrikSnapshot -id <String> [-SLA <String>] [-ForceFull] [-SLAID <String>] [-Server <String>]
- [-api <String>] [-WhatIf] [-Confirm]
+ [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### SLA_Unprotected
 ```
 New-RubrikSnapshot -id <String> [-DoNotProtect] [-ForceFull] [-SLAID <String>] [-Server <String>]
- [-api <String>] [-WhatIf] [-Confirm]
+ [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### SLA_Inherit
 ```
 New-RubrikSnapshot -id <String> [-Inherit] [-ForceFull] [-SLAID <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,21 +35,21 @@ The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific 
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-RubrikVM 'Server1' | New-RubrikSnapshot -Inherit
 ```
 
 This will trigger an on-demand backup for any virtual machine named "Server1" using the existing SLA domain
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot -SLA 'Gold'
 ```
 
 This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -Inherit
 ```
@@ -64,7 +64,7 @@ Rubrik's id of the object
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -79,7 +79,7 @@ The SLA Domain in Rubrik
 ```yaml
 Type: String
 Parameter Sets: SLA_Explicit
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +94,7 @@ Removes the SLA Domain assignment
 ```yaml
 Type: SwitchParameter
 Parameter Sets: SLA_Unprotected
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -109,7 +109,7 @@ Inherits the SLA Domain assignment from a parent object
 ```yaml
 Type: SwitchParameter
 Parameter Sets: SLA_Inherit
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +140,7 @@ SLA id value
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +155,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -170,7 +170,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -209,6 +209,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

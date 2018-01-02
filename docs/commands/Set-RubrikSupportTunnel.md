@@ -14,6 +14,7 @@ Sets the configuration of the Support Tunnel
 
 ```
 Set-RubrikSupportTunnel [-EnableTunnel] <Boolean> [[-Timeout] <Int32>] [[-Server] <String>] [[-api] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -22,21 +23,21 @@ This tunnel is used by Rubrik's support team for providing remote assistance and
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Set-RubrikSupportTunnel -EnableTunnel $false
 ```
 
 This will disable the Support Tunnel for the Rubrik cluster
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Set-RubrikSupportTunnel -EnableTunnel $true
 ```
 
 This will enable the Support Tunnel for the Rubrik cluster and set the inactivity timeout to infinite (no timeout)
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Set-RubrikSupportTunnel -EnableTunnel $true -Timeout 100
 ```
@@ -83,7 +84,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -98,7 +99,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -106,6 +107,10 @@ Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
