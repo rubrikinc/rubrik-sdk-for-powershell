@@ -102,13 +102,23 @@ function Connect-Rubrik
         }      
       }
 
+      Write-Verbose -Message 'Adding TLS 1.2'
+      #Force TLS 1.2
+      try{
+        if([Net.ServicePointManager]::SecurityProtocol -notcontains 'Tls12'){
+          [Net.ServicePointManager]::SecurityProtocol += [Net.SecurityProtocolType]::Tls12
+        }
+      }
+      catch 
+      {
+        Write-Verbose -Message $_
+        Write-Verbose -Message $_.Exception.InnerException.Message
+      }
+      
       Write-Verbose -Message 'Submitting the request'
       try 
       {
-        Write-Verbose -Message 'Forcing TLS 1.2'
-        #Force TLS 1.2
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        
+              
         $r = Invoke-WebRequest -Uri $uri -Method $method -Body (ConvertTo-Json -InputObject $body) -Headers $head
         $content = (ConvertFrom-Json -InputObject $r.Content)
         # If we find a successful call code and also a token, we know the request was successful
