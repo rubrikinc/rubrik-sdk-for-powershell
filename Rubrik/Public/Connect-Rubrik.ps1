@@ -101,12 +101,12 @@ function Connect-Rubrik
           'Authorization' = "Basic $auth"
         }      
       }
-
-      Write-Verbose -Message 'Adding TLS 1.2'
+      
       #Force TLS 1.2
       try{
-        if([Net.ServicePointManager]::SecurityProtocol -notcontains 'Tls12'){
-          [Net.ServicePointManager]::SecurityProtocol += [Net.SecurityProtocolType]::Tls12
+        if([Net.ServicePointManager]::SecurityProtocol -notlike '*Tls12*'){
+          Write-Verbose -Message 'Adding TLS 1.2'
+          [Net.ServicePointManager]::SecurityProtocol = ([Net.ServicePointManager]::SecurityProtocol).tostring() +', Tls12'
         }
       }
       catch 
