@@ -50,7 +50,7 @@ function New-RubrikReport
         
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
-    $resources = (Get-RubrikAPIData -endpoint $function).$api
+    $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
   

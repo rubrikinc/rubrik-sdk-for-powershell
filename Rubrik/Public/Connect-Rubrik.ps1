@@ -1,7 +1,6 @@
 ﻿#Requires -Version 3
-function Connect-Rubrik 
-{
-  <#  
+function Connect-Rubrik {
+    <#  
       .SYNOPSIS
       Connects to Rubrik and retrieves a token value for authentication
 
@@ -33,161 +32,98 @@ function Connect-Rubrik
       Rather than passing a username and secure password, you can also opt to submit an entire set of credentials using the -Credentials parameter.
   #>
 
-  [CmdletBinding()]
-  Param(
-    # The IP or FQDN of any available Rubrik node within the cluster
-    [Parameter(Mandatory = $true,Position = 0)]
-    [ValidateNotNullorEmpty()]
-    [String]$Server,
-    # Username with permissions to connect to the Rubrik cluster
-    # Optionally, use the Credential parameter
-    [Parameter(Position = 1)]
-    [String]$Username,
-    # Password for the Username provided
-    # Optionally, use the Credential parameter
-    [Parameter(Position = 2)]
-    [SecureString]$Password,
-    # Credentials with permission to connect to the Rubrik cluster
-    # Optionally, use the Username and Password parameters
-    [Parameter(Position = 3)]
-    [System.Management.Automation.CredentialAttribute()]$Credential
+    [CmdletBinding()]
+    Param(
+        # The IP or FQDN of any available Rubrik node within the cluster
+        [Parameter(Mandatory = $true, Position = 0)]
+        [ValidateNotNullorEmpty()]
+        [String]$Server,
+        # Username with permissions to connect to the Rubrik cluster
+        # Optionally, use the Credential parameter
+        [Parameter(Position = 1)]
+        [String]$Username,
+        # Password for the Username provided
+        # Optionally, use the Credential parameter
+        [Parameter(Position = 2)]
+        [SecureString]$Password,
+        # Credentials with permission to connect to the Rubrik cluster
+        # Optionally, use the Username and Password parameters
+        [Parameter(Position = 3)]
+        [System.Management.Automation.CredentialAttribute()]$Credential
 
-  )
+    )
 
-  Begin {
+    Begin {
 
-    Unblock-SelfSignedCert
+        Unblock-SelfSignedCert
         
-    # API data references the name of the function
-    # For convenience, that name is saved here to $function
-    $function = $MyInvocation.MyCommand.Name
+        # API data references the name of the function
+        # For convenience, that name is saved here to $function
+        $function = $MyInvocation.MyCommand.Name
         
-    # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
-    Write-Verbose -Message "Gather API Data for $function"
-    $resources = (Get-RubrikAPIData -endpoint $function)
+        # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
+        Write-Verbose -Message "Gather API Data for $function"
+        $resources = Get-RubrikAPIData -endpoint $function
+        Write-Verbose -Message "Load API data for $($resources.Function)"
+        Write-Verbose -Message "Description: $($resources.Description)"
   
-  }
+    }
 
-  Process {
+    Process {
 
-    $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
+        $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
 
-    foreach ($versionnum in $resources.Keys | Sort-Object -Descending)
-    {
-      # Load the version specific data from the resources array
-      $version = $resources[$versionnum]
-      
-      Write-Verbose -Message "Connecting to $($version.URI)"
-    
-      # Create the URI
-      $uri = 'https://'+$Server+$version.URI
-      
-      # Set the Method
-      $method = $version.Method      
-      
-      # For API version v1.0, create a body with the credentials
-      if ($versionnum -eq 'v1.0') 
-      {
-        $body = @{
-          $version.Body[0] = $Credential.UserName
-          $version.Body[1] = $Credential.GetNetworkCredential().Password
-        }
-      }
-      # For API version v1.1 or greater, use a standard Basic Auth Base64 encoded header with username:password
-      else 
-      {
-        $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Credential.UserName+':'+$Credential.GetNetworkCredential().Password))
+        $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+        $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+        $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+
+        # Standard Basic Auth Base64 encoded header with username:password
+        $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Credential.UserName + ':' + $Credential.GetNetworkCredential().Password))
         $head = @{
-          'Authorization' = "Basic $auth"
-        }      
-      }
-      
-      #Force TLS 1.2
-      try{
-        if([Net.ServicePointManager]::SecurityProtocol -notlike '*Tls12*'){
-          Write-Verbose -Message 'Adding TLS 1.2'
-          [Net.ServicePointManager]::SecurityProtocol = ([Net.ServicePointManager]::SecurityProtocol).tostring() +', Tls12'
+            'Authorization' = "Basic $auth"
+        }          
+
+        #Force TLS 1.2
+        try {
+            if ([Net.ServicePointManager]::SecurityProtocol -notlike '*Tls12*') {
+                Write-Verbose -Message 'Adding TLS 1.2'
+                [Net.ServicePointManager]::SecurityProtocol = ([Net.ServicePointManager]::SecurityProtocol).tostring() + ', Tls12'
+            }
         }
-      }
-      catch 
-      {
-        Write-Verbose -Message $_
-        Write-Verbose -Message $_.Exception.InnerException.Message
-      }
-      
-      Write-Verbose -Message 'Submitting the request'
-      try 
-      {
-              
-        $r = Invoke-WebRequest -Uri $uri -Method $method -Body (ConvertTo-Json -InputObject $body) -Headers $head
+        catch {
+            Write-Verbose -Message $_
+            Write-Verbose -Message $_.Exception.InnerException.Message
+        }
+
+        $r = Invoke-WebRequest -Uri $uri -Method $resources.Method -Body (ConvertTo-Json -InputObject $body) -Headers $head
         $content = (ConvertFrom-Json -InputObject $r.Content)
-        # If we find a successful call code and also a token, we know the request was successful
-        # Anything else will trigger a throw, which will cause the catch to break the current loop and try another version
-        if ($r.StatusCode -eq $version.Success -and $content.token -ne $null)
-        {
-          Write-Verbose -Message "Successfully acquired token: $($content.token)"
-          break
-        }
-        else
-        {
-          throw 'Unable to connect to the cluster'
-        }
-      }
-      catch 
-      {
-        Write-Verbose -Message $_
-        Write-Verbose -Message $_.Exception.InnerException.Message
-      }
-    }
     
-    # Final throw for when all versions of the API have failed
-    if ($content.token -eq $null) 
-    {
-      throw 'Unable to connect with any available API version. Check $Error for details or use the -Verbose parameter.'
-    }
+        # Final throw for when all versions of the API have failed
+        if ($content.token -eq $null) {
+            throw 'Unable to connect with any available API version. Check $Error for details or use the -Verbose parameter.'
+        }
 
-    # For API version v1.0, use a standard Basic Auth Base64 encoded header with token:$null
-    if ($versionnum -eq 'v1.0') 
-    {
-      Write-Verbose -Message 'Validate token and build Base64 Auth string'
-      $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($($content.token)+':'))
-      $head = @{
-        'Authorization' = "Basic $auth"
-      }
-    }
-    # For API version v1.1 or greater, use Bearer and token
-    else 
-    {
-      $head = @{
-        'Authorization' = "Bearer $($content.token)"
-      }
-    }
+        # For API version v1 or greater, use Bearer and token
+        $head = @{'Authorization' = "Bearer $($content.token)"}
 
-    # v1.0 uses a different auth method compared to v1.1
-    # If we find v1.1 is in use, reset the version number to 'v1' to match the remainder of v1 calls
-    if ($versionnum -match 'v1')
-    {
-      $versionnum = 'v1'
-    }
-
-    Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
-    $global:rubrikConnection = @{
-      id      = $content.id
-      userId  = $content.userId
-      token   = $content.token
-      server  = $Server
-      header  = $head
-      time    = (Get-Date)
-      api     = $versionnum
-      version = Get-RubrikSoftwareVersion -Server $Server
-    }
+        Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
+        $global:rubrikConnection = @{
+            id      = $content.id
+            userId  = $content.userId
+            token   = $content.token
+            server  = $Server
+            header  = $head
+            time    = (Get-Date)
+            api     = Get-RubrikAPIVersion -Server $Server
+            version = Get-RubrikSoftwareVersion -Server $Server
+        }
         
-    Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'
-    [array]$global:RubrikConnections += $rubrikConnection
+        Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'
+        [array]$global:RubrikConnections += $rubrikConnection
     
-    $global:rubrikConnection.GetEnumerator() | Where-Object -FilterScript {
-      $_.name -notmatch 'token'
-    }
+        $global:rubrikConnection.GetEnumerator() | Where-Object -FilterScript {
+            $_.name -notmatch 'token'
+        }
 
-  } # End of process
+    } # End of process
 } # End of function
