@@ -878,5 +878,6 @@ function Get-RubrikAPIData($endpoint) {
         $key = $api.$endpoint.Keys | Sort-Object | Where-Object {$_ -le $ver} | Select-Object -Last 1
     } 
 
+    Write-Verbose -Message "Selected $key API Data for $endpoint"
     return $api.$endpoint.$key
 } # End of function

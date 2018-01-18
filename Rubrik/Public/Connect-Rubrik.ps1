@@ -56,7 +56,19 @@ function Connect-Rubrik {
     Begin {
 
         Unblock-SelfSignedCert
-        
+
+        #Force TLS 1.2
+        try {
+            if ([Net.ServicePointManager]::SecurityProtocol -notlike '*Tls12*') {
+                Write-Verbose -Message 'Adding TLS 1.2'
+                [Net.ServicePointManager]::SecurityProtocol = ([Net.ServicePointManager]::SecurityProtocol).tostring() + ', Tls12'
+            }
+        }
+        catch {
+            Write-Verbose -Message $_
+            Write-Verbose -Message $_.Exception.InnerException.Message
+        }
+
         # API data references the name of the function
         # For convenience, that name is saved here to $function
         $function = $MyInvocation.MyCommand.Name
@@ -83,24 +95,11 @@ function Connect-Rubrik {
             'Authorization' = "Basic $auth"
         }          
 
-        #Force TLS 1.2
-        try {
-            if ([Net.ServicePointManager]::SecurityProtocol -notlike '*Tls12*') {
-                Write-Verbose -Message 'Adding TLS 1.2'
-                [Net.ServicePointManager]::SecurityProtocol = ([Net.ServicePointManager]::SecurityProtocol).tostring() + ', Tls12'
-            }
-        }
-        catch {
-            Write-Verbose -Message $_
-            Write-Verbose -Message $_.Exception.InnerException.Message
-        }
-
-        $r = Invoke-WebRequest -Uri $uri -Method $resources.Method -Body (ConvertTo-Json -InputObject $body) -Headers $head
-        $content = (ConvertFrom-Json -InputObject $r.Content)
+        $content = Submit-Request -uri $uri -header $head -method $($resources.Method)
     
         # Final throw for when all versions of the API have failed
         if ($content.token -eq $null) {
-            throw 'Unable to connect with any available API version. Check $Error for details or use the -Verbose parameter.'
+            throw 'No token found. Unable to connect with any available API version. Check $Error for details or use the -Verbose parameter.'
         }
 
         # For API version v1 or greater, use Bearer and token
