@@ -81,7 +81,9 @@ function Get-RubrikVM
   Process {
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    if($SLAID.Length -eq 0 -and $SLA.Length -gt 0) {
+      $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    }
     #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
