@@ -29,7 +29,13 @@ else
 
         # Update the manifest with the new version value and fix the weird string replace bug
         $functionList = ((Get-ChildItem -Path .\Rubrik\Public).BaseName)
-        Update-ModuleManifest -Path $manifestPath -ModuleVersion $newVersion -FunctionsToExport $functionList
+        $splat = @{
+            'Path'              = $manifestPath
+            'ModuleVersion'     = $newVersion
+            'FunctionsToExport' = $functionList
+            'Copyright'         = "(c) 2015-$( (Get-Date).Year ) Rubrik, Inc. All rights reserved."
+        }
+        Update-ModuleManifest @splat
         (Get-Content -Path $manifestPath) -replace 'PSGet_Rubrik', 'Rubrik' | Set-Content -Path $manifestPath
         (Get-Content -Path $manifestPath) -replace 'NewManifest', 'Rubrik' | Set-Content -Path $manifestPath
         (Get-Content -Path $manifestPath) -replace 'FunctionsToExport = ', 'FunctionsToExport = @(' | Set-Content -Path $manifestPath -Force
