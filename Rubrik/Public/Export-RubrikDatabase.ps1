@@ -24,10 +24,12 @@ function Export-RubrikDatabase
       Export-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase $db).latestRecoveryPoint) -targetInstanceId $db2.instanceId -targetDatabaseName 'BAR_EXP' -targetFilePaths $targetfiles -maxDataStreams 1
 
       Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database. New file paths are 
-      in the $targetfiles array:
-
+      in the $targetfiles array. Each individual file declaration (logicalName, exportPath,newFilename) will be a hashtable, so what gets passed to the
+      cmdlet is an array of hashtables
+      
+      $targetfiles = @()
       $targetfiles += @{logicalName='BAR_1';exportPath='E:\SQLFiles\Data\BAREXP\'}
-       $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
+      $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
       
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
@@ -56,7 +58,13 @@ function Export-RubrikDatabase
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api,
-    #Optional Export File Hash table Array
+    #Simple Mode - Data File Path 
+    [Alias('DataFilePath')]   
+    [string]$TargetDataFilePath,
+    #Simple Mode - Data File Path
+    [Alias('LogFilePath')]    
+    [string]$TargetLogFilePath,
+    #Advanced Mode - Array of hash tables for file reloaction.
     [PSCustomObject[]] $TargetFilePaths
   )
 
