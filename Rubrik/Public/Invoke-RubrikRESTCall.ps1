@@ -1,8 +1,8 @@
 function Invoke-RubrikRESTCall {
-<#  
+<#
       .SYNOPSIS
       Provides generic interface to make Rubrik REST API calls
-      
+
       .DESCRIPTION
       The Invoke-RubrikRESTCall allows users to make raw API endpoint calls to the Rubrik REST interface. The user
       will need to manage the format of both the endpoint call(including resource ids) and body, but provides the
@@ -10,17 +10,17 @@ function Invoke-RubrikRESTCall {
       reference is found on the Rubrik device at:
         <Rubrik IP>/docs/v1
         <Rubrik IP>/docs/v1/playground
-      
+
       .NOTES
       Written by Matt Altimar & Mike Fal for community usage
       Twitter: @Mike_Fal
       GitHub: mikefal
-      
+
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET 
+      Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET
 
       Retrieve the raw output for all VMWare VMs being managed by the Rubrik device.
 
@@ -32,7 +32,7 @@ function Invoke-RubrikRESTCall {
       .EXAMPLE
       $body = New-Object -TypeName PSObject -Property @{'slaID'='INHERIT';'ForceFullSnapshot'='FALSE'}
       Invoke-RubrikRESTCall -Endpoint 'vmware/vm/VirtualMachine:::fbcb1f51-9520-4227-a68c-6fe145982f48-vm-649/snapshot' -Method POST -Body $body
-      
+
       Execute an on-demand snapshot for the VMWare VM where the id is part of the endpoint.
   #>
 
@@ -42,7 +42,7 @@ function Invoke-RubrikRESTCall {
       [Parameter(Mandatory = $true,HelpMessage = 'REST Endpoint')]
       [ValidateNotNullorEmpty()]
       [System.String]$Endpoint,
-      #REST API method 
+      #REST API method
       [Parameter(Mandatory = $true,HelpMessage = 'REST Method')]
       [ValidateSET('GET','PUT','PATCH','DELETE','POST','HEAD','OPTIONS')]
       [System.String]$Method,
@@ -63,7 +63,7 @@ function Invoke-RubrikRESTCall {
   BEGIN
   {
     #connect to Rubrik if not already connected
-    Test-RubrikConnection  
+    Test-RubrikConnection
   }
 
   PROCESS
@@ -71,17 +71,17 @@ function Invoke-RubrikRESTCall {
     #execute REST operation
     try {
         #construct uri
-        [string]$uri = New-URIString -server $Server -endpoint "/api/$api/$Endpoint"
-        
+        [string]$uri = New-URIString -server $Server -endpoint "/api/v$api/$Endpoint"
+
         #If query object, add query parameters to URI
         if($query)
         {
-            $querystring = @()      
+            $querystring = @()
             foreach($q in $query.PSObject.Properties)
             {
                 $querystring += "$($q.name)=$($q.Value)"
             }
-            $uri = New-QueryString -query $querystring -uri $uri         
+            $uri = New-QueryString -query $querystring -uri $uri
         }
 
         #If Method is not a GET call and a REST Body is passed, build the JSON body
@@ -89,13 +89,13 @@ function Invoke-RubrikRESTCall {
             [string]$JsonBody = $Body | ConvertTo-Json
         }
         Write-Verbose "URI string: $uri"
-        
+
         $result = Submit-Request -uri $uri -header $Header -method $Method -body $JsonBody
     }
     catch {
         throw $_
     }
-    
+
     return $result
   }
 }
