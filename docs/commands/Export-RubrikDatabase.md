@@ -16,14 +16,16 @@ Connects to Rubrik exports a database to a MSSQL instance
 ```
 Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-TimestampMs <Int64>] [-FinishRecovery]
  [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
- [-TargetFilePaths <PSObject[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ### Recovery_DateTime
 ```
 Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryDateTime <DateTime>] [-FinishRecovery]
  [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
- [-TargetFilePaths <PSObject[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,10 +45,13 @@ Export-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase
 
 Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database.
 New file paths are 
-in the $targetfiles array:
+in the $targetfiles array.
+Each individual file declaration (logicalName, exportPath,newFilename) will be a hashtable, so what gets passed to the
+cmdlet is an array of hashtables
 
+$targetfiles = @()
 $targetfiles += @{logicalName='BAR_1';exportPath='E:\SQLFiles\Data\BAREXP\'}
- $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
+$targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
 
 ## PARAMETERS
 
@@ -185,8 +190,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -TargetDataFilePath
+Simple Mode - Data File Path
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: DataFilePath
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TargetLogFilePath
+Simple Mode - Data File Path
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: LogFilePath
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -TargetFilePaths
-Optional Export File Hash table Array
+Advanced Mode - Array of hash tables for file reloaction.
 
 ```yaml
 Type: PSObject[]
