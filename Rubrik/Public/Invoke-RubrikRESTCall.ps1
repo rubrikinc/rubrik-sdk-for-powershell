@@ -70,8 +70,14 @@ function Invoke-RubrikRESTCall {
   {
     #execute REST operation
     try {
+
+        if($api -ne 'internal')
+        {
+            $api = "v$api"
+        }
+
         #construct uri
-        [string]$uri = New-URIString -server $Server -endpoint "/api/v$api/$Endpoint"
+        [string]$uri = New-URIString -server $Server -endpoint "/api/$api/$Endpoint"
 
         #If query object, add query parameters to URI
         if($query)
