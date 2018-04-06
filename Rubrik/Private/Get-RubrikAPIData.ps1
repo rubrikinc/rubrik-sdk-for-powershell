@@ -198,6 +198,26 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikManagedVolume'           = @{
+            '1.0' = @{
+                Description = 'Returns a list of summary information for Rubrik Managed Volumes'
+                URI         = '/api/internal/managed_volume'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    primary_cluster_id      = 'primary_cluster_id'
+                    is_relic                = 'is_relic'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name'     = 'name'
+                    'SLA'      = 'effectiveSlaDomainName'
+                    'Hostname' = 'rootProperties.rootName'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikMount'              = @{
             '1.0' = @{
                 Description = 'Retrieve information for all live mounts'
@@ -467,6 +487,23 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '201'
             }
         }
+        'New-RubrikManagedVolume' = @{
+            '1.0' = @{
+                Description = 'Create a new managed volume'
+                URI         = '/api/internal/managed_volume'
+                Method      = 'Post'
+                Body        = @{
+                    name = 'name'
+                    numChannels = 'numChannels'
+                    subnet = 'subnet'
+                    volumeSize =  'volumeSize'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        }        
         'New-RubrikMount'              = @{
             '1.0' = @{
                 Description = 'Create a live mount request with given configuration'
