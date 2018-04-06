@@ -29,7 +29,7 @@ function Get-RubrikRequest
     [String]$id,
     # The type of request
     [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset','mssql','vmware/vm')]
+    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managedvolume')]
     [String]$Type,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
