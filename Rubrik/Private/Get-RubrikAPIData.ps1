@@ -672,6 +672,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '204'
             }
         }
+        'Remove-RubrikManagedVolume'            = @{
+            '1.0' = @{
+                Description = 'Delete a managed volume'
+                URI         = '/api/managed_volume/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikMount'           = @{
             '1.0' = @{
                 Description = 'Create a request to delete a live mount'
