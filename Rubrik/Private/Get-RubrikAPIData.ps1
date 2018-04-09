@@ -931,6 +931,30 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Start-RubrikManagedVolumeSnapshot' = @{
+            '1.0' = @{
+                Description = 'Open a Rubrik Managed Volume for read/write'
+                URI         = '/api/internal/managed_volume/{id}/begin_snapshot'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        } 
+        'Stop-RubrikManagedVolumeSnapshot' = @{
+            '1.0' = @{
+                Description = 'Close a Rubrik Managed Volume for read/write'
+                URI         = '/api/internal/managed_volume/{id}/end_snapshot'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        } 
     } # End of API
 
     # Determine which version of RCDM is running
