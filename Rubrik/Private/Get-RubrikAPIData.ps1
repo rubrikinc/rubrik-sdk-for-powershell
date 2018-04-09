@@ -345,12 +345,13 @@ function Get-RubrikAPIData($endpoint) {
         }
         'Get-RubrikSnapshot'           = @{
             '1.0' = @{
-                Description = 'Retrieve information for all snapshots for a VM'
+                Description = 'Retrieve information for all snapshots '
                 URI         = @{
                     Fileset = '/api/v1/fileset/{id}/snapshot'
                     MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
                     VMware  = '/api/v1/vmware/vm/{id}/snapshot'
                     HyperV  = '/api/internal/hyperv/vm/{id}/snapshot'
+                    ManagedVolume = '/api/internal/managed_volume/{id}/snapshot'
                 }
                 Method      = 'Get'
                 Body        = ''
