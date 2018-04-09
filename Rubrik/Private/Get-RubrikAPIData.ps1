@@ -675,7 +675,7 @@ function Get-RubrikAPIData($endpoint) {
         'Remove-RubrikManagedVolume'            = @{
             '1.0' = @{
                 Description = 'Delete a managed volume'
-                URI         = '/api/managed_volume/snapshot/{id}'
+                URI         = '/api/internal/managed_volume/{id}'
                 Method      = 'Delete'
                 Body        = ''
                 Query       = ''
@@ -791,6 +791,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikManagedVolume' = @{
+            '1.0' = @{
+                Description = 'Update a managed volume'
+                URI         = '/api/internal/managed_volume'
+                Method      = 'Patch'
+                Body        = @{
+                    name = 'name'
+                    volumeSize =  'volumeSize'
+                    configuredSlaDomainId = 'configuredSlaDomainId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        } 
         'Set-RubrikMount'              = @{
             '1.0' = @{
                 Description = 'Power given live-mounted vm on/off'

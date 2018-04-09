@@ -1,15 +1,15 @@
-﻿#requires -Version 3
-function Remove-RubrikManagedVolume
+#requires -Version 3
+function Set-RubrikManagedVolume
 {
   <#  
       .SYNOPSIS
-      Deletes a Rubrik Managed Volume 
+      Sets Rubrik Managed Volume properties
 
       .DESCRIPTION
-      The Remove-RubrikManagedVolume cmdlet is used to dlete a Managed Volume
+      The Set-RubrikMakangedVolume cmdlet is used to update certain settings for a Rubrik Managed Volume.
 
       .NOTES
-      Written by Mike Fal
+      Written by Mike Fal for community usage
       Twitter: @Mike_Fal
       GitHub: MikeFal
 
@@ -17,21 +17,34 @@ function Remove-RubrikManagedVolume
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # Name of managed volume
-    [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName = $true)]
+    # Rubrik's Managed Volume id value
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
+    #New name of the managed volume
+    [String]$Name,
+    #Size of the Managed Volume in Bytes
+    [int64]$volumeSize,
+    #Export config, such as host hints and host name patterns
+    [PSCustomObject[]]$exportConfig,
+    #SLA Domain ID for the database
+    [Alias('ConfiguredSlaDomainId')]
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
+    [string]$SLAID,
+    # The SLA Domain name in Rubrik
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
+    [String]$SLA,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
-
-  Begin {
+    Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -53,9 +66,15 @@ function Remove-RubrikManagedVolume
 
   Process {
 
+    #region One-off
+    if($SLA){
+      $SLAID = Test-RubrikSLA $SLA
+    }
+    
+    #endregion
+
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
