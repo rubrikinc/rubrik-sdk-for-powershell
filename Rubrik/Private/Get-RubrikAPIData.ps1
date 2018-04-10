@@ -213,8 +213,22 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = @{
                     'Name'     = 'name'
                     'SLA'      = 'effectiveSlaDomainName'
-                    'Hostname' = 'rootProperties.rootName'
                 }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikManagedVolumeExport'           = @{
+            '1.0' = @{
+                Description = 'Returns a list of summary information for Rubrik Managed Volume Exports'
+                URI         = '/api/internal/managed_volume/snapshot/export'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    source_managed_volume_id = 'source_managed_volume_id'
+                    source_managed_volume_name = 'source_managed_volume_name'
+                }
+                Result      = 'data'
+                Filter      = ''
                 Success     = '200'
             }
         }
@@ -689,6 +703,18 @@ function Get-RubrikAPIData($endpoint) {
             '1.0' = @{
                 Description = 'Delete a managed volume'
                 URI         = '/api/internal/managed_volume/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+        }
+        'Remove-RubrikManagedVolumeExport'            = @{
+            '1.0' = @{
+                Description = 'Delete a managed volume'
+                URI         = '/api/internal/managed_volume/snapshot/export/{id}'
                 Method      = 'Delete'
                 Body        = ''
                 Query       = ''
