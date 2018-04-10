@@ -1,12 +1,12 @@
 ﻿#Requires -Version 3
-function Export-RubrikManagedVolumeSnapshot
+function New-RubrikManagedVolumeExport
 {
   <#
       .SYNOPSIS
       Creates an export of a Managed Volume snapshot
 
       .DESCRIPTION
-      The Export-RubrikManagedVolumeSnapshot command will request the creation of
+      The New-RubrikManagedVolumeExport command will request the creation of
       a Managed Volume export of the specified Managed Volume snapshot
 
       .NOTES
