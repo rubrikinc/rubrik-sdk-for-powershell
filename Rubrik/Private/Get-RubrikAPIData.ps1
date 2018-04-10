@@ -59,6 +59,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Export-RubrikManagedVolumeSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Export a Managed Volume snapshot.'
+                URI         = '/api/internal/managed_volume/snapshot/{id}/export'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Export-RubrikReport'          = @{
             '1.0' = @{
                 Description = 'Get the link to a CSV file for a report.'
