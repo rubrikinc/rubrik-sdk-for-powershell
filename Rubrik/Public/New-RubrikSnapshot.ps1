@@ -17,15 +17,15 @@ function New-RubrikSnapshot
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM 'Server1' | New-RubrikSnapshot -Inherit
-      This will trigger an on-demand backup for any virtual machine named "Server1" using the existing SLA domain
+      Get-RubrikVM 'Server1' | New-RubrikSnapshot -Forever
+      This will trigger an on-demand backup for any virtual machine named "Server1" that will be retained indefinitely and available under Unmanaged Objects.
 
       .EXAMPLE
       Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot -SLA 'Gold'
-      This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain
+      This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain.
 
       .EXAMPLE
-      Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -Inherit
+      Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -SLA 'Silver'
       This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
   #>
 
@@ -37,9 +37,9 @@ function New-RubrikSnapshot
     # The SLA Domain in Rubrik
     [Parameter(ParameterSetName = 'SLA_Explicit')]
     [String]$SLA,
-    # Removes the SLA Domain assignment
-    [Parameter(ParameterSetName = 'SLA_Unprotected')]
-    [Switch]$DoNotProtect,
+    # The snapshot will be retained indefinitely and available under Unmanaged Objects
+    [Parameter(ParameterSetName = 'SLA_Forever')]
+    [Switch]$Forever,
     # Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
     [Alias('forceFullSnapshot')]
     [Switch]$ForceFull,
@@ -74,7 +74,7 @@ function New-RubrikSnapshot
   Process {
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $DoNotProtect
+    $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
     #endregion One-off
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
