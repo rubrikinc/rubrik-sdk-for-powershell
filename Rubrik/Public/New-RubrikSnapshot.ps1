@@ -40,9 +40,6 @@ function New-RubrikSnapshot
     # Removes the SLA Domain assignment
     [Parameter(ParameterSetName = 'SLA_Unprotected')]
     [Switch]$DoNotProtect,
-    # Inherits the SLA Domain assignment from a parent object
-    [Parameter(ParameterSetName = 'SLA_Inherit')]
-    [Switch]$Inherit,    
     # Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
     [Alias('forceFullSnapshot')]
     [Switch]$ForceFull,
@@ -77,7 +74,7 @@ function New-RubrikSnapshot
   Process {
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $DoNotProtect
     #endregion One-off
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
