@@ -18,15 +18,9 @@ New-RubrikSnapshot -id <String> [-SLA <String>] [-ForceFull] [-SLAID <String>] [
  [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### SLA_Unprotected
+### SLA_Forever
 ```
-New-RubrikSnapshot -id <String> [-DoNotProtect] [-ForceFull] [-SLAID <String>] [-Server <String>]
- [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
-```
-
-### SLA_Inherit
-```
-New-RubrikSnapshot -id <String> [-Inherit] [-ForceFull] [-SLAID <String>] [-Server <String>] [-api <String>]
+New-RubrikSnapshot -id <String> [-Forever] [-ForceFull] [-SLAID <String>] [-Server <String>] [-api <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -37,21 +31,21 @@ The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific 
 
 ### EXAMPLE 1
 ```
-Get-RubrikVM 'Server1' | New-RubrikSnapshot -Inherit
+Get-RubrikVM 'Server1' | New-RubrikSnapshot -Forever
 ```
 
-This will trigger an on-demand backup for any virtual machine named "Server1" using the existing SLA domain
+This will trigger an on-demand backup for any virtual machine named "Server1" that will be retained indefinitely and available under Unmanaged Objects.
 
 ### EXAMPLE 2
 ```
 Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot -SLA 'Gold'
 ```
 
-This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain
+This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain.
 
 ### EXAMPLE 3
 ```
-Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -Inherit
+Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -SLA 'Silver'
 ```
 
 This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
@@ -88,27 +82,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DoNotProtect
-Removes the SLA Domain assignment
+### -Forever
+The snapshot will be retained indefinitely and available under Unmanaged Objects
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: SLA_Unprotected
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Inherit
-Inherits the SLA Domain assignment from a parent object
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: SLA_Inherit
+Parameter Sets: SLA_Forever
 Aliases:
 
 Required: False
