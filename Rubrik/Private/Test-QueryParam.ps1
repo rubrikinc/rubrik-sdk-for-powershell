@@ -32,6 +32,11 @@
         Write-Verbose -Message 'Loading HyperV API data'
         $uri = ('https://'+$Server+$resources.URI.HyperV) -replace '{id}', $id
       }
+      'NutanixVirtualMachine:::*'
+      {
+        Write-Verbose -Message 'Loading Nutanix API data'
+        $uri = ('https://'+$Server+$resources.URI.Nutanix) -replace '{id}', $id
+      }
       default
       {
         throw 'The supplied id value has no matching endpoint'
