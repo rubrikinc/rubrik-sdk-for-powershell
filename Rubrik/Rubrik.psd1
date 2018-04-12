@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.132'
+ModuleVersion = '4.0.0.134'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -73,9 +73,9 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Export-RubrikReport', 'Get-RubrikAPIVersion', 'Get-RubrikDatabase', 
                'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 
                'Get-RubrikFileset', 'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 
-               'Get-RubrikMount', 'Get-RubrikNutanixVM', 'Get-RubrikReport', 
-               'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSLA', 
-               'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
+               'Get-RubrikHyperVVM', 'Get-RubrikMount', 'Get-RubrikNutanixVM', 
+               'Get-RubrikReport', 'Get-RubrikReportData', 'Get-RubrikRequest', 
+               'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
                'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 
                'Get-RubrikUnmanagedObject', 'Get-RubrikVersion', 'Get-RubrikVM', 
                'Invoke-RubrikRESTCall', 'Move-RubrikMountVMDK', 
@@ -88,7 +88,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Remove-RubrikUnmanagedObject', 'Restore-RubrikDatabase', 
                'Set-RubrikBlackout', 'Set-RubrikDatabase', 'Set-RubrikMount', 
                'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel', 'Set-RubrikVM', 
-               'Sync-RubrikAnnotation', 'Sync-RubrikTag', 'Get-RubrikHyperVVM')
+               'Sync-RubrikAnnotation', 'Sync-RubrikTag')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
