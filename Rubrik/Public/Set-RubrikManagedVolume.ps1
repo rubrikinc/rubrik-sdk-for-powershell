@@ -31,10 +31,8 @@ function Set-RubrikManagedVolume
    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik's Managed Volume id value
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ValueFromPipelineByPropertyName = $true,Mandatory=$true)]
     [String]$id,
-    #New name of the managed volume
-    [String]$Name,
     #Size of the Managed Volume in Bytes
     [int64]$VolumeSize,
     #Export config, such as host hints and host name patterns
