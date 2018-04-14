@@ -17,7 +17,15 @@ function Get-RubrikManagedVolumeExport
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
+      .EXAMPLE
+      Get-RubrikManagedVolumeExport
 
+      Return all managed volume exports (live mounts).
+
+      .EXAMPLE
+      Get-RubrikManagedVolumeExport -SourceManagedVolumeName 'foo'
+
+      Return all managed volume exports (live mounts) for the 'foo' managed volume.      
   #>
 
   [CmdletBinding()]

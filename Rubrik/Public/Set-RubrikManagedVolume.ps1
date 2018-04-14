@@ -17,6 +17,14 @@ function Set-RubrikManagedVolume
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
+      Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -SLA 'Gold'
+
+      Protect the specified managed volume with the 'Gold' SLA domain
+
+      .EXAMPLE
+      Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -VolumeSize 536870912000
+
+      Resize the specified managed volume to 536870912000 bytes (500GB)
 
   #>
 
@@ -28,7 +36,7 @@ function Set-RubrikManagedVolume
     #New name of the managed volume
     [String]$Name,
     #Size of the Managed Volume in Bytes
-    [int64]$volumeSize,
+    [int64]$VolumeSize,
     #Export config, such as host hints and host name patterns
     [PSCustomObject[]]$exportConfig,
     #SLA Domain ID for the database

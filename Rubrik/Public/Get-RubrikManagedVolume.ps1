@@ -27,6 +27,11 @@ function Get-RubrikManagedVolume
       Get-RubrikManagedVolume -SLA 'Foo'
 
       Get all managed volumes protected by the 'Foo' SLA domain.
+
+      .EXAMPLE
+      Get-RubrikManagedVolume -Name 'Bar'
+      
+      Get the managed volume named 'Bar'.
   #>
 
   [CmdletBinding()]

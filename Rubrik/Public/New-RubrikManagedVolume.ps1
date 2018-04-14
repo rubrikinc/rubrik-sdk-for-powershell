@@ -18,7 +18,14 @@ function New-RubrikManagedVolume
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      New-RubrikManagedVolume -Name foo -Channels 4 -VolumeSize 1073741824000
+
+      Creates a new managed volume named 'foo' with 4 channels and 1073741824000 bytes (1TB) in size
+
+      .EXAMPLE
+      New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -Subnet 172.21.10.0/23
+
+      Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, on the 172.21.10.0/23 subnet
   #>
 
   [CmdletBinding()]
@@ -28,11 +35,12 @@ function New-RubrikManagedVolume
     [String]$Name,
     #Number of channels in the Managed Volume
     [Parameter(Mandatory=$true)]
-    [int]$numChannels,
+    [Alias('numChannels')]
+    [int]$Channels,
     #Subnet Managed Volume is placed on
-    [String]$subnet,
+    [String]$Subnet,
     #Size of the Managed Volume in Bytes
-    [int64]$volumeSize,
+    [int64]$VolumeSize,
     #Export config, such as host hints and host name patterns
     [PSCustomObject[]]$exportConfig,
     # Rubrik server IP or FQDN

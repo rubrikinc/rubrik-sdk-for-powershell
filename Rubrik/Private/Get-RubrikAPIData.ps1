@@ -228,7 +228,9 @@ function Get-RubrikAPIData($endpoint) {
                     source_managed_volume_name = 'source_managed_volume_name'
                 }
                 Result      = 'data'
-                Filter      = ''
+                Filter      = @{
+                    sourceManagedVolumeName = 'SourceManagedVolumeName'
+                }
                 Success     = '200'
             }
         }

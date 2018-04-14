@@ -16,13 +16,20 @@ function New-RubrikManagedVolumeExport
 
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
+
+      .EXAMPLE
+      Get-RubrikSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 | Select-Object -First 1 | New-RubrikManagedVolumeExport
+
+      Create an export (live mount) of the most recent snapshot for the specified managed volume.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # Rubrik identifier of Managed Volumes to be exported
+    # Rubrik identifier of Managed Volume snapshot to be exported
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$Id,
+    #Source Managed Volume Name
+    [String]$SourceManagedVolumeName,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

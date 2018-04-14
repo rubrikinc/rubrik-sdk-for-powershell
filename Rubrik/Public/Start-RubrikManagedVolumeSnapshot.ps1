@@ -18,7 +18,14 @@ function Start-RubrikManagedVolumeSnapshot
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
+      Start-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
 
+      Open the specified managed volume for read/write operations
+
+      .EXAMPLE
+      Get-RubrikManagedVolume -name 'foo' | Start-ManagedVolumeSnapshot
+      
+      Open the 'foo' managed volume for read/write operations.
   #>
 
    [CmdletBinding()]

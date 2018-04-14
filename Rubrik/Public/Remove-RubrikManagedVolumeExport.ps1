@@ -17,7 +17,14 @@ function Remove-RubrikManagedVolumeExport
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      Remove-RubrikManagedVolumeExport -id deddca39-b8ca-407c-8f1c-af9866f7ba67
+
+      Remove the specified managed volume export (live mount).
+
+      .EXAMPLE
+      Get-RubrikManagedVolumeExport -SourceManagedVolumeName 'foo' | Remove-RubrikManagedVolumeExport
+
+      Remove all the managed volume exports (live mounts) for the managed volume 'foo'.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]

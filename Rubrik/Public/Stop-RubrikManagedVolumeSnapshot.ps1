@@ -18,6 +18,12 @@ function Stop-RubrikManagedVolumeSnapshot
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
+      Stop-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
+
+      Close the specified managed volume for read/write operations
+
+      .EXAMPLE
+      Stop-RubrikManagedVolume -name 'foo' | Start-ManagedVolumeSnapshot
 
   #>
 

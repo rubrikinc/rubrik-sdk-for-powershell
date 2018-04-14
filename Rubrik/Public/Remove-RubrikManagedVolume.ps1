@@ -17,7 +17,9 @@ function Remove-RubrikManagedVolume
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      Remove-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
+
+      Remove the specified managed volume. All associated snapshots will become unmaged objects.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
