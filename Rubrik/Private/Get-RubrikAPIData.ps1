@@ -368,6 +368,7 @@ function Get-RubrikAPIData($endpoint) {
                     VMware  = '/api/v1/vmware/vm/{id}/snapshot'
                     HyperV  = '/api/internal/hyperv/vm/{id}/snapshot'
                     ManagedVolume = '/api/internal/managed_volume/{id}/snapshot'
+                    Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
                 }
                 Method      = 'Get'
                 Body        = ''
@@ -471,6 +472,27 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikNutanixVM'                 = @{
+            '1.0' = @{
+                Description = 'Get summary of all Nutanix VMs'
+                URI         = '/api/internal/nutanix/vm'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    name                    = 'name'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                }
+                Success     = '200'
+            }
+        }        
         'New-RubrikDatabaseMount'      = @{
             '1.0' = @{
                 Description = 'Create a live mount request with given configuration'

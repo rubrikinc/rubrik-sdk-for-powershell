@@ -1,12 +1,12 @@
-#Requires -Version 3
-function New-RubrikSnapshot
+﻿#requires -Version 3
+function Get-RubrikHyperVVM
 {
   <#  
       .SYNOPSIS
-      Takes an on-demand Rubrik snapshot of a protected object
+      Retrieves details on one or more Hyper-V virtual machines known to a Rubrik cluster
 
       .DESCRIPTION
-      The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific object (virtual machine, database, fileset, etc.)
+      The Get-RubrikHyperVVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of Hyper-V virtual machines
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -17,33 +17,40 @@ function New-RubrikSnapshot
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM 'Server1' | New-RubrikSnapshot -Forever
-      This will trigger an on-demand backup for any virtual machine named "Server1" that will be retained indefinitely and available under Unmanaged Objects.
+      Get-RubrikHyperVVM -Name 'Server1'
+      This will return details on all Hyper-V virtual machines named "Server1".
 
       .EXAMPLE
-      Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot -SLA 'Gold'
-      This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain.
+      Get-RubrikHyperVVM -Name 'Server1' -SLA Gold
+      This will return details on all Hyper-V virtual machines named "Server1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
-      Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -SLA 'Silver'
-      This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
+      Get-RubrikHyperVVM -Relic
+      This will return all removed Hyper-V virtual machines that were formerly protected by Rubrik.
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding()]
   Param(
-    # Rubrik's id of the object
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    # Name of the Hyper-V virtual machine
+    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [Alias('VM')]
+    [String]$Name,
+    # Filter results to include only relic (removed) virtual machines
+    [Alias('is_relic')]    
+    [Switch]$Relic,
+    # SLA Domain policy assigned to the virtual machine
+    [String]$SLA, 
+    # Filter by SLA Domain assignment type
+    [ValidateSet('Derived', 'Direct','Unassigned')]
+    [String]$SLAAssignment,     
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Alias('primary_cluster_id')]
+    [String]$PrimaryClusterID,        
+    # Virtual machine id
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    # The SLA Domain in Rubrik
-    [Parameter(ParameterSetName = 'SLA_Explicit')]
-    [String]$SLA,
-    # The snapshot will be retained indefinitely and available under Unmanaged Objects
-    [Parameter(ParameterSetName = 'SLA_Forever')]
-    [Switch]$Forever,
-    # Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
-    [Alias('forceFullSnapshot')]
-    [Switch]$ForceFull,
     # SLA id value
+    [Alias('effective_sla_domain_id')]
     [String]$SLAID,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -74,15 +81,16 @@ function New-RubrikSnapshot
   Process {
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
-    #endregion One-off
+    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    #endregion
 
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    
+
     return $result
 
   } # End of process

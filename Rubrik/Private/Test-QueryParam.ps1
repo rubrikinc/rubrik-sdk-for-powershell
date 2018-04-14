@@ -36,6 +36,10 @@
       {
         Write-Verbose -Message 'Loading Managed Volume API data'
         $uri = ('https://'+$Server+$resources.URI.ManagedVolume) -replace '{id}', $id
+      'NutanixVirtualMachine:::*'
+      {
+        Write-Verbose -Message 'Loading Nutanix API data'
+        $uri = ('https://'+$Server+$resources.URI.Nutanix) -replace '{id}', $id
       }
       default
       {
