@@ -1,36 +1,48 @@
-﻿#Requires -Version 3
-function Get-RubrikRequest 
+﻿#requires -Version 3
+function New-RubrikManagedVolume
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves details on an async request
-            
+      Creates a new Rubrik Managed Volume 
+
       .DESCRIPTION
-      The Get-RubrikRequest cmdlet will pull details on a request that was submitted to the distributed task framework.
-      This is helpful for tracking the state (success, failure, running, etc.) of a request.
-            
+      The New-RubrikManagedVolume cmdlet is used to create
+      a new Managed Volume
+
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-            
+      Written by Mike Fal
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
+
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
-            
+
       .EXAMPLE
-      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
-      Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
+      New-RubrikManagedVolume -Name foo -Channels 4 -VolumeSize 1073741824000
+
+      Creates a new managed volume named 'foo' with 4 channels and 1073741824000 bytes (1TB) in size
+
+      .EXAMPLE
+      New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -Subnet 172.21.10.0/23
+
+      Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, on the 172.21.10.0/23 subnet
   #>
 
   [CmdletBinding()]
   Param(
-    # ID of an asynchronous request
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
-    [String]$id,
-    # The type of request
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managedvolume')]
-    [String]$Type,    
+    # Name of managed volume
+    [Parameter(Mandatory=$true)]
+    [String]$Name,
+    #Number of channels in the Managed Volume
+    [Parameter(Mandatory=$true)]
+    [Alias('numChannels')]
+    [int]$Channels,
+    #Subnet Managed Volume is placed on
+    [String]$Subnet,
+    #Size of the Managed Volume in Bytes
+    [int64]$VolumeSize,
+    #Export config, such as host hints and host name patterns
+    [PSCustomObject[]]$exportConfig,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -60,13 +72,8 @@ function Get-RubrikRequest
   Process {
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-
-    #region one-off
-    $uri = $uri -replace '{type}', $Type
-    #endregion
-
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

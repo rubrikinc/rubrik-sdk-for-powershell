@@ -198,27 +198,43 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikHyperVVM'                 = @{
+        'Get-RubrikManagedVolume'           = @{
             '1.0' = @{
-                Description = 'Get summary of all HyperV VMs'
-                URI         = '/api/internal/hyperv/vm'
+                Description = 'Returns a list of summary information for Rubrik Managed Volumes'
+                URI         = '/api/internal/managed_volume'
                 Method      = 'Get'
                 Body        = ''
                 Query       = @{
-                    is_relic                = 'is_relic'
-                    name                    = 'name'
                     effective_sla_domain_id = 'effective_sla_domain_id'
-                    sla_assignment          = 'sla_assignment'
                     primary_cluster_id      = 'primary_cluster_id'
+                    is_relic                = 'is_relic'
                 }
                 Result      = 'data'
                 Filter      = @{
-                    'Name' = 'name'
-                    'SLA'  = 'effectiveSlaDomainName'
+                    'Name'     = 'name'
+                    'SLA'      = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
             }
-        }  
+        }
+        'Get-RubrikManagedVolumeExport'           = @{
+            '1.0' = @{
+                Description = 'Returns a list of summary information for Rubrik Managed Volume Exports'
+                URI         = '/api/internal/managed_volume/snapshot/export'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    source_managed_volume_id = 'source_managed_volume_id'
+                    source_managed_volume_name = 'source_managed_volume_name'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    SourceManagedVolumeID = 'SourceManagedVolumeID'
+                    SourceManagedVolumeName = 'SourceManagedVolumeName'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikMount'              = @{
             '1.0' = @{
                 Description = 'Retrieve information for all live mounts'
@@ -317,6 +333,16 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
+            'internal' = @{
+                Description = 'Get details about an async request.'
+                URI         = '/api/internal/{type}/request/{id}'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Get-RubrikSLA'                = @{
             '1.0' = @{
@@ -336,12 +362,13 @@ function Get-RubrikAPIData($endpoint) {
         }
         'Get-RubrikSnapshot'           = @{
             '1.0' = @{
-                Description = 'Retrieve information for all snapshots for a VM'
+                Description = 'Retrieve information for all snapshots '
                 URI         = @{
                     Fileset = '/api/v1/fileset/{id}/snapshot'
                     MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
                     VMware  = '/api/v1/vmware/vm/{id}/snapshot'
                     HyperV  = '/api/internal/hyperv/vm/{id}/snapshot'
+                    ManagedVolume = '/api/internal/managed_volume/{id}/snapshot'
                     Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
                 }
                 Method      = 'Get'
@@ -500,6 +527,35 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '201'
             }
         }
+        'New-RubrikManagedVolume' = @{
+            '1.0' = @{
+                Description = 'Create a new managed volume'
+                URI         = '/api/internal/managed_volume'
+                Method      = 'Post'
+                Body        = @{
+                    name = 'name'
+                    numChannels = 'numChannels'
+                    subnet = 'subnet'
+                    volumeSize =  'volumeSize'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        }
+        'New-RubrikManagedVolumeExport'        = @{
+            '1.0' = @{
+                Description = 'Create a Managed Volume export.'
+                URI         = '/api/internal/managed_volume/snapshot/{id}/export'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }        
         'New-RubrikMount'              = @{
             '1.0' = @{
                 Description = 'Create a live mount request with given configuration'
@@ -668,6 +724,30 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '204'
             }
         }
+        'Remove-RubrikManagedVolume'            = @{
+            '1.0' = @{
+                Description = 'Delete a managed volume'
+                URI         = '/api/internal/managed_volume/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+        }
+        'Remove-RubrikManagedVolumeExport'            = @{
+            '1.0' = @{
+                Description = 'Delete a managed volume'
+                URI         = '/api/internal/managed_volume/snapshot/export/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikMount'           = @{
             '1.0' = @{
                 Description = 'Create a request to delete a live mount'
@@ -775,6 +855,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikManagedVolume' = @{
+            '1.0' = @{
+                Description = 'Update a managed volume'
+                URI         = '/api/internal/managed_volume'
+                Method      = 'Patch'
+                Body        = @{
+                    name = 'name'
+                    volumeSize =  'volumeSize'
+                    configuredSlaDomainId = 'configuredSlaDomainId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        } 
         'Set-RubrikMount'              = @{
             '1.0' = @{
                 Description = 'Power given live-mounted vm on/off'
@@ -899,6 +995,30 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Start-RubrikManagedVolumeSnapshot' = @{
+            '1.0' = @{
+                Description = 'Open a Rubrik Managed Volume for read/write'
+                URI         = '/api/internal/managed_volume/{id}/begin_snapshot'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        } 
+        'Stop-RubrikManagedVolumeSnapshot' = @{
+            '1.0' = @{
+                Description = 'Close a Rubrik Managed Volume for read/write'
+                URI         = '/api/internal/managed_volume/{id}/end_snapshot'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        } 
     } # End of API
 
     # Determine which version of RCDM is running

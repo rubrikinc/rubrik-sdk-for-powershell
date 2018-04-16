@@ -1,43 +1,45 @@
-﻿#Requires -Version 3
-function Get-RubrikRequest 
+#requires -Version 3
+function Start-RubrikManagedVolumeSnapshot
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves details on an async request
-            
+      Starts Rubrik Managed Volume snopshot
+
       .DESCRIPTION
-      The Get-RubrikRequest cmdlet will pull details on a request that was submitted to the distributed task framework.
-      This is helpful for tracking the state (success, failure, running, etc.) of a request.
-            
+      The Start-RubrikManagedVolumeSnapshot cmdlet is used to open a Rubrik Managed Volume
+      for read/write actions.
+
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-            
+      Written by Mike Fal for community usage
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
+
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
-            
+
       .EXAMPLE
-      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
-      Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
+      Start-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
+
+      Open the specified managed volume for read/write operations
+
+      .EXAMPLE
+      Get-RubrikManagedVolume -name 'foo' | Start-ManagedVolumeSnapshot
+      
+      Open the 'foo' managed volume for read/write operations.
   #>
 
-  [CmdletBinding()]
+   [CmdletBinding()]
   Param(
-    # ID of an asynchronous request
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    # Rubrik's Managed Volume id value
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    # The type of request
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managedvolume')]
-    [String]$Type,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
-
-  Begin {
+    Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -60,12 +62,6 @@ function Get-RubrikRequest
   Process {
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-
-    #region one-off
-    $uri = $uri -replace '{type}', $Type
-    #endregion
-
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result

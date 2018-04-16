@@ -1,36 +1,37 @@
-﻿#Requires -Version 3
-function Get-RubrikRequest 
+﻿#requires -Version 3
+function Remove-RubrikManagedVolumeExport
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves details on an async request
-            
+      Deletes a Rubrik Managed Volume export
+
       .DESCRIPTION
-      The Get-RubrikRequest cmdlet will pull details on a request that was submitted to the distributed task framework.
-      This is helpful for tracking the state (success, failure, running, etc.) of a request.
-            
+      The Remove-RubrikManagedVolumeExport cmdlet is used to delete a Managed Volume export
+
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-            
+      Written by Mike Fal
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
+
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
-            
+
       .EXAMPLE
-      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
-      Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
+      Remove-RubrikManagedVolumeExport -id deddca39-b8ca-407c-8f1c-af9866f7ba67
+
+      Remove the specified managed volume export (live mount).
+
+      .EXAMPLE
+      Get-RubrikManagedVolumeExport -SourceManagedVolumeName 'foo' | Remove-RubrikManagedVolumeExport
+
+      Remove all the managed volume exports (live mounts) for the managed volume 'foo'.
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # ID of an asynchronous request
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    # Id of managed volume export
+    [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    # The type of request
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managedvolume')]
-    [String]$Type,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -60,13 +61,8 @@ function Get-RubrikRequest
   Process {
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-
-    #region one-off
-    $uri = $uri -replace '{type}', $Type
-    #endregion
-
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

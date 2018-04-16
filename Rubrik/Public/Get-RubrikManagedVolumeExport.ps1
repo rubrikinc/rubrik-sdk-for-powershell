@@ -1,36 +1,47 @@
-﻿#Requires -Version 3
-function Get-RubrikRequest 
+﻿#requires -Version 3
+function Get-RubrikManagedVolumeExport
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves details on an async request
-            
+      Gets data on a Rubrik managed volume 
+
       .DESCRIPTION
-      The Get-RubrikRequest cmdlet will pull details on a request that was submitted to the distributed task framework.
-      This is helpful for tracking the state (success, failure, running, etc.) of a request.
-            
+      The Get-RubrikManagedVolumeExport cmdlet is used to retrive information 
+      on one or more managed volume exports.
+
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-            
+      Written by Mike Fal
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
+
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
-            
+
       .EXAMPLE
-      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
-      Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
+      Get-RubrikManagedVolumeExport
+
+      Return all managed volume exports (live mounts).
+
+      .EXAMPLE
+      Get-RubrikManagedVolumeExport -SourceManagedVolumeName 'foo'
+
+      Return all managed volume exports (live mounts) for the 'foo' managed volume.      
   #>
 
   [CmdletBinding()]
   Param(
-    # ID of an asynchronous request
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    # id of managed volume
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    # The type of request
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managedvolume')]
-    [String]$Type,    
+    #ID of the source managed volume
+    [Alias('$source_managed_volume_id')]
+    [String]$SourceManagedVolumeID,
+    #Name of the source managed volume
+    [Alias('$source_managed_volume_name')]
+    [String]$SourceManagedVolumeName,
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Alias('primary_cluster_id')]
+    [String]$PrimaryClusterID,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -60,13 +71,8 @@ function Get-RubrikRequest
   Process {
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-
-    #region one-off
-    $uri = $uri -replace '{type}', $Type
-    #endregion
-
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

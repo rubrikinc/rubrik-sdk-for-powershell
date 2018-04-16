@@ -32,6 +32,11 @@
         Write-Verbose -Message 'Loading HyperV API data'
         $uri = ('https://'+$Server+$resources.URI.HyperV) -replace '{id}', $id
       }
+      'ManagedVolume:::*'
+      {
+        Write-Verbose -Message 'Loading Managed Volume API data'
+        $uri = ('https://'+$Server+$resources.URI.ManagedVolume) -replace '{id}', $id
+      }
       'NutanixVirtualMachine:::*'
       {
         Write-Verbose -Message 'Loading Nutanix API data'

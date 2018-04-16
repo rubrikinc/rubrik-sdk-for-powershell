@@ -1,36 +1,57 @@
-﻿#Requires -Version 3
-function Get-RubrikRequest 
+﻿#requires -Version 3
+function Get-RubrikManagedVolume
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves details on an async request
-            
+      Gets data on a Rubrik managed volume 
+
       .DESCRIPTION
-      The Get-RubrikRequest cmdlet will pull details on a request that was submitted to the distributed task framework.
-      This is helpful for tracking the state (success, failure, running, etc.) of a request.
-            
+      The Get-RubrikManagedVolume cmdlet is used to retrive information 
+      on one or more managed volumes that are being protected 
+      with Rubrik.
+
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-            
+      Written by Mike Fal
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
+
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
-            
+
       .EXAMPLE
-      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
-      Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
+      Get-RubrikManagedVolume -name sqltest
+
+      Get a managed volume named sqltest
+
+      .EXAMPLE
+      Get-RubrikManagedVolume -SLA 'Foo'
+
+      Get all managed volumes protected by the 'Foo' SLA domain.
+
+      .EXAMPLE
+      Get-RubrikManagedVolume -Name 'Bar'
+      
+      Get the managed volume named 'Bar'.
   #>
 
   [CmdletBinding()]
   Param(
-    # ID of an asynchronous request
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    # id of managed volume
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    # The type of request
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managedvolume')]
-    [String]$Type,    
+    # Name of managed volume
+    [String]$Name,
+    # SLA name that the managed volume is protected under
+    [String]$SLA,
+    # SLA id that the managed volume is protected under
+    [Alias('effective_sla_domain_id')]
+    [String]$SLAID,
+    # Filter results to include only relic (removed) databases
+    [Alias('is_relic')]
+    [Switch]$Relic,
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Alias('primary_cluster_id')]
+    [String]$PrimaryClusterID,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -59,14 +80,15 @@ function Get-RubrikRequest
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-
-    #region one-off
-    $uri = $uri -replace '{type}', $Type
+    #region One-off
+    if($SLA){
+      $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    }
     #endregion
 
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

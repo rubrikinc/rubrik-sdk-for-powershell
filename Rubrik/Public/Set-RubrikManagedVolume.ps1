@@ -1,43 +1,56 @@
-﻿#Requires -Version 3
-function Get-RubrikRequest 
+#requires -Version 3
+function Set-RubrikManagedVolume
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves details on an async request
-            
+      Sets Rubrik Managed Volume properties
+
       .DESCRIPTION
-      The Get-RubrikRequest cmdlet will pull details on a request that was submitted to the distributed task framework.
-      This is helpful for tracking the state (success, failure, running, etc.) of a request.
-            
+      The Set-RubrikMakangedVolume cmdlet is used to update certain settings for a Rubrik Managed Volume.
+
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-            
+      Written by Mike Fal for community usage
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
+
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
-            
+
       .EXAMPLE
-      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
-      Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
+      Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -SLA 'Gold'
+
+      Protect the specified managed volume with the 'Gold' SLA domain
+
+      .EXAMPLE
+      Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -VolumeSize 536870912000
+
+      Resize the specified managed volume to 536870912000 bytes (500GB)
+
   #>
 
-  [CmdletBinding()]
+   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # ID of an asynchronous request
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    # Rubrik's Managed Volume id value
+    [Parameter(ValueFromPipelineByPropertyName = $true,Mandatory=$true)]
     [String]$id,
-    # The type of request
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managedvolume')]
-    [String]$Type,    
+    #Size of the Managed Volume in Bytes
+    [int64]$VolumeSize,
+    #Export config, such as host hints and host name patterns
+    [PSCustomObject[]]$exportConfig,
+    #SLA Domain ID for the database
+    [Alias('ConfiguredSlaDomainId')]
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
+    [string]$SLAID,
+    # The SLA Domain name in Rubrik
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
+    [String]$SLA,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
-
-  Begin {
+    Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -59,13 +72,14 @@ function Get-RubrikRequest
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-
-    #region one-off
-    $uri = $uri -replace '{type}', $Type
+    #region One-off
+    if($SLA){
+      $SLAID = Test-RubrikSLA $SLA
+    }
+    
     #endregion
 
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
