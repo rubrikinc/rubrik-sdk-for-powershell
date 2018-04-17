@@ -35,6 +35,8 @@ function Set-RubrikVM
         [ValidateSet('AUTOMATIC','APP_CONSISTENT','CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','VSS_CONSISTENT','INCONSISTENT','UNKNOWN')]
         [Alias('snapshotConsistencyMandate')]
         [String]$SnapConsistency,
+        #Raw Cloud Instantiation spec
+        [hashtable]$cloudInstantiationSpec,
         # The number of existing virtual machine snapshots allowed by Rubrik. Choices range from 0 - 4 snapshots.
         [ValidateRange(0,4)] 
         [Alias('maxNestedVsphereSnapshots')]
@@ -78,8 +80,8 @@ function Set-RubrikVM
         {
             $SnapConsistency = $SnapConsistency -replace 'AUTOMATIC', 'UNKNOWN'
         }
-        #endregion
-    
+        #endregion             
+        
         $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
         $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
         $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

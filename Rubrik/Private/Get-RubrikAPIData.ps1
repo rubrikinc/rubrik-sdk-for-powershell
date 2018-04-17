@@ -987,7 +987,9 @@ function Get-RubrikAPIData($endpoint) {
                         timeoutMs       = 'timeoutMs'
                         failureHandling = 'failureHandling'
                     }
-                    isArrayIntegrationEnabled  = 'isArrayIntegrationEnabled'
+                    cloudInstantiationSpec = @{
+                        imageRetentionInSeconds = 'imageRetentionInSeconds'
+                    }
                 }
                 Query       = ''
                 Result      = ''
