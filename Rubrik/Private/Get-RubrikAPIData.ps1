@@ -956,10 +956,9 @@ function Get-RubrikAPIData($endpoint) {
                 URI         = '/api/internal/nutanix/vm/{id}'
                 Method      = 'Patch'
                 Body        = @{
-                    isPaused                 = 'isVmPaused'
-                    cloudInstantiationSpec = @{
-                        imageRetentionInSeconds = 'imageRetentionInSeconds'
-                    }
+                    snapshotConsistencyMandate = 'snapshotConsistencyMandate'
+                    isPaused                 = 'isPaused'
+                    
                 }
                 Query       = ''
                 Result      = ''
