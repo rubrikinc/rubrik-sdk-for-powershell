@@ -198,6 +198,27 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikHyperVVM'                 = @{
+            '1.0' = @{
+                Description = 'Get summary of all HyperV VMs'
+                URI         = '/api/internal/hyperv/vm'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    name                    = 'name'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                }
+                Success     = '200'
+            }
+        } 
         'Get-RubrikManagedVolume'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Rubrik Managed Volumes'
@@ -251,6 +272,27 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikNutanixVM'                 = @{
+            '1.0' = @{
+                Description = 'Get summary of all Nutanix VMs'
+                URI         = '/api/internal/nutanix/vm'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    name                    = 'name'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                }
+                Success     = '200'
+            }
+        } 
         'Get-RubrikReport'             = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for each report.'
@@ -472,28 +514,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        }
-        'Get-RubrikNutanixVM'                 = @{
-            '1.0' = @{
-                Description = 'Get summary of all Nutanix VMs'
-                URI         = '/api/internal/nutanix/vm'
-                Method      = 'Get'
-                Body        = ''
-                Query       = @{
-                    is_relic                = 'is_relic'
-                    name                    = 'name'
-                    effective_sla_domain_id = 'effective_sla_domain_id'
-                    sla_assignment          = 'sla_assignment'
-                    primary_cluster_id      = 'primary_cluster_id'
-                }
-                Result      = 'data'
-                Filter      = @{
-                    'Name' = 'name'
-                    'SLA'  = 'effectiveSlaDomainName'
-                }
-                Success     = '200'
-            }
-        }        
+        }       
         'New-RubrikDatabaseMount'      = @{
             '1.0' = @{
                 Description = 'Create a live mount request with given configuration'
@@ -656,6 +677,34 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Query       = ''
                 Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Protect-RubrikHyperVVM'             = @{
+            '1.0' = @{
+                Description = 'Update a VM with the specified SLA Domain.'
+                URI         = '/api/internal/hyperv/vm/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    configuredSlaDomainId = 'configuredSlaDomainId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Protect-RubrikNutanixVM'             = @{
+            '1.0' = @{
+                Description = 'Update a VM with the specified SLA Domain.'
+                URI         = '/api/internal/nutanix/vm/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    configuredSlaDomainId = 'configuredSlaDomainId'
+                }
+                Query       = ''
+                Result      = ''
                 Filter      = ''
                 Success     = '200'
             }
