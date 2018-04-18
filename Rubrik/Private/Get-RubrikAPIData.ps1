@@ -904,6 +904,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikHyperVVM'                 = @{
+            '1.0' = @{
+                Description = 'Update VM with specified properties'
+                URI         = '/api/internal/hyperv/vm/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    cloudInstantiationSpec = @{
+                        imageRetentionInSeconds = 'imageRetentionInSeconds'
+                    }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Set-RubrikManagedVolume' = @{
             '1.0' = @{
                 Description = 'Update a managed volume'
@@ -927,6 +943,23 @@ function Get-RubrikAPIData($endpoint) {
                 Method      = 'Patch'
                 Body        = @{
                     powerStatus = 'powerStatus'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikNutanixVM'                 = @{
+            '1.0' = @{
+                Description = 'Update VM with specified properties'
+                URI         = '/api/internal/nutanix/vm/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    isPaused                 = 'isVmPaused'
+                    cloudInstantiationSpec = @{
+                        imageRetentionInSeconds = 'imageRetentionInSeconds'
+                    }
                 }
                 Query       = ''
                 Result      = ''
