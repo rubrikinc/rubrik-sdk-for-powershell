@@ -31,11 +31,13 @@ function Set-RubrikNutanixVM
         # Virtual machine ID
         [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
         [String]$id,
+        # Consistency level mandated for this VM
+        [ValidateSet('AUTOMATIC','APP_CONSISTENT','CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','VSS_CONSISTENT','INCONSISTENT','UNKNOWN')]
+        [Alias('snapshotConsistencyMandate')]
+        [String]$SnapConsistency,
         # Whether to pause or resume backups/archival for this VM.
         [Alias('isPaused')]
         [Bool]$PauseBackups,
-        #Raw Cloud Instantiation spec
-        [hashtable]$cloudInstantiationSpec,
         # Rubrik server IP or FQDN
         [String]$Server = $global:RubrikConnection.server,
         # API version
@@ -59,10 +61,18 @@ function Set-RubrikNutanixVM
         $resources = Get-RubrikAPIData -endpoint $function
         Write-Verbose -Message "Load API data for $($resources.Function)"
         Write-Verbose -Message "Description: $($resources.Description)"
+
+        #region one-off
+        if ($SnapConsistency)
+        {
+            $SnapConsistency = $SnapConsistency -replace 'AUTOMATIC', 'UNKNOWN'
+        }
+        #endregion    
   
     }
 
     Process {        
+        
         
         $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
         $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri

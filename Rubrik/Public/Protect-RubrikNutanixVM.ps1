@@ -38,12 +38,15 @@ function Protect-RubrikNutanixVM
     # The SLA Domain in Rubrik
     [Parameter(ParameterSetName = 'SLA_Explicit')]
     [String]$SLA,
+    # Inherits the SLA Domain assignment from a parent object
+    [Parameter(ParameterSetName = 'SLA_Inherit')]
+    [Switch]$Inherit,
     # Removes the SLA Domain assignment
     [Parameter(ParameterSetName = 'SLA_Unprotected')]
     [Switch]$DoNotProtect,
     # SLA id value
     [Alias('configuredSlaDomainId')]
-    [String]$SLAID = (Test-RubrikSLA -SLA $SLA -DoNotProtect $DoNotProtect -Mandatory:$true),    
+    [String]$SLAID = (Test-RubrikSLA -SLA $SLA -DoNotProtect $DoNotProtect -Inherit $Inherit -Mandatory:$true),    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
