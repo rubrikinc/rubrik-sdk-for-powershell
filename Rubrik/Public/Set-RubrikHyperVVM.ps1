@@ -1,27 +1,27 @@
 ﻿#requires -Version 3
-function Set-RubrikVM
+function Set-RubrikHyperVVM
 {
     <#  
             .SYNOPSIS
             Applies settings on one or more virtual machines known to a Rubrik cluster
 
             .DESCRIPTION
-            The Set-RubrikVM cmdlet is used to apply updated settings from a Rubrik cluster on any number of virtual machines
+            The Set-RubrikHyperVVM cmdlet is used to apply updated settings from a Rubrik cluster on any number of virtual machines
 
             .NOTES
-            Written by Chris Wahl for community usage
-            Twitter: @ChrisWahl
-            GitHub: chriswahl
+            Written by Mike Fal for community usage
+            Twitter: @Mike_Fal
+            GitHub: MikeFal
 
             .LINK
             https://github.com/rubrikinc/PowerShell-Module
 
             .EXAMPLE
-            Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups
+            Get-RubrikHyperVVM 'Server1' | Set-RubrikHyperVVM -PauseBackups
             This will pause backups on any virtual machine named "Server1"
 
             .EXAMPLE
-            Get-RubrikVM -SLA Platinum | Set-RubrikVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 -UseArrayIntegration 
+            Get-RubrikHyperVVM -SLA Platinum | Set-RubrikHyperVVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 -UseArrayIntegration 
             This will find all virtual machines in the Platinum SLA Domain and set their snapshot consistency to crash consistent (no application quiescence)
             while also limiting the number of active hypervisor snapshots to 2 and enable storage array (SAN) snapshots for ingest
     #>
@@ -31,22 +31,8 @@ function Set-RubrikVM
         # Virtual machine ID
         [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
         [String]$id,
-        # Consistency level mandated for this VM
-        [ValidateSet('AUTOMATIC','APP_CONSISTENT','CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','VSS_CONSISTENT','INCONSISTENT','UNKNOWN')]
-        [Alias('snapshotConsistencyMandate')]
-        [String]$SnapConsistency,
         #Raw Cloud Instantiation spec
         [hashtable]$cloudInstantiationSpec,
-        # The number of existing virtual machine snapshots allowed by Rubrik. Choices range from 0 - 4 snapshots.
-        [ValidateRange(0,4)] 
-        [Alias('maxNestedVsphereSnapshots')]
-        [int]$MaxNestedSnapshots,
-        # Whether to pause or resume backups/archival for this VM.
-        [Alias('isVmPaused')]
-        [Bool]$PauseBackups,
-        # User setting to dictate whether to use storage array snaphots for ingest. This setting only makes sense for VMs where array based ingest is possible.
-        [Alias('isArrayIntegrationEnabled')]
-        [Bool]$UseArrayIntegration,
         # Rubrik server IP or FQDN
         [String]$Server = $global:RubrikConnection.server,
         # API version
@@ -73,14 +59,7 @@ function Set-RubrikVM
   
     }
 
-    Process {
-
-        #region one-off
-        if ($SnapConsistency)
-        {
-            $SnapConsistency = $SnapConsistency -replace 'AUTOMATIC', 'UNKNOWN'
-        }
-        #endregion             
+    Process {        
         
         $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
         $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
