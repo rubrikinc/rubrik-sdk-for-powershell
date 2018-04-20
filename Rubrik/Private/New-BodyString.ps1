@@ -13,7 +13,14 @@
   # Look at the list of parameters that were set by the invocation process
   # This is how we know which params were actually set by the call, versus defaulting to some zero, null, or false value
   # We can also add any custom variables here, such as SLAID which is populated after the invocation resolves the name
-  if ($slaid) {$PSCmdlet.MyInvocation.BoundParameters.Add('SLAID',$slaid)}
+  if ($slaid -and $PSCmdlet.MyInvocation.BoundParameters.ContainsKey('SLAID'))
+  {
+    $PSCmdlet.MyInvocation.BoundParameters.SLAID = $slaid
+  } 
+  elseif($slaid)
+  {
+    $PSCmdlet.MyInvocation.BoundParameters.Add('SLAID',$slaid)
+  }
   
   # Now that custom params are added, let's inventory all invoked params
   $setParameters = $pscmdlet.MyInvocation.BoundParameters
