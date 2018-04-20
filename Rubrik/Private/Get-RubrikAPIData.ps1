@@ -140,6 +140,21 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikDatabaseRecoverableRange'           = @{
+            '1.0' = @{
+                Description = 'Returns a list of summary information for Microsoft SQL databases.'
+                URI         = '/api/v1/mssql/db/{id}/recoverable_range'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    before_time = 'before_time'
+                    after_time = 'after_time'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikFileset'            = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for each fileset. Optionally, filter the retrieved information.'
