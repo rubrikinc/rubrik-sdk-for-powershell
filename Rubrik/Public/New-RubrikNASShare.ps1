@@ -19,7 +19,9 @@ function New-RubrikNASShare
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      New-RubrikNASShare -HostID (Get-RubrikHost 'FOO').id -ShareType NFS -ExportPoint BAR -Credential (Get-Credential)
+
+      Create a new NFS share for host FOO, export point BAR.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]

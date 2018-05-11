@@ -18,10 +18,10 @@ function Remove-RubrikNASShare
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      Get-RubrikNASShare -Name 'FOO' | Remove-RubrikNASShare
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # NAS Share ID
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]    

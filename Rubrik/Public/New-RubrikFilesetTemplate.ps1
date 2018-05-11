@@ -22,8 +22,15 @@ function New-RubrikFilesetTemplate
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
-  #>
+      New-RubrikFilesetTemplate -Name 'FOO' -UseWindowsVSS -OperatingSystemType 'Windows' -Includes 'C:\*.mp3','C:\*.csv'
+
+      Create a Windows Fileset Template to backup .mp3 and .csv on the C:\.
+
+      .EXAMPLE
+      New-RubrikFilesetTemplate -Name 'BAR' -ShareType 'SMB' -Includes '*' -Excludes '*.pdf'
+
+      Create a new NAS FilesetTemplate named BAR to backup a NAS SMB share, backing up everything byt excluding all .pdf files.
+    #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(

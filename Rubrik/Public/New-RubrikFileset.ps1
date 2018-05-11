@@ -18,7 +18,14 @@ function New-RubrikFileset
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      New-RubrikFileset -TemplateID '1111-1111-1111-1111' -HostID 'Host::::2222-2222-2222-2222'
+
+      Creates a new fileset on the specified host, using the selected template.
+
+      .EXAMPLE
+      New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id
+
+      Creates a new fileset for the BAR NAS, using the FOO template.
   #>
 
   [CmdletBinding()]

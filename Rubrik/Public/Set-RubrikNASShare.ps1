@@ -19,7 +19,9 @@ function Set-RubrikNASShare
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      Get-RubrikNASShare -name 'FOO' | Set-RubrikNASShare -ExportPoint 'TEMP' 
+
+      Update the NAS Share FOO with the export point of TEMP.
   #>
 
   [CmdletBinding()]

@@ -17,7 +17,14 @@ function Get-RubrikNASShare
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      Get-RubrikNASShare -ShareType 'SMB'
+
+      Get all SMB NAS Shares
+
+      .EXAMPLE
+      Get-RubrikHost -name 'FOO'  | Get-RubrikNASShare
+
+      Get all NAS Shares attached to host 'FOO'.
   #>
 
   [CmdletBinding()]
