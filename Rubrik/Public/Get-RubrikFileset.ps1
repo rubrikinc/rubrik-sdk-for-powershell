@@ -58,6 +58,9 @@ function Get-RubrikFileset
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
+    # Rubrik's Share id
+    [Alias('share_id')]
+    [String]$ShareID,
     # Rubrik's fileset id
     [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [String]$id,
