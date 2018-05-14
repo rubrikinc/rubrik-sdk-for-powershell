@@ -59,6 +59,9 @@ function Get-RubrikFileset
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
     # Rubrik's fileset id
+    [Alias('share_id')]
+    [String]$ShareID,
+    # Rubrik's fileset id
     [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [String]$id,
     # SLA id value

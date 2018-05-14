@@ -38,6 +38,9 @@ function Get-RubrikFilesetTemplate
     [ValidateSet('Windows', 'Linux')]
     [Alias('operating_system_type')]
     [String]$OperatingSystemType,
+    # Filter the summary information based on the share type of the fileset. Accepted values: 'NFS', 'SMB'
+    [ValidateSet('NFS', 'SMB')]
+    [String]$shareType,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,    
