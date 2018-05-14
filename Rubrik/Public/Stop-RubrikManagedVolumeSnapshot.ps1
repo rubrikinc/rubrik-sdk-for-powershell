@@ -23,7 +23,7 @@ function Stop-RubrikManagedVolumeSnapshot
       Close the specified managed volume for read/write operations
 
       .EXAMPLE
-      Stop-RubrikManagedVolume -name 'foo' | Start-ManagedVolumeSnapshot
+      Get-RubrikManagedVolume -name 'foo' | Stop-ManagedVolumeSnapshot
 
   #>
 
