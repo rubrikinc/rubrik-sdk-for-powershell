@@ -1,44 +1,55 @@
-#requires -Version 3
-function Stop-RubrikManagedVolumeSnapshot
+﻿#requires -Version 3
+function Get-RubrikNASShare
 {
   <#  
       .SYNOPSIS
-      Stops Rubrik Managed Volume snopshot
+      Get information on NAS shares.
 
       .DESCRIPTION
-      The Stop-RubrikManagedVolumeSnapshot cmdlet is used to close a Rubrik Managed Volume
-      for read/write actions.
+      Get all information for NAS shares configured within Rubrik.
 
       .NOTES
-      Written by Mike Fal for community usage
+      Written by Mike Fal
       Twitter: @Mike_Fal
       GitHub: MikeFal
-
+      
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Stop-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
+      Get-RubrikNASShare -ShareType 'SMB'
 
-      Close the specified managed volume for read/write operations
+      Get all SMB NAS Shares
 
       .EXAMPLE
-      Get-RubrikManagedVolume -name 'foo' | Stop-ManagedVolumeSnapshot
+      Get-RubrikHost -name 'FOO'  | Get-RubrikNASShare
 
+      Get all NAS Shares attached to host 'FOO'.
   #>
 
-   [CmdletBinding()]
+  [CmdletBinding()]
   Param(
-    # Rubrik's Managed Volume id value
+    # NAS Share ID
     [Parameter(ValueFromPipelineByPropertyName = $true)]
-    [String]$id,
+    [String]$ID,
+    # Host ID associated with the share
+    [Alias('host_id')]
+    [string]$HostID,
+    #Share type (NFS or SMB)
+    [ValidateSet('NFS','SMB')]
+    [Alias('share_type')]
+    [String]$ShareType,
+    #Host name
+    [String]$HostName,
+    #export point
+    [String]$exportPoint,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
-    Begin {
+
+  Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -61,7 +72,8 @@ function Stop-RubrikManagedVolumeSnapshot
   Process {
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

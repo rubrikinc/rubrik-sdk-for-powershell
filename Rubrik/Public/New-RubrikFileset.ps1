@@ -1,44 +1,49 @@
-#requires -Version 3
-function Stop-RubrikManagedVolumeSnapshot
+﻿#requires -Version 3
+function New-RubrikFileset
 {
   <#  
       .SYNOPSIS
-      Stops Rubrik Managed Volume snopshot
+      {required: high level overview}
 
       .DESCRIPTION
-      The Stop-RubrikManagedVolumeSnapshot cmdlet is used to close a Rubrik Managed Volume
-      for read/write actions.
+      {required: more detailed description of the function's purpose}
 
       .NOTES
-      Written by Mike Fal for community usage
-      Twitter: @Mike_Fal
-      GitHub: MikeFal
+      Written by {required}
+      Twitter: {optional}
+      GitHub: {optional}
+      Any other links you'd like here
 
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Stop-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
+      New-RubrikFileset -TemplateID '1111-1111-1111-1111' -HostID 'Host::::2222-2222-2222-2222'
 
-      Close the specified managed volume for read/write operations
+      Creates a new fileset on the specified host, using the selected template.
 
       .EXAMPLE
-      Get-RubrikManagedVolume -name 'foo' | Stop-ManagedVolumeSnapshot
+      New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id
 
+      Creates a new fileset for the BAR NAS, using the FOO template.
   #>
 
-   [CmdletBinding()]
+  [CmdletBinding()]
   Param(
-    # Rubrik's Managed Volume id value
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
-    [String]$id,
+    #Fileset Template ID to use for the new fileset
+    [Parameter(Mandatory=$true)]
+    [String]$TemplateID,
+    # HostID - Used for Windows or Linux Filesets
+    [String]$HostID,
+    # ShareID - used for NAS shares
+    [String]$ShareID,   
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
-    Begin {
+
+  Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -61,7 +66,8 @@ function Stop-RubrikManagedVolumeSnapshot
   Process {
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

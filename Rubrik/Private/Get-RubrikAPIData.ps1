@@ -172,6 +172,7 @@ function Get-RubrikAPIData($endpoint) {
                     cached                  = 'cached'
                     name                    = 'name'
                     host_name               = 'host_name'
+                    share_id                = 'share_id'
                 }
                 Result      = 'data'
                 Filter      = @{
@@ -191,6 +192,7 @@ function Get-RubrikAPIData($endpoint) {
                     primary_cluster_id    = 'primary_cluster_id'
                     operating_system_type = 'operating_system_type'
                     name                  = 'name'
+                    share_type            = 'share_type'
                 }
                 Result      = 'data'
                 Filter      = ''
@@ -284,6 +286,25 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Result      = 'data'
                 Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikNASShare'              = @{
+            '1.0' = @{
+                Description = 'Retrieve information NAS Shares'
+                URI         = '/api/internal/host/share'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    host_id  = 'host_id'
+                    share_type = 'share_type'
+                    primary_cluster_id  = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    hostName = 'hostName'
+                    exportPoint = 'exportPoint'
+                }
                 Success     = '200'
             }
         }
@@ -548,6 +569,48 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'New-RubrikFileSet'      = @{
+            '1.0' = @{
+                Description = 'Create a fileset using an existing template along with a host or share'
+                URI         = '/api/v1/fileset'
+                Method      = 'Post'
+                Body        = @{
+                    hostId    = 'hostId'
+                    shareId = 'shareId'
+                    templateId = 'templateId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
+        'New-RubrikFileSetTemplate'      = @{
+            '1.0' = @{
+                Description = 'Create a new fileset template for fileset backups'
+                URI         = '/api/v1/fileset_template'
+                Method      = 'Post'
+                Body        = @{
+                    allowBackupNetworkMounts = 'allowBackupNetworkMounts'
+                    allowBackupHiddenFoldersInNetworkMounts = 'allowBackupHiddenFoldersInNetworkMounts'
+                    useWindowsVss = 'useWindowsVss'
+                    name = 'name'
+                    includes = 'includes'
+                    excludes = 'excludes'
+                    exceptions = 'exceptions'
+                    operatingSystemType = 'operatingSystemType'
+                    shareType = 'shareType'
+                    preBackupScript = 'preBackupScript'
+                    postBackupScript = 'postBackupScript'
+                    backupScriptTimeout = 'backupScriptTimeout'
+                    backupScriptErrorHandling = 'backupScriptErrorHandling'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'New-RubrikHost'               = @{
             '1.0' = @{
                 Description = 'Register a host'
@@ -604,6 +667,25 @@ function Get-RubrikAPIData($endpoint) {
                     disableNetwork       = 'disableNetwork'
                     removeNetworkDevices = 'removeNetworkDevices'
                     powerOn              = 'powerOn'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
+        'New-RubrikNASShare'              = @{
+            '1.0' = @{
+                Description = 'Create a new NAS share on an existing host'
+                URI         = '/api/internal/host/share'
+                Method      = 'Post'
+                Body        = @{
+                    hostId      = 'hostId'
+                    shareType   = 'shareType'
+                    exportPoint = 'exportPoint'
+                    username    = 'username'
+                    password    = 'password'
+                    domain      = 'domain'
                 }
                 Query       = ''
                 Result      = ''
@@ -826,6 +908,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Remove-RubrikNASShare'           = @{
+            '1.0' = @{
+                Description = 'Create a request to delete a NAS share'
+                URI         = '/api/internal/host/share/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Remove-RubrikReport'          = @{
             '1.0' = @{
                 Description = 'Delete a specific report specified by reportId'
@@ -958,6 +1052,23 @@ function Get-RubrikAPIData($endpoint) {
                 Method      = 'Patch'
                 Body        = @{
                     powerStatus = 'powerStatus'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikNASShare'              = @{
+            '1.0' = @{
+                Description = 'Power given live-mounted vm on/off'
+                URI         = '/api/internal/host/share/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    exportPoint = 'exportPoint'
+                    username    = 'username'
+                    password    = 'password'
+                    domain      = 'domain'
                 }
                 Query       = ''
                 Result      = ''
