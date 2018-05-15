@@ -5,70 +5,61 @@ online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
-# Get-RubrikFilesetTemplate
+# Get-RubrikNASShare
 
 ## SYNOPSIS
-Retrieves details on one or more fileset templates known to a Rubrik cluster
+Get information on NAS shares.
 
 ## SYNTAX
 
 ```
-Get-RubrikFilesetTemplate [[-Name] <String>] [[-OperatingSystemType] <String>] [[-shareType] <String>]
- [[-PrimaryClusterID] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikNASShare [[-ID] <String>] [[-HostID] <String>] [[-ShareType] <String>] [[-HostName] <String>]
+ [[-exportPoint] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Get-RubrikFilesetTemplate cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of fileset templates
+Get all information for NAS shares configured within Rubrik.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-RubrikFilesetTemplate -Name 'Template1'
+Get-RubrikNASShare -ShareType 'SMB'
 ```
 
-This will return details on all fileset templates named "Template1"
+Get all SMB NAS Shares
 
 ### EXAMPLE 2
 ```
-Get-RubrikFilesetTemplate -OperatingSystemType 'Linux'
+Get-RubrikHost -name 'FOO'  | Get-RubrikNASShare
 ```
 
-This will return details on all fileset templates that can be used against a Linux operating system type
-
-### EXAMPLE 3
-```
-Get-RubrikFilesetTemplate -id '11111111-2222-3333-4444-555555555555'
-```
-
-This will return details on the fileset template matching id "11111111-2222-3333-4444-555555555555"
+Get all NAS Shares attached to host 'FOO'.
 
 ## PARAMETERS
 
-### -Name
-Retrieve fileset templates with a name matching the provided name.
-The search is performed as a case-insensitive infix search.
+### -ID
+NAS Share ID
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: FilesetTemplate
+Aliases:
 
 Required: False
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -OperatingSystemType
-Filter the summary information based on the operating system type of the fileset.
-Accepted values: 'Windows', 'Linux'
+### -HostID
+Host ID associated with the share
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: operating_system_type
+Aliases: host_id
 
 Required: False
 Position: 2
@@ -77,9 +68,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -shareType
-Filter the summary information based on the share type of the fileset.
-Accepted values: 'NFS', 'SMB'
+### -ShareType
+Share type (NFS or SMB)
 
 ```yaml
 Type: String
@@ -93,14 +83,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PrimaryClusterID
-Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
-Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+### -HostName
+Host name
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: primary_cluster_id
+Aliases:
 
 Required: False
 Position: 4
@@ -109,8 +98,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -id
-The ID of the fileset template
+### -exportPoint
+export point
 
 ```yaml
 Type: String
@@ -120,7 +109,7 @@ Aliases:
 Required: False
 Position: 5
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -163,9 +152,9 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## OUTPUTS
 
 ## NOTES
-Written by Chris Wahl for community usage
-Twitter: @ChrisWahl
-GitHub: chriswahl
+Written by Mike Fal
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 

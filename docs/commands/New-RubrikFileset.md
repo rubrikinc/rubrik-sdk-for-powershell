@@ -5,39 +5,56 @@ online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
-# Stop-RubrikManagedVolumeSnapshot
+# New-RubrikFileset
 
 ## SYNOPSIS
-Stops Rubrik Managed Volume snopshot
+{required: high level overview}
 
 ## SYNTAX
 
 ```
-Stop-RubrikManagedVolumeSnapshot [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+New-RubrikFileset [-TemplateID] <String> [[-HostID] <String>] [[-ShareID] <String>] [[-Server] <String>]
+ [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Stop-RubrikManagedVolumeSnapshot cmdlet is used to close a Rubrik Managed Volume
-for read/write actions.
+{required: more detailed description of the function's purpose}
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Stop-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
+New-RubrikFileset -TemplateID '1111-1111-1111-1111' -HostID 'Host::::2222-2222-2222-2222'
 ```
 
-Close the specified managed volume for read/write operations
+Creates a new fileset on the specified host, using the selected template.
 
 ### EXAMPLE 2
 ```
-Get-RubrikManagedVolume -name 'foo' | Stop-ManagedVolumeSnapshot
+New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id
 ```
+
+Creates a new fileset for the BAR NAS, using the FOO template.
 
 ## PARAMETERS
 
-### -id
-Rubrik's Managed Volume id value
+### -TemplateID
+Fileset Template ID to use for the new fileset
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HostID
+HostID - Used for Windows or Linux Filesets
 
 ```yaml
 Type: String
@@ -45,9 +62,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: 2
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShareID
+ShareID - used for NAS shares
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -60,7 +92,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 4
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -75,7 +107,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 5
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -90,9 +122,10 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## OUTPUTS
 
 ## NOTES
-Written by Mike Fal for community usage
-Twitter: @Mike_Fal
-GitHub: MikeFal
+Written by {required}
+Twitter: {optional}
+GitHub: {optional}
+Any other links you'd like here
 
 ## RELATED LINKS
 

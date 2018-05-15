@@ -14,8 +14,8 @@ Retrieves details on one or more filesets known to a Rubrik cluster
 
 ```
 Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>]
- [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>]
- [<CommonParameters>]
+ [[-PrimaryClusterID] <String>] [[-ShareID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>]
+ [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -153,6 +153,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ShareID
+Rubrik's Share id
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: share_id
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -id
 Rubrik's fileset id
 
@@ -162,7 +177,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -177,7 +192,7 @@ Parameter Sets: (All)
 Aliases: effective_sla_domain_id
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -192,7 +207,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -207,7 +222,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -5,46 +5,39 @@ online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
-# Stop-RubrikManagedVolumeSnapshot
+# Remove-RubrikNASShare
 
 ## SYNOPSIS
-Stops Rubrik Managed Volume snopshot
+{required: high level overview}
 
 ## SYNTAX
 
 ```
-Stop-RubrikManagedVolumeSnapshot [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Remove-RubrikNASShare [-Id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Stop-RubrikManagedVolumeSnapshot cmdlet is used to close a Rubrik Managed Volume
-for read/write actions.
+{required: more detailed description of the function's purpose}
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Stop-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
-```
-
-Close the specified managed volume for read/write operations
-
-### EXAMPLE 2
-```
-Get-RubrikManagedVolume -name 'foo' | Stop-ManagedVolumeSnapshot
+Get-RubrikNASShare -Name 'FOO' | Remove-RubrikNASShare
 ```
 
 ## PARAMETERS
 
-### -id
-Rubrik's Managed Volume id value
+### -Id
+NAS Share ID
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -81,6 +74,37 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -90,9 +114,10 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## OUTPUTS
 
 ## NOTES
-Written by Mike Fal for community usage
-Twitter: @Mike_Fal
-GitHub: MikeFal
+Written by {required}
+Twitter: {optional}
+GitHub: {optional}
+Any other links you'd like here
 
 ## RELATED LINKS
 

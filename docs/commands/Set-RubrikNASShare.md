@@ -5,39 +5,50 @@ online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
-# Stop-RubrikManagedVolumeSnapshot
+# Set-RubrikNASShare
 
 ## SYNOPSIS
-Stops Rubrik Managed Volume snopshot
+Change settings for a NAS share
 
 ## SYNTAX
 
 ```
-Stop-RubrikManagedVolumeSnapshot [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Set-RubrikNASShare [-Id] <String> [[-ExportPoint] <String>] [[-Credential] <PSCredential>] [[-Server] <String>]
+ [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Stop-RubrikManagedVolumeSnapshot cmdlet is used to close a Rubrik Managed Volume
-for read/write actions.
+Update NAS share settings that are configured in Rubrik, such as updating the export point or
+change the NAS credentials
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Stop-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
+Get-RubrikNASShare -name 'FOO' | Set-RubrikNASShare -ExportPoint 'TEMP'
 ```
 
-Close the specified managed volume for read/write operations
-
-### EXAMPLE 2
-```
-Get-RubrikManagedVolume -name 'foo' | Stop-ManagedVolumeSnapshot
-```
+Update the NAS Share FOO with the export point of TEMP.
 
 ## PARAMETERS
 
-### -id
-Rubrik's Managed Volume id value
+### -Id
+NAS Share ID
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ExportPoint
+New export point for the share
 
 ```yaml
 Type: String
@@ -45,9 +56,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: 2
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Credential
+New NAS Share credential
+
+```yaml
+Type: PSCredential
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -60,7 +86,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 4
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -75,7 +101,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 5
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -90,9 +116,10 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## OUTPUTS
 
 ## NOTES
-Written by Mike Fal for community usage
+Written by Mike Fal
 Twitter: @Mike_Fal
 GitHub: MikeFal
+Any other links you'd like here
 
 ## RELATED LINKS
 
