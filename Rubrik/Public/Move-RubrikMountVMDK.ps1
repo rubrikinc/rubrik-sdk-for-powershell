@@ -90,10 +90,10 @@ function Move-RubrikMountVMDK
         $Date = Get-Date
       }
 
-      $HostID = (Get-RubrikVM -VM $TargetVM).hostId
-
-      Write-Verbose -Message "Creating a powered off Live Mount of $SourceVM"
-      $mount = Get-RubrikVM $SourceVM | Get-RubrikSnapshot -Date $Date | New-RubrikMount -HostID $HostID
+      $HostID = (Get-RubrikVM -VM $TargetVM -PrimaryClusterID local).hostId
+ 
+      Write-Verbose -Message "Creating a powered off Live Mount of $SourceVM(local)"
+      $mount = Get-RubrikVM $SourceVM -PrimaryClusterID local | Get-RubrikSnapshot -Date $Date | New-RubrikMount -HostID $HostID
     
       Write-Verbose -Message "Waiting for request $($mount.id) to complete"
       while ((Get-RubrikRequest -ID $mount.id -Type "vmware/vm").status -ne 'SUCCEEDED')
@@ -115,7 +115,7 @@ function Move-RubrikMountVMDK
       }
 
       Write-Verbose -Message 'Gathering details on the Live Mount'
-      $MountVM = Get-RubrikVM -id (Get-RubrikMount -id $MountID).mountedVmId
+      $MountVM = Get-RubrikVM -id (Get-RubrikMount -id $MountID).mountedVmId -PrimaryClusterID local
 
       Write-Verbose -Message 'Gathering details on the Target VM'
       $TargetHost = Get-VMHost -VM $TargetVM
