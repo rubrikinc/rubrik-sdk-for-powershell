@@ -83,6 +83,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Invoke-RubrikRESTCall', 'Move-RubrikMountVMDK', 
                'New-RubrikDatabaseMount', 'New-RubrikFileset', 
                'New-RubrikFilesetTemplate', 'New-RubrikHost', 
+               'New-RubrikLogBackup',
                'New-RubrikManagedVolume', 'New-RubrikManagedVolumeExport', 
                'New-RubrikMount', 'New-RubrikNASShare', 'New-RubrikReport', 
                'New-RubrikSLA', 'New-RubrikSnapshot', 'Protect-RubrikDatabase', 
