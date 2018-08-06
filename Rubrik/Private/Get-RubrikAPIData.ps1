@@ -626,6 +626,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '201'
             }
         }
+        'New-RubrikLogBackup'               = @{
+            '1.0' = @{
+                Description = 'Takes on demand transaction log backup for SQL Server'
+                URI         = '/api/v1/mssql/db/{id}/log_backup'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'New-RubrikManagedVolume' = @{
             '1.0' = @{
                 Description = 'Create a new managed volume'
