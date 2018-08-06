@@ -3,22 +3,26 @@ function New-RubrikLogBackup
 {
   <#  
       .SYNOPSIS
-      {required: high level overview}
+      Runs an on demand log backup for the specified database id.
 
       .DESCRIPTION
-      {required: more detailed description of the function's purpose}
+      This cmdlet initiates an on-demand transaction log backup for a specific SQL Server database.
 
       .NOTES
-      Written by {required}
-      Twitter: {optional}
-      GitHub: {optional}
-      Any other links you'd like here
+      Written by Mike Fal
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
 
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      {required: show one or more examples using the function}
+      New-RubrikLogBackup -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 
+
+      .EXAMPLE
+      Get-RubrikDatabase -ServerInstance FOO -Name BAR | New-RubrikLogBackup
+
+      Iniitaite a log backup for the BAR database on the FOO instance.
   #>
 
   [CmdletBinding()]
