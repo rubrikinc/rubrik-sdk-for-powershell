@@ -74,6 +74,18 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
+            '4.1' = @{
+                Description = 'Get the link to a CSV file for a report.'
+                URI         = '/api/internal/report/{id}/csv_link'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    timezone_offset = 'timezone_offset'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Get-RubrikAPIVersion'         = @{
             '1.0' = @{
