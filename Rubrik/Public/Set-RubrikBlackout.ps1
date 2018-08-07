@@ -17,7 +17,7 @@ function Set-RubrikBlackout
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Set-RubrikBlackout -Set [true/false]
+      Set-RubrikBlackout -Set:[$true/$false]
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
