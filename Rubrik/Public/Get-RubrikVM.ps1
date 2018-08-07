@@ -65,11 +65,11 @@ function Get-RubrikVM
     
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
@@ -81,7 +81,9 @@ function Get-RubrikVM
   Process {
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    if ($SLAID.Length -eq 0 -and $SLA.Length -gt 0) {
+      $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    }
     #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id

@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Testing for MacOS and Linux as per [143](https://github.com/rubrikinc/PowerShell-Module/issues/143)
 
+### Fixed
+
+* Prevent Get-RubrikVM $SLAID parameter value overwrite when it has a value as per [165](https://github.com/rubrikinc/PowerShell-Module/issues/165)
+
 ## [4.0.0] - 2017-07-07
 
 ### Added
