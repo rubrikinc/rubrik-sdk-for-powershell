@@ -1,55 +1,37 @@
 ﻿#requires -Version 3
-function Get-RubrikReportData
+function Get-RubrikOrganization
 {
   <#  
       .SYNOPSIS
-      Retrieve table data for a specific Envision report
+      Returns a list of all organizations.
 
       .DESCRIPTION
-      The Get-RubrikReportData cmdlet is used to pull table data from a specific Envision report
+      This cmdlet returns all the organizations within Rubrik. Organizations are used to support
+      Rubrik's multi-tenancy feature. 
 
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-
+      Written by Mike Fal
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
+      
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData
-      This will return table data from the "SLA Compliance Summary" report
+      Get-RubrikOrganization
 
-      .EXAMPLE
-      Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance'
-      This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"
+      Returns a complete list of all Rubrik organizations.
   #>
 
   [CmdletBinding()]
   Param(
-    # The ID of the report
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]    
+    # Organization ID
     [String]$id,
-    # Search table data by object name
-    [Alias('search_value')]
-    [String]$Name,
-    # Filter table data on task type
-    [Alias('task_type')]
-    [String]$TaskType,
-    # Filter table data on task status
-    [Alias('task_status')]
-    [String]$TaskStatus,
-    # Filter table data on object type
-    [Alias('object_type')]
-    [String]$ObjectType,
-    # Filter table data on compliance status
-    [Alias('compliance_status')]
-    [ValidateSet('InCompliance','NonCompliance')]
-    [String]$ComplianceStatus,  
-    #limit the number of rows returned
-    [int]$limit,  
-    #cursor start (if necessary)
-    [string]$cursor,
+    # Organization Name
+    [String]$name,
+    # Filter results on if the org is global or not
+    [Alias('is_global')]
+    [bool]$isGlobal,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -80,7 +62,7 @@ function Get-RubrikReportData
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

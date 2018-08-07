@@ -21,7 +21,9 @@ function Get-RubrikAPIData($endpoint) {
                 URI         = '/api/v1/session'
                 Method      = 'Post'
                 Body        = ''
-                Query       = ''
+                Query       = @{
+                    organization_id = 'organization_id'
+                }
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
@@ -328,6 +330,21 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
+        }
+        'Get-RubrikOrganization'                 = @{
+            '1.0' = @{
+                Description = 'Get summary of all Rubrik organizations'
+                URI         = '/api/internal/organization'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_global                = 'is_global'
+                    name                    = 'name'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
         } 
         'Get-RubrikReport'             = @{
             '1.0' = @{
@@ -385,6 +402,7 @@ function Get-RubrikAPIData($endpoint) {
                     sortBy         = 'sortBy'
                     sortOrder      = 'sortOrder'
                     search_value   = 'objectName'
+                    cursor         = 'cursor'
                     requestFilters = @{
                         sla_domain_id     = 'slaDomain'
                         task_type         = 'taskType'
