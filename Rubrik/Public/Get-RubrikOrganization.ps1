@@ -1,37 +1,44 @@
-﻿#Requires -Version 3
-function Set-RubrikBlackout
+﻿#requires -Version 3
+function Get-RubrikOrganization
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and sets blackout (stops/starts all snaps)
+      Returns a list of all organizations.
 
       .DESCRIPTION
-      The Set-RubrikBlackout cmdlet will accept a flag of true/false to set cluster blackout
+      This cmdlet returns all the organizations within Rubrik. Organizations are used to support
+      Rubrik's multi-tenancy feature. 
 
       .NOTES
-      Written by Pete Milanese for community usage
-      Twitter: @pmilano1
-      GitHub: pmilano1
-
+      Written by Mike Fal
+      Twitter: @Mike_Fal
+      GitHub: MikeFal
+      
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Set-RubrikBlackout -Set:[$true/$false]
+      Get-RubrikOrganization
+
+      Returns a complete list of all Rubrik organizations.
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding()]
   Param(
-    # Rubrik blackout value
-    [Alias('isGlobalBlackoutActive')]
-    [Switch]$Set,
+    # Organization ID
+    [String]$id,
+    # Organization Name
+    [String]$name,
+    # Filter results on if the org is global or not
+    [Alias('is_global')]
+    [bool]$isGlobal,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api
   )
 
-    Begin {
+  Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -55,7 +62,7 @@ function Set-RubrikBlackout
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

@@ -45,7 +45,11 @@ function Get-RubrikReportData
     # Filter table data on compliance status
     [Alias('compliance_status')]
     [ValidateSet('InCompliance','NonCompliance')]
-    [String]$ComplianceStatus,    
+    [String]$ComplianceStatus,  
+    #limit the number of rows returned
+    [int]$limit,  
+    #cursor start (if necessary)
+    [string]$cursor,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

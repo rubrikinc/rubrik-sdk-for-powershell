@@ -49,7 +49,11 @@ function Connect-Rubrik {
         # Credentials with permission to connect to the Rubrik cluster
         # Optionally, use the Username and Password parameters
         [Parameter(Position = 3)]
-        [System.Management.Automation.CredentialAttribute()]$Credential
+        [System.Management.Automation.CredentialAttribute()]$Credential,
+        #Organization to connect with, assuming the user has multiple organizations
+        [Parameter(Position = 4)]
+        [Alias('organization_id')]
+        [String]$OrganizationID
 
     )
 
