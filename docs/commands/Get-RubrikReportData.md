@@ -14,8 +14,8 @@ Retrieve table data for a specific Envision report
 
 ```
 Get-RubrikReportData [-id] <String> [[-Name] <String>] [[-TaskType] <String>] [[-TaskStatus] <String>]
- [[-ObjectType] <String>] [[-ComplianceStatus] <String>] [[-Server] <String>] [[-api] <String>]
- [<CommonParameters>]
+ [[-ObjectType] <String>] [[-ComplianceStatus] <String>] [[-limit] <Int32>] [[-cursor] <String>]
+ [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -129,6 +129,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -limit
+limit the number of rows returned
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -cursor
+cursor start (if necessary)
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Server
 Rubrik server IP or FQDN
 
@@ -138,7 +168,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 9
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -153,7 +183,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 10
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

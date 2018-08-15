@@ -14,7 +14,7 @@ Connects to Rubrik and retrieves a token value for authentication
 
 ```
 Connect-Rubrik [-Server] <String> [[-Username] <String>] [[-Password] <SecureString>] [[-Credential] <Object>]
- [<CommonParameters>]
+ [[-OrganizationID] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -107,6 +107,21 @@ Aliases:
 
 Required: False
 Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationID
+Organization to connect with, assuming the user has multiple organizations
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: organization_id
+
+Required: False
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

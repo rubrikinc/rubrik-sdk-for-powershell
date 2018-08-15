@@ -5,39 +5,74 @@ online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
-# Set-RubrikBlackout
+# Get-RubrikOrganization
 
 ## SYNOPSIS
-Connects to Rubrik and sets blackout (stops/starts all snaps)
+Returns a list of all organizations.
 
 ## SYNTAX
 
 ```
-Set-RubrikBlackout [-Set] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-RubrikOrganization [[-id] <String>] [[-name] <String>] [[-isGlobal] <Boolean>] [[-Server] <String>]
+ [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Set-RubrikBlackout cmdlet will accept a flag of true/false to set cluster blackout
+This cmdlet returns all the organizations within Rubrik.
+Organizations are used to support
+Rubrik's multi-tenancy feature.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Set-RubrikBlackout -Set:[$true/$false]
+Get-RubrikOrganization
 ```
+
+Returns a complete list of all Rubrik organizations.
 
 ## PARAMETERS
 
-### -Set
-Rubrik blackout value
+### -id
+Organization ID
 
 ```yaml
-Type: SwitchParameter
+Type: String
 Parameter Sets: (All)
-Aliases: isGlobalBlackoutActive
+Aliases:
 
 Required: False
-Position: Named
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+Organization Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -isGlobal
+Filter results on if the org is global or not
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases: is_global
+
+Required: False
+Position: 3
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -52,7 +87,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: 4
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -67,39 +102,8 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 5
 Default value: $global:RubrikConnection.api
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -113,9 +117,9 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## OUTPUTS
 
 ## NOTES
-Written by Pete Milanese for community usage
-Twitter: @pmilano1
-GitHub: pmilano1
+Written by Mike Fal
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
