@@ -17,6 +17,11 @@ function Move-RubrikMountVMDK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
+      Move-RubrikMountVMDK -SourceVMID (Get-RubrikVM -Name 'SourceVM').id -TargetVM 'TargetVM'
+      This will create a Live Mount using the latest snapshot of the VM named "SourceVM", using the VM's Rubrik ID.
+      The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
+
+      .EXAMPLE
       Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM'
       This will create a Live Mount using the latest snapshot of the VM named "SourceVM"
       The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
