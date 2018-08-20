@@ -43,10 +43,8 @@ function Export-RubrikDatabase
     # Number of parallel streams to copy data
     [int]$MaxDataStreams,
     # Recovery Point desired in the form of Epoch with Milliseconds
-    [Parameter(ParameterSetName='Recovery_timestamp')]
     [int64]$TimestampMs,
     # Recovery Point desired in the form of DateTime value
-    [Parameter(ParameterSetName='Recovery_DateTime')]
     [datetime]$RecoveryDateTime,
     # Take database out of recovery mode after export
     [Switch]$FinishRecovery,
@@ -59,12 +57,15 @@ function Export-RubrikDatabase
     # API version
     [String]$api = $global:RubrikConnection.api,
     #Simple Mode - Data File Path 
+    [Parameter(ParameterSetName='SimpleFileLocation')]
     [Alias('DataFilePath')]   
     [string]$TargetDataFilePath,
     #Simple Mode - Data File Path
+    [Parameter(ParameterSetName='SimpleFileLocation')]
     [Alias('LogFilePath')]    
     [string]$TargetLogFilePath,
     #Advanced Mode - Array of hash tables for file reloaction.
+    [Parameter(ParameterSetName='AdvancedFileLocation')]
     [PSCustomObject[]] $TargetFilePaths
   )
 
@@ -105,11 +106,17 @@ function Export-RubrikDatabase
       $resources.Body.targetDatabaseName = $TargetDatabaseName
       $resources.Body.finishRecovery = $FinishRecovery.IsPresent
       recoveryPoint = @()
-      targetFilePaths = $TargetFilePaths
     }
 
     if($MaxDataStreams){
       $body.Add($resources.Body.maxDataStreams,$MaxDataStreams)
+    }
+
+    if($TargetFilePaths){
+      $body.Add('targetFilePaths',$TargetFilePaths)
+    } else {
+      $body.Add('targetDataFilePath',$TargetDataFilePath)
+      $body.Add('targetLogFilePath',$TargetLogFilePath)
     }
 
     $body.recoveryPoint += @{
