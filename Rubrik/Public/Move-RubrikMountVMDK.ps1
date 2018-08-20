@@ -17,6 +17,11 @@ function Move-RubrikMountVMDK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
+      Move-RubrikMountVMDK -SourceVMID (Get-RubrikVM -Name 'SourceVM').id -TargetVM 'TargetVM'
+      This will create a Live Mount using the latest snapshot of the VM named "SourceVM", using the VM's Rubrik ID.
+      The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
+
+      .EXAMPLE
       Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM'
       This will create a Live Mount using the latest snapshot of the VM named "SourceVM"
       The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
@@ -45,22 +50,23 @@ function Move-RubrikMountVMDK
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
+    # Source virtual machine Rubrik ID to use as a live mount
+    [Parameter(ParameterSetName = 'Create')]
+    [String]$SourceVMID,
     # Source virtual machine to use as a Live Mount based on a previous backup
-    [Parameter(Mandatory = $true,Position = 0,ValueFromPipeline = $true,ParameterSetName = 'Create')]
+    [Parameter(ParameterSetName = 'Create')]
     [Alias('Name','VM')]
-    [ValidateNotNullorEmpty()]
     [String]$SourceVM,
     # Target virtual machine to attach the Live Mount disk(s)
-    [Parameter(Mandatory = $true,Position = 1,ParameterSetName = 'Create')]
-    [ValidateNotNullorEmpty()]
+    [Parameter(Mandatory=$true,ParameterSetName = 'Create')]
     [String]$TargetVM,
     # Backup date to use for the Live Mount
     # Will use the current date and time if no value is specified
-    [Parameter(Position = 2,ParameterSetName = 'Create')]
+    [Parameter(ParameterSetName = 'Create')]
     [String]$Date,
     # An array of disks to exclude from presenting to the target virtual machine
     # By default, all disks will be presented
-    [Parameter(Position = 3,ParameterSetName = 'Create')]
+    [Parameter(ParameterSetName = 'Create')]
     [Array]$ExcludeDisk,
     # The path to a cleanup file to remove the live mount and presented disks
     # The cleanup file is created each time the command is run and stored in the $HOME path as a text file with a random number value
@@ -77,11 +83,11 @@ function Move-RubrikMountVMDK
 
     Test-RubrikConnection
     Test-VMwareConnection
-  
+
   }
 
   Process {
-
+    try{
     if (!$Cleanup)
     {
       if (!$Date) 
@@ -90,11 +96,26 @@ function Move-RubrikMountVMDK
         $Date = Get-Date
       }
 
+      Write-Verbose -Message "Validating Source and Target VMs"
+      if($SourceVM -and !$SourceVMID){
+        Write-Warning -Message "-SourceVM has been deprecated as a parameter. The code will attempt to match the correct Rubrik VM ID, but please use -SourceVMID."
+        $SourceVMID = (Get-RubrikVM -Name $SourceVM -PrimaryClusterID local).id
+        if(!$SourceVMID){
+          throw "$SourceVM is invalid. Please use a valid VM."
+        } elseif ($SourceVMID.Count -gt 1) {
+          throw "$souceVM has mutliple results. Please use -SourceVMID to specific the VM you want to use."
+        }
+      }
+
       $HostID = (Get-RubrikVM -VM $TargetVM -PrimaryClusterID local).hostId
- 
-      Write-Verbose -Message "Creating a powered off Live Mount of $SourceVM(local)"
-      $mount = Get-RubrikVM $SourceVM -PrimaryClusterID local | Get-RubrikSnapshot -Date $Date | New-RubrikMount -HostID $HostID
-    
+      if(!$HostID){
+        throw "$targetvm is invalid."
+      }
+      Write-Verbose -Message "Creating a powered off Live Mount of $SourceVMID)"
+      $mount = Get-RubrikSnapshot -id $SourceVMID -Date $Date | New-RubrikMount -HostID $HostID
+      
+      if(-not $mount) {throw 'No mounts were created. Check that you have declared a valid VM.'}
+
       Write-Verbose -Message "Waiting for request $($mount.id) to complete"
       while ((Get-RubrikRequest -ID $mount.id -Type "vmware/vm").status -ne 'SUCCEEDED')
       {
@@ -103,6 +124,7 @@ function Move-RubrikMountVMDK
     
       Write-Verbose -Message 'Live Mount is now available'
       Write-Verbose -Message 'Gathering Live Mount ID value'
+      
       foreach ($link in ((Get-RubrikRequest -ID $mount.id -Type "vmware/vm").links))
       {
         # There are two links - the request (self) and result
@@ -116,10 +138,7 @@ function Move-RubrikMountVMDK
 
       Write-Verbose -Message 'Gathering details on the Live Mount'
       $MountVM = Get-RubrikVM -id (Get-RubrikMount -id $MountID).mountedVmId -PrimaryClusterID local
-
-      Write-Verbose -Message 'Gathering details on the Target VM'
-      $TargetHost = Get-VMHost -VM $TargetVM
-
+      
       Write-Verbose -Message 'Migrating the Mount VMDKs to VM'
       if ($PSCmdlet.ShouldProcess($TargetVM,'Migrating Live Mount VMDK(s)'))
       {
@@ -154,7 +173,7 @@ function Move-RubrikMountVMDK
       $TargetVM | Out-File -FilePath $Diskfile -Encoding utf8 -Force
       $MountID | Out-File -FilePath $Diskfile -Encoding utf8 -Append -Force      
       $MountedVMdiskFileNames | Out-File -FilePath $Diskfile -Encoding utf8 -Append -Force
-
+      
       # Return information needed to cleanup the mounted disks and Live Mount      
       $response = @{}
       $response.Add('Status','Success')
@@ -186,6 +205,13 @@ function Move-RubrikMountVMDK
       Write-Verbose -Message "Deleting the Live Mount named $($MountVM.name)"
       Remove-RubrikMount -id $MountID -Confirm:$false
     }
+    } #end Try
+    catch {
+      #IF any error occurs, bail out of the script before any damage is done.
+      throw $_
+      break
+
+    } #end Catch
 
   } # End of process
 } # End of function
