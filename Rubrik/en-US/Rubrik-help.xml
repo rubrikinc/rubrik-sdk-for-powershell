@@ -6602,7 +6602,19 @@
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Move-RubrikMountVMDK</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Name, VM">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>SourceVMID</maml:name>
+          <maml:Description>
+            <maml:para>Source virtual machine Rubrik ID to use as a live mount</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Name, VM">
           <maml:name>SourceVM</maml:name>
           <maml:Description>
             <maml:para>Source virtual machine to use as a Live Mount based on a previous backup</maml:para>
@@ -6614,7 +6626,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>TargetVM</maml:name>
           <maml:Description>
             <maml:para>Target virtual machine to attach the Live Mount disk(s)</maml:para>
@@ -6626,7 +6638,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Date</maml:name>
           <maml:Description>
             <maml:para>Backup date to use for the Live Mount Will use the current date and time if no value is specified</maml:para>
@@ -6638,7 +6650,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ExcludeDisk</maml:name>
           <maml:Description>
             <maml:para>An array of disks to exclude from presenting to the target virtual machine By default, all disks will be presented</maml:para>
@@ -6760,7 +6772,19 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Name, VM">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>SourceVMID</maml:name>
+        <maml:Description>
+          <maml:para>Source virtual machine Rubrik ID to use as a live mount</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Name, VM">
         <maml:name>SourceVM</maml:name>
         <maml:Description>
           <maml:para>Source virtual machine to use as a Live Mount based on a previous backup</maml:para>
@@ -6772,7 +6796,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>TargetVM</maml:name>
         <maml:Description>
           <maml:para>Target virtual machine to attach the Live Mount disk(s)</maml:para>
@@ -6784,7 +6808,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Date</maml:name>
         <maml:Description>
           <maml:para>Backup date to use for the Live Mount Will use the current date and time if no value is specified</maml:para>
@@ -6796,7 +6820,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ExcludeDisk</maml:name>
         <maml:Description>
           <maml:para>An array of disks to exclude from presenting to the target virtual machine By default, all disks will be presented</maml:para>
@@ -6879,27 +6903,34 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Move-RubrikMountVMDK -SourceVMID (Get-RubrikVM -Name 'SourceVM').id -TargetVM 'TargetVM'</dev:code>
+        <dev:remarks>
+          <maml:para>This will create a Live Mount using the latest snapshot of the VM named "SourceVM", using the VM's Rubrik ID. The Live Mount's VMDKs would then be presented to the VM named "TargetVM"</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
         <dev:code>Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM'</dev:code>
         <dev:remarks>
           <maml:para>This will create a Live Mount using the latest snapshot of the VM named "SourceVM" The Live Mount's VMDKs would then be presented to the VM named "TargetVM"</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
         <dev:code>Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -Date '01/30/2016 08:00'</dev:code>
         <dev:remarks>
           <maml:para>This will create a Live Mount using the January 30th 08:00AM snapshot of the VM named "SourceVM" The Live Mount's VMDKs would then be presented to the VM named "TargetVM" Note: The Date parameter will start at the time specified (in this case, 08:00am) and work backwards in time until it finds a snapshot. Precise timing is not required.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
         <dev:code>Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -ExcludeDisk @(0,1)</dev:code>
         <dev:remarks>
           <maml:para>This will create a Live Mount using the latest snapshot of the VM named "SourceVM" Disk 0 and 1 (the first and second disks) would be excluded from presentation to the VM named "TargetVM" Note: that for the "ExcludeDisk" array, the format is @(#,#,#,...) where each # represents a disk starting with 0. Example: To exclude the first and third disks, the value would be @(0,2). Example: To exclude just the first disk, use @(0).</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
         <dev:code>Move-RubrikMountVMDK -Cleanup 'C:\Users\Person1\Documents\SourceVM_to_TargetVM-1234567890.txt'</dev:code>
         <dev:remarks>
           <maml:para>This will remove the disk(s) and live mount, effectively reversing the initial request This file is created each time the command is run and stored in the $HOME path as a text file The file contains the TargetVM name, MountID value, and a list of all presented disks</maml:para>
