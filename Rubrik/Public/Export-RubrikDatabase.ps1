@@ -57,15 +57,12 @@ function Export-RubrikDatabase
     # API version
     [String]$api = $global:RubrikConnection.api,
     #Simple Mode - Data File Path 
-    [Parameter(ParameterSetName='SimpleFileLocation')]
     [Alias('DataFilePath')]   
     [string]$TargetDataFilePath,
     #Simple Mode - Data File Path
-    [Parameter(ParameterSetName='SimpleFileLocation')]
     [Alias('LogFilePath')]    
     [string]$TargetLogFilePath,
     #Advanced Mode - Array of hash tables for file reloaction.
-    [Parameter(ParameterSetName='AdvancedFileLocation')]
     [PSCustomObject[]] $TargetFilePaths
   )
 
@@ -113,10 +110,11 @@ function Export-RubrikDatabase
     }
 
     if($TargetFilePaths){
+      if($TargetDataFilePath -or $TargetLogFilePath) {Write-Warning 'Use of -TargetFilePaths overrides -TargetDataFilePath and -TargetLogFilePath.'}
       $body.Add('targetFilePaths',$TargetFilePaths)
     } else {
-      $body.Add('targetDataFilePath',$TargetDataFilePath)
-      $body.Add('targetLogFilePath',$TargetLogFilePath)
+      if($TargetDataFilePath){ $body.Add('targetDataFilePath',$TargetDataFilePath) }
+      if($TargetLogFilePath){ $body.Add('targetLogFilePath',$TargetLogFilePath) }
     }
 
     $body.recoveryPoint += @{
