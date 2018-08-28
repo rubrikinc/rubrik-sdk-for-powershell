@@ -55,7 +55,7 @@ function Get-RubrikAPIData($endpoint) {
                     finishRecovery     = 'finishRecovery'
                     maxDataStreams     = 'maxDataStreams'
                     targetDataFilePath = 'targetDataFilePath'
-                    targetLogFilePath  =  'targetLogFilePath'
+                    targetLogFilePath  = 'targetLogFilePath'
                 }
                 Query       = ''
                 Result      = ''
