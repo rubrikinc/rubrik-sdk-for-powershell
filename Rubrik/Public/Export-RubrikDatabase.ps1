@@ -109,7 +109,7 @@ function Export-RubrikDatabase
       $body.Add($resources.Body.maxDataStreams,$MaxDataStreams)
     }
 
-    if($TargetFilePaths -ne $null){
+    if([string]::IsNullOrWhiteSpace($TargetFilePaths) -eq $false){
       if($TargetDataFilePath -or $TargetLogFilePath) {Write-Warning 'Use of -TargetFilePaths overrides -TargetDataFilePath and -TargetLogFilePath.'}
       $body.Add('targetFilePaths',$TargetFilePaths)
     } else {
