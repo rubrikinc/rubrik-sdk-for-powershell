@@ -43,10 +43,8 @@ function Export-RubrikDatabase
     # Number of parallel streams to copy data
     [int]$MaxDataStreams,
     # Recovery Point desired in the form of Epoch with Milliseconds
-    [Parameter(ParameterSetName='Recovery_timestamp')]
     [int64]$TimestampMs,
     # Recovery Point desired in the form of DateTime value
-    [Parameter(ParameterSetName='Recovery_DateTime')]
     [datetime]$RecoveryDateTime,
     # Take database out of recovery mode after export
     [Switch]$FinishRecovery,
@@ -105,11 +103,18 @@ function Export-RubrikDatabase
       $resources.Body.targetDatabaseName = $TargetDatabaseName
       $resources.Body.finishRecovery = $FinishRecovery.IsPresent
       recoveryPoint = @()
-      targetFilePaths = $TargetFilePaths
     }
 
     if($MaxDataStreams){
       $body.Add($resources.Body.maxDataStreams,$MaxDataStreams)
+    }
+
+    if([string]::IsNullOrWhiteSpace($TargetFilePaths) -eq $false){
+      if($TargetDataFilePath -or $TargetLogFilePath) {Write-Warning 'Use of -TargetFilePaths overrides -TargetDataFilePath and -TargetLogFilePath.'}
+      $body.Add('targetFilePaths',$TargetFilePaths)
+    } else {
+      if($TargetDataFilePath){ $body.Add('targetDataFilePath',$TargetDataFilePath) }
+      if($TargetLogFilePath){ $body.Add('targetLogFilePath',$TargetLogFilePath) }
     }
 
     $body.recoveryPoint += @{
