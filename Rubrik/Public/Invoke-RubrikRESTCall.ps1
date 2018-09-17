@@ -92,7 +92,7 @@ function Invoke-RubrikRESTCall {
 
         #If Method is not a GET call and a REST Body is passed, build the JSON body
         if($Method -ne 'GET' -and $body){
-            [string]$JsonBody = $Body | ConvertTo-Json
+            [string]$JsonBody = $Body | ConvertTo-Json -Depth 10
         }
         Write-Verbose "URI string: $uri"
 
