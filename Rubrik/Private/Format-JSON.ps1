@@ -1,8 +1,9 @@
 ﻿<#
   Uses Json.Net https://www.newtonsoft.com/json for increased performance and cross-platform compatibility on PowerShell 6 and later
-#>
+  #>
 
 function ExpandPayload($response) {
+  Unblock-File "$PSScriptRoot\Newtonsoft.Json.dll"
   $asm = [Reflection.Assembly]::LoadFile("$PSScriptRoot\Newtonsoft.Json.dll")
   ConvertFrom-JsonNewtonsoft $response.Content
 }
