@@ -3,9 +3,19 @@
   #>
 
 function ExpandPayload($response) {
-  Unblock-File "$PSScriptRoot\Newtonsoft.Json.dll"
+  Unblock-ExternalDll
   $null = [Reflection.Assembly]::LoadFile("$PSScriptRoot\Newtonsoft.Json.dll")
   ConvertFrom-JsonNewtonsoft $response.Content
+}
+
+function Unblock-ExternalDll {
+    if (Test-PowerShellSix) {
+        if ($PSVersionTable.Platform -eq 'Win32NT') {
+            Unblock-File "$PSScriptRoot\Newtonsoft.Json.dll"
+        }
+    } else {
+        Unblock-File "$PSScriptRoot\Newtonsoft.Json.dll"
+    }
 }
 
 function ConvertFrom-JObject($obj) {
