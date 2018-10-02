@@ -1,61 +1,69 @@
 ﻿<#
-    Helper JSON functions to resolve the ConvertFrom-JSON maxJsonLength limitation, which defaults to 2 MB
-    http://stackoverflow.com/questions/16854057/convertfrom-json-max-length/27125027
-#>
+  Uses Json.Net https://www.newtonsoft.com/json for increased performance and cross-platform compatibility on PowerShell 6 and later
+  #>
 
-function ExpandPayload($response)
-{
-  [void][System.Reflection.Assembly]::LoadWithPartialName('System.Web.Extensions')
-  return ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
-        MaxJsonLength = 67108864
-  }).DeserializeObject($response.Content))
-}
-function ParseItem($jsonItem) 
-{
-  if($jsonItem.PSObject.TypeNames -match 'Array') 
-  {
-    return ParseJsonArray -jsonArray ($jsonItem)
-  }
-  elseif($jsonItem.PSObject.TypeNames -match 'Dictionary') 
-  {
-    return ParseJsonObject -jsonObj ([HashTable]$jsonItem)
-  }
-  else 
-  {
-    return $jsonItem
-  }
+function ExpandPayload($response) {
+  Unblock-ExternalDll
+  $null = [Reflection.Assembly]::LoadFile("$PSScriptRoot\Newtonsoft.Json.dll")
+  ConvertFrom-JsonNewtonsoft $response.Content
 }
 
-function ParseJsonObject($jsonObj) 
-{
-  $result = New-Object -TypeName PSCustomObject
-  foreach ($key in $jsonObj.Keys) 
-  {
-    $item = $jsonObj[$key]
-    if ($item) 
-    {
-      $parsedItem = ParseItem -jsonItem $item
+function Unblock-ExternalDll {
+    if (Test-PowerShellSix) {
+        if ($PSVersionTable.Platform -eq 'Win32NT') {
+            Unblock-File "$PSScriptRoot\Newtonsoft.Json.dll"
+        }
+    } else {
+        Unblock-File "$PSScriptRoot\Newtonsoft.Json.dll"
     }
-    else 
-    {
-      $parsedItem = $null
+}
+
+function ConvertFrom-JObject($obj) {
+   if ($obj -is [Newtonsoft.Json.Linq.JArray]) {
+        $a = foreach($entry in $obj.GetEnumerator()) {
+          @(convertfrom-jobject $entry)
+        }
+        return $a
+   }
+   elseif ($obj -is [Newtonsoft.Json.Linq.JObject]) {
+    $h = [ordered]@{}
+    foreach($kvp in $obj.GetEnumerator()) {
+        $val =  convertfrom-jobject $kvp.value
+        if ($kvp.value -is [Newtonsoft.Json.Linq.JArray]) { $val = @($val) }
+        $h += @{ "$($kvp.key)" = $val }
     }
-    $result | Add-Member -MemberType NoteProperty -Name $key -Value $parsedItem
-  }
-  return $result
+    return [pscustomobject]$h
+   }
+   elseif ($obj -is [Newtonsoft.Json.Linq.JValue]) {
+    return $obj.Value
+   }
+   else {
+    return $obj
+   }
 }
 
-function ParseJsonArray($jsonArray) 
-{
-  $result = @()
-  $jsonArray | ForEach-Object -Process {
-    $result += , (ParseItem -jsonItem $_)
-  }
-  return $result
+function ConvertFrom-JsonNewtonsoft {
+    [CmdletBinding()]
+    param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$string) 
+	
+    $HandleDeserializationError = 
+    {
+        param ([object] $sender, [Newtonsoft.Json.Serialization.ErrorEventArgs] $errorArgs)
+        $currentError = $errorArgs.ErrorContext.Error.Message
+        write-warning $currentError
+        $errorArgs.ErrorContext.Handled = $true
+        
+    }
+
+    $settings = new-object "Newtonsoft.Json.JSonSerializerSettings"
+    if ($ErrorActionPreference -eq "Ignore") {
+        $settings.Error = $HandleDeserializationError
+    }
+    $obj = [Newtonsoft.Json.JsonConvert]::DeserializeObject($string, [Newtonsoft.Json.Linq.JObject], $settings)    
+
+    return ConvertFrom-JObject $obj
 }
 
-function ParseJsonString($json) 
-{
-  $config = $javaScriptSerializer.DeserializeObject($json)
-  return ParseJsonObject -jsonObj ($config)
+function ConvertTo-JsonNewtonsoft([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$obj) {
+    return [Newtonsoft.Json.JsonConvert]::SerializeObject($obj, [Newtonsoft.Json.Formatting]::Indented)
 }
