@@ -34,6 +34,14 @@ function Stop-RubrikManagedVolumeSnapshot
     [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
+     # The SLA Domain in Rubrik
+     [Parameter(ParameterSetName = 'SLA_Explicit')]
+     [String]$SLA,
+     # The snapshot will be retained indefinitely and available under Unmanaged Objects
+     [Parameter(ParameterSetName = 'SLA_Forever')]
+     [Switch]$Forever,
+         # SLA id value
+    [String]$SLAID, 
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
@@ -55,6 +63,10 @@ function Stop-RubrikManagedVolumeSnapshot
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
+
+    #region One-off
+    $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
+    #endregion One-off
   
   }
 
