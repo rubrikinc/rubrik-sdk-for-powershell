@@ -33,6 +33,7 @@ function New-RubrikDatabaseMount
     [Alias('InstanceId')]
     [String]$TargetInstanceId,
     # Name of the mounted database
+    [Parameter(Mandatory = $true)]
     [Alias('DatabaseName','MountName')]
     [String]$MountedDatabaseName,
     # Recovery Point desired in the form of Epoch with Milliseconds
