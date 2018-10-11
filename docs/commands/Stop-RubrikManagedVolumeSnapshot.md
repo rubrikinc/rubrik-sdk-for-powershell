@@ -12,8 +12,16 @@ Stops Rubrik Managed Volume snopshot
 
 ## SYNTAX
 
+### SLA_Explicit
 ```
-Stop-RubrikManagedVolumeSnapshot [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Stop-RubrikManagedVolumeSnapshot [-id <String>] [-Server <String>] [-SLA <String>] [-SLAID <String>]
+ [-api <String>] [<CommonParameters>]
+```
+
+### SLA_Forever
+```
+Stop-RubrikManagedVolumeSnapshot [-id <String>] [-Server <String>] [-Forever] [-SLAID <String>] [-api <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,7 +53,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -60,8 +68,53 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: $global:RubrikConnection.server
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SLA
+The SLA Domain in Rubrik
+
+```yaml
+Type: String
+Parameter Sets: SLA_Explicit
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Forever
+The snapshot will be retained indefinitely and available under Unmanaged Objects
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: SLA_Forever
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SLAID
+SLA id value
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -75,7 +128,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
