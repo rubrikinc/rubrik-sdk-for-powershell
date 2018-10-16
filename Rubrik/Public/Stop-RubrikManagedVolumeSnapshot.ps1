@@ -27,7 +27,7 @@ function Stop-RubrikManagedVolumeSnapshot
 
   #>
 
-   [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true)]
   Param(
     # Rubrik's Managed Volume id value
     [Parameter(ValueFromPipelineByPropertyName = $true)]
@@ -35,10 +35,8 @@ function Stop-RubrikManagedVolumeSnapshot
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
      # The SLA Domain in Rubrik
-     [Parameter(ParameterSetName = 'SLA_Explicit')]
      [String]$SLA,
      # The snapshot will be retained indefinitely and available under Unmanaged Objects
-     [Parameter(ParameterSetName = 'SLA_Forever')]
      [Switch]$Forever,
          # SLA id value
     [String]$SLAID, 
@@ -65,7 +63,9 @@ function Stop-RubrikManagedVolumeSnapshot
     Write-Verbose -Message "Description: $($resources.Description)"
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
+    if($SLA -ne $null -or $Forever -eq '$true'){
+      $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
+    }
     #endregion One-off
   
   }
@@ -73,7 +73,16 @@ function Stop-RubrikManagedVolumeSnapshot
   Process {
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    #Custom body is used, uncomment this line and integrate if more options are added
+    #$body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)  
+
+    #region Add-SLAID
+    if($SLAID){
+      $body = @{retentionConfig=@{slaId=$SLAID}} | ConvertTo-Json 
+      Write-Verbose -Message "Body = $body"
+    }
+    #endregion Add-SLAID
+
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
