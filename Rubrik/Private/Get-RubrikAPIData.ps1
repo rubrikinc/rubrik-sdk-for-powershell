@@ -1266,7 +1266,11 @@ function Get-RubrikAPIData($endpoint) {
                 Description = 'Close a Rubrik Managed Volume for read/write'
                 URI         = '/api/internal/managed_volume/{id}/end_snapshot'
                 Method      = 'Post'
-                Body        = ''
+                Body        = @{
+                    retentionConfig  = @{
+                        slaID = 'slaID'
+                    }
+                }
                 Query       = ''
                 Result      = ''
                 Filter      = ''
