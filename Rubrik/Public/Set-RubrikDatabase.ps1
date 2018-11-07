@@ -26,6 +26,33 @@ function Set-RubrikDatabase
 
       Set all databases on host FOO to use SLA Silver and be copy only.
 
+      .EXAMPLE
+
+      $RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+      Set-RubrikDatabase -id $RubrikDatabase.id -PreScriptPath "c:\temp\test.bat" -PreScriptErrorAction "continue" -PreTimeoutMs 300 
+      
+      Set a script to run before a Rubrik Backup runs against the database
+
+      .EXAMPLE
+
+      $RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+      Set-RubrikDatabase -id $RubrikDatabase.id -PostScriptPath "c:\temp\test.bat" -PostScriptErrorAction "continue" -PostTimeoutMs 300 
+      
+      Set a script to run after a Rubrik Backup runs against the database
+
+      .EXAMPLE
+
+      $RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+      Set-RubrikDatabase -id $RubrikDatabase.id -DisablePreBackupScript 
+      
+      Remove a script from running before a Rubrik Backup
+
+      .EXAMPLE
+
+      $RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+      Set-RubrikDatabase -id $RubrikDatabase.id -DisablePostBackupScript 
+      
+      Remove a script from running after a Rubrik Backup
   #>
 
    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
