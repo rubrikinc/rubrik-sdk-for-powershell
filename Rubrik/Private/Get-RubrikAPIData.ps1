@@ -1050,6 +1050,16 @@ function Get-RubrikAPIData($endpoint) {
                     copyOnly                    = "copyOnly"
                     maxDataStreams              = "maxDataStreams"
                     configuredSlaDomainId       = "configuredSlaDomainId"   
+                    preBackupScript             = @{
+                        scriptPath              = "scriptPath"
+                        timeoutMs               = "timeoutMs"
+                        scriptErrorAction       = "scriptErrorAction"
+                    }
+                    postBackupScript            = @{
+                        scriptPath              = "scriptPath"
+                        timeoutMs               = "timeoutMs"
+                        scriptErrorAction       = "scriptErrorAction"
+                    }
                 }
                 Query       = ''
                 Result      = ''
