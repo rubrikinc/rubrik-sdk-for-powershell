@@ -26,6 +26,33 @@ function Set-RubrikDatabase
 
       Set all databases on host FOO to use SLA Silver and be copy only.
 
+      .EXAMPLE
+
+      $RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+      Set-RubrikDatabase -id $RubrikDatabase.id -PreScriptPath "c:\temp\test.bat" -PreScriptErrorAction "continue" -PreTimeoutMs 300 
+      
+      Set a script to run before a Rubrik Backup runs against the database
+
+      .EXAMPLE
+
+      $RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+      Set-RubrikDatabase -id $RubrikDatabase.id -PostScriptPath "c:\temp\test.bat" -PostScriptErrorAction "continue" -PostTimeoutMs 300 
+      
+      Set a script to run after a Rubrik Backup runs against the database
+
+      .EXAMPLE
+
+      $RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+      Set-RubrikDatabase -id $RubrikDatabase.id -DisablePreBackupScript 
+      
+      Remove a script from running before a Rubrik Backup
+
+      .EXAMPLE
+
+      $RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+      Set-RubrikDatabase -id $RubrikDatabase.id -DisablePostBackupScript 
+      
+      Remove a script from running after a Rubrik Backup
   #>
 
    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -41,6 +68,28 @@ function Set-RubrikDatabase
     [int]$LogRetentionHours = -1,
     #Boolean declaration for copy only backups on the database.
     [Switch]$CopyOnly,
+  
+    [Parameter(ParameterSetName = 'preBackupScript')]
+    [string]$PreScriptPath,
+    [Parameter(ParameterSetName = 'preBackupScript')]
+    [ValidateSet('abort','continue')]
+    [string]$PreScriptErrorAction,
+    [Parameter(ParameterSetName = 'preBackupScript')]
+    [int]$PreTimeoutMs,
+    [Parameter(ParameterSetName = 'preBackupScript')]
+    [switch]$DisablePreBackupScript,
+
+    [Parameter(ParameterSetName = 'postBackupScript')]
+    [string]$PostScriptPath,
+    [Parameter(ParameterSetName = 'postBackupScript')]
+    [ValidateSet('abort','continue')]
+    [string]$PostScriptErrorAction,
+    [Parameter(ParameterSetName = 'postBackupScript')]
+    [int]$PostTimeoutMs,
+    [Parameter(ParameterSetName = 'postBackupScript')]
+    [switch]$DisablePostBackupScript,
+
+
     #Number of max data streams Rubrik will use to back up the database
     #NOTE: Default of -1 is used to get around ints defaulting as 0
     [int]$MaxDataStreams = -1,
@@ -93,6 +142,60 @@ function Set-RubrikDatabase
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+
+    #Pre Backup script
+    #region Enable Pre Backup Script
+    if($PreScriptPath)
+    {
+      $bodytemp = ConvertFrom-Json $body
+      $pre = New-Object psobject -Property @{'scriptPath'=$PreScriptPath;'timeoutMs'=$PreTimeoutMs;'scriptErrorAction'=$PreScriptErrorAction}
+      $bodytemp | Add-Member -MemberType NoteProperty -Name 'preBackupScript' -Value $pre
+      $body = ConvertTo-Json $bodytemp
+    }
+    #endregion
+    #region Disable Pre Backup Script
+    if($DisablePreBackupScript -eq $true -and ([string]::IsNullOrEmpty($PreScriptPath)))
+    {
+      $bodytemp = ConvertFrom-Json $body
+      $pre = New-Object psobject -Property @{'scriptPath'=$null;'timeoutMs'=$Null;'scriptErrorAction'=$Null}
+      $bodytemp | Add-Member -MemberType NoteProperty -Name 'preBackupScript' -Value $pre
+      $body = ConvertTo-Json $bodytemp
+    } 
+    elseif(($DisablePreBackupScript) -and -not ([string]::IsNullOrEmpty($PreScriptPath)))
+    {
+      $msg = "Can not declare -PreScriptPath and -DisablePreBackupScript in the same request."
+      Write-Warning $msg
+      return $msg
+    }
+    #endregion
+
+    #Post Backup script
+    #region Enable Post Backup Script
+    if($PostScriptPath)
+    {
+      $bodytemp = ConvertFrom-Json $body
+      $Post = New-Object psobject -Property @{'scriptPath'=$PostScriptPath;'timeoutMs'=$PostTimeoutMs;'scriptErrorAction'=$PostScriptErrorAction}
+      $bodytemp | Add-Member -MemberType NoteProperty -Name 'postBackupScript' -Value $Post
+      $body = ConvertTo-Json $bodytemp
+    }
+    #endregion
+    #region Disable Post Backup Script
+    
+    if($DisablePostBackupScript -eq $true -and ([string]::IsNullOrEmpty($PostScriptPath)))
+    {
+      $bodytemp = ConvertFrom-Json $body
+      $Post = New-Object psobject -Property @{'scriptPath'=$null;'timeoutMs'=$Null;'scriptErrorAction'=$Null}
+      $bodytemp | Add-Member -MemberType NoteProperty -Name 'postBackupScript' -Value $Post
+      $body = ConvertTo-Json $bodytemp
+    } 
+    elseif(($DisablePostBackupScript) -and -not ([string]::IsNullOrEmpty($PostScriptPath)))
+    {
+      $msg = "Can not declare -PostScriptPath and -DisablePostBackupScript in the same request."
+      Write-Warning $msg
+      return $msg
+    }
+    #endregion
+
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
