@@ -12,6 +12,23 @@ Sets Rubrik database properties
 
 ## SYNTAX
 
+### preBackupScript
+```
+Set-RubrikDatabase [-id <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
+ [-CopyOnly] [-PreScriptPath <String>] [-PreScriptErrorAction <String>] [-PreTimeoutMs <Int32>]
+ [-DisablePreBackupScript] [-MaxDataStreams <Int32>] [-SLAID <String>] [-Server <String>] [-api <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### postBackupScript
+```
+Set-RubrikDatabase [-id <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
+ [-CopyOnly] [-PostScriptPath <String>] [-PostScriptErrorAction <String>] [-PostTimeoutMs <Int32>]
+ [-DisablePostBackupScript] [-MaxDataStreams <Int32>] [-SLAID <String>] [-Server <String>] [-api <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### SLA_Explicit
 ```
 Set-RubrikDatabase [-id <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
  [-CopyOnly] [-MaxDataStreams <Int32>] [-SLAID <String>] [-SLA <String>] [-Server <String>] [-api <String>]
@@ -36,6 +53,42 @@ Get-RubrikDatabase -HostName Foo -Instance MSSQLSERVER | Set-RubrikDatabase -SLA
 ```
 
 Set all databases on host FOO to use SLA Silver and be copy only.
+
+### EXAMPLE 3
+```
+$RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+```
+
+Set-RubrikDatabase -id $RubrikDatabase.id -PreScriptPath "c:\temp\test.bat" -PreScriptErrorAction "continue" -PreTimeoutMs 300 
+
+Set a script to run before a Rubrik Backup runs against the database
+
+### EXAMPLE 4
+```
+$RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+```
+
+Set-RubrikDatabase -id $RubrikDatabase.id -PostScriptPath "c:\temp\test.bat" -PostScriptErrorAction "continue" -PostTimeoutMs 300 
+
+Set a script to run after a Rubrik Backup runs against the database
+
+### EXAMPLE 5
+```
+$RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+```
+
+Set-RubrikDatabase -id $RubrikDatabase.id -DisablePreBackupScript 
+
+Remove a script from running before a Rubrik Backup
+
+### EXAMPLE 6
+```
+$RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+```
+
+Set-RubrikDatabase -id $RubrikDatabase.id -DisablePostBackupScript 
+
+Remove a script from running after a Rubrik Backup
 
 ## PARAMETERS
 
@@ -101,6 +154,126 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -PreScriptPath
+{{Fill PreScriptPath Description}}
+
+```yaml
+Type: String
+Parameter Sets: preBackupScript
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreScriptErrorAction
+{{Fill PreScriptErrorAction Description}}
+
+```yaml
+Type: String
+Parameter Sets: preBackupScript
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreTimeoutMs
+{{Fill PreTimeoutMs Description}}
+
+```yaml
+Type: Int32
+Parameter Sets: preBackupScript
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisablePreBackupScript
+{{Fill DisablePreBackupScript Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: preBackupScript
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PostScriptPath
+{{Fill PostScriptPath Description}}
+
+```yaml
+Type: String
+Parameter Sets: postBackupScript
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PostScriptErrorAction
+{{Fill PostScriptErrorAction Description}}
+
+```yaml
+Type: String
+Parameter Sets: postBackupScript
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PostTimeoutMs
+{{Fill PostTimeoutMs Description}}
+
+```yaml
+Type: Int32
+Parameter Sets: postBackupScript
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisablePostBackupScript
+{{Fill DisablePostBackupScript Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: postBackupScript
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -MaxDataStreams
 Number of max data streams Rubrik will use to back up the database
 NOTE: Default of -1 is used to get around ints defaulting as 0
@@ -137,7 +310,7 @@ The SLA Domain name in Rubrik
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: SLA_Explicit
 Aliases:
 
 Required: False
