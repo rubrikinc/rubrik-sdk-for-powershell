@@ -50,6 +50,7 @@ function Get-RubrikAPIData($endpoint) {
                     targetInstanceId   = 'targetInstanceId'
                     targetDatabaseName = 'targetDatabaseName'
                     recoveryPoint      = @{
+                        lsnPoint = @{lsn='lsn'}
                         timestampMs = 'timestampMs'
                     }
                     finishRecovery     = 'finishRecovery'
@@ -1013,7 +1014,8 @@ function Get-RubrikAPIData($endpoint) {
                 URI         = '/api/v1/mssql/db/{id}/restore'
                 Method      = 'Post'
                 Body        = @{
-                    recoveryPoint  = @{
+                    recoveryPoint      = @{
+                        lsnPoint = @{lsn='lsn'}
                         timestampMs = 'timestampMs'
                     }
                     finishRecovery = 'finishRecovery'

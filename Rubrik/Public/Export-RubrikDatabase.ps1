@@ -43,9 +43,14 @@ function Export-RubrikDatabase
     # Number of parallel streams to copy data
     [int]$MaxDataStreams,
     # Recovery Point desired in the form of Epoch with Milliseconds
+    [Parameter(ParameterSetName='Recovery_timestamp')]
     [int64]$TimestampMs,
     # Recovery Point desired in the form of DateTime value
+    [Parameter(ParameterSetName='Recovery_DateTime')]
     [datetime]$RecoveryDateTime,
+    # Recovery Point desired in the form of an LSN (Log Sequence Number)
+    [Parameter(ParameterSetName='Recovery_LSN')]
+    [string]$RecoveryLSN,
     # Take database out of recovery mode after export
     [Switch]$FinishRecovery,
     # Rubrik identifier of MSSQL instance to export to
@@ -117,10 +122,14 @@ function Export-RubrikDatabase
       if($TargetLogFilePath){ $body.Add('targetLogFilePath',$TargetLogFilePath) }
     }
 
-    $body.recoveryPoint += @{
-          $resources.Body.recoveryPoint.timestampMs = $TimestampMs
-          }
-    $body = ConvertTo-Json $body
+
+    if($RecoveryLSN){
+      $body.recoveryPoint += @{lsnPoint=@{lsn=$RecoveryLSN}}
+    } else {
+      $body.recoveryPoint += @{timestampMs = $TimestampMs}
+    }
+
+    $body = ConvertTo-Json $body -Depth 10
     Write-Verbose -Message "Body = $body"
     #endregion
 
