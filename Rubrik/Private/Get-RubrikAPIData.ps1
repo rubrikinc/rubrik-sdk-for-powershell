@@ -1052,6 +1052,16 @@ function Get-RubrikAPIData($endpoint) {
                     copyOnly                    = "copyOnly"
                     maxDataStreams              = "maxDataStreams"
                     configuredSlaDomainId       = "configuredSlaDomainId"   
+                    preBackupScript             = @{
+                        scriptPath              = "scriptPath"
+                        timeoutMs               = "timeoutMs"
+                        scriptErrorAction       = "scriptErrorAction"
+                    }
+                    postBackupScript            = @{
+                        scriptPath              = "scriptPath"
+                        timeoutMs               = "timeoutMs"
+                        scriptErrorAction       = "scriptErrorAction"
+                    }
                 }
                 Query       = ''
                 Result      = ''
@@ -1277,6 +1287,97 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '201'
+            }
+        } 
+        'Get-RubrikLogShipping' = @{
+            '1.0' = @{
+                Description = 'Retrieves all log shipping configuration objects. Results can be filtered and sorted'
+                URI         = '/api/v1/mssql/db/log_shipping'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_database_id     = 'primary_database_id'
+                    primary_database_name   = 'primary_database_name'
+                    secondary_database_name = 'secondary_database_name'
+                    location                = 'location'
+                    status                  = 'status'
+                    limit                   = 'limit'
+                    offset                  = 'offset'
+                    sort_by                 = 'sort_by'
+                    sort_order              = 'sort_order'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'New-RubrikLogShipping' = @{
+                '1.0' = @{
+                    Description = 'Create a log shipping configuration'
+                    URI         = '/api/v1/mssql/db/{id}/log_shipping'
+                    Method      = 'Post'
+                    Body        = @{
+                        state                             = 'state'
+                        shouldDisconnectStandbyUsers      = 'shouldDisconnectStandbyUsers'
+                        maxDataStreams                    = 'maxDataStreams'
+                        targetDatabaseName                = 'targetDatabaseName'
+                        targetDataFilePath                = 'targetDataFilePath'
+                        targetFilePaths = @{
+                            logicalName       = 'logicalName'
+                            exportPath        = 'exportPath'
+                            newLogicalName    = 'newLogicalName'
+                            newFilename       = 'newFilename'
+                        }
+                        targetInstanceId                  = 'targetInstanceId'
+                        targetLogFilePath                 = 'targetLogFilePath'
+                    }
+                    Result      = ''
+                    Filter      = ''
+                    Success     = '202'
+                }
+        } 
+        'Remove-RubrikLogShipping' = @{
+            '1.0' = @{
+                Description = 'Delete a specified log shipping configuration'
+                URI         = '/api/v1/mssql/db/log_shipping/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    delete_secondary_database = 'delete_secondary_database'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        } 
+        'Set-RubrikLogShipping' = @{
+            '1.0' = @{
+                Description = 'Update a specified log shipping configuration'
+                URI         = '/api/v1/mssql/db/log_shipping/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    state = 'state'
+                    shouldDisconnectStandbyUsers = 'shouldDisconnectStandbyUsers'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }    
+        'Reset-RubrikLogShipping' = @{
+            '1.0' = @{
+                Description = 'Reseed a secondary database'
+                URI         = '/api/v1/mssql/db/log_shipping/{id}/reseed'
+                Method      = 'Post'
+                Body        = @{
+                    state = 'state'
+                    shouldDisconnectStandbyUsers = 'shouldDisconnectStandbyUsers'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
             }
         } 
     } # End of API

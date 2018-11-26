@@ -14,13 +14,13 @@ Create a new Live Mount from a protected database
 
 ### Recovery_timestamp
 ```
-New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] [-MountedDatabaseName <String>]
+New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] -MountedDatabaseName <String>
  [-TimestampMs <Int64>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Recovery_DateTime
 ```
-New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] [-MountedDatabaseName <String>]
+New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] -MountedDatabaseName <String>
  [-RecoveryDateTime <DateTime>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -78,7 +78,7 @@ Type: String
 Parameter Sets: (All)
 Aliases: DatabaseName, MountName
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

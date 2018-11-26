@@ -58,19 +58,21 @@ function Connect-Rubrik {
     )
 
     Begin {
+        
+        if (-not (Test-PowerShellSix)) {
+            Unblock-SelfSignedCert
 
-        Unblock-SelfSignedCert
-
-        #Force TLS 1.2
-        try {
-            if ([Net.ServicePointManager]::SecurityProtocol -notlike '*Tls12*') {
-                Write-Verbose -Message 'Adding TLS 1.2'
-                [Net.ServicePointManager]::SecurityProtocol = ([Net.ServicePointManager]::SecurityProtocol).tostring() + ', Tls12'
+            #Force TLS 1.2
+            try {
+                if ([Net.ServicePointManager]::SecurityProtocol -notlike '*Tls12*') {
+                    Write-Verbose -Message 'Adding TLS 1.2'
+                    [Net.ServicePointManager]::SecurityProtocol = ([Net.ServicePointManager]::SecurityProtocol).tostring() + ', Tls12'
+                }
             }
-        }
-        catch {
-            Write-Verbose -Message $_
-            Write-Verbose -Message $_.Exception.InnerException.Message
+            catch {
+                Write-Verbose -Message $_
+                Write-Verbose -Message $_.Exception.InnerException.Message
+            }
         }
 
         # API data references the name of the function

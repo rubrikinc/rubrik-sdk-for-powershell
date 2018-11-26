@@ -12,20 +12,11 @@ Connects to Rubrik exports a database to a MSSQL instance
 
 ## SYNTAX
 
-### Recovery_timestamp
 ```
-Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-TimestampMs <Int64>] [-FinishRecovery]
- [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
- [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
-```
-
-### Recovery_DateTime
-```
-Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryDateTime <DateTime>] [-FinishRecovery]
- [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
- [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+Export-RubrikDatabase [-Id] <String> [[-MaxDataStreams] <Int32>] [[-TimestampMs] <Int64>]
+ [[-RecoveryDateTime] <DateTime>] [-FinishRecovery] [[-TargetInstanceId] <String>]
+ [[-TargetDatabaseName] <String>] [[-Server] <String>] [[-api] <String>] [[-TargetDataFilePath] <String>]
+ [[-TargetLogFilePath] <String>] [[-TargetFilePaths] <PSObject[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -64,7 +55,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -79,7 +70,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 2
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -90,11 +81,11 @@ Recovery Point desired in the form of Epoch with Milliseconds
 
 ```yaml
 Type: Int64
-Parameter Sets: Recovery_timestamp
+Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 3
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -105,11 +96,11 @@ Recovery Point desired in the form of DateTime value
 
 ```yaml
 Type: DateTime
-Parameter Sets: Recovery_DateTime
+Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -139,7 +130,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -154,7 +145,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -169,7 +160,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 7
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -184,7 +175,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 8
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -199,7 +190,7 @@ Parameter Sets: (All)
 Aliases: DataFilePath
 
 Required: False
-Position: Named
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -214,7 +205,7 @@ Parameter Sets: (All)
 Aliases: LogFilePath
 
 Required: False
-Position: Named
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -229,7 +220,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

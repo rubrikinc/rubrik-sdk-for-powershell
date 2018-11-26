@@ -14,8 +14,8 @@ Moves the VMDKs from a Live Mount to another VM
 
 ### Create
 ```
-Move-RubrikMountVMDK [-SourceVM] <String> [-TargetVM] <String> [[-Date] <String>] [[-ExcludeDisk] <Array>]
- [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Move-RubrikMountVMDK [-SourceVMID <String>] [-SourceVM <String>] -TargetVM <String> [-Date <String>]
+ [-ExcludeDisk <Array>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Destroy
@@ -31,13 +31,21 @@ The Move-RubrikMountVMDK cmdlet is used to attach VMDKs from a Live Mount to ano
 
 ### EXAMPLE 1
 ```
+Move-RubrikMountVMDK -SourceVMID (Get-RubrikVM -Name 'SourceVM').id -TargetVM 'TargetVM'
+```
+
+This will create a Live Mount using the latest snapshot of the VM named "SourceVM", using the VM's Rubrik ID.
+The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
+
+### EXAMPLE 2
+```
 Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM'
 ```
 
 This will create a Live Mount using the latest snapshot of the VM named "SourceVM"
 The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
 
-### EXAMPLE 2
+### EXAMPLE 3
 ```
 Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -Date '01/30/2016 08:00'
 ```
@@ -47,7 +55,7 @@ The Live Mount's VMDKs would then be presented to the VM named "TargetVM"
 Note: The Date parameter will start at the time specified (in this case, 08:00am) and work backwards in time until it finds a snapshot.
 Precise timing is not required.
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```
 Move-RubrikMountVMDK -SourceVM 'SourceVM' -TargetVM 'TargetVM' -ExcludeDisk @(0,1)
 ```
@@ -58,7 +66,7 @@ Note: that for the "ExcludeDisk" array, the format is @(#,#,#,...) where each # 
 Example: To exclude the first and third disks, the value would be @(0,2).
 Example: To exclude just the first disk, use @(0).
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```
 Move-RubrikMountVMDK -Cleanup 'C:\Users\Person1\Documents\SourceVM_to_TargetVM-1234567890.txt'
 ```
@@ -69,6 +77,21 @@ The file contains the TargetVM name, MountID value, and a list of all presented 
 
 ## PARAMETERS
 
+### -SourceVMID
+Source virtual machine Rubrik ID to use as a live mount
+
+```yaml
+Type: String
+Parameter Sets: Create
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SourceVM
 Source virtual machine to use as a Live Mount based on a previous backup
 
@@ -77,10 +100,10 @@ Type: String
 Parameter Sets: Create
 Aliases: Name, VM
 
-Required: True
-Position: 1
+Required: False
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -93,7 +116,7 @@ Parameter Sets: Create
 Aliases:
 
 Required: True
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -109,7 +132,7 @@ Parameter Sets: Create
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -125,7 +148,7 @@ Parameter Sets: Create
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
