@@ -12,11 +12,28 @@ Connects to Rubrik exports a database to a MSSQL instance
 
 ## SYNTAX
 
+### Recovery_timestamp
 ```
-Export-RubrikDatabase [-Id] <String> [[-MaxDataStreams] <Int32>] [[-TimestampMs] <Int64>]
- [[-RecoveryDateTime] <DateTime>] [-FinishRecovery] [[-TargetInstanceId] <String>]
- [[-TargetDatabaseName] <String>] [[-Server] <String>] [[-api] <String>] [[-TargetDataFilePath] <String>]
- [[-TargetLogFilePath] <String>] [[-TargetFilePaths] <PSObject[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-TimestampMs <Int64>] [-FinishRecovery]
+ [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
+ [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
+```
+
+### Recovery_DateTime
+```
+Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryDateTime <DateTime>] [-FinishRecovery]
+ [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
+ [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
+```
+
+### Recovery_LSN
+```
+Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryLSN <String>] [-FinishRecovery]
+ [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
+ [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,7 +72,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -70,7 +87,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -81,11 +98,11 @@ Recovery Point desired in the form of Epoch with Milliseconds
 
 ```yaml
 Type: Int64
-Parameter Sets: (All)
+Parameter Sets: Recovery_timestamp
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -96,11 +113,26 @@ Recovery Point desired in the form of DateTime value
 
 ```yaml
 Type: DateTime
-Parameter Sets: (All)
+Parameter Sets: Recovery_DateTime
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RecoveryLSN
+Recovery Point desired in the form of an LSN (Log Sequence Number)
+
+```yaml
+Type: String
+Parameter Sets: Recovery_LSN
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -130,7 +162,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -145,7 +177,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -160,7 +192,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -175,7 +207,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -190,7 +222,7 @@ Parameter Sets: (All)
 Aliases: DataFilePath
 
 Required: False
-Position: 9
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -205,7 +237,7 @@ Parameter Sets: (All)
 Aliases: LogFilePath
 
 Required: False
-Position: 10
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -220,7 +252,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

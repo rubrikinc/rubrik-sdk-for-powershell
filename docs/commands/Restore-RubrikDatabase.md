@@ -24,6 +24,12 @@ Restore-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryDateTime
  [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
+### Recovery_LSN
+```
+Restore-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryLSN <String>] [-FinishRecovery]
+ [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 The Restore-RubrikDatabase command will request a database restore from a Rubrik Cluster to a MSSQL instance.
 This
@@ -98,6 +104,21 @@ Recovery Point desired in the form of DateTime value
 ```yaml
 Type: DateTime
 Parameter Sets: Recovery_DateTime
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RecoveryLSN
+Recovery Point desired in the form of an LSN (Log Sequence Number)
+
+```yaml
+Type: String
+Parameter Sets: Recovery_LSN
 Aliases:
 
 Required: False

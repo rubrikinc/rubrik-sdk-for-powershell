@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="2" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2018-11-19" time="23:28:21">
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="2" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2018-11-28" time="17:02:24">
   <environment user="appveyor" machine-name="APPVYR-WIN" cwd="C:\projects\powershell-module" user-domain="APPVYR-WIN" platform="Microsoft Windows Server 2012 R2 Datacenter|C:\windows|\Device\Harddisk0\Partition5" nunit-version="2.5.8.0" os-version="6.3.9600" clr-version="4.0.30319.42000" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="1.6368" asserts="0" description="Pester">
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="1.9898" asserts="0" description="Pester">
     <results>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="1.6368" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="1.9898" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikVM" executed="True" result="Success" success="True" time="1.6368" asserts="0" description="Public/Get-RubrikVM">
+          <test-suite type="TestFixture" name="Public/Get-RubrikVM" executed="True" result="Success" success="True" time="1.9898" asserts="0" description="Public/Get-RubrikVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="1.3919" asserts="0" description="Parameter/SLA">
+              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="1.7014" asserts="0" description="Parameter/SLA">
                 <results>
-                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikVM.Parameter/SLA.should overwrite $SLAID" time="1.3919" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikVM.Parameter/SLA.should overwrite $SLAID" time="1.7014" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.2449" asserts="0" description="Parameter/SLAID">
+              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.2884" asserts="0" description="Parameter/SLAID">
                 <results>
-                  <test-case description="should not overwrite $SLAID" name="Public/Get-RubrikVM.Parameter/SLAID.should not overwrite $SLAID" time="0.2449" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="should not overwrite $SLAID" name="Public/Get-RubrikVM.Parameter/SLAID.should not overwrite $SLAID" time="0.2884" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>

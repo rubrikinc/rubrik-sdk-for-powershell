@@ -358,7 +358,7 @@
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Export-RubrikDatabase</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Id</maml:name>
           <maml:Description>
             <maml:para>Rubrik identifier of database to be exported</maml:para>
@@ -370,31 +370,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="LogFilePath">
-          <maml:name>TargetLogFilePath</maml:name>
-          <maml:Description>
-            <maml:para>Simple Mode - Data File Path</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
-          <maml:name>TargetFilePaths</maml:name>
-          <maml:Description>
-            <maml:para>Advanced Mode - Array of hash tables for file reloaction.</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">PSObject[]</command:parameterValue>
-          <dev:type>
-            <maml:name>PSObject[]</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>MaxDataStreams</maml:name>
           <maml:Description>
             <maml:para>Number of parallel streams to copy data</maml:para>
@@ -406,7 +382,7 @@
           </dev:type>
           <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>TimestampMs</maml:name>
           <maml:Description>
             <maml:para>Recovery Point desired in the form of Epoch with Milliseconds</maml:para>
@@ -418,19 +394,18 @@
           </dev:type>
           <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
-          <maml:name>RecoveryDateTime</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>FinishRecovery</maml:name>
           <maml:Description>
-            <maml:para>Recovery Point desired in the form of DateTime value</maml:para>
+            <maml:para>Take database out of recovery mode after export</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
-            <maml:name>DateTime</maml:name>
+            <maml:name>SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>TargetInstanceId</maml:name>
           <maml:Description>
             <maml:para>Rubrik identifier of MSSQL instance to export to</maml:para>
@@ -442,7 +417,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>TargetDatabaseName</maml:name>
           <maml:Description>
             <maml:para>Name to give database upon export</maml:para>
@@ -454,7 +429,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Server</maml:name>
           <maml:Description>
             <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -466,7 +441,7 @@
           </dev:type>
           <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>api</maml:name>
           <maml:Description>
             <maml:para>API version</maml:para>
@@ -478,10 +453,251 @@
           </dev:type>
           <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="DataFilePath">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="DataFilePath">
           <maml:name>TargetDataFilePath</maml:name>
           <maml:Description>
             <maml:para>Simple Mode - Data File Path</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="LogFilePath">
+          <maml:name>TargetLogFilePath</maml:name>
+          <maml:Description>
+            <maml:para>Simple Mode - Data File Path</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetFilePaths</maml:name>
+          <maml:Description>
+            <maml:para>Advanced Mode - Array of hash tables for file reloaction.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSObject[]</command:parameterValue>
+          <dev:type>
+            <maml:name>PSObject[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:Description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:Description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Export-RubrikDatabase</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Id</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik identifier of database to be exported</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>MaxDataStreams</maml:name>
+          <maml:Description>
+            <maml:para>Number of parallel streams to copy data</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>RecoveryDateTime</maml:name>
+          <maml:Description>
+            <maml:para>Recovery Point desired in the form of DateTime value</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>FinishRecovery</maml:name>
+          <maml:Description>
+            <maml:para>Take database out of recovery mode after export</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetInstanceId</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik identifier of MSSQL instance to export to</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetDatabaseName</maml:name>
+          <maml:Description>
+            <maml:para>Name to give database upon export</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik server IP or FQDN</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>api</maml:name>
+          <maml:Description>
+            <maml:para>API version</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="DataFilePath">
+          <maml:name>TargetDataFilePath</maml:name>
+          <maml:Description>
+            <maml:para>Simple Mode - Data File Path</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="LogFilePath">
+          <maml:name>TargetLogFilePath</maml:name>
+          <maml:Description>
+            <maml:para>Simple Mode - Data File Path</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetFilePaths</maml:name>
+          <maml:Description>
+            <maml:para>Advanced Mode - Array of hash tables for file reloaction.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSObject[]</command:parameterValue>
+          <dev:type>
+            <maml:name>PSObject[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:Description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:Description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Export-RubrikDatabase</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Id</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik identifier of database to be exported</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>MaxDataStreams</maml:name>
+          <maml:Description>
+            <maml:para>Number of parallel streams to copy data</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>RecoveryLSN</maml:name>
+          <maml:Description>
+            <maml:para>Recovery Point desired in the form of an LSN (Log Sequence Number)</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -500,6 +716,90 @@
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetInstanceId</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik identifier of MSSQL instance to export to</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetDatabaseName</maml:name>
+          <maml:Description>
+            <maml:para>Name to give database upon export</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik server IP or FQDN</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>api</maml:name>
+          <maml:Description>
+            <maml:para>API version</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="DataFilePath">
+          <maml:name>TargetDataFilePath</maml:name>
+          <maml:Description>
+            <maml:para>Simple Mode - Data File Path</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="LogFilePath">
+          <maml:name>TargetLogFilePath</maml:name>
+          <maml:Description>
+            <maml:para>Simple Mode - Data File Path</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TargetFilePaths</maml:name>
+          <maml:Description>
+            <maml:para>Advanced Mode - Array of hash tables for file reloaction.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSObject[]</command:parameterValue>
+          <dev:type>
+            <maml:name>PSObject[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
           <maml:name>WhatIf</maml:name>
@@ -526,7 +826,7 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Id</maml:name>
         <maml:Description>
           <maml:para>Rubrik identifier of database to be exported</maml:para>
@@ -538,7 +838,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>MaxDataStreams</maml:name>
         <maml:Description>
           <maml:para>Number of parallel streams to copy data</maml:para>
@@ -550,7 +850,7 @@
         </dev:type>
         <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>TimestampMs</maml:name>
         <maml:Description>
           <maml:para>Recovery Point desired in the form of Epoch with Milliseconds</maml:para>
@@ -562,7 +862,7 @@
         </dev:type>
         <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>RecoveryDateTime</maml:name>
         <maml:Description>
           <maml:para>Recovery Point desired in the form of DateTime value</maml:para>
@@ -570,6 +870,18 @@
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>RecoveryLSN</maml:name>
+        <maml:Description>
+          <maml:para>Recovery Point desired in the form of an LSN (Log Sequence Number)</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -586,7 +898,7 @@
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>TargetInstanceId</maml:name>
         <maml:Description>
           <maml:para>Rubrik identifier of MSSQL instance to export to</maml:para>
@@ -598,7 +910,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>TargetDatabaseName</maml:name>
         <maml:Description>
           <maml:para>Name to give database upon export</maml:para>
@@ -610,7 +922,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Server</maml:name>
         <maml:Description>
           <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -622,7 +934,7 @@
         </dev:type>
         <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>api</maml:name>
         <maml:Description>
           <maml:para>API version</maml:para>
@@ -634,7 +946,7 @@
         </dev:type>
         <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="DataFilePath">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="DataFilePath">
         <maml:name>TargetDataFilePath</maml:name>
         <maml:Description>
           <maml:para>Simple Mode - Data File Path</maml:para>
@@ -646,7 +958,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="LogFilePath">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="LogFilePath">
         <maml:name>TargetLogFilePath</maml:name>
         <maml:Description>
           <maml:para>Simple Mode - Data File Path</maml:para>
@@ -658,7 +970,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>TargetFilePaths</maml:name>
         <maml:Description>
           <maml:para>Advanced Mode - Array of hash tables for file reloaction.</maml:para>
@@ -15358,6 +15670,102 @@
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Restore-RubrikDatabase</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Id</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik identifier of database to be exported</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>MaxDataStreams</maml:name>
+          <maml:Description>
+            <maml:para>Number of parallel streams to copy data</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>RecoveryLSN</maml:name>
+          <maml:Description>
+            <maml:para>Recovery Point desired in the form of an LSN (Log Sequence Number)</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>FinishRecovery</maml:name>
+          <maml:Description>
+            <maml:para>If FinishRecover is true, fully recover the database</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik server IP or FQDN</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>api</maml:name>
+          <maml:Description>
+            <maml:para>API version</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:Description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:Description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
     </command:syntax>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
@@ -15404,6 +15812,18 @@
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>RecoveryLSN</maml:name>
+        <maml:Description>
+          <maml:para>Recovery Point desired in the form of an LSN (Log Sequence Number)</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
