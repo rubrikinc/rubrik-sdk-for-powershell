@@ -99,7 +99,7 @@ function Restore-RubrikDatabase
       $body.recoveryPoint += @{timestampMs = $TimestampMs}
     }
 
-    $body = ConvertTo-Json $body
+    $body = ConvertTo-Json $body -depth 10
     Write-Verbose -Message "Body = $body"
     #endregion
 
