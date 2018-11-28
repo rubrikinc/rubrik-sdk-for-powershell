@@ -41,6 +41,9 @@ function Restore-RubrikDatabase
     # Recovery Point desired in the form of DateTime value
     [Parameter(ParameterSetName='Recovery_DateTime')]
     [datetime]$RecoveryDateTime,
+    # Recovery Point desired in the form of an LSN (Log Sequence Number)
+    [Parameter(ParameterSetName='Recovery_LSN')]
+    [string]$RecoveryLSN,
     # If FinishRecover is true, fully recover the database
     [Switch]$FinishRecovery,
     # Rubrik server IP or FQDN
@@ -90,10 +93,13 @@ function Restore-RubrikDatabase
       $body.Add($resources.Body.maxDataStreams,$MaxDataStreams)
     }
 
-    $body.recoveryPoint += @{
-          $resources.Body.recoveryPoint.timestampMs = $TimestampMs
-          }
-    $body = ConvertTo-Json $body
+    if($RecoveryLSN){
+      $body.recoveryPoint += @{lsnPoint=@{lsn=$RecoveryLSN}}
+    } else {
+      $body.recoveryPoint += @{timestampMs = $TimestampMs}
+    }
+
+    $body = ConvertTo-Json $body -depth 10
     Write-Verbose -Message "Body = $body"
     #endregion
 

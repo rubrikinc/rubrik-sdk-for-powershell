@@ -83,9 +83,9 @@ function Invoke-RubrikRESTCall {
         if($query)
         {
             $querystring = @()
-            foreach($q in $query.PSObject.Properties)
+            foreach($q in $query.Keys)
             {
-                $querystring += "$($q.name)=$($q.Value)"
+                $querystring += "$q=$($query[$q])"
             }
             $uri = New-QueryString -query $querystring -uri $uri
         }
