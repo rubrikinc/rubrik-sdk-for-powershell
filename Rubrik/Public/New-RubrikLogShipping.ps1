@@ -38,10 +38,10 @@ function New-RubrikLogShipping
     [Parameter(Mandatory = $true)]
     [String]$targetDatabaseName, 
 
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $false)]
     [String]$targetDataFilePath, 
 
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $false)]
     [String]$targetLogFilePath,    
     
     [Parameter(Mandatory = $true)]
