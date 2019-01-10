@@ -94,21 +94,29 @@ function New-RubrikSLA
     [bool]$ParamValidation = $false
       
     if ($HourlyFrequency -and $HourlyRetention)
-    { 
-      $body.frequencies += @{
-        $resources.Body.frequencies.timeUnit = 'Hourly'
-        $resources.Body.frequencies.frequency = $HourlyFrequency
-        $resources.Body.frequencies.retention = $HourlyRetention
+    {
+      if($uri.contains('v2')){
+        $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}        
+      } else {
+        $body.frequencies += @{
+          $resources.Body.frequencies.timeUnit = 'Hourly'
+          $resources.Body.frequencies.frequency = $HourlyFrequency
+          $resources.Body.frequencies.retention = $HourlyRetention
+        }
       }
       [bool]$ParamValidation = $true
     }
     
     if ($DailyFrequency -and $DailyRetention)
-    { 
-      $body.frequencies += @{
-        $resources.Body.frequencies.timeUnit = 'Daily'
-        $resources.Body.frequencies.frequency = $DailyFrequency
-        $resources.Body.frequencies.retention = $DailyRetention
+    {
+      if($uri.contains('v2')){
+        $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}        
+      } else { 
+        $body.frequencies += @{
+          $resources.Body.frequencies.timeUnit = 'Daily'
+          $resources.Body.frequencies.frequency = $DailyFrequency
+          $resources.Body.frequencies.retention = $DailyRetention
+        }
       }
       [bool]$ParamValidation = $true
     }    
@@ -116,30 +124,42 @@ function New-RubrikSLA
     if ($WeeklyFrequency -and $WeeklyRetention)
     { 
       Write-Warning -Message 'Weekly SLA configurations are not yet supported in the Rubrik web UI.'
-      $body.frequencies += @{
-        $resources.Body.frequencies.timeUnit = 'Weekly'
-        $resources.Body.frequencies.frequency = $WeeklyFrequency
-        $resources.Body.frequencies.retention = $WeeklyRetention
+      if($uri.contains('v2')){
+        $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention}}        
+      } else {
+        $body.frequencies += @{
+          $resources.Body.frequencies.timeUnit = 'Weekly'
+          $resources.Body.frequencies.frequency = $WeeklyFrequency
+          $resources.Body.frequencies.retention = $WeeklyRetention
+        }
       }
       [bool]$ParamValidation = $true
     }    
 
     if ($MonthlyFrequency -and $MonthlyRetention)
-    { 
-      $body.frequencies += @{
-        $resources.Body.frequencies.timeUnit = 'Monthly'
-        $resources.Body.frequencies.frequency = $MonthlyFrequency
-        $resources.Body.frequencies.retention = $MonthlyRetention
+    {
+      if($uri.contains('v2')){
+        $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention}}        
+      } else { 
+        $body.frequencies += @{
+          $resources.Body.frequencies.timeUnit = 'Monthly'
+          $resources.Body.frequencies.frequency = $MonthlyFrequency
+          $resources.Body.frequencies.retention = $MonthlyRetention
+        }
       }
       [bool]$ParamValidation = $true
     }  
 
     if ($YearlyFrequency -and $YearlyRetention)
-    { 
-      $body.frequencies += @{
-        $resources.Body.frequencies.timeUnit = 'Yearly'
-        $resources.Body.frequencies.frequency = $YearlyFrequency
-        $resources.Body.frequencies.retention = $YearlyRetention
+    {
+      if($uri.contains('v2')){
+        $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention}}        
+      } else {  
+        $body.frequencies += @{
+          $resources.Body.frequencies.timeUnit = 'Yearly'
+          $resources.Body.frequencies.frequency = $YearlyFrequency
+          $resources.Body.frequencies.retention = $YearlyRetention
+        }
       }
       [bool]$ParamValidation = $true
     } 
@@ -150,7 +170,7 @@ function New-RubrikSLA
       throw 'You did not specify any frequency and retention values'
     }    
     
-    $body = ConvertTo-Json $body
+    $body = ConvertTo-Json $body -Depth 10
     Write-Verbose -Message "Body = $body"
     #endregion
 
