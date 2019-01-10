@@ -42,6 +42,11 @@
         Write-Verbose -Message 'Loading Nutanix API data'
         $uri = ('https://'+$Server+$resources.URI.Nutanix) -replace '{id}', $id
       }
+      'VolumeGroup:::*'
+      {
+        Write-Verbose -Message 'Loading VolumeGroup API data'
+        $uri = ('https://'+$Server+$resources.URI.VolumeGroup) -replace '{id}', $id
+      }
       default
       {
         throw 'The supplied id value has no matching endpoint'
