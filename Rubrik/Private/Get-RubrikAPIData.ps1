@@ -470,6 +470,20 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
+            '5.0' = @{
+                Description = 'Retrieve summary information for all SLA Domains'
+                URI         = '/api/v2/sla_domain'
+                Method      = 'Get'
+                Body        = 'Parameters to use in the body'
+                Query       = @{
+                    primary_cluster_id = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+            }
         }
         'Get-RubrikSnapshot'           = @{
             '1.0' = @{
@@ -771,6 +785,23 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '201'
             }
+            '5.0' = @{
+                Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
+                URI         = '/api/v2/sla_domain'
+                Method      = 'Post'
+                Body        = @{
+                    name        = 'name'
+                    frequencies = @{
+                        timeUnit  = 'timeUnit'
+                        frequency = 'frequency'
+                        retention = 'retention'
+                    }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
         }
         'New-RubrikSnapshot'           = @{
             '1.0' = @{
@@ -981,6 +1012,16 @@ function Get-RubrikAPIData($endpoint) {
             '1.0' = @{
                 Description = 'Delete an SLA Domain from a Rubrik cluster'
                 URI         = '/api/v1/sla_domain/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+            '5.0' = @{
+                Description = 'Delete an SLA Domain from a Rubrik cluster'
+                URI         = '/api/v2/sla_domain/{id}'
                 Method      = 'Delete'
                 Body        = ''
                 Query       = ''
@@ -1399,7 +1440,7 @@ function Get-RubrikAPIData($endpoint) {
         # Parse through the keys to find a match (less or equal), pick the last one in the case of an array of values
         # Example: We're using RCDM 4.0 and an endpoint has details for 1.0 and 4.0. Both are less/equal to 4.0. We'll want the last value (4.0).
         # Example: We're using RCDM 4.0 and an endpoint has details for 1.0 and 4.1. 4.1 is not less/equal to 4.0, as such, we'll want the only matching value (1.0).
-        $key = $api.$endpoint.Keys | Sort-Object | Where-Object {$_ -le $ver} | Select-Object -Last 1
+        $key = $api.$endpoint.Keys | Sort-Object | Where-Object {[float]$_ -le $ver} | Select-Object -Last 1
     } 
 
     Write-Verbose -Message "Selected $key API Data for $endpoint"
