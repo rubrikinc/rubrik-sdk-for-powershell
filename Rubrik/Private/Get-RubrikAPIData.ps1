@@ -226,6 +226,7 @@ function Get-RubrikAPIData($endpoint) {
                     operating_system_type = 'operating_system_type'
                     primary_cluster_id    = 'primary_cluster_id'
                     hostname              = 'hostname'
+                    name                  = 'name'
                 }
                 Result      = 'data'
                 Filter      = ''
