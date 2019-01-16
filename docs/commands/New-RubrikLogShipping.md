@@ -14,7 +14,7 @@ Create a log shipping configuration within Rubrik
 
 ```
 New-RubrikLogShipping [-id] <String> [[-state] <String>] [-DisconnectStandbyUsers]
- [-targetDatabaseName] <String> [-targetDataFilePath] <String> [-targetLogFilePath] <String>
+ [-targetDatabaseName] <String> [[-targetDataFilePath] <String>] [[-targetLogFilePath] <String>]
  [-targetInstanceId] <String> [[-TargetFilePaths] <PSObject[]>] [[-MaxDataStreams] <Int32>]
  [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
@@ -102,7 +102,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 4
 Default value: None
 Accept pipeline input: False
@@ -117,7 +117,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 5
 Default value: None
 Accept pipeline input: False
