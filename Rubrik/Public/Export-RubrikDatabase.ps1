@@ -57,6 +57,7 @@ function Export-RubrikDatabase
     [string]$TargetInstanceId,
     # Name to give database upon export
     [string]$TargetDatabaseName,
+    [Switch]$Overwrite,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -114,10 +115,12 @@ function Export-RubrikDatabase
       $body.Add($resources.Body.maxDataStreams,$MaxDataStreams)
     }
 
-    if([string]::IsNullOrWhiteSpace($TargetFilePaths) -eq $false){
+    if($TargetFilePaths){
+      Write-Verbose "Adding Advanced Mode File Paths"
       if($TargetDataFilePath -or $TargetLogFilePath) {Write-Warning 'Use of -TargetFilePaths overrides -TargetDataFilePath and -TargetLogFilePath.'}
       $body.Add('targetFilePaths',$TargetFilePaths)
     } else {
+      Write-Verbose "Adding Simple Mode File Paths"
       if($TargetDataFilePath){ $body.Add('targetDataFilePath',$TargetDataFilePath) }
       if($TargetLogFilePath){ $body.Add('targetLogFilePath',$TargetLogFilePath) }
     }
@@ -127,6 +130,10 @@ function Export-RubrikDatabase
       $body.recoveryPoint += @{lsnPoint=@{lsn=$RecoveryLSN}}
     } else {
       $body.recoveryPoint += @{timestampMs = $TimestampMs}
+    }
+
+    if($Overwrite){
+      $body.add('allowOverwrite',$true)
     }
 
     $body = ConvertTo-Json $body -Depth 10
