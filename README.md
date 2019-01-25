@@ -13,3 +13,7 @@ As we continue to improve our Community PowerShell module we have begun work on 
 
 ### Moving forward
 We will continue to support the issues and pull requests coming in, but for the 4.0 version of the module we will focus on bug fixes and security risks. New features and functionality will be implemented in the refactored 4.1 release of the module. If you have any questions in regards to this feel free to reach out to us.
+
+## Additional Links
+
+[Getting Started Video](https://www.youtube.com/watch?v=tY6nQLNYRSE)

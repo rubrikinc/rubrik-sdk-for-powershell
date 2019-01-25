@@ -244,6 +244,7 @@ function Get-RubrikAPIData($endpoint) {
                     operating_system_type = 'operating_system_type'
                     primary_cluster_id    = 'primary_cluster_id'
                     hostname              = 'hostname'
+                    name                  = 'name'
                 }
                 Result      = 'data'
                 Filter      = ''
@@ -513,6 +514,7 @@ function Get-RubrikAPIData($endpoint) {
                     HyperV  = '/api/internal/hyperv/vm/{id}/snapshot'
                     ManagedVolume = '/api/internal/managed_volume/{id}/snapshot'
                     Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
+                    VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
                 }
                 Method      = 'Get'
                 Body        = ''
@@ -616,6 +618,78 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }       
+        'Get-RubrikVolumeGroup'                 = @{
+            '1.0' = @{
+                Description = 'Get summary of all Volume Groups'
+                URI         = '/api/internal/volume_group'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    name                    = 'name'
+                    hostname                = 'hostname'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                }
+                Success     = '200'
+            }
+        }    
+        'Get-RubrikVolumeGroupMount'                 = @{
+            '1.0' = @{
+                Description = 'Retrieve information for all Volume mounts'
+                URI         = '/api/internal/volume_group/snapshot/mount'
+                Method      = 'Get'
+                Body        = ''
+                Query           = @{
+                    id          = 'source_volume_group_id'
+                    source_host = 'source_host_name'
+                    offset      = 'offset'
+                    limit       = 'limit'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+       }    
+        'New-RubrikVolumeGroupMount'      = @{
+            '1.0' = @{
+                Description = 'Create a Volume Group mount request with given configuration'
+                URI         = '/api/internal/volume_group/snapshot/{id}/mount'
+                Method      = 'Post'
+                Body        = @{
+                    targetHostId              = 'targetHostId'
+                    smbValidUsers             = 'smbValidUsers'
+                    volumeConfigs             = @{
+                        volumeId              = 'volumeId'
+                        mountPointOnHost      = 'mountPointOnHost'
+                    }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
+        'Remove-RubrikVolumeGroupMount'           = @{
+            '1.0' = @{
+                Description = 'Create a request to delete a mounted Volume Group'
+                URI         = '/api/internal/volume_group/snapshot/mount/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    force = 'force'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+        }
         'New-RubrikDatabaseMount'      = @{
             '1.0' = @{
                 Description = 'Create a live mount request with given configuration'
