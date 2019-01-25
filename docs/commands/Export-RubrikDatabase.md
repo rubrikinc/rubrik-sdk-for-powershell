@@ -15,7 +15,7 @@ Connects to Rubrik exports a database to a MSSQL instance
 ### Recovery_timestamp
 ```
 Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-TimestampMs <Int64>] [-FinishRecovery]
- [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
+ [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Overwrite] [-Server <String>] [-api <String>]
  [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
@@ -23,7 +23,7 @@ Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-TimestampMs <Int6
 ### Recovery_DateTime
 ```
 Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryDateTime <DateTime>] [-FinishRecovery]
- [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
+ [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Overwrite] [-Server <String>] [-api <String>]
  [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
@@ -31,7 +31,7 @@ Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryDateTime 
 ### Recovery_LSN
 ```
 Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryLSN <String>] [-FinishRecovery]
- [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Server <String>] [-api <String>]
+ [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Overwrite] [-Server <String>] [-api <String>]
  [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
@@ -179,6 +179,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Overwrite
+{{Fill Overwrite Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
