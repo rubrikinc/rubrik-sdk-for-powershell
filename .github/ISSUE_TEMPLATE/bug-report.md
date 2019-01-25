@@ -1,22 +1,25 @@
-# Expected Behavior
+---
+name: Bug Report
+about: Report a bug encountered while using the Rubrik PowerShell SDK.
+title: ''
+labels: kind-bug
+assignees: ''
 
-Please describe the behavior you are expecting.
+---
 
-# Current Behavior
+<!-- Please use this template while reporting a bug and provide as much info as possible. Not doing so may result in your bug not being addressed in a timely manner. Thanks!-->
 
-What is the current behavior?
+**Current Behavior**:
 
-# Failure Information (for bugs)
-
-Please help provide information about the failure if this is a bug by issuing the command using the `-Verbose` command.
+Provide information about the failure by issuing the command using the `-Verbose` command.
 
 ```
 Paste the verbose output from the command here
 ```
 
-**_If it is not a bug, please remove the rest of this template._**
+**Expected Behavior**:
 
-## Steps to Reproduce
+**Steps to Reproduce**:
 
 Please provide detailed steps for reproducing the issue.
 
@@ -24,7 +27,7 @@ Please provide detailed steps for reproducing the issue.
 1. Step 2
 1. Step 3 (and so on)
 
-## Context
+**Context**:
 
 Please provide any relevant information about your setup. This is important in case the issue is not reproducible except for under certain conditions.
 
@@ -32,6 +35,6 @@ Please provide any relevant information about your setup. This is important in c
 * **PowerShell Version**: Use `Get-PSVersion`
 * **Operating System**:
 
-## Failure Logs
+**Failure Logs**
 
 Please include any relevant log snippets or files here.
