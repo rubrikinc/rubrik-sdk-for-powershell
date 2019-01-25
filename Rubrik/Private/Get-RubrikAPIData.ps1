@@ -101,7 +101,25 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }     
+        }  
+        'Get-RubrikAvailabilityGroup' = @{
+            '1.0' = @{
+                Description = 'Get summary information for Microsoft SQL availability groups'
+                URI         = '/api/internal/mssql/availability_group'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_database_id     = 'primary_database_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'GroupName'     = 'name'
+                    'SLA'      = 'effectiveSlaDomainName'
+                    'SLAID'    = 'effectiveSlaDomainId'
+                }
+                Success     = '200'
+            }
+        } 
         'Get-RubrikDatabase'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Microsoft SQL databases.'
@@ -1140,6 +1158,23 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '202'
+            }
+        }
+        'Set-RubrikAvailabilityGroup'           = @{
+            '1.0' = @{
+                Description = 'Update a Microsoft SQL availability group.'
+                URI         = '/api/internal/mssql/availability_group/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    logBackupFrequencyInSeconds = 'logBackupFrequencyInSeconds'
+                    logRetentionHours           = 'logRetentionHours'
+                    copyOnly                    = 'copyOnly'
+                    configuredSlaDomainId       = 'configuredSlaDomainId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
             }
         }
         'Set-RubrikBlackout'           = @{
