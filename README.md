@@ -1,4 +1,4 @@
-Community PowerShell Module for Rubrik
+Rubrik SDK for PowerShell
 ============================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/52cv3jshak2w7624?svg=true)](https://ci.appveyor.com/project/chriswahl/powershell-module)
@@ -15,7 +15,7 @@ If you wish to load a specific version, use:
 
 `Import-Module Rubrik -RequiredVersion #.#.#.#`
 
-Where `"#.#.#.#"` represents the version number.
+Where `#.#.#.#` represents the version number.
 
 ## Quick Start
 
