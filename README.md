@@ -5,7 +5,26 @@ Community PowerShell Module for Rubrik
 
 This is a community project that provides a Microsoft PowerShell module for managing and monitoring Rubrik's Cloud Data Management fabric by way of published RESTful APIs. If you're looking to perform interactive automation, setting up scheduled tasks, leverage an orchestration engine, or need ad-hoc operations, this module is intended to be valuable to your needs.
 
-Please visit the **[full documentation](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)** for more details.
+## Installation
+
+Load the module by using:
+
+`Import-Module Rubrik`
+
+If you wish to load a specific version, use:
+
+`Import-Module Rubrik -RequiredVersion #.#.#.#`
+
+Where `"#.#.#.#"` represents the version number.
+
+## Quick Start
+
+* [Quick Start Guide](https://github.com/rubrikinc/rubrik-sdk-for-powershell/blob/master/docs/quick-start.md)
+
+## Documentation
+
+* [Rubrik SDK for PowerShell Documentation](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+* [Rubrik API Documentation](https://github.com/rubrikinc/api-documentation)
 
 ## Important Note
 As we continue to improve our Community PowerShell module we have begun work on the next version of the module. As we are working on refactoring the module we will focus our attention on the refactor branch. As a result of this code rewrite we are focussed on the 
@@ -16,5 +35,4 @@ We will continue to support the issues and pull requests coming in, but for the 
 
 ## Additional Links
 
-[Quick Start Guide](https://github.com/rubrikinc/rubrik-sdk-for-powershell/blob/master/docs/quick-start.md)
-[Getting Started Video](https://www.youtube.com/watch?v=tY6nQLNYRSE)
+* [Getting Started Video](https://www.youtube.com/watch?v=tY6nQLNYRSE)
