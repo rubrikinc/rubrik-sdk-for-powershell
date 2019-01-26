@@ -35,4 +35,7 @@ We will continue to support the issues and pull requests coming in, but for the 
 
 ## Additional Links
 
-* [Getting Started Video](https://www.youtube.com/watch?v=tY6nQLNYRSE)
+* [VIDEO: Getting Started with the Rubrik SDK for PowerShell](https://www.youtube.com/watch?v=tY6nQLNYRSE)
+* [BLOG: Get-Started with the Rubrik PowerShell Module](https://www.rubrik.com/blog/get-started-rubrik-powershell-module/)
+* [BLOG: Using Automation to Validate Applications and Services in Rubrik Backups](https://www.rubrik.com/blog/automation-to-validate-in-rubrik-backups/)
+* [BLOG: PowerShell and RESTful APIs - Making Backup Awesome Again](https://www.rubrik.com/blog/powershell-and-restful-apis-making-backup-awesome-again/)
