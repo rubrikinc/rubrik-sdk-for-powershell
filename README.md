@@ -16,4 +16,5 @@ We will continue to support the issues and pull requests coming in, but for the 
 
 ## Additional Links
 
+[Quick Start Guide](https://github.com/rubrikinc/rubrik-sdk-for-powershell/blob/master/docs/quick-start.md)
 [Getting Started Video](https://www.youtube.com/watch?v=tY6nQLNYRSE)
