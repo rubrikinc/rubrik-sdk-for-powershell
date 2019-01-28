@@ -74,7 +74,10 @@ function New-RubrikSnapshot
   Process {
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
+    
+    if ($PSCmdlet.ShouldProcess($SLA, 'Testing SLA')) {
+      $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
+    }
     #endregion One-off
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
