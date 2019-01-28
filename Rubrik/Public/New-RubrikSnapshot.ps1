@@ -61,7 +61,7 @@ function New-RubrikSnapshot
     
     # API data references the name of the function
     # For convenience, that name is saved here to $function
-    $function = $MyInvocation.MyCommand.Name 
+    $function = $MyInvocation.MyCommand.Name
         
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
