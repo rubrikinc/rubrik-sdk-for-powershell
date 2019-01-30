@@ -463,16 +463,6 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-            'internal' = @{
-                Description = 'Get details about an async request.'
-                URI         = '/api/internal/{type}/request/{id}'
-                Method      = 'Get'
-                Body        = ''
-                Query       = ''
-                Result      = ''
-                Filter      = ''
-                Success     = '200'
-            }
         }
         'Get-RubrikSLA'                = @{
             '1.0' = @{

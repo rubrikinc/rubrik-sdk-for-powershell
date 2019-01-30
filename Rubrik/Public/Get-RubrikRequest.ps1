@@ -29,7 +29,7 @@ function Get-RubrikRequest
     [String]$id,
     # The type of request
     [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managedvolume')]
+    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managed_volume')]
     [String]$Type,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -63,6 +63,11 @@ function Get-RubrikRequest
 
     #region one-off
     $uri = $uri -replace '{type}', $Type
+    #Place any internal API request calls into this collection, the replace will fix the URI
+    $internaltypes = @('managed_volume')
+    if($internaltypes -contains $Type){
+      $uri = $uri -replace 'v1', 'internal'
+    }
     #endregion
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
