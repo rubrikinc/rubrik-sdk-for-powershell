@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a bug encountered while using the Rubrik PowerShell SDK.
+about: Report a bug encountered while using the Rubrik SDK for PowerShell.
 title: ''
 labels: kind-bug
 assignees: ''
