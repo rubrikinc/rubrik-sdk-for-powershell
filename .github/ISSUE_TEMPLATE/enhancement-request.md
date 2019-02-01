@@ -9,11 +9,11 @@ assignees: ''
 
 <!-- Please only use this template for submitting enhancement requests -->
 
-**Overview of Enhancement Request**:
+**Overview of Enhancement Request**
 
 Please describe what is enhancement or feature is requested. 
 
-**Justification**:
+**Justification**
 
 Why is this needed? Please provide details as to the use case.
 
