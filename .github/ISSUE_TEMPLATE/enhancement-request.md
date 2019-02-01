@@ -9,14 +9,18 @@ assignees: ''
 
 <!-- Please only use this template for submitting enhancement requests -->
 
-**Overview of Enhancement Request**
+**Is your feature request related to a problem? Please describe.**
 
-Please describe what is enhancement or feature is requested. 
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-**Justification**
+**Describe the solution you'd like**
 
-Why is this needed? Please provide details as to the use case.
+A clear and concise description of what you want to happen.
 
-**Additional Context**
+**Describe alternatives you've considered**
 
-Use this section to provide any additional information as to why this is needed. 
+A clear and concise description of any alternative solutions or features you've considered.
+
+**Additional context**
+
+Add any other context or screenshots about the feature request here.
