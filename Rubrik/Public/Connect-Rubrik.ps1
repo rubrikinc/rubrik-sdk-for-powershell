@@ -30,6 +30,11 @@ function Connect-Rubrik {
       .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Credential (Get-Credential)
       Rather than passing a username and secure password, you can also opt to submit an entire set of credentials using the -Credentials parameter.
+
+      .EXAMPLE
+      Connect-Rubrik -Server 192.168.1.1 -Token "token key provided by Rubrik"
+      Rather than passing a username and secure password, you can now generate an API token key in Rubrik. This key can then be used to authenticate instead of a credential or user name and password. 
+      
   #>
     [cmdletbinding(SupportsShouldProcess=$true,DefaultParametersetName='UserPassword')]
     Param(
