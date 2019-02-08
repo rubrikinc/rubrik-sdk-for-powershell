@@ -31,8 +31,7 @@ function Connect-Rubrik {
       Connect-Rubrik -Server 192.168.1.1 -Credential (Get-Credential)
       Rather than passing a username and secure password, you can also opt to submit an entire set of credentials using the -Credentials parameter.
   #>
-
-    [CmdletBinding()]
+    [cmdletbinding(SupportsShouldProcess=$true,DefaultParametersetName='UserPassword')]
     Param(
         # The IP or FQDN of any available Rubrik node within the cluster
         [Parameter(Mandatory = $true, Position = 0)]
@@ -40,20 +39,23 @@ function Connect-Rubrik {
         [String]$Server,
         # Username with permissions to connect to the Rubrik cluster
         # Optionally, use the Credential parameter
-        [Parameter(Position = 1)]
+    
+        [Parameter(ParameterSetName='UserPassword',Mandatory=$true, Position = 1)]
         [String]$Username,
         # Password for the Username provided
         # Optionally, use the Credential parameter
-        [Parameter(Position = 2)]
+        [Parameter(ParameterSetName='UserPassword',Mandatory=$true, Position = 2)]
         [SecureString]$Password,
         # Credentials with permission to connect to the Rubrik cluster
         # Optionally, use the Username and Password parameters
-        [Parameter(Position = 3)]
+        [Parameter(ParameterSetName='Credential',Mandatory=$true, Position = 1)]
         [System.Management.Automation.CredentialAttribute()]$Credential,
+        [Parameter(ParameterSetName='Token',Mandatory=$true, Position = 1)]
+        [String]$Token,
         #Organization to connect with, assuming the user has multiple organizations
-        [Parameter(Position = 4)]
         [Alias('organization_id')]
         [String]$OrganizationID
+
 
     )
 
@@ -89,40 +91,56 @@ function Connect-Rubrik {
 
     Process {
 
-        $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
-
-        $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-        $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-        $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
-
-        # Standard Basic Auth Base64 encoded header with username:password
-        $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Credential.UserName + ':' + $Credential.GetNetworkCredential().Password))
-        $head = @{
-            'Authorization' = "Basic $auth"
-        }          
-
-        $content = Submit-Request -uri $uri -header $head -method $($resources.Method)
-    
-        # Final throw for when all versions of the API have failed
-        if ($content.token -eq $null) {
-            throw 'No token found. Unable to connect with any available API version. Check $Error for details or use the -Verbose parameter.'
+        if($Token)
+        {
+            $head = @{'Authorization' = "Bearer $($Token)"}
+            Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
+            $global:rubrikConnection = @{
+                id      = $null
+                userId  = $null
+                token   = $Token
+                server  = $Server
+                header  = $head
+                time    = (Get-Date)
+                api     = Get-RubrikAPIVersion -Server $Server
+                version = Get-RubrikSoftwareVersion -Server $Server
+            }
         }
+        else 
+        {
+            $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
 
-        # For API version v1 or greater, use Bearer and token
-        $head = @{'Authorization' = "Bearer $($content.token)"}
+            $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+            $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+            $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
 
-        Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
-        $global:rubrikConnection = @{
-            id      = $content.id
-            userId  = $content.userId
-            token   = $content.token
-            server  = $Server
-            header  = $head
-            time    = (Get-Date)
-            api     = Get-RubrikAPIVersion -Server $Server
-            version = Get-RubrikSoftwareVersion -Server $Server
+            # Standard Basic Auth Base64 encoded header with username:password
+            $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Credential.UserName + ':' + $Credential.GetNetworkCredential().Password))
+            $head = @{
+                'Authorization' = "Basic $auth"
+            }          
+            $content = Submit-Request -uri $uri -header $head -method $($resources.Method)
+
+            # Final throw for when all versions of the API have failed
+            if ($content.token -eq $null) {
+                throw 'No token found. Unable to connect with any available API version. Check $Error for details or use the -Verbose parameter.'
+            }
+
+            # For API version v1 or greater, use Bearer and token
+            $head = @{'Authorization' = "Bearer $($content.token)"}
+
+            Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
+            $global:rubrikConnection = @{
+                id      = $content.id
+                userId  = $content.userId
+                token   = $content.token
+                server  = $Server
+                header  = $head
+                time    = (Get-Date)
+                api     = Get-RubrikAPIVersion -Server $Server
+                version = Get-RubrikSoftwareVersion -Server $Server
+            }
         }
-        
         Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'
         [array]$global:RubrikConnections += $rubrikConnection
     
