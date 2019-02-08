@@ -303,10 +303,9 @@ Import-Csv -Path ./Example-SLA.csv | ForEach-Object {
 }
 ```
 
-```
-Note:
+### Note:
+
 This code will change the SLAs for all the VMs that are listed in the .csv file, verify that want to make those changes to be made before running this against your Rubrik cluster. This is good practice in general, make sure you use the correct data source (the csv file in our example), that you target the right environment (the Rubrik Cluster) and finally make sure that your PowerShell code does what you expect it to do.
-```
 
 The advantage of using the PowerShell module to automate tasks such as assigning SLAs to specific machines should be apparent here. The alternative, doing this through the GUI, is a slower process and more error prone. A single miss-click means assigning the wrong SLA. By writing a script or putting together a couple of PowerShell code you can automate a task forever.
 
