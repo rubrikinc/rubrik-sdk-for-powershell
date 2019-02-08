@@ -9,9 +9,9 @@ The code assumes that you have already deployed at least one Rubrik cluster into
 1. [PowerShell](https://aka.ms/getps6) Core or Windows PowerShell
 1. [PowerCLI](http://www.vmware.com/go/powercli) version 6.0 or higher
 
-## Note:
+## Note - PowerShell Core
 
-The module has been written with PowerShell Core support in mind. For best performance and compatibility, the most recent release of PowerShell Core is recommended with the Rubrik PowerShell Module.
+*The module has been written with PowerShell Core support in mind. For best performance and compatibility, the most recent release of PowerShell Core is recommended with the Rubrik PowerShell Module.*
 
 # Installation
 
@@ -197,9 +197,9 @@ Get-RubrikVM -VM "JBrasser-Win"
 
 Make sure to replace `"JBrasser-Win"` with the actual name of the virtual machine. If you received data back from Rubrik, you can be sure that this virtual machine is known to the cluster and can be modified.
 
-### Note:
+### Note - Quoting Rules
 
-The double quotes, or single quotes, are required if your virtual machine has any spaces in the name. It's generally considered a good habit to always use quotes around the name of objects.
+*The double quotes, or single quotes, are required if your virtual machine has any spaces in the name. It's generally considered a good habit to always use quotes around the name of objects.*
 
 Let's protect this virtual machine with the "Gold" SLA Domain. To do this, use the following command:
 
@@ -303,7 +303,7 @@ Import-Csv -Path ./Example-SLA.csv | ForEach-Object {
 }
 ```
 
-### Note:
+## Making changes based on csv-input
 
 This code will change the SLAs for all the VMs that are listed in the .csv file, verify that want to make those changes to be made before running this against your Rubrik cluster. This is good practice in general, make sure you use the correct data source (the csv file in our example), that you target the right environment (the Rubrik Cluster) and finally make sure that your PowerShell code does what you expect it to do.
 
