@@ -313,10 +313,9 @@ The advantage of using the PowerShell module to automate tasks such as assigning
 
 The PowerShell SDK supports the majority of the functionality available within the Rubrik CDM. That said, the release cycles between the SDK and Rubrik CDM are not simultaneous. This means there may be times when new features or enhancements are added to the product but methods and functions to utilize them may be missing from the SDK.
 
-Links to the API documentation available online are available at the end of this Quick Start. If you currently have access to a Rubrik cluster you can browse to the following url:
+Links to the API documentation available online are available at the end of this Quick Start. If you currently have access to a Rubrik cluster you can browse to either of the following urls:
 
 [https://yourserver/docs/v1/playground/](https://yourserver/docs/v1/playground/)
-
 [https://yourserver/docs/internal/playground/](https://yourserver/docs/internal/playground/)
 
 ## Sample Syntax
