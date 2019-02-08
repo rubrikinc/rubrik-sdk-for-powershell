@@ -31,7 +31,6 @@ Common PowerShell module paths include:
 1. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository.
 1. Alternatively `Install-Module -Name Rubrik -Scope AllUsers `can be execute be used if you would like to install the module for all users on the current system.
 
-
 ## Option 2: Installer Script
 
 1. Download the [master branch](https://github.com/rubrikinc/PowerShell-Module) to your workstation.
@@ -44,13 +43,13 @@ Common PowerShell module paths include:
 1. Download the [master branch](https://github.com/rubrikinc/PowerShell-Module) to your workstation.
 1. Copy the contents of the Rubrik folder onto your workstation into the desired PowerShell Module path.
 1. Open a Powershell console with the _Run as Administrator _option.
-1. Run `Set-ExecutionPolicy `using the parameter _RemoteSigned _or _Bypass_.
+1. Run `Set-ExecutionPolicy` using the argument _RemoteSigned_ or _Bypass_.
 
 ## Verification
 
 PowerShell will create a folder for each new version of any module you install. It's a good idea to check and see what version(s) you have installed and running in the session. To begin, let's see what versions of the Rubrik Module are installed:
 
-```
+``` PowerShell
 Get-Module -ListAvailable -Name Rubrik
 ```
 
@@ -58,19 +57,19 @@ The `-ListAvailable` switch will pull up all installed versions from any path fo
 
 To see which version is currently loaded, use:
 
-```
+``` PowerShell
 Get-Module Rubrik
 ```
 
 If nothing is returned, you need to first load the module by using:
 
-```
+``` PowerShell
 Import-Module Rubrik
 ```
 
 If you wish to load a specific version, use:
 
-```
+``` PowerShell
 Import-Module Rubrik -RequiredVersion #.#.#.#
 ```
 
@@ -80,7 +79,6 @@ Where "#.#.#.#" represents the version number.
 
 The Rubrik SDK for PowerShell provides two mechanisms for supplying credentials to the `Connect-Rubrik` function. A combination of username and password or a credential object. Credentials in the credential object may be entered manually or provided as an object.
 
-
 #### Authenticate by Providing Username and Password
 
 To authenticate with your Rubrik cluster you can make use of the `-UserName` and `-Password` parameters.
@@ -89,13 +87,13 @@ To authenticate with your Rubrik cluster you can make use of the `-UserName` and
 
 It is also possible to store your credentials in a credential object by using the built-in Get-Credential cmdlet. To store your credentials in a variable, the following sample can be used:
 
-```
+``` PowerShell
 $Credential = Get-Credential
 ```
 
 PowerShell will prompt for the UserName and Password and the credentials will be securely stored in the `$Credential` variable. This variable can now be used to authenticate against the Rubrik Cluster in by running the following code:
 
-```
+``` PowerShell
 Connect-Rubrik -Server yourip -Credential $Credential
 ```
 
@@ -127,7 +125,7 @@ What if we didn't know that `Connect-Rubrik` exists? To see a list of all availa
 
 For details on a command, use the PowerShell help command `Get-Help`. For example, to get help on the `Connect-Rubrik` function, use the following command:
 
-```
+``` PowerShell
 Get-Help Connect-Rubrik
 ```
 
@@ -135,7 +133,7 @@ Get-Help Connect-Rubrik
 
 This will display a description about the command. For details and examples, use the `-Full` parameter on the end.
 
-```
+``` PowerShell
 Get-Help Connect-Rubrik -Full
 ```
 
@@ -143,7 +141,7 @@ Get-Help Connect-Rubrik -Full
 
 As this is a lot of help to process, the help function can be used instead of Get-Help, to get scrolling output.
 
-```
+``` PowerShell
 help Connect-Rubrik -Full
 ```
 
@@ -155,8 +153,7 @@ Let's get information on the cluster. The use of any command beginning with the 
 
 We'll start by looking up the version running on the Rubrik cluster. Enter the command below and press enter:
 
-
-```
+``` PowerShell
 Get-RubrikVersion
 ```
 
@@ -164,7 +161,7 @@ Get-RubrikVersion
 
 The result is fairly simple: the command will output the cluster's code version. How about something a bit more complex? Try getting all of the SLA Domain details from the cluster. Here's the command:
 
-```
+``` PowerShell
 Get-RubrikSLA
 ```
 
@@ -172,7 +169,7 @@ Get-RubrikSLA
 
 A lot of stuff should be scrolling across the screen. You're seeing details on every SLA Domain known by the cluster at a very detailed level. If you want to see just one SLA Domain, tell the command to limit the results. You can do this by using a parameter. Parameters are ways to control a function. Try it with this example:.
 
-```
+``` PowerShell
 Get-RubrikSLA -SLA 'Gold'
 ```
 
@@ -189,7 +186,7 @@ Not every command will be about gathering data. Sometimes you'll want to modify 
 
 This example works best if you have a test virtual machine that you are not concerned with changes being made to it. Make sure that virtual machine is visible to the Rubrik cluster. To validate this, use the following command:
 
-```
+``` PowerShell
 Get-RubrikVM -VM "JBrasser-Win"
 ```
 
@@ -203,7 +200,7 @@ Make sure to replace `"JBrasser-Win"` with the actual name of the virtual machin
 
 Let's protect this virtual machine with the "Gold" SLA Domain. To do this, use the following command:
 
-```
+``` PowerShell
 Get-RubrikVM -VM 'Name' | Protect-RubrikVM -SLA 'Gold'
 ```
 
@@ -213,7 +210,7 @@ Before the change is made, a prompt will appear asking you to confirm the change
 
 This is a safeguard. You can either take the default action of "Yes" by pressing enter, or type "N" if you entered the wrong name or changed your mind. If you want to skip the confirmation check all together, use the `-Confirm:$false` parameter like this:
 
-```
+``` PowerShell
 Get-RubrikVM -VM 'Name' | Protect-RubrikVM -SLA 'Gold' -Confirm:false
 ```
 
@@ -221,8 +218,8 @@ This will make the change without asking for confirmation. Be careful!
 
 Additionally, it is also possible to either set the confirmation preference for an individual cmdlet or function by changing the default parameters and arguments:
 
-```
-$PSDefaultParameterValues=@{"Rubrik\Protect-RubrikVM:Confirm"=$false}
+``` PowerShell
+$PSDefaultParameterValues = @{"Rubrik\Protect-RubrikVM:Confirm" = $false}
 ```
 
 ![alt text](/img/image10.png)
@@ -234,13 +231,13 @@ By setting this, for the duration of your current PowerShell session, `Protect-R
 If we want to know the status of backups for certain workloads or SLAs we can easily gather this data using the PowerShell module.
 
 
-```
+``` PowerShell
 Get-RubrikVM -SLAID 'Gold'
 ```
 
 We can use the SLAID parameter of Get-RubrikVM to only gather a list of VMs that are protected under the Gold SLA. If we want to have the number of VMs that are protected under the Gold SLA, we can use the `Measure-Object` cmdlet in PowerShell:
 
-```
+``` PowerShell
 Get-RubrikVM -SLAID 'Gold' | Measure-Object
 ```
 
@@ -248,20 +245,20 @@ Get-RubrikVM -SLAID 'Gold' | Measure-Object
 
 If we want to make this output readable, we could also choose to only display either the output or the count-property:
 
-```
+``` PowerShell
 Get-RubrikVM -SLAID 'Gold' | Measure-Object | Select-Object -Property Count
 Get-RubrikVM -SLAID 'Gold' | Measure-Object | Select-Object -ExpandProperty Count
 ```
 
 Alternatively we can also display all VMs that are protected by any SLA:
 
-```
+``` PowerShell
 Get-RubrikVM | Where-Object {$_.EffectiveSlaDomainName -ne 'Unprotected'}
 ```
 
 We use the PowerShell `Where-Object` cmdlet to filter out VMs that are not protected by SLAs. Now if we want to take this one step further, we can also make a generate a summary of all the number of VMs assigned to each SLA:
 
-```
+``` PowerShell
 Get-RubrikVM | Where-Object {$_.EffectiveSlaDomainName -ne 'Unprotected'} |
 Group-Object -Property EffectiveSlaDomainName | Sort-Object -Property Count -Descending
 ```
@@ -276,7 +273,7 @@ In PowerShell we have the possibility to work data from different sources. In th
 
 In the first example we will use PowerShell to generate a `.csv` file for us:
 
-```
+``` PowerShell
 1..25 | ForEach-Object {
     [pscustomobject]@{
         Name = "TestVM$_"
@@ -289,15 +286,15 @@ In the first example we will use PowerShell to generate a `.csv` file for us:
 
 If you have a spreadsheet application installed, we can now open this spreadsheet by running the following code:
 
-```
-Invoke-Item ./Example-SLA.xsv
+``` PowerShell
+Invoke-Item ./Example-SLA.csv
 ```
 
 ![alt text](/img/image12.png)
 
 Now if we would like to make changes we can easily edit the `.csv` file. Once we have made the desired modifications, for example changes the SLAs for certain mission critical VMs to Gold, we can apply this configuration to our Rubrik Cluster:
 
-```
+``` PowerShell
 Import-Csv -Path ./Example-SLA.csv | ForEach-Object {
     Get-RubrikVM $_.Name | Protect-RubrikVM -SLA $_.SLA -Confirm:$false
 }
@@ -322,7 +319,7 @@ Links to the API documentation available online are available at the end of this
 
 In situations where the functions in the Rubrik SDK for PowerShell do not fulfill your specific use-case, it is possible to use the `InvokeRubrikRESTCall` function. The `Invoke-RubrikRESTCall` function, may be used to make native calls to Rubrik's RESTful API. The following syntax outlines a common piece of Rubrik functionality, assigning a VM to an SLA Domain, however, it does so by creating raw API requests to Rubrik CDM using the `Invoke-RubrikRESTCall` function
 
-```
+``` PowerShell
 Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET
 ```
 
@@ -330,7 +327,7 @@ Retrieve the raw output for all VMware VMs being managed by the Rubrik device. I
 
 We can also create more complex commands, for example:
 
-```
+``` PowerShell
 $body = New-Object -TypeName PSObject -Property @{'slaID'='INHERIT';'ForceFullSnapshot'='FALSE'}
 Invoke-RubrikRESTCall -Endpoint 'vmware/vm/VirtualMachine:::fbcb1f51-9520-4227-a68c-6fe145982f48-vm-649/snapshot' -Method POST -Body $body
 ```
