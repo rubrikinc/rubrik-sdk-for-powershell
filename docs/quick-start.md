@@ -9,9 +9,9 @@ The code assumes that you have already deployed at least one Rubrik cluster into
 1. [PowerShell](https://aka.ms/getps6) Core or Windows PowerShell
 1. [PowerCLI](http://www.vmware.com/go/powercli) version 6.0 or higher
 
-```
-Note: The module has been written with PowerShell Core support in mind. For best performance and compatibility, the most recent release of PowerShell Core is recommended with the Rubrik PowerShell Module.
-```
+## Note:
+
+The module has been written with PowerShell Core support in mind. For best performance and compatibility, the most recent release of PowerShell Core is recommended with the Rubrik PowerShell Module.
 
 # Installation
 
