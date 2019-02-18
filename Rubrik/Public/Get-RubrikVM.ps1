@@ -41,6 +41,7 @@ function Get-RubrikVM
     # SLA Domain policy assigned to the virtual machine
     [String]$SLA, 
     # Filter by SLA Domain assignment type
+    [Alias('sla_assignment')]
     [ValidateSet('Derived', 'Direct','Unassigned')]
     [String]$SLAAssignment,     
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
