@@ -3,10 +3,10 @@ function New-RubrikVMDKMount
 {
   <#  
       .SYNOPSIS
-      Create a new live mount of a protected volume group
+      Create a new live mount of a VMDK
       
       .DESCRIPTION
-      The New-RubrikVMDKpMount cmdlet is used to create a new mount of a specific virtual disk (vmdk) on the TargetVM of the selected Snapshot.      
+      The New-RubrikVMDKMount cmdlet is used to create a new mount of a specific virtual disk (vmdk) on the TargetVM of the selected Snapshot.      
       
       .NOTES
       Written by Pierre Flammer for community usage
@@ -17,7 +17,7 @@ function New-RubrikVMDKMount
 
       .PARAMETER
       ATTENTION: Names have to match the names configured in Rubrik!!!
-      SnapshotID: ID of the rubrik snaphot of the source VM
+      SnapshotID: ID of the Rubrik snaphot of the source VM
       TargetVM: Name of the VM where the VMDK(s) will be mounted
       AllDisks: If this parameter is used all VMDKs will be mounted to the target VM. 
                 If one has to enter a number and select one VMDK.
