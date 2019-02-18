@@ -646,7 +646,38 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-       }    
+        }  
+        'Get-RubrikVMSnapshot'                = @{
+            '1.0' = @{
+                Description = 'Retrieve information of a VM snapshot'
+                URI         = '/api/v1/vmware/vm/snapshot/{id}'
+                Method      = 'Get'
+                Body        = ''
+                Query           = @{
+                    id          = 'id'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }    
+        'New-RubrikVMDKMount'      = @{
+            '1.0' = @{
+                Description = 'Create a VMDK mount request with given configuration'
+                URI         = '/api/internal/vmware/vm/snapshot/{id}/mount_disks'
+                Method      = 'Post'
+                Body        = @{
+                    targetVmId          = 'targetVmId'
+                    vmdkIds             = @{}
+                    vlan                    = 'vlan'
+                    createNewScsiController = 'createNewScsiController'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'New-RubrikVolumeGroupMount'      = @{
             '1.0' = @{
                 Description = 'Create a Volume Group mount request with given configuration'
@@ -892,6 +923,7 @@ function Get-RubrikAPIData($endpoint) {
                     Fileset = '/api/v1/fileset/{id}/snapshot'
                     MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
                     VMware  = '/api/v1/vmware/vm/{id}/snapshot'
+                    VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
                 }
                 Method      = 'Post'
                 Body        = @{
