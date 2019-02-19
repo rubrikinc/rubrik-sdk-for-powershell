@@ -1,58 +1,29 @@
 ﻿#requires -Version 3
-function Get-RubrikVM
+function Get-RubrikVMSnapshot
 {
   <#  
       .SYNOPSIS
       Retrieves details on one or more virtual machines known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of virtual machines
+      The Get-RubrikVMSnapshot cmdlet is used to pull a detailed information from a VM snapshot
 
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
+      Written by Pierre Flammer for community usage
+      Twitter: @PierreFlammer
 
       .LINK
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikVM -Name 'Server1'
-      This will return details on all virtual machines named "Server1".
-
-      .EXAMPLE
-      Get-RubrikVM -Name 'Server1' -SLA Gold
-      This will return details on all virtual machines named "Server1" that are protected by the Gold SLA Domain.
-
-      .EXAMPLE
-      Get-RubrikVM -Relic
-      This will return all removed virtual machines that were formerly protected by Rubrik.
+      Get-RubrikVMSnapshot -id 'cc1b363a-a0d4-40b7-9b09-7b8f3a805b27'
+      This will return details on the specific snapshot.
   #>
 
   [CmdletBinding()]
   Param(
-    # Name of the virtual machine
-    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
-    [Alias('VM')]
-    [String]$Name,
-    # Filter results to include only relic (removed) virtual machines
-    [Alias('is_relic')]    
-    [Switch]$Relic,
-    # SLA Domain policy assigned to the virtual machine
-    [String]$SLA, 
-    # Filter by SLA Domain assignment type
-    [Alias('sla_assignment')]
-    [ValidateSet('Derived', 'Direct','Unassigned')]
-    [String]$SLAAssignment,     
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
-    [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,        
-    # Virtual machine id
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    # SLA id value
-    [Alias('effective_sla_domain_id')]
-    [String]$SLAID,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -80,13 +51,6 @@ function Get-RubrikVM
   }
 
   Process {
-
-    #region One-off
-    if ($SLAID.Length -eq 0 -and $SLA.Length -gt 0) {
-      $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
-    }
-    #endregion
-
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
