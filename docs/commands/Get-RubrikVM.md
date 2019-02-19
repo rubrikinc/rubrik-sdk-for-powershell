@@ -96,7 +96,7 @@ Filter by SLA Domain assignment type
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: sla_assignment
 
 Required: False
 Position: Named
