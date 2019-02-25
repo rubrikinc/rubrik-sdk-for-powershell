@@ -14,7 +14,7 @@ function New-RubrikSLA
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24

@@ -14,7 +14,7 @@ function Move-RubrikMountVMDK
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Move-RubrikMountVMDK -SourceVMID (Get-RubrikVM -Name 'SourceVM').id -TargetVM 'TargetVM'

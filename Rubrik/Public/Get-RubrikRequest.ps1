@@ -15,7 +15,7 @@ function Get-RubrikRequest
       GitHub: chriswahl
             
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
             
       .EXAMPLE
       Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'

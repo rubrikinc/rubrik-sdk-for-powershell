@@ -20,7 +20,7 @@ function Get-RubrikDatabaseFiles
       GitHub: MikeFal
             
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
             
       .EXAMPLE
       Get-RubrikDatabaseFiles -id '11111111-2222-3333-4444-555555555555'

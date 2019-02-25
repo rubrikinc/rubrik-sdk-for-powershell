@@ -16,7 +16,7 @@ function Protect-RubrikTag
       Twitter: @jasonburrell2
 
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -SLA 'Gold'

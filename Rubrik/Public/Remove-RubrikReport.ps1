@@ -14,7 +14,7 @@ function Remove-RubrikReport
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Get-RubrikReport | Remove-RubrikReport -Confirm:$true

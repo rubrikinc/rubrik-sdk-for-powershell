@@ -14,7 +14,7 @@ function New-RubrikReport
       GitHub: chriswahl
       
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       New-RubrikReport -Name 'Report1' -ReportTemplate 'ProtectionTasksDetails'

@@ -18,7 +18,7 @@ function Protect-RubrikHyperVVM
       GitHub: MikeFal
             
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
             
       .EXAMPLE
       Get-RubrikHyperVVM "VM1" | Protect-RubrikHyperVVM -SLA 'Gold'

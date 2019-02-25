@@ -14,7 +14,7 @@ function Remove-RubrikMount
       GitHub: chriswahl
             
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Remove-RubrikMount -id '11111111-2222-3333-4444-555555555555'
