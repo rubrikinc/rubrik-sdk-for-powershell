@@ -13,7 +13,7 @@ function Remove-RubrikVolumeGroupMount
       Twitter: @PierreFlammer
             
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      https://github.com/rubrikinc/rubrik-sdk-for-powershell
 
       .EXAMPLE
       Remove-RubrikVolumeGroupMount -id '11111111-2222-3333-4444-555555555555'

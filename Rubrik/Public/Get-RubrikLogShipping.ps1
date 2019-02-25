@@ -15,7 +15,7 @@ function Get-RubrikLogShipping
       Any other links you'd like here
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      https://github.com/rubrikinc/rubrik-sdk-for-powershell
 
       .EXAMPLE
       Get all log shipping configurations

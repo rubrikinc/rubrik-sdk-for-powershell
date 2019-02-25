@@ -16,7 +16,7 @@ function New-RubrikNASShare
       GitHub: MikeFal
       
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      https://github.com/rubrikinc/rubrik-sdk-for-powershell
 
       .EXAMPLE
       New-RubrikNASShare -HostID (Get-RubrikHost 'FOO').id -ShareType NFS -ExportPoint BAR -Credential (Get-Credential)

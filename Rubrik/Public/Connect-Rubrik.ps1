@@ -16,7 +16,7 @@ function Connect-Rubrik {
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      https://github.com/rubrikinc/rubrik-sdk-for-powershell
 
       .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Username admin

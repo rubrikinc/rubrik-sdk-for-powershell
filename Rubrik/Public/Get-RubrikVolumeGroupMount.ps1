@@ -14,7 +14,7 @@ function Get-RubrikVolumeGroupMount
       Twitter: @PierreFlammer
             
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      https://github.com/rubrikinc/rubrik-sdk-for-powershell
             
       .EXAMPLE
       Get-RubrikVolumeGroupMount

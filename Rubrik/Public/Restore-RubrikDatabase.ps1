@@ -25,7 +25,7 @@ function Restore-RubrikDatabase
       Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database.
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      https://github.com/rubrikinc/rubrik-sdk-for-powershell
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]

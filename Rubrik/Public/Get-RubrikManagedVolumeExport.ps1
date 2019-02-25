@@ -15,7 +15,7 @@ function Get-RubrikManagedVolumeExport
       GitHub: MikeFal
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      https://github.com/rubrikinc/rubrik-sdk-for-powershell
 
       .EXAMPLE
       Get-RubrikManagedVolumeExport
