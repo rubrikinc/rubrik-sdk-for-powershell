@@ -135,10 +135,10 @@ PrivateData = @{
         Tags = 'Rubrik','Converged_Data_Management','CDM','Backup','Recovery','Data_Protection'
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/rubrikinc/PowerShell-Module/blob/master/LICENSE'
+        LicenseUri = 'https://github.com/rubrikinc/rubrik-sdk-for-powershell/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/rubrikinc/PowerShell-Module'
+        ProjectUri = 'https://github.com/rubrikinc/rubrik-sdk-for-powershell'
 
         # A URL to an icon representing this module.
         IconUri = 'http://i.imgur.com/Zbdd4Ko.jpg'
