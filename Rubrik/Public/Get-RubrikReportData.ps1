@@ -14,7 +14,7 @@ function Get-RubrikReportData
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReportData.html
 
       .EXAMPLE
       Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData

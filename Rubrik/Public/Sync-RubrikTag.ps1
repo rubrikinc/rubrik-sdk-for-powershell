@@ -14,7 +14,7 @@ function Sync-RubrikTag
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Sync-RubrikTag.html
 
       .EXAMPLE
       Sync-RubrikTag -vCenter 'vcenter1.demo' -Category 'Rubrik'

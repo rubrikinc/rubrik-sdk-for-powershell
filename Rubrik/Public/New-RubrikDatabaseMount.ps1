@@ -14,7 +14,7 @@ function New-RubrikDatabaseMount
       GitHub: MikeFal
       
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikDatabaseMount.html
 
       .EXAMPLE
       New-RubrikDatabaseMount -id $db.id -targetInstanceId $db.instanceId -mountedDatabaseName 'BAR-LM' -recoveryDateTime (Get-date (Get-RubrikDatabase -id $db.id).latestRecoveryPoint)

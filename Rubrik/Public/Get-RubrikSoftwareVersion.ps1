@@ -14,7 +14,7 @@ function Get-RubrikSoftwareVersion
       GitHub: chriswahl
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSoftwareVersion.html
             
       .EXAMPLE
       Get-RubrikSoftwareVersion -Server 192.168.1.100

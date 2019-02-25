@@ -14,7 +14,7 @@ function Remove-RubrikFileset
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikFileset.html
 
       .EXAMPLE
       Get-RubrikFileset -Name 'C_Drive' | Remove-RubrikHost

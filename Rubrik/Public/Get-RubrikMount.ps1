@@ -17,7 +17,7 @@ function Get-RubrikMount
       GitHub: chriswahl
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikMount.html
             
       .EXAMPLE
       Get-RubrikMount

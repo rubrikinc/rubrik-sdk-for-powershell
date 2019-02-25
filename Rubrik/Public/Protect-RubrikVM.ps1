@@ -18,7 +18,7 @@ function Protect-RubrikVM
       GitHub: chriswahl
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikVM.html
             
       .EXAMPLE
       Get-RubrikVM "VM1" | Protect-RubrikVM -SLA 'Gold'

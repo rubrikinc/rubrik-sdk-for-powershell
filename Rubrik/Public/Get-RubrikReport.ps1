@@ -14,7 +14,7 @@ function Get-RubrikReport
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReport.html
 
       .EXAMPLE
       Get-RubrikReport

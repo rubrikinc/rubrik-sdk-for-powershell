@@ -15,7 +15,7 @@ function Get-RubrikUnmanagedObject
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikUnmanagedObject.html
 
       .EXAMPLE
       Get-RubrikUnmanagedObject -Type 'WindowsFileset'

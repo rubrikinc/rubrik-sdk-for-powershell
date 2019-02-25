@@ -14,7 +14,7 @@ function New-RubrikMount
       GitHub: chriswahl
       
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikMount.html
 
       .EXAMPLE
       New-RubrikMount -id '11111111-2222-3333-4444-555555555555'

@@ -14,7 +14,7 @@ function New-RubrikSnapshot
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikSnapshot.html
 
       .EXAMPLE
       Get-RubrikVM 'Server1' | New-RubrikSnapshot -Forever

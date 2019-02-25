@@ -16,7 +16,7 @@ function Get-RubrikFileset
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFileset.html
 
       .EXAMPLE
       Get-RubrikFileset -Name 'C_Drive' 
