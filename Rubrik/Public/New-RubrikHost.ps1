@@ -14,7 +14,7 @@ function New-RubrikHost
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikHost.html
 
       .EXAMPLE
       New-RubrikHost -Name 'Server1.example.com'

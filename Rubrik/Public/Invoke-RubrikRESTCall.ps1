@@ -17,7 +17,7 @@ function Invoke-RubrikRESTCall {
       GitHub: mikefal
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Invoke-RubrikRESTCall.html
 
       .EXAMPLE
       Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET

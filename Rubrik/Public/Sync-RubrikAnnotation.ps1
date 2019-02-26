@@ -17,7 +17,7 @@ function Sync-RubrikAnnotation
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Sync-RubrikAnnotation.html
 
       .EXAMPLE
       Sync-RubrikAnnotation

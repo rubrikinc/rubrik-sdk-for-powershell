@@ -16,7 +16,7 @@ function Set-RubrikNASShare
       Any other links you'd like here
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Get-RubrikNASShare -name 'FOO' | Set-RubrikNASShare -ExportPoint 'TEMP' 

@@ -14,7 +14,7 @@ function Get-RubrikHyperVVM
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Get-RubrikHyperVVM -Name 'Server1'

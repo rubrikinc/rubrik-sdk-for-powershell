@@ -15,7 +15,7 @@ function New-RubrikManagedVolumeExport
       GitHub: MikeFal
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Get-RubrikSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 | Select-Object -First 1 | New-RubrikManagedVolumeExport

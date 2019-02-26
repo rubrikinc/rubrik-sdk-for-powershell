@@ -15,7 +15,7 @@ function Set-RubrikLogShipping
       
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
        Get-RubrikLogShipping -PrimaryDatabaseName 'AthenaAM1-SQL16-1-2016' -SecondaryDatabaseName 'AthenaAM1-SQL16-1-2016' | Set-RubrikLogShipping -state STANDBY -DisconnectStandbyUsers
