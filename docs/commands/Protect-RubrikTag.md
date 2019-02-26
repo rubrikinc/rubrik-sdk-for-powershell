@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikTag.html
 schema: 2.0.0
 ---
 
@@ -217,5 +217,5 @@ Twitter: @jasonburrell2
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikTag.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikTag.html)
 

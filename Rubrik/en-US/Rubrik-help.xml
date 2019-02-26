@@ -346,8 +346,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Connect-Rubrik.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Connect-Rubrik.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -513,8 +513,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Disconnect-Rubrik.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Disconnect-Rubrik.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1254,8 +1254,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Export-RubrikDatabase.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Export-RubrikDatabase.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1399,8 +1399,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Export-RubrikReport.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Export-RubrikReport.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1513,8 +1513,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikAPIVersion.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikAPIVersion.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1723,8 +1723,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2049,8 +2049,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabase.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabase.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2225,8 +2225,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseFiles.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseFiles.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2463,8 +2463,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseMount.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseMount.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2687,8 +2687,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3020,8 +3020,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFileset.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFileset.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3244,8 +3244,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFilesetTemplate.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFilesetTemplate.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3451,8 +3451,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikHost.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikHost.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3722,8 +3722,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -4066,8 +4066,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -4313,8 +4313,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -4506,8 +4506,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -4665,8 +4665,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikMount.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikMount.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -4882,8 +4882,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -5153,8 +5153,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -5315,8 +5315,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -5491,8 +5491,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReport.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReport.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -5780,8 +5780,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReportData.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReportData.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -5918,8 +5918,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikRequest.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikRequest.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -6087,8 +6087,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSLA.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSLA.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -6293,8 +6293,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSnapshot.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSnapshot.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -6407,8 +6407,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSoftwareVersion.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSoftwareVersion.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -6679,8 +6679,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -6769,8 +6769,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -6938,8 +6938,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikUnmanagedObject.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikUnmanagedObject.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -7052,8 +7052,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVersion.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVersion.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -7323,8 +7323,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVM.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVM.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -7437,8 +7437,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -7684,8 +7684,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -7843,8 +7843,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -8044,8 +8044,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Invoke-RubrikRESTCall.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Invoke-RubrikRESTCall.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -8401,8 +8401,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Move-RubrikMountVMDK.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Move-RubrikMountVMDK.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -8743,8 +8743,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikDatabaseMount.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikDatabaseMount.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -8912,8 +8912,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -9542,8 +9542,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -9733,8 +9733,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikHost.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikHost.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -9854,8 +9854,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -10159,8 +10159,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -10376,8 +10376,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -10560,8 +10560,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -10876,8 +10876,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikMount.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikMount.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -11108,8 +11108,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -11246,8 +11246,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikReport.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikReport.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -11653,8 +11653,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikSLA.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikSLA.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -12005,8 +12005,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikSnapshot.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikSnapshot.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -12416,8 +12416,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -12823,8 +12823,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikDatabase.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikDatabase.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -13134,8 +13134,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikFileset.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikFileset.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -13541,8 +13541,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -13948,8 +13948,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -14369,8 +14369,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikTag.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikTag.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -14776,8 +14776,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikVM.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikVM.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -14973,8 +14973,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabaseMount.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabaseMount.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -15140,8 +15140,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikFileset.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikFileset.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -15307,8 +15307,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikHost.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikHost.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -15444,8 +15444,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -15604,8 +15604,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -15771,8 +15771,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -15968,8 +15968,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikMount.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikMount.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -16128,8 +16128,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -16302,8 +16302,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikReport.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikReport.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -16462,8 +16462,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikSLA.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikSLA.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -16660,8 +16660,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikUnmanagedObject.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikUnmanagedObject.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -16857,8 +16857,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -17018,8 +17018,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -17472,8 +17472,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabase.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabase.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -17712,8 +17712,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -17871,8 +17871,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikBlacout.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikBlacout.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -18643,8 +18643,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikDatabase.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikDatabase.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -18834,8 +18834,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -18995,8 +18995,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -19258,8 +19258,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -19449,8 +19449,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikMount.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikMount.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -19611,8 +19611,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -19826,8 +19826,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -20105,8 +20105,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -20257,8 +20257,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -20544,8 +20544,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikVM.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikVM.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -20665,8 +20665,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -20903,8 +20903,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -21079,8 +21079,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Sync-RubrikAnnotation.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Sync-RubrikAnnotation.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -21193,8 +21193,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/rubrikinc/PowerShell-Module</maml:linkText>
-        <maml:uri>https://github.com/rubrikinc/PowerShell-Module</maml:uri>
+        <maml:linkText>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Sync-RubrikTag.html</maml:linkText>
+        <maml:uri>http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Sync-RubrikTag.html</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>

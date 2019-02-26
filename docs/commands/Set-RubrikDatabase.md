@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikDatabase.html
 schema: 2.0.0
 ---
 
@@ -396,5 +396,5 @@ GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikDatabase.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikDatabase.html)
 
