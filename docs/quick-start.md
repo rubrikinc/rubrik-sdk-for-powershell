@@ -42,7 +42,7 @@ Common PowerShell module paths include:
 
 1. Download the [master branch](https://github.com/rubrikinc/PowerShell-Module) to your workstation.
 1. Copy the contents of the Rubrik folder onto your workstation into the desired PowerShell Module path.
-1. Open a Powershell console with the _Run as Administrator _option.
+1. Open a Powershell console with the _Run as Administrator_ option.
 1. Run `Set-ExecutionPolicy` using the argument _RemoteSigned_ or _Bypass_.
 
 ## Verification
