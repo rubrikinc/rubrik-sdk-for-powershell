@@ -272,6 +272,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         } 
+        'Get-RubrikLDAPSettings'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all LDAP settings of the Rubrik cluster'
+                URI         = '/api/v1/ldap_service'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'ldap'
+                Filter      = ''
+                Success     = '200'
+            }
+        }  
         'Get-RubrikManagedVolume'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Rubrik Managed Volumes'
@@ -464,6 +476,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikSettings'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all settings of the Rubrik cluster'
+                URI         = '/api/v1/cluster/{id}'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'settings'
+                Filter      = ''
+                Success     = '200'
+            }
+        }  
         'Get-RubrikSLA'                = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all SLA Domains'
@@ -575,6 +599,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+       'Get-RubrikVCenter'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all vCenter settings of the Rubrik cluster'
+                URI         = '/api/v1/vmware/vcenter?primary_cluster_id=local'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'vcenter'
+                Filter      = ''
+                Success     = '200'
+            }
+        }        
         'Get-RubrikVersion'            = @{
             '1.0' = @{
                 Description = 'Retrieve public information about the Rubrik cluster'
@@ -661,6 +697,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }    
+        'New-RubrikVCenter'      = @{
+            '1.0' = @{
+                Description = 'Create VMware vCenter connection'
+                URI         = '/api/v1/vmware/vcenter'
+                Method      = 'Post'
+                Body        = @{
+                    hostname = "hostname"
+                    username = "username"
+                    password = "password"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'New-RubrikVMDKMount'      = @{
             '1.0' = @{
                 Description = 'Create a VMDK mount request with given configuration'
@@ -786,6 +838,26 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '201'
             }
         }
+        'New-RubrikLDAPSettings'         = @{
+            '1.0' = @{
+                Description = 'Creates new LDAP server connection on the Rubrik cluster'
+                URI         = '/api/v1/ldap_service'
+                Method      = 'Post'
+                Body        = @{
+                    name = "name"
+                    dynamicDNSName = "dynamicDNSName"
+                    bindUserName = "bindUserName"
+                    bindUserPassword = "bindUserPassword"
+                    baseDN = "baseDN"
+                    authServers = "authServers"
+                    advancedOptions = "advancedOptions"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }         
         'New-RubrikLogBackup'               = @{
             '1.0' = @{
                 Description = 'Takes on demand transaction log backup for SQL Server'
@@ -1163,6 +1235,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Remove-RubrikVCenter'         = @{
+            '1.0' = @{
+                Description = 'Removes a vCenter connection'
+                URI         = '/api/v1/vmware/vcenter/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }  
         'Restore-RubrikDatabase'       = @{
             '1.0' = @{
                 Description = 'Export MSSQL Database from Rubrik to Destination Instance.'
@@ -1257,6 +1341,26 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikLDAPSettings'         = @{
+            '1.0' = @{
+                Description = 'Updates all settings of the Rubrik cluster'
+                URI         = '/api/v1/ldap_service'
+                Method      = 'Patch'
+                Body        = @{
+                    name = "name"
+                    dynamicDNSName = "dynamicDNSName"
+                    bindUserName = "bindUserName"
+                    bindUserPassword = "bindUserPassword"
+                    baseDN = "baseDN"
+                    authServers = "authServers"
+                    advancedOptions = "advancedOptions"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }         
         'Set-RubrikManagedVolume' = @{
             '1.0' = @{
                 Description = 'Update a managed volume'
@@ -1365,6 +1469,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikSettings'         = @{
+            '1.0' = @{
+                Description = 'Updates all settings of the Rubrik cluster'
+                URI         = '/api/v1/cluster/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    name = "name"
+                    timezone = "timezone"
+                    geolocation = "geolocation"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }  
         'Set-RubrikSQLInstance'        = @{
             '1.0' = @{
                 Description = 'Updates Rubrik database settings.'
@@ -1433,6 +1553,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikVCenter'         = @{
+            '1.0' = @{
+                Description = 'Updates settings of a vCenter connection'
+                URI         = '/api/v1/vmware/vcenter/{id}'
+                Method      = 'Put'
+                Body        = @{
+                    hostname = "hostname"
+                    username = "username"
+                    password = "password"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }  
         'Start-RubrikManagedVolumeSnapshot' = @{
             '1.0' = @{
                 Description = 'Open a Rubrik Managed Volume for read/write'
