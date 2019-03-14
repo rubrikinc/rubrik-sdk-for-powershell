@@ -1,12 +1,12 @@
 ﻿#Requires -Version 3
-function Get-RubrikSettings
+function Get-RubrikSetting
 {
   <#  
       .SYNOPSIS
       Connects to Rubrik and retrieves the current Rubrik cluster settings
             
       .DESCRIPTION
-      The Get-RubrikSettings cmdlet will retrieve the cluster settings actively running on the system. This does require authentication.
+      The Get-RubrikSetting cmdlet will retrieve the cluster settings actively running on the system. This does require authentication.
             
       .NOTES
       Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
@@ -15,20 +15,18 @@ function Get-RubrikSettings
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Get-RubrikSettings -Server 192.168.1.100
+      Get-RubrikSetting
       This will return the running cluster settings on the Rubrik cluster reachable at the address 192.168.1.100
   #>
 
   [CmdletBinding()]
   Param(
-    # Rubrik server IP or FQDN
-    [Parameter(Mandatory = $true)]    
-    [String]$Server,
     # ID of the Rubrik cluster or me for self
-    [String]$id = 'me',
+    [String]$id,
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
     # API version
-    [ValidateNotNullorEmpty()]
-    [String]$api = 'v1'
+    [String]$api = $global:RubrikConnection.api
   )
 
   Begin {
