@@ -15,8 +15,8 @@ function Remove-RubrikVCenter
         https://github.com/rubrikinc/PowerShell-Module
             
         .EXAMPLE
-        Remove-RubrikVCenter -Server 192.168.1.100
-        This will remove the vCenter connection with ID xxxxx from Rubrik cluster reachable at the address 192.168.1.100
+        Remove-RubrikVCenter -Server 192.168.1.100 -id "vCenter:::9e4299f5-dd99-4ec1-adee-cacb311b9507"
+        This will remove the vCenter connection with ID "vCenter:::9e4299f5-dd99-4ec1-adee-cacb311b9507" from Rubrik cluster reachable at the address 192.168.1.100
     #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
