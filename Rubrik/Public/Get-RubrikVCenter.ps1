@@ -15,16 +15,17 @@ function Get-RubrikVCenter
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Get-RubrikVCenter -Server 192.168.1.100
-      This will return the vCenter settings on the Rubrik cluster reachable at the address 192.168.1.100
+      Get-RubrikVCenter
+      This will return the vCenter settings on the currently connected Rubrik cluster
   #>
 
   [CmdletBinding()]
   Param(
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
-    # ID of the Rubrik cluster or me for self
-    [String]$id = '',
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Alias('primary_cluster_id')]
+    [String]$PrimaryClusterID,  
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
@@ -53,7 +54,7 @@ function Get-RubrikVCenter
   Process {
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    #$uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result

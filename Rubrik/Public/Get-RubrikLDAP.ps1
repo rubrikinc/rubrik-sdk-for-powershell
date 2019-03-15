@@ -15,16 +15,14 @@ function Get-RubrikLDAP
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Get-RubrikLDAP -Server 192.168.1.100
-      This will return the running LDAP settings on the Rubrik cluster reachable at the address 192.168.1.100
+      Get-RubrikLDAP
+      This will return the running LDAP settings on the currently connected Rubrik cluster
   #>
 
   [CmdletBinding()]
   Param(
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
-    # ID of the Rubrik cluster or me for self
-    [String]$id = '',
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api

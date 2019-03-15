@@ -602,11 +602,13 @@ function Get-RubrikAPIData($endpoint) {
        'Get-RubrikVCenter'         = @{
             '1.0' = @{
                 Description = 'Retrieves all vCenter settings of the Rubrik cluster'
-                URI         = '/api/v1/vmware/vcenter?primary_cluster_id=local'
+                URI         = '/api/v1/vmware/vcenter'
                 Method      = 'Get'
                 Body        = ''
-                Query       = ''
-                Result      = 'vcenter'
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
                 Filter      = ''
                 Success     = '200'
             }

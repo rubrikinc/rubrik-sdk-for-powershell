@@ -15,21 +15,22 @@ function New-RubrikVCenter
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      New-RubrikVCenter -Server 192.168.1.100 -hostname "test-vcenter.domain.com"
-      This will creates new vCenter connection to test-vcenter.domain.com on the Rubrik cluster reachable at the address 192.168.1.100
+      New-RubrikVCenter -hostname "test-vcenter.domain.com"
+      This will creates new vCenter connection to "test-vcenter.domain.com" on the current Rubrik cluster  
   #>
 
   [CmdletBinding()]
   Param(
+    # Hostname (FQDN) of your vCenter Server
+    [Parameter(Mandatory=$True)]
+    [string]$Hostname,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # ID of the Rubrik cluster or me for self
-    [String]$id = '',
+    [String]$id = 'me',
     # API version
     [ValidateNotNullorEmpty()]
-    [String]$api = $global:RubrikConnection.api,
-    [Parameter(Mandatory=$True)]
-    [string]$hostname
+    [String]$api = $global:RubrikConnection.api
   )
 
   Begin {

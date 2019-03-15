@@ -21,19 +21,23 @@ function New-RubrikLDAP
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
+    # Human friendly name
+    [Parameter(Mandatory=$True)]
+    [string]$Name,
+    # Dynamic DNS name for locating authentication servers.
+    [Parameter(Mandatory=$True)]
+    [string]$DynamicDNSName,
+    # The path to the directory where searches for users begin
+    [string]$BaseDN,
+    # An ordered list of authentication servers. Servers on this list have priority over servers discovered using dynamic DNS.
+    [string[]]$AuthServers,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # ID of the Rubrik cluster or me for self
-    [String]$id = '',
+    [String]$id = 'me',
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api,
-    [Parameter(Mandatory=$True)]
-    [string]$name,
-    [Parameter(Mandatory=$True)]
-    [string]$DynamicDNSName,
-    [string]$BaseDN,
-    [string[]]$AuthServers
   )
 
   Begin {

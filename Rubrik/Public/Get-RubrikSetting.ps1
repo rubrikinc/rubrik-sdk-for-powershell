@@ -15,14 +15,14 @@ function Get-RubrikSetting
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Get-RubrikSetting -id "me"
-      This will return the running cluster settings on the Rubrik cluster reachable at the address 192.168.1.100
+      Get-RubrikSetting
+      This will return the running cluster settings on the currently connected Rubrik cluster
   #>
 
   [CmdletBinding()]
   Param(
     # ID of the Rubrik cluster or me for self
-    [String]$id,
+    [String]$id = 'me',
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

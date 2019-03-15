@@ -6,7 +6,7 @@ function Remove-RubrikVCenter
         Removes an existing vCenter connection
             
         .DESCRIPTION
-        The Set-RubrikVCenter cmdlet will remove an existing vCenter connection on the system. This does require authentication.
+        The Remove-RubrikVCenter cmdlet will remove an existing vCenter connection on the system. This does require authentication.
             
         .NOTES
         Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
@@ -15,13 +15,13 @@ function Remove-RubrikVCenter
         https://github.com/rubrikinc/PowerShell-Module
             
         .EXAMPLE
-        Remove-RubrikVCenter -Server 192.168.1.100 -id "vCenter:::9e4299f5-dd99-4ec1-adee-cacb311b9507"
-        This will remove the vCenter connection with ID "vCenter:::9e4299f5-dd99-4ec1-adee-cacb311b9507" from Rubrik cluster reachable at the address 192.168.1.100
+        Remove-RubrikVCenter -id "vCenter:::9e4299f5-dd99-4ec1-adee-cacb311b9507"
+        This will remove the vCenter connection with ID "vCenter:::9e4299f5-dd99-4ec1-adee-cacb311b9507" from the current Rubrik cluster.
     #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # SLA Domain id
+    # ID of the vCenter Server to remove
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Rubrik server IP or FQDN
