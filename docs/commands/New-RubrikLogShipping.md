@@ -50,7 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -state
-{{Fill state Description}}
+{{ Fill state Description }}
 
 ```yaml
 Type: String
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisconnectStandbyUsers
-{{Fill DisconnectStandbyUsers Description}}
+{{ Fill DisconnectStandbyUsers Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -80,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -targetDatabaseName
-{{Fill targetDatabaseName Description}}
+{{ Fill targetDatabaseName Description }}
 
 ```yaml
 Type: String
@@ -95,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -targetDataFilePath
-{{Fill targetDataFilePath Description}}
+{{ Fill targetDataFilePath Description }}
 
 ```yaml
 Type: String
@@ -110,7 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -targetLogFilePath
-{{Fill targetLogFilePath Description}}
+{{ Fill targetLogFilePath Description }}
 
 ```yaml
 Type: String
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -targetInstanceId
-{{Fill targetInstanceId Description}}
+{{ Fill targetInstanceId Description }}
 
 ```yaml
 Type: String
@@ -200,8 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

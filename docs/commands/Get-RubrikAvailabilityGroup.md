@@ -34,7 +34,7 @@ This will return details on the Availability Group
 ## PARAMETERS
 
 ### -id
-{{Fill id Description}}
+{{ Fill id Description }}
 
 ```yaml
 Type: String
@@ -95,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
-{{Fill SLAID Description}}
+{{ Fill SLAID Description }}
 
 ```yaml
 Type: String
@@ -140,8 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

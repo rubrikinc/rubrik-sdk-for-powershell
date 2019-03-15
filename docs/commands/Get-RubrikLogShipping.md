@@ -50,7 +50,7 @@ Get-RubrkLogShipping -location am1-chrilumn-w1.rubrikdemo.com\MSSQLSERVER
 ## PARAMETERS
 
 ### -id
-{{Fill id Description}}
+{{ Fill id Description }}
 
 ```yaml
 Type: String
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryDatabaseId
-{{Fill PrimaryDatabaseId Description}}
+{{ Fill PrimaryDatabaseId Description }}
 
 ```yaml
 Type: String
@@ -80,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryDatabaseName
-{{Fill PrimaryDatabaseName Description}}
+{{ Fill PrimaryDatabaseName Description }}
 
 ```yaml
 Type: String
@@ -95,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -SecondaryDatabaseName
-{{Fill SecondaryDatabaseName Description}}
+{{ Fill SecondaryDatabaseName Description }}
 
 ```yaml
 Type: String
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -status
-{{Fill status Description}}
+{{ Fill status Description }}
 
 ```yaml
 Type: String
@@ -140,7 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
-{{Fill limit Description}}
+{{ Fill limit Description }}
 
 ```yaml
 Type: String
@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
-{{Fill offset Description}}
+{{ Fill offset Description }}
 
 ```yaml
 Type: String
@@ -170,7 +170,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort_by
-{{Fill sort_by Description}}
+{{ Fill sort_by Description }}
 
 ```yaml
 Type: String
@@ -185,7 +185,7 @@ Accept wildcard characters: False
 ```
 
 ### -sort_order
-{{Fill sort_order Description}}
+{{ Fill sort_order Description }}
 
 ```yaml
 Type: String
@@ -230,8 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

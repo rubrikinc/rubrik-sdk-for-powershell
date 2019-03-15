@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -PreScriptPath
-{{Fill PreScriptPath Description}}
+{{ Fill PreScriptPath Description }}
 
 ```yaml
 Type: String
@@ -170,7 +170,7 @@ Accept wildcard characters: False
 ```
 
 ### -PreScriptErrorAction
-{{Fill PreScriptErrorAction Description}}
+{{ Fill PreScriptErrorAction Description }}
 
 ```yaml
 Type: String
@@ -185,7 +185,7 @@ Accept wildcard characters: False
 ```
 
 ### -PreTimeoutMs
-{{Fill PreTimeoutMs Description}}
+{{ Fill PreTimeoutMs Description }}
 
 ```yaml
 Type: Int32
@@ -200,7 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisablePreBackupScript
-{{Fill DisablePreBackupScript Description}}
+{{ Fill DisablePreBackupScript Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -215,7 +215,7 @@ Accept wildcard characters: False
 ```
 
 ### -PostScriptPath
-{{Fill PostScriptPath Description}}
+{{ Fill PostScriptPath Description }}
 
 ```yaml
 Type: String
@@ -230,7 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -PostScriptErrorAction
-{{Fill PostScriptErrorAction Description}}
+{{ Fill PostScriptErrorAction Description }}
 
 ```yaml
 Type: String
@@ -245,7 +245,7 @@ Accept wildcard characters: False
 ```
 
 ### -PostTimeoutMs
-{{Fill PostTimeoutMs Description}}
+{{ Fill PostTimeoutMs Description }}
 
 ```yaml
 Type: Int32
@@ -260,7 +260,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisablePostBackupScript
-{{Fill DisablePostBackupScript Description}}
+{{ Fill DisablePostBackupScript Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -382,8 +382,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
