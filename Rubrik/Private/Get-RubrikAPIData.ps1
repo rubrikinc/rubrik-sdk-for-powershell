@@ -279,8 +279,13 @@ function Get-RubrikAPIData($endpoint) {
                 Method      = 'Get'
                 Body        = ''
                 Query       = ''
-                Result      = 'ldap'
-                Filter      = ''
+                Result      = 'data'
+                Filter      = @{
+                    DomainType = 'domainType'
+                    ID = 'id'
+                    InitialRefreshStatus = 'initialRefreshStatus'
+                    Name = 'name'
+                }
                 Success     = '200'
             }
         }  
