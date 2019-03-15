@@ -1,12 +1,12 @@
 ﻿#Requires -Version 3
-function Get-RubrikLDAPSettings
+function New-RubrikLDAP
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves the current Rubrik LDAP settings
+      Connects to Rubrik and sets Rubrik cluster settings
             
       .DESCRIPTION
-      The Get-RubrikSettings cmdlet will retrieve the LDAP settings actively running on the system. This does require authentication.
+      The New-RubrikLDAP cmdlet will set the cluster settings on the system. This does require authentication.
             
       .NOTES
       Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
@@ -15,11 +15,11 @@ function Get-RubrikLDAPSettings
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Get-RubrikSettings -Server 192.168.1.100
-      This will return the running cluster settings on the Rubrik cluster reachable at the address 192.168.1.100
+      New-RubrikLDAP -Name "Test LDAP Settings" -baseDN "DC=domain,DC=local" -authServers "192.168.1.8"
+      This will create LDAP settings on the Rubrik cluster defined by Connect-Rubrik function
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -27,14 +27,25 @@ function Get-RubrikLDAPSettings
     [String]$id = '',
     # API version
     [ValidateNotNullorEmpty()]
-    [String]$api = $global:RubrikConnection.api
+    [String]$api = $global:RubrikConnection.api,
+    [Parameter(Mandatory=$True)]
+    [string]$name,
+    [Parameter(Mandatory=$True)]
+    [string]$DynamicDNSName,
+    [string]$BaseDN,
+    [string[]]$AuthServers
   )
 
   Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-
+    $Credentials=$(Get-Credential -Message "Type AD Credentials.")
+    $bindUserName = $Credentials.UserName
+    $bindUserPassword = $Credentials.Password.ToString()
+    
+    #Write-Verbose "Username: $bindUserName"
+    #Write-Verbose "Password: $bindUserPassword"
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
     
@@ -51,10 +62,28 @@ function Get-RubrikLDAPSettings
   }
 
   Process {
+    #region One-off
+    Write-Verbose -Message "Build the body"
+    #[PSCustomObject]$advancedOptions
+
+    #Write-Verbose "Advanced Options = $advancedOptions"
+
+    $body = @{
+        $resources.Body.dynamicDNSName = $dynamicDNSName
+        $resources.Body.bindUserName = $bindUserName
+        $resources.Body.bindUserPassword = $bindUserPassword
+        $resources.Body.baseDN = $baseDN
+        $resources.Body.name = $name
+        $resources.Body.authServers = $authServers
+    }
+        
+    $body = ConvertTo-Json $body
+    Write-Verbose -Message "Body = $body"
+    #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    #$body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

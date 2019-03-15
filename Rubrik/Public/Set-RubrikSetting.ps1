@@ -1,12 +1,12 @@
 ﻿#Requires -Version 3
-function Set-RubrikSettings
+function Set-RubrikSetting
 {
   <#  
       .SYNOPSIS
       Connects to Rubrik and sets Rubrik cluster settings
             
       .DESCRIPTION
-      The Get-RubrikSettings cmdlet will set the cluster settings on the system. This does require authentication.
+      The Set-RubrikSetting cmdlet will set the cluster settings on the system. This does require authentication.
             
       .NOTES
       Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
@@ -15,7 +15,7 @@ function Set-RubrikSettings
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Set-RubrikSettings -Server "192.168.1.100" -clusterName "test-rubrik-cluster" -timeZone "America/Los Angeles" -clusterLocation "LA Office"
+      Set-RubrikSetting -Server "192.168.1.100" -clusterName "test-rubrik-cluster" -timeZone "America/Los Angeles" -clusterLocation "LA Office"
       This will set the designated cluster settings on the Rubrik cluster reachable at the address 192.168.1.100
   #>
 
@@ -23,12 +23,12 @@ function Set-RubrikSettings
   Param(
     # Rubrik server IP or FQDN
     [Parameter(Mandatory = $true)]    
-    [String]$Server,
+    [String]$Server = $global:RubrikConnection.server,
     # ID of the Rubrik cluster or me for self
     [String]$id = 'me',
     # API version
     [ValidateNotNullorEmpty()]
-    [String]$api = 'v1',
+    [String]$api = $global:RubrikConnection.api,
     [Parameter(Mandatory=$True)]
     [Alias('name')]
     [string]$clusterName,

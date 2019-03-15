@@ -15,7 +15,7 @@ function Get-RubrikSetting
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Get-RubrikSetting
+      Get-RubrikSetting -id "me"
       This will return the running cluster settings on the Rubrik cluster reachable at the address 192.168.1.100
   #>
 
