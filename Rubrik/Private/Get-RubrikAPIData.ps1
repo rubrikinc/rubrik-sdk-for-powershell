@@ -272,7 +272,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         } 
-        'Get-RubrikLDAPSettings'         = @{
+        'Get-RubrikLDAP'         = @{
             '1.0' = @{
                 Description = 'Retrieves all LDAP settings of the Rubrik cluster'
                 URI         = '/api/v1/ldap_service'
@@ -476,7 +476,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikSettings'         = @{
+        'Get-RubrikSetting'         = @{
             '1.0' = @{
                 Description = 'Retrieves all settings of the Rubrik cluster'
                 URI         = '/api/v1/cluster/{id}'
@@ -838,7 +838,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '201'
             }
         }
-        'New-RubrikLDAPSettings'         = @{
+        'New-RubrikLDAP'         = @{
             '1.0' = @{
                 Description = 'Creates new LDAP server connection on the Rubrik cluster'
                 URI         = '/api/v1/ldap_service'
@@ -1341,7 +1341,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Set-RubrikLDAPSettings'         = @{
+        'Set-RubrikLDAP'         = @{
             '1.0' = @{
                 Description = 'Updates all settings of the Rubrik cluster'
                 URI         = '/api/v1/ldap_service'
@@ -1469,7 +1469,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Set-RubrikSettings'         = @{
+        'Set-RubrikSetting'         = @{
             '1.0' = @{
                 Description = 'Updates all settings of the Rubrik cluster'
                 URI         = '/api/v1/cluster/{id}'
