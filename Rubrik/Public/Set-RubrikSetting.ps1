@@ -15,12 +15,23 @@ function Set-RubrikSetting
       https://github.com/rubrikinc/PowerShell-Module
             
       .EXAMPLE
-      Set-RubrikSetting -Server "192.168.1.100" -clusterName "test-rubrik-cluster" -timeZone "America/Los Angeles" -clusterLocation "LA Office"
-      This will set the designated cluster settings on the Rubrik cluster reachable at the address 192.168.1.100
+      Set-RubrikSetting -ClusterName "test-rubrik-cluster" -Timezone "America/Los Angeles" -ClusterLocation "LA Office"
+      This will set the designated cluster settings on the Rubrik cluster
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
+    # New name for a Rubrik cluster
+    [Parameter(Mandatory=$True)]
+    [Alias('name')]
+    [string]$ClusterName,
+    # New time zone for a Rubrik cluster 
+    [Parameter(Mandatory=$True)]
+    [ValidateSet("Africa/Johannesburg","Africa/Lagos","Africa/Nairobi","America/Anchorage","America/Araguaina","America/Barbados","America/Chicago","America/Denver","America/Los_Angeles","America/Mexico_City","America/New_York","America/Noronha","America/Phoenix","America/Toronto","America/Vancouver","Asia/Bangkok","Asia/Dhaka","Asia/Hong_Kong","Asia/Karachi","Asia/Kathmandu","Asia/Kolkata","Asia/Magadan","Asia/Singapore","Asia/Tokyo","Atlantic/Cape_Verde","Australia/Perth","Australia/Sydney","Europe/Amsterdam","Europe/Athens","Europe/London","Europe/Moscow","Pacific/Auckland","Pacific/Honolulu","Pacific/Midway","UTC")]
+    [string]$Timezone,
+    # Address information for mapping the location of the Rubrik cluster. This value is used to provide a location for the Rubrik cluster on the dashboard map
+    [Parameter(Mandatory=$True)]
+    [string]$ClusterLocation,
     # Rubrik server IP or FQDN
     [Parameter(Mandatory = $true)]    
     [String]$Server = $global:RubrikConnection.server,
@@ -28,15 +39,7 @@ function Set-RubrikSetting
     [String]$id = 'me',
     # API version
     [ValidateNotNullorEmpty()]
-    [String]$api = $global:RubrikConnection.api,
-    [Parameter(Mandatory=$True)]
-    [Alias('name')]
-    [string]$clusterName,
-    [Parameter(Mandatory=$True)]
-    [ValidateSet("Africa/Johannesburg","Africa/Lagos","Africa/Nairobi","America/Anchorage","America/Araguaina","America/Barbados","America/Chicago","America/Denver","America/Los_Angeles","America/Mexico_City","America/New_York","America/Noronha","America/Phoenix","America/Toronto","America/Vancouver","Asia/Bangkok","Asia/Dhaka","Asia/Hong_Kong","Asia/Karachi","Asia/Kathmandu","Asia/Kolkata","Asia/Magadan","Asia/Singapore","Asia/Tokyo","Atlantic/Cape_Verde","Australia/Perth","Australia/Sydney","Europe/Amsterdam","Europe/Athens","Europe/London","Europe/Moscow","Pacific/Auckland","Pacific/Honolulu","Pacific/Midway","UTC")]
-    [string]$timezone,
-    [Parameter(Mandatory=$True)]
-    [string]$clusterLocation
+    [String]$api = $global:RubrikConnection.api
   )
 
   Begin {

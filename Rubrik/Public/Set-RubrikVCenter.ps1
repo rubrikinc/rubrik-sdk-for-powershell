@@ -15,22 +15,23 @@ function Set-RubrikVCenter
         https://github.com/rubrikinc/PowerShell-Module
             
         .EXAMPLE
-        Set-RubrikVCenter -Server 192.168.1.100 -hostname "test-vcenter.domain.com"
-        This will return the running cluster settings on the Rubrik cluster reachable at the address 192.168.1.100
+        Set-RubrikVCenter -hostname "test-vcenter.domain.com"
+        This will return the running cluster settings on the Rubrik cluster.
     #>
 
     [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
     Param(
-    # Rubrik server IP or FQDN
-    [String]$Server = $global:RubrikConnection.server,
     # vCenter ID
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
+    # vCenter Hostname (FQDN)
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [string]$Hostname,
+    # Rubrik server IP or FQDN
+    [String]$Server = $global:RubrikConnection.server,
     # API version
     [ValidateNotNullorEmpty()]
-    [String]$api = $global:RubrikConnection.api,
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
-    [string]$hostname
+    [String]$api = $global:RubrikConnection.api
     )
 
     Begin {
@@ -60,9 +61,6 @@ function Set-RubrikVCenter
     Process {
     #region One-off
     Write-Verbose -Message "Build the body"
-    #[PSCustomObject]$advancedOptions
-
-    #Write-Verbose "Advanced Options = $advancedOptions"
 
     $body = @{
         $resources.Body.hostname = $hostname
