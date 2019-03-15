@@ -15,7 +15,7 @@ function Set-RubrikVCenter
         https://github.com/rubrikinc/PowerShell-Module
             
         .EXAMPLE
-        Set-RubrikVCenter -Server 192.168.1.100
+        Set-RubrikVCenter -Server 192.168.1.100 -hostname "test-vcenter.domain.com"
         This will return the running cluster settings on the Rubrik cluster reachable at the address 192.168.1.100
     #>
 
