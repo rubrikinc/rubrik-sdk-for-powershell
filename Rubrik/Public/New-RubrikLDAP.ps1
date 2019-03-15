@@ -37,7 +37,7 @@ function New-RubrikLDAP
     [String]$id = 'me',
     # API version
     [ValidateNotNullorEmpty()]
-    [String]$api = $global:RubrikConnection.api,
+    [String]$api = $global:RubrikConnection.api
   )
 
   Begin {
