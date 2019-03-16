@@ -27,7 +27,7 @@ function New-RubrikVCenter
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # ID of the Rubrik cluster or me for self
-    [String]$id = 'me',
+    [String]$id = '',
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
