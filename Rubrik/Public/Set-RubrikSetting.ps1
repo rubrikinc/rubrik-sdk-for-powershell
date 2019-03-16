@@ -33,7 +33,6 @@ function Set-RubrikSetting
     [Parameter(Mandatory=$True)]
     [string]$ClusterLocation,
     # Rubrik server IP or FQDN
-    [Parameter(Mandatory = $true)]    
     [String]$Server = $global:RubrikConnection.server,
     # ID of the Rubrik cluster or me for self
     [String]$id = 'me',
