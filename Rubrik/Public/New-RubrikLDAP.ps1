@@ -34,7 +34,7 @@ function New-RubrikLDAP
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # ID of the Rubrik cluster or me for self
-    [String]$id = 'me',
+    [String]$id = '',
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
@@ -86,7 +86,7 @@ function New-RubrikLDAP
     #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    #$uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     #$body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
