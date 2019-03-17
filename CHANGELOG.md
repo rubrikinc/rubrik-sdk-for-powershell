@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* Testing for MacOS and Linux as per [143](https://github.com/rubrikinc/PowerShell-Module/issues/143)
+* Added -DetailedObject parameter for Get-RubrikVM
 
 ### Fixed
 
