@@ -27,6 +27,10 @@ function Get-RubrikVM
       .EXAMPLE
       Get-RubrikVM -Relic
       This will return all removed virtual machines that were formerly protected by Rubrik.
+
+      .EXAMPLE
+      Get-RubrikVM -id myserver01 -DetailedObject
+      This will return the VM object with all properties, including additional details such as snapshots taken of the VM. Using this switch parameter negatively affects performance 
   #>
 
   [CmdletBinding()]
@@ -38,6 +42,8 @@ function Get-RubrikVM
     # Filter results to include only relic (removed) virtual machines
     [Alias('is_relic')]    
     [Switch]$Relic,
+    # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # SLA Domain policy assigned to the virtual machine
     [String]$SLA, 
     # Filter by SLA Domain assignment type
@@ -94,7 +100,15 @@ function Get-RubrikVM
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    return $result
+    # If the Get-RubrikVM function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      $result | ForEach-Object {
+        $result = Get-RubrikVM -id $_.id
+        return $result
+      }
+    } else {
+      return $result
+    }
 
   } # End of process
 } # End of function
