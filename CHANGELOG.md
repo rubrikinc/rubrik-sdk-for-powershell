@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Updated example 2 in comment-based help of Invoke-RubrikRESTCall
 * Added -DetailedObject parameter for Get-RubrikVM
 
 ### Fixed
