@@ -38,7 +38,7 @@ Retrieve the raw output for all VMWare VMs being managed by the Rubrik device.
 
 ### EXAMPLE 2
 ```
-Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query (New-Object -TypeName PSObject -Property @{'name'='msf-sql2016'})
+Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query @{'name'='msf-sql2016'}
 ```
 
 Retrieve the raw output for the VMWare VM msf-sql2016 using a query parameter.

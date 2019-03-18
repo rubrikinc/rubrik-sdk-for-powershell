@@ -8058,7 +8058,7 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query (New-Object -TypeName PSObject -Property @{'name'='msf-sql2016'})</dev:code>
+        <dev:code>Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query @{'name'='msf-sql2016'}</dev:code>
         <dev:remarks>
           <maml:para>Retrieve the raw output for the VMWare VM msf-sql2016 using a query parameter.</maml:para>
         </dev:remarks>
