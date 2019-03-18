@@ -7096,6 +7096,17 @@
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>DetailedObject</maml:name>
+          <maml:Description>
+            <maml:para>DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>SLA</maml:name>
           <maml:Description>
             <maml:para>SLA Domain policy assigned to the virtual machine</maml:para>
@@ -7198,6 +7209,18 @@
         <maml:name>Relic</maml:name>
         <maml:Description>
           <maml:para>Filter results to include only relic (removed) virtual machines</maml:para>
+        </maml:Description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>DetailedObject</maml:name>
+        <maml:Description>
+          <maml:para>DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.</maml:para>
         </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -7318,6 +7341,13 @@
         <dev:code>Get-RubrikVM -Relic</dev:code>
         <dev:remarks>
           <maml:para>This will return all removed virtual machines that were formerly protected by Rubrik.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <dev:code>Get-RubrikVM -Name myserver01 -DetailedObject</dev:code>
+        <dev:remarks>
+          <maml:para>This will return the VM object with all properties, including additional details such as snapshots taken of the VM. Using this switch parameter negatively affects performance</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

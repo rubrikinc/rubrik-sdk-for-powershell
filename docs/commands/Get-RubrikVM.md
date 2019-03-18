@@ -13,8 +13,9 @@ Retrieves details on one or more virtual machines known to a Rubrik cluster
 ## SYNTAX
 
 ```
-Get-RubrikVM [[-Name] <String>] [-Relic] [-SLA <String>] [-SLAAssignment <String>] [-PrimaryClusterID <String>]
- [-id <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+Get-RubrikVM [[-Name] <String>] [-Relic] [-DetailedObject] [-SLA <String>] [-SLAAssignment <String>]
+ [-PrimaryClusterID <String>] [-id <String>] [-SLAID <String>] [-Server <String>] [-api <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,6 +44,14 @@ Get-RubrikVM -Relic
 
 This will return all removed virtual machines that were formerly protected by Rubrik.
 
+### EXAMPLE 4
+```
+Get-RubrikVM -Name myserver01 -DetailedObject
+```
+
+This will return the VM object with all properties, including additional details such as snapshots taken of the VM.
+Using this switch parameter negatively affects performance
+
 ## PARAMETERS
 
 ### -Name
@@ -67,6 +76,22 @@ Filter results to include only relic (removed) virtual machines
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: is_relic
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
