@@ -395,7 +395,7 @@ function Get-RubrikAPIData($endpoint) {
                 Body        = ''
                 Query       = @{
                     is_global                = 'is_global'
-                    name                    = 'name'
+                    name                     = 'name'
                 }
                 Result      = 'data'
                 Filter      = ''
