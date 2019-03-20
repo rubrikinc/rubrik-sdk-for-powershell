@@ -2,35 +2,35 @@
 function Get-RubrikOracleDB
 {
   <#  
-      .SYNOPSIS
-      Retrieves details on one or more Oracle DBs known to a Rubrik cluster
+    .SYNOPSIS
+    Retrieves details on one or more Oracle DBs known to a Rubrik cluster
 
-      .DESCRIPTION
-      The Get-RubrikOracleDB cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of Oracle DBs
-
-      .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-
-      .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikOracleDB.html
-
-      .EXAMPLE
-      Get-RubrikOracleDB -Name 'OracleDB1'
-      This will return details on all Oracle DBs named "OracleDB1".
-
-      .EXAMPLE
-      Get-RubrikOracleDB -Name 'OracleDB1' -SLA Gold
-      This will return details on all Oracle DBs named "OracleDB1" that are protected by the Gold SLA Domain.
-
-      .EXAMPLE
-      Get-RubrikOracleDB -Relic
-      This will return all removed Oracle DBs that were formerly protected by Rubrik.
-
-      .EXAMPLE
-      Get-RubrikOracleDB -Name myserver01 -DetailedObject
-      This will return the VM object with all properties, including additional details such as snapshots taken of the VM. Using this switch parameter negatively affects performance 
+    .DESCRIPTION
+    The Get-RubrikOracleDB cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of Oracle DBs
+    
+    .NOTES
+    Written by Jaap Brasser for community usage
+    Twitter: @jaap_brasser
+    GitHub: jaapbrasser
+    
+    .LINK
+    http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikOracleDB.html
+    
+    .EXAMPLE
+    Get-RubrikOracleDB -Name 'OracleDB1'
+    This will return details on all Oracle DBs named "OracleDB1".
+    
+    .EXAMPLE
+    Get-RubrikOracleDB -Name 'OracleDB1' -SLA Gold
+    This will return details on all Oracle DBs named "OracleDB1" that are protected by the Gold SLA Domain.
+    
+    .EXAMPLE
+    Get-RubrikOracleDB -Relic
+    This will return all removed Oracle DBs that were formerly protected by Rubrik.
+    
+    .EXAMPLE
+    Get-RubrikOracleDB -Name OracleDB1 -DetailedObject
+    This will return the Oracle DB object with all properties, including additional details such as snapshots taken of the Oracle DB. Using this switch parameter negatively affects performance as more API queries will be performed.
   #>
 
   [CmdletBinding()]
@@ -38,7 +38,7 @@ function Get-RubrikOracleDB
     # Name of the Oracle DB
     [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [String]$Name,
-    # Filter results to include only relic (removed)
+    # Filter results to include only relic (removed) Oracle DBs
     [Alias('is_relic')]    
     [Switch]$Relic,
     [Alias('is_live_mount')]    
