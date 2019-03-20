@@ -365,6 +365,28 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikOracleDB'                = @{
+            '1.0' = @{
+                Description = 'Get summary of all the Oracle DBs'
+                URI         = '/api/internal/oracle/db'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    is_live_mount           = 'is_live_mount'
+                    name                    = 'name'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                }
+                Success     = '200'
+            }
+        }        
         'Get-RubrikOrganization'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all Rubrik organizations'
