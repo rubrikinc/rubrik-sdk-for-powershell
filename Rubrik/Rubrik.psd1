@@ -77,7 +77,8 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 'Get-RubrikHyperVVM', 
                'Get-RubrikLogShipping', 'Get-RubrikManagedVolume', 
                'Get-RubrikManagedVolumeExport', 'Get-RubrikMount', 
-               'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 'Get-RubrikOrganization', 
+               'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 
+               'Get-RubrikOracleDB', 'Get-RubrikOrganization', 
                'Get-RubrikReport', 'Get-RubrikReportData', 'Get-RubrikRequest', 
                'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
                'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 
@@ -166,4 +167,3 @@ PrivateData = @{
 # DefaultCommandPrefix = ''
 
 }
-
