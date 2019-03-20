@@ -3,10 +3,10 @@ function Get-RubrikOracleDB
 {
   <#  
       .SYNOPSIS
-      Retrieves details on one or more virtual machines known to a Rubrik cluster
+      Retrieves details on one or more Oracle DBs known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikOracleDB cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of virtual machines
+      The Get-RubrikOracleDB cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of Oracle DBs
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -18,15 +18,15 @@ function Get-RubrikOracleDB
 
       .EXAMPLE
       Get-RubrikOracleDB -Name 'OracleDB1'
-      This will return details on all virtual machines named "OracleDB1".
+      This will return details on all Oracle DBs named "OracleDB1".
 
       .EXAMPLE
       Get-RubrikOracleDB -Name 'OracleDB1' -SLA Gold
-      This will return details on all virtual machines named "OracleDB1" that are protected by the Gold SLA Domain.
+      This will return details on all Oracle DBs named "OracleDB1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
       Get-RubrikOracleDB -Relic
-      This will return all removed virtual machines that were formerly protected by Rubrik.
+      This will return all removed Oracle DBs that were formerly protected by Rubrik.
 
       .EXAMPLE
       Get-RubrikOracleDB -Name myserver01 -DetailedObject
@@ -35,15 +35,17 @@ function Get-RubrikOracleDB
 
   [CmdletBinding()]
   Param(
-    # Name of the virtual machine
+    # Name of the Oracle DB
     [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [String]$Name,
-    # Filter results to include only relic (removed) virtual machines
+    # Filter results to include only relic (removed)
     [Alias('is_relic')]    
     [Switch]$Relic,
+    [Alias('is_live_mount')]    
+    [Switch]$LiveMount,
     # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
     [Switch]$DetailedObject,
-    # SLA Domain policy assigned to the virtual machine
+    # SLA Domain policy assigned to the Oracle DB
     [String]$SLA, 
     # Filter by SLA Domain assignment type
     [Alias('sla_assignment')]
@@ -52,7 +54,7 @@ function Get-RubrikOracleDB
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
-    # Virtual machine id
+    # Oracle DB id
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # SLA id value
