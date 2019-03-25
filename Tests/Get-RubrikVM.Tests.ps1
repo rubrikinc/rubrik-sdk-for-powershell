@@ -60,4 +60,27 @@ Describe -Name 'Public/Get-RubrikVM' -Tag 'Public', 'Get-RubrikVM' -Fixture {
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
     }
+
+    Context -Name 'Parameter Validation' {
+        It -Name 'Parameter Name cannot be $null' -Test {
+            { Get-RubrikVM -Name $null } |
+                Should -Throw "Cannot validate argument on parameter 'Name'"
+        }
+        It -Name 'Parameter Name cannot be empty' -Test {
+            { Get-RubrikVM -Name '' } |
+                Should -Throw "Cannot validate argument on parameter 'Name'"
+        }
+        It -Name 'Parameter ID cannot be $null' -Test {
+            { Get-RubrikVM -Id $null } |
+                Should -Throw "Cannot validate argument on parameter 'ID'"
+        }
+        It -Name 'Parameter ID cannot be empty' -Test {
+            { Get-RubrikVM -Id '' } |
+                Should -Throw "Cannot validate argument on parameter 'ID'"
+        }
+        It -Name 'Parameters Id and Name cannot be simultaneously used' -Test {
+            { Get-RubrikVM -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -Name 'swagsanta'  } |
+                Should -Throw "Parameter set cannot be resolved using the specified named parameters."
+        }
+    }
 }
