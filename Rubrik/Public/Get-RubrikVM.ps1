@@ -40,6 +40,7 @@ function Get-RubrikVM
       ParameterSetName='Query',
       Position = 0,
       ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [Alias('VM')]
     [String]$Name,
     # Virtual machine id
@@ -48,6 +49,7 @@ function Get-RubrikVM
       Position = 0,
       Mandatory = $true,
       ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     # Filter results to include only relic (removed) virtual machines
     [Parameter(ParameterSetName='Query')]
@@ -58,18 +60,22 @@ function Get-RubrikVM
     [Switch]$DetailedObject,
     # SLA Domain policy assigned to the virtual machine
     [Parameter(ParameterSetName='Query')]
+    [ValidateNotNullOrEmpty()]
     [String]$SLA, 
     # Filter by SLA Domain assignment type
     [Parameter(ParameterSetName='Query')]
+    [ValidateNotNullOrEmpty()]
     [ValidateSet('Derived', 'Direct','Unassigned')]
     [Alias('sla_assignment')]
     [String]$SLAAssignment,     
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Parameter(ParameterSetName='Query')]
+    [ValidateNotNullOrEmpty()]
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
     # SLA id value
     [Parameter(ParameterSetName='Query')]
+    [ValidateNotNullOrEmpty()]
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,    
     # Rubrik server IP or FQDN
