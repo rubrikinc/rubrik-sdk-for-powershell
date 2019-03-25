@@ -79,7 +79,7 @@ Describe -Name 'Public/Get-RubrikVM' -Tag 'Public', 'Get-RubrikVM' -Fixture {
                 Should -Throw "Cannot validate argument on parameter 'ID'"
         }
         It -Name 'Parameters Id and Name cannot be simultaneously used' -Test {
-            { Get-RubrikVM -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -Name 'swagsanta'  } |
+            { Get-RubrikVM -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -Name 'swagsanta' } |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
     }
