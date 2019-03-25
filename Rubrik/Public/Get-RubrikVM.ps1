@@ -33,7 +33,7 @@ function Get-RubrikVM
       This will return the VM object with all properties, including additional details such as snapshots taken of the VM. Using this switch parameter negatively affects performance 
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Name of the virtual machine
     [Parameter(
@@ -57,6 +57,7 @@ function Get-RubrikVM
     [Parameter(ParameterSetName='Query')]
     [Switch]$DetailedObject,
     # SLA Domain policy assigned to the virtual machine
+    [Parameter(ParameterSetName='Query')]
     [String]$SLA, 
     # Filter by SLA Domain assignment type
     [Parameter(ParameterSetName='Query')]
