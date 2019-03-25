@@ -36,32 +36,48 @@ function Get-RubrikVM
   [CmdletBinding()]
   Param(
     # Name of the virtual machine
-    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      ParameterSetName='Query',
+      Position = 0,
+      ValueFromPipelineByPropertyName = $true)]
     [Alias('VM')]
     [String]$Name,
+    # Virtual machine id
+    [Parameter(
+      ParameterSetName='ID',
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
     # Filter results to include only relic (removed) virtual machines
+    [Parameter(ParameterSetName='Query')]
     [Alias('is_relic')]    
     [Switch]$Relic,
     # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Parameter(ParameterSetName='Query')]
     [Switch]$DetailedObject,
     # SLA Domain policy assigned to the virtual machine
     [String]$SLA, 
     # Filter by SLA Domain assignment type
-    [Alias('sla_assignment')]
+    [Parameter(ParameterSetName='Query')]
     [ValidateSet('Derived', 'Direct','Unassigned')]
+    [Alias('sla_assignment')]
     [String]$SLAAssignment,     
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Parameter(ParameterSetName='Query')]
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
-    # Virtual machine id
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
-    [String]$id,
     # SLA id value
+    [Parameter(ParameterSetName='Query')]
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,    
     # Rubrik server IP or FQDN
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$api = $global:RubrikConnection.api
   )
 
