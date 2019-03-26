@@ -12,10 +12,15 @@ Retrieves details on one or more virtual machines known to a Rubrik cluster
 
 ## SYNTAX
 
+### Query (Default)
 ```
 Get-RubrikVM [[-Name] <String>] [-Relic] [-DetailedObject] [-SLA <String>] [-SLAAssignment <String>]
- [-PrimaryClusterID <String>] [-id <String>] [-SLAID <String>] [-Server <String>] [-api <String>]
- [<CommonParameters>]
+ [-PrimaryClusterID <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
+### ID
+```
+Get-RubrikVM [-id] <String> [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -59,10 +64,25 @@ Name of the virtual machine
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: VM
 
 Required: False
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -id
+Virtual machine id
+
+```yaml
+Type: String
+Parameter Sets: ID
+Aliases:
+
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -74,7 +94,7 @@ Filter results to include only relic (removed) virtual machines
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: is_relic
 
 Required: False
@@ -90,7 +110,7 @@ Using this parameter does affect performance as more data will be retrieved and 
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases:
 
 Required: False
@@ -105,7 +125,7 @@ SLA Domain policy assigned to the virtual machine
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases:
 
 Required: False
@@ -120,7 +140,7 @@ Filter by SLA Domain assignment type
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: sla_assignment
 
 Required: False
@@ -136,7 +156,7 @@ Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting t
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: primary_cluster_id
 
 Required: False
@@ -146,27 +166,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -id
-Virtual machine id
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -SLAID
 SLA id value
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: effective_sla_domain_id
 
 Required: False
