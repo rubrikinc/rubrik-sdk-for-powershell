@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-03-24 [Parameter validation for Get-RubrikVM]
+
+### Added
+
+* Added parameter sets and parameter validation to Get-RubrikVM
+* Added ValidateNullNotEmpty to selected parameters in Get-RubrikVM
+* Added additional 5 tests to validate parameters sets and validation work as intended
+
+## 2019-03-17 [Added new functionality and fixed help]
+
 ### Added
 
 * Updated example 2 in comment-based help of Invoke-RubrikRESTCall
