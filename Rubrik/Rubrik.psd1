@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.235'
+ModuleVersion = '4.0.0.236'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -75,41 +75,41 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 
                'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikFileset', 
                'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 'Get-RubrikHyperVVM', 
-               'Get-RubrikLogShipping', 'Get-RubrikManagedVolume', 
+               'Get-RubrikLDAP', 'Get-RubrikLogShipping', 'Get-RubrikManagedVolume', 
                'Get-RubrikManagedVolumeExport', 'Get-RubrikMount', 
                'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 'Get-RubrikOrganization', 
                'Get-RubrikReport', 'Get-RubrikReportData', 'Get-RubrikRequest', 
-               'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
-               'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 
-               'Get-RubrikUnmanagedObject', 'Get-RubrikVersion', 'Get-RubrikVM', 
+               'Get-RubrikSetting', 'Get-RubrikSLA', 'Get-RubrikSnapshot', 
+               'Get-RubrikSoftwareVersion', 'Get-RubrikSQLInstance', 
+               'Get-RubrikSupportTunnel', 'Get-RubrikUnmanagedObject', 
+               'Get-RubrikVCenter', 'Get-RubrikVersion', 'Get-RubrikVM', 
                'Get-RubrikVMSnapshot', 'Get-RubrikVolumeGroup', 
                'Get-RubrikVolumeGroupMount', 'Invoke-RubrikRESTCall', 
                'Move-RubrikMountVMDK', 'New-RubrikDatabaseMount', 
                'New-RubrikFileset', 'New-RubrikFilesetTemplate', 'New-RubrikHost', 
-               'New-RubrikLogBackup', 'New-RubrikLogShipping', 
+               'New-RubrikLDAP', 'New-RubrikLogBackup', 'New-RubrikLogShipping', 
                'New-RubrikManagedVolume', 'New-RubrikManagedVolumeExport', 
                'New-RubrikMount', 'New-RubrikNASShare', 'New-RubrikReport', 
-               'New-RubrikSLA', 'New-RubrikSnapshot', 'New-RubrikVMDKMount', 
-               'New-RubrikVolumeGroupMount', 'Protect-RubrikDatabase', 
-               'Protect-RubrikFileset', 'Protect-RubrikHyperVVM', 
-               'Protect-RubrikNutanixVM', 'Protect-RubrikTag', 'Protect-RubrikVM', 
-               'Remove-RubrikDatabaseMount', 'Remove-RubrikFileset', 
-               'Remove-RubrikHost', 'Remove-RubrikLogShipping', 
-               'Remove-RubrikManagedVolume', 'Remove-RubrikManagedVolumeExport', 
-               'Remove-RubrikMount', 'Remove-RubrikNASShare', 'Remove-RubrikReport', 
-               'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
+               'New-RubrikSLA', 'New-RubrikSnapshot', 'New-RubrikVCenter', 
+               'New-RubrikVMDKMount', 'New-RubrikVolumeGroupMount', 
+               'Protect-RubrikDatabase', 'Protect-RubrikFileset', 
+               'Protect-RubrikHyperVVM', 'Protect-RubrikNutanixVM', 
+               'Protect-RubrikTag', 'Protect-RubrikVM', 'Remove-RubrikDatabaseMount', 
+               'Remove-RubrikFileset', 'Remove-RubrikHost', 
+               'Remove-RubrikLogShipping', 'Remove-RubrikManagedVolume', 
+               'Remove-RubrikManagedVolumeExport', 'Remove-RubrikMount', 
+               'Remove-RubrikNASShare', 'Remove-RubrikReport', 'Remove-RubrikSLA', 
+               'Remove-RubrikUnmanagedObject', 'Remove-RubrikVCenter', 
                'Remove-RubrikVolumeGroupMount', 'Reset-RubrikLogShipping', 
                'Restore-RubrikDatabase', 'Set-RubrikAvailabilityGroup', 
                'Set-RubrikBlackout', 'Set-RubrikDatabase', 'Set-RubrikHyperVVM', 
                'Set-RubrikLogShipping', 'Set-RubrikManagedVolume', 'Set-RubrikMount', 
-               'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikSQLInstance', 
-               'Set-RubrikSupportTunnel', 'Set-RubrikVM', 
+               'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikSetting', 
+               'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel', 
+               'Set-RubrikVCenter', 'Set-RubrikVM', 
                'Start-RubrikManagedVolumeSnapshot', 
                'Stop-RubrikManagedVolumeSnapshot', 'Sync-RubrikAnnotation', 
-               'Sync-RubrikTag', 'Get-RubrikLDAP', 'Get-RubrikSetting', 
-               'Get-RubrikVCenter', 'New-RubrikLDAP', 'New-RubrikVCenter', 
-               'Remove-RubrikVCenter', 'Set-RubrikLDAP', 'Set-RubrikSetting', 'Set-RubrikVCenter'
-)
+               'Sync-RubrikTag')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
