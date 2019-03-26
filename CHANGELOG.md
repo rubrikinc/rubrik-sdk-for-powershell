@@ -37,6 +37,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * [GitHub Issue Template](https://github.com/rubrikinc/PowerShell-Module/commit/ca0a7fc1864c42162236b4e68af6f44d07f0a164).
 * [Invoke-RubrikRESTCall](https://github.com/rubrikinc/PowerShell-Module/pull/118).
 * TLS v1.2 support triggered during the usage of `Connect-Rubrik`.
+* `Get-RubrikLDAPSettings` - Checks all LDAP server settings
+* `Get-RubrikSettings` - Checks cluster settings
+* `Get-RubrikVCenter` - Checks all vCenter server settings
+* `New-RubrikLDAPSettings` - Creates new LDAP server connection
+* `New-RubrikVCenter` - Creates new vCenter server connection
+* `Remove-RubrikVCenter` - Removes vCenter server connection
+* `Set-RubrikSettings` - Modifes cluster settings
+* `Set-RubrikVCenter` - Modifies vCenter server connection settings
 
 ### Changed
 
