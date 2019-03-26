@@ -43,8 +43,7 @@ function Connect-Rubrik {
         [ValidateNotNullorEmpty()]
         [String]$Server,
         # Username with permissions to connect to the Rubrik cluster
-        # Optionally, use the Credential parameter
-    
+        # Optionally, use the Credential parameter    
         [Parameter(ParameterSetName='UserPassword',Mandatory=$true, Position = 1)]
         [String]$Username,
         # Password for the Username provided
