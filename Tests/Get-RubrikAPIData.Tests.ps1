@@ -37,7 +37,7 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
         param($v,$f)
         $global:rubrikConnection.version = $v
         $resources = Get-RubrikAPIData -endpoint $f
-        $resources.Method | Should -BeIn @('Get','Post','Patch','Delete')
+        $resources.Method | Should -BeIn @('Get','Post','Patch','Delete','Put')
         $resources.URI | Should -Not -Be $null 
 
     }
