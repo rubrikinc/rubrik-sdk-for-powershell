@@ -1355,7 +1355,7 @@ function Get-RubrikAPIData($endpoint) {
                 Method      = 'Patch'
                 Body        = @{
                     name = "name"
-                    dynamicDNSName = "dynamicDNSName"
+                    dynamicDnsName = "dynamicDnsName"
                     bindUserName = "bindUserName"
                     bindUserPassword = "bindUserPassword"
                     baseDN = "baseDN"
