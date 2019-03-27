@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-03-27 [Quickstart Documentation Update]
+
+### Changed
+
+* Updated Typo in Quickstart Documentation
+
 ## 2019-03-24 [Parameter validation for Get-RubrikVM]
 
 ### Added
