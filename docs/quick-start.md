@@ -211,7 +211,7 @@ Before the change is made, a prompt will appear asking you to confirm the change
 This is a safeguard. You can either take the default action of "Yes" by pressing enter, or type "N" if you entered the wrong name or changed your mind. If you want to skip the confirmation check all together, use the `-Confirm:$false` parameter like this:
 
 ``` PowerShell
-Get-RubrikVM -VM 'Name' | Protect-RubrikVM -SLA 'Gold' -Confirm:false
+Get-RubrikVM -VM 'Name' | Protect-RubrikVM -SLA 'Gold' -Confirm:$false
 ```
 
 This will make the change without asking for confirmation. Be careful!
