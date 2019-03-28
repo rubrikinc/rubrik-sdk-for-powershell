@@ -13,7 +13,8 @@ Connects to Rubrik and retrieves the current Rubrik vCenter settings
 ## SYNTAX
 
 ```
-Get-RubrikVCenter [[-Server] <String>] [[-PrimaryClusterID] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikVCenter [[-Name] <String>] [[-Server] <String>] [[-PrimaryClusterID] <String>] [[-api] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,6 +32,21 @@ This will return the vCenter settings on the currently connected Rubrik cluster
 
 ## PARAMETERS
 
+### -Name
+vCenter Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Server
 Rubrik server IP or FQDN
 
@@ -40,7 +56,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: 2
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -56,7 +72,7 @@ Parameter Sets: (All)
 Aliases: primary_cluster_id
 
 Required: False
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -71,7 +87,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
