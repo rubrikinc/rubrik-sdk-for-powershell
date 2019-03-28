@@ -15,10 +15,14 @@ function Update-RubrikVCenter
 
       .LINK
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Update-RubrikVCenter.html
-            
+      
       .EXAMPLE
       Get-RubrikVCenter -Name 'vcsa.domain.local' | Update-RubrikVCenter
       This will refresh the vCenter metadata on the currently connected Rubrik cluster
+
+      .EXAMPLE
+      Get-RubrikVCenter | Update-RubrikVCenter
+      This will refresh the vCenter metadata for all connecter vCenter instances on the currently connected Rubrik cluster
   #>
 
   [CmdletBinding()]
