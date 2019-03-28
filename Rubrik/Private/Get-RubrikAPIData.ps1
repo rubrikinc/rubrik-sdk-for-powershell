@@ -614,7 +614,9 @@ function Get-RubrikAPIData($endpoint) {
                     primary_cluster_id      = 'primary_cluster_id'
                 }
                 Result      = 'data'
-                Filter      = ''
+                Filter      =  @{
+                    'Name' = 'name'
+                }
                 Success     = '200'
             }
         }        
@@ -1695,6 +1697,19 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         } 
+        'Update-RubrikVCenter'         = @{
+            '1.0' = @{
+                Description = 'Refresh the metadata for the specified vCenter Server'
+                URI         = '/api/v1/vmware/vcenter/{id}/refresh'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }        
+
     } # End of API
 
     # Determine which version of RCDM is running
