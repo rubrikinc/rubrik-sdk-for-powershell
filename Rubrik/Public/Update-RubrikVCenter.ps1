@@ -27,6 +27,7 @@ function Update-RubrikVCenter
     [Parameter(
       ValueFromPipelineByPropertyName = $true,
       Mandatory = $true )]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
