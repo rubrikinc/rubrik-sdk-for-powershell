@@ -1,33 +1,33 @@
 ﻿#Requires -Version 3
-function Get-RubrikVCenter
+function Update-RubrikVCenter
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves the current Rubrik vCenter settings
+      Connects to Rubrik to refresh the metadata for the specified vCenter Server
             
       .DESCRIPTION
-      The Get-RubrikVCenter cmdlet will retrieve the all vCenter settings actively running on the system. This does require authentication.
+      The Update-RubrikVCenter cmdlet will refresh all vCenter metadata known to the connected Rubrik cluster.
             
       .NOTES
-      Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
-            
+      Written by Chris Wahl for community usage
+      Twitter: @ChrisWahl
+      GitHub: chriswahl
+
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Update-RubrikVCenter.html
             
       .EXAMPLE
-      Get-RubrikVCenter
-      This will return the vCenter settings on the currently connected Rubrik cluster
+      Get-RubrikVCenter -Name 'vcsa.domain.local' | Update-RubrikVCenter
+      This will refresh the vCenter metadata on the currently connected Rubrik cluster
   #>
 
   [CmdletBinding()]
   Param(
-    # vCenter Name
-    [String]$Name,
+    # vCenter id value from the Rubrik Cluster
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
-    [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,  
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
