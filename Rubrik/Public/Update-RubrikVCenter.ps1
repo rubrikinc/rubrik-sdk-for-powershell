@@ -24,7 +24,9 @@ function Update-RubrikVCenter
   [CmdletBinding()]
   Param(
     # vCenter id value from the Rubrik Cluster
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true,
+      Mandatory = $true )]
     [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
