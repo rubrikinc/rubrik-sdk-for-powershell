@@ -152,7 +152,7 @@ Accept wildcard characters: False
 
 ### -PrimaryClusterID
 Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
-Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+Use **local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
 
 ```yaml
 Type: String
