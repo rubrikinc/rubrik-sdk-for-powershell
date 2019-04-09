@@ -13,7 +13,7 @@ function New-RubrikVMDKMount
       Twitter: @PierreFlammer
       
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .PARAMETER
       ATTENTION: Names have to match the names configured in Rubrik!!!
@@ -70,7 +70,7 @@ function New-RubrikVMDKMount
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $SourceSnapshot.id
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $snapshotid
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
         
     $TargetID = Get-RubrikVM -name $TargetVM
@@ -105,9 +105,6 @@ function New-RubrikVMDKMount
     $body = ConvertTo-Json $body
     Write-Verbose -Message "Body = $body"
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $snapshotid
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
