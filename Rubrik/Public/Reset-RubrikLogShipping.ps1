@@ -3,10 +3,10 @@ function Reset-RubrikLogShipping
 {
   <#  
       .SYNOPSIS
-      Reseed a secondady database
+      Reseed a secondary database
 
       .DESCRIPTION
-      Reseed a secondady database
+      Reseed a secondary database
 
       .NOTES
       Written by Chris Lumnah 
