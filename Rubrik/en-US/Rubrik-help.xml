@@ -18002,11 +18002,11 @@
       <command:verb>Reset</command:verb>
       <command:noun>RubrikLogShipping</command:noun>
       <maml:description>
-        <maml:para>Reseed a secondady database</maml:para>
+        <maml:para>Reseed a secondary database</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Reseed a secondady database</maml:para>
+      <maml:para>Reseed a secondary database</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
