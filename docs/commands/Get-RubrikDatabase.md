@@ -14,8 +14,8 @@ Retrieves details on one or more databases known to a Rubrik cluster
 
 ```
 Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>]
- [[-ServerInstance] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>]
- [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+ [[-ServerInstance] <String>] [[-InstanceID] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>]
+ [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,6 +54,13 @@ Get-RubrikDatabase -id 'MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
 This will return details on a single database matching the Rubrik ID of "MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
 Note that the database ID is globally unique and is often handy to know if tracking a specific database for longer workflows,
 whereas some values are not unique (such as nearly all hosts having one or more databases named "model") and more difficult to track by name.
+
+### EXAMPLE 5
+```
+Get-RubrikDatabase -InstanceID MssqlInstance:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+```
+
+This will return details on a single SQL instance matching the Rubrik ID of "MssqlInstance:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
 
 ## PARAMETERS
 
@@ -147,6 +154,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -InstanceID
+SQL InstanceID, used as a unique identifier
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: instance_id
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PrimaryClusterID
 Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
 Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
@@ -157,7 +179,7 @@ Parameter Sets: (All)
 Aliases: primary_cluster_id
 
 Required: False
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -172,7 +194,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -187,7 +209,7 @@ Parameter Sets: (All)
 Aliases: effective_sla_domain_id
 
 Required: False
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -202,7 +224,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -217,7 +239,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 11
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
