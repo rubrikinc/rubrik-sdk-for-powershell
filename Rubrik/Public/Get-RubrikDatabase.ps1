@@ -35,6 +35,10 @@ function Get-RubrikDatabase
       This will return details on a single database matching the Rubrik ID of "MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
       Note that the database ID is globally unique and is often handy to know if tracking a specific database for longer workflows,
       whereas some values are not unique (such as nearly all hosts having one or more databases named "model") and more difficult to track by name.
+  
+      .EXAMPLE
+      Get-RubrikDatabase -InstanceID MssqlInstance:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+      This will return details on a single SQL instance matching the Rubrik ID of "MssqlInstance:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   #>
 
   [CmdletBinding()]
@@ -53,6 +57,9 @@ function Get-RubrikDatabase
     [String]$Hostname,
     #ServerInstance name (combined hostname\instancename)
     [String]$ServerInstance,
+    #SQL InstanceID, used as a unique identifier
+    [Alias('instance_id')]
+    [string]$InstanceID,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,    
@@ -89,12 +96,16 @@ function Get-RubrikDatabase
 
     #region one-off
     if($ServerInstance){
+
       $SIobj = ConvertFrom-SqlServerInstance $ServerInstance
       $Hostname = $SIobj.hostname
       $Instance = $SIobj.instancename
     }
+      
+   if($Hostname.Length -gt 0 -and $Instance.Length -gt 0 -and $InstanceID.Length -eq 0){
+      $InstanceID = (Get-RubrikSQLInstance -Hostname $Hostname -Name $Instance).id
+    }
     #endregion
-  
   }
 
   Process {
