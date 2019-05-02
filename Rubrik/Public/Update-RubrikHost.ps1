@@ -1,9 +1,9 @@
 ﻿#requires -Version 3
-function Refresh-RubrikHost
+function Update-RubrikHost
 {
   <#  
       .SYNOPSIS
-      Refreshed the properties shown for the specified host
+      Refresh the properties shown for the specified host
 
       .DESCRIPTION
       Refresh the properties of a host object when changes on the host are not seen in the Rubrik web UI.
@@ -12,13 +12,19 @@ function Refresh-RubrikHost
       Written by Chris Lumnah
       Twitter: @lumnah
       GitHub: clumnah
-      Any other links you'd like here
 
       .LINK
       https://github.com/rubrikinc/rubrik-sdk-for-powershell
 
       .EXAMPLE
-      Get-RubrikHost -Name "am1-sql16fc-1" | Refresh-RubrikHost 
+      Get-RubrikHost -Name "am1-sql16fc-1" | Update-RubrikHost
+      
+      Get the details of Rubrikhost am1-sql16fc-1 and refresh the information of this host on the Rubrik Cluster and returns the information of the host
+      
+      .EXAMPLE
+      Update-RubrikHost -id Host:::ccc9c8f4-6f16-4216-ba46-e9925c67d3b2
+      
+      Refresh the information of this host by specifying the id on the Rubrik Cluster and returns the information of the host
   #>
 
   [CmdletBinding()]
