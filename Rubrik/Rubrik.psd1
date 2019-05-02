@@ -96,7 +96,7 @@ FunctionsToExport = @(
     'Protect-RubrikDatabase', 'Protect-RubrikFileset', 
     'Protect-RubrikHyperVVM', 'Protect-RubrikNutanixVM', 
     'Protect-RubrikTag', 'Protect-RubrikVM', 'Remove-RubrikDatabaseMount', 
-    'Refresh-RubrikHost','Remove-RubrikFileset', 'Remove-RubrikHost', 
+    'Update-RubrikHost','Remove-RubrikFileset', 'Remove-RubrikHost', 
     'Remove-RubrikLogShipping', 'Remove-RubrikManagedVolume', 
     'Remove-RubrikManagedVolumeExport', 'Remove-RubrikMount', 
     'Remove-RubrikNASShare', 'Remove-RubrikReport', 'Remove-RubrikSLA', 
