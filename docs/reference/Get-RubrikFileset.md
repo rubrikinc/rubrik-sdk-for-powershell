@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFileset.html
 schema: 2.0.0
 ---
 
@@ -14,7 +14,8 @@ Retrieves details on one or more filesets known to a Rubrik cluster
 
 ```
 Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>]
- [[-PrimaryClusterID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>]
+ [[-PrimaryClusterID] <String>] [[-ShareID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>]
+ [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,35 +25,35 @@ Note that a fileset name is not required; you can use params (such as HostName a
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-RubrikFileset -Name 'C_Drive'
 ```
 
 This will return details on the fileset named "C_Drive" assigned to any hosts
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-RubrikFileset -Name 'C_Drive' -HostName 'Server1'
 ```
 
 This will return details on the fileset named "C_Drive" assigned to only the "Server1" host
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Get-RubrikFileset -Name 'C_Drive' -SLA Gold
 ```
 
 This will return details on the fileset named "C_Drive" assigned to any hosts with an SLA Domain matching "Gold"
 
-### -------------------------- EXAMPLE 4 --------------------------
+### EXAMPLE 4
 ```
 Get-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
 ```
 
 This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
 
-### -------------------------- EXAMPLE 5 --------------------------
+### EXAMPLE 5
 ```
 Get-RubrikFileset -Relic
 ```
@@ -97,7 +98,7 @@ SLA Domain policy assigned to the database
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -152,16 +153,31 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ShareID
+Rubrik's Share id
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: share_id
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -id
 Rubrik's fileset id
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -176,7 +192,7 @@ Parameter Sets: (All)
 Aliases: effective_sla_domain_id
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -188,10 +204,10 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -203,14 +219,17 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -223,5 +242,5 @@ GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFileset.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFileset.html)
 

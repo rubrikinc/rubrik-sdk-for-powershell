@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Connect-Rubrik.html
 schema: 2.0.0
 ---
 
@@ -12,8 +12,22 @@ Connects to Rubrik and retrieves a token value for authentication
 
 ## SYNTAX
 
+### UserPassword (Default)
 ```
-Connect-Rubrik [-Server] <String> [[-Username] <String>] [[-Password] <SecureString>] [[-Credential] <Object>]
+Connect-Rubrik [-Server] <String> [-Username] <String> [-Password] <SecureString> [-OrganizationID <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### Credential
+```
+Connect-Rubrik [-Server] <String> [-Credential] <Object> [-OrganizationID <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
+```
+
+### Token
+```
+Connect-Rubrik [-Server] <String> [-Token] <String> [-OrganizationID <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,7 +38,7 @@ Note that you can pass a username and password or an entire set of credentials.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Connect-Rubrik -Server 192.168.1.1 -Username admin
 ```
@@ -32,19 +46,27 @@ Connect-Rubrik -Server 192.168.1.1 -Username admin
 This will connect to Rubrik with a username of "admin" to the IP address 192.168.1.1.
 The prompt will request a secure password.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Connect-Rubrik -Server 192.168.1.1 -Username admin -Password (ConvertTo-SecureString "secret" -asplaintext -force)
 ```
 
 If you need to pass the password value in the cmdlet directly, use the ConvertTo-SecureString function.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Connect-Rubrik -Server 192.168.1.1 -Credential (Get-Credential)
 ```
 
 Rather than passing a username and secure password, you can also opt to submit an entire set of credentials using the -Credentials parameter.
+
+### EXAMPLE 4
+```
+Connect-Rubrik -Server 192.168.1.1 -Token "token key provided by Rubrik"
+```
+
+Rather than passing a username and secure password, you can now generate an API token key in Rubrik.
+This key can then be used to authenticate instead of a credential or user name and password.
 
 ## PARAMETERS
 
@@ -54,7 +76,7 @@ The IP or FQDN of any available Rubrik node within the cluster
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -69,10 +91,10 @@ Optionally, use the Credential parameter
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: 
+Parameter Sets: UserPassword
+Aliases:
 
-Required: False
+Required: True
 Position: 2
 Default value: None
 Accept pipeline input: False
@@ -85,10 +107,10 @@ Optionally, use the Credential parameter
 
 ```yaml
 Type: SecureString
-Parameter Sets: (All)
-Aliases: 
+Parameter Sets: UserPassword
+Aliases:
 
-Required: False
+Required: True
 Position: 3
 Default value: None
 Accept pipeline input: False
@@ -101,15 +123,79 @@ Optionally, use the Username and Password parameters
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
-Aliases: 
+Parameter Sets: Credential
+Aliases:
 
-Required: False
-Position: 4
+Required: True
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Token
+{{ Fill Token Description }}
+
+```yaml
+Type: String
+Parameter Sets: Token
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationID
+Organization to connect with, assuming the user has multiple organizations
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: organization_id
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -122,5 +208,5 @@ GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Connect-Rubrik.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Connect-Rubrik.html)
 

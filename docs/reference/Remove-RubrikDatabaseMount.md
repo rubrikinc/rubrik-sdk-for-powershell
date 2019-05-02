@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabaseMount.html
 schema: 2.0.0
 ---
 
@@ -14,6 +14,7 @@ Connects to Rubrik and removes one or more database live mounts
 
 ```
 Remove-RubrikDatabaseMount [-id] <String> [-Force] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,21 +22,21 @@ The Remove-RubrikDatabaseMount cmdlet is used to request the deletion of one or 
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Remove-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'
 ```
 
 This will remove mount id "11111111-2222-3333-4444-555555555555".
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-RubrikDatabaseMount | Remove-RubrikDatabaseMount
 ```
 
 This will remove all mounted databases.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Get-RubrikDatabaseMount -source_database_name 'BAR' | Remove-RubrikDatabaseMount
 ```
@@ -50,7 +51,7 @@ The Rubrik ID value of the mount
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -65,7 +66,7 @@ Force unmount to deal with situations where host has been moved.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +81,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -95,7 +96,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -135,6 +136,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -146,5 +150,5 @@ GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabaseMount.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabaseMount.html)
 
