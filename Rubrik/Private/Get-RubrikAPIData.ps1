@@ -1103,7 +1103,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Refresh-RubrikHost'            = @{
+        'Update-RubrikHost'             = @{
             '1.0' = @{
                 Description = 'Refresh the properties of a host object when changes on the host are not seen in the Rubrik web UI.'
                 URI         = '/api/v1/host/{id}/refresh'
