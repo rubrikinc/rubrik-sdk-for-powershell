@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Invoke-RubrikRESTCall.html
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Provides generic interface to make Rubrik REST API calls
 
 ```
 Invoke-RubrikRESTCall [-Endpoint] <String> [-Method] <String> [[-Query] <PSObject>] [[-Body] <PSObject>]
- [[-Server] <String>] [[-api] <String>]
+ [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,21 +29,21 @@ reference is found on the Rubrik device at:
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET
 ```
 
 Retrieve the raw output for all VMWare VMs being managed by the Rubrik device.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
-Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query (New-Object -TypeName PSObject -Property @{'name'='msf-sql2016'})
+Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query @{'name'='msf-sql2016'}
 ```
 
 Retrieve the raw output for the VMWare VM msf-sql2016 using a query parameter.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 $body = New-Object -TypeName PSObject -Property @{'slaID'='INHERIT';'ForceFullSnapshot'='FALSE'}
 ```
@@ -60,7 +60,7 @@ Rubrik API endpoint, DO NOT USE LEADING '/'
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -75,7 +75,7 @@ REST API method
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -90,7 +90,7 @@ Hash table body to pass to API call
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -105,7 +105,7 @@ Hash table body to pass to API call
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -120,7 +120,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 5
@@ -135,7 +135,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 6
@@ -143,6 +143,9 @@ Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -155,5 +158,5 @@ GitHub: mikefal
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Invoke-RubrikRESTCall.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Invoke-RubrikRESTCall.html)
 

@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVM.html
 schema: 2.0.0
 ---
 
@@ -12,9 +12,15 @@ Retrieves details on one or more virtual machines known to a Rubrik cluster
 
 ## SYNTAX
 
+### Query (Default)
 ```
-Get-RubrikVM [[-Name] <String>] [-Relic] [-SLA <String>] [-SLAAssignment <String>] [-PrimaryClusterID <String>]
- [-id <String>] [-SLAID <String>] [-Server <String>] [-api <String>]
+Get-RubrikVM [[-Name] <String>] [-Relic] [-DetailedObject] [-SLA <String>] [-SLAAssignment <String>]
+ [-PrimaryClusterID <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
+### ID
+```
+Get-RubrikVM [-id] <String> [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -22,26 +28,34 @@ The Get-RubrikVM cmdlet is used to pull a detailed data set from a Rubrik cluste
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-RubrikVM -Name 'Server1'
 ```
 
 This will return details on all virtual machines named "Server1".
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-RubrikVM -Name 'Server1' -SLA Gold
 ```
 
 This will return details on all virtual machines named "Server1" that are protected by the Gold SLA Domain.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Get-RubrikVM -Relic
 ```
 
 This will return all removed virtual machines that were formerly protected by Rubrik.
+
+### EXAMPLE 4
+```
+Get-RubrikVM -Name myserver01 -DetailedObject
+```
+
+This will return the VM object with all properties, including additional details such as snapshots taken of the VM.
+Using this switch parameter negatively affects performance
 
 ## PARAMETERS
 
@@ -50,10 +64,25 @@ Name of the virtual machine
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: VM
 
 Required: False
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -id
+Virtual machine id
+
+```yaml
+Type: String
+Parameter Sets: ID
+Aliases:
+
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -65,8 +94,24 @@ Filter results to include only relic (removed) virtual machines
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: is_relic
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Query
+Aliases:
 
 Required: False
 Position: Named
@@ -80,8 +125,8 @@ SLA Domain policy assigned to the virtual machine
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: 
+Parameter Sets: Query
+Aliases:
 
 Required: False
 Position: Named
@@ -95,8 +140,8 @@ Filter by SLA Domain assignment type
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: 
+Parameter Sets: Query
+Aliases: sla_assignment
 
 Required: False
 Position: Named
@@ -111,23 +156,8 @@ Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting t
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: primary_cluster_id
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -id
-Virtual machine id
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
 
 Required: False
 Position: Named
@@ -141,7 +171,7 @@ SLA id value
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: effective_sla_domain_id
 
 Required: False
@@ -157,7 +187,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -172,7 +202,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -180,6 +210,9 @@ Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -192,5 +225,5 @@ GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVM.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVM.html)
 
