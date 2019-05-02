@@ -1103,6 +1103,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Update-RubrikHost'             = @{
+            '1.0' = @{
+                Description = 'Refresh the properties of a host object when changes on the host are not seen in the Rubrik web UI.'
+                URI         = '/api/v1/host/{id}/refresh'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Remove-RubrikDatabaseMount'   = @{
             '1.0' = @{
                 Description = 'Create a request to delete a database live mount'
