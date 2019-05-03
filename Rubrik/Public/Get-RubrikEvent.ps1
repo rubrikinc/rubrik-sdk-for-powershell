@@ -6,13 +6,18 @@ function Get-RubrikEvent
       Retrieve information for events that match the value specified in any of the following categories: type, status, or ID, and limit events by date.
 
       .DESCRIPTION
-      
+      The Get-RubrikEvent cmdlet is used to pull a event data set from a Rubrik cluster. There are a vast number of arguments 
+      that can be supplied to narrow down the event query. 
+
       .NOTES
+      Written by J.R. Phillips for community usage
+      GitHub: JayAreP     
 
       .LINK
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikEvent.html
 
       .EXAMPLE
-      Get-RubrikEvent -ObjectName vm-foo -EventType Backup
+      Get-RubrikEvent -ObjectName "vm-foo" -EventType Backup
       This will query for any 'Backup' events on the Rubrik VM object named 'vm-foo'
 
       .EXAMPLE
@@ -103,7 +108,6 @@ function Get-RubrikEvent
 
   Process {
 
-    # $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = New-URIString -server $Server -endpoint ($resources.URI)
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
