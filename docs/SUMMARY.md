@@ -115,4 +115,5 @@
   * [Stop-RubrikManagedVolumeSnapshot](reference/Stop-RubrikManagedVolumeSnapshot.md)
   * [Sync-RubrikAnnotation](reference/Sync-RubrikAnnotation.md)
   * [Sync-RubrikTag](reference/Sync-RubrikTag.md)
+  * [Update-RubrikHost](reference/Update-RubrikHost.md)
   * [Update-RubrikVCenter](reference/Update-RubrikVCenter.md)
