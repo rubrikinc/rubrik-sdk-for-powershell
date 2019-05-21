@@ -15,6 +15,15 @@ function New-RubrikVMDKMount
     .LINK
     http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
+    .PARAMETER
+    ATTENTION: Names have to match the names configured in Rubrik!!!
+
+    SnapshotID: ID of the Rubrik snaphot of the source VM
+    TargetVM: Name of the VM where the VMDK(s) will be mounted
+    AllDisks: If this parameter is used all VMDKs will be mounted to the target VM. 
+              If one has to enter a number and select one VMDK.
+    VLAN: Specify the VLAN number
+
     .EXAMPLE
     New-RubrikVMDKMount -snapshotid 'cc1b363a-a0d4-40b7-9b09-7b8f3a805b27' -TargetVM 'VM2' 
     
