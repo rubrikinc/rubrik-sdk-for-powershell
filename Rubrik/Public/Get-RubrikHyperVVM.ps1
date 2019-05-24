@@ -81,7 +81,9 @@ function Get-RubrikHyperVVM
   Process {
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    If ($SLAID -eq "") {
+      $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    }
     #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
