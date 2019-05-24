@@ -95,9 +95,13 @@ function Connect-Rubrik {
 
     Process {
 
+        # Create User Agent string
+        $UserAgent = "Rubrik-Powershell-SDK/$($MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString())"
+        Write-Verbose -Message "Using User Agent $($UserAgent)"
+
         if($Token)
         {
-            $head = @{'Authorization' = "Bearer $($Token)"}
+            $head = @{'Authorization' = "Bearer $($Token)";'User-Agent' = $UserAgent}
             Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
             $global:rubrikConnection = @{
                 id      = $null
@@ -122,6 +126,7 @@ function Connect-Rubrik {
             $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Credential.UserName + ':' + $Credential.GetNetworkCredential().Password))
             $head = @{
                 'Authorization' = "Basic $auth"
+                'User-Agent' = $UserAgent
             }          
             $content = Submit-Request -uri $uri -header $head -method $($resources.Method)
 
@@ -131,7 +136,7 @@ function Connect-Rubrik {
             }
 
             # For API version v1 or greater, use Bearer and token
-            $head = @{'Authorization' = "Bearer $($content.token)"}
+            $head = @{'Authorization' = "Bearer $($content.token)";'User-Agent' = $UserAgent}
 
             Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
             $global:rubrikConnection = @{
