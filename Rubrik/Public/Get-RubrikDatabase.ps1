@@ -111,7 +111,10 @@ function Get-RubrikDatabase
   Process {
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    # If SLA paramter defined, resolve SLAID
+    If ($SLA) {
+      $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    }
     #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id

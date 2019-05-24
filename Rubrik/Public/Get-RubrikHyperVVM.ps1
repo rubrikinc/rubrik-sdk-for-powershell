@@ -81,7 +81,8 @@ function Get-RubrikHyperVVM
   Process {
 
     #region One-off
-    If ($SLAID -eq "") {
+    # If SLA paramter defined, resolve SLAID
+    If ($SLA) {
       $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
     }
     #endregion
