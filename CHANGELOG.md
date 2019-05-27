@@ -16,6 +16,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+=======
+
+## 2019-05-27
+
+### Changed [Added functionality]
+
+* Added -name parameter to Get-RubrikOrganization
+
+## 2019-05-24
+
+### Changed [Resolving issues]
+
+* Updated Get-RubrikDatabase, Get-RubrikFileset, Get-RubrikHyperVVM, GetRubrikNutanixVM and Get-RubrikVolumeGroup to address issue [223](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/223). Calls to Test-RubrikSLA were inadvertently overwriting the $SLAID variable, causing the paramater to be ignored.
+* Added Custom User Agent value to HTTP headers in Connect-Rubrik function
+
 ## 2019-05-22
 
 ### Changed [Resolving issues]
