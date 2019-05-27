@@ -70,7 +70,7 @@ Note:
 
 Let's protect this virtual machine with the "Gold" SLA Domain. To do this, use the following command:
 
-``Protect-RubrikVM -VM "Name" -SLA "Gold"``
+``Get-RubrikVM -VM "Name" | Protect-RubrikVM -SLA "Gold"``
 
 Before the change is made, a prompt will appear asking you to confirm the change.
 
