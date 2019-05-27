@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.265'
+ModuleVersion = '4.0.0.267'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -169,3 +169,4 @@ PrivateData = @{
 # DefaultCommandPrefix = ''
 
 }
+
