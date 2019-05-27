@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+=======
+
+## 2019-05-27
+
+### Changed [Added functionality]
+
+* Added -name parameter to Get-RubrikOrganization
+
 ## 2019-05-24
 
 ### Changed [Resolving issues]
