@@ -13,8 +13,8 @@ Get information on NAS shares.
 ## SYNTAX
 
 ```
-Get-RubrikNASShare [[-ID] <String>] [[-HostID] <String>] [[-ShareType] <String>] [[-HostName] <String>]
- [[-exportPoint] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikNASShare [-ID <String>] [-HostID <String>] [-ShareType <String>] [-HostName <String>]
+ [-exportPoint <String>] [-Server <String>] [-PrimaryClusterID <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,7 +47,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -62,7 +62,7 @@ Parameter Sets: (All)
 Aliases: host_id
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -77,7 +77,7 @@ Parameter Sets: (All)
 Aliases: share_type
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -92,7 +92,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -107,7 +107,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -122,8 +122,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: $global:RubrikConnection.server
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PrimaryClusterID
+Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
+Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: primary_cluster_id
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -137,7 +153,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
