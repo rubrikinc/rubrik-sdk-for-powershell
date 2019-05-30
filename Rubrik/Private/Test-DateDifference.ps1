@@ -34,7 +34,7 @@
     if ($datematrix.value -eq 0) { break }
   }
   
-  If ($datematrix.date -ne $null) {
+  If ($null -ne $datematrix.date) {
     Write-Verbose -Message "Using date $($datematrix.date)"
   }
   else {
