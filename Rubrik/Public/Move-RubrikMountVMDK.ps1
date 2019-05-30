@@ -95,6 +95,18 @@ function Move-RubrikMountVMDK
         Write-Verbose -Message 'No date entered. Taking current time.'
         $Date = Get-Date
       }
+      else {
+        # Strip training Z from $Date. Using a date directly from an API response will cause PowerShell to create an inaccurate datetime object
+        $Date = $Date.TrimEnd("Z")
+
+        # Validate provided date
+        try {
+          $Date = [datetime]$Date          
+        }
+        catch {
+          throw "Invalid Date"
+        }
+      }
 
       Write-Verbose -Message "Validating Source and Target VMs"
       if($SourceVM -and !$SourceVMID){
@@ -111,7 +123,7 @@ function Move-RubrikMountVMDK
       if(!$HostID){
         throw "$targetvm is invalid."
       }
-      Write-Verbose -Message "Creating a powered off Live Mount of $SourceVMID)"
+      Write-Verbose -Message "Creating a powered off Live Mount of $SourceVMID"
       $mount = Get-RubrikSnapshot -id $SourceVMID -Date $Date | New-RubrikMount -HostID $HostID
       
       if(-not $mount) {throw 'No mounts were created. Check that you have declared a valid VM.'}
@@ -119,12 +131,12 @@ function Move-RubrikMountVMDK
       Write-Verbose -Message "Waiting for request $($mount.id) to complete"
       while ((Get-RubrikRequest -ID $mount.id -Type "vmware/vm").status -ne 'SUCCEEDED')
       {
-        Start-Sleep -Seconds 1
+        Start-Sleep -Seconds 5
       }
     
       Write-Verbose -Message 'Live Mount is now available'
       Write-Verbose -Message 'Gathering Live Mount ID value'
-      
+
       foreach ($link in ((Get-RubrikRequest -ID $mount.id -Type "vmware/vm").links))
       {
         # There are two links - the request (self) and result
@@ -133,11 +145,12 @@ function Move-RubrikMountVMDK
         {
           # We just want the very last part of the link, which contains the ID value
           $MountID = $link.href.Split('/')[-1]
+          Write-Verbose -Message "Found Live Mount ID $MountID"
         }
       }
 
-      Write-Verbose -Message 'Gathering details on the Live Mount'
-      $MountVM = Get-RubrikVM -id (Get-RubrikMount -id $MountID).mountedVmId -PrimaryClusterID local
+      Write-Verbose -Message "Gathering details on Live Mount ID $MountID"
+      $MountVM = Get-RubrikVM -id (Get-RubrikMount -id $MountID).mountedVmId
       
       Write-Verbose -Message 'Migrating the Mount VMDKs to VM'
       if ($PSCmdlet.ShouldProcess($TargetVM,'Migrating Live Mount VMDK(s)'))
