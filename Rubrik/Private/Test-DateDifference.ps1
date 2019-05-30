@@ -23,7 +23,7 @@
     # Should we find a value that is less than the existing winning value, store it
     # Note: 0 would be a perfect match (e.g. 0 days different between what we found and what the user wants in $compare)
     # Note: Negative values indicate a future (e.g. supply yesterday for $compare but finding a $date from today)
-    # Absolute values are used so negatives are igored and we find the closest actual match. 
+    # Absolute values are used so negatives are ignored and we find the closest actual match. 
     if ([Math]::Abs($c) -lt $datematrix.value)
     {
       $datematrix.date = $_
