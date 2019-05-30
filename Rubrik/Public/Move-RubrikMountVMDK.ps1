@@ -71,7 +71,7 @@ function Move-RubrikMountVMDK
     # The path to a cleanup file to remove the live mount and presented disks
     # The cleanup file is created each time the command is run and stored in the $HOME path as a text file with a random number value
     # The file contains the TargetVM name, MountID value, and a list of all presented disks
-    [Parameter(ParameterSetName = 'Destroy')]    
+    [Parameter(ParameterSetName = 'Destroy')]
     [String]$Cleanup,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -101,7 +101,7 @@ function Move-RubrikMountVMDK
 
         # Validate provided date
         try {
-          $Date = [datetime]$Date          
+          $Date = [datetime]$Date
         }
         catch {
           throw "Invalid Date"
@@ -187,11 +187,15 @@ function Move-RubrikMountVMDK
       $MountID | Out-File -FilePath $Diskfile -Encoding utf8 -Append -Force      
       $MountedVMdiskFileNames | Out-File -FilePath $Diskfile -Encoding utf8 -Append -Force
       
-      # Return information needed to cleanup the mounted disks and Live Mount      
-      $response = @{}
-      $response.Add('Status','Success')
-      $response.add('CleanupFile',$Diskfile)
-      $response.Add('Example',"Move-RubrikMountVMDK -Cleanup `'$Diskfile`'")
+      # Return information needed to cleanup the mounted disks and Live Mount
+      $response = [pscustomobject]@{
+        'Status' = 'Success'
+        'CleanupFile' = $Diskfile
+        'TargetVM' = $TargetVM
+        'MountID' = $MountID
+        'MountedVMdiskFileNames' = $MountedVMdiskFileNames
+        'Example' = "Move-RubrikMountVMDK -Cleanup '$Diskfile'"
+      }
       return $response
     }
 
@@ -202,7 +206,7 @@ function Move-RubrikMountVMDK
         throw 'File does not exist'
       }
       $TargetVM = (Get-Content -Path $Cleanup -Encoding UTF8)[0]
-      $MountID = (Get-Content -Path $Cleanup -Encoding UTF8)[1]      
+      $MountID = (Get-Content -Path $Cleanup -Encoding UTF8)[1]
       $MountedVMdiskFileNames = (Get-Content -Path $Cleanup -Encoding UTF8) | Select-Object -Skip 2
       Write-Verbose -Message 'Removing disks from the VM'
       [array]$SourceVMdisk = Get-HardDisk $TargetVM
