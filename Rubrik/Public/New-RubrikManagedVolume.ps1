@@ -26,6 +26,12 @@ function New-RubrikManagedVolume
       New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -Subnet 172.21.10.0/23
 
       Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, on the 172.21.10.0/23 subnet
+
+      .EXAMPLE
+      New-RubrikManagedVolume -Name foo -Channels 2-VolumeSize (500 * 1GB) -ApplicationTag "PostgreSql"
+
+      Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, configured for PostreSQL backups
+      Valid ApplicationTag values are 'Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', and 'RecoverX'
   #>
 
   [CmdletBinding()]
@@ -41,6 +47,9 @@ function New-RubrikManagedVolume
     [String]$Subnet,
     #Size of the Managed Volume in Bytes
     [int64]$VolumeSize,
+    #Application whose data will be stored in managed volume
+    [ValidateSet('Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', 'RecoverX')]
+    [string]$applicationTag,
     #Export config, such as host hints and host name patterns
     [PSCustomObject[]]$exportConfig,
     # Rubrik server IP or FQDN
