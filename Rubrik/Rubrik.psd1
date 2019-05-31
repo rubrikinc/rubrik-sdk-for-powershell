@@ -84,7 +84,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikSupportTunnel', 'Get-RubrikUnmanagedObject', 
                'Get-RubrikVCenter', 'Get-RubrikVersion', 'Get-RubrikVM', 
                'Get-RubrikVMSnapshot', 'Get-RubrikVolumeGroup', 
-               'Get-RubrikVolumeGroupMount', 'Invoke-RubrikRESTCall', 
+               'Get-RubrikVolumeGroupMount', 'Install-RubrikVolumeFilterDriver', 'Invoke-RubrikRESTCall', 
                'Move-RubrikMountVMDK', 'New-RubrikDatabaseMount', 
                'New-RubrikFileset', 'New-RubrikFilesetTemplate', 'New-RubrikHost', 
                'New-RubrikLDAP', 'New-RubrikLogBackup', 'New-RubrikLogShipping', 
