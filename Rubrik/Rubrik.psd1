@@ -84,7 +84,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikSupportTunnel', 'Get-RubrikUnmanagedObject', 
                'Get-RubrikVCenter', 'Get-RubrikVersion', 'Get-RubrikVM', 
                'Get-RubrikVMSnapshot', 'Get-RubrikVolumeGroup', 
-               'Get-RubrikVolumeGroupMount', 'Install-RubrikVolumeFilterDriver', 'Invoke-RubrikRESTCall', 
+               'Get-RubrikVolumeGroupMount', 'Invoke-RubrikRESTCall', 
                'Move-RubrikMountVMDK', 'New-RubrikDatabaseMount', 
                'New-RubrikFileset', 'New-RubrikFilesetTemplate', 'New-RubrikHost', 
                'New-RubrikLDAP', 'New-RubrikLogBackup', 'New-RubrikLogShipping', 
@@ -106,7 +106,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Set-RubrikLogShipping', 'Set-RubrikManagedVolume', 'Set-RubrikMount', 
                'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikSetting', 
                'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel', 
-               'Set-RubrikVCenter', 'Set-RubrikVM', 
+               'Set-RubrikVCenter', 'Set-RubrikVM', 'Set-RubrikVolumeFilterDriver', 
                'Start-RubrikManagedVolumeSnapshot', 
                'Stop-RubrikManagedVolumeSnapshot', 'Sync-RubrikAnnotation', 
                'Sync-RubrikTag', 'Update-RubrikHost', 'Update-RubrikVCenter')

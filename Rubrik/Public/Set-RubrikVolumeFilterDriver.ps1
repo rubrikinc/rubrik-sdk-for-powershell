@@ -1,12 +1,12 @@
 #requires -Version 3
-function Install-RubrikVolumeFilterDriver
+function Set-RubrikVolumeFilterDriver
 {
   <#  
       .SYNOPSIS
-      Installs the Rubrik Volume Filter Driver on a registered Windows host.
+      Used to Install or Uninstall the Rubrik Volume Filter Driver on a registered Windows host.
 
       .DESCRIPTION
-      The Install-RubrikVolumeFilterDriver installs the Rubrik Volume Filter Driver on a host registered to a Rubrik cluster
+      The Set-RubrikVolumeFilterDriver either installs or uninstalls the Rubrik Volume Filter Driver on a host registered to a Rubrik cluster
 
       .NOTES
       Written by Mike Preston for community usage
@@ -26,7 +26,7 @@ function Install-RubrikVolumeFilterDriver
   Param(
     # Rubrik's host id value
     [Parameter(ValueFromPipelineByPropertyName = $true)]
-    [String]$hostIds,
+    [String[]]$hostIds,
     # Whether to install or uninstall the VFD
     [Boolean]$install,
     # Rubrik server IP or FQDN
@@ -58,9 +58,6 @@ function Install-RubrikVolumeFilterDriver
   Process {
 
     #region One-off
-    if($SLA){
-      $SLAID = Test-RubrikSLA $SLA
-    }
     #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id

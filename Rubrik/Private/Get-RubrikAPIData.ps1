@@ -707,22 +707,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }
-        'Install-RubrikVolumeFilterDriver'      = @{
-            '5.0' = @{
-                Description = 'Installs the Rubrik Volume Filter Driver'
-                URI         = '/api/internal/host/bulk/volume_filter_driver'
-                Method      = 'Post'
-                Body        = @{
-                    hostIds = @('hostIds')
-                    install = 'install'
-                }
-                Query       = ''
-                Result      = ''
-                Filter      = ''
-                Success     = '200'
-            }
-        }    
+        } 
         'New-RubrikVCenter'      = @{
             '1.0' = @{
                 Description = 'Create VMware vCenter connection'
@@ -1600,6 +1585,21 @@ function Get-RubrikAPIData($endpoint) {
                     hostname = "hostname"
                     username = "username"
                     password = "password"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        } 
+        'Set-RubrikVolumeFilterDriver'      = @{
+            '5.0' = @{
+                Description = 'Installs or Uninstalls the Rubrik Volume Filter Driver'
+                URI         = '/api/internal/host/bulk/volume_filter_driver'
+                Method      = 'Post'
+                Body        = @{
+                    hostIds = 'hostIds'
+                    install = 'install'
                 }
                 Query       = ''
                 Result      = ''
