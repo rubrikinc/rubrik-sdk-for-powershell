@@ -39,7 +39,7 @@ Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (50
 
 ### EXAMPLE 3
 ```
-New-RubrikManagedVolume -Name foo -Channels 2-VolumeSize (500 * 1GB) -ApplicationTag "PostgreSql"
+New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -ApplicationTag "PostgreSql"
 ```
 
 Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, configured for PostreSQL backups
