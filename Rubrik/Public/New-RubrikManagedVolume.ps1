@@ -28,7 +28,7 @@ function New-RubrikManagedVolume
       Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, on the 172.21.10.0/23 subnet
 
       .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 2-VolumeSize (500 * 1GB) -ApplicationTag "PostgreSql"
+      New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -ApplicationTag "PostgreSql"
 
       Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, configured for PostreSQL backups
       Valid ApplicationTag values are 'Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', and 'RecoverX'
