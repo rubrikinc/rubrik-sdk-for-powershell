@@ -31,7 +31,12 @@ function Get-RubrikHost
       .EXAMPLE
       Get-RubrikHost -id 'Host:::111111-2222-3333-4444-555555555555'
       This will return details specifically for the host id matching "Host:::111111-2222-3333-4444-555555555555"
-  #>
+  
+      .EXAMPLE
+      Get-RubrikHost -Name myserver01 -DetailedObject
+      This will return the Host object with all properties, including additional details such as information around the Volume Filter Driver if applicable. Using this switch parameter may negatively affect performance
+  
+      #>
 
   [CmdletBinding()]
   Param(

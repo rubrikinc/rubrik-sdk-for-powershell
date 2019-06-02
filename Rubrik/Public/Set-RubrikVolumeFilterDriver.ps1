@@ -14,11 +14,19 @@ function Set-RubrikVolumeFilterDriver
       GitHub: mwpreston
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Install-RubrikVolumeFilterDriver.html
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikVolumeFilterDriver.html
 
       .EXAMPLE
+      Set-RubrikVolumeFilterDriver -hostIds 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443' -installed $true
+      This will install the Volume Filter Driver on the host with an id of Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443
       
-      Finish!
+      .EXAMPLE
+      Get-RubrikHost -Name server01 -DetailedObject | ForEach-Object { Set-RubrikVolumeFilterDriver -hostIds 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443' -installed $false
+      This will remove the Volume Filter Driver on the host named server01
+      
+      .EXAMPLE
+      Set-RubrikVolumeFilterDriver -hostIds @('Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443','Host:::a1e1043c-f460-4ac1-a25a-e07b5eh45583') -installed $true
+      This will install the Volume Filter Driver on the specifed array of host ids
 
   #>
 
