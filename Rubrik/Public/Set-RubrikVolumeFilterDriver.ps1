@@ -28,7 +28,7 @@ function Set-RubrikVolumeFilterDriver
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String[]]$hostIds,
     # Whether to install or uninstall the VFD
-    [Boolean]$install,
+    [Boolean]$installed,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

@@ -47,6 +47,9 @@ function Get-RubrikHost
     [String]$PrimaryClusterID,
     # ID of the registered host
     [String]$id,
+    # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Parameter(ParameterSetName='Query')]
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -81,8 +84,17 @@ function Get-RubrikHost
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-
-    return $result
+    $resultcount = ($result | measure-object).Count
+    # If the Get-RubrikHost function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt $resultcount; $i++) {
+        $Percentage = [int]($i/$resultcount)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $($resultcount)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        Get-RubrikHost -id $result[$i].id
+      }
+    } else {
+      return $result
+    }
 
   } # End of process
 } # End of function

@@ -1599,7 +1599,7 @@ function Get-RubrikAPIData($endpoint) {
                 Method      = 'Post'
                 Body        = @{
                     hostIds = 'hostIds'
-                    install = 'install'
+                    installed = 'installed'
                 }
                 Query       = ''
                 Result      = ''
