@@ -13,7 +13,8 @@ function New-RubrikVMDKMount
       Twitter: @PierreFlammer
       
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/      .PARAMETER
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      .PARAMETER
       ATTENTION: Names have to match the names configured in Rubrik!!!
       SnapshotID: ID of the Rubrik snaphot of the source VM
       TargetVM: Name of the VM where the VMDK(s) will be mounted
