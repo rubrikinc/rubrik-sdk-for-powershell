@@ -70,11 +70,20 @@ function New-RubrikVMDKMount
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $SourceSnapshot.id
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $snapshotid
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
         
     $TargetID = Get-RubrikVM -name $TargetVM
-    $TargetID = $TargetID.id
+    if ($TargetID.count -gt 1) {
+        # Found more than one VM with the target name
+        "Found multiple VMs with name " + $TargetVM + ". Please select the one to use." | Out-Host
+        "--------------------------------" | Out-Host
+        $TargetID.id  | ForEach-Object -Begin {$i=0} -Process {"VM $i - $($_)";$i++} | Out-Host
+        $selection = Read-Host 'Enter ID of selected VM'
+        $TargetID = $TargetID[$selection].id
+    } else {
+        $TargetID = $TargetID.id
+    }
 
     Write-Verbose -Message "Build the body"
 
@@ -105,9 +114,6 @@ function New-RubrikVMDKMount
     $body = ConvertTo-Json $body
     Write-Verbose -Message "Body = $body"
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $snapshotid
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

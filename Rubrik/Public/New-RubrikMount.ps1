@@ -49,9 +49,9 @@ function New-RubrikMount
     # Whether the network should be disabled on mount.This should be set true to avoid ip conflict in case of static IPs. 
     [Bool]$DisableNetwork,
     # Whether the network devices should be removed on mount.
-    [Switch]$RemoveNetworkDevices,
+    [Bool]$RemoveNetworkDevices,
     # Whether the VM should be powered on after mount.
-    [Switch]$PowerOn,
+    [Bool]$PowerOn,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
