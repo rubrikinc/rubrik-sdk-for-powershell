@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikVM.html
 schema: 2.0.0
 ---
 
@@ -13,9 +13,9 @@ Applies settings on one or more virtual machines known to a Rubrik cluster
 ## SYNTAX
 
 ```
-Set-RubrikVM [-id] <String> [[-SnapConsistency] <String>] [[-MaxNestedSnapshots] <Int32>]
- [[-PauseBackups] <Boolean>] [[-UseArrayIntegration] <Boolean>] [[-Server] <String>] [[-api] <String>]
- [-WhatIf] [-Confirm]
+Set-RubrikVM [-id] <String> [[-SnapConsistency] <String>] [[-cloudInstantiationSpec] <Hashtable>]
+ [[-MaxNestedSnapshots] <Int32>] [[-PauseBackups] <Boolean>] [[-UseArrayIntegration] <Boolean>]
+ [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,14 +23,14 @@ The Set-RubrikVM cmdlet is used to apply updated settings from a Rubrik cluster 
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups
 ```
 
 This will pause backups on any virtual machine named "Server1"
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-RubrikVM -SLA Platinum | Set-RubrikVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 -UseArrayIntegration
 ```
@@ -46,7 +46,7 @@ Virtual machine ID
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -70,6 +70,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -cloudInstantiationSpec
+Raw Cloud Instantiation spec
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -MaxNestedSnapshots
 The number of existing virtual machine snapshots allowed by Rubrik.
 Choices range from 0 - 4 snapshots.
@@ -80,7 +95,7 @@ Parameter Sets: (All)
 Aliases: maxNestedVsphereSnapshots
 
 Required: False
-Position: 3
+Position: 4
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -95,7 +110,7 @@ Parameter Sets: (All)
 Aliases: isVmPaused
 
 Required: False
-Position: 4
+Position: 5
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -111,7 +126,7 @@ Parameter Sets: (All)
 Aliases: isArrayIntegrationEnabled
 
 Required: False
-Position: 5
+Position: 6
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -123,10 +138,10 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -138,10 +153,10 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -178,6 +193,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -189,5 +207,5 @@ GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikVM.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikVM.html)
 

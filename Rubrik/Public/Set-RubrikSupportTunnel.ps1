@@ -15,7 +15,7 @@ function Set-RubrikSupportTunnel
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Set-RubrikSupportTunnel -EnableTunnel $false

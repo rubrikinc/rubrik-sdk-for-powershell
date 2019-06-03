@@ -18,7 +18,7 @@ function Protect-RubrikFileset
       GitHub: chriswahl
             
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikFileset.html
             
       .EXAMPLE
       Get-RubrikFileset 'C_Drive' | Protect-RubrikFileset -SLA 'Gold'

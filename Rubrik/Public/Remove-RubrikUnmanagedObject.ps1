@@ -15,7 +15,7 @@ function Remove-RubrikUnmanagedObject
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikUnmanagedObject.html
 
       .EXAMPLE
       Get-RubrikUnmanagedObject | Remove-RubrikUnmanagedObject

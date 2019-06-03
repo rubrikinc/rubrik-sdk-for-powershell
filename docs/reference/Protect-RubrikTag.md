@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikTag.html
 schema: 2.0.0
 ---
 
@@ -15,19 +15,19 @@ Connects to Rubrik and assigns an SLA Domain based on a vSphere category and tag
 ### SLA_Explicit
 ```
 Protect-RubrikTag -Tag <String> -Category <String> [-SLA <String>] [-Server <String>] [-api <String>] [-WhatIf]
- [-Confirm]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ### SLA_Unprotected
 ```
 Protect-RubrikTag -Tag <String> -Category <String> [-DoNotProtect] [-Server <String>] [-api <String>] [-WhatIf]
- [-Confirm]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ### SLA_Inherit
 ```
 Protect-RubrikTag -Tag <String> -Category <String> [-Inherit] [-Server <String>] [-api <String>] [-WhatIf]
- [-Confirm]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -37,28 +37,28 @@ Make sure you have PowerCLI installed and connect to the required vCenter Server
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -SLA 'Gold'
 ```
 
 This will assign the Gold SLA Domain to any VM tagged with Gold in the Rubrik category
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -SLA 'Titanium'
 ```
 
 This will assign the Titanium SLA Domain to any VM tagged with Gold in the Rubrik category
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -DoNotProtect
 ```
 
 This will remove protection from any VM tagged with Gold in the Rubrik category
 
-### -------------------------- EXAMPLE 4 --------------------------
+### EXAMPLE 4
 ```
 Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -Inherit
 ```
@@ -73,7 +73,7 @@ vSphere Tag
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -88,7 +88,7 @@ vSphere Tag Category
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -103,7 +103,7 @@ The SLA Domain in Rubrik
 ```yaml
 Type: String
 Parameter Sets: SLA_Explicit
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -118,7 +118,7 @@ Removes the SLA Domain assignment
 ```yaml
 Type: SwitchParameter
 Parameter Sets: SLA_Unprotected
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -133,7 +133,7 @@ Inherits the SLA Domain assignment from a parent object
 ```yaml
 Type: SwitchParameter
 Parameter Sets: SLA_Inherit
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -148,7 +148,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -163,7 +163,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -203,6 +203,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -213,5 +216,5 @@ Twitter: @jasonburrell2
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikTag.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikTag.html)
 

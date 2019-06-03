@@ -16,7 +16,7 @@ function Get-RubrikSnapshot
       GitHub: chriswahl
       
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSnapshot.html
       
       .EXAMPLE
       Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'

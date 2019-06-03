@@ -15,7 +15,7 @@ function Disconnect-Rubrik
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Disconnect-Rubrik.html
 
       .EXAMPLE
       Disconnect-Rubrik -Confirm:$false

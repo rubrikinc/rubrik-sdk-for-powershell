@@ -14,7 +14,7 @@ function Get-RubrikSQLInstance
       GitHub: MikeFal
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Get-RubrikSQLInstance -Name MSSQLSERVER

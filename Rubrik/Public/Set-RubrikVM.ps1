@@ -14,7 +14,7 @@ function Set-RubrikVM
             GitHub: chriswahl
 
             .LINK
-            https://github.com/rubrikinc/PowerShell-Module
+            http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikVM.html
 
             .EXAMPLE
             Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups

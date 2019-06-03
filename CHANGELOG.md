@@ -22,12 +22,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Resolved bug in New-RubrikVMDKMount, thanks @Pierre-PvF
 
-## 2019-05-31 
+## 2019-05-31
 
 ### Added [New-RubrikManagedVolume update]
 
 * Added `-ApplicationTag` parameter support to New-RubrikManagedVolume so users can specify which application the managed volume will be used for. This addresses issue [285](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/285).
-
 
 ## 2019-05-30
 

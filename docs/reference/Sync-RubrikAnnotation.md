@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Sync-RubrikAnnotation.html
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Applies Rubrik SLA Domain information to VM Annotations using the Custom Attribu
 
 ```
 Sync-RubrikAnnotation [[-SLA] <String>] [[-SLAAnnotationName] <String>] [[-BackupAnnotationName] <String>]
- [-Server <String>] [-api <String>]
+ [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +26,7 @@ Keep in mind that this only displays in the VMware vSphere Thick (C#) client, wh
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Sync-RubrikAnnotation
 ```
@@ -34,7 +34,7 @@ Sync-RubrikAnnotation
 This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count annotations
 using the defaults of "Rubrik_SLA" and "Rubrik_Backups" respectively.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Sync-RubrikAnnotation -SLA Silver
 ```
@@ -42,7 +42,7 @@ Sync-RubrikAnnotation -SLA Silver
 This will find all VMs being protected with a Rubrik SLA Domain Name of "Silver" and update their SLA and snapshot count annotations
 using the defaults of "Rubrik_SLA" and "Rubrik_Backups" respectively.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Sync-RubrikAnnotation -SLAAnnotationName 'Backup-Policy' -BackupAnnotationName 'Backup-Snapshots'
 ```
@@ -59,7 +59,7 @@ By default, all SLA Domain Names will be collected when this parameter is not us
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -75,7 +75,7 @@ By default, will use "Rubrik_SLA"
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -91,7 +91,7 @@ By default, will use "Rubrik_Backups"
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -106,7 +106,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +121,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -129,6 +129,9 @@ Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -141,5 +144,5 @@ GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Sync-RubrikAnnotation.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Sync-RubrikAnnotation.html)
 

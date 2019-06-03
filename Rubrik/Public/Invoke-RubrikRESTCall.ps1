@@ -17,7 +17,7 @@ function Invoke-RubrikRESTCall {
       GitHub: mikefal
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Invoke-RubrikRESTCall.html
 
       .EXAMPLE
       Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET
@@ -25,7 +25,7 @@ function Invoke-RubrikRESTCall {
       Retrieve the raw output for all VMWare VMs being managed by the Rubrik device.
 
       .EXAMPLE
-      Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query (New-Object -TypeName PSObject -Property @{'name'='msf-sql2016'})
+      Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query @{'name'='msf-sql2016'}
 
       Retrieve the raw output for the VMWare VM msf-sql2016 using a query parameter.
 

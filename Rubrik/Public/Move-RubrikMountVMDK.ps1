@@ -14,7 +14,7 @@ function Move-RubrikMountVMDK
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Move-RubrikMountVMDK.html
 
       .EXAMPLE
       Move-RubrikMountVMDK -SourceVMID (Get-RubrikVM -Name 'SourceVM').id -TargetVM 'TargetVM'
@@ -71,7 +71,7 @@ function Move-RubrikMountVMDK
     # The path to a cleanup file to remove the live mount and presented disks
     # The cleanup file is created each time the command is run and stored in the $HOME path as a text file with a random number value
     # The file contains the TargetVM name, MountID value, and a list of all presented disks
-    [Parameter(ParameterSetName = 'Destroy')]    
+    [Parameter(ParameterSetName = 'Destroy')]
     [String]$Cleanup,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -95,6 +95,18 @@ function Move-RubrikMountVMDK
         Write-Verbose -Message 'No date entered. Taking current time.'
         $Date = Get-Date
       }
+      else {
+        # Strip training Z from $Date. Using a date directly from an API response will cause PowerShell to create an inaccurate datetime object
+        $Date = $Date.TrimEnd("Z")
+
+        # Validate provided date
+        try {
+          $Date = [datetime]$Date
+        }
+        catch {
+          throw "Invalid Date"
+        }
+      }
 
       Write-Verbose -Message "Validating Source and Target VMs"
       if($SourceVM -and !$SourceVMID){
@@ -111,7 +123,7 @@ function Move-RubrikMountVMDK
       if(!$HostID){
         throw "$targetvm is invalid."
       }
-      Write-Verbose -Message "Creating a powered off Live Mount of $SourceVMID)"
+      Write-Verbose -Message "Creating a powered off Live Mount of $SourceVMID"
       $mount = Get-RubrikSnapshot -id $SourceVMID -Date $Date | New-RubrikMount -HostID $HostID
       
       if(-not $mount) {throw 'No mounts were created. Check that you have declared a valid VM.'}
@@ -119,12 +131,12 @@ function Move-RubrikMountVMDK
       Write-Verbose -Message "Waiting for request $($mount.id) to complete"
       while ((Get-RubrikRequest -ID $mount.id -Type "vmware/vm").status -ne 'SUCCEEDED')
       {
-        Start-Sleep -Seconds 1
+        Start-Sleep -Seconds 5
       }
     
       Write-Verbose -Message 'Live Mount is now available'
       Write-Verbose -Message 'Gathering Live Mount ID value'
-      
+
       foreach ($link in ((Get-RubrikRequest -ID $mount.id -Type "vmware/vm").links))
       {
         # There are two links - the request (self) and result
@@ -133,11 +145,12 @@ function Move-RubrikMountVMDK
         {
           # We just want the very last part of the link, which contains the ID value
           $MountID = $link.href.Split('/')[-1]
+          Write-Verbose -Message "Found Live Mount ID $MountID"
         }
       }
 
-      Write-Verbose -Message 'Gathering details on the Live Mount'
-      $MountVM = Get-RubrikVM -id (Get-RubrikMount -id $MountID).mountedVmId -PrimaryClusterID local
+      Write-Verbose -Message "Gathering details on Live Mount ID $MountID"
+      $MountVM = Get-RubrikVM -id (Get-RubrikMount -id $MountID).mountedVmId
       
       Write-Verbose -Message 'Migrating the Mount VMDKs to VM'
       if ($PSCmdlet.ShouldProcess($TargetVM,'Migrating Live Mount VMDK(s)'))
@@ -174,11 +187,15 @@ function Move-RubrikMountVMDK
       $MountID | Out-File -FilePath $Diskfile -Encoding utf8 -Append -Force      
       $MountedVMdiskFileNames | Out-File -FilePath $Diskfile -Encoding utf8 -Append -Force
       
-      # Return information needed to cleanup the mounted disks and Live Mount      
-      $response = @{}
-      $response.Add('Status','Success')
-      $response.add('CleanupFile',$Diskfile)
-      $response.Add('Example',"Move-RubrikMountVMDK -Cleanup `'$Diskfile`'")
+      # Return information needed to cleanup the mounted disks and Live Mount
+      $response = [pscustomobject]@{
+        'Status' = 'Success'
+        'CleanupFile' = $Diskfile
+        'TargetVM' = $TargetVM
+        'MountID' = $MountID
+        'MountedVMdiskFileNames' = $MountedVMdiskFileNames
+        'Example' = "Move-RubrikMountVMDK -Cleanup '$Diskfile'"
+      }
       return $response
     }
 
@@ -189,7 +206,7 @@ function Move-RubrikMountVMDK
         throw 'File does not exist'
       }
       $TargetVM = (Get-Content -Path $Cleanup -Encoding UTF8)[0]
-      $MountID = (Get-Content -Path $Cleanup -Encoding UTF8)[1]      
+      $MountID = (Get-Content -Path $Cleanup -Encoding UTF8)[1]
       $MountedVMdiskFileNames = (Get-Content -Path $Cleanup -Encoding UTF8) | Select-Object -Skip 2
       Write-Verbose -Message 'Removing disks from the VM'
       [array]$SourceVMdisk = Get-HardDisk $TargetVM

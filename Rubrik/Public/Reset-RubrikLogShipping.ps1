@@ -3,10 +3,10 @@ function Reset-RubrikLogShipping
 {
   <#  
       .SYNOPSIS
-      Reseed a secondady database
+      Reseed a secondary database
 
       .DESCRIPTION
-      Reseed a secondady database
+      Reseed a secondary database
 
       .NOTES
       Written by Chris Lumnah 
@@ -15,7 +15,7 @@ function Reset-RubrikLogShipping
       
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Get-RubrikLogShipping -PrimaryDatabaseName 'AthenaAM1-SQL16-1-2016' -SecondaryDatabaseName 'AthenaAM1-SQL16-1-2016' | Reset-RubrikLogShipping -state STANDBY -DisconnectStandbyUsers

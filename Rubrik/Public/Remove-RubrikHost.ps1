@@ -14,7 +14,7 @@ function Remove-RubrikHost
       GitHub: chriswahl
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikHost.html
 
       .EXAMPLE
       Get-RubrikHost -Name 'Server1.example.com' | Remove-RubrikHost

@@ -14,7 +14,7 @@ function Get-RubrikAPIVersion
       GitHub: chriswahl
             
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikAPIVersion.html
             
       .EXAMPLE
       Get-RubrikAPIVersion -Server 192.168.1.100

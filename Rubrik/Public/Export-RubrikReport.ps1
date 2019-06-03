@@ -14,7 +14,7 @@ function Export-RubrikReport
       GitHub: basvinken
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Export-RubrikReport.html
 
       .EXAMPLE
       Export-RubrikReport -id '11111111-2222-3333-4444-555555555555' -timezone_offset 120
