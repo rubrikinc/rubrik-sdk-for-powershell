@@ -891,6 +891,7 @@ function Get-RubrikAPIData($endpoint) {
                     numChannels = 'numChannels'
                     subnet = 'subnet'
                     volumeSize =  'volumeSize'
+                    applicationTag = 'applicationTag'
                 }
                 Query       = ''
                 Result      = ''
