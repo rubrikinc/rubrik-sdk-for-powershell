@@ -14,6 +14,7 @@ function New-RubrikVMDKMount
       
       .LINK
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+
       .PARAMETER
       ATTENTION: Names have to match the names configured in Rubrik!!!
       SnapshotID: ID of the Rubrik snaphot of the source VM
@@ -21,6 +22,7 @@ function New-RubrikVMDKMount
       AllDisks: If this parameter is used all VMDKs will be mounted to the target VM. 
                 If one has to enter a number and select one VMDK.
       VLAN: Specify the VLAN number
+
       .EXAMPLE
       New-RubrikVMDKMount -snapshotid 'cc1b363a-a0d4-40b7-9b09-7b8f3a805b27' -TargetVM 'VM2' 
       
@@ -72,7 +74,16 @@ function New-RubrikVMDKMount
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
         
     $TargetID = Get-RubrikVM -name $TargetVM
-    $TargetID = $TargetID.id
+    if ($TargetID.count -gt 1) {
+        # Found more than one VM with the target name
+        "Found multiple VMs with name " + $TargetVM + ". Please select the one to use." | Out-Host
+        "--------------------------------" | Out-Host
+        $TargetID.id  | ForEach-Object -Begin {$i=0} -Process {"VM $i - $($_)";$i++} | Out-Host
+        $selection = Read-Host 'Enter ID of selected VM'
+        $TargetID = $TargetID[$selection].id
+    } else {
+        $TargetID = $TargetID.id
+    }
 
     Write-Verbose -Message "Build the body"
 
