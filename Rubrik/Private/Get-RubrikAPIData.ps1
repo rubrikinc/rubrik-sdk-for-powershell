@@ -64,6 +64,27 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Export-RubrikVM'        = @{
+            '1.0' = @{
+                Description = 'Export a VMware VM to an existing vSphere environment'
+                URI         = '/api/v1/vmware/vm/snapshot/{id}/export'
+                Method      = 'Post'
+                Body        = @{
+                    vmName                  = 'vmName'
+                    disableNetwork          = 'disableNetwork'
+                    removeNetworkDevices    = 'removeNetworkDevices'
+                    powerOn                 = 'powerOn'
+                    hostId                  = 'hostId'
+                    datastoreId             = 'datastoreId'
+                    shouldRecoverTags       = 'shouldRecoverTags'
+                    keepMacAddresses        = 'keepMacAddresses'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Export-RubrikReport'          = @{
             '1.0' = @{
                 Description = 'Get the link to a CSV file for a report.'
