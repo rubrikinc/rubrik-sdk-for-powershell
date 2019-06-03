@@ -18,7 +18,7 @@ Remove-RubrikManagedVolume [-id] <String> [[-Server] <String>] [[-api] <String>]
 ```
 
 ## DESCRIPTION
-The Remove-RubrikManagedVolume cmdlet is used to delete a Managed Volume
+The Remove-RubrikManagedVolume cmdlet is used to dlete a Managed Volume
 
 ## EXAMPLES
 
@@ -28,7 +28,7 @@ Remove-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2d
 ```
 
 Remove the specified managed volume.
-All associated snapshots will become unmanaged objects.
+All associated snapshots will become unmaged objects.
 
 ## PARAMETERS
 

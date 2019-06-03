@@ -11119,6 +11119,18 @@
           <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>applicationTag</maml:name>
+          <maml:Description>
+            <maml:para>Application whose data will be stored in managed volume</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
           <maml:name>exportConfig</maml:name>
           <maml:Description>
             <maml:para>Export config, such as host hints and host name patterns</maml:para>
@@ -11130,7 +11142,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
           <maml:name>Server</maml:name>
           <maml:Description>
             <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -11142,7 +11154,7 @@
           </dev:type>
           <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
           <maml:name>api</maml:name>
           <maml:Description>
             <maml:para>API version</maml:para>
@@ -11206,6 +11218,18 @@
         <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>applicationTag</maml:name>
+        <maml:Description>
+          <maml:para>Application whose data will be stored in managed volume</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
         <maml:name>exportConfig</maml:name>
         <maml:Description>
           <maml:para>Export config, such as host hints and host name patterns</maml:para>
@@ -11217,7 +11241,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
         <maml:name>Server</maml:name>
         <maml:Description>
           <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -11229,7 +11253,7 @@
         </dev:type>
         <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
         <maml:name>api</maml:name>
         <maml:Description>
           <maml:para>API version</maml:para>
@@ -11262,6 +11286,13 @@
         <dev:code>New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -Subnet 172.21.10.0/23</dev:code>
         <dev:remarks>
           <maml:para>Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, on the 172.21.10.0/23 subnet</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -ApplicationTag "PostgreSql"</dev:code>
+        <dev:remarks>
+          <maml:para>Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, configured for PostreSQL backups Valid ApplicationTag values are 'Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', and 'RecoverX'</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

@@ -14,7 +14,8 @@ Creates a new Rubrik Managed Volume
 
 ```
 New-RubrikManagedVolume [-Name] <String> [-Channels] <Int32> [[-Subnet] <String>] [[-VolumeSize] <Int64>]
- [[-exportConfig] <PSObject[]>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+ [[-applicationTag] <String>] [[-exportConfig] <PSObject[]>] [[-Server] <String>] [[-api] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -107,7 +108,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ApplicationTag
+### -applicationTag
 Application whose data will be stored in managed volume
 
 ```yaml
