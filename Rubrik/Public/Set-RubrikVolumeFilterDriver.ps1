@@ -33,13 +33,14 @@ function Set-RubrikVolumeFilterDriver
    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik's host id value
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      ValueFromPipeline = $true,
+      ValueFromPipelineByPropertyName = $true)]
     [Alias('id')]
     [String[]]$hostId,
     # Whether to install or uninstall the VFD
     [Parameter(ParameterSetName='Install')]
-    [Alias('Install')]
-    [switch]$Installed,
+    [switch]$Install,
     [Parameter(ParameterSetName='Remove')]
     [switch]$Remove,
     # Rubrik server IP or FQDN
@@ -65,8 +66,15 @@ function Set-RubrikVolumeFilterDriver
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-
-    $Installed = $Installed -as [bool]
+    
+    # Update PSBoundParameters for correct processing for New-BodyString
+    if ($Install) {
+      $PSBoundParameters.Remove('Install')
+      $PSBoundParameters.Add('installed',$true)
+    } elseif ($Remove) {
+      $PSBoundParameters.Remove('Remove')
+      $PSBoundParameters.Add('installed',$false)
+    }
   }
 
   Process {
