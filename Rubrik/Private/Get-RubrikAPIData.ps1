@@ -642,7 +642,37 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        }        
+        } 
+        'Get-RubrikVMwareDatastore'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all datastores known to the Rubrik cluster'
+                URI         = '/api/internal/vmware/datastore'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{}
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+            }
+        }  
+        'Get-RubrikVMwareHost'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all ESXi hosts known to the Rubrik cluster'
+                URI         = '/api/v1/vmware/host'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+            }
+        }         
         'Get-RubrikVersion'            = @{
             '1.0' = @{
                 Description = 'Retrieve public information about the Rubrik cluster'
