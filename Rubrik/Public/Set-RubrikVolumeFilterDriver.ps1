@@ -17,15 +17,15 @@ function Set-RubrikVolumeFilterDriver
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikVolumeFilterDriver.html
 
       .EXAMPLE
-      Set-RubrikVolumeFilterDriver -hostId 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443' -Install
+      Set-RubrikVolumeFilterDriver -Id 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443' -Install
       This will install the Volume Filter Driver on the host with an id of Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443
       
       .EXAMPLE
-      Get-RubrikHost -Name server01 -DetailedObject | Set-RubrikVolumeFilterDriver -hostId 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443' -Remove
+      Get-RubrikHost -Name server01 -DetailedObject | Set-RubrikVolumeFilterDriver -Remove
       This will remove the Volume Filter Driver on the host named server01
       
       .EXAMPLE
-      Set-RubrikVolumeFilterDriver -hostId 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443','Host:::a1e1043c-f460-4ac1-a25a-e07b5eh45583' -Install
+      Set-RubrikVolumeFilterDriver -hostId Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443, Host:::a1e1043c-f460-4ac1-a25a-e07b5eh45583 -Install
       This will install the Volume Filter Driver on the specifed array of host ids
 
   #>
@@ -36,11 +36,12 @@ function Set-RubrikVolumeFilterDriver
     [Parameter(
       ValueFromPipeline = $true,
       ValueFromPipelineByPropertyName = $true)]
-    [Alias('id')]
-    [String[]]$hostId,
-    # Whether to install or uninstall the VFD
+    [Alias('hostid')]
+    [String[]]$id,
+    # Installs the volume filter driver
     [Parameter(ParameterSetName='Install')]
     [switch]$Install,
+    # Removes the volume filter driver if installed
     [Parameter(ParameterSetName='Remove')]
     [switch]$Remove,
     # Rubrik server IP or FQDN
@@ -69,10 +70,10 @@ function Set-RubrikVolumeFilterDriver
     
     # Update PSBoundParameters for correct processing for New-BodyString
     if ($Install) {
-      $PSBoundParameters.Remove('Install')
+      $PSBoundParameters.Remove('Install') | Out-Null
       $PSBoundParameters.Add('installed',$true)
     } elseif ($Remove) {
-      $PSBoundParameters.Remove('Remove')
+      $PSBoundParameters.Remove('Remove') | Out-Null
       $PSBoundParameters.Add('installed',$false)
     }
   }
@@ -84,9 +85,7 @@ function Set-RubrikVolumeFilterDriver
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    if ($PSCmdlet.ShouldProcess($TargetVM,'Setting ')) {
-      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    }
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
