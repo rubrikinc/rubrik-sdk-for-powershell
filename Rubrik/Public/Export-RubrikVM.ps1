@@ -46,10 +46,10 @@ function Export-RubrikVM
     # Whether the newly restored virtual machine is unregistered from vCenter. Default is false.
     [Bool]$UnregisterVM,
     # Whether the VM should be powered on after restoration. Default is true.
-    [bool]$PowerOn,
+    [Bool]$PowerOn,
     # Whether to recover vSphere tags
     [Alias('shouldRecoverTags')]
-    [bool]$RecoverTags,
+    [Bool]$RecoverTags,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
