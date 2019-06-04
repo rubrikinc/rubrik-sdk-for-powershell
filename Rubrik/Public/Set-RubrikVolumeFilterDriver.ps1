@@ -17,15 +17,15 @@ function Set-RubrikVolumeFilterDriver
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikVolumeFilterDriver.html
 
       .EXAMPLE
-      Set-RubrikVolumeFilterDriver -hostIds 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443' -installed $true
+      Set-RubrikVolumeFilterDriver -hostId 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443' -Install
       This will install the Volume Filter Driver on the host with an id of Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443
       
       .EXAMPLE
-      Get-RubrikHost -Name server01 -DetailedObject | ForEach-Object { Set-RubrikVolumeFilterDriver -hostIds 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443' -installed $false
+      Get-RubrikHost -Name server01 -DetailedObject | Set-RubrikVolumeFilterDriver -hostId 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443' -Remove
       This will remove the Volume Filter Driver on the host named server01
       
       .EXAMPLE
-      Set-RubrikVolumeFilterDriver -hostIds @('Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443','Host:::a1e1043c-f460-4ac1-a25a-e07b5eh45583') -installed $true
+      Set-RubrikVolumeFilterDriver -hostId 'Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443','Host:::a1e1043c-f460-4ac1-a25a-e07b5eh45583' -Install
       This will install the Volume Filter Driver on the specifed array of host ids
 
   #>
@@ -34,10 +34,14 @@ function Set-RubrikVolumeFilterDriver
   Param(
     # Rubrik's host id value
     [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Alias('id')]
     [String[]]$hostId,
     # Whether to install or uninstall the VFD
-    [Alias('install')]
-    [switch]$installed,
+    [Parameter(ParameterSetName='Install')]
+    [Alias('Install')]
+    [switch]$Installed,
+    [Parameter(ParameterSetName='Remove')]
+    [switch]$Remove,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -72,7 +76,7 @@ function Set-RubrikVolumeFilterDriver
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    if ($PSCmdlet.ShouldProcess($TargetVM,'Settings ')) {
+    if ($PSCmdlet.ShouldProcess($TargetVM,'Setting ')) {
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     }
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
