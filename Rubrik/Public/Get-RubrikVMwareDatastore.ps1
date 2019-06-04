@@ -23,12 +23,19 @@ function Get-RubrikVMwareDatastore
       .EXAMPLE
       Get-RubrikVMwareDatastore -Name 'vSAN'
       This will return a listing of all of the datastores named 'vSAN' known to a connected Rubrik cluster
+      
+      .EXAMPLE
+      Get-RubrikVMwareDatastore -DatastoreType 'NFS'
+      This will return a listing of all of the NFS datastores known to a connected Rubrik cluster
   #>
 
   [CmdletBinding()]
   Param(
     # Datastore Name
     [String]$Name,
+    # Filter Datastore type
+    [ValidateSet('VMFS', 'NFS','vSAN')]
+    [String]$DatastoreType,     
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

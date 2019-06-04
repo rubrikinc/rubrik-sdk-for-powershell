@@ -653,6 +653,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      =  @{
                     'Name' = 'name'
+                    'dataStoreType' = 'dataStoreType'
                 }
                 Success     = '200'
             }
