@@ -44,7 +44,7 @@ function Set-RubrikVolumeFilterDriver
     [Parameter(
       ValueFromPipeline = $true,
       ValueFromPipelineByPropertyName = $true)]
-    [Alias('hostid')]
+    [Alias('hostids')]
     [String[]]$id,
     # Installs the volume filter driver
     [Parameter(ParameterSetName='Install')]
@@ -79,10 +79,10 @@ function Set-RubrikVolumeFilterDriver
     # Update PSBoundParameters for correct processing for New-BodyString
     if ($Install) {
       $PSBoundParameters.Remove('Install') | Out-Null
-      $PSBoundParameters.Add('installed',$true)
+      $PSBoundParameters.Add('install',$true)
     } elseif ($Remove) {
       $PSBoundParameters.Remove('Remove') | Out-Null
-      $PSBoundParameters.Add('installed',$false)
+      $PSBoundParameters.Add('install',$false)
     }
   }
 
