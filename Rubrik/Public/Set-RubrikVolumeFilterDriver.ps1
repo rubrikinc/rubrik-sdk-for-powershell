@@ -37,7 +37,7 @@ function Set-RubrikVolumeFilterDriver
     [String[]]$hostId,
     # Whether to install or uninstall the VFD
     [Alias('install')]
-    [Boolean]$installed,
+    [switch]$installed,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -61,7 +61,8 @@ function Set-RubrikVolumeFilterDriver
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
+    $Installed = $Installed -as [bool]
   }
 
   Process {
@@ -71,7 +72,9 @@ function Set-RubrikVolumeFilterDriver
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    if ($PSCmdlet.ShouldProcess($TargetVM,'Settings ')) {
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    }
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
