@@ -44,8 +44,8 @@ function Set-RubrikVolumeFilterDriver
     [Parameter(
       ValueFromPipeline = $true,
       ValueFromPipelineByPropertyName = $true)]
-    [Alias('hostids')]
-    [String[]]$id,
+    [Alias('hostids','id')]
+    [String[]]$hostid,
     # Installs the volume filter driver
     [Parameter(ParameterSetName='Install')]
     [switch]$Install,
