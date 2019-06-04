@@ -19,7 +19,7 @@ Describe -Name 'Public/Get-RubrikVMwareHost' -Tag 'Public', 'Get-RubrikVMwareHos
     }
     #endregion
 
-    Context -Name 'Parameter/Name' {
+    Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 

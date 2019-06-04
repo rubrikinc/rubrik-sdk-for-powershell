@@ -19,7 +19,7 @@ Describe -Name 'Public/Get-RubrikVMwareDatastore' -Tag 'Public', 'Get-RubrikVMwa
     }
     #endregion
 
-    Context -Name 'Parameter/Name' {
+    Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
@@ -59,6 +59,10 @@ Describe -Name 'Public/Get-RubrikVMwareDatastore' -Tag 'Public', 'Get-RubrikVMwa
         It -Name 'Should return count of 2 ' -Test {
             (Get-RubrikVMwareDatastore -DatastoreType 'VMFS').count |
                 Should -BeExactly 2
+        }
+        It -Name 'Should return count of 0 ' -Test {
+            (Get-RubrikVMwareDatastore -Name 'test').count |
+                Should -BeExactly 0
         }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
