@@ -28,6 +28,14 @@ function Set-RubrikVolumeFilterDriver
       Set-RubrikVolumeFilterDriver -hostId Host:::a1e1004c-f460-4ac1-a25a-e07b5eb15443, Host:::a1e1043c-f460-4ac1-a25a-e07b5eh45583 -Install
       This will install the Volume Filter Driver on the specifed array of host ids
 
+      .EXAMPLE
+      Get-RubrikHost -DetailedObject | Where hostVfdDriverState -ne Installed | Set-RubrikVolumeFilterDriver -Install
+      Install Volume Filter Drivers for all hosts where the driver currently is not installed
+
+      .EXAMPLE
+      Get-RubrikHost -DetailedObject | Where hostVfdDriverState -eq Installed | Set-RubrikVolumeFilterDriver -Remove
+      Uninstall Volume Filter Drivers for all hosts where the driver currently is not installed
+
   #>
 
    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
