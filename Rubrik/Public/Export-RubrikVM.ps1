@@ -17,10 +17,11 @@ function Export-RubrikVM
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Export-RubrikVM.html
 
       .EXAMPLE
-      Export-RubrikVM -id '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -HostId 'VmwareHost:::1226ff04-6100-454f-905b-5df817b6981a-host-6811' -DatastoreId 'DataStore:::1226ff04-6100-454f-905b-5df817b6981a-datastore-8144'
+      Export-RubrikVM -id '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -HostId (Get-RubrikVMwareHost -name esxi01 -PrimaryClusterID local).id -DatastoreId (Get-RubrikVMwareDatastore -name vSAN).id
       This will mount the snapshot with an id of 7acdf6cd-2c9f-4661-bd29-b67d86ace70b to the specified host and datastore
-
-      Get-RubrikVM 'server01' -PrimaryClusterID local | Get-RubrikSnapshot | Sort-Object -Property Date -Descending | Select -First 1 | Export-RubrikVM -HostID VmwareHost:::1226ff04-6100-454f-905b-5df817b6981a-host-6811 -DatastoreId DataStore:::1226ff04-6100-454f-905b-5df817b6981a-datastore-8144
+      
+      .EXAMPLE
+      Get-RubrikVM 'server01' -PrimaryClusterID local | Get-RubrikSnapshot | Sort-Object -Property Date -Descending | Select -First 1 | Export-RubrikVM -HostId (Get-RubrikVMwareHost -name esxi01 -PrimaryClusterID local).id -DatastoreId (Get-RubrikVMwareDatastore -name vSAN).id
       This will retreive the latest snapshot from the given VM 'server01' and export to the specified host and datastore.
   #>
 
