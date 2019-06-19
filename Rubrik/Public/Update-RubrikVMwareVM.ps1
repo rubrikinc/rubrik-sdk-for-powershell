@@ -19,6 +19,14 @@ function Update-RubrikVMwareVM
       .EXAMPLE
       Get-RubrikVM -Name 'myvm.domain.local' | Update-RubrikVMwareVM
       This will refresh the VMware VM metadata on the currently connected Rubrik cluster
+
+      .EXAMPLE
+      Update-RubrikVMwareVM -Id vCenter:::1226ff04-6100-454f-905b-5df817b6981a -moid vm-100
+      This will refresh the VMware VM metadata, for the VM and vcCenter specified, on the currently connected Rubrik cluster
+      
+      .EXAMPLE
+      Import-Csv .\RefreshVM.csv | Update-RubrikVMwareVM -Verbose
+      This will refresh the VMware VM metadata, for the VM and vcCenter specified in the csv file, on the currently connected Rubrik cluster while displaying verbose information. Please note that the .csv file should contain the id and moid fields.
   #>
 
   [CmdletBinding()]
