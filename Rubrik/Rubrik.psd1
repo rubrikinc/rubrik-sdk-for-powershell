@@ -109,7 +109,8 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Set-RubrikVCenter', 'Set-RubrikVM', 
                'Start-RubrikManagedVolumeSnapshot', 
                'Stop-RubrikManagedVolumeSnapshot', 'Sync-RubrikAnnotation', 
-               'Sync-RubrikTag', 'Update-RubrikHost', 'Update-RubrikVCenter')
+               'Sync-RubrikTag', 'Update-RubrikHost', 'Update-RubrikVCenter',
+               'Update-RubrikVMwareVM')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
