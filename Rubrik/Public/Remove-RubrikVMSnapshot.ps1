@@ -30,7 +30,7 @@ function Remove-RubrikVMSnapshot
       This will attempt to remove any snapshot from `03/21/2017` for VM `OldVM1`.
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # ID of the snapshot to delete
     [Parameter(ValueFromPipelineByPropertyName = $true)]
