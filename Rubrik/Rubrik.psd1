@@ -99,7 +99,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Remove-RubrikLogShipping', 'Remove-RubrikManagedVolume', 
                'Remove-RubrikManagedVolumeExport', 'Remove-RubrikMount', 
                'Remove-RubrikNASShare', 'Remove-RubrikReport', 'Remove-RubrikSLA', 
-               'Remove-RubrikUnmanagedObject', 'Remove-RubrikVCenter', 
+               'Remove-RubrikUnmanagedObject', 'Remove-RubrikVCenter', 'Remove-RubrikVMSnapshot'
                'Remove-RubrikVolumeGroupMount', 'Reset-RubrikLogShipping', 
                'Restore-RubrikDatabase', 'Set-RubrikAvailabilityGroup', 
                'Set-RubrikBlackout', 'Set-RubrikDatabase', 'Set-RubrikHyperVVM', 

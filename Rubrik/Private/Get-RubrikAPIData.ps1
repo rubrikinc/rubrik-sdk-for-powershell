@@ -1240,6 +1240,19 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '204'
             }
         }
+        'Remove-RubrikVMSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired VM snapshot available for garbage collection'
+                URI         = '/api/v1/vmware/vm/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
+            }
+        }        
         'Remove-RubrikUnmanagedObject' = @{
             '1.0' = @{
                 Description = 'Bulk delete all unmanaged snapshots for the objects specified by objectId/objectType pairings.'
