@@ -48,14 +48,12 @@ Describe -Name 'Public/Update-RubrikVMwareVM' -Tag 'Public', 'Update-RubrikVMwar
         }
 
         Get-RubrikVM 
-        It -Name 'Get-VM' -Test {
+        It -Name 'Get-TestVM should return id / vmmoid' -Test {
             Get-TestVM -Name 'Jaap' | Should -Be '@{vcenterId=vCenter:::1226ff04-6100-454f-905b-5df817b6981a; vmMoid=vm-100}'
         }
 
-        It -Name 'Valid execution' -Test {
-            Get-TestVM -Name 'Jaap' | ForEach-Object {
-                Update-RubrikVMwareVM -vcenterId $_.vcenterId -vmMoid $_.vmMoid
-            } | Should -Be $null
+        It -Name 'Valid execution based on Get-TestVM' -Test {
+            Get-TestVM -Name 'Jaap' | Update-RubrikVMwareVM | Should -Be $null
         }
 
         Assert-VerifiableMock
