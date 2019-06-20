@@ -33,7 +33,7 @@ function Remove-RubrikVMSnapshot
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # ID of the snapshot to delete
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Snapshot location to delete, either "local" or "all". Defaults to "all"
     [String]$location = "all",
