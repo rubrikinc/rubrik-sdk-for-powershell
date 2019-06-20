@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-18
+
+### Added [Update-RubrikVMwareVM]
+
+* Added new `Update-RubrikVMwareVM` cmdlet to refresh a single VMware VM's metadata. This addresses issue [305](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/305)
+
 ## 2019-06-04
 
 ### Changed [Resolved issues]
