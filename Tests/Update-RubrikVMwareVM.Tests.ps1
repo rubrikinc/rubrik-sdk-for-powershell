@@ -36,7 +36,8 @@ Describe -Name 'Public/Update-RubrikVMwareVM' -Tag 'Public', 'Update-RubrikVMwar
 
     Context -Name 'Request Succeeds' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
-        Mock -CommandName Get-RubrikVM -Verifiable -ModuleName 'Rubrik' -MockWith {
+        function Get-TestVM {}
+        Mock -CommandName Get-TestVM -MockWith {
             [pscustomobject]@{
                 vcenterId = 'vCenter:::1226ff04-6100-454f-905b-5df817b6981a'
                 vmMoid = 'vm-100'
@@ -48,21 +49,18 @@ Describe -Name 'Public/Update-RubrikVMwareVM' -Tag 'Public', 'Update-RubrikVMwar
 
         Get-RubrikVM 
         It -Name 'Get-VM' -Test {
-            Get-RubrikVM | Should -Be ([pscustomobject]@{
-                vcenterId = 'vCenter:::1226ff04-6100-454f-905b-5df817b6981a'
-                vmMoid = 'vm-100'
-            })
+            Get-TestVM -Name 'Jaap' | Should -Be '@{vcenterId=vCenter:::1226ff04-6100-454f-905b-5df817b6981a; vmMoid=vm-100}'
         }
 
         It -Name 'Valid execution' -Test {
-            Get-RubrikVM | ForEach-Object {
-                Update-RubrikVMwareVM -vcenterId $_.vcenter -vmMoid $_.vmMoid
+            Get-TestVM -Name 'Jaap' | ForEach-Object {
+                Update-RubrikVMwareVM -vcenterId $_.vcenterId -vmMoid $_.vmMoid
             } | Should -Be $null
         }
 
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Get-RubrikVM -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Get-TestVM -Times 2
     }
 }
