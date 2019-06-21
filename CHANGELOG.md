@@ -16,11 +16,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-20
+
+### Added [New Remove-RubrikVMSnapshot cmdlet]
+
+* Added Remove-RubrikVMSnapshot cmdlet to address [148](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/148) and associated unit test
+
+### Changed [Additional logging and info]
+
+* Updated Invoke-RubrikWebRequest so the HTTP status code returned from the API call is displayed when verbose logging is enabled
+* Updated Submit-Request to handle `Delete` API calls differently than other calls. Previously `Delete` operations did not surface any status to the user. With this change, the HTTP response code is checked to verify it matches the expected response. If so, it returns a PSObject with the HTTP code and Status = 'Success'.
+
 ## 2019-06-18
 
 ### Added [Update-RubrikVMwareVM]
 
 * Added new `Update-RubrikVMwareVM` cmdlet to refresh a single VMware VM's metadata. This addresses issue [305](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/305)
+
 
 ## 2019-06-04
 
