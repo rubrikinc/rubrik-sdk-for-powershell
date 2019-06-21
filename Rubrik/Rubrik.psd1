@@ -70,7 +70,7 @@ PowerShellVersion = '4.0'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
-               'Export-RubrikReport', 'Get-RubrikAPIVersion', 
+               'Export-RubrikReport', 'Get-RubrikAPIVersion', 'Export-RubrikVM',
                'Get-RubrikAvailabilityGroup', 'Get-RubrikDatabase', 
                'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 
                'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikFileset', 
@@ -83,8 +83,8 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikSoftwareVersion', 'Get-RubrikSQLInstance', 
                'Get-RubrikSupportTunnel', 'Get-RubrikUnmanagedObject', 
                'Get-RubrikVCenter', 'Get-RubrikVersion', 'Get-RubrikVM', 
-               'Get-RubrikVMSnapshot', 'Get-RubrikVolumeGroup', 
-               'Get-RubrikVolumeGroupMount', 'Invoke-RubrikRESTCall', 
+               'Get-RubrikVMSnapshot', 'Get-RubrikVolumeGroup', 'Get-RubrikVMwareHost',
+               'Get-RubrikVMwareDatastore', 'Get-RubrikVolumeGroupMount', 'Invoke-RubrikRESTCall', 
                'Move-RubrikMountVMDK', 'New-RubrikDatabaseMount', 
                'New-RubrikFileset', 'New-RubrikFilesetTemplate', 'New-RubrikHost', 
                'New-RubrikLDAP', 'New-RubrikLogBackup', 'New-RubrikLogShipping', 
