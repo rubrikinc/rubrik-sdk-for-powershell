@@ -9,22 +9,27 @@
         try {
             Write-Verbose -Message 'Submitting the request'
             if ($resources.method -eq 'Delete') {
-                # Delete operations have no response body, skip JSON formatting and store the response from Invoke-WebRequest
+                # Delete operations generally have no response body, skip JSON formatting and store the response from Invoke-WebRequest
                 $response = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body
-                # If if HTTP status code matches our expected result, build a PSObject reflecting success
-                if($response.StatusCode -eq [int]$resources.Success) {
-                    $result = @{
-                        Status = 'Success'
-                        HTTPStatusCode = $response.StatusCode
+                # Parse response to verify there is nothing in the body
+                $result = ExpandPayload -response $response
+                # If $result is null, build a $result object to return to the user. Otherwise, $result will be returned.
+                if($null -eq $result) {   
+                    # If if HTTP status code matches our expected result, build a PSObject reflecting success
+                    if($response.StatusCode -eq [int]$resources.Success) {
+                        $result = @{
+                            Status = 'Success'
+                            HTTPStatusCode = $response.StatusCode
+                        }
                     }
-                }
-                # If a different HTTP status is returned, surface that information to the user
-                # This code may never run due to non-200 HTTP codes throwing an HttpResponseException
-                else {
-                    $result = @{
-                        Status = 'Error'
-                        HTTPStatusCode = $response.StatusCode
-                        HTTPStatusDescription = $response.StatusCode
+                    # If a different HTTP status is returned, surface that information to the user
+                    # This code may never run due to non-200 HTTP codes throwing an HttpResponseException
+                    else {
+                        $result = @{
+                            Status = 'Error'
+                            HTTPStatusCode = $response.StatusCode
+                            HTTPStatusDescription = $response.StatusCode
+                        }
                     }
                 }
             }
