@@ -943,6 +943,7 @@ function Get-RubrikAPIData($endpoint) {
                     numChannels = 'numChannels'
                     subnet = 'subnet'
                     volumeSize =  'volumeSize'
+                    applicationTag = 'applicationTag'
                 }
                 Query       = ''
                 Result      = ''
@@ -1774,7 +1775,21 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '202'
             }
-        }        
+        }
+        'Update-RubrikVMwareVM'         = @{
+            '1.0' = @{
+                Description = 'Refresh the metadata for the specified VMware VM'
+                URI         = '/api/internal/vmware/vcenter/{id}/refresh_vm'
+                Method      = 'Post'
+                Body        = @{
+                    vmMoid = 'vmMoid'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+        }      
 
     } # End of API
 

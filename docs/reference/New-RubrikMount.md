@@ -14,8 +14,8 @@ Create a new Live Mount from a protected VM
 
 ```
 New-RubrikMount [-id] <String> [[-HostID] <String>] [[-MountName] <String>] [[-DatastoreName] <String>]
- [[-DisableNetwork] <Boolean>] [-RemoveNetworkDevices] [-PowerOn] [[-Server] <String>] [[-api] <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-DisableNetwork] <Boolean>] [[-RemoveNetworkDevices] <Boolean>] [[-PowerOn] <Boolean>] [[-Server] <String>]
+ [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -129,12 +129,12 @@ Accept wildcard characters: False
 Whether the network devices should be removed on mount.
 
 ```yaml
-Type: SwitchParameter
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 6
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -144,12 +144,12 @@ Accept wildcard characters: False
 Whether the VM should be powered on after mount.
 
 ```yaml
-Type: SwitchParameter
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 7
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -164,7 +164,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 8
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -179,7 +179,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 9
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

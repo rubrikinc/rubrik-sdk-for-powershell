@@ -16,11 +16,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-18
+
+### Added [Update-RubrikVMwareVM]
+
+* Added new `Update-RubrikVMwareVM` cmdlet to refresh a single VMware VM's metadata. This addresses issue [305](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/305)
+
 ## 2019-06-04
 
 ### Added [Resolving Issues]
 
 * Added Export-RubrikVM cmdlet to address [Issue 239](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/239). Since the cmdlet requires IDs for both a VMware datastore and a VMware host, 2 other cmdlets were developed, Get-RubrikVMwareDatastore and Get-RubrikVMwareHost to make the whole process easier.
+
+### Changed [Resolved issues]
+
+* Resolved bug in New-RubrikVMDKMount, thanks @Pierre-PvF
+
+## 2019-05-31
+
+### Added [New-RubrikManagedVolume update]
+
+* Added `-ApplicationTag` parameter support to New-RubrikManagedVolume so users can specify which application the managed volume will be used for. This addresses issue [285](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/285).
 
 ## 2019-05-30
 
