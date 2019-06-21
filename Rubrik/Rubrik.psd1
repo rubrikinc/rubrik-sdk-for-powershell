@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.281'
+ModuleVersion = '4.0.0.284'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -100,14 +100,14 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Remove-RubrikLogShipping', 'Remove-RubrikManagedVolume', 
                'Remove-RubrikManagedVolumeExport', 'Remove-RubrikMount', 
                'Remove-RubrikNASShare', 'Remove-RubrikReport', 'Remove-RubrikSLA', 
-               'Remove-RubrikUnmanagedObject', 'Remove-RubrikVCenter', 'Remove-RubrikVMSnapshot'
-               'Remove-RubrikVolumeGroupMount', 'Reset-RubrikLogShipping', 
-               'Restore-RubrikDatabase', 'Set-RubrikAvailabilityGroup', 
-               'Set-RubrikBlackout', 'Set-RubrikDatabase', 'Set-RubrikHyperVVM', 
-               'Set-RubrikLogShipping', 'Set-RubrikManagedVolume', 'Set-RubrikMount', 
-               'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikSetting', 
-               'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel', 
-               'Set-RubrikVCenter', 'Set-RubrikVM', 
+               'Remove-RubrikUnmanagedObject', 'Remove-RubrikVCenter', 
+               'Remove-RubrikVMSnapshot', 'Remove-RubrikVolumeGroupMount', 
+               'Reset-RubrikLogShipping', 'Restore-RubrikDatabase', 
+               'Set-RubrikAvailabilityGroup', 'Set-RubrikBlackout', 
+               'Set-RubrikDatabase', 'Set-RubrikHyperVVM', 'Set-RubrikLogShipping', 
+               'Set-RubrikManagedVolume', 'Set-RubrikMount', 'Set-RubrikNASShare', 
+               'Set-RubrikNutanixVM', 'Set-RubrikSetting', 'Set-RubrikSQLInstance', 
+               'Set-RubrikSupportTunnel', 'Set-RubrikVCenter', 'Set-RubrikVM', 
                'Start-RubrikManagedVolumeSnapshot', 
                'Stop-RubrikManagedVolumeSnapshot', 'Sync-RubrikAnnotation', 
                'Sync-RubrikTag', 'Update-RubrikHost', 'Update-RubrikVCenter', 
