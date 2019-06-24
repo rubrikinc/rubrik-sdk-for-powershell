@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-24
+
+### Added [New Get-RubrikOracleDB cmdlet]
+
+* Added Get-RubrikOracleDB cmdlet to address [255](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/255) and associated unit test
+
 ## 2019-06-20
 
 ### Added [New Remove-RubrikVMSnapshot cmdlet]
