@@ -1659,6 +1659,19 @@ function Get-RubrikAPIData($endpoint) {
             }
         } 
         'Set-RubrikVolumeFilterDriver'      = @{
+            '1.0' = @{
+                Description = 'Installs or Uninstalls the Rubrik Volume Filter Driver'
+                URI         = '/api/internal/host/bulk/volume_filter_driver'
+                Method      = 'Post'
+                Body        = @{
+                    hostIds = 'hostIds'
+                    install = 'install'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            },
             '5.0' = @{
                 Description = 'Installs or Uninstalls the Rubrik Volume Filter Driver'
                 URI         = '/api/internal/host/bulk/volume_filter_driver'
