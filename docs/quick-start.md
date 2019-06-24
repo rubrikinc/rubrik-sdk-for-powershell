@@ -45,6 +45,12 @@ Common PowerShell module paths include:
 1. Open a Powershell console with the _Run as Administrator_ option.
 1. Run `Set-ExecutionPolicy` using the argument _RemoteSigned_ or _Bypass_.
 
+## Options 4: Download Module from PowerShell Gallery for redistribution
+1.
+1.
+1.
+1.
+
 ## Verification
 
 PowerShell will create a folder for each new version of any module you install. It's a good idea to check and see what version(s) you have installed and running in the session. To begin, let's see what versions of the Rubrik Module are installed:
