@@ -1,60 +1,46 @@
-﻿#requires -Version 3
-function New-RubrikManagedVolume
+#requires -Version 3
+function Remove-RubrikVMSnapshot
 {
   <#  
       .SYNOPSIS
-      Creates a new Rubrik Managed Volume 
-
+      Connects to Rubrik and removes an expired VMware VM snapshot available for garbage collection.
+            
       .DESCRIPTION
-      The New-RubrikManagedVolume cmdlet is used to create
-      a new Managed Volume
-
+      The Remove-RubrikVMSnapshot cmdlet will request that the Rubrik API delete an an expired VMware VM snapshot.
+      The snapshot must be an on-demand snapshot or a snapshot from a virtual machine that is not assigned to an SLA Domain.
+            
       .NOTES
-      Written by Mike Fal
-      Twitter: @Mike_Fal
-      GitHub: MikeFal
-
+      Written by Matt Elliott for community usage
+      Twitter: @NetworkBrouhaha
+      GitHub: shamsway
+            
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikVMSnapshot.html
+           
+      .EXAMPLE
+      Remove-RubrikVMSnapshot -id '01234567-8910-1abc-d435-0abc1234d567'
+      This will attempt to remove VM snapshot (backup) data with the snapshot id `01234567-8910-1abc-d435-0abc1234d567`
 
       .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 4 -VolumeSize 1073741824000
-
-      Creates a new managed volume named 'foo' with 4 channels and 1073741824000 bytes (1TB) in size
-
-      .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -Subnet 172.21.10.0/23
-
-      Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, on the 172.21.10.0/23 subnet
+      Remove-RubrikVMSnapshot -id '01234567-8910-1abc-d435-0abc1234d567' -location local
+      This will attempt to remove the local copy of the VM snapshot (backup) data with the snapshot id `01234567-8910-1abc-d435-0abc1234d567`
 
       .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -ApplicationTag "PostgreSql"
-
-      Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, configured for PostreSQL backups
-      Valid ApplicationTag values are 'Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', and 'RecoverX'
+      Get-RubrikVM OldVM1 | Get-RubrikSnapshot -Date '03/21/2017' | Remove-RubrikVMSnapshot
+      This will attempt to remove any snapshot from `03/21/2017` for VM `OldVM1`.
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # Name of managed volume
-    [Parameter(Mandatory=$true)]
-    [String]$Name,
-    #Number of channels in the Managed Volume
-    [Parameter(Mandatory=$true)]
-    [Alias('numChannels')]
-    [int]$Channels,
-    #Subnet Managed Volume is placed on
-    [String]$Subnet,
-    #Size of the Managed Volume in Bytes
-    [int64]$VolumeSize,
-    #Application whose data will be stored in managed volume
-    [ValidateSet('Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', 'RecoverX')]
-    [string]$applicationTag,
-    #Export config, such as host hints and host name patterns
-    [PSCustomObject[]]$exportConfig,
+    # ID of the snapshot to delete
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
+    # Snapshot location to delete, either "local" or "all". Defaults to "all"
+    [String]$location = "all",
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 

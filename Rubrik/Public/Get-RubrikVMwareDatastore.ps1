@@ -1,60 +1,45 @@
-﻿#requires -Version 3
-function New-RubrikManagedVolume
+#Requires -Version 3
+function Get-RubrikVMwareDatastore
 {
   <#  
       .SYNOPSIS
-      Creates a new Rubrik Managed Volume 
-
+      Connects to Rubrik and retrieves a list of VMware datastores
+            
       .DESCRIPTION
-      The New-RubrikManagedVolume cmdlet is used to create
-      a new Managed Volume
-
+      The Get-RubrikVMwareDatastore cmdlet will retrieve VMware datastores known to an authenticated Rubrik cluster.
+            
       .NOTES
-      Written by Mike Fal
-      Twitter: @Mike_Fal
-      GitHub: MikeFal
-
+      Written by Mike Preston for community usage
+      Twitter: @mwpreston
+      GitHub: mwpreston
+            
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
-
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVMwareDatastore.html
+            
       .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 4 -VolumeSize 1073741824000
-
-      Creates a new managed volume named 'foo' with 4 channels and 1073741824000 bytes (1TB) in size
-
+      Get-RubrikVMwareDatastore
+      This will return a listing of all of the datastores known to a connected Rubrik cluster
+      
       .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -Subnet 172.21.10.0/23
-
-      Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, on the 172.21.10.0/23 subnet
-
+      Get-RubrikVMwareDatastore -Name 'vSAN'
+      This will return a listing of all of the datastores named 'vSAN' known to a connected Rubrik cluster
+      
       .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -ApplicationTag "PostgreSql"
-
-      Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, configured for PostreSQL backups
-      Valid ApplicationTag values are 'Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', and 'RecoverX'
+      Get-RubrikVMwareDatastore -DatastoreType 'NFS'
+      This will return a listing of all of the NFS datastores known to a connected Rubrik cluster
   #>
 
   [CmdletBinding()]
   Param(
-    # Name of managed volume
-    [Parameter(Mandatory=$true)]
+    # Datastore Name
     [String]$Name,
-    #Number of channels in the Managed Volume
-    [Parameter(Mandatory=$true)]
-    [Alias('numChannels')]
-    [int]$Channels,
-    #Subnet Managed Volume is placed on
-    [String]$Subnet,
-    #Size of the Managed Volume in Bytes
-    [int64]$VolumeSize,
-    #Application whose data will be stored in managed volume
-    [ValidateSet('Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', 'RecoverX')]
-    [string]$applicationTag,
-    #Export config, such as host hints and host name patterns
-    [PSCustomObject[]]$exportConfig,
+    # Filter Datastore type
+    [ValidateSet('VMFS', 'NFS','vSAN')]
+    [String]$DatastoreType,     
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 
@@ -62,7 +47,7 @@ function New-RubrikManagedVolume
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
     

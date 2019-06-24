@@ -1,60 +1,44 @@
-﻿#requires -Version 3
-function New-RubrikManagedVolume
+#Requires -Version 3
+function Get-RubrikVMwareHost
 {
   <#  
       .SYNOPSIS
-      Creates a new Rubrik Managed Volume 
-
+      Connects to Rubrik and retrieves a list of ESXi hosts registered
+            
       .DESCRIPTION
-      The New-RubrikManagedVolume cmdlet is used to create
-      a new Managed Volume
-
+      The Get-RubrikVMwareHost cmdlet will retrieve all of the registered ESXi hosts within the authenticated Rubrik cluster.
+            
       .NOTES
-      Written by Mike Fal
-      Twitter: @Mike_Fal
-      GitHub: MikeFal
-
+      Written by Mike Preston for community usage
+      Twitter: @mwpreston
+      GitHub: mwpreston
+            
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVMwareHost.html
+            
+      .EXAMPLE
+      Get-RubrikVMwareHost
+      This will return a listing of all of the ESXi hosts known to the connected Rubrik cluster
+
+      Get-RubrikVMwareHost -PrimarClusterId local
+      This will return a listing of all of the ESXi hosts whose primary cluster is that of the connected Rubrik cluster.
 
       .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 4 -VolumeSize 1073741824000
-
-      Creates a new managed volume named 'foo' with 4 channels and 1073741824000 bytes (1TB) in size
-
-      .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -Subnet 172.21.10.0/23
-
-      Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, on the 172.21.10.0/23 subnet
-
-      .EXAMPLE
-      New-RubrikManagedVolume -Name foo -Channels 2 -VolumeSize (500 * 1GB) -ApplicationTag "PostgreSql"
-
-      Creates a new managed volume named 'foo' with 2 channels, 536870912000 bytes (500 GB) in size, configured for PostreSQL backups
-      Valid ApplicationTag values are 'Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', and 'RecoverX'
+      Get-RubrikVMwareHost -Name 'esxi01'
+      This will return a listing of all of the ESXi hosts named 'esxi01' registered with the connected Rubrik cluster
   #>
 
   [CmdletBinding()]
   Param(
-    # Name of managed volume
-    [Parameter(Mandatory=$true)]
+    # ESXi Host Name
     [String]$Name,
-    #Number of channels in the Managed Volume
-    [Parameter(Mandatory=$true)]
-    [Alias('numChannels')]
-    [int]$Channels,
-    #Subnet Managed Volume is placed on
-    [String]$Subnet,
-    #Size of the Managed Volume in Bytes
-    [int64]$VolumeSize,
-    #Application whose data will be stored in managed volume
-    [ValidateSet('Oracle', 'OracleIncremental', 'MsSql', 'SapHana', 'MySql', 'PostgreSql', 'RecoverX')]
-    [string]$applicationTag,
-    #Export config, such as host hints and host name patterns
-    [PSCustomObject[]]$exportConfig,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Alias('primary_cluster_id')]
+    [String]$PrimaryClusterID,  
     # API version
+    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
 
@@ -62,7 +46,7 @@ function New-RubrikManagedVolume
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
     
