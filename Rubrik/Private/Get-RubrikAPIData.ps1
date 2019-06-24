@@ -1671,7 +1671,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
-            },
+            }
             '5.0' = @{
                 Description = 'Installs or Uninstalls the Rubrik Volume Filter Driver'
                 URI         = '/api/internal/host/bulk/volume_filter_driver'
