@@ -11,8 +11,12 @@ Custom wrapper for Invoke-WebRequest, implemented to provide different parameter
     )
     
     if (Test-PowerShellSix) {
-        Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
+        $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
     } else {
-        Invoke-WebRequest -UseBasicParsing @PSBoundParameters
+        $result = Invoke-WebRequest -UseBasicParsing @PSBoundParameters
     }
+    
+    Write-Verbose -Message "Received HTTP Status $($result.StatusCode)"
+
+    return $result
 }

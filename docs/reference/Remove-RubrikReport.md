@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikReport.html
 schema: 2.0.0
 ---
 
@@ -14,6 +14,7 @@ Removes one or more reports created in Rubrik Envision
 
 ```
 Remove-RubrikReport [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,21 +22,21 @@ The Remove-RubrikReport cmdlet is used to delete any number of Rubrik Envision r
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-RubrikReport | Remove-RubrikReport -Confirm:$true
 ```
 
 This will delete all reports and force confirmation for each delete operation
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-RubrikReport -Name 'SLA' -Type Custom | Remove-RubrikReport
 ```
 
 This will delete all custom reports that contain the string "SLA"
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Get-RubrikReport -id '11111111-2222-3333-4444-555555555555' | Remove-RubrikReport -Confirm:$false
 ```
@@ -50,7 +51,7 @@ The Rubrik ID value of the report
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -65,7 +66,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -80,7 +81,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -120,6 +121,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -131,5 +135,5 @@ GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikReport.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikReport.html)
 

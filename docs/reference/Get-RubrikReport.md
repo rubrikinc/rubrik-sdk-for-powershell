@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReport.html
 schema: 2.0.0
 ---
 
@@ -14,6 +14,7 @@ Retrieves details on one or more reports created in Rubrik Envision
 
 ```
 Get-RubrikReport [[-Name] <String>] [[-Type] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,21 +22,21 @@ The Get-RubrikReport cmdlet is used to pull information on any number of Rubrik 
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-RubrikReport
 ```
 
 This will return details on all reports
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-RubrikReport -Name 'SLA' -Type Custom
 ```
 
 This will return details on all custom reports that contain the string "SLA"
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Get-RubrikReport -id '11111111-2222-3333-4444-555555555555'
 ```
@@ -81,7 +82,7 @@ The ID of the report.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -96,7 +97,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -111,7 +112,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 5
@@ -119,6 +120,9 @@ Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -131,5 +135,5 @@ GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReport.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReport.html)
 
