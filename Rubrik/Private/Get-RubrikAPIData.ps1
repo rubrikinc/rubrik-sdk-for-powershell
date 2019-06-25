@@ -122,7 +122,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }  
+        }
         'Get-RubrikAvailabilityGroup' = @{
             '1.0' = @{
                 Description = 'Get summary information for Microsoft SQL availability groups'
@@ -140,7 +140,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        } 
+        }
         'Get-RubrikDatabase'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Microsoft SQL databases.'
@@ -254,7 +254,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }    
+        }
         'Get-RubrikHost'               = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all hosts that are registered with a Rubrik cluster'
@@ -292,7 +292,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        } 
+        }
         'Get-RubrikLDAP'         = @{
             '1.0' = @{
                 Description = 'Retrieves all LDAP settings of the Rubrik cluster'
@@ -309,7 +309,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        }  
+        }
         'Get-RubrikManagedVolume'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Rubrik Managed Volumes'
@@ -419,7 +419,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        } 
+        }
         'Get-RubrikReport'             = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for each report.'
@@ -433,7 +433,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
-            }  
+            }
             '4.1' = @{
                 Description = 'Retrieve summary information for each report.'
                 URI         = '/api/internal/report'
@@ -484,14 +484,14 @@ function Get-RubrikAPIData($endpoint) {
                         object_type       = 'objectType'
                         compliance_status = 'complianceStatus'
                         cluster_location  = 'clusterLocation'
-                    }                    
+                    }
                 }
                 Query       = ''
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
             }
-        }    
+        }
         'Get-RubrikRequest'            = @{
             '1.0' = @{
                 Description = 'Get details about an async request.'
@@ -515,7 +515,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }  
+        }
         'Get-RubrikSLA'                = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all SLA Domains'
@@ -610,7 +610,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }     
+        }
         'Get-RubrikUnmanagedObject'    = @{
             '1.0' = @{
                 Description = 'Get summary of all the objects with unmanaged snapshots'
@@ -642,7 +642,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        } 
+        }
         'Get-RubrikVMwareDatastore'         = @{
             '1.0' = @{
                 Description = 'Retrieves all datastores known to the Rubrik cluster'
@@ -657,7 +657,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        }  
+        }
         'Get-RubrikVMwareHost'         = @{
             '1.0' = @{
                 Description = 'Retrieves all ESXi hosts known to the Rubrik cluster'
@@ -673,7 +673,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        }         
+        }
         'Get-RubrikVersion'            = @{
             '1.0' = @{
                 Description = 'Retrieve public information about the Rubrik cluster'
@@ -706,7 +706,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        }       
+        }
         'Get-RubrikVolumeGroup'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all Volume Groups'
@@ -728,7 +728,7 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        }    
+        }
         'Get-RubrikVolumeGroupMount'                 = @{
             '1.0' = @{
                 Description = 'Retrieve information for all Volume mounts'
@@ -745,7 +745,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }  
+        }
         'Get-RubrikVMSnapshot'                = @{
             '1.0' = @{
                 Description = 'Retrieve information of a VM snapshot'
@@ -759,7 +759,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        } 
+        }
         'New-RubrikVCenter'      = @{
             '1.0' = @{
                 Description = 'Create VMware vCenter connection'
@@ -824,6 +824,18 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '204'
+            }
+        }
+        'New-RubrikAPIToken'      = @{
+            '5.0' = @{
+                Description = 'Create an API Token'
+                URI         = '/api/internal/session'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = 'session'
+                Filter      = ''
+                Success     = '200'
             }
         }
         'New-RubrikDatabaseMount'      = @{
@@ -920,7 +932,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }         
+        }
         'New-RubrikLogBackup'               = @{
             '1.0' = @{
                 Description = 'Takes on demand transaction log backup for SQL Server'
@@ -962,7 +974,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '202'
             }
-        }        
+        }
         'New-RubrikMount'              = @{
             '1.0' = @{
                 Description = 'Create a live mount request with given configuration'
@@ -1015,7 +1027,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '201'
             }
-        }    
+        }
         'New-RubrikSLA'                = @{
             '1.0' = @{
                 Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
@@ -1304,7 +1316,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Success     = '204'
             }
-        }        
+        }
         'Remove-RubrikUnmanagedObject' = @{
             '1.0' = @{
                 Description = 'Bulk delete all unmanaged snapshots for the objects specified by objectId/objectType pairings.'
@@ -1335,7 +1347,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }  
+        }
         'Restore-RubrikDatabase'       = @{
             '1.0' = @{
                 Description = 'Export MSSQL Database from Rubrik to Destination Instance.'
@@ -1396,7 +1408,7 @@ function Get-RubrikAPIData($endpoint) {
                     logRetentionHours           = "logRetentionHours"
                     copyOnly                    = "copyOnly"
                     maxDataStreams              = "maxDataStreams"
-                    configuredSlaDomainId       = "configuredSlaDomainId"   
+                    configuredSlaDomainId       = "configuredSlaDomainId"
                     preBackupScript             = @{
                         scriptPath              = "scriptPath"
                         timeoutMs               = "timeoutMs"
@@ -1449,7 +1461,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }         
+        }
         'Set-RubrikManagedVolume' = @{
             '1.0' = @{
                 Description = 'Update a managed volume'
@@ -1465,7 +1477,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '201'
             }
-        } 
+        }
         'Set-RubrikMount'              = @{
             '1.0' = @{
                 Description = 'Power given live-mounted vm on/off'
@@ -1505,7 +1517,7 @@ function Get-RubrikAPIData($endpoint) {
                 Body        = @{
                     snapshotConsistencyMandate = 'snapshotConsistencyMandate'
                     isPaused                 = 'isPaused'
-                    
+
                 }
                 Query       = ''
                 Result      = ''
@@ -1524,7 +1536,7 @@ function Get-RubrikAPIData($endpoint) {
                         slaDomain        = 'slaDomain'
                         objects          = 'objects'
                         objectType       = 'objectType'
-                        objectLocation   = 'objectLocation'            
+                        objectLocation   = 'objectLocation'
                         clusterLocation  = 'clusterLocation'
                         taskType         = 'taskType'
                         complianceStatus = 'complianceStatus'
@@ -1539,14 +1551,14 @@ function Get-RubrikAPIData($endpoint) {
                         name      = 'name'
                         chartType = 'chartType'
                         attribute = 'attribute'
-                        measure   = 'measure' 
+                        measure   = 'measure'
                     }
                     chart1  = @{
                         id        = 'id'
                         name      = 'name'
                         chartType = 'chartType'
                         attribute = 'attribute'
-                        measure   = 'measure' 
+                        measure   = 'measure'
                     }
                     table   = @{
                         columns = 'columns'
@@ -1573,7 +1585,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }  
+        }
         'Set-RubrikSQLInstance'        = @{
             '1.0' = @{
                 Description = 'Updates Rubrik database settings.'
@@ -1584,7 +1596,7 @@ function Get-RubrikAPIData($endpoint) {
                     logRetentionHours           = "logRetentionHours"
                     copyOnly                    = "copyOnly"
                     maxDataStreams              = "maxDataStreams"
-                    configuredSlaDomainId       = "configuredSlaDomainId"   
+                    configuredSlaDomainId       = "configuredSlaDomainId"
                 }
                 Query       = ''
                 Result      = ''
@@ -1606,7 +1618,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }     
+        }
         'Set-RubrikVM'                 = @{
             '1.0' = @{
                 Description = 'Update VM with specified properties'
@@ -1657,7 +1669,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        } 
+        }
         'Set-RubrikVolumeFilterDriver'      = @{
             '1.0' = @{
                 Description = 'Installs or Uninstalls the Rubrik Volume Filter Driver'
@@ -1685,7 +1697,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }  
+        }
         'Start-RubrikManagedVolumeSnapshot' = @{
             '1.0' = @{
                 Description = 'Open a Rubrik Managed Volume for read/write'
@@ -1697,7 +1709,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '201'
             }
-        } 
+        }
         'Stop-RubrikManagedVolumeSnapshot' = @{
             '1.0' = @{
                 Description = 'Close a Rubrik Managed Volume for read/write'
@@ -1713,7 +1725,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '201'
             }
-        } 
+        }
         'Get-RubrikLogShipping' = @{
             '1.0' = @{
                 Description = 'Retrieves all log shipping configuration objects. Results can be filtered and sorted'
@@ -1760,7 +1772,7 @@ function Get-RubrikAPIData($endpoint) {
                     Filter      = ''
                     Success     = '202'
                 }
-        } 
+        }
         'Remove-RubrikLogShipping' = @{
             '1.0' = @{
                 Description = 'Delete a specified log shipping configuration'
@@ -1774,7 +1786,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '202'
             }
-        } 
+        }
         'Set-RubrikLogShipping' = @{
             '1.0' = @{
                 Description = 'Update a specified log shipping configuration'
@@ -1789,7 +1801,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '202'
             }
-        }    
+        }
         'Reset-RubrikLogShipping' = @{
             '1.0' = @{
                 Description = 'Reseed a secondary database'
@@ -1804,7 +1816,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '202'
             }
-        } 
+        }
         'Update-RubrikVCenter'         = @{
             '1.0' = @{
                 Description = 'Refresh the metadata for the specified vCenter Server'
@@ -1830,7 +1842,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '204'
             }
-        }      
+        }
 
     } # End of API
 
@@ -1839,7 +1851,7 @@ function Get-RubrikAPIData($endpoint) {
     if ($endpoint -eq 'Get-RubrikSoftwareVersion' -or $endpoint -eq 'Get-RubrikAPIVersion') {$key = '1.0'}
 
     else {
-        # Take the first three values (major.minor) and convert to a float  
+        # Take the first three values (major.minor) and convert to a float
         # If there is no version yet, we're probably connecting to the cluster for the first time (Connect-Rubrik)
         if (!$global:RubrikConnection.version) {
             $ver = [float](Get-RubrikSoftwareVersion -Server $Server).substring(0, 3)
@@ -1852,7 +1864,7 @@ function Get-RubrikAPIData($endpoint) {
         # Example: We're using RCDM 4.0 and an endpoint has details for 1.0 and 4.0. Both are less/equal to 4.0. We'll want the last value (4.0).
         # Example: We're using RCDM 4.0 and an endpoint has details for 1.0 and 4.1. 4.1 is not less/equal to 4.0, as such, we'll want the only matching value (1.0).
         $key = $api.$endpoint.Keys | Sort-Object | Where-Object {[float]$_ -le $ver} | Select-Object -Last 1
-    } 
+    }
 
     Write-Verbose -Message "Selected $key API Data for $endpoint"
     return $api.$endpoint.$key
