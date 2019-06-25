@@ -6,7 +6,7 @@ function New-RubrikAPIToken
       Creates a new Rubrik API Token.
 
       .DESCRIPTION
-      xxxThe New-RubrikHost cmdlet is used to register a host with the Rubrik cluster. This could be a host leveraging the Rubrik Backup Service or directly as with the case of NAS shares.
+      The New-RubrikAPIToken cmdlet is used to generate a new API Token for the Rubrik cluster using the role and permissions of the currently logged in session. The token can then be used in making API requests without having to resort to basic authorization.
 
       .NOTES
       Written by Chris Wahl for community usage

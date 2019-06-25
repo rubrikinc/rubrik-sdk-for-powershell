@@ -1182,6 +1182,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Remove-RubrikAPIToken'   = @{
+            '5.0' = @{
+                Description = 'Deletes session tokens'
+                URI         = '/api/internal/session/bulk_delete'
+                Method      = 'Post'
+                Body        = @{
+                    tokenIds = 'tokenIds'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikDatabaseMount'   = @{
             '1.0' = @{
                 Description = 'Create a request to delete a database live mount'
