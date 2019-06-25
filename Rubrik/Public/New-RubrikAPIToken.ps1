@@ -33,6 +33,7 @@ function New-RubrikAPIToken
   [CmdletBinding()]
   Param(
     # Bind the new session to the specified organization. When this parameter is not specified, the session will be bound to an organization chosen according to the user's preferences and authorizations.
+    [ValidateNotNullOrEmpty()]
     [String]$OrganizationId,
     # This value specifies an interval in minutes. The token expires at the end of the interval. By default, this value is 60 (1 hour). This value cannot exceed 525600 (365 days).
     [ValidateRange(1,525600)]
