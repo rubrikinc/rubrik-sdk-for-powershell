@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-25
+
+### Added [New New-RubrikAPIToken cmdlet]
+
+* Added New-RubrikAPIToken cmdlet to address [316](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/316) and associated unit test.
+
+### Added [New Remove-RubrikAPIToken cmdlet]
+
+* Added Remove-RubrikAPIToken cmdlet to address [316](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/316) and associated unit test.
+
 ## 2019-06-20
 
 ### Added [New Remove-RubrikVMSnapshot cmdlet]
