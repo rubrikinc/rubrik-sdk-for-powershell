@@ -64,6 +64,27 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Export-RubrikVM'        = @{
+            '1.0' = @{
+                Description = 'Export a VMware VM to an existing vSphere environment'
+                URI         = '/api/v1/vmware/vm/snapshot/{id}/export'
+                Method      = 'Post'
+                Body        = @{
+                    vmName                  = 'vmName'
+                    disableNetwork          = 'disableNetwork'
+                    removeNetworkDevices    = 'removeNetworkDevices'
+                    powerOn                 = 'powerOn'
+                    hostId                  = 'hostId'
+                    datastoreId             = 'datastoreId'
+                    shouldRecoverTags       = 'shouldRecoverTags'
+                    keepMacAddresses        = 'keepMacAddresses'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Export-RubrikReport'          = @{
             '1.0' = @{
                 Description = 'Get the link to a CSV file for a report.'
@@ -621,7 +642,38 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-        }        
+        } 
+        'Get-RubrikVMwareDatastore'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all datastores known to the Rubrik cluster'
+                URI         = '/api/internal/vmware/datastore'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{}
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                    'dataStoreType' = 'dataStoreType'
+                }
+                Success     = '200'
+            }
+        }  
+        'Get-RubrikVMwareHost'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all ESXi hosts known to the Rubrik cluster'
+                URI         = '/api/v1/vmware/host'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+            }
+        }         
         'Get-RubrikVersion'            = @{
             '1.0' = @{
                 Description = 'Retrieve public information about the Rubrik cluster'
@@ -707,7 +759,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
             }
-        }    
+        } 
         'New-RubrikVCenter'      = @{
             '1.0' = @{
                 Description = 'Create VMware vCenter connection'
@@ -1240,6 +1292,19 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '204'
             }
         }
+        'Remove-RubrikVMSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired VM snapshot available for garbage collection'
+                URI         = '/api/v1/vmware/vm/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
+            }
+        }        
         'Remove-RubrikUnmanagedObject' = @{
             '1.0' = @{
                 Description = 'Bulk delete all unmanaged snapshots for the objects specified by objectId/objectType pairings.'
@@ -1586,6 +1651,34 @@ function Get-RubrikAPIData($endpoint) {
                     hostname = "hostname"
                     username = "username"
                     password = "password"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        } 
+        'Set-RubrikVolumeFilterDriver'      = @{
+            '1.0' = @{
+                Description = 'Installs or Uninstalls the Rubrik Volume Filter Driver'
+                URI         = '/api/internal/host/bulk/volume_filter_driver'
+                Method      = 'Post'
+                Body        = @{
+                    hostIds = 'hostIds'
+                    install = 'install'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.0' = @{
+                Description = 'Installs or Uninstalls the Rubrik Volume Filter Driver'
+                URI         = '/api/internal/host/bulk/volume_filter_driver'
+                Method      = 'Post'
+                Body        = @{
+                    hostIds = 'hostIds'
+                    install = 'install'
                 }
                 Query       = ''
                 Result      = ''
