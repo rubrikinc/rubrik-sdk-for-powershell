@@ -30,6 +30,7 @@ function Remove-RubrikAPIToken
   Param(
     # API Token ID value(s). For multiple ID values, encase the values in parenthesis and separate each ID with a comma. See the examples for more details.
     [Parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()]
     [Alias('tokenIds')]
     [Array]$TokenId,
     # Rubrik server IP or FQDN
