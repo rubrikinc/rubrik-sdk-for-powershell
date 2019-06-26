@@ -18,6 +18,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-06-26
 
+### Added [Tests for Get-RubrikHost]
+
+* Added unit test for Get-RubrikHost cmdlet
+
+### Fixed [Get-RubrikHost, Get-RubrikVM, Get-RubrikOracleDB]
+
+* Added formating around $result to convert to an array in order to support -DetailedObject with older versions of Powershell.  Addresses [319](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/319)
+
 ### Modified [New-RubrikSnapshot cmdlet]
 * Added support for Oracle to New-RubrikSnapshot
 * Added tests for New-RubrikSnapshot

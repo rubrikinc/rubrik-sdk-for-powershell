@@ -268,7 +268,9 @@ function Get-RubrikAPIData($endpoint) {
                     name                  = 'name'
                 }
                 Result      = 'data'
-                Filter      = ''
+                Filter      = @{
+                    Name            = 'name'
+                }
                 Success     = '200'
             }
         }
