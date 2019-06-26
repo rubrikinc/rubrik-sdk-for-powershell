@@ -22,6 +22,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added support for Oracle to New-RubrikSnapshot
 * Added tests for New-RubrikSnapshot
 
+## 2019-06-25
+
+### Added [New New-RubrikAPIToken cmdlet]
+
+* Added New-RubrikAPIToken cmdlet to address [316](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/316) and associated unit test.
+
+### Added [New Remove-RubrikAPIToken cmdlet]
+
+* Added Remove-RubrikAPIToken cmdlet to address [316](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/316) and associated unit test.
+
 ## 2019-06-24
 
 ### Added [New Get-RubrikOracleDB cmdlet]
@@ -45,7 +55,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added new `Update-RubrikVMwareVM` cmdlet to refresh a single VMware VM's metadata. This addresses issue [305](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/305)
 
-
 ## 2019-06-04
 
 ### Added [Resolving Issues]
@@ -56,11 +65,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Resolved bug in New-RubrikVMDKMount, thanks @Pierre-PvF
 
+## 2019-06-03
+
+### Added [Resolving issues, new cmdlet]
+
+* Added Set-RubrikVolumeFilterDriver cmdlet to support the installation/uninstallation of the Rubrik VFD on registered Windows hosts as per reported in [Issue 291](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/291).  Set-RubrikVolumeFilterDriver takes an array of string (hostIds) and an installed (true/false) parameter to determine whether to install or uninstall the VFD on the given hosts.
+
+### Added [ DetailedObject Support for Get-RubrikHost ]
+
+* Added a DetailedObject switch (similar to that on Get-RubrikVM) to the Get-RubrikHost cmdlet in order to grab more information when not querying by hostID.  This allows for more information to be returned by the API (IE hostVfdDriverState, hostVfdEnabled). This way users could query Rubrik hosts by name, check installation status, and pipe id's to the new Set-RubrikVolumeFilterDriver cmdlet for VFD installation.
+
 ## 2019-05-31
 
 ### Added [New-RubrikManagedVolume update]
 
 * Added `-ApplicationTag` parameter support to New-RubrikManagedVolume so users can specify which application the managed volume will be used for. This addresses issue [285](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/285).
+
 
 ## 2019-05-30
 
