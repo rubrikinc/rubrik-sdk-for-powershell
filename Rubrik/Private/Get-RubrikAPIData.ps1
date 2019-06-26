@@ -403,6 +403,28 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikOracleDB'                = @{
+            '1.0' = @{
+                Description = 'Get summary of all the Oracle DBs'
+                URI         = '/api/internal/oracle/db'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    is_live_mount           = 'is_live_mount'
+                    name                    = 'name'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                }
+                Success     = '200'
+            }
+        }        
         'Get-RubrikOrganization'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all Rubrik organizations'
@@ -411,7 +433,7 @@ function Get-RubrikAPIData($endpoint) {
                 Body        = ''
                 Query       = @{
                     is_global                = 'is_global'
-                    name                    = 'name'
+                    name                     = 'name'
                 }
                 Result      = 'data'
                 Filter      = @{
@@ -557,6 +579,7 @@ function Get-RubrikAPIData($endpoint) {
                     ManagedVolume = '/api/internal/managed_volume/{id}/snapshot'
                     Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
+                    Oracle = '/api/internal/oracle/{id}/snapshot'
                 }
                 Method      = 'Get'
                 Body        = ''
@@ -1072,6 +1095,7 @@ function Get-RubrikAPIData($endpoint) {
                     MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
                     VMware  = '/api/v1/vmware/vm/{id}/snapshot'
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
+                    Oracle = '/api/internal/oracle/db/{id}/snapshot'
                 }
                 Method      = 'Post'
                 Body        = @{

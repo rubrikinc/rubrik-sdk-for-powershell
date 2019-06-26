@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-26
+
+### Modified [New-RubrikSnapshot cmdlet]
+* Added support for Oracle to New-RubrikSnapshot
+* Added tests for New-RubrikSnapshot
+
 ## 2019-06-25
 
 ### Added [New New-RubrikAPIToken cmdlet]
@@ -25,6 +31,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added [New Remove-RubrikAPIToken cmdlet]
 
 * Added Remove-RubrikAPIToken cmdlet to address [316](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/316) and associated unit test.
+
+## 2019-06-24
+
+### Added [New Get-RubrikOracleDB cmdlet]
+
+* Added Get-RubrikOracleDB cmdlet to address [255](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/255) and associated unit test
 
 ## 2019-06-20
 
