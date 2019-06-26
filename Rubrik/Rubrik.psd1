@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.293'
+ModuleVersion = '4.0.0.297'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -77,14 +77,13 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 'Get-RubrikHyperVVM', 
                'Get-RubrikLDAP', 'Get-RubrikLogShipping', 'Get-RubrikManagedVolume', 
                'Get-RubrikManagedVolumeExport', 'Get-RubrikMount', 
-               'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 
-               'Get-RubrikOracleDB', 'Get-RubrikOrganization', 
-               'Get-RubrikReport', 'Get-RubrikReportData', 'Get-RubrikRequest', 
-               'Get-RubrikSetting', 'Get-RubrikSLA', 'Get-RubrikSnapshot', 
-               'Get-RubrikSoftwareVersion', 'Get-RubrikSQLInstance', 
-               'Get-RubrikSupportTunnel', 'Get-RubrikUnmanagedObject', 
-               'Get-RubrikVCenter', 'Get-RubrikVersion', 'Get-RubrikVM', 
-               'Get-RubrikVMSnapshot', 'Get-RubrikVMwareDatastore', 
+               'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 'Get-RubrikOracleDB', 
+               'Get-RubrikOrganization', 'Get-RubrikReport', 'Get-RubrikReportData', 
+               'Get-RubrikRequest', 'Get-RubrikSetting', 'Get-RubrikSLA', 
+               'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
+               'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 
+               'Get-RubrikUnmanagedObject', 'Get-RubrikVCenter', 'Get-RubrikVersion', 
+               'Get-RubrikVM', 'Get-RubrikVMSnapshot', 'Get-RubrikVMwareDatastore', 
                'Get-RubrikVMwareHost', 'Get-RubrikVolumeGroup', 
                'Get-RubrikVolumeGroupMount', 'Invoke-RubrikRESTCall', 
                'Move-RubrikMountVMDK', 'New-RubrikAPIToken', 
@@ -174,3 +173,4 @@ PrivateData = @{
 # DefaultCommandPrefix = ''
 
 }
+
