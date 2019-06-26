@@ -26,21 +26,26 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
     #CDM versions
     $versions = @('4.0','4.1','4.2','5.0')
 
-    $cases =@()
-    foreach($version in $versions){
-        foreach($function in $functions){
-         $cases += @{'v'=$version;'f' = $function}
-        }
+    $cases = foreach($function in $functions){
+        @{'v'=$versions;'f' = $function}
     }
+
     #endregion
-    it -Name "Get-RubrikAPIData <v> - <f> test" -TestCases $cases {
+    it -Name "Get-RubrikAPIData - <f> test" -TestCases $cases { 
         param($v,$f)
-        $global:rubrikConnection.version = $v
-        $resources = Get-RubrikAPIData -endpoint $f
-        $resources.Method | Should -BeIn @('Get','Post','Patch','Delete','Put')
-        $resources.URI | Should -Not -Be $null 
+        $v | ForEach-Object -Begin {
+            $methodresult = New-Object System.Collections.Generic.List[System.Boolean]
+            $uriresult = New-Object System.Collections.Generic.List[System.Boolean]
+        } -Process {
+            $global:rubrikConnection.version = $_
+            try {
+                $resources = Get-RubrikAPIData -endpoint $f
+                $methodresult.add($resources.Method -In @('Get','Post','Patch','Delete','Put')) | Out-Null
+                $uriresult.add($null -ne $resources.URI) | Out-Null
+            } catch {}
+        }
 
+        $methodresult | Should -Contain $true
+        $uriresult | Should -Contain $true
     }
-
-
 }
