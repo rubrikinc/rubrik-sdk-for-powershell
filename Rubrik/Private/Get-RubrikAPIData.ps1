@@ -1083,6 +1083,7 @@ function Get-RubrikAPIData($endpoint) {
                     MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
                     VMware  = '/api/v1/vmware/vm/{id}/snapshot'
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
+                    Oracle = '/api/internal/oracle/db/{id}/snapshot'
                 }
                 Method      = 'Post'
                 Body        = @{
