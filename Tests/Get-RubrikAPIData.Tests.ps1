@@ -29,23 +29,62 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
     $cases = foreach($function in $functions){
         @{'v'=$versions;'f' = $function}
     }
-
     #endregion
-    it -Name "Get-RubrikAPIData - <f> test" -TestCases $cases { 
-        param($v,$f)
-        $v | ForEach-Object -Begin {
-            $methodresult = New-Object System.Collections.Generic.List[System.Boolean]
-            $uriresult = New-Object System.Collections.Generic.List[System.Boolean]
-        } -Process {
-            $global:rubrikConnection.version = $_
-            try {
-                $resources = Get-RubrikAPIData -endpoint $f
-                $methodresult.add($resources.Method -In @('Get','Post','Patch','Delete','Put')) | Out-Null
-                $uriresult.add($null -ne $resources.URI) | Out-Null
-            } catch {}
+
+    Context -Name "Function specific tests" -Fixture {
+
+        it -Name "Get-RubrikAPIData - <f> test" -TestCases $cases { 
+            param($v,$f)
+            $v | ForEach-Object -Begin {
+                $methodresult = New-Object System.Collections.Generic.List[System.Boolean]
+                $uriresult = New-Object System.Collections.Generic.List[System.Boolean]
+            } -Process {
+                $global:rubrikConnection.version = $_
+                try {
+                    $resources = Get-RubrikAPIData -endpoint $f
+                    $methodresult.add($resources.Method -In @('Get','Post','Patch','Delete','Put')) | Out-Null
+                    $uriresult.add($null -ne $resources.URI) | Out-Null
+                } catch {}
+            }
+
+            $methodresult | Should -Contain $true
+            $uriresult | Should -Contain $true
+        }
+    }
+
+    Context -Name "Failure tests, validate incorrect input" -Fixture {
+        It -Name 'Get-RubrikAPIData - Incorrect version number, should fail' -Test {
+            '0.1337' | ForEach-Object -Begin {
+                $methodresult = New-Object System.Collections.Generic.List[System.Boolean]
+                $uriresult = New-Object System.Collections.Generic.List[System.Boolean]
+            } -Process {
+                $global:rubrikConnection.version = $_
+                try {
+                    $resources = Get-RubrikAPIData -endpoint Connect-Rubrik
+                    $methodresult.add($resources.Method -In @('Get','Post','Patch','Delete','Put')) | Out-Null
+                    $uriresult.add($null -ne $resources.URI) | Out-Null
+                } catch {}
+            }
+
+            $methodresult | Should -Not -Contain $true
+            $uriresult | Should -Not -Contain $true
         }
 
-        $methodresult | Should -Contain $true
-        $uriresult | Should -Contain $true
+        It -Name 'Get-RubrikAPIData - Non-existent function, should fail' -Test {
+            '4.2','5.0' | ForEach-Object -Begin {
+                $methodresult = New-Object System.Collections.Generic.List[System.Boolean]
+                $uriresult = New-Object System.Collections.Generic.List[System.Boolean]
+            } -Process {
+                $global:rubrikConnection.version = $_
+                try {
+                    $resources = Get-RubrikAPIData -endpoint Initialize-RoxieAtRubrik
+                    $methodresult.add($resources.Method -In @('Get','Post','Patch','Delete','Put')) | Out-Null
+                    $uriresult.add($null -ne $resources.URI) | Out-Null
+                } catch {}
+            }
+
+            $methodresult | Should -Not -Contain $true
+            $uriresult | Should -Not -Contain $true
+        }
     }
 }
