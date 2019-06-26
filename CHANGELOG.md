@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-26
+
+### Modified [New-RubrikSnapshot cmdlet]
+* Added support for Oracle to New-RubrikSnapshot
+* Added tests for New-RubrikSnapshot
+
 ## 2019-06-24
 
 ### Added [New Get-RubrikOracleDB cmdlet]
