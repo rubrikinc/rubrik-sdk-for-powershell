@@ -48,7 +48,7 @@ Describe -Name 'Public/New-RubrikSnapshot' -Tag 'Public', 'New-RubrikSnapshot' -
                 { New-RubrikSnapshot -id $null } |
                     Should -Throw "Cannot bind argument to parameter 'id' because it is an empty string."
             }
-            $results = New-RubrikSnapshot -id 'VirtualMachine:::11111' -SLA 'Gold' -ForceFull -Confirm:$false -WarningVariable warning
+            $results = New-RubrikSnapshot -id 'VirtualMachine:::11111' -SLA 'Gold' -ForceFull -Confirm:$false -WarningVariable warning -WarningAction SilentlyContinue
             It -Name 'Should issue warning' {
                 $warning | Should -BeLike "*Oracle and MSSQL databases*"
             }
