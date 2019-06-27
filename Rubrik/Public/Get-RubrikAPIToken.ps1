@@ -21,9 +21,11 @@ function Get-RubrikAPIToken
       Get-RubrikAPIToken
       This will return all generated API tokens belonging to the currently logged in user.
 
+      .EXAMPLE
       Get-RubrikAPIToken -tag roxie
       This will return all generated API tokens belonging to the currently logged in user with a 'roxie' tag.
 
+      .EXAMPLE
       Get-RubrikAPIToken -organizationId 1111-2222-3333
       This will return all generated API tokens assigned to the currently logged in user with the specified organization id.
   #>
@@ -31,11 +33,14 @@ function Get-RubrikAPIToken
   [CmdletBinding()]
   Param(
     # UserID to retrieve tokens from - defaults to currently logged in user
+    [Parameter(Mandatory = $true)]
     [Alias('user_id')]
     [String]$UserId = $rubrikconnection.userId,
     # Tag assigned to the API Token
     [String]$Tag,
+    # Organization ID the API Token belongs to.
     [String]$OrganizationId,
+    # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api
