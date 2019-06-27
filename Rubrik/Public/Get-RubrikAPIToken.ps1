@@ -13,7 +13,6 @@ function Get-RubrikAPIToken
       Twitter: @mwpreston
       GitHub: mwpreston
 
-
       .LINK
      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikAPIToken.html
 
