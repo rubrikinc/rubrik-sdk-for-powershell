@@ -30,9 +30,10 @@ function Sync-RubrikAnnotation
       using the defaults of "Rubrik_SLA" and "Rubrik_Backups" respectively.
 
       .EXAMPLE
-      Sync-RubrikAnnotation -SLAAnnotationName 'Backup-Policy' -BackupAnnotationName 'Backup-Snapshots'
+      Sync-RubrikAnnotation -SLAAnnotationName 'Backup-Policy' -BackupAnnotationName 'Backup-Snapshots' -LatestRubrikBackupAnnotationName 'Latest-Rubrik-Backup'
       This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count annotations
-      using the custom values of "Backup-Policy" and "Backup-Snapshots" respectively.
+      using the custom values of "Backup-Policy", "Backup-Snapshots", and 'Latest-Rubrik-Backup' respectively.
+
   #>
 
   [CmdletBinding()]
@@ -54,6 +55,12 @@ function Sync-RubrikAnnotation
     [ValidateNotNullorEmpty()]
     [ValidateLength(1,63)]
     [String]$BackupAnnotationName = 'Rubrik_Backups',
+    # Attribute name in vCenter for latest backup date
+    # By default, will use "Rubrik_Latest_Backup"
+    [Parameter(Position = 3)]
+    [ValidateNotNullorEmpty()]
+    [ValidateLength(1,63)]
+    [String]$LatestRubrikBackupAnnotationName = 'Rubrik_Latest_Backup',
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -70,14 +77,16 @@ function Sync-RubrikAnnotation
   Process {
 
     Write-Verbose -Message "Ensuring vCenter has attributes for $SLAAnnotationName and $BackupAnnotationName"
-    New-CustomAttribute -Name $SLAAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue
-    New-CustomAttribute -Name $BackupAnnotationName -TargetType VirtualMachine
+    $null = New-CustomAttribute -Name $SLAAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue
+    $null = New-CustomAttribute -Name $BackupAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue
+    $null = New-CustomAttribute -Name $LatestRubrikBackupAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue
 
     Write-Verbose -Message 'Updating vCenter annotations'
-    foreach ($_ in (Get-RubrikVM -SLA $SLA))
+    foreach ($_ in (Get-RubrikVM -SLA $SLA -DetailedObject))
     {
       $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $SLAAnnotationName -Value $_.effectiveSlaDomainName
       $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $BackupAnnotationName -Value $_.snapshotCount
+      $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $LatestRubrikBackupAnnotationName -Value ($_.snapshots | Sort-Object -Property date -Descending | Select -First 1).date
       Write-Verbose -Message "Successfully tagged $($_.name) as $($_.effectiveSlaDomainName)"
     }
 
