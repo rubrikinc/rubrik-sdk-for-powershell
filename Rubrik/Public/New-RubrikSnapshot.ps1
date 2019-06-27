@@ -77,7 +77,6 @@ function New-RubrikSnapshot
 
     # Throw erros if -ForceFull is used with anything other than MSSQL or Oracle
     if ((-Not $id.contains('OracleDatabase:::') -or $id.contains('MssqlDatabase:::')) -and $ForceFull) {
-      #throw 'The ForceFull parameter can only be applied to Oracle or MSSQL Databases.'
       Write-Warning -Message "The ForceFull parameter is only applicable to Oracle and MSSQL databases. The process will continue to take an incremental snapshot"
     }
 
