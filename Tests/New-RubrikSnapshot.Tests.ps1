@@ -28,7 +28,7 @@ Describe -Name 'Public/New-RubrikSnapshot' -Tag 'Public', 'New-RubrikSnapshot' -
         }
         Mock -CommandName Test-QueryParam -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'slaid' = 'https://server/api/internal/oracle/database/11111/snapshot'
+                'uri' = ('https://server/v1/vm/VirtualMachine:::123123123/snapshot')
             }
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
@@ -42,10 +42,15 @@ Describe -Name 'Public/New-RubrikSnapshot' -Tag 'Public', 'New-RubrikSnapshot' -
             ( New-RubrikSnapshot -id 1 -SLA 'Gold' -Confirm:$false).status |
                 Should -BeExactly 'QUEUED'
         }
+
         Context -Name 'Parameter Validation' {
             It -Name 'Parameter id cannot be $null or empty' -Test {
                 { New-RubrikSnapshot -id $null } |
                     Should -Throw "Cannot bind argument to parameter 'id' because it is an empty string."
+            }
+            $results = New-RubrikSnapshot -id 'VirtualMachine:::11111' -SLA 'Gold' -ForceFull -Confirm:$false -WarningVariable warning
+            It -Name 'Should issue warning' {
+                $warning | Should -BeLike "*Oracle and MSSQL databases*"
             }
 
         }
