@@ -33,7 +33,7 @@ function Get-RubrikAPIToken
   [CmdletBinding()]
   Param(
     # UserID to retrieve tokens from - defaults to currently logged in user
-    [Parameter(Mandatory = $true)]
+    [ValidateNotNullorEmpty()]
     [Alias('user_id')]
     [String]$UserId = $rubrikconnection.userId,
     # Tag assigned to the API Token
