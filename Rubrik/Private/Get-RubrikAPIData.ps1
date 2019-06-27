@@ -111,6 +111,23 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikAPIToken'         = @{
+            '5.0' = @{
+                Description = 'Retrieves list of generated API tokens from the Rubrik cluster'
+                URI         = '/api/internal/session'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    user_id     = 'user_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'tag'               = 'tag'
+                    'organizationId'    = 'organizationId'
+                }
+                Success     = '200'
+            }
+        }       
         'Get-RubrikAPIVersion'         = @{
             '1.0' = @{
                 Description = 'Retrieves software version of the Rubrik cluster'
