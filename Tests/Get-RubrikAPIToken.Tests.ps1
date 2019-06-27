@@ -63,6 +63,14 @@ Describe -Name 'Public/Get-RubrikAPIToken' -Tag 'Public', 'Get-RubrikAPIToken' -
             (Get-RubrikAPIToken -Tag 'nonexistant').count |
                 Should -BeExactly 0
         }
+        It -Name 'Parameter UserID cannot be $null' -Test {
+            { Get-RubrikAPIToken -UserId $null } |
+                Should -Throw "Cannot validate argument on parameter 'UserId'"
+        }
+        It -Name 'Parameter UserId cannot be empty' -Test {
+            { Get-RubrikAPIToken -UserId '' } |
+                Should -Throw "Cannot validate argument on parameter 'UserId'"
+        }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
