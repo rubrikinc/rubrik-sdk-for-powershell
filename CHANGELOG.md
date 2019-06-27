@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-27
+
+### Changed [New-RubrikSnapshot]
+
+* Cmdlet will now display a warning if -ForceFull is set on any other protected object other than Oracle or SQL databases.
+* This is just a warning and the cmdlet will continue to run, performing an incremental backup.
+* This addresses [315](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/315)
+
 ## 2019-06-26
 
 ### Added [Tests for Get-RubrikHost]
