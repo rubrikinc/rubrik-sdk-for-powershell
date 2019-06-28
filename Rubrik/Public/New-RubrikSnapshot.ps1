@@ -40,7 +40,7 @@ function New-RubrikSnapshot
     # The snapshot will be retained indefinitely and available under Unmanaged Objects
     [Parameter(ParameterSetName = 'SLA_Forever')]
     [Switch]$Forever,
-    # Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
+    # Whether to force a full snapshot or an incremental. Only valid with MSSQL and Oracle Databases.
     [Alias('forceFullSnapshot')]
     [Switch]$ForceFull,
     # SLA id value
@@ -74,14 +74,22 @@ function New-RubrikSnapshot
   Process {
 
     #region One-off
-    
+
+    # Display a warning if -ForceFull is used with anything other than MSSQL or Oracle
+    if ((-Not ($id.contains('OracleDatabase:::') -or $id.contains('MssqlDatabase:::'))) -and $ForceFull) {
+      Write-Warning -Message ('Using the ForceFull parameter with a {0} object is not possible, this functionality is only available to Oracle and MSSQL databases. The process will continue to take an incremental snapshot' -f $Id.Split(':')[0])
+    }
+
     if ($PSCmdlet.ShouldProcess($SLA, 'Testing SLA')) {
       $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
     }
     #endregion One-off
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values) 
+
+
+
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

@@ -35,7 +35,7 @@ Describe -Name 'Public/Get-RubrikVM' -Tag 'Public', 'Get-RubrikVM' -Fixture {
             }
         }
         It -Name 'should overwrite $SLAID' -Test {
-            ( Get-RubrikVM -SLA 'test-valid_sla_name' -Verbose ).Name |
+            ( Get-RubrikVM -SLA 'test-valid_sla_name' ).Name |
                 Should -BeExactly 'test-vm1'
         }
         Assert-VerifiableMock
@@ -53,7 +53,7 @@ Describe -Name 'Public/Get-RubrikVM' -Tag 'Public', 'Get-RubrikVM' -Fixture {
             }
         }
         It -Name 'should not overwrite $SLAID' -Test {
-            ( Get-RubrikVM -SLAID 'test-valid_sla_id' -Verbose ).Name |
+            ( Get-RubrikVM -SLAID 'test-valid_sla_id' ).Name |
                 Should -BeExactly 'test-vm1'
         }
         Assert-VerifiableMock

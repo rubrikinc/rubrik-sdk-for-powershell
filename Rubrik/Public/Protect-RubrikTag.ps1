@@ -95,7 +95,7 @@ function Protect-RubrikTag
       $DoNotProtect = $false
       $Inherit = $false
       if ($vmlist.count -gt 0) {
-        $vcuuid = ((Get-RubrikVM -VM ($vmlist[0].Name) -PrimaryClusterID 'local').vCenterId) -replace 'vCenter:::', ''
+        $vcuuid = ((Get-RubrikVM -VM ($vmlist[0].Name) -PrimaryClusterID 'local' | where-object {$_.isRelic -eq $false}).vCenterId) -replace 'vCenter:::', ''
       }
     }
     catch

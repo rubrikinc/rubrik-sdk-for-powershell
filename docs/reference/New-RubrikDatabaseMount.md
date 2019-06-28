@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikDatabaseMount.html
 schema: 2.0.0
 ---
 
@@ -14,14 +14,14 @@ Create a new Live Mount from a protected database
 
 ### Recovery_timestamp
 ```
-New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] [-MountedDatabaseName <String>]
- [-TimestampMs <Int64>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
+New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] -MountedDatabaseName <String>
+ [-TimestampMs <Int64>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Recovery_DateTime
 ```
-New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] [-MountedDatabaseName <String>]
- [-RecoveryDateTime <DateTime>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
+New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] -MountedDatabaseName <String>
+ [-RecoveryDateTime <DateTime>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,7 +29,7 @@ The New-RubrikDatabaseMount cmdlet is used to create a Live Mount (clone) of a p
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 New-RubrikDatabaseMount -id $db.id -targetInstanceId $db.instanceId -mountedDatabaseName 'BAR-LM' -recoveryDateTime (Get-date (Get-RubrikDatabase -id $db.id).latestRecoveryPoint)
 ```
@@ -46,7 +46,7 @@ Rubrik id of the database
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -78,7 +78,7 @@ Type: String
 Parameter Sets: (All)
 Aliases: DatabaseName, MountName
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -91,7 +91,7 @@ Recovery Point desired in the form of Epoch with Milliseconds
 ```yaml
 Type: Int64
 Parameter Sets: Recovery_timestamp
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -106,7 +106,7 @@ Recovery Point desired in the form of DateTime value
 ```yaml
 Type: DateTime
 Parameter Sets: Recovery_DateTime
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +121,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -136,7 +136,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -176,6 +176,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -187,5 +190,5 @@ GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikDatabaseMount.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikDatabaseMount.html)
 
