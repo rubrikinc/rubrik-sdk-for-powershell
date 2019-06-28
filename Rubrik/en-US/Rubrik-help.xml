@@ -14011,7 +14011,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="forceFullSnapshot">
           <maml:name>ForceFull</maml:name>
           <maml:Description>
-            <maml:para>Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.</maml:para>
+            <maml:para>Whether to force a full snapshot or an incremental. Only valid with MSSQL and Oracle Databases.</maml:para>
           </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -14106,7 +14106,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="forceFullSnapshot">
           <maml:name>ForceFull</maml:name>
           <maml:Description>
-            <maml:para>Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.</maml:para>
+            <maml:para>Whether to force a full snapshot or an incremental. Only valid with MSSQL and Oracle Databases.</maml:para>
           </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -14214,7 +14214,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="forceFullSnapshot">
         <maml:name>ForceFull</maml:name>
         <maml:Description>
-          <maml:para>Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.</maml:para>
+          <maml:para>Whether to force a full snapshot or an incremental. Only valid with MSSQL and Oracle Databases.</maml:para>
         </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
