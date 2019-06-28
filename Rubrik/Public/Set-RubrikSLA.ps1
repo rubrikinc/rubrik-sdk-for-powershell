@@ -24,6 +24,10 @@ function Set-RubrikSLA
       New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24 -DailyFrequency 1 -DailyRetention 30
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours
       while also keeping one backup per day for 30 days.
+
+      .EXAMPLE
+      Get-RubrikSLA -Name 'Silver (Managed by Polaris)' | Set-RubrikSLA -HourlyRetention 4 -HourlyFrequency 5 -Verbose
+      Will get information of Silver SLA and only change the values specified in the Set-RubrikSLA function
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
