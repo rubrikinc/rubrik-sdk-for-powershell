@@ -1,7 +1,7 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://github.com/rubrikinc/PowerShell-Module
+online version: http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikSnapshot.html
 schema: 2.0.0
 ---
 
@@ -15,19 +15,13 @@ Takes an on-demand Rubrik snapshot of a protected object
 ### SLA_Explicit
 ```
 New-RubrikSnapshot -id <String> [-SLA <String>] [-ForceFull] [-SLAID <String>] [-Server <String>]
- [-api <String>] [-WhatIf] [-Confirm]
+ [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### SLA_Unprotected
+### SLA_Forever
 ```
-New-RubrikSnapshot -id <String> [-DoNotProtect] [-ForceFull] [-SLAID <String>] [-Server <String>]
- [-api <String>] [-WhatIf] [-Confirm]
-```
-
-### SLA_Inherit
-```
-New-RubrikSnapshot -id <String> [-Inherit] [-ForceFull] [-SLAID <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm]
+New-RubrikSnapshot -id <String> [-Forever] [-ForceFull] [-SLAID <String>] [-Server <String>] [-api <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,23 +29,23 @@ The New-RubrikSnapshot cmdlet will trigger an on-demand snapshot for a specific 
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
-Get-RubrikVM 'Server1' | New-RubrikSnapshot
+Get-RubrikVM 'Server1' | New-RubrikSnapshot -Forever
 ```
 
-This will trigger an on-demand backup for any virtual machine named "Server1"
+This will trigger an on-demand backup for any virtual machine named "Server1" that will be retained indefinitely and available under Unmanaged Objects.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-RubrikFileset 'C_Drive' | New-RubrikSnapshot -SLA 'Gold'
 ```
 
-This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain
+This will trigger an on-demand backup for any fileset named "C_Drive" using the "Gold" SLA Domain.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
-Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull
+Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -SLA 'Silver'
 ```
 
 This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
@@ -64,7 +58,7 @@ Rubrik's id of the object
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -79,7 +73,7 @@ The SLA Domain in Rubrik
 ```yaml
 Type: String
 Parameter Sets: SLA_Explicit
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -88,28 +82,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DoNotProtect
-Removes the SLA Domain assignment
+### -Forever
+The snapshot will be retained indefinitely and available under Unmanaged Objects
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: SLA_Unprotected
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Inherit
-Inherits the SLA Domain assignment from a parent object
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: SLA_Inherit
-Aliases: 
+Parameter Sets: SLA_Forever
+Aliases:
 
 Required: False
 Position: Named
@@ -120,7 +99,7 @@ Accept wildcard characters: False
 
 ### -ForceFull
 Whether to force a full snapshot or an incremental.
-Only valid with MSSQL Databases.
+Only valid with MSSQL and Oracle Databases.
 
 ```yaml
 Type: SwitchParameter
@@ -140,7 +119,7 @@ SLA id value
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +134,7 @@ Rubrik server IP or FQDN
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -170,7 +149,7 @@ API version
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -210,6 +189,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -221,5 +203,5 @@ GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikSnapshot.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikSnapshot.html)
 

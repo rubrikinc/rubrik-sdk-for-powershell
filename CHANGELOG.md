@@ -16,6 +16,126 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-27 
+
+### Changed [Sync-RubrikAnnotation]
+
+* Added -DetailedObject to Get-RubrikVM in order to return the snapshots
+* Added a third annotation to store the date of the latest Rubrik snapshot.
+* Added associated unit tests for Sync-RubrikAnnotation
+
+### Changed [New-RubrikSnapshot]
+
+* Cmdlet will now display a warning if -ForceFull is set on any other protected object other than Oracle or SQL databases.
+* This is just a warning and the cmdlet will continue to run, performing an incremental backup.
+* This addresses [315](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/315)
+
+### Fixed [Protect-RubrikTag]
+
+* modified Protect-RubrikTag in order to ignore relic's when retrieving the vCenter UUID.
+* Addresses [Issue 311](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/311)
+* added associated Unit test for the cmdlet.
+
+## 2019-06-26
+
+### Added [Tests for Get-RubrikHost]
+
+* Added unit test for Get-RubrikHost cmdlet
+
+### Added [Get-RubrikAPIToken cmdlet]
+
+* Added Get-RubrikAPIToken cmdlet to address [321](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/321) and associated unit test.
+
+### Modified [New-RubrikSnapshot cmdlet]
+
+* Added support for Oracle to New-RubrikSnapshot
+* Added tests for New-RubrikSnapshot
+
+### Fixed [Get-RubrikHost, Get-RubrikVM, Get-RubrikOracleDB]
+
+* Added formating around $result to convert to an array in order to support -DetailedObject with older versions of Powershell.  Addresses [319](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/319)
+
+## 2019-06-25
+
+### Added [New New-RubrikAPIToken cmdlet]
+
+* Added New-RubrikAPIToken cmdlet to address [316](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/316) and associated unit test.
+
+### Added [New Remove-RubrikAPIToken cmdlet]
+
+* Added Remove-RubrikAPIToken cmdlet to address [316](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/316) and associated unit test.
+
+## 2019-06-24
+
+### Added [New Get-RubrikOracleDB cmdlet]
+
+* Added Get-RubrikOracleDB cmdlet to address [255](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/255) and associated unit test
+
+## 2019-06-20
+
+### Added [New Remove-RubrikVMSnapshot cmdlet]
+
+* Added Remove-RubrikVMSnapshot cmdlet to address [148](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/148) and associated unit test
+
+### Changed [Additional logging and info]
+
+* Updated Invoke-RubrikWebRequest so the HTTP status code returned from the API call is displayed when verbose logging is enabled
+* Updated Submit-Request to handle `Delete` API calls differently than other calls. Previously `Delete` operations did not surface any status to the user. With this change, the HTTP response code is checked to verify it matches the expected response. If so, it returns a PSObject with the HTTP code and Status = 'Success'.
+
+## 2019-06-18
+
+### Added [Update-RubrikVMwareVM]
+
+* Added new `Update-RubrikVMwareVM` cmdlet to refresh a single VMware VM's metadata. This addresses issue [305](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/305)
+
+## 2019-06-04
+
+### Added [Resolving Issues]
+
+* Added Export-RubrikVM cmdlet to address [Issue 239](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/239). Since the cmdlet requires IDs for both a VMware datastore and a VMware host, 2 other cmdlets were developed, Get-RubrikVMwareDatastore and Get-RubrikVMwareHost to make the whole process easier.
+
+### Changed [Resolved issues]
+
+* Resolved bug in New-RubrikVMDKMount, thanks @Pierre-PvF
+
+## 2019-06-03
+
+### Added [Resolving issues, new cmdlet]
+
+* Added Set-RubrikVolumeFilterDriver cmdlet to support the installation/uninstallation of the Rubrik VFD on registered Windows hosts as per reported in [Issue 291](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/291).  Set-RubrikVolumeFilterDriver takes an array of string (hostIds) and an installed (true/false) parameter to determine whether to install or uninstall the VFD on the given hosts.
+
+### Added [ DetailedObject Support for Get-RubrikHost ]
+
+* Added a DetailedObject switch (similar to that on Get-RubrikVM) to the Get-RubrikHost cmdlet in order to grab more information when not querying by hostID.  This allows for more information to be returned by the API (IE hostVfdDriverState, hostVfdEnabled). This way users could query Rubrik hosts by name, check installation status, and pipe id's to the new Set-RubrikVolumeFilterDriver cmdlet for VFD installation.
+
+## 2019-05-31
+
+### Added [New-RubrikManagedVolume update]
+
+* Added `-ApplicationTag` parameter support to New-RubrikManagedVolume so users can specify which application the managed volume will be used for. This addresses issue [285](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/285).
+
+
+## 2019-05-30
+
+### Changed [Resolving issues]
+
+* Updated Move-RubrikMountVMDK and Test-DateDifference to resolve bugs reported in [250](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/250). Move-RubrikMountVMDK will try to find the snapshot closest to the date specified, within one day. Any valid PowerShell `datetime` formatted string will be accepted as an input, but greater specificity will lead to a much better chance of matching the intended snapshot.
+
+## 2019-05-27
+
+### Changed [Added functionality and resolved issues]
+
+* Added -name parameter to Get-RubrikOrganization
+* Updated Get-RubrikDatabase, Get-RubrikFileset, Get-RubrikHyperVVM, GetRubrikNutanixVM and Get-RubrikVolumeGroup to address issue [223](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/223). Calls to Test-RubrikSLA were inadvertently overwriting the $SLAID variable, causing the paramater to be ignored.
+* Added Custom User Agent value to HTTP headers in Connect-Rubrik function
+
+## 2019-05-22
+
+### Changed [Resolving issues]
+
+ * Get-RubrikOrganization will only return an exact match as per [224](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/224)
+ * Updated documentation to fix errors on Protect-RubrikVM entry as per [162](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/162)
+
 ## 2019-03-27 [Quickstart Documentation Update]
 
 ### Changed
