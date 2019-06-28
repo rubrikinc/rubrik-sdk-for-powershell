@@ -138,14 +138,12 @@ function Set-RubrikSLA
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
       
-    if ($HourlyFrequency -and $HourlyRetention)
-    {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true))
-      {
+    if ($HourlyFrequency -and $HourlyRetention) {
+      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Hourly';retentionType=$HourlyRetentionUnit}
-        } elseif ($uri.contains('v2')) {
+      } elseif ($uri.contains('v2')) {
             $body.advancedUiConfig = $false
             $body.frequencies += @{'Hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
       } else {
@@ -158,14 +156,12 @@ function Set-RubrikSLA
       [bool]$ParamValidation = $true
     }
     
-    if ($DailyFrequency -and $DailyRetention)
-    {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true))
-      {
+    if ($DailyFrequency -and $DailyRetention) {
+      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionUnit}
-        } elseif ($uri.contains('v2')) {
+      } elseif ($uri.contains('v2')) {
             $body.advancedUiConfig = $false
             $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
       } else { 
@@ -178,14 +174,12 @@ function Set-RubrikSLA
       [bool]$ParamValidation = $true
     }    
 
-    if ($WeeklyFrequency -and $WeeklyRetention)
-    { 
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true))
-      {
+    if ($WeeklyFrequency -and $WeeklyRetention) { 
+      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
         $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention;dayOfWeek=$DayOfWeek}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Weekly';retentionType='Weekly'}
-        } elseif ($uri.contains('v2')) {
+      } elseif ($uri.contains('v2')) {
             $body.advancedUiConfig = $false
             $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention}}
       } else {
@@ -199,14 +193,12 @@ function Set-RubrikSLA
       [bool]$ParamValidation = $true
     }    
 
-    if ($MonthlyFrequency -and $MonthlyRetention)
-    {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true))
-      {
+    if ($MonthlyFrequency -and $MonthlyRetention) {
+      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionUnit}
-        } elseif ($uri.contains('v2')) {
+      } elseif ($uri.contains('v2')) {
             $body.advancedUiConfig = $false
             $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention}}
       } else { 
@@ -219,14 +211,12 @@ function Set-RubrikSLA
       [bool]$ParamValidation = $true
     }  
 
-    if ($QuarterlyFrequency -and $QuarterlyRetention)
-    {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true))
-        {
+    if ($QuarterlyFrequency -and $QuarterlyRetention) {
+      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
           $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
           $body.showAdvancedUi = $true
           $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionUnit}
-        } elseif ($uri.contains('v2')) {
+      } elseif ($uri.contains('v2')) {
             $body.advancedUiConfig = $false
             $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention}}
       } else { 
@@ -240,14 +230,12 @@ function Set-RubrikSLA
       [bool]$ParamValidation = $true
     }  
 
-    if ($YearlyFrequency -and $YearlyRetention)
-    {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true))
-      {
+    if ($YearlyFrequency -and $YearlyRetention) {
+      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
         $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Yearly';retentionType='Yearly'}
-        } elseif ($uri.contains('v2')) {
+      } elseif ($uri.contains('v2')) {
             $body.advancedUiConfig = $false  
             $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention}}
       } else {  
