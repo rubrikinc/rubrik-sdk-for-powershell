@@ -33,7 +33,7 @@ function Set-RubrikSLA
       ValueFromPipelineByPropertyName = $true,
       Mandatory = $true )]
     [ValidateNotNullOrEmpty()]
-    [String]$SLAid,
+    [String]$id,
     # SLA Domain Name
     [Alias('SLA')]
     [String]$Name,
