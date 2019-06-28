@@ -21,6 +21,10 @@ function Get-RubrikEvent
       This will query for any 'Backup' events on the Rubrik VM object named 'vm-foo'
 
       .EXAMPLE
+      Get-RubrikVM -Name jbrasser-win | Get-RubrikEvent -Limit 10
+      Queries the Rubrik Cluster for any vms named jbrasser-win and return the last ten events for each VM found
+
+      .EXAMPLE
       Get-RubrikEvent -EventType Archive -Limit 100
       This qill query the latest 100 Archive events on the currently logged in Rubrik cluster
 
@@ -32,7 +36,7 @@ function Get-RubrikEvent
 
   [CmdletBinding()]
   Param(
-    # Maximum number of events retrieved
+    # Maximum number of events retrieved, default is to return 50 objects
     [parameter()]
     [int]$Limit = 50,
     # Earliest event retrieved
