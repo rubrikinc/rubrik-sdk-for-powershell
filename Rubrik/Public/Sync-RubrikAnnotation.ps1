@@ -33,7 +33,6 @@ function Sync-RubrikAnnotation
       Sync-RubrikAnnotation -SLAAnnotationName 'Backup-Policy' -BackupAnnotationName 'Backup-Snapshots' -LatestRubrikBackupAnnotationName 'Latest-Rubrik-Backup'
       This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count annotations
       using the custom values of "Backup-Policy", "Backup-Snapshots", and 'Latest-Rubrik-Backup' respectively.
-
   #>
 
   [CmdletBinding()]
@@ -82,8 +81,7 @@ function Sync-RubrikAnnotation
     $null = New-CustomAttribute -Name $LatestRubrikBackupAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue
 
     Write-Verbose -Message 'Updating vCenter annotations'
-    foreach ($_ in (Get-RubrikVM -SLA $SLA -DetailedObject))
-    {
+    foreach ($_ in (Get-RubrikVM -SLA $SLA -DetailedObject)) {
       $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $SLAAnnotationName -Value $_.effectiveSlaDomainName
       $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $BackupAnnotationName -Value $_.snapshotCount
       $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $LatestRubrikBackupAnnotationName -Value ($_.snapshots | Sort-Object -Property date -Descending | Select -First 1).date
