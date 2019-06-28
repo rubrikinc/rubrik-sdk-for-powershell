@@ -36,7 +36,7 @@ Common PowerShell module paths include:
 1. Download the [master branch](https://github.com/rubrikinc/PowerShell-Module) to your workstation.
 1. Open a Powershell console with the _Run as Administrator_ option.
 1. Run `Set-ExecutionPolicy` using the parameter _RemoteSigned_ or _Bypass_.
-1. Run the `Install-Rubrik.ps1 `script in the root of this repository and follow the prompts to install, upgrade, or delete your Rubrik Module contents.
+1. Run the `Install-Rubrik.ps1` script in the root of this repository and follow the prompts to install, upgrade, or delete your Rubrik Module contents.
 
 ## Option 3: Manual Installation
 
@@ -46,10 +46,12 @@ Common PowerShell module paths include:
 1. Run `Set-ExecutionPolicy` using the argument _RemoteSigned_ or _Bypass_.
 
 ## Options 4: Download Module from PowerShell Gallery for redistribution
-1.
-1.
-1.
-1.
+
+1. Navigate to [PowerShell Gallery - Rubrik](https://www.powershellgallery.com/packages/Rubrik)
+1. Click Manual Download
+1. Click Download the raw nupkg file
+   1. To directly use the module the .nupkg file can be extracted at the destination system, be sure the place the file in PSModulePath to allow to automatic loading
+   1. Alternatively this file can be imported in a local nupkg repository for further distribution
 
 ## Verification
 
