@@ -325,9 +325,9 @@ function Set-RubrikSLA
     Write-Verbose -Message "Body = $body"
     #endregion
 
-    #$result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    #$result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    #$result = Test-FilterObject -filter ($resources.Filter) -result $result
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
     return $result
 
