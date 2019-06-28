@@ -35,6 +35,8 @@ function Set-RubrikSLA
     [ValidateNotNullOrEmpty()]
     [String]$id,
     # SLA Domain Name
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
     [Alias('SLA')]
     [String]$Name,
     # Hourly frequency to take backups
@@ -42,15 +44,15 @@ function Set-RubrikSLA
     # Number of days or weeks to retain the hourly backups
     [int]$HourlyRetention,
     # Retention unit to apply to hourly snapshots
-    [ValidateSet('Days','Weeks')]
-    [String]$HourlyRetentionUnit='Days',
+    [ValidateSet('Daily','Weekly')]
+    [String]$HourlyRetentionUnit='Daily',
     # Daily frequency to take backups
     [int]$DailyFrequency,
     # Number of days or weeks to retain the daily backups
     [int]$DailyRetention,
     # Retention unit to apply to daily snapshots
-    [ValidateSet('Days','Weeks')]
-    [String]$DailyRetentionUnit='Days',
+    [ValidateSet('Daily','Weekly')]
+    [String]$DailyRetentionUnit='Daily',
     # Weekly frequency to take backups
     [int]$WeeklyFrequency,
     # Number of weeks to retain the weekly backups
@@ -66,8 +68,8 @@ function Set-RubrikSLA
     [ValidateSet('FirstDay','Fifteenth','LastDay')]
     [String]$DayOfMonth='LastDay',
     # Retention unit to apply to monthly snapshots
-    [ValidateSet('Months','Quarters','Years')]
-    [String]$MonthlyRetentionUnit='Months',
+    [ValidateSet('Monthly','Quarterly','Yearly')]
+    [String]$MonthlyRetentionUnit='Monthly',
     # Quarterly frequency to take backups
     [int]$QuarterlyFrequency,
     # Number of quarters or years to retain the monthly backup
@@ -79,8 +81,8 @@ function Set-RubrikSLA
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$FirstQuarterStartMonth='January',
     # Retention unit to apply to quarterly snapshots
-    [ValidateSet('Quarters','Years')]
-    [String]$QuarterlyRetentionUnit='Quarters',
+    [ValidateSet('Quarterly','Yearly')]
+    [String]$QuarterlyRetentionUnit='Quarterly',
     # Yearly frequency to take backups
     [int]$YearlyFrequency,
     # Number of years to retain the yearly backups
