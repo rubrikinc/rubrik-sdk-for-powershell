@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-06-27 
+
+### Changed [quick-start.md] - Additional download instructions
+
+* Added a 4th option for downloading and distributing the Rubrik SDK for PowerShell
+
 ## 2019-06-20
 
 ### Added [New Remove-RubrikVMSnapshot cmdlet]
