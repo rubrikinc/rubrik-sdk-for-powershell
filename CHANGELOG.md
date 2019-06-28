@@ -24,6 +24,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * This is just a warning and the cmdlet will continue to run, performing an incremental backup.
 * This addresses [315](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/315)
 
+### Fixed [Protect-RubrikTag]
+
+* modified Protect-RubrikTag in order to ignore relic's when retrieving the vCenter UUID.
+* Addresses [Issue 311](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/311)
+* added associated Unit test for the cmdlet.
+
 ## 2019-06-26
 
 ### Added [Tests for Get-RubrikHost]
