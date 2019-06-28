@@ -75,9 +75,9 @@ function New-RubrikSnapshot
 
     #region One-off
 
-    # Throw erros if -ForceFull is used with anything other than MSSQL or Oracle
-    if ((-Not $id.contains('OracleDatabase:::') -or $id.contains('MssqlDatabase:::')) -and $ForceFull) {
-      Write-Warning -Message "The ForceFull parameter is only applicable to Oracle and MSSQL databases. The process will continue to take an incremental snapshot"
+    # Display a warning if -ForceFull is used with anything other than MSSQL or Oracle
+    if ((-Not ($id.contains('OracleDatabase:::') -or $id.contains('MssqlDatabase:::'))) -and $ForceFull) {
+      Write-Warning -Message ('Using the ForceFull parameter with a {0} object is not possible, this functionality is only available to Oracle and MSSQL databases. The process will continue to take an incremental snapshot' -f $Id.Split(':')[0])
     }
 
     if ($PSCmdlet.ShouldProcess($SLA, 'Testing SLA')) {
