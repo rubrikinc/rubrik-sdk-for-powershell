@@ -228,6 +228,31 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikEvent'               = @{
+            '1.0' = @{
+                Description = 'Retrieve information for the latest of related events that match the value specified in any of the following categories: type, status, or ID, and limit events by date.'
+                URI         = '/api/internal/event'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    limit = 'limit'
+                    after_id = 'after_id'
+                    event_series_id = 'event_series_id'
+                    status = 'status'
+                    event_type = 'event_type'
+                    object_ids = 'object_ids'
+                    object_name = 'object_name'
+                    before_date = 'before_date'
+                    after_date = 'after_date'
+                    object_type = 'object_type'
+                    show_only_latest = 'show_only_latest'
+                    filter_only_on_latest = 'filter_only_on_latest'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikFileset'            = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for each fileset. Optionally, filter the retrieved information.'

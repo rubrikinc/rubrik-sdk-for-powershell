@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added Get-RubrikEvent per [289](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/289)
+
+### Added
+
 * Testing for MacOS and Linux as per [143](https://github.com/rubrikinc/PowerShell-Module/issues/143)
 
 ## [4.0.0] - 2017-07-07
