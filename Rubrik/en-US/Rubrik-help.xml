@@ -24644,6 +24644,18 @@
           </dev:type>
           <dev:defaultValue>Rubrik_Backups</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>LatestRubrikBackupAnnotationName</maml:name>
+          <maml:Description>
+            <maml:para>Attribute name in vCenter for latest backup date By default, will use "Rubrik_Latest_Backup"</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Rubrik_Latest_Backup</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Server</maml:name>
           <maml:Description>
@@ -24707,6 +24719,18 @@
         </dev:type>
         <dev:defaultValue>Rubrik_Backups</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>LatestRubrikBackupAnnotationName</maml:name>
+        <maml:Description>
+          <maml:para>Attribute name in vCenter for latest backup date By default, will use "Rubrik_Latest_Backup"</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Rubrik_Latest_Backup</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Server</maml:name>
         <maml:Description>
@@ -24756,9 +24780,9 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Sync-RubrikAnnotation -SLAAnnotationName 'Backup-Policy' -BackupAnnotationName 'Backup-Snapshots'</dev:code>
+        <dev:code>Sync-RubrikAnnotation -SLAAnnotationName 'Backup-Policy' -BackupAnnotationName 'Backup-Snapshots' -LatestRubrikBackupAnnotationName 'Latest-Rubrik-Backup'</dev:code>
         <dev:remarks>
-          <maml:para>This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count annotations using the custom values of "Backup-Policy" and "Backup-Snapshots" respectively.</maml:para>
+          <maml:para>This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count annotations using the custom values of "Backup-Policy", "Backup-Snapshots", and 'Latest-Rubrik-Backup' respectively.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
