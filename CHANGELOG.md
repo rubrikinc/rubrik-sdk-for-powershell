@@ -16,7 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 2019-06-27
+## 2019-06-27 
+
+### Changed [Sync-RubrikAnnotation]
+
+* Added -DetailedObject to Get-RubrikVM in order to return the snapshots
+* Added a third annotation to store the date of the latest Rubrik snapshot.
+* Added associated unit tests for Sync-RubrikAnnotation
 
 ### Changed [New-RubrikSnapshot]
 
