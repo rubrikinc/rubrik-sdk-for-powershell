@@ -95,6 +95,15 @@ function Set-RubrikSLA
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Only supported with CDM versions greater or equal to 5.0
     [switch]$AdvancedConfiguration=$false,
+    # Takes this object from Get-RubrikSLA
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [object[]] $Frequencies,
+    # Takes this object from Get-RubrikSLA
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('advancedUiConfig')]
+    [object[]] $AdvancedFreq,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -122,7 +131,6 @@ function Set-RubrikSLA
   }
 
   Process {
-
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
 
@@ -137,7 +145,62 @@ function Set-RubrikSLA
     
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
-      
+    if ($Frequencies) {
+      $Frequencies[0].psobject.properties.name | ForEach-Object {
+        if (($_ -eq 'Hourly') -and
+          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and
+          (-not $HourlyFrequency) -and (-not $HourlyRetention)) {
+            $HourlyFrequency, $HourlyRetention = $Frequencies.$_.frequency, $Frequencies.$_.retention
+        } elseif (($_ -eq 'Daily') -and
+          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and
+          (-not $DailyFrequency) -and (-not $DailyRetention)) {
+            $DailyFrequency, $DailyRetention = $Frequencies.$_.frequency, $Frequencies.$_.$_.retention
+        } elseif (($_ -eq 'Weekly') -and
+          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and ($Frequencies.$_.dayOfWeek) -and
+          (-not $WeeklyFrequency) -and (-not $WeeklyRetention) -and
+          (-not $PSBoundParameters.ContainsKey('dayOfWeek'))) {
+            $WeeklyFrequency, $WeeklyRetention, $DayOfWeek = $Frequencies.$_.frequency, $Frequencies.$_.retention, $Frequencies.$_.dayOfWeek
+        } elseif (($_ -eq 'Monthly') -and
+          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and ($Frequencies.$_.dayOfMonth) -and
+          (-not $MonthlyFrequency) -and (-not $MonthlyRetention) -and
+          (-not $PSBoundParameters.ContainsKey('dayOfMonth'))) {
+            $MonthlyFrequency, $MonthlyRetention, $DayofMonth = $Frequencies.$_.frequency, $Frequencies.$_.retention, $Frequencies.$_.dayOfMonth
+        } elseif (($_ -eq 'Quarterly') -and
+          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and ($Frequencies.$_.firstQuarterStartMonth) -and ($Frequencies.$_.dayOfQuarter) -and
+          (-not $QuarterlyFrequency) -and (-not $QuarterlyRetention) -and
+          (-not $PSBoundParameters.ContainsKey('firstQuarterStartMonth')) -and
+          (-not $PSBoundParameters.ContainsKey('dayOfQuarter'))) {
+            $QuarterlyFrequency, $QuarterlyRetention, $FirstQuarterStartMonth, $DayOfQuarter = $Frequencies.$_.frequency, $Frequencies.$_.retention, $Frequencies.$_.firstQuarterStartMonth, $Frequencies.$_.dayOfQuarter
+        } elseif (($_ -eq 'Yearly') -and
+          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and ($Frequencies.$_.yearStartMonth) -and ($Frequencies.$_.dayOfYear) -and
+          (-not $YearlyFrequency) -and (-not $YearlyRetention) -and
+          (-not $PSBoundParameters.ContainsKey('yearStartMonth')) -and
+          (-not $PSBoundParameters.ContainsKey('dayOfYear'))) {
+            $YearlyFrequency, $YearlyRetention, $YearStartMonth, $DayOfYear = $Frequencies.$_.frequency, $Frequencies.$_.retention, $Frequencies.$_.yearStartMonth, $Frequencies.$_.dayOfYear
+        }
+      }
+    }
+
+    if ($AdvancedFreq) {
+      $AdvancedFreq | ForEach-Object {
+        if (($_.timeUnit -eq 'Hourly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('HourlyRetentionUnit'))) {
+          $HourlyRetentionUnit = $_.retentionType
+
+        } elseif (($_.timeUnit -eq 'Daily') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('DailyRetentionUnit'))) {
+          $DailyRetentionUnit = $_.retentionType
+        #} elseif (($_.timeUnit -eq 'Weekly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('WeeklyRetentionUnit'))) {
+        #  $WeeklyRetentionUnit = $_.retentionType
+        } elseif (($_.timeUnit -eq 'Monthly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('MonthlyRetentionUnit'))) {
+          $MonthlyRetentionUnit = $_.retentionType
+        } elseif (($_.timeUnit -eq 'Quarterly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('QuarterlyRetentionUnit'))) {
+          $QuarterlyRetentionUnit = $_.retentionType
+        }
+        # elseif (($_.timeUnit -eq 'Yearly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('YearlyRetentionUnit'))) {
+        #  $YearlyRetentionUnit = $_.retentionType
+        #}
+      }
+    }
+     
     if ($HourlyFrequency -and $HourlyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
@@ -258,9 +321,9 @@ function Set-RubrikSLA
     Write-Verbose -Message "Body = $body"
     #endregion
 
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    #$result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    #$result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    #$result = Test-FilterObject -filter ($resources.Filter) -result $result
 
     return $result
 
