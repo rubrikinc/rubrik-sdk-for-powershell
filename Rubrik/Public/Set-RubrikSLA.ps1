@@ -94,7 +94,7 @@ function Set-RubrikSLA
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Only supported with CDM versions greater or equal to 5.0
-    [Bool]$AdvancedConfiguration=$false,
+    [switch]$AdvancedConfiguration=$false,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
