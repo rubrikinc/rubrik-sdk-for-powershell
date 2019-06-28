@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.302'
+ModuleVersion = '4.0.0.303'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -73,15 +73,15 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Export-RubrikReport', 'Export-RubrikVM', 'Get-RubrikAPIToken', 
                'Get-RubrikAPIVersion', 'Get-RubrikAvailabilityGroup', 
                'Get-RubrikDatabase', 'Get-RubrikDatabaseFiles', 
-               'Get-RubrikDatabaseMount', 'Get-RubrikEvent', 
-               'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikFileset',
-               'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 
-               'Get-RubrikHyperVVM', 'Get-RubrikLDAP', 'Get-RubrikLogShipping', 
-               'Get-RubrikManagedVolume', 'Get-RubrikManagedVolumeExport', 
-               'Get-RubrikMount', 'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 
-               'Get-RubrikOracleDB', 'Get-RubrikOrganization', 'Get-RubrikReport', 
-               'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
-               'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
+               'Get-RubrikDatabaseMount', 'Get-RubrikDatabaseRecoverableRange', 
+               'Get-RubrikEvent', 'Get-RubrikFileset', 'Get-RubrikFilesetTemplate', 
+               'Get-RubrikHost', 'Get-RubrikHyperVVM', 'Get-RubrikLDAP', 
+               'Get-RubrikLogShipping', 'Get-RubrikManagedVolume', 
+               'Get-RubrikManagedVolumeExport', 'Get-RubrikMount', 
+               'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 'Get-RubrikOracleDB', 
+               'Get-RubrikOrganization', 'Get-RubrikReport', 'Get-RubrikReportData', 
+               'Get-RubrikRequest', 'Get-RubrikSetting', 'Get-RubrikSLA', 
+               'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
                'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 
                'Get-RubrikUnmanagedObject', 'Get-RubrikVCenter', 'Get-RubrikVersion', 
                'Get-RubrikVM', 'Get-RubrikVMSnapshot', 'Get-RubrikVMwareDatastore', 
@@ -174,3 +174,4 @@ PrivateData = @{
 # DefaultCommandPrefix = ''
 
 }
+
