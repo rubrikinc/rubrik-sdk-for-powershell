@@ -99,7 +99,7 @@ Accept wildcard characters: False
 
 ### -ForceFull
 Whether to force a full snapshot or an incremental.
-Only valid with MSSQL Databases.
+Only valid with MSSQL and Oracle Databases.
 
 ```yaml
 Type: SwitchParameter
