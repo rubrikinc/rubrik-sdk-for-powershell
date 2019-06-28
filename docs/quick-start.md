@@ -48,10 +48,10 @@ Common PowerShell module paths include:
 ## Options 4: Download Module from PowerShell Gallery for redistribution
 
 1. Navigate to [PowerShell Gallery - Rubrik](https://www.powershellgallery.com/packages/Rubrik)
-1. Click Manual Download
-1. Click Download the raw nupkg file
-   1. To directly use the module the .nupkg file can be extracted at the destination system, be sure the place the file in PSModulePath to allow to automatic loading
-   1. Alternatively this file can be imported in a local nupkg repository for further distribution
+1. Click Manual Download.
+1. Click Download the raw nupkg file.
+   1. To directly use the module, the .nupkg file can be extracted on the destination system. Be sure the place the files in PSModulePath to allow for automatic loading.
+   1. Alternatively, this file can be imported in a local nupkg repository for further distribution
 
 ## Verification
 
