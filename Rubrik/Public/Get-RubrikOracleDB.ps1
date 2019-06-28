@@ -1,90 +1,68 @@
-﻿#requires -Version 3
-function Get-RubrikVM
+#requires -Version 3
+function Get-RubrikOracleDB
 {
   <#  
-      .SYNOPSIS
-      Retrieves details on one or more virtual machines known to a Rubrik cluster
+    .SYNOPSIS
+    Retrieves details on one or more Oracle DBs known to a Rubrik cluster
 
-      .DESCRIPTION
-      The Get-RubrikVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of virtual machines
-
-      .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-
-      .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVM.html
-
-      .EXAMPLE
-      Get-RubrikVM -Name 'Server1'
-      This will return details on all virtual machines named "Server1".
-
-      .EXAMPLE
-      Get-RubrikVM -Name 'Server1' -SLA Gold
-      This will return details on all virtual machines named "Server1" that are protected by the Gold SLA Domain.
-
-      .EXAMPLE
-      Get-RubrikVM -Relic
-      This will return all removed virtual machines that were formerly protected by Rubrik.
-
-      .EXAMPLE
-      Get-RubrikVM -Name myserver01 -DetailedObject
-      This will return the VM object with all properties, including additional details such as snapshots taken of the VM. Using this switch parameter negatively affects performance 
+    .DESCRIPTION
+    The Get-RubrikOracleDB cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of Oracle DBs
+    
+    .NOTES
+    Written by Jaap Brasser for community usage
+    Twitter: @jaap_brasser
+    GitHub: jaapbrasser
+    
+    .LINK
+    http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikOracleDB.html
+    
+    .EXAMPLE
+    Get-RubrikOracleDB -Name 'OracleDB1'
+    This will return details on all Oracle DBs named "OracleDB1".
+    
+    .EXAMPLE
+    Get-RubrikOracleDB -Name 'OracleDB1' -SLA Gold
+    This will return details on all Oracle DBs named "OracleDB1" that are protected by the Gold SLA Domain.
+    
+    .EXAMPLE
+    Get-RubrikOracleDB -Relic
+    This will return all removed Oracle DBs that were formerly protected by Rubrik.
+    
+    .EXAMPLE
+    Get-RubrikOracleDB -Name OracleDB1 -DetailedObject
+    This will return the Oracle DB object with all properties, including additional details such as snapshots taken of the Oracle DB. Using this switch parameter negatively affects performance as more API queries will be performed.
   #>
 
-  [CmdletBinding(DefaultParameterSetName = 'Query')]
+  [CmdletBinding()]
   Param(
-    # Name of the virtual machine
-    [Parameter(
-      ParameterSetName='Query',
-      Position = 0,
-      ValueFromPipelineByPropertyName = $true)]
-    [ValidateNotNullOrEmpty()]
-    [Alias('VM')]
+    # Name of the Oracle DB
+    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [String]$Name,
-    # Virtual machine id
-    [Parameter(
-      ParameterSetName='ID',
-      Position = 0,
-      Mandatory = $true,
-      ValueFromPipelineByPropertyName = $true)]
-    [ValidateNotNullOrEmpty()]
-    [String]$id,
-    # Filter results to include only relic (removed) virtual machines
-    [Parameter(ParameterSetName='Query')]
+    # Filter results to include only relic (removed) Oracle DBs
     [Alias('is_relic')]    
     [Switch]$Relic,
+    [Alias('is_live_mount')]    
+    [Switch]$LiveMount,
     # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
-    [Parameter(ParameterSetName='Query')]
     [Switch]$DetailedObject,
-    # SLA Domain policy assigned to the virtual machine
-    [Parameter(ParameterSetName='Query')]
-    [ValidateNotNullOrEmpty()]
+    # SLA Domain policy assigned to the Oracle DB
     [String]$SLA, 
     # Filter by SLA Domain assignment type
-    [Parameter(ParameterSetName='Query')]
-    [ValidateNotNullOrEmpty()]
-    [ValidateSet('Derived', 'Direct','Unassigned')]
     [Alias('sla_assignment')]
+    [ValidateSet('Derived', 'Direct','Unassigned')]
     [String]$SLAAssignment,     
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
-    [Parameter(ParameterSetName='Query')]
-    [ValidateNotNullOrEmpty()]
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
+    # Oracle DB id
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [String]$id,
     # SLA id value
-    [Parameter(ParameterSetName='Query')]
-    [ValidateNotNullOrEmpty()]
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,    
     # Rubrik server IP or FQDN
-    [Parameter(ParameterSetName='Query')]
-    [Parameter(ParameterSetName='ID')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [Parameter(ParameterSetName='Query')]
-    [Parameter(ParameterSetName='ID')]
     [String]$api = $global:RubrikConnection.api
   )
 
@@ -123,12 +101,12 @@ function Get-RubrikVM
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    # If the Get-RubrikVM function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
+    # If the Get-RubrikOracleDB function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
-      for ($i = 0; $i -lt @($result).Count; $i++) {
+      for ($i = 0; $i -lt @($result).count; $i++) {
         $Percentage = [int]($i/@($result).count*100)
         Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-        Get-RubrikVM -id $result[$i].id
+        Get-RubrikOracleDB -id $result[$i].id
       }
     } else {
       return $result

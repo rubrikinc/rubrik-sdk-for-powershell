@@ -16,11 +16,66 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 2019-06-27 
+## 2019-06-28
 
 ### Changed [quick-start.md] - Additional download instructions
 
 * Added a 4th option for downloading and distributing the Rubrik SDK for PowerShell
+
+## 2019-06-27
+
+### Changed [Sync-RubrikAnnotation]
+
+* Added -DetailedObject to Get-RubrikVM in order to return the snapshots
+* Added a third annotation to store the date of the latest Rubrik snapshot.
+* Added associated unit tests for Sync-RubrikAnnotation
+
+### Changed [New-RubrikSnapshot]
+
+* Cmdlet will now display a warning if -ForceFull is set on any other protected object other than Oracle or SQL databases.
+* This is just a warning and the cmdlet will continue to run, performing an incremental backup.
+* This addresses [315](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/315)
+
+### Fixed [Protect-RubrikTag]
+
+* modified Protect-RubrikTag in order to ignore relic's when retrieving the vCenter UUID.
+* Addresses [Issue 311](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/311)
+* added associated Unit test for the cmdlet.
+
+## 2019-06-26
+
+### Added [Tests for Get-RubrikHost]
+
+* Added unit test for Get-RubrikHost cmdlet
+
+### Added [Get-RubrikAPIToken cmdlet]
+
+* Added Get-RubrikAPIToken cmdlet to address [321](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/321) and associated unit test.
+
+### Modified [New-RubrikSnapshot cmdlet]
+
+* Added support for Oracle to New-RubrikSnapshot
+* Added tests for New-RubrikSnapshot
+
+### Fixed [Get-RubrikHost, Get-RubrikVM, Get-RubrikOracleDB]
+
+* Added formating around $result to convert to an array in order to support -DetailedObject with older versions of Powershell.  Addresses [319](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/319)
+
+## 2019-06-25
+
+### Added [New New-RubrikAPIToken cmdlet]
+
+* Added New-RubrikAPIToken cmdlet to address [316](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/316) and associated unit test.
+
+### Added [New Remove-RubrikAPIToken cmdlet]
+
+* Added Remove-RubrikAPIToken cmdlet to address [316](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/316) and associated unit test.
+
+## 2019-06-24
+
+### Added [New Get-RubrikOracleDB cmdlet]
+
+* Added Get-RubrikOracleDB cmdlet to address [255](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/255) and associated unit test
 
 ## 2019-06-20
 
@@ -39,7 +94,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added new `Update-RubrikVMwareVM` cmdlet to refresh a single VMware VM's metadata. This addresses issue [305](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/305)
 
-
 ## 2019-06-04
 
 ### Added [Resolving Issues]
@@ -50,11 +104,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Resolved bug in New-RubrikVMDKMount, thanks @Pierre-PvF
 
+## 2019-06-03
+
+### Added [Resolving issues, new cmdlet]
+
+* Added Set-RubrikVolumeFilterDriver cmdlet to support the installation/uninstallation of the Rubrik VFD on registered Windows hosts as per reported in [Issue 291](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/291).  Set-RubrikVolumeFilterDriver takes an array of string (hostIds) and an installed (true/false) parameter to determine whether to install or uninstall the VFD on the given hosts.
+
+### Added [ DetailedObject Support for Get-RubrikHost ]
+
+* Added a DetailedObject switch (similar to that on Get-RubrikVM) to the Get-RubrikHost cmdlet in order to grab more information when not querying by hostID.  This allows for more information to be returned by the API (IE hostVfdDriverState, hostVfdEnabled). This way users could query Rubrik hosts by name, check installation status, and pipe id's to the new Set-RubrikVolumeFilterDriver cmdlet for VFD installation.
+
 ## 2019-05-31
 
 ### Added [New-RubrikManagedVolume update]
 
 * Added `-ApplicationTag` parameter support to New-RubrikManagedVolume so users can specify which application the managed volume will be used for. This addresses issue [285](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/285).
+
 
 ## 2019-05-30
 

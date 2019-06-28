@@ -13,8 +13,8 @@ Retrieve summary information for all hosts that are registered with a Rubrik clu
 ## SYNTAX
 
 ```
-Get-RubrikHost [[-Name] <String>] [[-Type] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>]
- [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikHost [-Name <String>] [-Type <String>] [-PrimaryClusterID <String>] [-id <String>] [-DetailedObject]
+ [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -50,6 +50,14 @@ Get-RubrikHost -id 'Host:::111111-2222-3333-4444-555555555555'
 
 This will return details specifically for the host id matching "Host:::111111-2222-3333-4444-555555555555"
 
+### EXAMPLE 5
+```
+Get-RubrikHost -Name myserver01 -DetailedObject
+```
+
+This will return the Host object with all properties, including additional details such as information around the Volume Filter Driver if applicable.
+Using this switch parameter may negatively affect performance
+
 ## PARAMETERS
 
 ### -Name
@@ -62,7 +70,7 @@ Parameter Sets: (All)
 Aliases: Hostname
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -80,7 +88,7 @@ Parameter Sets: (All)
 Aliases: operating_system_type
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -96,7 +104,7 @@ Parameter Sets: (All)
 Aliases: primary_cluster_id
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -111,8 +119,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -126,7 +150,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -141,7 +165,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
