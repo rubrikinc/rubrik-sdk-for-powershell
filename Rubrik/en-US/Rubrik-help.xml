@@ -14712,6 +14712,20 @@
           <maml:para>This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.</maml:para>
         </dev:remarks>
       </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <dev:code>Get-RubrikOracleDB -Id OracleDatabase:::e7d64866-b2ee-494d-9a61-46824ae85dc1 | New-RubrikSnapshot -ForceFull -SLA Bronze</dev:code>
+        <dev:remarks>
+          <maml:para>This will trigger an on-demand backup for the Oracle database by its ID, and force the backup to be a full rather than an incremental.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+        <dev:code>New-RubrikSnapShot -Id MssqlDatabase:::ee7aead5-6a51-4f0e-9479-1ed1f9e31614 -SLA Gold</dev:code>
+        <dev:remarks>
+          <maml:para>This will trigger an on-demand backup by ID, in this example it is the ID of a MSSQL Database</maml:para>
+        </dev:remarks>
+      </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
