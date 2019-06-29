@@ -22,6 +22,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added examples of how to do Full backups of Oracle and MSSQL databases
 
+## 2019-06-28
+
+### Changed [quick-start.md] - Additional download instructions
+
+* Added a 4th option for downloading and distributing the Rubrik SDK for PowerShell
+
 ## 2019-06-27
 
 ### Changed [Sync-RubrikAnnotation]
@@ -119,7 +125,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added [New-RubrikManagedVolume update]
 
 * Added `-ApplicationTag` parameter support to New-RubrikManagedVolume so users can specify which application the managed volume will be used for. This addresses issue [285](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/285).
-
 
 ## 2019-05-30
 
