@@ -33,7 +33,7 @@ function New-RubrikSnapshot
       This will trigger an on-demand backup for the Oracle database by its ID, and force the backup to be a full rather than an incremental.
 
       .EXAMPLE
-      New-RubrikSnapShot -id MssqlDatabase:::ee7aead5-6a51-4f0e-9479-1ed1f9e31614 -SLA Gold
+      New-RubrikSnapShot -Id MssqlDatabase:::ee7aead5-6a51-4f0e-9479-1ed1f9e31614 -SLA Gold
       This will trigger an on-demand backup by ID, in this example it is the ID of a MSSQL Database
   #>
 
