@@ -16,7 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 2019-06-27 
+## 2019-06-29
+
+### Added [New-RubrikSnapshot] Additional help examples in
+
+* Added examples of how to do Full backups of Oracle and MSSQL databases
+
+## 2019-06-27
 
 ### Changed [Sync-RubrikAnnotation]
 
