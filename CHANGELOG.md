@@ -16,9 +16,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 2019-06-29 Changed Standardized usage of Out-Null over the module
+## 2019-06-29 
+
+### Changed Standardized usage of Out-Null over the module
 
 * To improve PowerShell 6, and onwards compatibility we have standardized on using | Out-Null
+
+### Added [New-RubrikSnapshot] Additional help examples in
+
+* Added examples of how to do Full backups of Oracle and MSSQL databases
 
 ## 2019-06-28
 
