@@ -255,6 +255,12 @@ function Set-RubrikSLA
           if (($Frequencies.$_.retention) -and (-not $YearlyRetention)) {
             $YearlyRetention = $Frequencies.$_.retention
           }
+          if (($Frequencies.$_.yearStartMonth) -and (-not $PSBoundParameters.ContainsKey('yearStartMonth'))) {
+            $YearStartMonth = $Frequencies.$_.yearStartMonth
+          }
+          if (($Frequencies.$_.dayOfYear) -and (-not $PSBoundParameters.ContainsKey('dayOfYear'))) {
+            $DayOfYear = $Frequencies.$_.dayOfYear
+          }
         }
       }
     }
@@ -366,7 +372,7 @@ function Set-RubrikSLA
         $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
         $body.advancedUiConfig += @{timeUnit='Yearly';retentionType='Yearly'}
       } elseif ($uri.contains('v2')) {  
-            $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention}}
+            $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
       } else {  
           $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Yearly'
