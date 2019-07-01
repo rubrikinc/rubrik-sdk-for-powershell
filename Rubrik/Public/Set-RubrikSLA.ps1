@@ -268,19 +268,19 @@ function Set-RubrikSLA
     if (($AdvancedFreq) -and ($AdvancedConfig)) {
       $AdvancedFreq | ForEach-Object {
         if (($_.timeUnit -eq 'Hourly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('HourlyRetentionUnit'))) {
-          $HourlyRetentionUnit = $_.retentionType
+          $HourlyRetentionUnit = $_.timeUnit
 
         } elseif (($_.timeUnit -eq 'Daily') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('DailyRetentionUnit'))) {
-          $DailyRetentionUnit = $_.retentionType
+          $DailyRetentionUnit = $_.timeUnit
         #} elseif (($_.timeUnit -eq 'Weekly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('WeeklyRetentionUnit'))) {
-        #  $WeeklyRetentionUnit = $_.retentionType
+        #  $WeeklyRetentionUnit = $_.timeUnit
         } elseif (($_.timeUnit -eq 'Monthly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('MonthlyRetentionUnit'))) {
-          $MonthlyRetentionUnit = $_.retentionType
+          $MonthlyRetentionUnit = $_.timeUnit
         } elseif (($_.timeUnit -eq 'Quarterly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('QuarterlyRetentionUnit'))) {
-          $QuarterlyRetentionUnit = $_.retentionType
+          $QuarterlyRetentionUnit = $_.timeUnit
         }
         # elseif (($_.timeUnit -eq 'Yearly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('YearlyRetentionUnit'))) {
-        #  $YearlyRetentionUnit = $_.retentionType
+        #  $YearlyRetentionUnit = $_.timeUnit
         #}
       }
     }
