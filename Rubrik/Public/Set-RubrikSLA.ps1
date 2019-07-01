@@ -158,7 +158,7 @@ function Set-RubrikSLA
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
 
-    if ($Frequencies) {
+    if (($Frequencies) -and ($AdvancedConfig)) {
       $Frequencies[0].psobject.properties.name | ForEach-Object {
         if ($_ -eq 'Hourly') {
           if (($Frequencies.$_.frequency) -and (-not $HourlyFrequency)) {
@@ -222,9 +222,41 @@ function Set-RubrikSLA
           }
         }
       }
+    } elseif (($Frequencies)) {
+      $Frequencies[0].psobject.properties.name | ForEach-Object {
+        if ($_ -eq 'Hourly') {
+          if (($Frequencies.$_.frequency) -and (-not $HourlyFrequency)) {
+            $HourlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $HourlyRetention)) {
+            $HourlyRetention = $Frequencies.$_.retention
+          }
+        } elseif ($_ -eq 'Daily') {
+          if (($Frequencies.$_.frequency) -and (-not $DailyFrequency)) {
+            $DailyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $DailyRetention)) {
+            $DailyRetention = $Frequencies.$_.retention
+          }
+        } elseif ($_ -eq 'Monthly') {
+          if (($Frequencies.$_.frequency) -and (-not $MonthlyFrequency)) {
+            $MonthlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $MonthlyRetention)) {
+            $MonthlyRetention = $Frequencies.$_.retention
+          }
+        } elseif ($_ -eq 'Yearly') {
+          if (($Frequencies.$_.frequency) -and (-not $YearlyFrequency)) {
+            $YearlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $YearlyRetention)) {
+            $YearlyRetention = $Frequencies.$_.retention
+          }
+        }
+      }
     }
 
-    if ($AdvancedFreq) {
+    if (($AdvancedFreq) -and ($AdvancedConfig)) {
       $AdvancedFreq | ForEach-Object {
         if (($_.timeUnit -eq 'Hourly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('HourlyRetentionUnit'))) {
           $HourlyRetentionUnit = $_.retentionType
