@@ -98,7 +98,7 @@ function Set-RubrikSLA
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Only supported with CDM versions greater or equal to 5.0
-    [switch]$AdvancedConfiguration=$false,
+    [switch]$AdvancedConfig,
     # Takes this object from Get-RubrikSLA
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
