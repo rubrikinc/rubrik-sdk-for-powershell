@@ -341,6 +341,7 @@ function Set-RubrikSLA
     }    
     
     $body = ConvertTo-Json $body -Depth 10
+    Write-Verbose -Message "Header = $header"
     Write-Verbose -Message "Body = $body"
     #endregion
 
