@@ -278,11 +278,9 @@ function Set-RubrikSLA
     }
      
     if ($HourlyFrequency -and $HourlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
+      if ($uri.contains('v2')) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
         $body.advancedUiConfig += @{timeUnit='Hourly';retentionType=$HourlyRetentionUnit}
-      } elseif ($uri.contains('v2')) {
-            $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
       } else {
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Hourly'
@@ -294,11 +292,9 @@ function Set-RubrikSLA
     }
     
     if ($DailyFrequency -and $DailyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
+      if ($uri.contains('v2')) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
         $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionUnit}
-      } elseif ($uri.contains('v2')) {
-            $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
       } else { 
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Daily'
@@ -310,11 +306,9 @@ function Set-RubrikSLA
     }    
 
     if ($WeeklyFrequency -and $WeeklyRetention) { 
-      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
+      if ($uri.contains('v2')) {
         $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention;dayOfWeek=$DayOfWeek}}
         $body.advancedUiConfig += @{timeUnit='Weekly';retentionType='Weekly'}
-      } elseif ($uri.contains('v2')) {
-            $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention}}
       } else {
         Write-Warning -Message 'Weekly SLA configurations are not supported in this version of Rubrik CDM.'
         # $body.frequencies += @{
@@ -327,11 +321,9 @@ function Set-RubrikSLA
     }    
 
     if ($MonthlyFrequency -and $MonthlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
+      if ($uri.contains('v2')) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
         $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionUnit}
-      } elseif ($uri.contains('v2')) {
-            $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
       } else { 
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Monthly'
@@ -343,11 +335,9 @@ function Set-RubrikSLA
     }  
 
     if ($QuarterlyFrequency -and $QuarterlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
+      if ($uri.contains('v2')) {
           $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
           $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionUnit}
-      } elseif ($uri.contains('v2')) {
-            $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention}}
       } else { 
         Write-Warning -Message 'Quarterly SLA configurations are not supported in this version of Rubrik CDM.'
         # $body.frequencies += @{
@@ -360,11 +350,9 @@ function Set-RubrikSLA
     }  
 
     if ($YearlyFrequency -and $YearlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
+      if ($uri.contains('v2')) {
         $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
         $body.advancedUiConfig += @{timeUnit='Yearly';retentionType='Yearly'}
-      } elseif ($uri.contains('v2')) {  
-            $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
       } else {  
           $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Yearly'
