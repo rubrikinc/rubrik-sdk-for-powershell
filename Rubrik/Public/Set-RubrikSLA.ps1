@@ -149,6 +149,7 @@ function Set-RubrikSLA
     
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
+
     if ($Frequencies) {
       $Frequencies[0].psobject.properties.name | ForEach-Object {
         if (($_ -eq 'Hourly') -and
@@ -206,7 +207,7 @@ function Set-RubrikSLA
     }
      
     if ($HourlyFrequency -and $HourlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Hourly';retentionType=$HourlyRetentionUnit}
@@ -224,7 +225,7 @@ function Set-RubrikSLA
     }
     
     if ($DailyFrequency -and $DailyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionUnit}
@@ -242,7 +243,7 @@ function Set-RubrikSLA
     }    
 
     if ($WeeklyFrequency -and $WeeklyRetention) { 
-      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
         $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention;dayOfWeek=$DayOfWeek}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Weekly';retentionType='Weekly'}
@@ -261,7 +262,7 @@ function Set-RubrikSLA
     }    
 
     if ($MonthlyFrequency -and $MonthlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionUnit}
@@ -279,7 +280,7 @@ function Set-RubrikSLA
     }  
 
     if ($QuarterlyFrequency -and $QuarterlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
           $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
           $body.showAdvancedUi = $true
           $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionUnit}
@@ -298,7 +299,7 @@ function Set-RubrikSLA
     }  
 
     if ($YearlyFrequency -and $YearlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig)) {
         $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Yearly';retentionType='Yearly'}
