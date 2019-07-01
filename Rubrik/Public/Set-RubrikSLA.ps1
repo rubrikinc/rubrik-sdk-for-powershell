@@ -333,7 +333,7 @@ function Set-RubrikSLA
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
         $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionUnit}
       } elseif ($uri.contains('v2')) {
-            $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention}}
+            $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
       } else { 
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Monthly'
