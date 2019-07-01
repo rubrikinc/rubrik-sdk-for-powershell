@@ -143,7 +143,7 @@ function Set-RubrikSLA
     $body = @{
       $resources.Body.name = $Name
       frequencies = @()
-      showAdvancedUi = $AdvancedConfig
+      showAdvancedUi = $AdvancedConfig.IsPresent
       advancedUiConfig = @()
     }
     
