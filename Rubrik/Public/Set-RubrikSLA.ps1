@@ -152,36 +152,66 @@ function Set-RubrikSLA
 
     if ($Frequencies) {
       $Frequencies[0].psobject.properties.name | ForEach-Object {
-        if (($_ -eq 'Hourly') -and
-          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and
-          (-not $HourlyFrequency) -and (-not $HourlyRetention)) {
-            $HourlyFrequency, $HourlyRetention = $Frequencies.$_.frequency, $Frequencies.$_.retention
-        } elseif (($_ -eq 'Daily') -and
-          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and
-          (-not $DailyFrequency) -and (-not $DailyRetention)) {
-            $DailyFrequency, $DailyRetention = $Frequencies.$_.frequency, $Frequencies.$_.$_.retention
-        } elseif (($_ -eq 'Weekly') -and
-          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and ($Frequencies.$_.dayOfWeek) -and
-          (-not $WeeklyFrequency) -and (-not $WeeklyRetention) -and
-          (-not $PSBoundParameters.ContainsKey('dayOfWeek'))) {
-            $WeeklyFrequency, $WeeklyRetention, $DayOfWeek = $Frequencies.$_.frequency, $Frequencies.$_.retention, $Frequencies.$_.dayOfWeek
-        } elseif (($_ -eq 'Monthly') -and
-          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and ($Frequencies.$_.dayOfMonth) -and
-          (-not $MonthlyFrequency) -and (-not $MonthlyRetention) -and
-          (-not $PSBoundParameters.ContainsKey('dayOfMonth'))) {
-            $MonthlyFrequency, $MonthlyRetention, $DayofMonth = $Frequencies.$_.frequency, $Frequencies.$_.retention, $Frequencies.$_.dayOfMonth
-        } elseif (($_ -eq 'Quarterly') -and
-          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and ($Frequencies.$_.firstQuarterStartMonth) -and ($Frequencies.$_.dayOfQuarter) -and
-          (-not $QuarterlyFrequency) -and (-not $QuarterlyRetention) -and
-          (-not $PSBoundParameters.ContainsKey('firstQuarterStartMonth')) -and
-          (-not $PSBoundParameters.ContainsKey('dayOfQuarter'))) {
-            $QuarterlyFrequency, $QuarterlyRetention, $FirstQuarterStartMonth, $DayOfQuarter = $Frequencies.$_.frequency, $Frequencies.$_.retention, $Frequencies.$_.firstQuarterStartMonth, $Frequencies.$_.dayOfQuarter
-        } elseif (($_ -eq 'Yearly') -and
-          ($Frequencies.$_.frequency) -and ($Frequencies.$_.retention) -and ($Frequencies.$_.yearStartMonth) -and ($Frequencies.$_.dayOfYear) -and
-          (-not $YearlyFrequency) -and (-not $YearlyRetention) -and
-          (-not $PSBoundParameters.ContainsKey('yearStartMonth')) -and
-          (-not $PSBoundParameters.ContainsKey('dayOfYear'))) {
-            $YearlyFrequency, $YearlyRetention, $YearStartMonth, $DayOfYear = $Frequencies.$_.frequency, $Frequencies.$_.retention, $Frequencies.$_.yearStartMonth, $Frequencies.$_.dayOfYear
+        if ($_ -eq 'Hourly') {
+          if (($Frequencies.$_.frequency) -and (-not $HourlyFrequency)) {
+            $HourlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $HourlyRetention)) {
+            $HourlyRetention = $Frequencies.$_.retention
+          }
+        } elseif ($_ -eq 'Daily') {
+          if (($Frequencies.$_.frequency) -and (-not $DailyFrequency)) {
+            $DailyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $DailyRetention)) {
+            $DailyRetention = $Frequencies.$_.$_.retention
+          }
+        } elseif ($_ -eq 'Weekly') {
+          if (($Frequencies.$_.frequency) -and (-not $WeeklyFrequency)) {
+            $WeeklyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $WeeklyRetention)) {
+            $WeeklyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.dayOfWeek) -and (-not $PSBoundParameters.ContainsKey('dayOfWeek'))) {
+            $DayOfWeek = $Frequencies.$_.dayOfWeek
+          }
+        } elseif ($_ -eq 'Monthly') {
+          if (($Frequencies.$_.frequency) -and (-not $MonthlyFrequency)) {
+            $MonthlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $MonthlyRetention)) {
+            $MonthlyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.dayOfMonth) -and (-not $PSBoundParameters.ContainsKey('dayOfMonth'))) {
+            $DayofMonth = $Frequencies.$_.dayOfMonth
+          }
+        } elseif ($_ -eq 'Quarterly') {
+          if (($Frequencies.$_.frequency) -and (-not $QuarterlyFrequency)) {
+            $QuarterlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $QuarterlyRetention)) {
+            $QuarterlyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.firstQuarterStartMonth) -and (-not $PSBoundParameters.ContainsKey('firstQuarterStartMonth'))) {
+            $FirstQuarterStartMonth = $Frequencies.$_.firstQuarterStartMonth
+          }
+          if (($Frequencies.$_.dayOfQuarter) -and (-not $PSBoundParameters.ContainsKey('dayOfQuarter'))) {
+            $DayOfQuarter = $Frequencies.$_.dayOfQuarter
+          }
+        } elseif ($_ -eq 'Yearly') {
+          if (($Frequencies.$_.frequency) -and (-not $YearlyFrequency)) {
+            $YearlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $YearlyRetention)) {
+            $YearlyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.yearStartMonth) -and (-not $PSBoundParameters.ContainsKey('yearStartMonth'))) {
+            $YearStartMonth = $Frequencies.$_.yearStartMonth
+          }
+          if (($Frequencies.$_.dayOfYear) -and (-not $PSBoundParameters.ContainsKey('dayOfYear'))) {
+            $DayOfYear = $Frequencies.$_.dayOfYear
+          }
         }
       }
     }
