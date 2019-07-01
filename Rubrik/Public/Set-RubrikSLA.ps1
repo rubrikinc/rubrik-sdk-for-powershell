@@ -61,14 +61,14 @@ function Set-RubrikSLA
     [int]$WeeklyFrequency,
     # Number of weeks to retain the weekly backups
     [int]$WeeklyRetention,
-    # Day of week for the weekly snapshots when $AdvancedConfiguration is set to $true. The default is Saturday
+    # Day of week for the weekly snapshots when $AdvancedConfig is set to $true. The default is Saturday
     [ValidateSet('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday')]
     [String]$DayOfWeek='Saturday',
     # Monthly frequency to take backups
     [int]$MonthlyFrequency,
     # Number of months, quarters or years to retain the monthly backups
     [int]$MonthlyRetention,
-    # Day of month for the monthly snapshots when $AdvancedConfiguration is set to $true. The default is the last day of the month.
+    # Day of month for the monthly snapshots when $AdvancedConfig is set to $true. The default is the last day of the month.
     [ValidateSet('FirstDay','Fifteenth','LastDay')]
     [String]$DayOfMonth='LastDay',
     # Retention unit to apply to monthly snapshots
@@ -78,10 +78,10 @@ function Set-RubrikSLA
     [int]$QuarterlyFrequency,
     # Number of quarters or years to retain the monthly backup
     [int]$QuarterlyRetention,
-    # Day of quarter for the quarterly snapshots when $AdvancedConfiguration is set to $true. The default is the last day of the quarter.
+    # Day of quarter for the quarterly snapshots when $AdvancedConfig is set to $true. The default is the last day of the quarter.
     [ValidateSet('FirstDay','LastDay')]
     [String]$DayOfQuarter='LastDay',
-    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfiguration is set to $true. The default is January.
+    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is set to $true. The default is January.
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$FirstQuarterStartMonth='January',
     # Retention unit to apply to quarterly snapshots
@@ -91,10 +91,10 @@ function Set-RubrikSLA
     [int]$YearlyFrequency,
     # Number of years to retain the yearly backups
     [int]$YearlyRetention,
-    # Day of year for the yearly snapshots when $AdvancedConfiguration is set to $true. The default is the last day of the year.
+    # Day of year for the yearly snapshots when $AdvancedConfig is set to $true. The default is the last day of the year.
     [ValidateSet('FirstDay','LastDay')]
     [String]$DayOfYear='LastDay',
-    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfiguration is set to $true. The default is January.
+    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is set to $true. The default is January.
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Only supported with CDM versions greater or equal to 5.0
@@ -143,7 +143,7 @@ function Set-RubrikSLA
     $body = @{
       $resources.Body.name = $Name
       frequencies = @()
-      showAdvancedUi = $AdvancedConfiguration
+      showAdvancedUi = $AdvancedConfig
       advancedUiConfig = @()
     }
     
@@ -206,7 +206,7 @@ function Set-RubrikSLA
     }
      
     if ($HourlyFrequency -and $HourlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Hourly';retentionType=$HourlyRetentionUnit}
@@ -224,7 +224,7 @@ function Set-RubrikSLA
     }
     
     if ($DailyFrequency -and $DailyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionUnit}
@@ -242,7 +242,7 @@ function Set-RubrikSLA
     }    
 
     if ($WeeklyFrequency -and $WeeklyRetention) { 
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
         $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention;dayOfWeek=$DayOfWeek}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Weekly';retentionType='Weekly'}
@@ -261,7 +261,7 @@ function Set-RubrikSLA
     }    
 
     if ($MonthlyFrequency -and $MonthlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionUnit}
@@ -279,7 +279,7 @@ function Set-RubrikSLA
     }  
 
     if ($QuarterlyFrequency -and $QuarterlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
           $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
           $body.showAdvancedUi = $true
           $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionUnit}
@@ -298,7 +298,7 @@ function Set-RubrikSLA
     }  
 
     if ($YearlyFrequency -and $YearlyRetention) {
-      if (($uri.contains('v2')) -and ($AdvancedConfiguration=$true)) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig=$true)) {
         $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
         $body.showAdvancedUi = $true
         $body.advancedUiConfig += @{timeUnit='Yearly';retentionType='Yearly'}
