@@ -265,7 +265,7 @@ function Set-RubrikSLA
       }
     }
 
-    if (($AdvancedFreq) -and ($AdvancedConfig)) {
+    if ($AdvancedFreq) {
       $AdvancedFreq | ForEach-Object {
         if (($_.timeUnit -eq 'Hourly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('HourlyRetentionUnit'))) {
           $HourlyRetentionUnit = $_.timeUnit
