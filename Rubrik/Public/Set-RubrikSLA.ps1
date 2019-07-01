@@ -172,7 +172,7 @@ function Set-RubrikSLA
             $DailyFrequency = $Frequencies.$_.frequency
           }
           if (($Frequencies.$_.retention) -and (-not $DailyRetention)) {
-            $DailyRetention = $Frequencies.$_.$_.retention
+            $DailyRetention = $Frequencies.$_.retention
           }
         } elseif ($_ -eq 'Weekly') {
           if (($Frequencies.$_.frequency) -and (-not $WeeklyFrequency)) {
