@@ -245,6 +245,9 @@ function Set-RubrikSLA
           if (($Frequencies.$_.retention) -and (-not $MonthlyRetention)) {
             $MonthlyRetention = $Frequencies.$_.retention
           }
+          if (($Frequencies.$_.dayOfMonth) -and (-not $PSBoundParameters.ContainsKey('dayOfMonth'))) {
+            $DayofMonth = $Frequencies.$_.dayOfMonth
+          }
         } elseif ($_ -eq 'Yearly') {
           if (($Frequencies.$_.frequency) -and (-not $YearlyFrequency)) {
             $YearlyFrequency = $Frequencies.$_.frequency
