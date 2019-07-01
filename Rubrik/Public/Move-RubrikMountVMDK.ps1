@@ -168,8 +168,8 @@ function Move-RubrikMountVMDK
           {
             try
             {
-              $null = Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false
-              $null = New-HardDisk -VM $TargetVM -DiskPath $_.Filename
+              Remove-HardDisk -HardDisk $_ -DeletePermanently:$false -Confirm:$false | Out-Null
+              New-HardDisk -VM $TargetVM -DiskPath $_.Filename | Out-Null
               $MountedVMdiskFileNames += $_.Filename
               Write-Verbose -Message "Migrated $($_.Filename) to $TargetVM"
             }
