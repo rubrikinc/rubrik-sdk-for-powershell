@@ -34,8 +34,14 @@
                 }
             }
             else {
-                # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
-                $result = ExpandPayload -response (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)
+                if (Test-PowerShellSix) {
+                    $result = ExpandPayload -response (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)
+                    #$result = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body | ConvertFrom-Json -Depth 8
+                } else {
+                    # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
+                    $result = ExpandPayload -response (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)
+                }
+                
             }
         }
         catch {
