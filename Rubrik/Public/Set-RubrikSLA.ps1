@@ -281,7 +281,8 @@ function Set-RubrikSLA
       if ($uri.contains('v2')) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
         $body.advancedUiConfig += @{timeUnit='Hourly';retentionType=$HourlyRetentionUnit}
-      } else {
+      } 
+      else {
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Hourly'
           $resources.Body.frequencies.frequency = $HourlyFrequency
