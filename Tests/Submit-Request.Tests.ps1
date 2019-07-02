@@ -19,7 +19,7 @@ Describe -Name 'Public/Get-RubrikVM' -Tag 'Public', 'Get-RubrikVM' -Fixture {
     }
     #endregion
 
-    Context -Name 'Parameter/SLA' {
+    Context -Name 'Method:Delete' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Get-RubrikSLA -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 'id' = 'test-sla_id' }
