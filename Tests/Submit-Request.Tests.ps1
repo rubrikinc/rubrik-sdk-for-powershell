@@ -53,11 +53,11 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         name                          = 'TestSLA_1 (Managed by Polaris)'
         polarisManagedId              = '4896a9de-b7e4-4a0b-ac20-d93d91bfb260'
         frequencies                   = '@{daily=}'
-        allowedBackupWindows          = '{}'
-        firstFullAllowedBackupWindows = '{}'
+        allowedBackupWindows          = $null
+        firstFullAllowedBackupWindows = $null
         maxLocalRetentionLimit        = '604800'
-        archivalSpecs                 = '{}'
-        replicationSpecs              = '{}'
+        archivalSpecs                 = $null
+        replicationSpecs              = $null
         numDbs                        = '0'
         numOracleDbs                  = '0'
         numFilesets                   = '0'
@@ -76,10 +76,11 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         isDefault                     = 'False'
         uiColor                       = '#7f3340'
         showAdvancedUi                = $true
-        advancedUiConfig              = '{timeUnit=Daily; retentionType=Daily}'
+        advancedUiConfig              = '@{timeUnit=Daily; retentionType=Daily}'
     }
 
-    $SLAJson = '{"hasMore":false,"data":[{"id":"156eff81-b7d8-48c3-b3e5-97c2f788e215","primaryClusterId":"8b4fe6f6-cc87-4354-a125-b65e23cf8c90","name":"TestSLA_1 (Managed by Polaris)","polarisManagedId":"4896a9de-b7e4-4a0b-ac20-d93d91bfb260","frequencies":"@{daily=}","allowedBackupWindows":"","firstFullAllowedBackupWindows":"","maxLocalRetentionLimit":604800,"archivalSpecs":"","replicationSpecs":"","numDbs":0,"numOracleDbs":0,"numFilesets":0,"numHypervVms":0,"numNutanixVms":0,"numManagedVolumes":0,"numStorageArrayVolumeGroups":0,"numWindowsVolumeGroups":0,"numLinuxHosts":0,"numShares":0,"numWindowsHosts":0,"numVms":0,"numEc2Instances":0,"numVcdVapps":0,"numProtectedObjects":0,"isDefault":false,"uiColor":"#7f3340","showAdvancedUi":true,"advancedUiConfig":""}],"total":1}'
+    #$SLAJson = '{"hasMore":false,"data":[{"id":"156eff81-b7d8-48c3-b3e5-97c2f788e215","primaryClusterId":"8b4fe6f6-cc87-4354-a125-b65e23cf8c90","name":"TestSLA_1 (Managed by Polaris)","polarisManagedId":"4896a9de-b7e4-4a0b-ac20-d93d91bfb260","frequencies":"@{daily=}","allowedBackupWindows":"","firstFullAllowedBackupWindows":"","maxLocalRetentionLimit":604800,"archivalSpecs":"","replicationSpecs":"","numDbs":0,"numOracleDbs":0,"numFilesets":0,"numHypervVms":0,"numNutanixVms":0,"numManagedVolumes":0,"numStorageArrayVolumeGroups":0,"numWindowsVolumeGroups":0,"numLinuxHosts":0,"numShares":0,"numWindowsHosts":0,"numVms":0,"numEc2Instances":0,"numVcdVapps":0,"numProtectedObjects":0,"isDefault":false,"uiColor":"#7f3340","showAdvancedUi":true,"advancedUiConfig":""}],"total":1}'
+    $SLAJson = '{"hasMore":false,"data":[{"id":"156eff81-b7d8-48c3-b3e5-97c2f788e215","primaryClusterId":"8b4fe6f6-cc87-4354-a125-b65e23cf8c90","name":"TestSLA_1 (Managed by Polaris)","polarisManagedId":"4896a9de-b7e4-4a0b-ac20-d93d91bfb260","frequencies":{"daily":{"frequency":1,"retention":7}},"allowedBackupWindows":[],"firstFullAllowedBackupWindows":[],"maxLocalRetentionLimit":604800,"archivalSpecs":[],"replicationSpecs":[],"numDbs":0,"numOracleDbs":0,"numFilesets":0,"numHypervVms":0,"numNutanixVms":0,"numManagedVolumes":0,"numStorageArrayVolumeGroups":0,"numWindowsVolumeGroups":0,"numLinuxHosts":0,"numShares":0,"numWindowsHosts":0,"numVms":0,"numEc2Instances":0,"numVcdVapps":0,"numProtectedObjects":0,"isDefault":false,"uiColor":"#7f3340","showAdvancedUi":true,"advancedUiConfig":[{"timeUnit":"Daily","retentionType":"Daily"}]}],"total":1}'
 
     Context -Name 'Method:Delete' {
         It 'Parse as PowerShell' {
@@ -130,6 +131,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
             }
         }
         It 'Parse as PowerShell - SLA Object - Verify <Property> Property' -TestCases $SLACases {
+            param($Property)
             (Submit-Request -Uri 1 -Method Post).Data.$Property | Should -BeExactly $SLAObject.$Property
         }
 
