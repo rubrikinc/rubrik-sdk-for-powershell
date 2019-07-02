@@ -67,10 +67,15 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
             $EventJson
         }
 
-        It 'Parse as PowerShell - Verify output object' {
-            $EventObject[0].psobject.Properties.name | ForEach-Object {
-                (Submit-Request -Uri 1 -Method Post).Data.$_ | Should -BeExactly $EventObject.$_
+        $EventCases = $EventObject[0].psobject.properties.name | ForEach-Object {
+            @{
+                'Property'=$_
             }
+        }
+
+        It 'Parse as PowerShell - Event Objects - Verify <Property> Property' -TestCases $EventCases {
+            param($Property)
+            (Submit-Request -Uri 1 -Method Post).Data.$Property | Should -BeExactly $EventObject.$Property
         }
 
         Assert-MockCalled -CommandName Test-PowerShellSix -Times 1
