@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Export-RubrikReport' -Tag 'Public', 'Export-RubrikReport' -Fixture {
+Describe -Name 'Public/Export-RubrikDatabase' -Tag 'Public', 'Export-RubrikDatabase' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -29,18 +29,18 @@ Describe -Name 'Public/Export-RubrikReport' -Tag 'Public', 'Export-RubrikReport'
 
         Context -Name 'Report Filtering' {
             It -Name 'Should return url for report' -Test {
-                ( Export-RubrikReport -id 'reportid').url |
+                ( Export-RubrikDatabase -id 'reportid').url |
                     Should -BeExactly 'https://192.168.150.121/report_dir/reportid.csv'
             }
         }
         
         Context -Name 'Parameter Validation' {
             It -Name 'Parameter id must be specified' -Test {
-                { Export-RubrikReport -id  } |
+                { Export-RubrikDatabase -id  } |
                     Should -Throw "Missing an argument for parameter 'id'. Specify a parameter of type 'System.String' and try again."
             }
             It -Name 'Parameter id cannot be $null or empty' -Test {
-                { Export-RubrikReport -id '' } |
+                { Export-RubrikDatabase -id '' } |
                     Should -Throw "Cannot bind argument to parameter 'id' because it is an empty string."
             }
         }
