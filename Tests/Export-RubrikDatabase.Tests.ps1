@@ -52,8 +52,17 @@ Describe -Name 'Public/Export-RubrikDatabase' -Tag 'Public', 'Export-RubrikDatab
                     Should -Throw "Parameter set cannot be resolved using the specified named parameters."
             } 
             It -Name 'RecoveryDateTime must be a date.' -Test {
-                { Export-RubrikDatabase -Id '111111' -recoveryDateTime 'July 2nd' -TargetInstanceId 'instanceid' -TargetDatabaseName 'asdf'} |
-                    Should -Throw "The string was not recognized as a valid DateTime. There is an unknown word starting at index 6."
+                # This test can be updated for Pester 5 release - Wildcards are supported there, currently we use Test-PowerShellSix as a workaround
+                # Windows PowerShell: "The string was not recognized as a valid DateTime. There is an unknown word starting at index 6."
+                # PowerShell 6      : "The string 'July 2nd' was not recognized as a valid DateTime. There is an unknown word starting at index '6'."
+                # Pester v5 Test    : "The string * was not recognized as a valid DateTime. There is an unknown word starting at*6*."
+                if (Test-PowerShellSix) {
+                    { Export-RubrikDatabase -Id '111111' -recoveryDateTime 'July 2nd' -TargetInstanceId 'instanceid' -TargetDatabaseName 'asdf'} |
+                        Should -Throw "The string 'July 2nd' was not recognized as a valid DateTime. There is an unknown word starting at index '6'."
+                } else {
+                    { Export-RubrikDatabase -Id '111111' -recoveryDateTime 'July 2nd' -TargetInstanceId 'instanceid' -TargetDatabaseName 'asdf'} |
+                        Should -Throw "The string was not recognized as a valid DateTime. There is an unknown word starting at index 6."
+                }
             }        
         }
         Assert-VerifiableMock
