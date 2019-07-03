@@ -16,7 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 2019-06-27 
+## 2019-07-03
+
+### Changed [Get-RubrikDatabase] - Relic parameter
+
+* Parameter now has 3 states -Relic -Relic:$false or not specified
+
+## 2019-06-27
 
 ### Changed [Sync-RubrikAnnotation]
 
