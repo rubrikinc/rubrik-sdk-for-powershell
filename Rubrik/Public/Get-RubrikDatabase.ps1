@@ -117,6 +117,11 @@ function Get-RubrikDatabase
     }
     #endregion
 
+    if($PSBoundParameters.ContainsKey('Relic')) {
+      $PSBoundParameters.is_relic = $Relic.IsPresent
+      $PSBoundParameters.Remove('Relic')
+    }
+
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
