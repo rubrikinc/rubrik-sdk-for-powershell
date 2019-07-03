@@ -16,7 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 2019-06-29 
+## 2019-07-02
+
+### Added Unit Tests [Export-RubrikReport & Export-RubrikDatabase]
+
+* Added Unit Tests for Export-RubrikReport & Export-RubrikDatabase to address [Issue 333](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/333)
+
+## 2019-06-29
 
 ### Changed Standardized usage of Out-Null over the module
 
