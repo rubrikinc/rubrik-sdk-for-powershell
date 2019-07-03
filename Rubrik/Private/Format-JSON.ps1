@@ -32,7 +32,7 @@ function ParseJsonObject($jsonObj)
   foreach ($key in $jsonObj.Keys) 
   {
     $item = $jsonObj[$key]
-    if ($item) 
+    if ($null -ne $item) 
     {
       $parsedItem = ParseItem -jsonItem $item
     }
