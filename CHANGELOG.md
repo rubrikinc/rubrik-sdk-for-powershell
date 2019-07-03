@@ -22,6 +22,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Parameter now has 3 states -Relic -Relic:$false or not specified
 
+## 2019-07-02
+
+### Added Unit Tests [Export-RubrikReport & Export-RubrikDatabase]
+
+* Added Unit Tests for Export-RubrikReport & Export-RubrikDatabase to address [Issue 333](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/333)
+
+## 2019-06-29
+
+### Changed Standardized usage of Out-Null over the module
+
+* To improve PowerShell 6, and onwards compatibility we have standardized on using | Out-Null
+
+### Added [New-RubrikSnapshot] Additional help examples in
+
+* Added examples of how to do Full backups of Oracle and MSSQL databases
+
+## 2019-06-28
+
+### Changed [quick-start.md] - Additional download instructions
+
+* Added a 4th option for downloading and distributing the Rubrik SDK for PowerShell
+
 ## 2019-06-27
 
 ### Changed [Sync-RubrikAnnotation]
@@ -119,7 +141,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added [New-RubrikManagedVolume update]
 
 * Added `-ApplicationTag` parameter support to New-RubrikManagedVolume so users can specify which application the managed volume will be used for. This addresses issue [285](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/285).
-
 
 ## 2019-05-30
 

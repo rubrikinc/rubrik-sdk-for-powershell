@@ -14,7 +14,7 @@
                 # Parse response to verify there is nothing in the body
                 $result = ExpandPayload -response $response
                 # If $result is null, build a $result object to return to the user. Otherwise, $result will be returned.
-                if($null -eq $result) {   
+                if ($null -eq $result) {   
                     # If if HTTP status code matches our expected result, build a PSObject reflecting success
                     if($response.StatusCode -eq [int]$resources.Success) {
                         $result = @{

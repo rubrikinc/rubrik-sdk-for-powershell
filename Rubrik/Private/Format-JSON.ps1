@@ -4,7 +4,7 @@
 
 function ExpandPayload($response) {
   Unblock-ExternalDll
-  $null = [Reflection.Assembly]::LoadFile("$PSScriptRoot\Newtonsoft.Json.dll")
+  [Reflection.Assembly]::LoadFile("$PSScriptRoot\Newtonsoft.Json.dll") | Out-Null
   ConvertFrom-JsonNewtonsoft $response.Content
 }
 

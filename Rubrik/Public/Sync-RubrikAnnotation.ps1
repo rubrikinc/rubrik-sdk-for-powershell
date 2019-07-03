@@ -76,15 +76,15 @@ function Sync-RubrikAnnotation
   Process {
 
     Write-Verbose -Message "Ensuring vCenter has attributes for $SLAAnnotationName and $BackupAnnotationName"
-    $null = New-CustomAttribute -Name $SLAAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue
-    $null = New-CustomAttribute -Name $BackupAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue
-    $null = New-CustomAttribute -Name $LatestRubrikBackupAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue
+    New-CustomAttribute -Name $SLAAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue | Out-Null
+    New-CustomAttribute -Name $BackupAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue | Out-Null
+    New-CustomAttribute -Name $LatestRubrikBackupAnnotationName -TargetType VirtualMachine -ErrorAction SilentlyContinue | Out-Null
 
     Write-Verbose -Message 'Updating vCenter annotations'
     foreach ($_ in (Get-RubrikVM -SLA $SLA -DetailedObject)) {
-      $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $SLAAnnotationName -Value $_.effectiveSlaDomainName
-      $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $BackupAnnotationName -Value $_.snapshotCount
-      $null = Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $LatestRubrikBackupAnnotationName -Value ($_.snapshots | Sort-Object -Property date -Descending | Select -First 1).date
+      Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $SLAAnnotationName -Value $_.effectiveSlaDomainName | Out-Null
+      Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $BackupAnnotationName -Value $_.snapshotCount | Out-Null
+      Set-Annotation -Entity (Get-VM -Id ('VirtualMachine-'+$_.moid)) -CustomAttribute $LatestRubrikBackupAnnotationName -Value ($_.snapshots | Sort-Object -Property date -Descending | Select -First 1).date | Out-Null
       Write-Verbose -Message "Successfully tagged $($_.name) as $($_.effectiveSlaDomainName)"
     }
 
