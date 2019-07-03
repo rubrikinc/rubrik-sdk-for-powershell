@@ -117,9 +117,9 @@ function Get-RubrikDatabase
     }
     #endregion
 
-    if($PSBoundParameters.ContainsKey('Relic')) {
-      $PSBoundParameters.is_relic = $Relic.IsPresent
-      $PSBoundParameters.Remove('Relic')
+    # If the switch parameter was not explicitly specified remove from query params 
+    if(-not $PSBoundParameters.ContainsKey('Relic')) {
+      $Resources.Query.Remove('is_relic')
     }
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
