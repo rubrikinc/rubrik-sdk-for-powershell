@@ -150,7 +150,7 @@ function Set-RubrikSLA
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
 
-    if (($Frequencies) -and ($AdvancedConfig)) {
+    if ($Frequencies) {
       $Frequencies[0].psobject.properties.name | ForEach-Object {
         if ($_ -eq 'Hourly') {
           if (($Frequencies.$_.frequency) -and (-not $HourlyFrequency)) {
@@ -166,7 +166,7 @@ function Set-RubrikSLA
           if (($Frequencies.$_.retention) -and (-not $DailyRetention)) {
             $DailyRetention = $Frequencies.$_.retention
           }
-        } elseif ($_ -eq 'Weekly') {
+        } elseif (($_ -eq 'Weekly') -and ($AdvancedConfig)) {
           if (($Frequencies.$_.frequency) -and (-not $WeeklyFrequency)) {
             $WeeklyFrequency = $Frequencies.$_.frequency
           }
@@ -186,7 +186,7 @@ function Set-RubrikSLA
           if (($Frequencies.$_.dayOfMonth) -and (-not $PSBoundParameters.ContainsKey('dayOfMonth'))) {
             $DayofMonth = $Frequencies.$_.dayOfMonth
           }
-        } elseif ($_ -eq 'Quarterly') {
+        } elseif (($_ -eq 'Quarterly') -and ($AdvancedConfig)) {
           if (($Frequencies.$_.frequency) -and (-not $QuarterlyFrequency)) {
             $QuarterlyFrequency = $Frequencies.$_.frequency
           }
