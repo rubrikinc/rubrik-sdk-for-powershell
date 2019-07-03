@@ -82,7 +82,9 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
     $SLAJson = '{"hasMore":false,"data":[{"id":"156eff81-b7d8-48c3-b3e5-97c2f788e215","primaryClusterId":"8b4fe6f6-cc87-4354-a125-b65e23cf8c90","name":"TestSLA_1 (Managed by Polaris)","polarisManagedId":"4896a9de-b7e4-4a0b-ac20-d93d91bfb260","frequencies":{"daily":{"frequency":1,"retention":7}},"allowedBackupWindows":[],"firstFullAllowedBackupWindows":[],"maxLocalRetentionLimit":604800,"archivalSpecs":[],"replicationSpecs":[],"numDbs":0,"numOracleDbs":0,"numFilesets":0,"numHypervVms":0,"numNutanixVms":0,"numManagedVolumes":0,"numStorageArrayVolumeGroups":0,"numWindowsVolumeGroups":0,"numLinuxHosts":0,"numShares":0,"numWindowsHosts":0,"numVms":0,"numEc2Instances":0,"numVcdVapps":0,"numProtectedObjects":0,"isDefault":false,"uiColor":"#7f3340","showAdvancedUi":true,"advancedUiConfig":[{"timeUnit":"Daily","retentionType":"Daily"}]}],"total":1}'
 
     Context -Name 'Method:Delete-Success/Error' {
-        Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {$true}
+        Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {
+            $false
+        }
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
             $null
         }
@@ -117,7 +119,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
 
     Context -Name 'Method:Other-EventObject' {
         Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {
-            $true
+            $false
         }
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
             $EventJson
@@ -141,7 +143,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
 
     Context  -Name 'Method:Other-SLAObject' {
         Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {
-            $true
+            $false
         }
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
             $SLAJson
@@ -164,7 +166,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
 
     Context -Name 'Error:Route not defined' {
         Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {
-            $true
+            $false
         }
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
             throw 'Route not defined.'
