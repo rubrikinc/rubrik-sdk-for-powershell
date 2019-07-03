@@ -16,7 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 2019-06-29 
+## 2019-07-03
+
+### Fixed issues with parsing of complex JSON payloads
+
+* Get-RubrikReportData now correctly returns all data
+* Performance of JSON parsing improved for PowerShell 6 and later
+
+## 2019-06-29
 
 ### Changed Standardized usage of Out-Null over the module
 
