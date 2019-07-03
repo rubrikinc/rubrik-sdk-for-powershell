@@ -31,6 +31,14 @@ function Get-RubrikDatabase
       This will return all removed databases that were formerly protected by Rubrik.
 
       .EXAMPLE
+      Get-RubrikDatabase -Relic:$false
+      This will return all databases that are currently protected by Rubrik.
+
+      .EXAMPLE
+      Get-RubrikDatabase
+      This will return all databases that are currently or formerly protected by Rubrik.
+
+      .EXAMPLE
       Get-RubrikDatabase -id 'MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
       This will return details on a single database matching the Rubrik ID of "MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
       Note that the database ID is globally unique and is often handy to know if tracking a specific database for longer workflows,
