@@ -171,11 +171,12 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         }
 
         It 'Should throw' {
-            {Submit-Request -Uri 1 -Method Post} | Should -Throw
+            {Submit-Request -Uri 1 -Method Post 3>$null} | Should -Throw
         }
 
         It 'Should throw' {
-            {Submit-Request -Uri 1 -Method Post} | Should -Throw
+            {Submit-Request -Uri 1 -Method Post -WarningVariable Jaap}
+            $Jaap | Should -BeExactly 'WARNING: The endpoint supplied to Rubrik is invalid. Likely this is due to an incompatible version of the API or references pointing to a non-existent endpoint. The URI passed was: 1'
         }
 
         Assert-VerifiableMock

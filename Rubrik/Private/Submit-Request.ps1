@@ -1,4 +1,12 @@
-﻿function Submit-Request($uri, $header, $method = $($resources.Method) , $body) {
+﻿
+function Submit-Request {
+    [cmdletbinding(supportsshouldprocess=$true)]
+    param(
+        $uri,
+        $header,
+        $method = $($resources.Method),
+        $body
+    )
     # The Submit-Request function is used to send data to an endpoint and then format the response for further use
     # $uri = The endpoint's URI
     # $header = The header containing authentication details
