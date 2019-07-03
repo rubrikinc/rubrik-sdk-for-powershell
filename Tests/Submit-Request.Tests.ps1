@@ -87,7 +87,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
             $null
         }
 
-        It 'Status:success' {
+        It 'Status:Success' {
            $response = @{
                 StatusCode = 204
            }
@@ -98,7 +98,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
            (Submit-Request -Uri 1 -Method Delete).Status | Should -BeExactly 'Success'
         }
 
-        It 'Status:error' {
+        It 'Status:Error' {
             $response = @{
                 StatusCode = 1337
             }
@@ -170,13 +170,8 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
             throw 'Route not defined.'
         }
 
-        It 'Should throw' {
+        It 'Should throw - Route not defined.' {
             {Submit-Request -Uri 1 -Method Post 3>$null} | Should -Throw
-        }
-
-        It 'Should throw' {
-            {Submit-Request -Uri 1 -Method Post -WarningVariable Jaap}
-            $Jaap | Should -BeExactly 'WARNING: The endpoint supplied to Rubrik is invalid. Likely this is due to an incompatible version of the API or references pointing to a non-existent endpoint. The URI passed was: 1'
         }
 
         Assert-VerifiableMock
