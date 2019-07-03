@@ -79,19 +79,40 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         advancedUiConfig              = '@{timeUnit=Daily; retentionType=Daily}'
     }
 
-    #$SLAJson = '{"hasMore":false,"data":[{"id":"156eff81-b7d8-48c3-b3e5-97c2f788e215","primaryClusterId":"8b4fe6f6-cc87-4354-a125-b65e23cf8c90","name":"TestSLA_1 (Managed by Polaris)","polarisManagedId":"4896a9de-b7e4-4a0b-ac20-d93d91bfb260","frequencies":"@{daily=}","allowedBackupWindows":"","firstFullAllowedBackupWindows":"","maxLocalRetentionLimit":604800,"archivalSpecs":"","replicationSpecs":"","numDbs":0,"numOracleDbs":0,"numFilesets":0,"numHypervVms":0,"numNutanixVms":0,"numManagedVolumes":0,"numStorageArrayVolumeGroups":0,"numWindowsVolumeGroups":0,"numLinuxHosts":0,"numShares":0,"numWindowsHosts":0,"numVms":0,"numEc2Instances":0,"numVcdVapps":0,"numProtectedObjects":0,"isDefault":false,"uiColor":"#7f3340","showAdvancedUi":true,"advancedUiConfig":""}],"total":1}'
     $SLAJson = '{"hasMore":false,"data":[{"id":"156eff81-b7d8-48c3-b3e5-97c2f788e215","primaryClusterId":"8b4fe6f6-cc87-4354-a125-b65e23cf8c90","name":"TestSLA_1 (Managed by Polaris)","polarisManagedId":"4896a9de-b7e4-4a0b-ac20-d93d91bfb260","frequencies":{"daily":{"frequency":1,"retention":7}},"allowedBackupWindows":[],"firstFullAllowedBackupWindows":[],"maxLocalRetentionLimit":604800,"archivalSpecs":[],"replicationSpecs":[],"numDbs":0,"numOracleDbs":0,"numFilesets":0,"numHypervVms":0,"numNutanixVms":0,"numManagedVolumes":0,"numStorageArrayVolumeGroups":0,"numWindowsVolumeGroups":0,"numLinuxHosts":0,"numShares":0,"numWindowsHosts":0,"numVms":0,"numEc2Instances":0,"numVcdVapps":0,"numProtectedObjects":0,"isDefault":false,"uiColor":"#7f3340","showAdvancedUi":true,"advancedUiConfig":[{"timeUnit":"Daily","retentionType":"Daily"}]}],"total":1}'
 
-    Context -Name 'Method:Delete' {
-        It 'Parse as PowerShell' {
-            Mock -CommandName Test-PowerShellSix -Verifiable  -MockWith {$true}
+    Context -Name 'Method:Delete-Success/Error' {
+        Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {$true}
+        Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
+            $null
         }
+
         It 'Status:success' {
-            Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {$true}
+           $response = @{
+                StatusCode = 204
+           }
+           $resources = @{
+                Method = 'Delete'
+                Success = 204
+           }
+           (Submit-Request -Uri 1 -Method Delete).Status | Should -BeExactly 'Success'
         }
+
         It 'Status:error' {
-            Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {$true}
+            $response = @{
+                StatusCode = 1337
+            }
+            $resources = @{
+                Method = 'Delete'
+                Success = 204
+            }
+            
+            (Submit-Request -Uri 1 -Method Delete).Status | Should -BeExactly 'Error'
         }
+
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-PowerShellSix -Times 2
+        Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 2
     }
 
     Context -Name 'Method:Other-EventObject' {
@@ -113,8 +134,9 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
             (Submit-Request -Uri 1 -Method Post).Data.$Property | Should -BeExactly $EventObject.$Property
         }
 
-        Assert-MockCalled -CommandName Test-PowerShellSix -Times 1
-        Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 1
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-PowerShellSix -Times 11
+        Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 11
     }
 
     Context  -Name 'Method:Other-SLAObject' {
@@ -135,11 +157,29 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
             (Submit-Request -Uri 1 -Method Post).Data.$Property | Should -BeExactly $SLAObject.$Property
         }
 
-        Assert-MockCalled -CommandName Test-PowerShellSix -Times 1
-        Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 1
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-PowerShellSix -Times 29
+        Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 29
     }
 
-    Context -Name 'Error' {
-    
+    Context -Name 'Error:Route not defined' {
+        Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {
+            $true
+        }
+        Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
+            throw 'Route not defined.'
+        }
+
+        It 'Should throw' {
+            {Submit-Request -Uri 1 -Method Post} | Should -Throw
+        }
+
+        It 'Should throw' {
+            {Submit-Request -Uri 1 -Method Post} | Should -Throw
+        }
+
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-PowerShellSix -Times 1
+        Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 1
     }
 }
