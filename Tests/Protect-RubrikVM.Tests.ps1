@@ -89,11 +89,11 @@ Describe -Name 'Public/Protect-RubrikVM' -Tag 'Public', 'Protect-RubrikVM' -Fixt
                 Should -Throw "Cannot validate argument on parameter 'ID'"
         }
         It -Name 'Parameters SLA and DoNotProtect cannot be simultaneously used' -Test {
-            { Protect-RubrikVM -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -Name -SLA Gold -DoNotProtect} |
+            { Protect-RubrikVM -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -SLA Gold -DoNotProtect} |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
         It -Name 'Parameters SLA and Inherit cannot be simultaneously used' -Test {
-            { Protect-RubrikVM -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -Name -SLA Gold -Inherit} |
+            { Protect-RubrikVM -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -SLA Gold -Inherit} |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
         It -Name 'Parameters DoNotProtect and Inherit cannot be simultaneously used' -Test {

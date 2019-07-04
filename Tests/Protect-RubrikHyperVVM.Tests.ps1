@@ -89,11 +89,11 @@ Describe -Name 'Public/Protect-RubrikHyperVVM' -Tag 'Public', 'Protect-RubrikHyp
                 Should -Throw "Cannot validate argument on parameter 'ID'"
         }
         It -Name 'Parameters SLA and DoNotProtect cannot be simultaneously used' -Test {
-            { Protect-RubrikHyperVVM -Id HypervVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-ffffffff-0000-1111-2222-333333333333 -Name -SLA Gold -DoNotProtect} |
+            { Protect-RubrikHyperVVM -Id HypervVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-ffffffff-0000-1111-2222-333333333333 -SLA Gold -DoNotProtect} |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
         It -Name 'Parameters SLA and Inherit cannot be simultaneously used' -Test {
-            { Protect-RubrikHyperVVM -Id HypervVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-ffffffff-0000-1111-2222-333333333333 -Name -SLA Gold -Inherit} |
+            { Protect-RubrikHyperVVM -Id HypervVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-ffffffff-0000-1111-2222-333333333333 -SLA Gold -Inherit} |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
         It -Name 'Parameters DoNotProtect and Inherit cannot be simultaneously used' -Test {
