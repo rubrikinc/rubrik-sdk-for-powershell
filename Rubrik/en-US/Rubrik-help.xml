@@ -1247,7 +1247,7 @@
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
         <dev:code>Export-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase $db).latestRecoveryPoint) -targetInstanceId $db2.instanceId -targetDatabaseName 'BAR_EXP' -targetFilePaths $targetfiles -maxDataStreams 1</dev:code>
         <dev:remarks>
-          <maml:para>Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database. New file paths are  in the $targetfiles array. Each individual file declaration (logicalName, exportPath,newFilename) will be a hashtable, so what gets passed to the cmdlet is an array of hashtables</maml:para>
+          <maml:para>Restore the $db (where $db is the output of a Get-RubrikDatabase call) to the most recent recovery point for that database. New file paths are  in the $targetfiles array. Each individual file declaration (logicalName, exportPath,newFilename) will be a hashtable, so what gets passed to the cmdlet is an array of hashtables</maml:para>
           <maml:para>$targetfiles = @() $targetfiles += @{logicalName='BAR_1';exportPath='E:\SQLFiles\Data\BAREXP\'} $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}</maml:para>
         </dev:remarks>
       </command:example>
