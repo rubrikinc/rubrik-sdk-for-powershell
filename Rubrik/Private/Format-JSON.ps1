@@ -18,7 +18,7 @@ This function use the .Net JSON Serializer in order to
 function ParseItem($jsonItem) {
 <#
 .SYNOPSIS
-Main function that determines the type of object and calls 
+Main function that determines the type of object and calls either ParseJsonObject or ParseJsonArray
 #>
   if($jsonItem.PSObject.TypeNames -match 'Array') {
     return ParseJsonArray -jsonArray ($jsonItem)
@@ -32,7 +32,7 @@ Main function that determines the type of object and calls
 function ParseJsonObject($jsonObj) {
 <#
 .SYNOPSIS
-
+Converts JSON to PowerShell Custom objects
 #>
   $result = New-Object -TypeName PSCustomObject
   foreach ($key in $jsonObj.Keys) 
@@ -53,7 +53,7 @@ function ParseJsonObject($jsonObj) {
 function ParseJsonArray($jsonArray) {
 <#
 .SYNOPSIS
-Expands the array and feeds this back into ParseItem
+Expands the array and feeds this back into ParseItem, in case of nested arrays this might occur multiple times
 #>
   $result = @()
   $jsonArray | ForEach-Object -Process {
