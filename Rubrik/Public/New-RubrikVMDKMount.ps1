@@ -32,14 +32,19 @@ function New-RubrikVMDKMount
 
   [CmdletBinding()]
   Param(
-    # Target host to attach the Live Mount disk(s)
+    # Snapshot ID containing VMDKs to attach to target VM
     [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [Alias('id')]
     [String]$SnapshotID,
+    # Target VM to attach the Live Mount disk(s)
     [Parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()]
     [String]$TargetVM,
+    # Switch to specitfy whether or not to mount all VMDKs in snapshot
     [parameter(Mandatory=$false)]
     [Switch]$AllDisks,
+    # VLAN used by ESXi to mount the datastore
     [parameter(Mandatory=$false)]
     [Int]$VLAN,
     # Rubrik server IP or FQDN
