@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-03
+
+### Added [Unit tests]
+
+* Added unit tests for Get-RubrikHyperVVM, Get-RubrikNutanixVM, Move-RubrikMountVMDK, New-RubrikVMDKMount, Protect-RubrikHyperVVM ,Protect-RubrikNutanixVM. Protect-RubrikVM, Set-RubrikHyperVVM, Set-RubrikNutanixVM, Set-RubrikVM
+
+### Changed [Fixes for unit tests]
+
+* Minor updates to parameter configurations of Get-RubrikHyperVVM, Get-RubrikNutanixVM, Move-RubrikMountVMDK, New-RubrikVMDKMount, Protect-RubrikHyperVVM ,Protect-RubrikNutanixVM. Protect-RubrikVM, Set-RubrikHyperVVM, Set-RubrikNutanixVM, Set-RubrikVM so they pass associated unit tests
+
 ## 2019-06-29 
 
 ### Changed Standardized usage of Out-Null over the module
