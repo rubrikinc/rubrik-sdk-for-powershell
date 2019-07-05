@@ -150,7 +150,7 @@ function Set-RubrikSLA
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
 
-    if (($Frequencies) -and ($AdvancedConfig)) {
+    if (($uri.contains('v2')) -and ($Frequencies) -and ($AdvancedConfig)) {
       $Frequencies[0].psobject.properties.name | ForEach-Object {
         if ($_ -eq 'Hourly') {
           if (($Frequencies.$_.frequency) -and (-not $HourlyFrequency)) {
@@ -214,7 +214,7 @@ function Set-RubrikSLA
           }
         }
       }
-    } elseif (($Frequencies)) {
+    } elseif ($uri.contains('v2') -and ($Frequencies)) {
       $Frequencies[0].psobject.properties.name | ForEach-Object {
         if ($_ -eq 'Hourly') {
           if (($Frequencies.$_.frequency) -and (-not $HourlyFrequency)) {
@@ -252,6 +252,46 @@ function Set-RubrikSLA
           }
           if (($Frequencies.$_.dayOfYear) -and (-not $PSBoundParameters.ContainsKey('dayOfYear'))) {
             $DayOfYear = $Frequencies.$_.dayOfYear
+          }
+        }
+      }
+    } elseif ($Frequencies) {
+      $Frequencies | ForEach-Object {
+        if ($_.timeUnit -eq 'Hourly') {
+          if (($_.frequency) -and (-not $HourlyFrequency)) {
+            $HourlyFrequency = $_.frequency
+            Write-Verbose -Message "The hourly frequency retrieved from pipeline is $HourlyFrequency"
+          }
+          if (($_.retention) -and (-not $HourlyRetention)) {
+            $HourlyRetention = $_.retention
+            Write-Verbose -Message "The hourly retention retrieved from pipeline is $HourlyRetention"
+          }
+        } elseif ($_.timeUnit -eq 'Daily') {
+          if (($_.frequency) -and (-not $DailyFrequency)) {
+            $DailyFrequency = $_.frequency
+            Write-Verbose -Message "The daily frequency retrieved from pipeline is $DailyFrequency"
+          }
+          if (($_.retention) -and (-not $DailyRetention)) {
+            $DailyRetention = $_.retention
+            Write-Verbose -Message "The daily retention retrieved from pipeline is $DailyRetention"
+          }
+        } elseif ($_.timeUnit -eq 'Monthly') {
+          if (($_.frequency) -and (-not $MonthlyFrequency)) {
+            $MonthlyFrequency = $_.frequency
+            Write-Verbose -Message "The monthly frequency retrieved from pipeline is $MonthlyFrequency"
+          }
+          if (($_.retention) -and (-not $MonthlyRetention)) {
+            $MonthlyRetention = $_.retention
+            Write-Verbose -Message "The monthly retention retrieved from pipeline is $MonthlyRetention"
+          }
+        }elseif ($_.timeUnit -eq 'Yearly') {
+          if (($_.frequency) -and (-not $YearlyFrequency)) {
+            $YearlyFrequency = $_.frequency
+            Write-Verbose -Message "The yearly frequency retrieved from pipeline is $YearlyFrequency"
+          }
+          if (($_.retention) -and (-not $YearlyRetention)) {
+            $YearlyRetention = $_.retention
+            Write-Verbose -Message "The yearly retention retrieved from pipeline is $YearlyRetention"
           }
         }
       }
