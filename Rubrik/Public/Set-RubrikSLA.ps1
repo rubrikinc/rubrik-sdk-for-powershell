@@ -140,11 +140,18 @@ function Set-RubrikSLA
 
     #region One-off
     Write-Verbose -Message 'Build the body'
-    $body = @{
-      $resources.Body.name = $Name
-      frequencies = @()
-      showAdvancedUi = $AdvancedConfig.IsPresent
-      advancedUiConfig = @()
+    if ($uri.contains('v2')) {
+      $body = @{
+        $resources.Body.name = $Name
+        frequencies = @()
+        showAdvancedUi = $AdvancedConfig.IsPresent
+        advancedUiConfig = @()
+      }
+    } else {
+      $body = @{
+        $resources.Body.name = $Name
+        frequencies = @()
+      }
     }
     
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
