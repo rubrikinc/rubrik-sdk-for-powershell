@@ -291,7 +291,7 @@ function Set-RubrikSLA
             $MonthlyRetention = $_.retention
             Write-Verbose -Message "The monthly retention retrieved from pipeline is $MonthlyRetention"
           }
-        }elseif ($_.timeUnit -eq 'Yearly') {
+        } elseif ($_.timeUnit -eq 'Yearly') {
           if (($_.frequency) -and (-not $YearlyFrequency)) {
             $YearlyFrequency = $_.frequency
             Write-Verbose -Message "The yearly frequency retrieved from pipeline is $YearlyFrequency"
@@ -302,6 +302,8 @@ function Set-RubrikSLA
           }
         }
       }
+    } elseif ($HourlyRetention) {
+      $HourlyRetention = ($HourlyRetention * 24)
     }
 
     if ($AdvancedFreq) {
@@ -333,7 +335,7 @@ function Set-RubrikSLA
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Hourly'
           $resources.Body.frequencies.frequency = $HourlyFrequency
-          $resources.Body.frequencies.retention = $HourlyRetention
+          $resources.Body.frequencies.retention = ($HourlyRetention)
         }
       }
       [bool]$ParamValidation = $true
