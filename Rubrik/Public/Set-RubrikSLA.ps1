@@ -302,6 +302,8 @@ function Set-RubrikSLA
       }
     } elseif ($HourlyRetention) {
       $HourlyRetention = ($HourlyRetention * 24)
+    } elseif ($MonthlyRetention) {
+      $MonthlyRetention = ($MonthlyRetention * 12)
     }
 
     if ($AdvancedFreq) {
