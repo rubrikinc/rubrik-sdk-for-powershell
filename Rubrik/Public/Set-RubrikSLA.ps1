@@ -47,7 +47,7 @@ function Set-RubrikSLA
     [int]$HourlyFrequency,
     # Number of days or weeks to retain the hourly backups
     [int]$HourlyRetention,
-    # Retention unit to apply to hourly snapshots
+    # Retention unit to apply to hourly snapshots. Does not apply to CDM versions prior to 5.0.
     [ValidateSet('Daily','Weekly')]
     [String]$HourlyRetentionUnit='Daily',
     # Daily frequency to take backups
@@ -61,27 +61,27 @@ function Set-RubrikSLA
     [int]$WeeklyFrequency,
     # Number of weeks to retain the weekly backups
     [int]$WeeklyRetention,
-    # Day of week for the weekly snapshots when $AdvancedConfig is set to $true. The default is Saturday
+    # Day of week for the weekly snapshots when $AdvancedConfig is used. The default is Saturday
     [ValidateSet('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday')]
     [String]$DayOfWeek='Saturday',
     # Monthly frequency to take backups
     [int]$MonthlyFrequency,
-    # Number of months, quarters or years to retain the monthly backups
+    # Number of months, quarters or years to retain the monthly backups. For CDM versions prior to 5.0, this value must be set in years.
     [int]$MonthlyRetention,
-    # Day of month for the monthly snapshots when $AdvancedConfig is set to $true. The default is the last day of the month.
+    # Day of month for the monthly snapshots when $AdvancedConfig is used. The default is the last day of the month.
     [ValidateSet('FirstDay','Fifteenth','LastDay')]
     [String]$DayOfMonth='LastDay',
-    # Retention unit to apply to monthly snapshots
+    # Retention unit to apply to monthly snapshots. Does not apply to CDM version prior to 5.0
     [ValidateSet('Monthly','Quarterly','Yearly')]
     [String]$MonthlyRetentionUnit='Monthly',
     # Quarterly frequency to take backups
     [int]$QuarterlyFrequency,
     # Number of quarters or years to retain the monthly backup
     [int]$QuarterlyRetention,
-    # Day of quarter for the quarterly snapshots when $AdvancedConfig is set to $true. The default is the last day of the quarter.
+    # Day of quarter for the quarterly snapshots when $AdvancedConfig is used. The default is the last day of the quarter.
     [ValidateSet('FirstDay','LastDay')]
     [String]$DayOfQuarter='LastDay',
-    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is set to $true. The default is January.
+    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used. The default is January.
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$FirstQuarterStartMonth='January',
     # Retention unit to apply to quarterly snapshots
@@ -229,6 +229,8 @@ function Set-RubrikSLA
           }
           if (($Frequencies.$_.retention) -and (-not $HourlyRetention)) {
             $HourlyRetention = $Frequencies.$_.retention
+          } elseif ($HourlyRetention) {
+            $HourlyRetention = ($HourlyRetention * 24)
           }
         } elseif ($_ -eq 'Daily') {
           if (($Frequencies.$_.frequency) -and (-not $DailyFrequency)) {
@@ -267,62 +269,54 @@ function Set-RubrikSLA
         if ($_.timeUnit -eq 'Hourly') {
           if (($_.frequency) -and (-not $HourlyFrequency)) {
             $HourlyFrequency = $_.frequency
-            Write-Verbose -Message "The hourly frequency retrieved from pipeline is $HourlyFrequency"
           }
           if (($_.retention) -and (-not $HourlyRetention)) {
             $HourlyRetention = $_.retention
-            Write-Verbose -Message "The hourly retention retrieved from pipeline is $HourlyRetention"
+          } elseif ($HourlyRetention) {
+            $HourlyRetention = ($HourlyRetention * 24)
           }
         } elseif ($_.timeUnit -eq 'Daily') {
           if (($_.frequency) -and (-not $DailyFrequency)) {
             $DailyFrequency = $_.frequency
-            Write-Verbose -Message "The daily frequency retrieved from pipeline is $DailyFrequency"
           }
           if (($_.retention) -and (-not $DailyRetention)) {
             $DailyRetention = $_.retention
-            Write-Verbose -Message "The daily retention retrieved from pipeline is $DailyRetention"
           }
         } elseif ($_.timeUnit -eq 'Monthly') {
           if (($_.frequency) -and (-not $MonthlyFrequency)) {
             $MonthlyFrequency = $_.frequency
-            Write-Verbose -Message "The monthly frequency retrieved from pipeline is $MonthlyFrequency"
           }
           if (($_.retention) -and (-not $MonthlyRetention)) {
             $MonthlyRetention = $_.retention
-            Write-Verbose -Message "The monthly retention retrieved from pipeline is $MonthlyRetention"
+          } elseif ($MonthlyRetention) {
+            $MonthlyRetention = ($MonthlyRetention * 12)
           }
         } elseif ($_.timeUnit -eq 'Yearly') {
           if (($_.frequency) -and (-not $YearlyFrequency)) {
             $YearlyFrequency = $_.frequency
-            Write-Verbose -Message "The yearly frequency retrieved from pipeline is $YearlyFrequency"
           }
           if (($_.retention) -and (-not $YearlyRetention)) {
             $YearlyRetention = $_.retention
-            Write-Verbose -Message "The yearly retention retrieved from pipeline is $YearlyRetention"
           }
         }
       }
     } elseif ($HourlyRetention) {
       $HourlyRetention = ($HourlyRetention * 24)
+    } elseif (-not ($uri.contains('v2')) -and ($MonthlyRetention)) {
+      $MonthlyRetention = ($MonthlyRetention * 12)
     }
 
     if ($AdvancedFreq) {
       $AdvancedFreq | ForEach-Object {
         if (($_.timeUnit -eq 'Hourly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('HourlyRetentionUnit'))) {
           $HourlyRetentionUnit = $_.retentionType
-
         } elseif (($_.timeUnit -eq 'Daily') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('DailyRetentionUnit'))) {
           $DailyRetentionUnit = $_.retentionType
-        #} elseif (($_.timeUnit -eq 'Weekly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('WeeklyRetentionUnit'))) {
-        #  $WeeklyRetentionUnit = $_.retentionType
         } elseif (($_.timeUnit -eq 'Monthly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('MonthlyRetentionUnit'))) {
           $MonthlyRetentionUnit = $_.retentionType
         } elseif (($_.timeUnit -eq 'Quarterly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('QuarterlyRetentionUnit'))) {
           $QuarterlyRetentionUnit = $_.retentionType
         }
-        # elseif (($_.timeUnit -eq 'Yearly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('YearlyRetentionUnit'))) {
-        #  $YearlyRetentionUnit = $_.retentionType
-        #}
       }
     }
      
@@ -391,9 +385,9 @@ function Set-RubrikSLA
       } else { 
         Write-Warning -Message 'Quarterly SLA configurations are not supported in this version of Rubrik CDM.'
         # $body.frequencies += @{
-        #   $resources.Body.frequencies.timeUnit = 'ly'
-        #   $resources.Body.frequencies.frequency = $MonthlyFrequency
-        #   $resources.Body.frequencies.retention = $MonthlyRetention
+        #   $resources.Body.frequencies.timeUnit = 'Quarterly'
+        #   $resources.Body.frequencies.frequency = $QuarterlyFrequency
+        #   $resources.Body.frequencies.retention = $QuarterlyRetention
         # }
       }
       [bool]$ParamValidation = $true
