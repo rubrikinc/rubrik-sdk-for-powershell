@@ -27,7 +27,7 @@ function Set-RubrikSLA
 
       .EXAMPLE
       Get-RubrikSLA -Name 'Silver (Managed by Polaris)' | Set-RubrikSLA -HourlyRetention 4 -HourlyFrequency 5 -Verbose
-      Will get information of Silver SLA and only change the values specified in the Set-RubrikSLA function
+      Will get information of Silver SLA and only change the hourly retention and frequency.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -45,7 +45,7 @@ function Set-RubrikSLA
     [String]$Name,
     # Hourly frequency to take backups
     [int]$HourlyFrequency,
-    # Number of days or weeks to retain the hourly backups
+    # Number of days or weeks to retain the hourly backups. In CDM versions prior to 5.0 this value must be set in days.
     [int]$HourlyRetention,
     # Retention unit to apply to hourly snapshots. Does not apply to CDM versions prior to 5.0.
     [ValidateSet('Daily','Weekly')]
@@ -66,12 +66,12 @@ function Set-RubrikSLA
     [String]$DayOfWeek='Saturday',
     # Monthly frequency to take backups
     [int]$MonthlyFrequency,
-    # Number of months, quarters or years to retain the monthly backups. For CDM versions prior to 5.0, this value must be set in years.
+    # Number of months, quarters or years to retain the monthly backups. In CDM versions prior to 5.0, this value must be set in years.
     [int]$MonthlyRetention,
     # Day of month for the monthly snapshots when $AdvancedConfig is used. The default is the last day of the month.
     [ValidateSet('FirstDay','Fifteenth','LastDay')]
     [String]$DayOfMonth='LastDay',
-    # Retention unit to apply to monthly snapshots. Does not apply to CDM version prior to 5.0
+    # Retention unit to apply to monthly snapshots. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Monthly','Quarterly','Yearly')]
     [String]$MonthlyRetentionUnit='Monthly',
     # Quarterly frequency to take backups
@@ -91,10 +91,10 @@ function Set-RubrikSLA
     [int]$YearlyFrequency,
     # Number of years to retain the yearly backups
     [int]$YearlyRetention,
-    # Day of year for the yearly snapshots when $AdvancedConfig is set to $true. The default is the last day of the year.
+    # Day of year for the yearly snapshots when $AdvancedConfig is used. The default is the last day of the year.
     [ValidateSet('FirstDay','LastDay')]
     [String]$DayOfYear='LastDay',
-    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is set to $true. The default is January.
+    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used. The default is January.
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Only supported with CDM versions greater or equal to 5.0
@@ -289,7 +289,7 @@ function Set-RubrikSLA
           if (($_.retention) -and (-not $MonthlyRetention)) {
             $MonthlyRetention = $_.retention
           } elseif ($MonthlyRetention) {
-            $MonthlyRetention = ($MonthlyRetention * 12)
+            $MonthlyRetention = $MonthlyRetention * 12
           }
         } elseif ($_.timeUnit -eq 'Yearly') {
           if (($_.frequency) -and (-not $YearlyFrequency)) {
@@ -302,8 +302,6 @@ function Set-RubrikSLA
       }
     } elseif ($HourlyRetention) {
       $HourlyRetention = ($HourlyRetention * 24)
-    } elseif (-not ($uri.contains('v2')) -and ($MonthlyRetention)) {
-      $MonthlyRetention = ($MonthlyRetention * 12)
     }
 
     if ($AdvancedFreq) {
@@ -355,11 +353,11 @@ function Set-RubrikSLA
         $body.advancedUiConfig += @{timeUnit='Weekly';retentionType='Weekly'}
       } else {
         Write-Warning -Message 'Weekly SLA configurations are not supported in this version of Rubrik CDM.'
-        # $body.frequencies += @{
-        #   $resources.Body.frequencies.timeUnit = 'Weekly'
-        #   $resources.Body.frequencies.frequency = $WeeklyFrequency
-        #   $resources.Body.frequencies.retention = $WeeklyRetention
-        # }
+        $body.frequencies += @{
+          $resources.Body.frequencies.timeUnit = 'Weekly'
+          $resources.Body.frequencies.frequency = $WeeklyFrequency
+          $resources.Body.frequencies.retention = $WeeklyRetention
+        }
       }
       [bool]$ParamValidation = $true
     }    
@@ -384,11 +382,6 @@ function Set-RubrikSLA
           $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionUnit}
       } else { 
         Write-Warning -Message 'Quarterly SLA configurations are not supported in this version of Rubrik CDM.'
-        # $body.frequencies += @{
-        #   $resources.Body.frequencies.timeUnit = 'Quarterly'
-        #   $resources.Body.frequencies.frequency = $QuarterlyFrequency
-        #   $resources.Body.frequencies.retention = $QuarterlyRetention
-        # }
       }
       [bool]$ParamValidation = $true
     }  
