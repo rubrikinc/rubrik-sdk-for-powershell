@@ -23,6 +23,10 @@ function Get-RubrikDatabase
       This will return details on all databases named DB1 protected by the Gold SLA Domain on any known host or instance.
 
       .EXAMPLE
+      Get-RubrikDatabase -Name 'DB1' -DetailedObject
+      This will return the Database object with all properties, including additional details such as snapshots taken of the database and recovery point date/time information. Using this switch parameter negatively affects performance 
+
+      .EXAMPLE
       Get-RubrikDatabase -Name 'DB1' -Host 'Host1' -Instance 'MSSQLSERVER'
       This will return details on a database named "DB1" living on an instance named "MSSQLSERVER" on the host named "Host1".
 
