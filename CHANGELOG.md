@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-08
+
+### Changed [Get-RubrikDatabase]
+
+* Added ability to specify -DetailedObject on Get-RubrikDatabase to address [Issue 354](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/354)
+
 ## 2019-07-03
 
 ### Added [Unit tests]
