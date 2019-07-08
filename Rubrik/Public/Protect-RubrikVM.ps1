@@ -34,6 +34,7 @@ function Protect-RubrikVM
   Param(
     # Virtual machine ID
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     # The SLA Domain in Rubrik
     [Parameter(ParameterSetName = 'SLA_Explicit')]

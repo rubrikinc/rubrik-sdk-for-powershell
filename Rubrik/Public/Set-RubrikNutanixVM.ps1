@@ -30,6 +30,7 @@ function Set-RubrikNutanixVM
     Param(
         # Virtual machine ID
         [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullOrEmpty()]
         [String]$id,
         # Consistency level mandated for this VM
         [ValidateSet('AUTOMATIC','APP_CONSISTENT','CRASH_CONSISTENT','FILE_SYSTEM_CONSISTENT','VSS_CONSISTENT','INCONSISTENT','UNKNOWN')]

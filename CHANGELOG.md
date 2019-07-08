@@ -18,6 +18,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-07-03
 
+### Added [Unit tests]
+
+* Added unit tests for Get-RubrikHyperVVM, Get-RubrikNutanixVM, Move-RubrikMountVMDK, New-RubrikVMDKMount, Protect-RubrikHyperVVM ,Protect-RubrikNutanixVM. Protect-RubrikVM, Set-RubrikHyperVVM, Set-RubrikNutanixVM, Set-RubrikVM
+
+### Changed [Fixes for unit tests]
+
+* Minor updates to parameter configurations of Get-RubrikHyperVVM, Get-RubrikNutanixVM, Move-RubrikMountVMDK, New-RubrikVMDKMount, Protect-RubrikHyperVVM ,Protect-RubrikNutanixVM. Protect-RubrikVM, Set-RubrikHyperVVM, Set-RubrikNutanixVM, Set-RubrikVM so they pass associated unit tests
+
 ### Changed [Get-RubrikDatabase] - Relic parameter
 
 * Parameter now has 3 states -Relic -Relic:$false or not specified
