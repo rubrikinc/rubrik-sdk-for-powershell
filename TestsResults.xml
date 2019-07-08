@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="233" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2019-07-04" time="07:42:04">
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="233" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2019-07-08" time="17:05:47">
   <environment user="appveyor" machine-name="APPVYR-WIN" cwd="C:\projects\powershell-module" user-domain="APPVYR-WIN" platform="Microsoft Windows Server 2012 R2 Datacenter|C:\windows|\Device\Harddisk0\Partition5" nunit-version="2.5.8.0" os-version="6.3.9600" clr-version="4.0.30319.42000" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="22.2358" asserts="0" description="Pester">
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="20.2438" asserts="0" description="Pester">
     <results>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Export-RubrikDatabase.Tests.ps1" executed="True" result="Success" success="True" time="2.6185" asserts="0" description="C:\projects\powershell-module\tests\Export-RubrikDatabase.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Export-RubrikDatabase.Tests.ps1" executed="True" result="Success" success="True" time="1.9463" asserts="0" description="C:\projects\powershell-module\tests\Export-RubrikDatabase.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Export-RubrikDatabase" executed="True" result="Success" success="True" time="1.9221" asserts="0" description="Public/Export-RubrikDatabase">
+          <test-suite type="TestFixture" name="Public/Export-RubrikDatabase" executed="True" result="Success" success="True" time="1.4639" asserts="0" description="Public/Export-RubrikDatabase">
             <results>
-              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="1.8059" asserts="0" description="Parameters">
+              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="1.3614" asserts="0" description="Parameters">
                 <results>
-                  <test-suite type="TestFixture" name="Command Execution" executed="True" result="Success" success="True" time="1.0275" asserts="0" description="Command Execution">
+                  <test-suite type="TestFixture" name="Command Execution" executed="True" result="Success" success="True" time="0.7784" asserts="0" description="Command Execution">
                     <results>
-                      <test-case description="Should return status of queued" name="Public/Export-RubrikDatabase.Parameters.Command Execution.Should return status of queued" time="0.7375" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Should return status of queued" name="Public/Export-RubrikDatabase.Parameters.Command Execution.Should return status of queued" time="0.56" asserts="0" success="True" result="Success" executed="True" />
                     </results>
                   </test-suite>
-                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.1724" asserts="0" description="Parameter Validation">
+                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.1494" asserts="0" description="Parameter Validation">
                     <results>
-                      <test-case description="Parameter id must be specified" name="Public/Export-RubrikDatabase.Parameters.Parameter Validation.Parameter id must be specified" time="0.0419" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Parameter id cannot be $null or empty" name="Public/Export-RubrikDatabase.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0396" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Parameter set cannot be resolved." name="Public/Export-RubrikDatabase.Parameters.Parameter Validation.Parameter set cannot be resolved." time="0.0084" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="RecoveryDateTime must be a date." name="Public/Export-RubrikDatabase.Parameters.Parameter Validation.RecoveryDateTime must be a date." time="0.0217" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Parameter id must be specified" name="Public/Export-RubrikDatabase.Parameters.Parameter Validation.Parameter id must be specified" time="0.0458" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Parameter id cannot be $null or empty" name="Public/Export-RubrikDatabase.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0071" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Parameter set cannot be resolved." name="Public/Export-RubrikDatabase.Parameters.Parameter Validation.Parameter set cannot be resolved." time="0.0066" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="RecoveryDateTime must be a date." name="Public/Export-RubrikDatabase.Parameters.Parameter Validation.RecoveryDateTime must be a date." time="0.0146" asserts="0" success="True" result="Success" executed="True" />
                     </results>
                   </test-suite>
                 </results>
@@ -29,21 +29,21 @@
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Export-RubrikReport.Tests.ps1" executed="True" result="Success" success="True" time="0.7579" asserts="0" description="C:\projects\powershell-module\tests\Export-RubrikReport.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Export-RubrikReport.Tests.ps1" executed="True" result="Success" success="True" time="0.4932" asserts="0" description="C:\projects\powershell-module\tests\Export-RubrikReport.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Export-RubrikReport" executed="True" result="Success" success="True" time="0.2338" asserts="0" description="Public/Export-RubrikReport">
+          <test-suite type="TestFixture" name="Public/Export-RubrikReport" executed="True" result="Success" success="True" time="0.2067" asserts="0" description="Public/Export-RubrikReport">
             <results>
-              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="0.2024" asserts="0" description="Parameters">
+              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="0.1687" asserts="0" description="Parameters">
                 <results>
-                  <test-suite type="TestFixture" name="Report Filtering" executed="True" result="Success" success="True" time="0.1026" asserts="0" description="Report Filtering">
+                  <test-suite type="TestFixture" name="Report Filtering" executed="True" result="Success" success="True" time="0.0836" asserts="0" description="Report Filtering">
                     <results>
-                      <test-case description="Should return url for report" name="Public/Export-RubrikReport.Parameters.Report Filtering.Should return url for report" time="0.0788" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Should return url for report" name="Public/Export-RubrikReport.Parameters.Report Filtering.Should return url for report" time="0.062" asserts="0" success="True" result="Success" executed="True" />
                     </results>
                   </test-suite>
-                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0408" asserts="0" description="Parameter Validation">
+                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0374" asserts="0" description="Parameter Validation">
                     <results>
-                      <test-case description="Parameter id must be specified" name="Public/Export-RubrikReport.Parameters.Parameter Validation.Parameter id must be specified" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Parameter id cannot be $null or empty" name="Public/Export-RubrikReport.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0051" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Parameter id must be specified" name="Public/Export-RubrikReport.Parameters.Parameter Validation.Parameter id must be specified" time="0.0077" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Parameter id cannot be $null or empty" name="Public/Export-RubrikReport.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
                     </results>
                   </test-suite>
                 </results>
@@ -52,177 +52,177 @@
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Export-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="0.6072" asserts="0" description="C:\projects\powershell-module\tests\Export-RubrikVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Export-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="0.5366" asserts="0" description="C:\projects\powershell-module\tests\Export-RubrikVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Export-RubrikVM" executed="True" result="Success" success="True" time="0.3037" asserts="0" description="Public/Export-RubrikVM">
+          <test-suite type="TestFixture" name="Public/Export-RubrikVM" executed="True" result="Success" success="True" time="0.2621" asserts="0" description="Public/Export-RubrikVM">
             <results>
-              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="0.2835" asserts="0" description="Parameters">
+              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="0.2441" asserts="0" description="Parameters">
                 <results>
-                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0391" asserts="0" description="Parameter Validation">
+                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0422" asserts="0" description="Parameter Validation">
                     <results>
-                      <test-case description="Parameter id cannot be $null or empty" name="Public/Export-RubrikVM.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Parameter DatastoreId cannot be $null or empty" name="Public/Export-RubrikVM.Parameters.Parameter Validation.Parameter DatastoreId cannot be $null or empty" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Parameter id cannot be $null or empty" name="Public/Export-RubrikVM.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0077" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Parameter DatastoreId cannot be $null or empty" name="Public/Export-RubrikVM.Parameters.Parameter Validation.Parameter DatastoreId cannot be $null or empty" time="0.0051" asserts="0" success="True" result="Success" executed="True" />
                     </results>
                   </test-suite>
-                  <test-case description="Should Return status of QUEUED" name="Public/Export-RubrikVM.Parameters.Should Return status of QUEUED" time="0.1914" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return status of QUEUED" name="Public/Export-RubrikVM.Parameters.Should Return status of QUEUED" time="0.1284" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikAPIData.Tests.ps1" executed="True" result="Success" success="True" time="3.6986" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikAPIData.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikAPIData.Tests.ps1" executed="True" result="Success" success="True" time="3.6344" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikAPIData.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Private/Get-RubrikAPIData" executed="True" result="Success" success="True" time="3.3729" asserts="0" description="Private/Get-RubrikAPIData">
+          <test-suite type="TestFixture" name="Private/Get-RubrikAPIData" executed="True" result="Success" success="True" time="3.3249" asserts="0" description="Private/Get-RubrikAPIData">
             <results>
-              <test-suite type="TestFixture" name="Function specific tests" executed="True" result="Success" success="True" time="3.2588" asserts="0" description="Function specific tests">
+              <test-suite type="TestFixture" name="Function specific tests" executed="True" result="Success" success="True" time="3.2061" asserts="0" description="Function specific tests">
                 <results>
-                  <test-suite type="ParameterizedTest" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - &lt;f&gt; test" executed="True" result="Success" success="True" time="2.4178" asserts="0" description="Get-RubrikAPIData - &lt;f&gt; test">
+                  <test-suite type="ParameterizedTest" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - &lt;f&gt; test" executed="True" result="Success" success="True" time="2.0405" asserts="0" description="Get-RubrikAPIData - &lt;f&gt; test">
                     <results>
-                      <test-case description="Get-RubrikAPIData - Connect-Rubrik test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Connect-Rubrik test" time="0.048" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Disconnect-Rubrik test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Disconnect-Rubrik test" time="0.0322" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Export-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Export-RubrikDatabase test" time="0.0393" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Export-RubrikReport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Export-RubrikReport test" time="0.0342" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Export-RubrikVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Export-RubrikVM test" time="0.0327" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikAPIToken test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikAPIToken test" time="0.0355" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikAPIVersion test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikAPIVersion test" time="0.0225" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikAvailabilityGroup test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikAvailabilityGroup test" time="0.0685" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikDatabase test" time="0.0241" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikDatabaseFiles test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikDatabaseFiles test" time="0.0147" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikDatabaseMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikDatabaseMount test" time="0.0196" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikDatabaseRecoverableRange test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikDatabaseRecoverableRange test" time="0.0186" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikEvent test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikEvent test" time="0.0238" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikFileset test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikFileset test" time="0.0216" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikFilesetTemplate test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikFilesetTemplate test" time="0.1011" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikHost test" time="0.0168" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikHyperVVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikHyperVVM test" time="0.0195" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikLDAP test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikLDAP test" time="0.0283" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikLogShipping test" time="0.0247" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikManagedVolume test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikManagedVolume test" time="0.0191" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikManagedVolumeExport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikManagedVolumeExport test" time="0.0179" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikMount test" time="0.015" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikNASShare test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikNASShare test" time="0.0179" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikNutanixVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikNutanixVM test" time="0.0202" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikOracleDB test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikOracleDB test" time="0.017" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikOrganization test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikOrganization test" time="0.0176" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikReport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikReport test" time="0.0179" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikReportData test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikReportData test" time="0.0248" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikRequest test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikRequest test" time="0.0153" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikSetting test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSetting test" time="0.0184" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikSLA test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSLA test" time="0.0792" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSnapshot test" time="0.0308" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikSoftwareVersion test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSoftwareVersion test" time="0.0276" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikSQLInstance test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSQLInstance test" time="0.0326" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikSupportTunnel test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSupportTunnel test" time="0.0322" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikUnmanagedObject test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikUnmanagedObject test" time="0.0319" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVCenter test" time="0.0295" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikVersion test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVersion test" time="0.0331" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVM test" time="0.1937" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikVMSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVMSnapshot test" time="0.0243" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikVMwareDatastore test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVMwareDatastore test" time="0.0321" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikVMwareHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVMwareHost test" time="0.0139" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikVolumeGroup test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVolumeGroup test" time="0.0141" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Get-RubrikVolumeGroupMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVolumeGroupMount test" time="0.0142" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikAPIToken test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikAPIToken test" time="0.0139" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikDatabaseMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikDatabaseMount test" time="0.0143" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikFileset test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikFileset test" time="0.0153" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikFilesetTemplate test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikFilesetTemplate test" time="0.0135" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikHost test" time="0.0161" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikLDAP test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikLDAP test" time="0.0136" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikLogBackup test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikLogBackup test" time="0.0154" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikLogShipping test" time="0.0129" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikManagedVolume test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikManagedVolume test" time="0.0164" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikManagedVolumeExport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikManagedVolumeExport test" time="0.0141" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikMount test" time="0.016" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikNASShare test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikNASShare test" time="0.0138" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikReport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikReport test" time="0.0161" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikSLA test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikSLA test" time="0.0155" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikSnapshot test" time="0.0142" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikVCenter test" time="0.0148" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikVMDKMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikVMDKMount test" time="0.0138" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - New-RubrikVolumeGroupMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikVolumeGroupMount test" time="0.0145" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Protect-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikDatabase test" time="0.0136" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Protect-RubrikFileset test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikFileset test" time="0.0172" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Protect-RubrikHyperVVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikHyperVVM test" time="0.0153" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Protect-RubrikNutanixVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikNutanixVM test" time="0.0171" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Protect-RubrikTag test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikTag test" time="0.0138" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Protect-RubrikVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikVM test" time="0.0165" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikAPIToken test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikAPIToken test" time="0.0136" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikDatabaseMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikDatabaseMount test" time="0.0176" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikFileset test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikFileset test" time="0.0142" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikHost test" time="0.0229" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikLogShipping test" time="0.0198" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikManagedVolume test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikManagedVolume test" time="0.0209" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikManagedVolumeExport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikManagedVolumeExport test" time="0.0148" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikMount test" time="0.0151" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikNASShare test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikNASShare test" time="0.0154" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikReport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikReport test" time="0.0157" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikSLA test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikSLA test" time="0.0143" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikUnmanagedObject test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikUnmanagedObject test" time="0.0142" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikVCenter test" time="0.0158" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikVMSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikVMSnapshot test" time="0.0147" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Remove-RubrikVolumeGroupMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikVolumeGroupMount test" time="0.0194" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Reset-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Reset-RubrikLogShipping test" time="0.0181" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Restore-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Restore-RubrikDatabase test" time="0.0208" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikAvailabilityGroup test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikAvailabilityGroup test" time="0.0185" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikBlackout test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikBlackout test" time="0.0193" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikDatabase test" time="0.0162" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikHyperVVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikHyperVVM test" time="0.0195" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikLogShipping test" time="0.0138" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikManagedVolume test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikManagedVolume test" time="0.018" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikMount test" time="0.0151" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikNASShare test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikNASShare test" time="0.0265" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikNutanixVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikNutanixVM test" time="0.0247" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikSetting test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikSetting test" time="0.0258" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikSQLInstance test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikSQLInstance test" time="0.0158" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikSupportTunnel test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikSupportTunnel test" time="0.0146" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikVCenter test" time="0.0165" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Connect-Rubrik test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Connect-Rubrik test" time="0.0733" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Disconnect-Rubrik test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Disconnect-Rubrik test" time="0.026" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Export-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Export-RubrikDatabase test" time="0.0165" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Export-RubrikReport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Export-RubrikReport test" time="0.0211" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Export-RubrikVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Export-RubrikVM test" time="0.0226" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikAPIToken test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikAPIToken test" time="0.0291" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikAPIVersion test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikAPIVersion test" time="0.0301" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikAvailabilityGroup test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikAvailabilityGroup test" time="0.0475" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikDatabase test" time="0.0166" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikDatabaseFiles test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikDatabaseFiles test" time="0.0165" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikDatabaseMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikDatabaseMount test" time="0.1041" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikDatabaseRecoverableRange test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikDatabaseRecoverableRange test" time="0.018" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikEvent test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikEvent test" time="0.0178" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikFileset test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikFileset test" time="0.0147" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikFilesetTemplate test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikFilesetTemplate test" time="0.0175" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikHost test" time="0.017" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikHyperVVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikHyperVVM test" time="0.0166" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikLDAP test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikLDAP test" time="0.0219" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikLogShipping test" time="0.0164" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikManagedVolume test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikManagedVolume test" time="0.015" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikManagedVolumeExport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikManagedVolumeExport test" time="0.0208" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikMount test" time="0.0161" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikNASShare test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikNASShare test" time="0.0154" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikNutanixVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikNutanixVM test" time="0.0153" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikOracleDB test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikOracleDB test" time="0.014" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikOrganization test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikOrganization test" time="0.0157" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikReport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikReport test" time="0.0147" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikReportData test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikReportData test" time="0.0367" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikRequest test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikRequest test" time="0.0142" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikSetting test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSetting test" time="0.0186" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikSLA test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSLA test" time="0.0144" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSnapshot test" time="0.0201" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikSoftwareVersion test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSoftwareVersion test" time="0.0147" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikSQLInstance test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSQLInstance test" time="0.0138" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikSupportTunnel test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikSupportTunnel test" time="0.0175" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikUnmanagedObject test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikUnmanagedObject test" time="0.0147" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVCenter test" time="0.0167" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikVersion test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVersion test" time="0.0144" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVM test" time="0.0135" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikVMSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVMSnapshot test" time="0.0145" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikVMwareDatastore test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVMwareDatastore test" time="0.0139" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikVMwareHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVMwareHost test" time="0.0215" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikVolumeGroup test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVolumeGroup test" time="0.0153" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Get-RubrikVolumeGroupMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Get-RubrikVolumeGroupMount test" time="0.0169" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikAPIToken test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikAPIToken test" time="0.0138" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikDatabaseMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikDatabaseMount test" time="0.0179" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikFileset test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikFileset test" time="0.0148" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikFilesetTemplate test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikFilesetTemplate test" time="0.0185" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikHost test" time="0.0145" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikLDAP test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikLDAP test" time="0.0185" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikLogBackup test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikLogBackup test" time="0.0204" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikLogShipping test" time="0.0187" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikManagedVolume test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikManagedVolume test" time="0.0445" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikManagedVolumeExport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikManagedVolumeExport test" time="0.0281" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikMount test" time="0.0152" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikNASShare test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikNASShare test" time="0.0184" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikReport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikReport test" time="0.0147" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikSLA test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikSLA test" time="0.015" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikSnapshot test" time="0.017" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikVCenter test" time="0.0264" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikVMDKMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikVMDKMount test" time="0.0152" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - New-RubrikVolumeGroupMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - New-RubrikVolumeGroupMount test" time="0.0267" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Protect-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikDatabase test" time="0.0152" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Protect-RubrikFileset test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikFileset test" time="0.0173" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Protect-RubrikHyperVVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikHyperVVM test" time="0.0185" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Protect-RubrikNutanixVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikNutanixVM test" time="0.0141" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Protect-RubrikTag test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikTag test" time="0.0168" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Protect-RubrikVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Protect-RubrikVM test" time="0.0157" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikAPIToken test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikAPIToken test" time="0.0166" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikDatabaseMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikDatabaseMount test" time="0.014" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikFileset test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikFileset test" time="0.0168" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikHost test" time="0.0139" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikLogShipping test" time="0.0163" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikManagedVolume test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikManagedVolume test" time="0.0137" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikManagedVolumeExport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikManagedVolumeExport test" time="0.0155" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikMount test" time="0.014" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikNASShare test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikNASShare test" time="0.0142" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikReport test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikReport test" time="0.0144" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikSLA test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikSLA test" time="0.014" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikUnmanagedObject test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikUnmanagedObject test" time="0.0191" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikVCenter test" time="0.0162" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikVMSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikVMSnapshot test" time="0.0202" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Remove-RubrikVolumeGroupMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Remove-RubrikVolumeGroupMount test" time="0.019" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Reset-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Reset-RubrikLogShipping test" time="0.0198" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Restore-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Restore-RubrikDatabase test" time="0.0171" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikAvailabilityGroup test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikAvailabilityGroup test" time="0.0183" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikBlackout test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikBlackout test" time="0.0149" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikDatabase test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikDatabase test" time="0.0191" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikHyperVVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikHyperVVM test" time="0.0143" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikLogShipping test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikLogShipping test" time="0.0167" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikManagedVolume test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikManagedVolume test" time="0.0148" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikMount test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikMount test" time="0.0168" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikNASShare test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikNASShare test" time="0.0137" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikNutanixVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikNutanixVM test" time="0.0164" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikSetting test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikSetting test" time="0.0168" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikSQLInstance test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikSQLInstance test" time="0.0163" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikSupportTunnel test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikSupportTunnel test" time="0.0189" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikVCenter test" time="0.0164" asserts="0" success="True" result="Success" executed="True" />
                       <test-case description="Get-RubrikAPIData - Set-RubrikVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikVM test" time="0.0152" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Set-RubrikVolumeFilterDriver test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikVolumeFilterDriver test" time="0.0157" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Start-RubrikManagedVolumeSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Start-RubrikManagedVolumeSnapshot test" time="0.015" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Stop-RubrikManagedVolumeSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Stop-RubrikManagedVolumeSnapshot test" time="0.0159" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Update-RubrikHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Update-RubrikHost test" time="0.0165" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Update-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Update-RubrikVCenter test" time="0.0193" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Get-RubrikAPIData - Update-RubrikVMwareVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Update-RubrikVMwareVM test" time="0.0153" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Set-RubrikVolumeFilterDriver test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Set-RubrikVolumeFilterDriver test" time="0.0235" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Start-RubrikManagedVolumeSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Start-RubrikManagedVolumeSnapshot test" time="0.0236" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Stop-RubrikManagedVolumeSnapshot test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Stop-RubrikManagedVolumeSnapshot test" time="0.0184" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Update-RubrikHost test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Update-RubrikHost test" time="0.0189" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Update-RubrikVCenter test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Update-RubrikVCenter test" time="0.017" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Get-RubrikAPIData - Update-RubrikVMwareVM test" name="Private/Get-RubrikAPIData.Function specific tests.Get-RubrikAPIData - Update-RubrikVMwareVM test" time="0.0184" asserts="0" success="True" result="Success" executed="True" />
                     </results>
                   </test-suite>
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Failure tests, validate incorrect input" executed="True" result="Success" success="True" time="0.0564" asserts="0" description="Failure tests, validate incorrect input">
+              <test-suite type="TestFixture" name="Failure tests, validate incorrect input" executed="True" result="Success" success="True" time="0.0557" asserts="0" description="Failure tests, validate incorrect input">
                 <results>
-                  <test-case description="Get-RubrikAPIData - Incorrect version number, should fail" name="Private/Get-RubrikAPIData.Failure tests, validate incorrect input.Get-RubrikAPIData - Incorrect version number, should fail" time="0.0114" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Get-RubrikAPIData - Non-existent function, should fail" name="Private/Get-RubrikAPIData.Failure tests, validate incorrect input.Get-RubrikAPIData - Non-existent function, should fail" time="0.0234" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Get-RubrikAPIData - Incorrect version number, should fail" name="Private/Get-RubrikAPIData.Failure tests, validate incorrect input.Get-RubrikAPIData - Incorrect version number, should fail" time="0.0135" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Get-RubrikAPIData - Non-existent function, should fail" name="Private/Get-RubrikAPIData.Failure tests, validate incorrect input.Get-RubrikAPIData - Non-existent function, should fail" time="0.02" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikAPIToken.Tests.ps1" executed="True" result="Success" success="True" time="0.755" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikAPIToken.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikAPIToken.Tests.ps1" executed="True" result="Success" success="True" time="0.5814" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikAPIToken.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikAPIToken" executed="True" result="Success" success="True" time="0.4291" asserts="0" description="Public/Get-RubrikAPIToken">
+          <test-suite type="TestFixture" name="Public/Get-RubrikAPIToken" executed="True" result="Success" success="True" time="0.2924" asserts="0" description="Public/Get-RubrikAPIToken">
             <results>
-              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.4002" asserts="0" description="Results Filtering">
+              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.2746" asserts="0" description="Results Filtering">
                 <results>
-                  <test-case description="Should Return count of 4" name="Public/Get-RubrikAPIToken.Results Filtering.Should Return count of 4" time="0.0898" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should Return count of 3" name="Public/Get-RubrikAPIToken.Results Filtering.Should Return count of 3" time="0.0562" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should Return 11111" name="Public/Get-RubrikAPIToken.Results Filtering.Should Return 11111" time="0.0517" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should return count of 0 " name="Public/Get-RubrikAPIToken.Results Filtering.Should return count of 0 " time="0.0288" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter UserID cannot be $null" name="Public/Get-RubrikAPIToken.Results Filtering.Parameter UserID cannot be $null" time="0.0055" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter UserId cannot be empty" name="Public/Get-RubrikAPIToken.Results Filtering.Parameter UserId cannot be empty" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return count of 4" name="Public/Get-RubrikAPIToken.Results Filtering.Should Return count of 4" time="0.0648" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return count of 3" name="Public/Get-RubrikAPIToken.Results Filtering.Should Return count of 3" time="0.0339" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return 11111" name="Public/Get-RubrikAPIToken.Results Filtering.Should Return 11111" time="0.0431" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should return count of 0 " name="Public/Get-RubrikAPIToken.Results Filtering.Should return count of 0 " time="0.0268" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter UserID cannot be $null" name="Public/Get-RubrikAPIToken.Results Filtering.Parameter UserID cannot be $null" time="0.0093" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter UserId cannot be empty" name="Public/Get-RubrikAPIToken.Results Filtering.Parameter UserId cannot be empty" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikEvent.Tests.ps1" executed="True" result="Success" success="True" time="0.5374" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikEvent.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikEvent.Tests.ps1" executed="True" result="Success" success="True" time="0.4795" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikEvent.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikEvent" executed="True" result="Success" success="True" time="0.1876" asserts="0" description="Public/Get-RubrikEvent">
+          <test-suite type="TestFixture" name="Public/Get-RubrikEvent" executed="True" result="Success" success="True" time="0.1589" asserts="0" description="Public/Get-RubrikEvent">
             <results>
-              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.1531" asserts="0" description="Results Filtering">
+              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.1403" asserts="0" description="Results Filtering">
                 <results>
-                  <test-case description="Should Return count of 5" name="Public/Get-RubrikEvent.Results Filtering.Should Return count of 5" time="0.0737" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return count of 5" name="Public/Get-RubrikEvent.Results Filtering.Should Return count of 5" time="0.069" asserts="0" success="True" result="Success" executed="True" />
                   <test-case description="Should not run with Name parameter" name="Public/Get-RubrikEvent.Results Filtering.Should not run with Name parameter" time="0.0042" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
@@ -230,483 +230,483 @@
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikHost.Tests.ps1" executed="True" result="Success" success="True" time="0.6547" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikHost.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikHost.Tests.ps1" executed="True" result="Success" success="True" time="0.5907" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikHost.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikHost" executed="True" result="Success" success="True" time="0.2792" asserts="0" description="Public/Get-RubrikHost">
+          <test-suite type="TestFixture" name="Public/Get-RubrikHost" executed="True" result="Success" success="True" time="0.2744" asserts="0" description="Public/Get-RubrikHost">
             <results>
-              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.2552" asserts="0" description="Results Filtering">
+              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.2507" asserts="0" description="Results Filtering">
                 <results>
-                  <test-case description="Should Return count of 5" name="Public/Get-RubrikHost.Results Filtering.Should Return count of 5" time="0.0365" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should Return host05" name="Public/Get-RubrikHost.Results Filtering.Should Return host05" time="0.0435" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should Return Host:::22222" name="Public/Get-RubrikHost.Results Filtering.Should Return Host:::22222" time="0.0232" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should return count of 0 " name="Public/Get-RubrikHost.Results Filtering.Should return count of 0 " time="0.0257" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return count of 5" name="Public/Get-RubrikHost.Results Filtering.Should Return count of 5" time="0.0371" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return host05" name="Public/Get-RubrikHost.Results Filtering.Should Return host05" time="0.0314" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return Host:::22222" name="Public/Get-RubrikHost.Results Filtering.Should Return Host:::22222" time="0.0241" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should return count of 0 " name="Public/Get-RubrikHost.Results Filtering.Should return count of 0 " time="0.0424" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikHyperVVM.Tests.ps1" executed="True" result="Success" success="True" time="0.756" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikHyperVVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikHyperVVM.Tests.ps1" executed="True" result="Success" success="True" time="0.7035" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikHyperVVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikHyperVVM" executed="True" result="Success" success="True" time="0.4787" asserts="0" description="Public/Get-RubrikHyperVVM">
+          <test-suite type="TestFixture" name="Public/Get-RubrikHyperVVM" executed="True" result="Success" success="True" time="0.4119" asserts="0" description="Public/Get-RubrikHyperVVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.1277" asserts="0" description="Parameter/SLA">
+              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.1466" asserts="0" description="Parameter/SLA">
                 <results>
-                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikHyperVVM.Parameter/SLA.should overwrite $SLAID" time="0.0645" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikHyperVVM.Parameter/SLA.should overwrite $SLAID" time="0.0814" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.1082" asserts="0" description="Parameter/SLAID">
+              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.0854" asserts="0" description="Parameter/SLAID">
                 <results>
-                  <test-case description="should not overwrite $SLAID" name="Public/Get-RubrikHyperVVM.Parameter/SLAID.should not overwrite $SLAID" time="0.0368" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="should not overwrite $SLAID" name="Public/Get-RubrikHyperVVM.Parameter/SLAID.should not overwrite $SLAID" time="0.0366" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.2055" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.1503" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter Name cannot be $null" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameter Name cannot be $null" time="0.0177" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter Name cannot be empty" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameter Name cannot be empty" time="0.0102" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be $null" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be $null" time="0.0144" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be empty" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be empty" time="0.0082" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters Id and Name cannot be simultaneously used" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameters Id and Name cannot be simultaneously used" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Name cannot be $null" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameter Name cannot be $null" time="0.0111" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Name cannot be empty" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameter Name cannot be empty" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be $null" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be $null" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be empty" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be empty" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters Id and Name cannot be simultaneously used" name="Public/Get-RubrikHyperVVM.Parameter Validation.Parameters Id and Name cannot be simultaneously used" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikLDAP.Tests.ps1" executed="True" result="Success" success="True" time="0.5858" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikLDAP.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikLDAP.Tests.ps1" executed="True" result="Success" success="True" time="0.5618" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikLDAP.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikLDAP" executed="True" result="Success" success="True" time="0.2511" asserts="0" description="Public/Get-RubrikLDAP">
+          <test-suite type="TestFixture" name="Public/Get-RubrikLDAP" executed="True" result="Success" success="True" time="0.2452" asserts="0" description="Public/Get-RubrikLDAP">
             <results>
-              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.2316" asserts="0" description="Parameter/SLA">
+              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.2249" asserts="0" description="Parameter/SLA">
                 <results>
-                  <test-case description="Should return local" name="Public/Get-RubrikLDAP.Parameter/SLA.Should return local" time="0.0416" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should return rubrik.com" name="Public/Get-RubrikLDAP.Parameter/SLA.Should return rubrik.com" time="0.0214" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Output should be PSCustomObject" name="Public/Get-RubrikLDAP.Parameter/SLA.Output should be PSCustomObject" time="0.0387" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should return local" name="Public/Get-RubrikLDAP.Parameter/SLA.Should return local" time="0.0332" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should return rubrik.com" name="Public/Get-RubrikLDAP.Parameter/SLA.Should return rubrik.com" time="0.0218" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Output should be PSCustomObject" name="Public/Get-RubrikLDAP.Parameter/SLA.Output should be PSCustomObject" time="0.0473" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikNutanixVM.Tests.ps1" executed="True" result="Success" success="True" time="0.5507" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikNutanixVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikNutanixVM.Tests.ps1" executed="True" result="Success" success="True" time="0.5541" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikNutanixVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikNutanixVM" executed="True" result="Success" success="True" time="0.2568" asserts="0" description="Public/Get-RubrikNutanixVM">
+          <test-suite type="TestFixture" name="Public/Get-RubrikNutanixVM" executed="True" result="Success" success="True" time="0.2648" asserts="0" description="Public/Get-RubrikNutanixVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.1023" asserts="0" description="Parameter/SLA">
+              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.1048" asserts="0" description="Parameter/SLA">
                 <results>
-                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikNutanixVM.Parameter/SLA.should overwrite $SLAID" time="0.0435" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikNutanixVM.Parameter/SLA.should overwrite $SLAID" time="0.0448" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.0634" asserts="0" description="Parameter/SLAID">
+              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.0656" asserts="0" description="Parameter/SLAID">
                 <results>
-                  <test-case description="should not overwrite $SLAID" name="Public/Get-RubrikNutanixVM.Parameter/SLAID.should not overwrite $SLAID" time="0.0256" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="should not overwrite $SLAID" name="Public/Get-RubrikNutanixVM.Parameter/SLAID.should not overwrite $SLAID" time="0.0261" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0632" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0666" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter Name cannot be $null" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameter Name cannot be $null" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter Name cannot be empty" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameter Name cannot be empty" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be $null" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be $null" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be empty" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be empty" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters Id and Name cannot be simultaneously used" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameters Id and Name cannot be simultaneously used" time="0.0042" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Name cannot be $null" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameter Name cannot be $null" time="0.0064" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Name cannot be empty" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameter Name cannot be empty" time="0.005" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be $null" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be $null" time="0.0042" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be empty" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be empty" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters Id and Name cannot be simultaneously used" name="Public/Get-RubrikNutanixVM.Parameter Validation.Parameters Id and Name cannot be simultaneously used" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikOracleDB.Tests.ps1" executed="True" result="Success" success="True" time="0.632" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikOracleDB.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikOracleDB.Tests.ps1" executed="True" result="Success" success="True" time="0.6056" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikOracleDB.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikOracleDB" executed="True" result="Success" success="True" time="0.2778" asserts="0" description="Public/Get-RubrikOracleDB">
+          <test-suite type="TestFixture" name="Public/Get-RubrikOracleDB" executed="True" result="Success" success="True" time="0.3109" asserts="0" description="Public/Get-RubrikOracleDB">
             <results>
-              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.1088" asserts="0" description="Parameter/SLA">
+              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.1171" asserts="0" description="Parameter/SLA">
                 <results>
-                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikOracleDB.Parameter/SLA.should overwrite $SLAID" time="0.056" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikOracleDB.Parameter/SLA.should overwrite $SLAID" time="0.0621" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.1409" asserts="0" description="Parameter/SLAID">
+              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.1712" asserts="0" description="Parameter/SLAID">
                 <results>
-                  <test-case description="SLAID Query should return OracleDB1 DB" name="Public/Get-RubrikOracleDB.Parameter/SLAID.SLAID Query should return OracleDB1 DB" time="0.0284" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="SLAID Query should return OracleDB1 SLA" name="Public/Get-RubrikOracleDB.Parameter/SLAID.SLAID Query should return OracleDB1 SLA" time="0.0308" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="SLAID Query should return OracleDB1 DB" name="Public/Get-RubrikOracleDB.Parameter/SLAID.SLAID Query should return OracleDB1 DB" time="0.0296" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="SLAID Query should return OracleDB1 SLA" name="Public/Get-RubrikOracleDB.Parameter/SLAID.SLAID Query should return OracleDB1 SLA" time="0.0299" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="0.9787" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="0.7691" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikVM" executed="True" result="Success" success="True" time="0.6323" asserts="0" description="Public/Get-RubrikVM">
+          <test-suite type="TestFixture" name="Public/Get-RubrikVM" executed="True" result="Success" success="True" time="0.4961" asserts="0" description="Public/Get-RubrikVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.1038" asserts="0" description="Parameter/SLA">
+              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.1458" asserts="0" description="Parameter/SLA">
                 <results>
-                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikVM.Parameter/SLA.should overwrite $SLAID" time="0.0477" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="should overwrite $SLAID" name="Public/Get-RubrikVM.Parameter/SLA.should overwrite $SLAID" time="0.0773" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.1009" asserts="0" description="Parameter/SLAID">
+              <test-suite type="TestFixture" name="Parameter/SLAID" executed="True" result="Success" success="True" time="0.2313" asserts="0" description="Parameter/SLAID">
                 <results>
-                  <test-case description="should not overwrite $SLAID" name="Public/Get-RubrikVM.Parameter/SLAID.should not overwrite $SLAID" time="0.0214" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="should not overwrite $SLAID" name="Public/Get-RubrikVM.Parameter/SLAID.should not overwrite $SLAID" time="0.1807" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.398" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0906" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter Name cannot be $null" name="Public/Get-RubrikVM.Parameter Validation.Parameter Name cannot be $null" time="0.333" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter Name cannot be empty" name="Public/Get-RubrikVM.Parameter Validation.Parameter Name cannot be empty" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be $null" name="Public/Get-RubrikVM.Parameter Validation.Parameter ID cannot be $null" time="0.0053" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be empty" name="Public/Get-RubrikVM.Parameter Validation.Parameter ID cannot be empty" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters Id and Name cannot be simultaneously used" name="Public/Get-RubrikVM.Parameter Validation.Parameters Id and Name cannot be simultaneously used" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Name cannot be $null" name="Public/Get-RubrikVM.Parameter Validation.Parameter Name cannot be $null" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Name cannot be empty" name="Public/Get-RubrikVM.Parameter Validation.Parameter Name cannot be empty" time="0.0067" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be $null" name="Public/Get-RubrikVM.Parameter Validation.Parameter ID cannot be $null" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be empty" name="Public/Get-RubrikVM.Parameter Validation.Parameter ID cannot be empty" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters Id and Name cannot be simultaneously used" name="Public/Get-RubrikVM.Parameter Validation.Parameters Id and Name cannot be simultaneously used" time="0.005" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikVMwareDatastore.Tests.ps1" executed="True" result="Success" success="True" time="0.5367" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikVMwareDatastore.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikVMwareDatastore.Tests.ps1" executed="True" result="Success" success="True" time="0.5987" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikVMwareDatastore.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikVMwareDatastore" executed="True" result="Success" success="True" time="0.2556" asserts="0" description="Public/Get-RubrikVMwareDatastore">
+          <test-suite type="TestFixture" name="Public/Get-RubrikVMwareDatastore" executed="True" result="Success" success="True" time="0.2901" asserts="0" description="Public/Get-RubrikVMwareDatastore">
             <results>
-              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.2376" asserts="0" description="Results Filtering">
+              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.273" asserts="0" description="Results Filtering">
                 <results>
-                  <test-case description="Should Return count of 4" name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should Return count of 4" time="0.0372" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should Return datastore03" name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should Return datastore03" time="0.0205" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should Return Datastore:::22222" name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should Return Datastore:::22222" time="0.0282" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should return count of 2 " name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should return count of 2 " time="0.0301" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should return count of 0 " name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should return count of 0 " time="0.0264" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return count of 4" name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should Return count of 4" time="0.0332" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return datastore03" name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should Return datastore03" time="0.026" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return Datastore:::22222" name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should Return Datastore:::22222" time="0.0438" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should return count of 2 " name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should return count of 2 " time="0.0344" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should return count of 0 " name="Public/Get-RubrikVMwareDatastore.Results Filtering.Should return count of 0 " time="0.0241" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikVMwareHost.Tests.ps1" executed="True" result="Success" success="True" time="0.5478" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikVMwareHost.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Get-RubrikVMwareHost.Tests.ps1" executed="True" result="Success" success="True" time="0.7089" asserts="0" description="C:\projects\powershell-module\tests\Get-RubrikVMwareHost.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Get-RubrikVMwareHost" executed="True" result="Success" success="True" time="0.2387" asserts="0" description="Public/Get-RubrikVMwareHost">
+          <test-suite type="TestFixture" name="Public/Get-RubrikVMwareHost" executed="True" result="Success" success="True" time="0.3938" asserts="0" description="Public/Get-RubrikVMwareHost">
             <results>
-              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.2168" asserts="0" description="Results Filtering">
+              <test-suite type="TestFixture" name="Results Filtering" executed="True" result="Success" success="True" time="0.3753" asserts="0" description="Results Filtering">
                 <results>
-                  <test-case description="Should Return count of 2" name="Public/Get-RubrikVMwareHost.Results Filtering.Should Return count of 2" time="0.0401" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should Return esxi01.domain.local" name="Public/Get-RubrikVMwareHost.Results Filtering.Should Return esxi01.domain.local" time="0.0215" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should Return VMwareHost:::44444" name="Public/Get-RubrikVMwareHost.Results Filtering.Should Return VMwareHost:::44444" time="0.0211" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should return count of 4 " name="Public/Get-RubrikVMwareHost.Results Filtering.Should return count of 4 " time="0.0281" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return count of 2" name="Public/Get-RubrikVMwareHost.Results Filtering.Should Return count of 2" time="0.0342" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return esxi01.domain.local" name="Public/Get-RubrikVMwareHost.Results Filtering.Should Return esxi01.domain.local" time="0.0213" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return VMwareHost:::44444" name="Public/Get-RubrikVMwareHost.Results Filtering.Should Return VMwareHost:::44444" time="0.0186" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should return count of 4 " name="Public/Get-RubrikVMwareHost.Results Filtering.Should return count of 4 " time="0.2291" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Move-RubrikMountVMDK.Tests.ps1" executed="True" result="Success" success="True" time="0.6264" asserts="0" description="C:\projects\powershell-module\tests\Move-RubrikMountVMDK.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Move-RubrikMountVMDK.Tests.ps1" executed="True" result="Success" success="True" time="0.4579" asserts="0" description="C:\projects\powershell-module\tests\Move-RubrikMountVMDK.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Move-RubrikMountVMDK" executed="True" result="Success" success="True" time="0.1444" asserts="0" description="Public/Move-RubrikMountVMDK">
+          <test-suite type="TestFixture" name="Public/Move-RubrikMountVMDK" executed="True" result="Success" success="True" time="0.1349" asserts="0" description="Public/Move-RubrikMountVMDK">
             <results>
-              <test-suite type="TestFixture" name="Parameter/Date" executed="True" result="Success" success="True" time="0.0862" asserts="0" description="Parameter/Date">
+              <test-suite type="TestFixture" name="Parameter/Date" executed="True" result="Success" success="True" time="0.0863" asserts="0" description="Parameter/Date">
                 <results>
-                  <test-case description="Should detect invalid date" name="Public/Move-RubrikMountVMDK.Parameter/Date.Should detect invalid date" time="0.0493" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should detect invalid date" name="Public/Move-RubrikMountVMDK.Parameter/Date.Should detect invalid date" time="0.0447" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.028" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0291" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameters SourceVM and Cleanup cannot be simultaneously used" name="Public/Move-RubrikMountVMDK.Parameter Validation.Parameters SourceVM and Cleanup cannot be simultaneously used" time="0.0042" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters TargetVM and Cleanup cannot be simultaneously used" name="Public/Move-RubrikMountVMDK.Parameter Validation.Parameters TargetVM and Cleanup cannot be simultaneously used" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters SourceVM and Cleanup cannot be simultaneously used" name="Public/Move-RubrikMountVMDK.Parameter Validation.Parameters SourceVM and Cleanup cannot be simultaneously used" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters TargetVM and Cleanup cannot be simultaneously used" name="Public/Move-RubrikMountVMDK.Parameter Validation.Parameters TargetVM and Cleanup cannot be simultaneously used" time="0.004" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\New-RubrikAPIToken.Tests.ps1" executed="True" result="Success" success="True" time="0.4893" asserts="0" description="C:\projects\powershell-module\tests\New-RubrikAPIToken.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\New-RubrikAPIToken.Tests.ps1" executed="True" result="Success" success="True" time="0.3733" asserts="0" description="C:\projects\powershell-module\tests\New-RubrikAPIToken.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/New-RubrikAPIToken" executed="True" result="Success" success="True" time="0.0807" asserts="0" description="Public/New-RubrikAPIToken">
+          <test-suite type="TestFixture" name="Public/New-RubrikAPIToken" executed="True" result="Success" success="True" time="0.0814" asserts="0" description="Public/New-RubrikAPIToken">
             <results>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0614" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0645" asserts="0" description="Parameter Validation">
                 <results>
                   <test-case description="Parameter Expiration cannot be $null" name="Public/New-RubrikAPIToken.Parameter Validation.Parameter Expiration cannot be $null" time="0.0078" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter Expiration cannot be empty" name="Public/New-RubrikAPIToken.Parameter Validation.Parameter Expiration cannot be empty" time="0.0042" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter OrganizationId cannot be $null" name="Public/New-RubrikAPIToken.Parameter Validation.Parameter OrganizationId cannot be $null" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter OrganizationId cannot be empty" name="Public/New-RubrikAPIToken.Parameter Validation.Parameter OrganizationId cannot be empty" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Expiration cannot be empty" name="Public/New-RubrikAPIToken.Parameter Validation.Parameter Expiration cannot be empty" time="0.0082" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter OrganizationId cannot be $null" name="Public/New-RubrikAPIToken.Parameter Validation.Parameter OrganizationId cannot be $null" time="0.0088" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter OrganizationId cannot be empty" name="Public/New-RubrikAPIToken.Parameter Validation.Parameter OrganizationId cannot be empty" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\New-RubrikSnapshot.Tests.ps1" executed="True" result="Success" success="True" time="0.7616" asserts="0" description="C:\projects\powershell-module\tests\New-RubrikSnapshot.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\New-RubrikSnapshot.Tests.ps1" executed="True" result="Success" success="True" time="0.704" asserts="0" description="C:\projects\powershell-module\tests\New-RubrikSnapshot.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/New-RubrikSnapshot" executed="True" result="Success" success="True" time="0.3309" asserts="0" description="Public/New-RubrikSnapshot">
+          <test-suite type="TestFixture" name="Public/New-RubrikSnapshot" executed="True" result="Success" success="True" time="0.3477" asserts="0" description="Public/New-RubrikSnapshot">
             <results>
-              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="0.2978" asserts="0" description="Parameters">
+              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="0.3191" asserts="0" description="Parameters">
                 <results>
-                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.1033" asserts="0" description="Parameter Validation">
+                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.1078" asserts="0" description="Parameter Validation">
                     <results>
-                      <test-case description="Parameter id cannot be $null or empty" name="Public/New-RubrikSnapshot.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
-                      <test-case description="Should issue warning" name="Public/New-RubrikSnapshot.Parameters.Parameter Validation.Should issue warning" time="0.0076" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Parameter id cannot be $null or empty" name="Public/New-RubrikSnapshot.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0075" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Should issue warning" name="Public/New-RubrikSnapshot.Parameters.Parameter Validation.Should issue warning" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
                     </results>
                   </test-suite>
-                  <test-case description="Should Return status of QUEUED" name="Public/New-RubrikSnapshot.Parameters.Should Return status of QUEUED" time="0.0959" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return status of QUEUED" name="Public/New-RubrikSnapshot.Parameters.Should Return status of QUEUED" time="0.0865" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\New-RubrikVMDKMount.Tests.ps1" executed="True" result="Success" success="True" time="0.6142" asserts="0" description="C:\projects\powershell-module\tests\New-RubrikVMDKMount.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\New-RubrikVMDKMount.Tests.ps1" executed="True" result="Success" success="True" time="0.637" asserts="0" description="C:\projects\powershell-module\tests\New-RubrikVMDKMount.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/New-RubrikVMDKMount" executed="True" result="Success" success="True" time="0.3118" asserts="0" description="Public/New-RubrikVMDKMount">
+          <test-suite type="TestFixture" name="Public/New-RubrikVMDKMount" executed="True" result="Success" success="True" time="0.2946" asserts="0" description="Public/New-RubrikVMDKMount">
             <results>
-              <test-suite type="TestFixture" name="Parameter/ID" executed="True" result="Success" success="True" time="0.2061" asserts="0" description="Parameter/ID">
+              <test-suite type="TestFixture" name="Parameter/ID" executed="True" result="Success" success="True" time="0.22" asserts="0" description="Parameter/ID">
                 <results>
-                  <test-case description="Status should be QUEUED" name="Public/New-RubrikVMDKMount.Parameter/ID.Status should be QUEUED" time="0.0893" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Mount request status should exist" name="Public/New-RubrikVMDKMount.Parameter/ID.Mount request status should exist" time="0.0468" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Status should be QUEUED" name="Public/New-RubrikVMDKMount.Parameter/ID.Status should be QUEUED" time="0.1033" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Mount request status should exist" name="Public/New-RubrikVMDKMount.Parameter/ID.Mount request status should exist" time="0.0463" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0836" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.048" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter SnapshotID cannot be $null" name="Public/New-RubrikVMDKMount.Parameter Validation.Parameter SnapshotID cannot be $null" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter SnapshotID cannot be empty" name="Public/New-RubrikVMDKMount.Parameter Validation.Parameter SnapshotID cannot be empty" time="0.0063" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter TargetVM cannot be $null" name="Public/New-RubrikVMDKMount.Parameter Validation.Parameter TargetVM cannot be $null" time="0.0054" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter TargetVM cannot be empty" name="Public/New-RubrikVMDKMount.Parameter Validation.Parameter TargetVM cannot be empty" time="0.007" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter SnapshotID cannot be $null" name="Public/New-RubrikVMDKMount.Parameter Validation.Parameter SnapshotID cannot be $null" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter SnapshotID cannot be empty" name="Public/New-RubrikVMDKMount.Parameter Validation.Parameter SnapshotID cannot be empty" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter TargetVM cannot be $null" name="Public/New-RubrikVMDKMount.Parameter Validation.Parameter TargetVM cannot be $null" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter TargetVM cannot be empty" name="Public/New-RubrikVMDKMount.Parameter Validation.Parameter TargetVM cannot be empty" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Protect-RubrikHyperVVM.Tests.ps1" executed="True" result="Success" success="True" time="0.7065" asserts="0" description="C:\projects\powershell-module\tests\Protect-RubrikHyperVVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Protect-RubrikHyperVVM.Tests.ps1" executed="True" result="Success" success="True" time="0.5919" asserts="0" description="C:\projects\powershell-module\tests\Protect-RubrikHyperVVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Protect-RubrikHyperVVM" executed="True" result="Success" success="True" time="0.3738" asserts="0" description="Public/Protect-RubrikHyperVVM">
+          <test-suite type="TestFixture" name="Public/Protect-RubrikHyperVVM" executed="True" result="Success" success="True" time="0.3134" asserts="0" description="Public/Protect-RubrikHyperVVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.1296" asserts="0" description="Parameter/SLA">
+              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.0932" asserts="0" description="Parameter/SLA">
                 <results>
-                  <test-case description="Should assign SLA" name="Public/Protect-RubrikHyperVVM.Parameter/SLA.Should assign SLA" time="0.0657" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should assign SLA" name="Public/Protect-RubrikHyperVVM.Parameter/SLA.Should assign SLA" time="0.0476" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/DoNotProtect" executed="True" result="Success" success="True" time="0.088" asserts="0" description="Parameter/DoNotProtect">
+              <test-suite type="TestFixture" name="Parameter/DoNotProtect" executed="True" result="Success" success="True" time="0.0712" asserts="0" description="Parameter/DoNotProtect">
                 <results>
-                  <test-case description="Should be Unprotected" name="Public/Protect-RubrikHyperVVM.Parameter/DoNotProtect.Should be Unprotected" time="0.0351" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should be Unprotected" name="Public/Protect-RubrikHyperVVM.Parameter/DoNotProtect.Should be Unprotected" time="0.0247" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/Inherit" executed="True" result="Success" success="True" time="0.0679" asserts="0" description="Parameter/Inherit">
+              <test-suite type="TestFixture" name="Parameter/Inherit" executed="True" result="Success" success="True" time="0.0686" asserts="0" description="Parameter/Inherit">
                 <results>
-                  <test-case description="Should be Inherited" name="Public/Protect-RubrikHyperVVM.Parameter/Inherit.Should be Inherited" time="0.0237" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should be Inherited" name="Public/Protect-RubrikHyperVVM.Parameter/Inherit.Should be Inherited" time="0.0253" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0557" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.056" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter ID cannot be $null" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be $null" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be empty" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be empty" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters SLA and DoNotProtect cannot be simultaneously used" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameters SLA and DoNotProtect cannot be simultaneously used" time="0.006" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters SLA and Inherit cannot be simultaneously used" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameters SLA and Inherit cannot be simultaneously used" time="0.004" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters DoNotProtect and Inherit cannot be simultaneously used" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameters DoNotProtect and Inherit cannot be simultaneously used" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be $null" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be $null" time="0.007" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be empty" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be empty" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters SLA and DoNotProtect cannot be simultaneously used" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameters SLA and DoNotProtect cannot be simultaneously used" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters SLA and Inherit cannot be simultaneously used" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameters SLA and Inherit cannot be simultaneously used" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters DoNotProtect and Inherit cannot be simultaneously used" name="Public/Protect-RubrikHyperVVM.Parameter Validation.Parameters DoNotProtect and Inherit cannot be simultaneously used" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Protect-RubrikNutanixVM.Tests.ps1" executed="True" result="Success" success="True" time="0.6591" asserts="0" description="C:\projects\powershell-module\tests\Protect-RubrikNutanixVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Protect-RubrikNutanixVM.Tests.ps1" executed="True" result="Success" success="True" time="0.6103" asserts="0" description="C:\projects\powershell-module\tests\Protect-RubrikNutanixVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Protect-RubrikNutanixVM" executed="True" result="Success" success="True" time="0.3259" asserts="0" description="Public/Protect-RubrikNutanixVM">
+          <test-suite type="TestFixture" name="Public/Protect-RubrikNutanixVM" executed="True" result="Success" success="True" time="0.3304" asserts="0" description="Public/Protect-RubrikNutanixVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.0928" asserts="0" description="Parameter/SLA">
+              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.0913" asserts="0" description="Parameter/SLA">
                 <results>
-                  <test-case description="Should assign SLA" name="Public/Protect-RubrikNutanixVM.Parameter/SLA.Should assign SLA" time="0.0421" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should assign SLA" name="Public/Protect-RubrikNutanixVM.Parameter/SLA.Should assign SLA" time="0.0434" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/DoNotProtect" executed="True" result="Success" success="True" time="0.072" asserts="0" description="Parameter/DoNotProtect">
+              <test-suite type="TestFixture" name="Parameter/DoNotProtect" executed="True" result="Success" success="True" time="0.0737" asserts="0" description="Parameter/DoNotProtect">
                 <results>
-                  <test-case description="Should be Unprotected" name="Public/Protect-RubrikNutanixVM.Parameter/DoNotProtect.Should be Unprotected" time="0.0228" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should be Unprotected" name="Public/Protect-RubrikNutanixVM.Parameter/DoNotProtect.Should be Unprotected" time="0.0268" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/Inherit" executed="True" result="Success" success="True" time="0.0737" asserts="0" description="Parameter/Inherit">
+              <test-suite type="TestFixture" name="Parameter/Inherit" executed="True" result="Success" success="True" time="0.0739" asserts="0" description="Parameter/Inherit">
                 <results>
-                  <test-case description="Should be Inherited" name="Public/Protect-RubrikNutanixVM.Parameter/Inherit.Should be Inherited" time="0.0264" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should be Inherited" name="Public/Protect-RubrikNutanixVM.Parameter/Inherit.Should be Inherited" time="0.0278" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0619" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.058" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter ID cannot be $null" name="Public/Protect-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be $null" time="0.0085" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be $null" name="Public/Protect-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be $null" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
                   <test-case description="Parameter ID cannot be empty" name="Public/Protect-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be empty" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters SLA and DoNotProtect cannot be simultaneously used" name="Public/Protect-RubrikNutanixVM.Parameter Validation.Parameters SLA and DoNotProtect cannot be simultaneously used" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters SLA and DoNotProtect cannot be simultaneously used" name="Public/Protect-RubrikNutanixVM.Parameter Validation.Parameters SLA and DoNotProtect cannot be simultaneously used" time="0.0076" asserts="0" success="True" result="Success" executed="True" />
                   <test-case description="Parameters SLA and Inherit cannot be simultaneously used" name="Public/Protect-RubrikNutanixVM.Parameter Validation.Parameters SLA and Inherit cannot be simultaneously used" time="0.004" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters DoNotProtect and Inherit cannot be simultaneously used" name="Public/Protect-RubrikNutanixVM.Parameter Validation.Parameters DoNotProtect and Inherit cannot be simultaneously used" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters DoNotProtect and Inherit cannot be simultaneously used" name="Public/Protect-RubrikNutanixVM.Parameter Validation.Parameters DoNotProtect and Inherit cannot be simultaneously used" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Protect-RubrikTag.Tests.ps1" executed="True" result="Success" success="True" time="0.4008" asserts="0" description="C:\projects\powershell-module\tests\Protect-RubrikTag.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Protect-RubrikTag.Tests.ps1" executed="True" result="Success" success="True" time="0.3692" asserts="0" description="C:\projects\powershell-module\tests\Protect-RubrikTag.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Protect-RubrikTag" executed="True" result="Success" success="True" time="0.093" asserts="0" description="Public/Protect-RubrikTag">
+          <test-suite type="TestFixture" name="Public/Protect-RubrikTag" executed="True" result="Success" success="True" time="0.0881" asserts="0" description="Public/Protect-RubrikTag">
             <results>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0717" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0707" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter Tag is mandatory" name="Public/Protect-RubrikTag.Parameter Validation.Parameter Tag is mandatory" time="0.0241" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter Category is mandatory" name="Public/Protect-RubrikTag.Parameter Validation.Parameter Category is mandatory" time="0.0089" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Tag is mandatory" name="Public/Protect-RubrikTag.Parameter Validation.Parameter Tag is mandatory" time="0.0224" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Category is mandatory" name="Public/Protect-RubrikTag.Parameter Validation.Parameter Category is mandatory" time="0.004" asserts="0" success="True" result="Success" executed="True" />
                   <test-case description="Parameter Tag is null or empty" name="Public/Protect-RubrikTag.Parameter Validation.Parameter Tag is null or empty" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter Category is null or empty" name="Public/Protect-RubrikTag.Parameter Validation.Parameter Category is null or empty" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Category is null or empty" name="Public/Protect-RubrikTag.Parameter Validation.Parameter Category is null or empty" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Protect-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="0.6396" asserts="0" description="C:\projects\powershell-module\tests\Protect-RubrikVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Protect-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="0.6276" asserts="0" description="C:\projects\powershell-module\tests\Protect-RubrikVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Protect-RubrikVM" executed="True" result="Success" success="True" time="0.3701" asserts="0" description="Public/Protect-RubrikVM">
+          <test-suite type="TestFixture" name="Public/Protect-RubrikVM" executed="True" result="Success" success="True" time="0.3484" asserts="0" description="Public/Protect-RubrikVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.0972" asserts="0" description="Parameter/SLA">
+              <test-suite type="TestFixture" name="Parameter/SLA" executed="True" result="Success" success="True" time="0.0907" asserts="0" description="Parameter/SLA">
                 <results>
-                  <test-case description="Should assign SLA" name="Public/Protect-RubrikVM.Parameter/SLA.Should assign SLA" time="0.0448" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should assign SLA" name="Public/Protect-RubrikVM.Parameter/SLA.Should assign SLA" time="0.0435" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/DoNotProtect" executed="True" result="Success" success="True" time="0.0822" asserts="0" description="Parameter/DoNotProtect">
+              <test-suite type="TestFixture" name="Parameter/DoNotProtect" executed="True" result="Success" success="True" time="0.0791" asserts="0" description="Parameter/DoNotProtect">
                 <results>
-                  <test-case description="Should be Unprotected" name="Public/Protect-RubrikVM.Parameter/DoNotProtect.Should be Unprotected" time="0.0293" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should be Unprotected" name="Public/Protect-RubrikVM.Parameter/DoNotProtect.Should be Unprotected" time="0.0299" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/Inherit" executed="True" result="Success" success="True" time="0.0844" asserts="0" description="Parameter/Inherit">
+              <test-suite type="TestFixture" name="Parameter/Inherit" executed="True" result="Success" success="True" time="0.0807" asserts="0" description="Parameter/Inherit">
                 <results>
-                  <test-case description="Should be Inherited" name="Public/Protect-RubrikVM.Parameter/Inherit.Should be Inherited" time="0.0301" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should be Inherited" name="Public/Protect-RubrikVM.Parameter/Inherit.Should be Inherited" time="0.0292" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0753" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.065" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter ID cannot be $null" name="Public/Protect-RubrikVM.Parameter Validation.Parameter ID cannot be $null" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be empty" name="Public/Protect-RubrikVM.Parameter Validation.Parameter ID cannot be empty" time="0.0073" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters SLA and DoNotProtect cannot be simultaneously used" name="Public/Protect-RubrikVM.Parameter Validation.Parameters SLA and DoNotProtect cannot be simultaneously used" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters SLA and Inherit cannot be simultaneously used" name="Public/Protect-RubrikVM.Parameter Validation.Parameters SLA and Inherit cannot be simultaneously used" time="0.0061" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameters DoNotProtect and Inherit cannot be simultaneously used" name="Public/Protect-RubrikVM.Parameter Validation.Parameters DoNotProtect and Inherit cannot be simultaneously used" time="0.009" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be $null" name="Public/Protect-RubrikVM.Parameter Validation.Parameter ID cannot be $null" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be empty" name="Public/Protect-RubrikVM.Parameter Validation.Parameter ID cannot be empty" time="0.0058" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters SLA and DoNotProtect cannot be simultaneously used" name="Public/Protect-RubrikVM.Parameter Validation.Parameters SLA and DoNotProtect cannot be simultaneously used" time="0.0087" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters SLA and Inherit cannot be simultaneously used" name="Public/Protect-RubrikVM.Parameter Validation.Parameters SLA and Inherit cannot be simultaneously used" time="0.0042" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameters DoNotProtect and Inherit cannot be simultaneously used" name="Public/Protect-RubrikVM.Parameter Validation.Parameters DoNotProtect and Inherit cannot be simultaneously used" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Remove-RubrikAPIToken.Tests.ps1" executed="True" result="Success" success="True" time="0.3734" asserts="0" description="C:\projects\powershell-module\tests\Remove-RubrikAPIToken.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Remove-RubrikAPIToken.Tests.ps1" executed="True" result="Success" success="True" time="0.3948" asserts="0" description="C:\projects\powershell-module\tests\Remove-RubrikAPIToken.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Remove-RubrikAPIToken" executed="True" result="Success" success="True" time="0.059" asserts="0" description="Public/Remove-RubrikAPIToken">
+          <test-suite type="TestFixture" name="Public/Remove-RubrikAPIToken" executed="True" result="Success" success="True" time="0.0498" asserts="0" description="Public/Remove-RubrikAPIToken">
             <results>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0357" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0311" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter TokenId cannot be $null" name="Public/Remove-RubrikAPIToken.Parameter Validation.Parameter TokenId cannot be $null" time="0.0063" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter TokenId cannot be empty" name="Public/Remove-RubrikAPIToken.Parameter Validation.Parameter TokenId cannot be empty" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter TokenId cannot be $null" name="Public/Remove-RubrikAPIToken.Parameter Validation.Parameter TokenId cannot be $null" time="0.0053" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter TokenId cannot be empty" name="Public/Remove-RubrikAPIToken.Parameter Validation.Parameter TokenId cannot be empty" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Remove-RubrikVMSnapshot.Tests.ps1" executed="True" result="Success" success="True" time="0.4717" asserts="0" description="C:\projects\powershell-module\tests\Remove-RubrikVMSnapshot.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Remove-RubrikVMSnapshot.Tests.ps1" executed="True" result="Success" success="True" time="0.4679" asserts="0" description="C:\projects\powershell-module\tests\Remove-RubrikVMSnapshot.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Remove-RubrikVMSnapshot" executed="True" result="Success" success="True" time="0.1623" asserts="0" description="Public/Remove-RubrikVMSnapshot">
+          <test-suite type="TestFixture" name="Public/Remove-RubrikVMSnapshot" executed="True" result="Success" success="True" time="0.2083" asserts="0" description="Public/Remove-RubrikVMSnapshot">
             <results>
-              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="0.1372" asserts="0" description="Parameters">
+              <test-suite type="TestFixture" name="Parameters" executed="True" result="Success" success="True" time="0.1897" asserts="0" description="Parameters">
                 <results>
-                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0267" asserts="0" description="Parameter Validation">
+                  <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0459" asserts="0" description="Parameter Validation">
                     <results>
-                      <test-case description="Parameter id cannot be $null or empty" name="Public/Remove-RubrikVMSnapshot.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
+                      <test-case description="Parameter id cannot be $null or empty" name="Public/Remove-RubrikVMSnapshot.Parameters.Parameter Validation.Parameter id cannot be $null or empty" time="0.0189" asserts="0" success="True" result="Success" executed="True" />
                     </results>
                   </test-suite>
-                  <test-case description="Should Return status of Success" name="Public/Remove-RubrikVMSnapshot.Parameters.Should Return status of Success" time="0.0337" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Should Return HTTP status code 204" name="Public/Remove-RubrikVMSnapshot.Parameters.Should Return HTTP status code 204" time="0.0246" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return status of Success" name="Public/Remove-RubrikVMSnapshot.Parameters.Should Return status of Success" time="0.0318" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should Return HTTP status code 204" name="Public/Remove-RubrikVMSnapshot.Parameters.Should Return HTTP status code 204" time="0.0299" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Set-RubrikHyperVVM.Tests.ps1" executed="True" result="Success" success="True" time="0.3481" asserts="0" description="C:\projects\powershell-module\tests\Set-RubrikHyperVVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Set-RubrikHyperVVM.Tests.ps1" executed="True" result="Success" success="True" time="0.3385" asserts="0" description="C:\projects\powershell-module\tests\Set-RubrikHyperVVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Set-RubrikHyperVVM" executed="True" result="Success" success="True" time="0.0551" asserts="0" description="Public/Set-RubrikHyperVVM">
+          <test-suite type="TestFixture" name="Public/Set-RubrikHyperVVM" executed="True" result="Success" success="True" time="0.0626" asserts="0" description="Public/Set-RubrikHyperVVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0362" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.037" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter ID cannot be $null" name="Public/Set-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be $null" time="0.0081" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be empty" name="Public/Set-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be empty" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be $null" name="Public/Set-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be $null" time="0.0085" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be empty" name="Public/Set-RubrikHyperVVM.Parameter Validation.Parameter ID cannot be empty" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Set-RubrikNutanixVM.Tests.ps1" executed="True" result="Success" success="True" time="0.5075" asserts="0" description="C:\projects\powershell-module\tests\Set-RubrikNutanixVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Set-RubrikNutanixVM.Tests.ps1" executed="True" result="Success" success="True" time="0.5269" asserts="0" description="C:\projects\powershell-module\tests\Set-RubrikNutanixVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Set-RubrikNutanixVM" executed="True" result="Success" success="True" time="0.2182" asserts="0" description="Public/Set-RubrikNutanixVM">
+          <test-suite type="TestFixture" name="Public/Set-RubrikNutanixVM" executed="True" result="Success" success="True" time="0.2393" asserts="0" description="Public/Set-RubrikNutanixVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter/PauseBackups" executed="True" result="Success" success="True" time="0.0904" asserts="0" description="Parameter/PauseBackups">
+              <test-suite type="TestFixture" name="Parameter/PauseBackups" executed="True" result="Success" success="True" time="0.1025" asserts="0" description="Parameter/PauseBackups">
                 <results>
-                  <test-case description="Should set PauseBackups" name="Public/Set-RubrikNutanixVM.Parameter/PauseBackups.Should set PauseBackups" time="0.0477" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should set PauseBackups" name="Public/Set-RubrikNutanixVM.Parameter/PauseBackups.Should set PauseBackups" time="0.055" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/SnapConsistency" executed="True" result="Success" success="True" time="0.0614" asserts="0" description="Parameter/SnapConsistency">
+              <test-suite type="TestFixture" name="Parameter/SnapConsistency" executed="True" result="Success" success="True" time="0.0671" asserts="0" description="Parameter/SnapConsistency">
                 <results>
-                  <test-case description="Should set SnapConsistency" name="Public/Set-RubrikNutanixVM.Parameter/SnapConsistency.Should set SnapConsistency" time="0.0182" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should set SnapConsistency" name="Public/Set-RubrikNutanixVM.Parameter/SnapConsistency.Should set SnapConsistency" time="0.0273" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0417" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0452" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter ID cannot be $null" name="Public/Set-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be $null" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be empty" name="Public/Set-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be empty" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter SnapConsistency must have a valid value" name="Public/Set-RubrikNutanixVM.Parameter Validation.Parameter SnapConsistency must have a valid value" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be $null" name="Public/Set-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be $null" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be empty" name="Public/Set-RubrikNutanixVM.Parameter Validation.Parameter ID cannot be empty" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter SnapConsistency must have a valid value" name="Public/Set-RubrikNutanixVM.Parameter Validation.Parameter SnapConsistency must have a valid value" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Set-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="0.56" asserts="0" description="C:\projects\powershell-module\tests\Set-RubrikVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Set-RubrikVM.Tests.ps1" executed="True" result="Success" success="True" time="0.5302" asserts="0" description="C:\projects\powershell-module\tests\Set-RubrikVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Set-RubrikVM" executed="True" result="Success" success="True" time="0.235" asserts="0" description="Public/Set-RubrikVM">
+          <test-suite type="TestFixture" name="Public/Set-RubrikVM" executed="True" result="Success" success="True" time="0.2471" asserts="0" description="Public/Set-RubrikVM">
             <results>
-              <test-suite type="TestFixture" name="Parameter/PauseBackups" executed="True" result="Success" success="True" time="0.0941" asserts="0" description="Parameter/PauseBackups">
+              <test-suite type="TestFixture" name="Parameter/PauseBackups" executed="True" result="Success" success="True" time="0.1031" asserts="0" description="Parameter/PauseBackups">
                 <results>
-                  <test-case description="Should set PauseBackups" name="Public/Set-RubrikVM.Parameter/PauseBackups.Should set PauseBackups" time="0.0522" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should set PauseBackups" name="Public/Set-RubrikVM.Parameter/PauseBackups.Should set PauseBackups" time="0.0616" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter/SnapConsistency" executed="True" result="Success" success="True" time="0.0618" asserts="0" description="Parameter/SnapConsistency">
+              <test-suite type="TestFixture" name="Parameter/SnapConsistency" executed="True" result="Success" success="True" time="0.0643" asserts="0" description="Parameter/SnapConsistency">
                 <results>
-                  <test-case description="Should set SnapConsistency" name="Public/Set-RubrikVM.Parameter/SnapConsistency.Should set SnapConsistency" time="0.0218" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should set SnapConsistency" name="Public/Set-RubrikVM.Parameter/SnapConsistency.Should set SnapConsistency" time="0.0191" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0559" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.052" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter ID cannot be $null" name="Public/Set-RubrikVM.Parameter Validation.Parameter ID cannot be $null" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter ID cannot be empty" name="Public/Set-RubrikVM.Parameter Validation.Parameter ID cannot be empty" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter SnapConsistency must have a valid value" name="Public/Set-RubrikVM.Parameter Validation.Parameter SnapConsistency must have a valid value" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter MaxNestedSnapshots must have a valid value" name="Public/Set-RubrikVM.Parameter Validation.Parameter MaxNestedSnapshots must have a valid value" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be $null" name="Public/Set-RubrikVM.Parameter Validation.Parameter ID cannot be $null" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter ID cannot be empty" name="Public/Set-RubrikVM.Parameter Validation.Parameter ID cannot be empty" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter SnapConsistency must have a valid value" name="Public/Set-RubrikVM.Parameter Validation.Parameter SnapConsistency must have a valid value" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter MaxNestedSnapshots must have a valid value" name="Public/Set-RubrikVM.Parameter Validation.Parameter MaxNestedSnapshots must have a valid value" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Sync-RubrikAnnotation.Tests.ps1" executed="True" result="Success" success="True" time="0.3424" asserts="0" description="C:\projects\powershell-module\tests\Sync-RubrikAnnotation.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Sync-RubrikAnnotation.Tests.ps1" executed="True" result="Success" success="True" time="0.339" asserts="0" description="C:\projects\powershell-module\tests\Sync-RubrikAnnotation.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Sync-RubrikAnnotation" executed="True" result="Success" success="True" time="0.0647" asserts="0" description="Public/Sync-RubrikAnnotation">
+          <test-suite type="TestFixture" name="Public/Sync-RubrikAnnotation" executed="True" result="Success" success="True" time="0.0618" asserts="0" description="Public/Sync-RubrikAnnotation">
             <results>
-              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0362" asserts="0" description="Parameter Validation">
+              <test-suite type="TestFixture" name="Parameter Validation" executed="True" result="Success" success="True" time="0.0397" asserts="0" description="Parameter Validation">
                 <results>
-                  <test-case description="Parameter Name cannot be $null" name="Public/Sync-RubrikAnnotation.Parameter Validation.Parameter Name cannot be $null" time="0.0085" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Parameter Name cannot be empty" name="Public/Sync-RubrikAnnotation.Parameter Validation.Parameter Name cannot be empty" time="0.0078" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Name cannot be $null" name="Public/Sync-RubrikAnnotation.Parameter Validation.Parameter Name cannot be $null" time="0.009" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Parameter Name cannot be empty" name="Public/Sync-RubrikAnnotation.Parameter Validation.Parameter Name cannot be empty" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Update-RubrikVMwareVM.Tests.ps1" executed="True" result="Success" success="True" time="0.5183" asserts="0" description="C:\projects\powershell-module\tests\Update-RubrikVMwareVM.Tests.ps1">
+      <test-suite type="TestFixture" name="C:\projects\powershell-module\tests\Update-RubrikVMwareVM.Tests.ps1" executed="True" result="Success" success="True" time="0.5117" asserts="0" description="C:\projects\powershell-module\tests\Update-RubrikVMwareVM.Tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Public/Update-RubrikVMwareVM" executed="True" result="Success" success="True" time="0.2361" asserts="0" description="Public/Update-RubrikVMwareVM">
+          <test-suite type="TestFixture" name="Public/Update-RubrikVMwareVM" executed="True" result="Success" success="True" time="0.2288" asserts="0" description="Public/Update-RubrikVMwareVM">
             <results>
-              <test-suite type="TestFixture" name="Request Fails" executed="True" result="Success" success="True" time="0.0808" asserts="0" description="Request Fails">
+              <test-suite type="TestFixture" name="Request Fails" executed="True" result="Success" success="True" time="0.0714" asserts="0" description="Request Fails">
                 <results>
-                  <test-case description="Invalid vCenter id" name="Public/Update-RubrikVMwareVM.Request Fails.Invalid vCenter id" time="0.04" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Invalid vCenter id" name="Public/Update-RubrikVMwareVM.Request Fails.Invalid vCenter id" time="0.0343" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Request Succeeds" executed="True" result="Success" success="True" time="0.1343" asserts="0" description="Request Succeeds">
+              <test-suite type="TestFixture" name="Request Succeeds" executed="True" result="Success" success="True" time="0.1378" asserts="0" description="Request Succeeds">
                 <results>
-                  <test-case description="Get-TestVM should return id / vmmoid" name="Public/Update-RubrikVMwareVM.Request Succeeds.Get-TestVM should return id / vmmoid" time="0.0185" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Valid execution based on Get-TestVM" name="Public/Update-RubrikVMwareVM.Request Succeeds.Valid execution based on Get-TestVM" time="0.0266" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Get-TestVM should return id / vmmoid" name="Public/Update-RubrikVMwareVM.Request Succeeds.Get-TestVM should return id / vmmoid" time="0.015" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Valid execution based on Get-TestVM" name="Public/Update-RubrikVMwareVM.Request Succeeds.Valid execution based on Get-TestVM" time="0.0295" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
