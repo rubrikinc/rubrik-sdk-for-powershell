@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-07-08
 
+### Added [Unit Tests]
+
+* Added unit tests for Update-RubrikHost and Update-RubrikvCenter to address [Issue 339](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/339)
+
 ### Changed [Get-RubrikDatabase]
 
 * Added ability to specify -DetailedObject on Get-RubrikDatabase to address [Issue 354](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/354)
