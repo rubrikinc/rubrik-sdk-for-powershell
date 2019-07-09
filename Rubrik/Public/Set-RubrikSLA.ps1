@@ -140,6 +140,7 @@ function Set-RubrikSLA
 
     #region One-off
     Write-Verbose -Message 'Build the body'
+    # Build the body for CDM versions 5 and above when the advanced SLA configuration is turned on
     if (($uri.contains('v2')) -and $AdvancedConfig) {
       $body = @{
         $resources.Body.name = $Name
@@ -147,12 +148,14 @@ function Set-RubrikSLA
         showAdvancedUi = $AdvancedConfig.IsPresent
         advancedUiConfig = @()
       }
+    # Build the body for CDM versions 5 and above when the advanced SLA configuration is turned off
     } elseif ($uri.contains('v2')) {
       $body = @{
         $resources.Body.name = $Name
         frequencies = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
       }
+    # Build the body for CDM versions prior to 5.0
     } else {
       $body = @{
         $resources.Body.name = $Name
@@ -163,6 +166,7 @@ function Set-RubrikSLA
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
 
+    # Retrieve snapshot frequencies from pipeline for CDM versions 5 and above when advanced SLA configuration is turned on
     if (($uri.contains('v2')) -and ($Frequencies) -and ($AdvancedConfig)) {
       $Frequencies[0].psobject.properties.name | ForEach-Object {
         if ($_ -eq 'Hourly') {
@@ -170,6 +174,7 @@ function Set-RubrikSLA
             $HourlyFrequency = $Frequencies.$_.frequency
           }
           if (($Frequencies.$_.retention) -and (-not $HourlyRetention)) {
+            # Convert hourly retention in days when the value retrieved from pipeline is in hours because advanced SLA configuration was previously turned off
             if ($AdvancedFreq.Count -eq 0) {
               $HourlyRetention = ($Frequencies.$_.retention) / 24
             } else {
@@ -231,6 +236,7 @@ function Set-RubrikSLA
           }
         }
       }
+    # Retrieve snapshot frequencies from pipeline for CDM versions 5 and above when advanced SLA configuration is turned off
     } elseif ($uri.contains('v2') -and ($Frequencies)) {
       $Frequencies[0].psobject.properties.name | ForEach-Object {
         if ($_ -eq 'Hourly') {
@@ -238,11 +244,13 @@ function Set-RubrikSLA
             $HourlyFrequency = $Frequencies.$_.frequency
           }
           if (($Frequencies.$_.retention) -and (-not $HourlyRetention)) {
+            # Convert hourly retention in hours when the value retrieved from pipeline is in days because advanced SLA configuration was previously turned on
             if ($AdvancedFreq.Count -eq 0) {
               $HourlyRetention = $Frequencies.$_.retention
             } else {
               $HourlyRetention = ($Frequencies.$_.retention) * 24
             }
+          # Convert hourly retention in hours when the value set explicitly with the parameter is in days, like in the UI
           } elseif ($HourlyRetention) {
             $HourlyRetention = ($HourlyRetention * 24)
           }
@@ -278,6 +286,7 @@ function Set-RubrikSLA
           }
         }
       }
+    # Retrieve snapshot frequencies from pipeline for CDM versions prior to 5.0
     } elseif ($Frequencies) {
       $Frequencies | ForEach-Object {
         if ($_.timeUnit -eq 'Hourly') {
@@ -286,6 +295,7 @@ function Set-RubrikSLA
           }
           if (($_.retention) -and (-not $HourlyRetention)) {
             $HourlyRetention = $_.retention
+          # Convert hourly retention in hours when the parameter is explicitly specified because the default unit is days, like in the UI
           } elseif ($HourlyRetention) {
             $HourlyRetention = $HourlyRetention * 24
           }
@@ -302,6 +312,7 @@ function Set-RubrikSLA
           }
           if (($_.retention) -and (-not $MonthlyRetention)) {
             $MonthlyRetention = $_.retention
+          # Convert monthly retention in months when the parameter is explicitly specified because the default unit is in years, like in the UI
           } elseif ($MonthlyRetention) {
             $MonthlyRetention = $MonthlyRetention * 12
           }
@@ -314,21 +325,26 @@ function Set-RubrikSLA
           }
         }
       }
+      # Ensure the hourly retention set via the cli parameter is converted to hours if frequencies were retrieved from the pipeline but hourly retention was empty
       if (($Frequencies.timeUnit -notcontains 'Hourly') -and $HourlyRetention) {
         $HourlyRetention = $HourlyRetention * 24
       }
+      # Ensure the monthly retention set via the cli parameter is converted to months if frequencies were retrieved from the pipeline but monthly retention was empty
       if (($Frequencies.timeUnit -notcontains 'Monthly') -and $MonthlyRetention) {
         $MonthlyRetention = $MonthlyRetention * 12
       }
     } elseif ($HourlyRetention -or $MonthlyRetention) {
-        if ($HourlyRetention -and (-not $AdvancedConfig)) {
+      # Ensure the hourly retention set via the cli parameter is converted to hours for CDM versions prior to 5.0, and 5.x when advanced SLA configuration is disabled
+      if ($HourlyRetention -and (-not $AdvancedConfig)) {
           $HourlyRetention = ($HourlyRetention * 24)
         }
+      # Ensure the monthly retention set via the cli parameter is converted to months for CDM versions prior to 5.0
         if ($MonthlyRetention -and (-not ($uri.contains('v2')))) {
           $MonthlyRetention = ($MonthlyRetention * 12)
         }
     }
 
+    # Retrieve advanced retention unit parameters from pipeline for CDM 5.0
     if ($AdvancedFreq) {
       $AdvancedFreq | ForEach-Object {
         if (($_.timeUnit -eq 'Hourly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('HourlyRetentionUnit'))) {
@@ -342,7 +358,8 @@ function Set-RubrikSLA
         }
       }
     }
-     
+    
+    # Populate the body according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
     if ($HourlyFrequency -and $HourlyRetention) {
       if (($uri.contains('v2')) -and $AdvancedConfig) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
