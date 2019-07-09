@@ -43,67 +43,67 @@ function Set-RubrikSLA
       ValueFromPipelineByPropertyName = $true)]
     [Alias('SLA')]
     [String]$Name,
-    # Hourly frequency to take backups
+    # Hourly frequency to take snapshots
     [int]$HourlyFrequency,
-    # Number of days or weeks to retain the hourly backups. In CDM versions prior to 5.0 this value must be set in days.
+    # Number of days or weeks to retain the hourly snapshots. For CDM versions prior to 5.0 this value must be set in days
     [int]$HourlyRetention,
-    # Retention unit to apply to hourly snapshots. Does not apply to CDM versions prior to 5.0.
+    # Retention unit to apply to hourly snapshots when $AdvancedConfig is used. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Daily','Weekly')]
     [String]$HourlyRetentionUnit='Daily',
-    # Daily frequency to take backups
+    # Daily frequency to take snapshots
     [int]$DailyFrequency,
-    # Number of days or weeks to retain the daily backups
+    # Number of days or weeks to retain the daily snapshots. For CDM versions prior to 5.0 this value must be set in days
     [int]$DailyRetention,
-    # Retention unit to apply to daily snapshots
+    # Retention unit to apply to daily snapshots when $AdvancedConfig is used. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Daily','Weekly')]
     [String]$DailyRetentionUnit='Daily',
-    # Weekly frequency to take backups
+    # Weekly frequency to take snapshots
     [int]$WeeklyFrequency,
-    # Number of weeks to retain the weekly backups
+    # Number of weeks to retain the weekly snapshots
     [int]$WeeklyRetention,
-    # Day of week for the weekly snapshots when $AdvancedConfig is used. The default is Saturday
+    # Day of week for the weekly snapshots when $AdvancedConfig is used. The default is Saturday. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday')]
     [String]$DayOfWeek='Saturday',
-    # Monthly frequency to take backups
+    # Monthly frequency to take snapshots
     [int]$MonthlyFrequency,
-    # Number of months, quarters or years to retain the monthly backups. In CDM versions prior to 5.0, this value must be set in years.
+    # Number of months, quarters or years to retain the monthly backups. For CDM versions prior to 5.0, this value must be set in years
     [int]$MonthlyRetention,
-    # Day of month for the monthly snapshots when $AdvancedConfig is used. The default is the last day of the month.
+    # Day of month for the monthly snapshots when $AdvancedConfig is used. The default is the last day of the month. Does not apply to CDM versions prior to 5.0
     [ValidateSet('FirstDay','Fifteenth','LastDay')]
     [String]$DayOfMonth='LastDay',
     # Retention unit to apply to monthly snapshots. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Monthly','Quarterly','Yearly')]
     [String]$MonthlyRetentionUnit='Monthly',
-    # Quarterly frequency to take backups
+    # Quarterly frequency to take snapshots. Does not apply to CDM versions prior to 5.0
     [int]$QuarterlyFrequency,
-    # Number of quarters or years to retain the monthly backup
+    # Number of quarters or years to retain the monthly snapshots. Does not apply to CDM versions prior to 5.0
     [int]$QuarterlyRetention,
-    # Day of quarter for the quarterly snapshots when $AdvancedConfig is used. The default is the last day of the quarter.
+    # Day of quarter for the quarterly snapshots when $AdvancedConfig is used. The default is the last day of the quarter. Does not apply to CDM versions prior to 5.0
     [ValidateSet('FirstDay','LastDay')]
     [String]$DayOfQuarter='LastDay',
-    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used. The default is January.
+    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used. The default is January. Does not apply to CDM versions prior to 5.0
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$FirstQuarterStartMonth='January',
-    # Retention unit to apply to quarterly snapshots
+    # Retention unit to apply to quarterly snapshots. The default is Quarterly. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Quarterly','Yearly')]
     [String]$QuarterlyRetentionUnit='Quarterly',
-    # Yearly frequency to take backups
+    # Yearly frequency to take snapshots
     [int]$YearlyFrequency,
-    # Number of years to retain the yearly backups
+    # Number of years to retain the yearly snapshots
     [int]$YearlyRetention,
-    # Day of year for the yearly snapshots when $AdvancedConfig is used. The default is the last day of the year.
+    # Day of year for the yearly snapshots when $AdvancedConfig is used. The default is the last day of the year. Does not apply to CDM versions prior to 5.0
     [ValidateSet('FirstDay','LastDay')]
     [String]$DayOfYear='LastDay',
-    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used. The default is January.
+    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used. The default is January. Does not apply to CDM versions prior to 5.0
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$YearStartMonth='January',
-    # Whether to turn advanced SLA configuration on or off. Only supported with CDM versions greater or equal to 5.0
+    # Whether to turn advanced SLA configuration on or off. Does not apply to CDM versions prior to 5.0
     [switch]$AdvancedConfig,
-    # Takes this object from Get-RubrikSLA
+    # Retrieves frequencies from Get-RubrikSLA via the pipeline
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
     [object[]] $Frequencies,
-    # Takes this object from Get-RubrikSLA
+    # Retrieves the advanced UI configuration parameters from Get-RubrikSLA via the pipeline
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
     [alias('advancedUiConfig')]
