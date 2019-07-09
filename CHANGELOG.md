@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-09
+
+### Added [Set-RubrikSLA]
+
+* Added new `Set-RubrikSLA` cmdlet to update an existing SLA Domain. This addresses issue [283](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/283)
+
 ## 2019-06-20
 
 ### Added [New Remove-RubrikVMSnapshot cmdlet]
