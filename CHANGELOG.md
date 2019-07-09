@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-09
+
+### Changed [New-RubrikSLA]
+
+* Added ability to specify advanced SLA configuration settings introduced in 5.0 on New-RubrikSLA to address [Issue 304](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/354)
+
 ## 2019-07-08
 
 ### Changed [Get-RubrikDatabase]
