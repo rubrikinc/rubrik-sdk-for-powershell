@@ -287,7 +287,7 @@ function Set-RubrikSLA
           if (($_.retention) -and (-not $HourlyRetention)) {
             $HourlyRetention = $_.retention
           } elseif ($HourlyRetention) {
-            $HourlyRetention = ($HourlyRetention * 24)
+            $HourlyRetention = $HourlyRetention * 24
           }
         } elseif ($_.timeUnit -eq 'Daily') {
           if (($_.frequency) -and (-not $DailyFrequency)) {
@@ -314,10 +314,19 @@ function Set-RubrikSLA
           }
         }
       }
-    } elseif ($HourlyRetention) {
-      $HourlyRetention = ($HourlyRetention * 24)
-    } elseif (-not ($uri.contains('v2')) -and ($MonthlyRetention)) {
-      $MonthlyRetention = ($MonthlyRetention * 12)
+      if (($Frequencies.timeUnit -notcontains 'Hourly') -and $HourlyRetention) {
+        $HourlyRetention = $HourlyRetention * 24
+      }
+      if (($Frequencies.timeUnit -notcontains 'Monthly') -and $MonthlyRetention) {
+        $MonthlyRetention = $MonthlyRetention * 12
+      }
+    } elseif ($HourlyRetention -or $MonthlyRetention) {
+        if ($HourlyRetention -and (-not $AdvancedConfig)) {
+          $HourlyRetention = ($HourlyRetention * 24)
+        }
+        if ($MonthlyRetention -and (-not ($uri.contains('v2')))) {
+          $MonthlyRetention = ($MonthlyRetention * 12)
+        }
     }
 
     if ($AdvancedFreq) {
