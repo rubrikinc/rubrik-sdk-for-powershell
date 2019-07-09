@@ -36,16 +36,16 @@ function New-RubrikSLA
     [int]$HourlyFrequency,
     # Number of days or weeks to retain the hourly snapshots. For CDM versions prior to 5.0 this value must be set in days
     [int]$HourlyRetention,
-    # Retention unit to apply to hourly snapshots when $AdvancedConfig is used. Does not apply to CDM versions prior to 5.0
+    # Retention type to apply to hourly snapshots when $AdvancedConfig is used. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Daily','Weekly')]
-    [String]$HourlyRetentionUnit='Daily',
+    [String]$HourlyRetentionType='Daily',
     # Daily frequency to take snapshots
     [int]$DailyFrequency,
     # Number of days or weeks to retain the daily snapshots. For CDM versions prior to 5.0 this value must be set in days
     [int]$DailyRetention,
-    # Retention unit to apply to daily snapshots when $AdvancedConfig is used. Does not apply to CDM versions prior to 5.0
+    # Retention type to apply to daily snapshots when $AdvancedConfig is used. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Daily','Weekly')]
-    [String]$DailyRetentionUnit='Daily',
+    [String]$DailyRetentionType='Daily',
     # Weekly frequency to take snapshots
     [int]$WeeklyFrequency,
     # Number of weeks to retain the weekly snapshots
@@ -60,9 +60,9 @@ function New-RubrikSLA
     # Day of month for the monthly snapshots when $AdvancedConfig is used. The default is the last day of the month. Does not apply to CDM versions prior to 5.0
     [ValidateSet('FirstDay','Fifteenth','LastDay')]
     [String]$DayOfMonth='LastDay',
-    # Retention unit to apply to monthly snapshots. Does not apply to CDM versions prior to 5.0
+    # Retention type to apply to monthly snapshots. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Monthly','Quarterly','Yearly')]
-    [String]$MonthlyRetentionUnit='Monthly',
+    [String]$MonthlyRetentionType='Monthly',
     # Quarterly frequency to take snapshots. Does not apply to CDM versions prior to 5.0
     [int]$QuarterlyFrequency,
     # Number of quarters or years to retain the monthly snapshots. Does not apply to CDM versions prior to 5.0
@@ -73,9 +73,9 @@ function New-RubrikSLA
     # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used. The default is January. Does not apply to CDM versions prior to 5.0
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$FirstQuarterStartMonth='January',
-    # Retention unit to apply to quarterly snapshots. The default is Quarterly. Does not apply to CDM versions prior to 5.0
+    # Retention type to apply to quarterly snapshots. The default is Quarterly. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Quarterly','Yearly')]
-    [String]$QuarterlyRetentionUnit='Quarterly',
+    [String]$QuarterlyRetentionType='Quarterly',
     # Yearly frequency to take snapshots
     [int]$YearlyFrequency,
     # Number of years to retain the yearly snapshots
@@ -158,7 +158,7 @@ function New-RubrikSLA
     if ($HourlyFrequency -and $HourlyRetention) {
       if (($uri.contains('v2')) -and $AdvancedConfig) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
-        $body.advancedUiConfig += @{timeUnit='Hourly';retentionType=$HourlyRetentionUnit}
+        $body.advancedUiConfig += @{timeUnit='Hourly';retentionType=$HourlyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
       } else {
@@ -174,7 +174,7 @@ function New-RubrikSLA
     if ($DailyFrequency -and $DailyRetention) {
       if (($uri.contains('v2')) -and $AdvancedConfig) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
-        $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionUnit}
+        $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
       } else { 
@@ -207,7 +207,7 @@ function New-RubrikSLA
     if ($MonthlyFrequency -and $MonthlyRetention) {
       if (($uri.contains('v2')) -and $AdvancedConfig) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
-        $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionUnit}
+        $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
       } else { 
@@ -223,7 +223,7 @@ function New-RubrikSLA
     if ($QuarterlyFrequency -and $QuarterlyRetention) {
       if (($uri.contains('v2')) -and $AdvancedConfig) {
         $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
-        $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionUnit}
+        $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
       } else { 
