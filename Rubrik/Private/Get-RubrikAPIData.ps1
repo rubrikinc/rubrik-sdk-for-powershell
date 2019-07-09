@@ -1590,7 +1590,7 @@ function Get-RubrikAPIData($endpoint) {
                 Query       = ''
                 Result      = ''
                 Filter      = ''
-                Success     = '201'
+                Success     = '200'
             }
             '5.0' = @{
                 Description = 'Update an existing SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
@@ -1611,7 +1611,7 @@ function Get-RubrikAPIData($endpoint) {
                 Query       = ''
                 Result      = ''
                 Filter      = ''
-                Success     = '201'
+                Success     = '200'
             }
         }
         'Set-RubrikSQLInstance'        = @{
