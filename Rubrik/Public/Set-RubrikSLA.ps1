@@ -17,17 +17,23 @@ function Set-RubrikSLA
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikSLA.html
 
       .EXAMPLE
-      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24
-      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours.
+      Set-RubrikSLA -id e4d121af-5611-496a-bb8d-57ba46443e94 -Name Gold -HourlyFrequency 12 -HourlyRetention 5
+      This will update the SLA Domain named "Gold" to take a snapshot every 12 hours and keep those for 5 days.
+      All other existing parameters will be reset.
+      
+      .EXAMPLE
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -HourlyFrequency 4 -HourlyRetention 3
+      This will update the SLA Domain named "Gold" to take a snapshot every 4 hours and keep those hourly snapshots for 3 days,
+      while keeping all other existing parameters.
 
       .EXAMPLE
-      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24 -DailyFrequency 1 -DailyRetention 30
-      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours
-      while also keeping one backup per day for 30 days.
+      Get-RubrikSLA -Name Gold | Set RubrikSLA -AdvancedConfig -HourlyFrequency 4 -HourlyRetention 3 -WeeklyFrequency 1 -WeeklyRetention 4 -DayOfWeek Friday
+      This will update the SLA Domain named "Gold" to take a snapshot every 4 hours and keep those hourly snapshots for 3 days
+      while also keeping one snapshot per week for 4 weeks, created on Fridays. All other existing parameters will remain as they were.
 
       .EXAMPLE
-      Get-RubrikSLA -Name 'Silver (Managed by Polaris)' | Set-RubrikSLA -HourlyRetention 4 -HourlyFrequency 5 -Verbose
-      Will get information of Silver SLA and only change the hourly retention and frequency.
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -AdvancedConfig
+      This will update the SLA Domain named "Gold" to only enable Advanced Configuration
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
