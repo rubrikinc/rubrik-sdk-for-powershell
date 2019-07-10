@@ -51,7 +51,7 @@ Export-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -
 Export-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase $db).latestRecoveryPoint) -targetInstanceId $db2.instanceId -targetDatabaseName 'BAR_EXP' -targetFilePaths $targetfiles -maxDataStreams 1
 ```
 
-Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database.
+Restore the $db (where $db is the output of a Get-RubrikDatabase call) to the most recent recovery point for that database.
 New file paths are 
 in the $targetfiles array.
 Each individual file declaration (logicalName, exportPath,newFilename) will be a hashtable, so what gets passed to the

@@ -47,6 +47,11 @@
         Write-Verbose -Message 'Loading VolumeGroup API data'
         $uri = ('https://'+$Server+$resources.URI.VolumeGroup) -replace '{id}', $id
       }
+      'OracleDatabase:::*'
+      {
+        Write-Verbose -Message 'Loading OracleDatabase API data'
+        $uri = ('https://'+$Server+$resources.URI.Oracle) -replace '{id}', $id
+      }
       default
       {
         throw 'The supplied id value has no matching endpoint'
