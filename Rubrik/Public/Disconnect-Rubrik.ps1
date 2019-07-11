@@ -64,7 +64,7 @@ function Disconnect-Rubrik
 
   Process {
     
-    if ([String]::isNullOrEmpty($global:RubrikConnection.userId)) {
+    if ($global:RubrikConnection.authType -eq 'Token') {
       Write-Verbose -Message "Detected token authentication - Disconnecting without deleting token."
       $global:RubrikConnection = $null
       $result = $null

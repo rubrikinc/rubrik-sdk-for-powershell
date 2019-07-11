@@ -18,8 +18,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-07-10
 
-### Fixed [Disconnect-Rubrik]
+### Fixed [Disconnect-Rubrik Connect-Rubrik]
 
+* Added global attribute 'authType' to $rubrikconnection to remove reliance on userId.
 * Added logic to disconnect to address the deletion of tokens when using token based authenticaion as per [Issue 363](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/363)
 
 ## 2019-07-08

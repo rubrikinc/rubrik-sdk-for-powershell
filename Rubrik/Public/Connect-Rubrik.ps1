@@ -112,6 +112,7 @@ function Connect-Rubrik {
                 time    = (Get-Date)
                 api     = Get-RubrikAPIVersion -Server $Server
                 version = Get-RubrikSoftwareVersion -Server $Server
+                authType = 'Token'
             }
         }
         else 
@@ -148,6 +149,7 @@ function Connect-Rubrik {
                 time    = (Get-Date)
                 api     = Get-RubrikAPIVersion -Server $Server
                 version = Get-RubrikSoftwareVersion -Server $Server
+                authType = 'Basic'
             }
         }
         Write-Verbose -Message 'Adding connection details into the $global:RubrikConnections array'
