@@ -110,7 +110,7 @@ Describe -Name 'Public/New-RubrikSLA' -Tag 'Public', 'New-RubrikSLA' -Fixture {
         It -Name 'yearly retention set' -Test {
             $response = New-RubrikSLA -Name 'Gold' -HourlyFrequency 8 -HourlyRetention 72 -DailyFrequency 1 -DailyRetention 30 -MonthlyFrequency 1 -MonthlyRetention 12 -YearlyFrequency 1 -YearlyRetention 2
             ($response.frequencies -match "Yearly").retention | Should -BeExactly 2
-        }               
+        }           
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1

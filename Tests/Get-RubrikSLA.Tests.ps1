@@ -22,64 +22,69 @@ Describe -Name 'Public/Get-RubrikSLA' -Tag 'Public', 'Get-RubrikSLA' -Fixture {
             $response = '{  
                 "hasMore":false,
                 "data":[  
-                   {  
+                    {  
                       "id":"12345678-1234-abcd-8910-1234567890ab",
                       "primaryClusterId":"12345678-1234-abcd-8910-1234567890ab",
                       "name":"Gold",
                       "frequencies":[  
-                         {  
-                            "timeUnit":"Hourly",
-                            "frequency":8,
-                            "retention":72
-                         },
-                         {  
-                            "timeUnit":"Daily",
-                            "frequency":1,
-                            "retention":30
-                         },
-                         {  
-                            "timeUnit":"Monthly",
-                            "frequency":1,
-                            "retention":12
-                         },
-                         {  
-                            "timeUnit":"Yearly",
-                            "frequency":1,
-                            "retention":2
-                         }
+                        {  
+                        "timeUnit":"Hourly",
+                        "frequency":8,
+                        "retention":72
+                        },
+                        {  
+                        "timeUnit":"Daily",
+                        "frequency":1,
+                        "retention":30
+                        },
+                        {
+                        "timeUnit": "Weekly",
+                        "frequency": 1,
+                        "retention": 4
+                        },
+                        {  
+                        "timeUnit":"Monthly",
+                        "frequency":1,
+                        "retention":12
+                        },
+                        {  
+                        "timeUnit":"Yearly",
+                        "frequency":1,
+                        "retention":2
+                        }
                       ]
-                   },
-                   {  
-                      "id":"12345678-1234-abcd-8910-1234567890ac",
-                      "primaryClusterId":"12345678-1234-abcd-8910-1234567890ab",
-                      "name":"Gold AWS",
-                      "frequencies":[  
-                         {  
-                            "timeUnit":"Hourly",
-                            "frequency":8,
-                            "retention":72
-                         },
-                         {  
-                            "timeUnit":"Daily",
-                            "frequency":1,
-                            "retention":30
-                         },
-                         {  
-                            "timeUnit":"Monthly",
-                            "frequency":1,
-                            "retention":12
-                         },
-                         {  
-                            "timeUnit":"Yearly",
-                            "frequency":1,
-                            "retention":2
-                         }
-                      ]
-                   }
+                    },
+                    {  
+                        "id":"12345678-1234-abcd-8910-1234567890ac",
+                        "primaryClusterId":"12345678-1234-abcd-8910-1234567890ab",
+                        "name":"Gold AWS",
+                        "frequencies":[  
+                            {  
+                                "timeUnit":"Hourly",
+                                "frequency":8,
+                                "retention":72
+                            },
+                            {  
+                                "timeUnit":"Daily",
+                                "frequency":1,
+                                "retention":30
+                            },
+                            {  
+                                "timeUnit":"Monthly",
+                                "frequency":1,
+                                "retention":12
+                            },
+                            {  
+                                "timeUnit":"Yearly",
+                                "frequency":1,
+                                "retention":2
+                            }
+                        ]
+                    }
                 ],
                 "total":2
-             }'
-          return ConvertFrom-Json $response
+            }'
+            return ConvertFrom-Json $response
         }
         It -Name 'should filter on SLA name' -Test {
             ( Get-RubrikSLA -Name 'Gold' ).Name |
@@ -88,7 +93,47 @@ Describe -Name 'Public/Get-RubrikSLA' -Tag 'Public', 'Get-RubrikSLA' -Fixture {
         It -Name 'frequencies array should be populated' -Test {
             ( Get-RubrikSLA -Name 'Gold' ).frequencies.Count |
                 Should -BeGreaterThan 0
-        }        
+        }
+        It -Name 'hourly frequency set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Hourly").frequency |
+                Should -BeExactly 8
+        }
+        It -Name 'hourly retention set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Hourly").retention | 
+                Should -BeExactly 72
+        }
+        It -Name 'daily frequency set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Daily").frequency | 
+                Should -BeExactly 1
+        }
+        It -Name 'daily retention set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Daily").retention | 
+                Should -BeExactly 30
+        }
+        It -Name 'weekly frequency set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Weekly").frequency | 
+                Should -BeExactly 1
+        }
+        It -Name 'weekly retention set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Weekly").retention | 
+                Should -BeExactly 4
+        }
+        It -Name 'monthly frequency set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Monthly").frequency | 
+                Should -BeExactly 1
+        }
+        It -Name 'monthly retention set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Monthly").retention | 
+                Should -BeExactly 12
+        }
+        It -Name 'yearly frequency set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Yearly").frequency | 
+                Should -BeExactly 1
+        }
+        It -Name 'yearly retention set' -Test {
+            ((Get-RubrikSLA -Name 'Gold').frequencies -match "Yearly").retention | 
+                Should -BeExactly 2
+        }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
@@ -116,29 +161,29 @@ Describe -Name 'Public/Get-RubrikSLA' -Tag 'Public', 'Get-RubrikSLA' -Fixture {
                         "name": "Gold",
                         "frequencies": {
                             "hourly": {
-                            "frequency": 12,
-                            "retention": 15
-                            },
-                            "daily": {
-                            "frequency": 1,
-                            "retention": 30
-                            },
-                            "weekly": {
-                            "retention": 4,
-                            "frequency": 1,
-                            "dayOfWeek": "Saturday"
-                            },
-                            "monthly": {
-                            "dayOfMonth": "LastDay",
-                            "retention": 2,
-                            "frequency": 1
-                            },
-                            "yearly": {
-                            "yearStartMonth": "March",
-                            "dayOfYear": "FirstDay",
-                            "retention": 5,
-                            "frequency": 1
-                            }
+                                "frequency": 8,
+                                "retention": 72
+                              },
+                              "daily": {
+                                "frequency": 1,
+                                "retention": 30
+                              },
+                              "weekly": {
+                                "frequency": 1,
+                                "retention": 4,
+                                "dayOfWeek": "Saturday"
+                              },
+                              "monthly": {
+                                "dayOfMonth": "LastDay",
+                                "frequency": 1,
+                                "retention": 12
+                              },
+                              "yearly": {
+                                "yearStartMonth": "March",
+                                "dayOfYear": "FirstDay",
+                                "frequency": 1,
+                                "retention": 2
+                              }
                         },
                         "showAdvancedUi": true,
                         "advancedUiConfig": [
@@ -170,29 +215,29 @@ Describe -Name 'Public/Get-RubrikSLA' -Tag 'Public', 'Get-RubrikSLA' -Fixture {
                         "name": "Gold AWS",
                         "frequencies": {
                             "hourly": {
-                            "frequency": 12,
-                            "retention": 15
-                            },
-                            "daily": {
-                            "frequency": 1,
-                            "retention": 30
-                            },
-                            "weekly": {
-                            "retention": 4,
-                            "frequency": 1,
-                            "dayOfWeek": "Saturday"
-                            },
-                            "monthly": {
-                            "dayOfMonth": "LastDay",
-                            "retention": 2,
-                            "frequency": 1
-                            },
-                            "yearly": {
-                            "yearStartMonth": "March",
-                            "dayOfYear": "FirstDay",
-                            "retention": 5,
-                            "frequency": 1
-                            }
+                                "frequency": 8,
+                                "retention": 72
+                              },
+                              "daily": {
+                                "frequency": 1,
+                                "retention": 30
+                              },
+                              "weekly": {
+                                "frequency": 1,
+                                "retention": 4,
+                                "dayOfWeek": "Saturday"
+                              },
+                              "monthly": {
+                                "dayOfMonth": "LastDay",
+                                "frequency": 1,
+                                "retention": 12
+                              },
+                              "yearly": {
+                                "yearStartMonth": "March",
+                                "dayOfYear": "FirstDay",
+                                "frequency": 1,
+                                "retention": 2
+                              }
                         },
                         "showAdvancedUi": true,
                         "advancedUiConfig": [
@@ -220,17 +265,73 @@ Describe -Name 'Public/Get-RubrikSLA' -Tag 'Public', 'Get-RubrikSLA' -Fixture {
                     }
                 ],
                 "total":2
-             }'
-          return ConvertFrom-Json $response
+            }'
+            return ConvertFrom-Json $response
         }
         It -Name 'should filter on SLA name' -Test {
             ( Get-RubrikSLA -Name 'Gold' ).Name |
                 Should -BeExactly 'Gold'
         }
-        It -Name 'frequencies array should be populated' -Test {
-            ( Get-RubrikSLA -Name 'Gold' ).frequencies.Count |
-                Should -BeGreaterThan 0
-        }        
+        It -Name 'hourly frequency exists' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.hourly |
+                Should -Not -BeNullOrEmpty
+        }
+        It -Name 'hourly frequency set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.hourly.frequency | 
+                Should -BeExactly 8
+        }
+        It -Name 'hourly retention set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.hourly.retention | 
+                Should -BeExactly 72
+        }
+        It -Name 'daily frequency exists' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.daily | 
+                Should -Not -BeNullOrEmpty
+        }
+        It -Name 'daily frequency set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.daily.frequency | 
+                Should -BeExactly 1
+        }
+        It -Name 'daily retention set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.daily.retention | 
+                Should -BeExactly 30
+        }
+        It -Name 'weekly frequency exists' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.weekly | 
+                Should -Not -BeNullOrEmpty
+        }
+        It -Name 'weekly frequency set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.weekly.frequency | 
+                Should -BeExactly 1
+        }
+        It -Name 'weekly retention set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.weekly.retention | 
+                Should -BeExactly 4
+        }
+        It -Name 'monthly frequency exists' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.monthly | 
+                Should -Not -BeNullOrEmpty
+        }
+        It -Name 'monthly frequency set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.monthly.frequency | 
+                Should -BeExactly 1
+        }
+        It -Name 'monthly retention set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.monthly.retention | 
+                Should -BeExactly 12
+        }
+        It -Name 'yearly frequency exists' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.yearly | 
+                Should -Not -BeNullOrEmpty
+        }
+        It -Name 'yearly frequency set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.yearly.frequency | 
+                Should -BeExactly 1
+        }
+        It -Name 'yearly retention set' -Test {
+            (Get-RubrikSLA -Name 'Gold').frequencies.yearly.retention | 
+                Should -BeExactly 2
+        }     
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
