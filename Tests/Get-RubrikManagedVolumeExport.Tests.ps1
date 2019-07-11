@@ -27,14 +27,14 @@ Describe -Name 'Public/Get-RubrikManagedVolumeExport' -Tag 'Public', 'Get-Rubrik
                 'id'                        = '11111-22222-33333'
                 'isActive'                  = 'True'
                 'primaryClusterId'          = 'local'
-                'sourceManagedVolumeName'   = 'OracleMV'
+                'sourceManagedVolumeName'   = 'OracleMV1'
                 'sourceManagedVolumeID'     = 'ManagedVolume:::11111'
             },
             @{
                 'id'                        = '22222-22222-33333'
                 'isActive'                  = 'True'
                 'primaryClusterId'          = 'local'
-                'sourceManagedVolumeName'   = 'OracleMV'
+                'sourceManagedVolumeName'   = 'OracleMV2'
                 'sourceManagedVolumeID'     = 'ManagedVolume:::11111'
             },
             @{
@@ -46,19 +46,19 @@ Describe -Name 'Public/Get-RubrikManagedVolumeExport' -Tag 'Public', 'Get-Rubrik
             }
         }
         
-        It -Name 'Should Return count of 3' -Test {
+        It -Name 'Getting all exports should return count of 3' -Test {
             (Get-RubrikManagedVolumeExport).Count |
                 Should -BeExactly 3
         }
-        It -Name 'Source name filter non existant should return count of 0' -Test {
+        It -Name 'Source name filter non existant name should return count of 0' -Test {
             (Get-RubrikManagedVolumeExport -SourceManagedVolumeName 'nonexistant').Count |
                 Should -BeExactly 0
         } 
-        It -Name 'Source name filter - ID should be 33333-22222-33333' -Test {
+        It -Name 'Source name filter on individual name should return id of 33333-22222-33333' -Test {
             (Get-RubrikManagedVolumeExport -SourceManagedVolumeName 'SQLMV').id |
                 Should -BeExactly '33333-22222-33333'
         } 
-        It -Name 'Missing ID Exception' -Test {
+        It -Name 'Missing id value should throw exception' -Test {
             { Get-RubrikManagedVolumeExport -id  } |
                 Should -Throw "Missing an argument for parameter 'id'. Specify a parameter of type 'System.String' and try again."
         } 
