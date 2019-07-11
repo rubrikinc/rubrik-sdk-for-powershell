@@ -38,7 +38,7 @@ Describe -Name 'Public/Remove-RubrikSLA' -Tag 'Public', 'Remove-RubrikSLA' -Fixt
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
     }
 
-    Context -Name 'Parameter/ID-v5' {
+    Context -Name 'Parameter/ID-v2' {
         $global:rubrikConnection = @{
             id      = 'test-id'
             userId  = 'test-userId'
@@ -46,7 +46,7 @@ Describe -Name 'Public/Remove-RubrikSLA' -Tag 'Public', 'Remove-RubrikSLA' -Fixt
             server  = 'test-server'
             header  = @{ 'Authorization' = 'Bearer test-authorization' }
             time    = (Get-Date)
-            api     = 'v5'
+            api     = 'v2'
             version = '5.0.1'
         }
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}

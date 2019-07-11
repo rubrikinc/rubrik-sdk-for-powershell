@@ -139,7 +139,7 @@ Describe -Name 'Public/Get-RubrikSLA' -Tag 'Public', 'Get-RubrikSLA' -Fixture {
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
     }
 
-    Context -Name 'Parameter/Name-v5' {
+    Context -Name 'Parameter/Name-v2' {
         $global:rubrikConnection = @{
             id      = 'test-id'
             userId  = 'test-userId'
@@ -147,7 +147,7 @@ Describe -Name 'Public/Get-RubrikSLA' -Tag 'Public', 'Get-RubrikSLA' -Fixture {
             server  = 'test-server'
             header  = @{ 'Authorization' = 'Bearer test-authorization' }
             time    = (Get-Date)
-            api     = 'v5'
+            api     = 'v2'
             version = '5.0.1'
         }        
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
