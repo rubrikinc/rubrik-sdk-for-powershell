@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-10
+
+### Fixed [Disconnect-Rubrik]
+
+* Added logic to disconnect to address the deletion of tokens when using token based authenticaion as per [Issue 363](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/363)
+
 ## 2019-07-08
 
 ### Added [Unit Tests]
