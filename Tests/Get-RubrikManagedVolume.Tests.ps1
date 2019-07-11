@@ -29,6 +29,7 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
                 'primaryClusterId'          = 'cluster01'
                 'configuredSlaDomainName'   = 'Gold'
                 'isRelic'                   = 'False'
+                'effectiveSlaDomainId'      = 'test-sla_id'
             },
             @{ 
                 'id'                        = 'ManagedVolume:::22222'
@@ -37,6 +38,7 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
                 'primaryClusterId'          = 'cluster01'
                 'configuredSlaDomainName'   = 'Gold'
                 'isRelic'                   = 'False'
+                'effectiveSlaDomainId'      = 'test-sla_id'
             },
             @{ 
                 'id'                        = 'ManagedVolume:::33333'
@@ -45,6 +47,7 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
                 'primaryClusterId'          = 'cluster02'
                 'configuredSlaDomainName'   = 'Silver'
                 'isRelic'                   = 'True'
+                'effectiveSlaDomainId'      = 'test-sla_id2'
             },
             @{ 
                 'id'                        = 'ManagedVolume:::44444'
@@ -53,6 +56,7 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
                 'primaryClusterId'          = 'cluster01'
                 'configuredSlaDomainName'   = 'Silver'
                 'isRelic'                   = 'False'
+                'effectiveSlaDomainId'      = 'test-sla_id2'
             },
             @{ 
                 'id'                        = 'ManagedVolume:::55555'
@@ -61,14 +65,25 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
                 'primaryClusterId'          = 'cluster01'
                 'configuredSlaDomainName'   = 'Gold'
                 'isRelic'                   = 'True'
+                'effectiveSlaDomainId'      = 'test-sla_id'
             }
         }
         It -Name 'Should Return count of 5' -Test {
             (Get-RubrikManagedVolume).Count |
                 Should -BeExactly 5
         }
+        It -Name 'Name filter non existant should return count of 0' -Test {
+            (Get-RubrikManagedVolume -Name 'nonexistant').Count |
+                Should -BeExactly 0
+        }  
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! left off here
+        It -Name 'Name filter non existant should return count of 0' -Test {
+            (Get-RubrikManagedVolume -ID 'ManagedVolume:::55555').Count |
+                Should -BeExactly 0
+        }  
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
     }
+
 }
