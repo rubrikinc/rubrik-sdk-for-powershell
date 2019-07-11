@@ -12,9 +12,16 @@ Connects to Rubrik and retrieves details on SLA Domain(s)
 
 ## SYNTAX
 
+### Query
 ```
-Get-RubrikSLA [[-Name] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>] [[-Server] <String>]
- [[-api] <String>] [<CommonParameters>]
+Get-RubrikSLA [[-Name] <String>] [-PrimaryClusterID <String>] [-Server <String>] [-api <String>]
+ [<CommonParameters>]
+```
+
+### ID
+```
+Get-RubrikSLA [-PrimaryClusterID <String>] [-id] <String> [-Server <String>] [-api <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,13 +51,13 @@ Name of the SLA Domain
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: SLA
 
 Required: False
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -64,7 +71,7 @@ Parameter Sets: (All)
 Aliases: primary_cluster_id
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -75,11 +82,11 @@ SLA Domain id
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: ID
 Aliases:
 
-Required: False
-Position: 3
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -94,7 +101,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -109,7 +116,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
