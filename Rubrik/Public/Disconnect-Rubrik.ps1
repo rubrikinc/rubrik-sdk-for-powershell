@@ -67,7 +67,12 @@ function Disconnect-Rubrik
     # if token was used to authenticate, remove variable and exit
     if ($global:RubrikConnection.authType -eq 'Token') {
       Write-Verbose -Message "Detected token authentication - Disconnecting without deleting token."
-      Remove-Variable -Name rubrikconnection -Scope Global
+      
+      # Remove from RubrikConnections global Variable
+      $global:RubrikConnections = $RubrikConnections | Where-Object {$_.Token -ne $RubrikConnection.Token}
+      
+      # Remove Global variable, RubrikConnection
+      Remove-Variable -Name RubrikConnection -Scope Global
       $result = $null
     }
     else {
