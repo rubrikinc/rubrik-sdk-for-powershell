@@ -16,12 +16,56 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 2019-07-03
+## 2019-07-12
 
 ### Fixed issues with parsing of complex JSON payloads
 
 * Get-RubrikReportData now correctly returns all data
 * Performance of JSON parsing improved for PowerShell 6 and later
+
+## 2019-07-11
+
+### Added [Various Unit Tests]
+
+* Added unit tests for Get-RubrikManagedVolume, Get-RubrikManagedVolumeExport, Get-RubrikVolumeGroup, Get-RubrikVolumeGroupMount, New-RubrikManagedVolume, New-RubrikManagedVolumeExport, New-RubrikVolumeGroupMount, Remove-RubrikManagedVolume, Remove-RubrikManagedVolumeExport, Remove-RubrikVolumeGroupMount, Set-RubrikManagedVolume, Start-RubrikManagedVolumeSnapshot, Start-RubrikManagedVolumeSnapshot to address [Issue 340](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/340)
+* Note - Set-RubrikVolumeFilterDriver already contained a unit test.
+
+## 2019-07-10
+
+### Fixed [Disconnect-Rubrik & Connect-Rubrik]
+
+* Added global attribute 'authType' to $rubrikconnection to remove reliance on userId.
+* Added logic to disconnect to address the deletion of tokens when using token based authenticaion as per [Issue 363](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/363)
+
+## 2019-07-08
+
+### Added [Unit Tests]
+
+* Added unit tests for Update-RubrikHost and Update-RubrikvCenter to address [Issue 339](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/339)
+
+### Changed [Get-RubrikDatabase]
+
+* Added ability to specify -DetailedObject on Get-RubrikDatabase to address [Issue 354](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/354)
+
+## 2019-07-03
+
+### Added [Unit tests]
+
+* Added unit tests for Get-RubrikHyperVVM, Get-RubrikNutanixVM, Move-RubrikMountVMDK, New-RubrikVMDKMount, Protect-RubrikHyperVVM ,Protect-RubrikNutanixVM. Protect-RubrikVM, Set-RubrikHyperVVM, Set-RubrikNutanixVM, Set-RubrikVM
+
+### Changed [Fixes for unit tests]
+
+* Minor updates to parameter configurations of Get-RubrikHyperVVM, Get-RubrikNutanixVM, Move-RubrikMountVMDK, New-RubrikVMDKMount, Protect-RubrikHyperVVM ,Protect-RubrikNutanixVM. Protect-RubrikVM, Set-RubrikHyperVVM, Set-RubrikNutanixVM, Set-RubrikVM so they pass associated unit tests
+
+### Changed [Get-RubrikDatabase] - Relic parameter
+
+* Parameter now has 3 states -Relic -Relic:$false or not specified
+
+## 2019-07-02
+
+### Added Unit Tests [Export-RubrikReport & Export-RubrikDatabase]
+
+* Added Unit Tests for Export-RubrikReport & Export-RubrikDatabase to address [Issue 333](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/333)
 
 ## 2019-06-29
 

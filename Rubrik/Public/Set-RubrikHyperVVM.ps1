@@ -30,6 +30,7 @@ function Set-RubrikHyperVVM
     Param(
         # Virtual machine ID
         [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullOrEmpty()]
         [String]$id,
         #Raw Cloud Instantiation spec
         [hashtable]$cloudInstantiationSpec,

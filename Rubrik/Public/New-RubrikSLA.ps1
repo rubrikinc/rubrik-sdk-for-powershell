@@ -30,6 +30,7 @@ function New-RubrikSLA
   Param(
     # SLA Domain Name
     [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
     [Alias('SLA')]
     [String]$Name,
     # Hourly frequency to take backups
