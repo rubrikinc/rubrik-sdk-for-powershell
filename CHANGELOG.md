@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-11
+
+### Added [Unit Tests]
+
+* Added unit tests for Get-RubrikSLA, New-RubrikSLA, Remove-RubrikSLA
+
 ## 2019-07-08
 
 ### Added [Unit Tests]
