@@ -1925,7 +1925,48 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '204'
             }
         }
-
+        'Get-RubrikBootStrap'         = @{
+            '1.0' = @{
+                Description = 'Status of the bootstrap request'
+                URI         = '/api/internal/cluster/{id}/bootstrap'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    request_id    = 'request_id'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'New-RubrikBootStrap'      = @{
+            '1.0' = @{
+                Description = 'New Bootstrap Request'
+                URI         = '/api/internal/cluster/{id}/bootstrap'
+                Method      = 'Post'
+                Body        = @{
+                    Name   = 'rubrik_name'
+                    enableSoftwareEncryptionAtRest = 'enable_Software_Encryption_At_Rest'
+                    adminUserInfo      = @{
+                        emailAddress = 'email_Address'
+                        id = 'admin_id'
+                        password = 'admin_password'
+                    }
+                    #change to a foreach loop and accept object
+                    nodeConfigs      = @{
+                        1      = @{
+                            managementIpConfig = 'management_Ip_Config'
+                            gateway = 'management_gateway'
+                            netmask = 'management_netmask'
+                        }
+                    }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
     } # End of API
 
     # Determine which version of RCDM is running
