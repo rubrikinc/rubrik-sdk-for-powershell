@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Start-RubrikManagedVolumeSnapshot' -Tag 'Public', 'Start-RubrikManagedVolumeSnapshot' -Fixture {
+Describe -Name 'Public/Stop-RubrikManagedVolumeSnapshot' -Tag 'Public', 'Stop-RubrikManagedVolumeSnapshot' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -23,16 +23,18 @@ Describe -Name 'Public/Start-RubrikManagedVolumeSnapshot' -Tag 'Public', 'Start-
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'snapshotId' = '11111a'
+                'id'      = 'id1'
+                'slaId'   = 'slaid'
+                'slaName' = 'Gold'
             }
         }
         It -Name 'Request Fulfilled' -Test {
-            (Start-RubrikManagedVolumeSnapshot -id 'ManagedVolume:::11111' ).snapshotId |
-                Should -BeExactly '11111a'
+            (Stop-RubrikManagedVolumeSnapshot -id 'id1' ).id |
+                Should -BeExactly 'id1'
         }
 
         It -Name 'Parameter ID must be present' -Test {
-            { Start-RubrikManagedVolumeSnapshot -Id  } |
+            { Stop-RubrikManagedVolumeSnapshot -Id  } |
                 Should -Throw "Missing an argument for parameter 'id'. Specify a parameter of type 'System.String' and try again."
         }
 
