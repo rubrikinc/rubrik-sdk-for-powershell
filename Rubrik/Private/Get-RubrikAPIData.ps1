@@ -1945,7 +1945,11 @@ function Get-RubrikAPIData($endpoint) {
                 URI         = '/api/internal/cluster/{id}/bootstrap'
                 Method      = 'Post'
                 Body        = @{
-                    Name   = 'rubrik_name'
+                    name   = 'rubrik_name'
+                    dnsNameservers = 'management_dns'
+                    ntpServerConfigs      = @{
+                        server = 'ntp_server'
+                    }
                     enableSoftwareEncryptionAtRest = 'enable_Software_Encryption_At_Rest'
                     adminUserInfo      = @{
                         emailAddress = 'email_Address'
@@ -1953,11 +1957,14 @@ function Get-RubrikAPIData($endpoint) {
                         password = 'admin_password'
                     }
                     #change to a foreach loop and accept object
+                    #needs to be depth 3 to work
                     nodeConfigs      = @{
-                        1      = @{
-                            managementIpConfig = 'management_Ip_Config'
+                        node1      = @{
+                            managementIpConfig      = @{
+                            address = 'address'
                             gateway = 'management_gateway'
                             netmask = 'management_netmask'
+                            }
                         }
                     }
                 }

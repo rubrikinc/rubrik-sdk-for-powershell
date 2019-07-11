@@ -36,6 +36,7 @@
     # Array Object
     if ($resources.Body.$body.GetType().BaseType.Name -eq 'Array')
     {
+      Write-Verbose "Body Build Debug: Detected array Object"
       $bodyarray = $resources.Body.$body.Keys
       $arraystring = @{}
       foreach ($arrayitem in $bodyarray) 
@@ -68,6 +69,7 @@
     # Non-Array Object
     else 
     {
+      Write-Verbose "Body Build Debug: Detected non-array Object"
       # Walk through all of the parameters defined in the function
       # Both the parameter name and parameter alias are used to match against a body option
       # It is suggested to make the parameter name "human friendly" and set an alias corresponding to the body option name
@@ -92,7 +94,7 @@
   }
 
   # Store the results into a JSON string
-  $bodystring = ConvertTo-Json -InputObject $bodystring
+  $bodystring = ConvertTo-Json -InputObject $bodystring -depth 3
   Write-Verbose -Message "Body = $bodystring"
   return $bodystring
 }

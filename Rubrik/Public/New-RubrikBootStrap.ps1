@@ -28,21 +28,21 @@ function New-RubrikBootStrap
     # API version
     [String]$api = $global:RubrikConnection.api,
     [Alias('admin_id')]
-    [string]$adminid = 'admin',
+    $adminUserInfo = '',
     [Alias('email_Address')]
     [string]$emailAddress = 'Drew.Russell@rubrik.com',
     [Alias('admin_password')]
     [string]$password = 'p@ssw0rd!',
     [Alias('enable_Software_Encryption_At_Rest')]
-    [string]$enableSoftwareEncryptionAtRest = 'false',
+    [string]$enableSoftwareEncryptionAtRest = $false,
     [Alias('rubrik_name')]
     [string]$name = 'Rubrik',
-    [Alias('management_Ip_config')]
-    [string]$managementIpConfig = '',
-    [Alias('management_gateway')]
-    [string]$gateway = '',
-    [Alias('management_netmask')]
-    [string]$netmask = ''
+    [Alias('node_config')]
+    $nodeConfigs = '',
+    [Alias('ntp_server')]
+    $ntpServerConfigs = '',
+    [Alias('management_dns')]
+    [string]$dnsNameServers = ''
   )
 
   Begin {
@@ -71,8 +71,7 @@ function New-RubrikBootStrap
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    Write-Verbose -Message "Body Debug $body"
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    $result = Submit-Request -uri $uri -Headers @{"content-type"="application/json"} -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
