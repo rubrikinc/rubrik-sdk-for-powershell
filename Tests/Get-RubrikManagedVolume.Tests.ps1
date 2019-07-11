@@ -69,6 +69,7 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
             { Get-RubrikManagedVolume -id  } |
                 Should -Throw "Missing an argument for parameter 'id'. Specify a parameter of type 'System.String' and try again."
         } 
+        
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
