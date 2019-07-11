@@ -76,11 +76,6 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
             (Get-RubrikManagedVolume -Name 'nonexistant').Count |
                 Should -BeExactly 0
         }  
-        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! left off here
-        It -Name 'Name filter non existant should return count of 0' -Test {
-            (Get-RubrikManagedVolume -ID 'ManagedVolume:::55555').Count |
-                Should -BeExactly 0
-        }  
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
