@@ -16,9 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-11
+
+### Added [Various Unit Tests]
+
+* Added unit tests for Get-RubrikManagedVolume, Get-RubrikManagedVolumeExport, Get-RubrikVolumeGroup, Get-RubrikVolumeGroupMount, New-RubrikManagedVolume, New-RubrikManagedVolumeExport, New-RubrikVolumeGroupMount, Remove-RubrikManagedVolume, Remove-RubrikManagedVolumeExport, Remove-RubrikVolumeGroupMount, Set-RubrikManagedVolume, Start-RubrikManagedVolumeSnapshot, Start-RubrikManagedVolumeSnapshot to address [Issue 340](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/340)
+* Note - Set-RubrikVolumeFilterDriver already contained a unit test.
+
 ## 2019-07-10
 
-### Fixed [Disconnect-Rubrik Connect-Rubrik]
+### Fixed [Disconnect-Rubrik & Connect-Rubrik]
 
 * Added global attribute 'authType' to $rubrikconnection to remove reliance on userId.
 * Added logic to disconnect to address the deletion of tokens when using token based authenticaion as per [Issue 363](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/363)
