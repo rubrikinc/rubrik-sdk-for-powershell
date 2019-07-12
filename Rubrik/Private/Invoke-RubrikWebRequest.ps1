@@ -11,7 +11,6 @@ Custom wrapper for Invoke-WebRequest, implemented to provide different parameter
     )
     
     if (Test-PowerShellSix) {
-        $debug = $PSBoundParameters.Values
         $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
     } else {
         $result = Invoke-WebRequest -UseBasicParsing @PSBoundParameters
