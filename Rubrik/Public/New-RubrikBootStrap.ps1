@@ -9,13 +9,21 @@ function New-RubrikBootStrap
       This will send a bootstrap request 
             
       .NOTES
-      
+      #DNS Param must be an array even if only passing a single server
+      #NTP Must be an array than contains hash table for each server object
+      #Nodeconfigs Param must be a hash table object.
+
             
       .LINK
       https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap
             
       .EXAMPLE
-      New-RubrikBootStrap -server 169.254.11.25 -params
+      New-RubrikBootStrap -Server 169.254.11.25 
+      -name 'rubrik-edge' 
+      -management_dns @('192.168.11.1')
+      -ntpserverconfigs @(@{server = 'pool.ntp.org'})
+      -adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
+      -nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
       
   #>
 
@@ -34,7 +42,7 @@ function New-RubrikBootStrap
     [Alias('admin_password')]
     [string]$password = 'p@ssw0rd!',
     [Alias('enable_Software_Encryption_At_Rest')]
-    [string]$enableSoftwareEncryptionAtRest = $false,
+    [bool]$enableSoftwareEncryptionAtRest = $false,
     [Alias('rubrik_name')]
     [string]$name = 'Rubrik',
     [Alias('node_config')]
@@ -42,7 +50,7 @@ function New-RubrikBootStrap
     [Alias('ntp_server')]
     $ntpServerConfigs = '',
     [Alias('management_dns')]
-    [string]$dnsNameServers = ''
+    $dnsNameServers = ''
   )
 
   Begin {
