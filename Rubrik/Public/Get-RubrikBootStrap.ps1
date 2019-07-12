@@ -22,11 +22,13 @@ function Get-RubrikBootStrap
   [CmdletBinding()]
   Param(
     # ID of the Rubrik cluster or me for self
+    [ValidateNotNullOrEmpty()]
     [String]$id = 'me',
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api,
+    [ValidateNotNullOrEmpty()]
     [Alias('request_id')]
     [string]$RequestId = '1'
   )
