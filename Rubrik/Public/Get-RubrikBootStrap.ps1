@@ -23,24 +23,19 @@ function Get-RubrikBootStrap
   Param(
     # ID of the Rubrik cluster or me for self
     [ValidateNotNullOrEmpty()]
-    [String]$id = 'me',
+    [String] $id = 'me',
     # Rubrik server IP or FQDN
-    [String]$Server = $global:RubrikConnection.server,
-    # API version
-    [String]$api = $global:RubrikConnection.api,
+    [ValidateNotNullOrEmpty()]
+    [String] $Server,
     [ValidateNotNullOrEmpty()]
     [Alias('request_id')]
-    [string]$RequestId = '1'
+    [string] $RequestId = '1'
   )
 
   Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-
-    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
-    # This is not run due to no auth needed
-    #Test-RubrikConnection
     
     # API data references the name of the function
     # For convenience, that name is saved here to $function
