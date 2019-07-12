@@ -6,7 +6,7 @@ function Register-RBS
       Register the Rubrik Backup Service
 
       .DESCRIPTION
-      Register the Rubrik Backup Service for the specified VM.
+      Register the Rubrik Backup Service for the specified VM
 
       .NOTES
       Written by Pierre-François Guglielmi
@@ -29,6 +29,7 @@ function Register-RBS
   Param(
     # ID of the VM which agent needs to be registered
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Alias('VMid')]
     [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
