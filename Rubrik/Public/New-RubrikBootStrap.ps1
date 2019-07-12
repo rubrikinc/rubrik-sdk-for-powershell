@@ -18,6 +18,7 @@ function New-RubrikBootStrap
       https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap
             
       .EXAMPLE
+      https://gist.github.com/nshores/104f069570740ea645d67a8aeab19759
       New-RubrikBootStrap -Server 169.254.11.25 
       -name 'rubrik-edge' 
       -management_dns @('192.168.11.1')
