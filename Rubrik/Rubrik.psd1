@@ -70,7 +70,7 @@ PowerShellVersion = '4.0'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
-               'Export-RubrikReport', 'Export-RubrikVM', 
+               'Export-RubrikReport', 'Export-RubrikVM',
                'Get-RubrikAPIToken', 'Get-RubrikAPIVersion',
                'Get-RubrikAvailabilityGroup', 'Get-RubrikBootStrap',
                'Get-RubrikDatabase', 'Get-RubrikDatabaseFiles', 
