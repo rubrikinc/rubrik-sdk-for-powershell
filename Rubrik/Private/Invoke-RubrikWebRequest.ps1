@@ -7,13 +7,13 @@ Custom wrapper for Invoke-WebRequest, implemented to provide different parameter
         $Uri,
         $Headers,
         $Method,
-        $Body 
+        $Body
     )
     
     if (Test-PowerShellSix) {
-        $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
+        $result = Invoke-WebRequest -ErrorAction Stop -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
     } else {
-        $result = Invoke-WebRequest -UseBasicParsing @PSBoundParameters
+        $result = Invoke-WebRequest -ErrorAction Stop -UseBasicParsing @PSBoundParameters
     }
     
     Write-Verbose -Message "Received HTTP Status $($result.StatusCode)"
