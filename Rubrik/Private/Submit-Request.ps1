@@ -34,6 +34,7 @@ function Submit-Request {
                         $result = [pscustomobject]@{
                             Status = 'Success'
                             HTTPStatusCode = $response.StatusCode
+                            HTTPStatusDescription = $response.StatusDescription
                         }
                     }
                     # If a different HTTP status is returned, surface that information to the user
@@ -42,7 +43,7 @@ function Submit-Request {
                         $result = [pscustomobject]@{
                             Status = 'Error'
                             HTTPStatusCode = $response.StatusCode
-                            HTTPStatusDescription = $response.StatusCode
+                            HTTPStatusDescription = $response.StatusDescription
                         }
                     }
                 }
