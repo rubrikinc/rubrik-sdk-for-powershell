@@ -1,4 +1,4 @@
-﻿<#
+<#
     Helper function to retrieve API data from Rubrik
 #>
 function Get-RubrikAPIData($endpoint) {
@@ -1661,6 +1661,46 @@ function Get-RubrikAPIData($endpoint) {
                     name = "name"
                     timezone = "timezone"
                     geolocation = "geolocation"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikSLA'             = @{
+            '1.0' = @{
+                Description = 'Update an existing SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
+                URI         = '/api/v1/sla_domain'
+                Method      = 'Patch'
+                Body        = @{
+                    name        = 'name'
+                    frequencies = @{
+                        timeUnit  = 'timeUnit'
+                        frequency = 'frequency'
+                        retention = 'retention'
+                    }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.0' = @{
+                Description = 'Update an existing SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
+                URI         = '/api/v2/sla_domain'
+                Method      = 'Patch'
+                Body        = @{
+                    name             = 'name'
+                    showAdvancedUi   = 'showAdvancedUi'
+                    frequencies      = @{
+                        frequency = 'frequency'
+                        retention = 'retention'
+                    }
+                    advancedUiConfig = @{
+                        timeUnit      = 'timeUnit'
+                        retentionType = 'retentionType'
+                    }
                 }
                 Query       = ''
                 Result      = ''
