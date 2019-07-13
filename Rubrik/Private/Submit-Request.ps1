@@ -31,7 +31,7 @@ function Submit-Request {
                 if ($null -eq $result) {   
                     # If if HTTP status code matches our expected result, build a PSObject reflecting success
                     if($response.StatusCode -eq [int]$resources.Success) {
-                        $result = @{
+                        $result = [pscustomobject]@{
                             Status = 'Success'
                             HTTPStatusCode = $response.StatusCode
                         }
@@ -39,7 +39,7 @@ function Submit-Request {
                     # If a different HTTP status is returned, surface that information to the user
                     # This code may never run due to non-200 HTTP codes throwing an HttpResponseException
                     else {
-                        $result = @{
+                        $result = [pscustomobject]@{
                             Status = 'Error'
                             HTTPStatusCode = $response.StatusCode
                             HTTPStatusDescription = $response.StatusCode
