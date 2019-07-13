@@ -21,7 +21,8 @@ function New-RubrikBootStrap
       https://gist.github.com/nshores/104f069570740ea645d67a8aeab19759
       New-RubrikBootStrap -Server 169.254.11.25 
       -name 'rubrik-edge' 
-      -management_dns @('192.168.11.1')
+      -dnsNameservers @('192.168.11.1')
+      -dnsSearchDomains @('corp.us','branch.corp.us')
       -ntpserverconfigs @(@{server = 'pool.ntp.org'})
       -adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
       -nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
@@ -31,37 +32,69 @@ function New-RubrikBootStrap
   [CmdletBinding()]
   Param(
     # ID of the Rubrik cluster or me for self
-    [String]$id = 'me',
+    [ValidateNotNullOrEmpty()]
+    [String] $id = 'me',
     # Rubrik server IP or FQDN
-    [String]$Server = $global:RubrikConnection.server,
-    # API version
-    [String]$api = $global:RubrikConnection.api,
-    [Alias('admin_id')]
-    $adminUserInfo = '',
-    [Alias('email_Address')]
-    [string]$emailAddress = 'Drew.Russell@rubrik.com',
-    [Alias('admin_password')]
-    [string]$password = 'p@ssw0rd!',
-    [Alias('enable_Software_Encryption_At_Rest')]
-    [bool]$enableSoftwareEncryptionAtRest = $false,
-    [Alias('rubrik_name')]
-    [string]$name = 'Rubrik',
-    [Alias('node_config')]
-    $nodeConfigs = '',
-    [Alias('ntp_server')]
-    $ntpServerConfigs = '',
-    [Alias('management_dns')]
-    $dnsNameServers = ''
+    [ValidateNotNullOrEmpty()]
+    [String] $Server,
+    # Admin User Info Hashtable
+    [Parameter(Mandatory = $true)]
+    [ValidateScript({             
+      $requiredProperties = @("emailAddress","id","password")
+      ForEach($item in $requiredProperties) {
+        if(!$_.ContainsKey($item)) {
+          Throw "adminUserInfo missing property $($item)"
+        }
+        if([string]::IsNullOrEmpty($_[$item])) {
+          Throw "adminUserInfo $($item) is null or empty"
+        }
+      }
+      return $true
+     })]
+    [ValidateNotNullOrEmpty()]
+    [Object] 
+    $adminUserInfo, 
+    # Node Configuration Hashtable
+    [Parameter(Mandatory = $true)]
+    [ValidateScript({             
+      $requiredProperties = @("address","gateway","netmask")
+      ForEach($node in $_.Keys) {
+        $ipConfig = $_[$node].managementIpConfig
+        ForEach($item in $requiredProperties) {
+          if(!$ipConfig.ContainsKey($item)) {
+            Throw "node configuration for $($node) missing property $($item)"
+          }
+          if([string]::IsNullOrEmpty($ipConfig[$item])) {
+            Throw "node configuration for $($node) value $($item) is null or empty"
+          }
+        }
+      }
+      return $true
+     })]
+    [ValidateNotNullOrEmpty()]
+    [System.Object]
+    $nodeConfigs,
+    # Software Encryption
+    [bool]
+    $enableSoftwareEncryptionAtRest = $false,
+    # Cluster/Edge Name
+    [ValidateNotNullOrEmpty()]
+    [string]
+    $name,
+    # NTP Servers
+    $ntpServerConfigs,
+    # DNS Servers
+    [String[]]
+    $dnsNameservers,
+    # DNS Search Domains
+    [String[]]
+    $dnsSearchDomains
   )
 
   Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-
-    # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
-    # This is not run due to no auth needed
-    #Test-RubrikConnection
     
     # API data references the name of the function
     # For convenience, that name is saved here to $function
@@ -72,7 +105,36 @@ function New-RubrikBootStrap
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+    
+    #region One-off
+    # If there is more than node node, update the API data to contain all data for all nodes
+    if($nodeConfigs.Count -gt 1) {
+      ForEach($key in $nodeConfigs.Keys) {
+        $resources.Body.nodeConfigs[$key] = $nodeConfigs[$key]
+      }
+    }
+
+    # Default DNS servers to 8.8.8.8
+    if($dnsNameServers -eq '') {
+      $dnsNameServers = @(
+        '8.8.8.8'
+      )
+    }
+
+    # Default DNS search domains to an empty array
+    if($dnsSearchDomains -eq '') {
+      $dnsSearchDomains = @()
+    }
+
+    # Default NTP servers to pool.ntp.org
+    if($ntpServerConfigs.Length -lt 1) {
+      $ntpServerConfigs = @(
+        @{
+          server = 'pool.ntp.org'
+        }
+      )
+    }
+    #endregion
   }
 
   Process {
