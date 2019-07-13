@@ -1,4 +1,4 @@
-﻿<#
+<#
     Helper function to retrieve API data from Rubrik
 #>
 function Get-RubrikAPIData($endpoint) {

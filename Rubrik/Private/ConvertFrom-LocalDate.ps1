@@ -13,7 +13,7 @@ function ConvertFrom-LocalDate()
 
     try
     {
-        $null = $Date -as [datetime]
+        $Date -as [datetime] | Out-Null
     }
     catch
     {

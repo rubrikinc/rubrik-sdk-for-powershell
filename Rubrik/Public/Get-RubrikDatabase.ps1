@@ -23,12 +23,24 @@ function Get-RubrikDatabase
       This will return details on all databases named DB1 protected by the Gold SLA Domain on any known host or instance.
 
       .EXAMPLE
+      Get-RubrikDatabase -Name 'DB1' -DetailedObject
+      This will return the Database object with all properties, including additional details such as snapshots taken of the database and recovery point date/time information. Using this switch parameter negatively affects performance 
+
+      .EXAMPLE
       Get-RubrikDatabase -Name 'DB1' -Host 'Host1' -Instance 'MSSQLSERVER'
       This will return details on a database named "DB1" living on an instance named "MSSQLSERVER" on the host named "Host1".
 
       .EXAMPLE
       Get-RubrikDatabase -Relic
       This will return all removed databases that were formerly protected by Rubrik.
+
+      .EXAMPLE
+      Get-RubrikDatabase -Relic:$false
+      This will return all databases that are currently protected by Rubrik.
+
+      .EXAMPLE
+      Get-RubrikDatabase
+      This will return all databases that are currently or formerly protected by Rubrik.
 
       .EXAMPLE
       Get-RubrikDatabase -id 'MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
@@ -68,7 +80,10 @@ function Get-RubrikDatabase
     [String]$id,
     # SLA id value
     [Alias('effective_sla_domain_id')]
-    [String]$SLAID,     
+    [String]$SLAID,
+    # DetailedObject will retrieved the detailed database object, the default behavior of the API is to only retrieve a subset of the database object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Parameter(ParameterSetName='Query')]
+    [Switch]$DetailedObject,     
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -117,14 +132,28 @@ function Get-RubrikDatabase
     }
     #endregion
 
+    # If the switch parameter was not explicitly specified remove from query params 
+    if(-not $PSBoundParameters.ContainsKey('Relic')) {
+      $Resources.Query.Remove('is_relic')
+    }
+
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-
-    return $result
+    
+    # If the Get-RubrikDatabase function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        Get-RubrikDatabase -id $result[$i].id
+      }
+    } else {
+      return $result
+    }
 
   } # End of process
 } # End of function

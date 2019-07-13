@@ -29,17 +29,31 @@ function Get-RubrikSLA
   [CmdletBinding()]
   Param(
     # Name of the SLA Domain
+    [Parameter(
+      ParameterSetName='Query',
+      Position = 0,
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [Alias('SLA')]
     [String]$Name,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,    
     # SLA Domain id
-    [Parameter(ValueFromPipelineByPropertyName = $true)]    
+    [Parameter(
+      ParameterSetName='ID',
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]    
     [String]$id, 
     # Rubrik server IP or FQDN
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$api = $global:RubrikConnection.api
   )
 
