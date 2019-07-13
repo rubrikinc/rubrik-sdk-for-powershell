@@ -466,7 +466,11 @@ function Set-RubrikSLA
     }    
     
     $body = ConvertTo-Json $body -Depth 10
-    Write-Verbose -Message "Header = $header"
+    
+    # Remove bearer or basic auth info from verbose information
+    Write-Verbose -Message "Header = $(
+        (ConvertTo-Json -InputObject $header -Compress) -replace '(Bearer\s.*?")|(Basic\s.*?")'
+      )"
     Write-Verbose -Message "Body = $body"
     #endregion
 
