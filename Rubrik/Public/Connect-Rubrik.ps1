@@ -55,6 +55,7 @@ function Connect-Rubrik {
         [Parameter(ParameterSetName='Credential',Mandatory=$true, Position = 1)]
         [System.Management.Automation.CredentialAttribute()]$Credential,
         [Parameter(ParameterSetName='Token',Mandatory=$true, Position = 1)]
+        [ValidateNotNullOrEmpty()]
         [String]$Token,
         #Organization to connect with, assuming the user has multiple organizations
         [Alias('organization_id')]
