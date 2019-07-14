@@ -99,8 +99,7 @@ function Connect-Rubrik {
         $UserAgent = "Rubrik-Powershell-SDK/$($MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString())"
         Write-Verbose -Message "Using User Agent $($UserAgent)"
 
-        if($Token)
-        {
+        if($Token) {
             $head = @{'Authorization' = "Bearer $($Token)";'User-Agent' = $UserAgent}
             Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
             $global:rubrikConnection = @{
@@ -113,6 +112,13 @@ function Connect-Rubrik {
                 api     = Get-RubrikAPIVersion -Server $Server
                 version = Get-RubrikSoftwareVersion -Server $Server
                 authType = 'Token'
+            }
+            
+            try {
+                $null = Get-RubrikVersion -ErrorAction Stop
+            } catch {
+                Disconnect-Rubrik
+                throw 'Invalid API Token provided, please provide correct token'
             }
         }
         else 
