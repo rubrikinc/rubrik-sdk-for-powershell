@@ -119,12 +119,11 @@ function Connect-Rubrik {
             try {
                 $null = Get-RubrikVersion -ErrorAction Stop
             } catch {
+                Write-Verbose -Message 'Removing API token from $RubrikConnection using Disconnect-Rubrik'
                 Disconnect-Rubrik
                 throw 'Invalid API Token provided, please provide correct token'
             }
-        }
-        else 
-        {
+        } else {
             $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
 
             $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
