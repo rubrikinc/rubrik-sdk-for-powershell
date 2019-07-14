@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-14
+
+### Changed [Connect-Rubrik] - Will validate if token is correct
+
+* Added validation step for token, a query is executed against the cluster endpoint to validate the token
+* Get-RubrikAPIToken pwsh 5 bug fixed
+
 ## 2019-07-13
 
 ### Changed [Submit-Request] private function
