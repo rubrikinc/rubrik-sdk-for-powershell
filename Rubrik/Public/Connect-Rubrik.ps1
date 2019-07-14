@@ -54,6 +54,7 @@ function Connect-Rubrik {
         # Optionally, use the Username and Password parameters
         [Parameter(ParameterSetName='Credential',Mandatory=$true, Position = 1)]
         [System.Management.Automation.CredentialAttribute()]$Credential,
+        # Provide the Rubrik API Token instead, these are specificially created API token for authentication.
         [Parameter(ParameterSetName='Token',Mandatory=$true, Position = 1)]
         [ValidateNotNullOrEmpty()]
         [String]$Token,
