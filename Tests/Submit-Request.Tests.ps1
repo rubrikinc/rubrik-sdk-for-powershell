@@ -94,7 +94,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         }
 
         It 'Status:Success' {
-           $response = @{
+           $WebResult = @{
                 StatusCode = 204
            }
            $resources = @{
@@ -105,7 +105,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         }
 
         It 'Status:Error' {
-            $response = @{
+            $WebResult = @{
                 StatusCode = 1337
             }
             $resources = @{

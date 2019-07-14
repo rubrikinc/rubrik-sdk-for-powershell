@@ -30,16 +30,15 @@ function Submit-Request {
                 # If $result is null, build a $result object to return to the user. Otherwise, $result will be returned.
                 if ($null -eq $result) {   
                     # If if HTTP status code matches our expected result, build a PSObject reflecting success
-                    if($WebResult.StatusCode -eq [int]$resources.Success) {
+                    if($WebResult.StatusCode -eq $resources.Success) {
                         $result = [pscustomobject]@{
                             Status = 'Success'
                             HTTPStatusCode = $WebResult.StatusCode
                             HTTPStatusDescription = $WebResult.StatusDescription
                         }
-                    }
+                    } else {
                     # If a different HTTP status is returned, surface that information to the user
                     # This code may never run due to non-200 HTTP codes throwing an HttpResponseException
-                    else {
                         $result = [pscustomobject]@{
                             Status = 'Error'
                             HTTPStatusCode = $WebResult.StatusCode
