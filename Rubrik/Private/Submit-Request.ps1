@@ -76,6 +76,13 @@ function Submit-Request {
                     if ($rubrikWarning.cause) {Write-Warning -Message $rubrikWarning.cause}
                     throw $_.Exception
                 }
+                '{"message":*' {
+                    [Array]$rubrikWarning = ConvertFrom-Json $_.ErrorDetails.Message
+                    if ($rubrikWarning.errorType) {Write-Warning -Message $rubrikWarning.errorType}
+                    if ($rubrikWarning.message) {Write-Warning -Message $rubrikWarning.message}
+                    if ($rubrikWarning.cause) {Write-Warning -Message $rubrikWarning.cause}
+                    throw $_.Exception
+                }
                 default {
                     throw $_
                 }
