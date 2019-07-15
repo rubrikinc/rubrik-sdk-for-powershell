@@ -17782,6 +17782,141 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Register-RubrikBackupService</command:name>
+      <command:verb>Register</command:verb>
+      <command:noun>RubrikBackupService</command:noun>
+      <maml:description>
+        <maml:para>Register the Rubrik Backup Service</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Register the Rubrik Backup Service for the specified VM</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Register-RubrikBackupService</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="VMid">
+          <maml:name>id</maml:name>
+          <maml:Description>
+            <maml:para>ID of the VM which agent needs to be registered</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik server IP or FQDN</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>api</maml:name>
+          <maml:Description>
+            <maml:para>API version</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="VMid">
+        <maml:name>id</maml:name>
+        <maml:Description>
+          <maml:para>ID of the VM which agent needs to be registered</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Rubrik server IP or FQDN</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>api</maml:name>
+        <maml:Description>
+          <maml:para>API version</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by Pierre-Fran §ois Guglielmi Twitter: @pfguglielmi GitHub: pfguglielmi</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-RubrikVM -Name "demo-win01" | Register-RubrikBackupService -Verbose</dev:code>
+        <dev:remarks>
+          <maml:para>Get the details of VMware VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-RubrikNutanixVM -Name "demo-ahv01" | Register-RubrikBackupService -Verbose</dev:code>
+        <dev:remarks>
+          <maml:para>Get the details of Nutanix VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Get-RubrikHyperVVM -Name "demo-hyperv01" | Register-RubrikBackupService -Verbose</dev:code>
+        <dev:remarks>
+          <maml:para>Get the details of Hyper-V VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <dev:code>Register-RubrikBackupService -VMid VirtualMachine:::2af8fe5f-5b64-44dd-a9e0-ec063753b823-vm-37558</dev:code>
+        <dev:remarks>
+          <maml:para>Register the Rubrik Backup Service installed on this VM with the Rubrik cluster by specifying the VM id</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://github.com/rubrikinc/rubrik-sdk-for-powershell</maml:linkText>
+        <maml:uri>https://github.com/rubrikinc/rubrik-sdk-for-powershell</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Remove-RubrikAPIToken</command:name>
       <command:verb>Remove</command:verb>
       <command:noun>RubrikAPIToken</command:noun>
