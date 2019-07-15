@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added [Register-RBS]
 
-* Added new `Register-RBS`cmdlet to register the Rubrik Backup Service installed on the specified VM with the Rubrik cluster. This addresses issue [219](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/219)
+* Added new `Register-RBS`cmdlet to register the Rubrik Backup Service installed on the specified VM with the Rubrik cluster. This addresses issue [219](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/219). Like in the UI, there is a delay between the successful execution of the command and the actual registration of RBS.
 
 ## 2019-07-08
 
