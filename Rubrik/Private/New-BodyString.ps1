@@ -92,7 +92,7 @@
   }
 
   # Store the results into a JSON string
-  $bodystring = ConvertTo-Json -InputObject $bodystring
+  $bodystring = ConvertTo-Json -InputObject $bodystring -depth 3
   Write-Verbose -Message "Body = $bodystring"
   return $bodystring
 }
