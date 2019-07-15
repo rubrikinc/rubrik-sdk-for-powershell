@@ -1,5 +1,5 @@
 #requires -Version 3
-function Register-RBS
+function Register-RubrikBackupService
 {
   <#  
       .SYNOPSIS
@@ -17,19 +17,19 @@ function Register-RBS
       https://github.com/rubrikinc/rubrik-sdk-for-powershell
 
       .EXAMPLE
-      Get-RubrikVM -Name "demo-win01" | Register-RBS -Verbose
+      Get-RubrikVM -Name "demo-win01" | Register-RubrikBackupService -Verbose
       Get the details of VMware VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster
       
       .EXAMPLE
-      Get-RubrikNutanixVM -Name "demo-ahv01" | Register-RBS -Verbose
+      Get-RubrikNutanixVM -Name "demo-ahv01" | Register-RubrikBackupService -Verbose
       Get the details of Nutanix VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster
 
       .EXAMPLE
-      Get-RubrikHyperVVM -Name "demo-hyperv01" | Register-RBS -Verbose
+      Get-RubrikHyperVVM -Name "demo-hyperv01" | Register-RubrikBackupService -Verbose
       Get the details of Hyper-V VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster
 
       .EXAMPLE
-      Register-RBS -VMid VirtualMachine:::2af8fe5f-5b64-44dd-a9e0-ec063753b823-vm-37558
+      Register-RubrikBackupService -VMid VirtualMachine:::2af8fe5f-5b64-44dd-a9e0-ec063753b823-vm-37558
       Register the Rubrik Backup Service installed on this VM with the Rubrik cluster by specifying the VM id
   #>
 
