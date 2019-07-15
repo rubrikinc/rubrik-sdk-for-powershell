@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed [New-RubrikSLA]
 
 * Added ability to specify advanced SLA configuration settings introduced in 5.0 on New-RubrikSLA to address [Issue 304](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/354)
+* Changed -HourlyFrequency to take input in days or weeks instead of hours
 
 ## 2019-07-13
 
