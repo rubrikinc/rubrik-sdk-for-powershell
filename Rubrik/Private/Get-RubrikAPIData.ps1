@@ -1250,7 +1250,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Register-RBS'                  = @{
+        'Register-RubrikBackupService'                  = @{
             '1.0' = @{
                 Description = 'Register the Rubrik Backup Service.'
                 URI         = @{
