@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.367'
+ModuleVersion = '4.0.0.368'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -70,32 +70,31 @@ PowerShellVersion = '4.0'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
-               'Export-RubrikReport', 'Export-RubrikVM',
-               'Get-RubrikAPIToken', 'Get-RubrikAPIVersion',
-               'Get-RubrikAvailabilityGroup', 'Get-RubrikBootStrap',
-               'Get-RubrikDatabase', 'Get-RubrikDatabaseFiles', 
-               'Get-RubrikDatabaseMount', 'Get-RubrikDatabaseRecoverableRange', 
-               'Get-RubrikEvent', 'Get-RubrikFileset', 'Get-RubrikFilesetTemplate', 
-               'Get-RubrikHost', 'Get-RubrikHyperVVM', 'Get-RubrikLDAP', 
-               'Get-RubrikLogShipping', 'Get-RubrikManagedVolume', 
-               'Get-RubrikManagedVolumeExport', 'Get-RubrikMount', 
-               'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 'Get-RubrikOracleDB', 
-               'Get-RubrikOrganization', 'Get-RubrikReport', 'Get-RubrikReportData', 
-               'Get-RubrikRequest', 'Get-RubrikSetting', 'Get-RubrikSLA', 
-               'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
+               'Export-RubrikReport', 'Export-RubrikVM', 'Get-RubrikAPIToken', 
+               'Get-RubrikAPIVersion', 'Get-RubrikAvailabilityGroup', 
+               'Get-RubrikBootStrap', 'Get-RubrikDatabase', 
+               'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 
+               'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikEvent', 
+               'Get-RubrikFileset', 'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 
+               'Get-RubrikHyperVVM', 'Get-RubrikLDAP', 'Get-RubrikLogShipping', 
+               'Get-RubrikManagedVolume', 'Get-RubrikManagedVolumeExport', 
+               'Get-RubrikMount', 'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 
+               'Get-RubrikOracleDB', 'Get-RubrikOrganization', 'Get-RubrikReport', 
+               'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
+               'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
                'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 
                'Get-RubrikUnmanagedObject', 'Get-RubrikVCenter', 'Get-RubrikVersion', 
                'Get-RubrikVM', 'Get-RubrikVMSnapshot', 'Get-RubrikVMwareDatastore', 
                'Get-RubrikVMwareHost', 'Get-RubrikVolumeGroup', 
                'Get-RubrikVolumeGroupMount', 'Invoke-RubrikRESTCall', 
-               'Move-RubrikMountVMDK', 'New-RubrikAPIToken', 'New-RubrikBootStrap',
+               'Move-RubrikMountVMDK', 'New-RubrikAPIToken', 'New-RubrikBootStrap', 
                'New-RubrikDatabaseMount', 'New-RubrikFileset', 
                'New-RubrikFilesetTemplate', 'New-RubrikHost', 'New-RubrikLDAP', 
                'New-RubrikLogBackup', 'New-RubrikLogShipping', 
                'New-RubrikManagedVolume', 'New-RubrikManagedVolumeExport', 
-               'New-RubrikMount', 'New-RubrikNASShare', 'New-RubrikReport',
-               'New-RubrikSLA', 'New-RubrikSnapshot', 'New-RubrikVCenter',
-               'New-RubrikVMDKMount', 'New-RubrikVolumeGroupMount',
+               'New-RubrikMount', 'New-RubrikNASShare', 'New-RubrikReport', 
+               'New-RubrikSLA', 'New-RubrikSnapshot', 'New-RubrikVCenter', 
+               'New-RubrikVMDKMount', 'New-RubrikVolumeGroupMount', 
                'Protect-RubrikDatabase', 'Protect-RubrikFileset', 
                'Protect-RubrikHyperVVM', 'Protect-RubrikNutanixVM', 
                'Protect-RubrikTag', 'Protect-RubrikVM', 
