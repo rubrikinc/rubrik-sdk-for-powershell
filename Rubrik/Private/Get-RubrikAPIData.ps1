@@ -1118,11 +1118,15 @@ function Get-RubrikAPIData($endpoint) {
                 URI         = '/api/v2/sla_domain'
                 Method      = 'Post'
                 Body        = @{
-                    name        = 'name'
-                    frequencies = @{
-                        timeUnit  = 'timeUnit'
+                    name             = 'name'
+                    showAdvancedUi   = 'showAdvancedUi'
+                    frequencies      = @{
                         frequency = 'frequency'
                         retention = 'retention'
+                    }
+                    advancedUiConfig = @{
+                        timeUnit      = 'timeUnit'
+                        retentionType = 'retentionType'
                     }
                 }
                 Query       = ''
