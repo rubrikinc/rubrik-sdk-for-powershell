@@ -1,4 +1,12 @@
-﻿function Submit-Request($uri, $header, $method = $($resources.Method) , $body) {
+﻿
+function Submit-Request {
+    [cmdletbinding(supportsshouldprocess=$true)]
+    param(
+        $uri,
+        $header,
+        $method = $($resources.Method),
+        $body
+    )
     # The Submit-Request function is used to send data to an endpoint and then format the response for further use
     # $uri = The endpoint's URI
     # $header = The header containing authentication details
@@ -10,9 +18,15 @@
             Write-Verbose -Message 'Submitting the request'
             if ($resources.method -eq 'Delete') {
                 # Delete operations generally have no response body, skip JSON formatting and store the response from Invoke-WebRequest
-                $response = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body
-                # Parse response to verify there is nothing in the body
-                $result = ExpandPayload -response $response
+                if (Test-PowerShellSix) {
+                    # Uses the improved ConvertFrom-Json cmdlet as provided in PowerShell 6.1
+                    $result = if ($null -ne ($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
+                        ConvertFrom-Json -InputObject $WebResult
+                    }
+                } else {
+                    # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
+                    $result = ExpandPayload -response (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)
+                }
                 # If $result is null, build a $result object to return to the user. Otherwise, $result will be returned.
                 if ($null -eq $result) {   
                     # If if HTTP status code matches our expected result, build a PSObject reflecting success
@@ -34,8 +48,13 @@
                 }
             }
             else {
-                # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
-                $result = ExpandPayload -response (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)
+                if (Test-PowerShellSix) {
+                    # Uses the improved ConvertFrom-Json cmdlet as provided in PowerShell 6.1
+                    $result = ConvertFrom-Json -InputObject (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)
+                } else {
+                    # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
+                    $result = ExpandPayload -response (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)
+                }
             }
         }
         catch {

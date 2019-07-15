@@ -22,6 +22,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added new `Register-RubrikBackupService`cmdlet to register the Rubrik Backup Service installed on the specified VM with the Rubrik cluster. This addresses issue [219](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/219). Like in the UI, there is a delay between the successful execution of the command and the actual registration of RBS.
 
+## 2019-07-13
+
+### Added [Set-RubrikSLA]
+
+* Added new `Set-RubrikSLA` cmdlet to update an existing SLA Domain. This addresses issue [283](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/283)
+
+## 2019-07-12
+
+### Fixed issues with parsing of complex JSON payloads
+
+* Get-RubrikReportData now correctly returns all data
+* Performance of JSON parsing improved for PowerShell 6 and later
+
+## 2019-07-11
+
+### Added [Various Unit Tests]
+
+* Added unit tests for Get-RubrikManagedVolume, Get-RubrikManagedVolumeExport, Get-RubrikVolumeGroup, Get-RubrikVolumeGroupMount, New-RubrikManagedVolume, New-RubrikManagedVolumeExport, New-RubrikVolumeGroupMount, Remove-RubrikManagedVolume, Remove-RubrikManagedVolumeExport, Remove-RubrikVolumeGroupMount, Set-RubrikManagedVolume, Start-RubrikManagedVolumeSnapshot, Start-RubrikManagedVolumeSnapshot to address [Issue 340](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/340)
+* Note - Set-RubrikVolumeFilterDriver already contained a unit test.
+
+## 2019-07-10
+
+### Fixed [Disconnect-Rubrik & Connect-Rubrik]
+
+* Added global attribute 'authType' to $rubrikconnection to remove reliance on userId.
+* Added logic to disconnect to address the deletion of tokens when using token based authenticaion as per [Issue 363](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/363)
+
 ## 2019-07-08
 
 ### Added [Unit Tests]

@@ -63,13 +63,26 @@ function Disconnect-Rubrik
   }
 
   Process {
-
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    
+    # if token was used to authenticate, remove variable and exit
+    if ($global:RubrikConnection.authType -eq 'Token') {
+      Write-Verbose -Message "Detected token authentication - Disconnecting without deleting token."
+      
+      # Remove from RubrikConnections global Variable
+      $global:RubrikConnections = $RubrikConnections | Where-Object {$_.Token -ne $RubrikConnection.Token}
+      
+      # Remove Global variable, RubrikConnection
+      Remove-Variable -Name RubrikConnection -Scope Global
+      $result = $null
+    }
+    else {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    }
 
     return $result
 
