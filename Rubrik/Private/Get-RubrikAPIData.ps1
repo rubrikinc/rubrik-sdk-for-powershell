@@ -1,4 +1,4 @@
-﻿<#
+<#
     Helper function to retrieve API data from Rubrik
 #>
 function Get-RubrikAPIData($endpoint) {
@@ -1254,6 +1254,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Register-RubrikBackupService'                  = @{
+            '1.0' = @{
+                Description = 'Register the Rubrik Backup Service.'
+                URI         = @{
+                    VMware  = '/api/v1/vmware/vm/{id}/register_agent'
+                    HyperV  = '/api/internal/hyperv/vm/{id}/register_agent'
+                    Nutanix = '/api/internal/nutanix/vm/{id}/register_agent'
+                }
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            } 
+        }
         'Remove-RubrikAPIToken'   = @{
             '5.0' = @{
                 Description = 'Deletes session tokens'
@@ -1665,6 +1681,46 @@ function Get-RubrikAPIData($endpoint) {
                     name = "name"
                     timezone = "timezone"
                     geolocation = "geolocation"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikSLA'             = @{
+            '1.0' = @{
+                Description = 'Update an existing SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
+                URI         = '/api/v1/sla_domain'
+                Method      = 'Patch'
+                Body        = @{
+                    name        = 'name'
+                    frequencies = @{
+                        timeUnit  = 'timeUnit'
+                        frequency = 'frequency'
+                        retention = 'retention'
+                    }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.0' = @{
+                Description = 'Update an existing SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
+                URI         = '/api/v2/sla_domain'
+                Method      = 'Patch'
+                Body        = @{
+                    name             = 'name'
+                    showAdvancedUi   = 'showAdvancedUi'
+                    frequencies      = @{
+                        frequency = 'frequency'
+                        retention = 'retention'
+                    }
+                    advancedUiConfig = @{
+                        timeUnit      = 'timeUnit'
+                        retentionType = 'retentionType'
+                    }
                 }
                 Query       = ''
                 Result      = ''

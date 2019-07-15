@@ -1,32 +1,43 @@
-﻿#Requires -Version 3
-function Remove-RubrikSLA 
+#requires -Version 3
+function Register-RubrikBackupService
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and removes SLA Domains
-            
+      Register the Rubrik Backup Service
+
       .DESCRIPTION
-      The Remove-RubrikSLA cmdlet will request that the Rubrik API delete an SLA Domain.
-      The SLA Domain must have zero protected objects (VMs, filesets, databases, etc.) in order to be successful.
-            
+      Register the Rubrik Backup Service for the specified VM
+
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-            
+      Written by Pierre-François Guglielmi
+      Twitter: @pfguglielmi
+      GitHub: pfguglielmi
+
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikSLA.html
-            
+      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+
       .EXAMPLE
-      Get-RubrikSLA -SLA 'Gold' | Remove-RubrikSLA
-      This will attempt to remove the Gold SLA Domain from Rubrik if there are no objects being protected by the policy
+      Get-RubrikVM -Name "demo-win01" | Register-RubrikBackupService -Verbose
+      Get the details of VMware VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster
+      
+      .EXAMPLE
+      Get-RubrikNutanixVM -Name "demo-ahv01" | Register-RubrikBackupService -Verbose
+      Get the details of Nutanix VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster
+
+      .EXAMPLE
+      Get-RubrikHyperVVM -Name "demo-hyperv01" | Register-RubrikBackupService -Verbose
+      Get the details of Hyper-V VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster
+
+      .EXAMPLE
+      Register-RubrikBackupService -VMid VirtualMachine:::2af8fe5f-5b64-44dd-a9e0-ec063753b823-vm-37558
+      Register the Rubrik Backup Service installed on this VM with the Rubrik cluster by specifying the VM id
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding()]
   Param(
-    # SLA Domain id
+    # ID of the VM which agent needs to be registered
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
-    [ValidateNotNullOrEmpty()]
+    [Alias('VMid')]
     [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
