@@ -1250,6 +1250,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Register-RubrikBackupService'                  = @{
+            '1.0' = @{
+                Description = 'Register the Rubrik Backup Service.'
+                URI         = @{
+                    VMware  = '/api/v1/vmware/vm/{id}/register_agent'
+                    HyperV  = '/api/internal/hyperv/vm/{id}/register_agent'
+                    Nutanix = '/api/internal/nutanix/vm/{id}/register_agent'
+                }
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            } 
+        }
         'Remove-RubrikAPIToken'   = @{
             '5.0' = @{
                 Description = 'Deletes session tokens'
