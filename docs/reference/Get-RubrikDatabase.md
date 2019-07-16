@@ -13,9 +13,9 @@ Retrieves details on one or more databases known to a Rubrik cluster
 ## SYNTAX
 
 ```
-Get-RubrikDatabase [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-Instance] <String>] [[-Hostname] <String>]
- [[-ServerInstance] <String>] [[-InstanceID] <String>] [[-PrimaryClusterID] <String>] [[-id] <String>]
- [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikDatabase [-Name <String>] [-Relic] [-SLA <String>] [-Instance <String>] [-Hostname <String>]
+ [-ServerInstance <String>] [-InstanceID <String>] [-PrimaryClusterID <String>] [-id <String>]
+ [-SLAID <String>] [-DetailedObject] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,19 +34,41 @@ This will return details on all databases named DB1 protected by the Gold SLA Do
 
 ### EXAMPLE 2
 ```
+Get-RubrikDatabase -Name 'DB1' -DetailedObject
+```
+
+This will return the Database object with all properties, including additional details such as snapshots taken of the database and recovery point date/time information.
+Using this switch parameter negatively affects performance
+
+### EXAMPLE 3
+```
 Get-RubrikDatabase -Name 'DB1' -Host 'Host1' -Instance 'MSSQLSERVER'
 ```
 
 This will return details on a database named "DB1" living on an instance named "MSSQLSERVER" on the host named "Host1".
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```
 Get-RubrikDatabase -Relic
 ```
 
 This will return all removed databases that were formerly protected by Rubrik.
 
-### EXAMPLE 4
+### EXAMPLE 5
+```
+Get-RubrikDatabase -Relic:$false
+```
+
+This will return all databases that are currently protected by Rubrik.
+
+### EXAMPLE 6
+```
+Get-RubrikDatabase
+```
+
+This will return all databases that are currently or formerly protected by Rubrik.
+
+### EXAMPLE 7
 ```
 Get-RubrikDatabase -id 'MssqlDatabase:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
 ```
@@ -55,7 +77,7 @@ This will return details on a single database matching the Rubrik ID of "MssqlDa
 Note that the database ID is globally unique and is often handy to know if tracking a specific database for longer workflows,
 whereas some values are not unique (such as nearly all hosts having one or more databases named "model") and more difficult to track by name.
 
-### EXAMPLE 5
+### EXAMPLE 8
 ```
 Get-RubrikDatabase -InstanceID MssqlInstance:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
 ```
@@ -73,7 +95,7 @@ Parameter Sets: (All)
 Aliases: Database
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -103,7 +125,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -118,7 +140,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -133,7 +155,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -148,7 +170,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -163,7 +185,7 @@ Parameter Sets: (All)
 Aliases: instance_id
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -179,7 +201,7 @@ Parameter Sets: (All)
 Aliases: primary_cluster_id
 
 Required: False
-Position: 7
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -194,7 +216,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -209,8 +231,24 @@ Parameter Sets: (All)
 Aliases: effective_sla_domain_id
 
 Required: False
-Position: 9
+Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed database object, the default behavior of the API is to only retrieve a subset of the database object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -224,7 +262,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -239,7 +277,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

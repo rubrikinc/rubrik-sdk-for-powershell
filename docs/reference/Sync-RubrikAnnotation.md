@@ -14,7 +14,7 @@ Applies Rubrik SLA Domain information to VM Annotations using the Custom Attribu
 
 ```
 Sync-RubrikAnnotation [[-SLA] <String>] [[-SLAAnnotationName] <String>] [[-BackupAnnotationName] <String>]
- [-Server <String>] [-api <String>] [<CommonParameters>]
+ [[-LatestRubrikBackupAnnotationName] <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,11 +44,11 @@ using the defaults of "Rubrik_SLA" and "Rubrik_Backups" respectively.
 
 ### EXAMPLE 3
 ```
-Sync-RubrikAnnotation -SLAAnnotationName 'Backup-Policy' -BackupAnnotationName 'Backup-Snapshots'
+Sync-RubrikAnnotation -SLAAnnotationName 'Backup-Policy' -BackupAnnotationName 'Backup-Snapshots' -LatestRubrikBackupAnnotationName 'Latest-Rubrik-Backup'
 ```
 
 This will find all VMs being protected with any Rubrik SLA Domain Name and update their SLA and snapshot count annotations
-using the custom values of "Backup-Policy" and "Backup-Snapshots" respectively.
+using the custom values of "Backup-Policy", "Backup-Snapshots", and 'Latest-Rubrik-Backup' respectively.
 
 ## PARAMETERS
 
@@ -96,6 +96,22 @@ Aliases:
 Required: False
 Position: 3
 Default value: Rubrik_Backups
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LatestRubrikBackupAnnotationName
+Attribute name in vCenter for latest backup date
+By default, will use "Rubrik_Latest_Backup"
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: Rubrik_Latest_Backup
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

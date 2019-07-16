@@ -26,6 +26,7 @@ function Remove-RubrikSLA
   Param(
     # SLA Domain id
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,

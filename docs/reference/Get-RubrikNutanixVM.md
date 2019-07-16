@@ -12,10 +12,15 @@ Retrieves details on one or more Nutanix (AHV) virtual machines known to a Rubri
 
 ## SYNTAX
 
+### Query
 ```
 Get-RubrikNutanixVM [[-Name] <String>] [-Relic] [-SLA <String>] [-SLAAssignment <String>]
- [-PrimaryClusterID <String>] [-id <String>] [-SLAID <String>] [-Server <String>] [-api <String>]
- [<CommonParameters>]
+ [-PrimaryClusterID <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
+### ID
+```
+Get-RubrikNutanixVM [-id] <String> [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -51,7 +56,7 @@ Name of the Nutanix (AHV) virtual machine
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: VM
 
 Required: False
@@ -66,7 +71,7 @@ Filter results to include only relic (removed) virtual machines
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: is_relic
 
 Required: False
@@ -81,7 +86,7 @@ SLA Domain policy assigned to the virtual machine
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases:
 
 Required: False
@@ -96,7 +101,7 @@ Filter by SLA Domain assignment type
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases:
 
 Required: False
@@ -112,7 +117,7 @@ Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting t
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: primary_cluster_id
 
 Required: False
@@ -127,11 +132,11 @@ Virtual machine id
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: ID
 Aliases:
 
-Required: False
-Position: Named
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -142,7 +147,7 @@ SLA id value
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: effective_sla_domain_id
 
 Required: False

@@ -55,7 +55,7 @@
               $arraystring.Add($arrayitem,(Get-Variable -Name $param.Name).Value.IsPresent)
             }
             # All other variable types
-            elseif ((Get-Variable -Name $param.Name).Value -ne $null)
+            elseif ($null -ne (Get-Variable -Name $param.Name).Value)
             {
               $arraystring.Add($arrayitem,(Get-Variable -Name $param.Name).Value)
             }
@@ -82,7 +82,7 @@
             $bodystring.Add($body,(Get-Variable -Name $param.Name).Value.IsPresent)
           }     
           # All other variable types
-          elseif ((Get-Variable -Name $param.Name).Value -ne $null -and (Get-Variable -Name $param.Name).Value.Length -gt 0)
+          elseif ($null -ne (Get-Variable -Name $param.Name).Value -and (Get-Variable -Name $param.Name).Value.Length -gt 0)
           {
             $bodystring.Add($body,(Get-Variable -Name $param.Name).Value)
           }
@@ -92,7 +92,11 @@
   }
 
   # Store the results into a JSON string
-  $bodystring = ConvertTo-Json -InputObject $bodystring
-  Write-Verbose -Message "Body = $bodystring"
+  if (0 -ne $bodystring.count) {
+    $bodystring = ConvertTo-Json -InputObject $bodystring
+    Write-Verbose -Message "Body = $bodystring"
+  } else {
+    Write-Verbose -Message 'No body for this request'
+  }
   return $bodystring
 }

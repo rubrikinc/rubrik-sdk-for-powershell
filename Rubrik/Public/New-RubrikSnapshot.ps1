@@ -27,6 +27,14 @@ function New-RubrikSnapshot
       .EXAMPLE
       Get-RubrikDatabase 'DB1' | New-RubrikSnapshot -ForceFull -SLA 'Silver'
       This will trigger an on-demand backup for any database named "DB1" and force the backup to be a full rather than an incremental.
+
+      .EXAMPLE
+      Get-RubrikOracleDB -Id OracleDatabase:::e7d64866-b2ee-494d-9a61-46824ae85dc1 | New-RubrikSnapshot -ForceFull -SLA Bronze
+      This will trigger an on-demand backup for the Oracle database by its ID, and force the backup to be a full rather than an incremental.
+
+      .EXAMPLE
+      New-RubrikSnapShot -Id MssqlDatabase:::ee7aead5-6a51-4f0e-9479-1ed1f9e31614 -SLA Gold
+      This will trigger an on-demand backup by ID, in this example it is the ID of a MSSQL Database
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -40,7 +48,7 @@ function New-RubrikSnapshot
     # The snapshot will be retained indefinitely and available under Unmanaged Objects
     [Parameter(ParameterSetName = 'SLA_Forever')]
     [Switch]$Forever,
-    # Whether to force a full snapshot or an incremental. Only valid with MSSQL Databases.
+    # Whether to force a full snapshot or an incremental. Only valid with MSSQL and Oracle Databases.
     [Alias('forceFullSnapshot')]
     [Switch]$ForceFull,
     # SLA id value
@@ -74,14 +82,22 @@ function New-RubrikSnapshot
   Process {
 
     #region One-off
-    
+
+    # Display a warning if -ForceFull is used with anything other than MSSQL or Oracle
+    if ((-Not ($id.contains('OracleDatabase:::') -or $id.contains('MssqlDatabase:::'))) -and $ForceFull) {
+      Write-Warning -Message ('Using the ForceFull parameter with a {0} object is not possible, this functionality is only available to Oracle and MSSQL databases. The process will continue to take an incremental snapshot' -f $Id.Split(':')[0])
+    }
+
     if ($PSCmdlet.ShouldProcess($SLA, 'Testing SLA')) {
       $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
     }
     #endregion One-off
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values) 
+
+
+
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

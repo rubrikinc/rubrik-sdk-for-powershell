@@ -72,7 +72,7 @@ function Get-RubrikHost
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+    
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
@@ -89,12 +89,11 @@ function Get-RubrikHost
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $resultcount = ($result | measure-object).Count
     # If the Get-RubrikHost function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
-      for ($i = 0; $i -lt $resultcount; $i++) {
-        $Percentage = [int]($i/$resultcount)
-        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $($resultcount)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+      for ($i = 0; $i -lt @($result).count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
         Get-RubrikHost -id $result[$i].id
       }
     } else {
