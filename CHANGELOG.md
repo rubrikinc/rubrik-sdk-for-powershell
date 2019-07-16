@@ -37,6 +37,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-07-13
 
+### Changed [Submit-Request] private function
+
+* Changed output type for http status codes and errors to PSCustomObject
+
 ### Added [Set-RubrikSLA]
 
 * Added new `Set-RubrikSLA` cmdlet to update an existing SLA Domain. This addresses issue [283](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/283)

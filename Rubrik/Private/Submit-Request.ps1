@@ -30,19 +30,19 @@ function Submit-Request {
                 # If $result is null, build a $result object to return to the user. Otherwise, $result will be returned.
                 if ($null -eq $result) {   
                     # If if HTTP status code matches our expected result, build a PSObject reflecting success
-                    if($response.StatusCode -eq [int]$resources.Success) {
-                        $result = @{
+                    if($WebResult.StatusCode -eq $resources.Success) {
+                        $result = [pscustomobject]@{
                             Status = 'Success'
-                            HTTPStatusCode = $response.StatusCode
+                            HTTPStatusCode = $WebResult.StatusCode
+                            HTTPStatusDescription = $WebResult.StatusDescription
                         }
-                    }
+                    } else {
                     # If a different HTTP status is returned, surface that information to the user
                     # This code may never run due to non-200 HTTP codes throwing an HttpResponseException
-                    else {
-                        $result = @{
+                        $result = [pscustomobject]@{
                             Status = 'Error'
-                            HTTPStatusCode = $response.StatusCode
-                            HTTPStatusDescription = $response.StatusCode
+                            HTTPStatusCode = $WebResult.StatusCode
+                            HTTPStatusDescription = $WebResult.StatusDescription
                         }
                     }
                 }
@@ -70,6 +70,13 @@ function Submit-Request {
                 '{"errorType":*' {
                     # Parses the Rubrik generated JSON warning into something a bit more human readable
                     # Fields are: errorType, message, and cause
+                    [Array]$rubrikWarning = ConvertFrom-Json $_.ErrorDetails.Message
+                    if ($rubrikWarning.errorType) {Write-Warning -Message $rubrikWarning.errorType}
+                    if ($rubrikWarning.message) {Write-Warning -Message $rubrikWarning.message}
+                    if ($rubrikWarning.cause) {Write-Warning -Message $rubrikWarning.cause}
+                    throw $_.Exception
+                }
+                '{"message":*' {
                     [Array]$rubrikWarning = ConvertFrom-Json $_.ErrorDetails.Message
                     if ($rubrikWarning.errorType) {Write-Warning -Message $rubrikWarning.errorType}
                     if ($rubrikWarning.message) {Write-Warning -Message $rubrikWarning.message}

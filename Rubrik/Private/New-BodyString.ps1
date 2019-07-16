@@ -92,7 +92,11 @@
   }
 
   # Store the results into a JSON string
-  $bodystring = ConvertTo-Json -InputObject $bodystring -depth 3
-  Write-Verbose -Message "Body = $bodystring"
+  if (0 -ne $bodystring.count) {
+    $bodystring = ConvertTo-Json -InputObject $bodystring
+    Write-Verbose -Message "Body = $bodystring"
+  } else {
+    Write-Verbose -Message 'No body for this request'
+  }
   return $bodystring
 }
