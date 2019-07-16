@@ -164,7 +164,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Token</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill Token Description }}</maml:para>
+            <maml:para>Provide the Rubrik API Token instead, these are specificially created API token for authentication.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -261,7 +261,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Token</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill Token Description }}</maml:para>
+          <maml:para>Provide the Rubrik API Token instead, these are specificially created API token for authentication.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>

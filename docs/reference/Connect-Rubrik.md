@@ -134,7 +134,7 @@ Accept wildcard characters: False
 ```
 
 ### -Token
-{{ Fill Token Description }}
+Provide the Rubrik API Token instead, these are specificially created API token for authentication.
 
 ```yaml
 Type: String
