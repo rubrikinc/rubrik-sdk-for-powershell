@@ -54,7 +54,9 @@ function Connect-Rubrik {
         # Optionally, use the Username and Password parameters
         [Parameter(ParameterSetName='Credential',Mandatory=$true, Position = 1)]
         [System.Management.Automation.CredentialAttribute()]$Credential,
+        # Provide the Rubrik API Token instead, these are specificially created API token for authentication.
         [Parameter(ParameterSetName='Token',Mandatory=$true, Position = 1)]
+        [ValidateNotNullOrEmpty()]
         [String]$Token,
         #Organization to connect with, assuming the user has multiple organizations
         [Alias('organization_id')]
@@ -99,8 +101,7 @@ function Connect-Rubrik {
         $UserAgent = "Rubrik-Powershell-SDK/$($MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString())"
         Write-Verbose -Message "Using User Agent $($UserAgent)"
 
-        if($Token)
-        {
+        if($Token) {
             $head = @{'Authorization' = "Bearer $($Token)";'User-Agent' = $UserAgent}
             Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
             $global:rubrikConnection = @{
@@ -114,9 +115,15 @@ function Connect-Rubrik {
                 version = Get-RubrikSoftwareVersion -Server $Server
                 authType = 'Token'
             }
-        }
-        else 
-        {
+            
+            try {
+                $null = Get-RubrikVersion -ErrorAction Stop
+            } catch {
+                Write-Verbose -Message 'Removing API token from $RubrikConnection using Disconnect-Rubrik'
+                Disconnect-Rubrik
+                throw 'Invalid API Token provided, please provide correct token'
+            }
+        } else {
             $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
 
             $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
