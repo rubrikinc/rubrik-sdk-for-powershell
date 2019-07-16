@@ -55,39 +55,65 @@ function Get-RubrikDatabase
 
   [CmdletBinding()]
   Param(
+    # Rubrik's database id value
+    [Parameter(
+      ParameterSetName='ID',
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()] 
+    [String]$id,
     # Name of the database
     [Alias('Database')]
+    [Parameter(ParameterSetName='Query')]
     [String]$Name,
     # Filter results to include only relic (removed) databases
     [Alias('is_relic')]
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [Switch]$Relic,
     # SLA Domain policy assigned to the database
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$SLA,
     # Name of the database instance
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$Instance,    
     # Name of the database host
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$Hostname,
     #ServerInstance name (combined hostname\instancename)
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$ServerInstance,
     #SQL InstanceID, used as a unique identifier
     [Alias('instance_id')]
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [string]$InstanceID,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$PrimaryClusterID,    
-    # Rubrik's database id value
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
-    [String]$id,
     # SLA id value
     [Alias('effective_sla_domain_id')]
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$SLAID,
     # DetailedObject will retrieved the detailed database object, the default behavior of the API is to only retrieve a subset of the database object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
     [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [Switch]$DetailedObject,     
     # Rubrik server IP or FQDN
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [ValidateNotNullorEmpty()]
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$api = $global:RubrikConnection.api
   )
 
