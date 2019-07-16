@@ -16,6 +16,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-16
+
+### Changed [New-RubrikSLA]
+
+* Added ability to specify advanced SLA configuration settings introduced in 5.0 on New-RubrikSLA to address [Issue 304](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/354)
+* Changed -HourlyFrequency to take input in days or weeks instead of hours
+
+## 2019-07-15
+
+### Added [Register-RubrikBackupService]
+
+* Added new `Register-RubrikBackupService`cmdlet to register the Rubrik Backup Service installed on the specified VM with the Rubrik cluster. This addresses issue [219](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/219). Like in the UI, there is a delay between the successful execution of the command and the actual registration of RBS.
+
+### Added [*-Bootstrap] functions
+
+* Added new `New-RubrikBootstrap` function to send a Rubrik Bootstrap Request
+* Added new `Get-RubrikBootstrap` function that Connects to the Rubrik cluster and retrieves the bootstrap process progress
+* Created a templates folder with examples of Rubrik bootstrap
+
 ## 2019-07-14
 
 ### Changed [Connect-Rubrik] - Will validate if token is correct
