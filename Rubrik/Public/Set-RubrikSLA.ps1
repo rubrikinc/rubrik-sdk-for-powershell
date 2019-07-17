@@ -105,6 +105,9 @@ function Set-RubrikSLA
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Does not apply to CDM versions prior to 5.0
     [switch]$AdvancedConfig,
+    [int]$BackupStartHour,
+    [int]$BackupStartMinute,
+    [int]$BackupWindowDuration,
     # Retrieves frequencies from Get-RubrikSLA via the pipeline
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
@@ -113,7 +116,17 @@ function Set-RubrikSLA
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
     [alias('advancedUiConfig')]
-    [object[]] $AdvancedFreq,
+    [object[]] $AdvancedFreq,    
+    # Retrieves the allowed backup windows from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('allowedBackupWindows')]
+    [object[]] $BackupWindows,
+    # Retrieves the allowed backup windows for the first full backup from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('firstFullAllowedBackupWindows')]
+    [object[]] $FirstFullBackupWindows,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -151,6 +164,7 @@ function Set-RubrikSLA
       $body = @{
         $resources.Body.name = $Name
         frequencies = @()
+        allowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
         advancedUiConfig = @()
       }
@@ -159,6 +173,7 @@ function Set-RubrikSLA
       $body = @{
         $resources.Body.name = $Name
         frequencies = @()
+        allowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
       }
     # Build the body for CDM versions prior to 5.0
@@ -166,6 +181,7 @@ function Set-RubrikSLA
       $body = @{
         $resources.Body.name = $Name
         frequencies = @()
+        allowedBackupWindows = @()
       }
     }
     
@@ -365,6 +381,22 @@ function Set-RubrikSLA
       }
     }
     
+    # Retrieve the allowed backup window settings from pipeline
+    if ($BackupWindows) {
+      $BackupStartHour = $_.startTimeAttributes.hour
+      $BackupStartMinute = $_.startTimeAttributes.minutes
+      $BackupWindowDuration = $_.durationInHours
+    }
+
+    # Populate the body with the allowed backup window settings
+    if ($BackupStartHour -and $BackupStartMinute -and $BackupWindowDuration) {
+      $body.allowedBackupWindows += @{
+        $resources.Body.allowedBackupWindows.hour = $BackupStartHour
+        $resources.Body.allowedBackupWindows.minutes = $BackupStartMinute
+        $resources.Body.allowedBackupWindows.durationInHours = $BackupWindowDuration
+      }
+    }
+
     # Populate the body according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
     if ($HourlyFrequency -and $HourlyRetention) {
       if (($uri.contains('v2')) -and $AdvancedConfig) {

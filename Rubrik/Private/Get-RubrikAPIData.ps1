@@ -1694,11 +1694,19 @@ function Get-RubrikAPIData($endpoint) {
                 URI         = '/api/v1/sla_domain'
                 Method      = 'Patch'
                 Body        = @{
-                    name        = 'name'
-                    frequencies = @{
+                    name                 = 'name'
+                    frequencies          = @{
                         timeUnit  = 'timeUnit'
                         frequency = 'frequency'
                         retention = 'retention'
+                    }
+                    allowedBackupWindows = @{
+                        startTimeAttributes = @{
+                            minutes   = "minutes"
+                            hour      = "hour"
+                            dayOfWeek = "dayOfWeek"
+                        }
+                        durationInHours  = "durationInHours"
                     }
                 }
                 Query       = ''
@@ -1720,6 +1728,14 @@ function Get-RubrikAPIData($endpoint) {
                     advancedUiConfig = @{
                         timeUnit      = 'timeUnit'
                         retentionType = 'retentionType'
+                    }
+                    allowedBackupWindows = @{
+                        startTimeAttributes = @{
+                            minutes   = "minutes"
+                            hour      = "hour"
+                            dayOfWeek = "dayOfWeek"
+                        }
+                        durationInHours  = "durationInHours"
                     }
                 }
                 Query       = ''
