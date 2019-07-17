@@ -139,21 +139,4 @@ Describe -Name 'Public/Get-RubrikDatabaseMount' -Tag 'Public', 'Get-RubrikDataba
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
     }
-
-    <#
-    Context -Name 'Parameter Validation' {
-        It -Name 'Parameter ID cannot be $null' -Test {
-            { Get-RubrikDatabaseMount -Id $null } |
-                Should -Throw "Cannot validate argument on parameter 'ID'"
-        }
-        It -Name 'Parameter ID cannot be empty' -Test {
-            { Get-RubrikDatabaseMount -Id '' } |
-                Should -Throw "Cannot validate argument on parameter 'ID'"
-        }
-        It -Name 'Parameters Id and Name cannot be simultaneously used' -Test {
-            { Get-RubrikDatabaseMount -Id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -Name 'ExampleDB1' } |
-                Should -Throw "Parameter set cannot be resolved using the specified named parameters."
-        }
-    }
-    #>
 }
