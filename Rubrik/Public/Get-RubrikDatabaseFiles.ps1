@@ -38,15 +38,31 @@ function Get-RubrikDatabaseFiles
   [CmdletBinding()]
   Param(
     # Rubrik's id of the mount
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      ParameterSetName='Time',
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      ParameterSetName='RecoveryDateTime',
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$Id,
     # Recovery Point desired in the form of DateTime value
+    [Parameter(ParameterSetName='RecoveryDateTime')]
+    [ValidateNotNullOrEmpty()]
     [datetime]$RecoveryDateTime,
     # Recovery Point desired in the form of a UTC string (yyyy-MM-ddTHH:mm:ss)
+    [Parameter(ParameterSetName='Time')]
+    [ValidateNotNullOrEmpty()]
     [string]$time,
     # Rubrik server IP or FQDN
+    [Parameter(ParameterSetName='Time')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [Parameter(ParameterSetName='Time')]
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
