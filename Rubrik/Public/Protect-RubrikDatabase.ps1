@@ -21,11 +21,11 @@ function Protect-RubrikDatabase
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikDatabase.html
             
       .EXAMPLE
-      Get-RubrikDatabase "DB1" | Protect-RubrikDatabase -SLA 'Gold'
+      Get-RubrikDatabase -Name "DB1" | Protect-RubrikDatabase -SLA 'Gold'
       This will assign the Gold SLA Domain to any database named "DB1"
 
       .EXAMPLE
-      Get-RubrikDatabase "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -SLA 'Gold' -Confirm:$False
+      Get-RubrikDatabase -Name "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -SLA 'Gold' -Confirm:$False
       This will assign the Gold SLA Domain to any database named "DB1" residing on an instance named "MSSQLSERVER" without asking for confirmation
   #>
 
@@ -33,6 +33,7 @@ function Protect-RubrikDatabase
   Param(
     # Database ID
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()] 
     [String]$id,
     # The SLA Domain in Rubrik
     [Parameter(ParameterSetName = 'SLA_Explicit')]
