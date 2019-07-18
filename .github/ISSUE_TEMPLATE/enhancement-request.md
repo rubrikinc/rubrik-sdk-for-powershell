@@ -9,6 +9,8 @@ assignees: ''
 
 <!-- Please only use this template for submitting enhancement requests -->
 
+<!-- Any enhancement requests submitted will be visible publicly, do not include confidential information in this enhancement request. !-->
+
 **Is your feature request related to a problem? Please describe.**
 
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
