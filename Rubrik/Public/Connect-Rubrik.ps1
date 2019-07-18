@@ -115,9 +115,15 @@ function Connect-Rubrik {
                 version = Get-RubrikSoftwareVersion -Server $Server
                 authType = 'Token'
             }
-            
+
             try {
-                $null = Get-RubrikVersion -ErrorAction Stop
+                $RestSplat = @{
+                    Endpoint = 'user/me'
+                    Method = 'get'
+                    Api = 'internal'
+                }
+                $global:rubrikConnection.userid = (Invoke-RubrikRESTCall @RestSplat -ErrorAction Stop).id -replace '.*?:::'
+
             } catch {
                 Write-Verbose -Message 'Removing API token from $RubrikConnection using Disconnect-Rubrik'
                 Disconnect-Rubrik
