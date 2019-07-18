@@ -23,7 +23,7 @@ Describe -Name 'Public/New-RubrikDatabaseMount' -Tag 'Public', 'New-RubrikDataba
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'id'        = 'RESTORE_MSSQL_DB_databaseid'
+                'id'        = 'RESTORE_MSSQL_DB_01234567-8910-1abc-d435-0abc1234d567_01234567-8910-1abc-d435-0abc1234d567:::0'
                 'status'    = 'QUEUED'
                 'progress'  = '0'
                 'startTime' = '2019-07-02 11:21:22 PM'
