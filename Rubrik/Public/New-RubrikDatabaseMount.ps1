@@ -28,12 +28,14 @@ function New-RubrikDatabaseMount
   Param(
     # Rubrik id of the database
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     # ID of Instance to use for the mount
     [Alias('InstanceId')]
     [String]$TargetInstanceId,
     # Name of the mounted database
     [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
     [Alias('DatabaseName','MountName')]
     [String]$MountedDatabaseName,
     # Recovery Point desired in the form of Epoch with Milliseconds
