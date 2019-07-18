@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-18 [Unit Tests]
+
+* Added unit tests for Get-RubrikDatabase, Get-RubrikDatabaseFiles, Get-RubrikDatabaseMount, Get-RubrikDatabaseRecoverableRange, New-RubrikDatabaseMount, Protect-RubrikDatabase, Remove-RubrikDatabaseMount, Restore-RubrikDatabase, Set-RubrikDatabase
+* Minor changes to the cmdlets listed above so they will pass new unit tests
+
 ## 2019-07-11
 
 ### Added [Unit Tests]
