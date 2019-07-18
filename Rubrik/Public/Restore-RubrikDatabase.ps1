@@ -32,6 +32,7 @@ function Restore-RubrikDatabase
   Param(
     # Rubrik identifier of database to be exported
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$Id,
     # Number of parallel streams to copy data
     [int]$MaxDataStreams,
