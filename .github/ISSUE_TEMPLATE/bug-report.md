@@ -9,7 +9,7 @@ assignees: ''
 
 <!-- Please use this template while reporting a bug and provide as much info as possible. Not doing so may result in your bug not being addressed in a timely manner. Thanks!-->
 
-<!--  Any bug reports submitted will be visible publicly, do not include confidential information in this bug report.!-->
+<!-- Any bug reports submitted will be visible publicly, do not include any confidential information in this bug report. !-->
 
 **Current Behavior**:
 
@@ -39,4 +39,4 @@ Please provide any relevant information about your setup. This is important in c
 
 **Failure Logs**
 
-Please include any relevant log snippets or files here, *IMPORTANT* this information will be visible publicly. Do not include user names, passwords, API tokens or any identifiable information when submitting failure logs.
+Please include any relevant log snippets or files here, *IMPORTANT* all information will be visible publicly on GitHub. Do not include user names, passwords, API tokens or any identifiable information when submitting failure logs.
