@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-17
+
+### Changed [Connect-Rubrik]
+
+* Added Userid to RubrikConnection variable when connecting using an API-token
+* Resolves [Issue 381](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/381)
+
 ## 2019-07-16
 
 ### Changed [New-RubrikSLA]
