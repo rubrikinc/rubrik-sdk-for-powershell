@@ -403,7 +403,10 @@ function Get-RubrikAPIData($endpoint) {
                     limit  = 'limit'
                 }
                 Result      = 'data'
-                Filter      = ''
+                Filter      = @{
+                    id = 'id'
+                    vmId = 'vmId'    
+                }
                 Success     = '200'
             }
         }
