@@ -1702,11 +1702,10 @@ function Get-RubrikAPIData($endpoint) {
                     }
                     allowedBackupWindows = @{
                         startTimeAttributes = @{
-                            minutes   = "minutes"
-                            hour      = "hour"
-                            dayOfWeek = "dayOfWeek"
+                            minutes   = 'minutes'
+                            hour      = 'hour'
                         }
-                        durationInHours  = "durationInHours"
+                        durationInHours  = 'durationInHours'
                     }
                 }
                 Query       = ''
@@ -1731,11 +1730,10 @@ function Get-RubrikAPIData($endpoint) {
                     }
                     allowedBackupWindows = @{
                         startTimeAttributes = @{
-                            minutes   = "minutes"
-                            hour      = "hour"
-                            dayOfWeek = "dayOfWeek"
+                            minutes   = 'minutes'
+                            hour      = 'hour'
                         }
-                        durationInHours  = "durationInHours"
+                        durationInHours  = 'durationInHours'
                     }
                 }
                 Query       = ''

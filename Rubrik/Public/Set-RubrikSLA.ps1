@@ -105,10 +105,13 @@ function Set-RubrikSLA
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Does not apply to CDM versions prior to 5.0
     [switch]$AdvancedConfig,
+    # Hour from which backups are allowed to run. Uses the 24-hour clock
     [ValidateRange(0,23)]
     [int]$BackupStartHour,
+    # Minute of hour from which backups are allowed to run
     [ValidateRange(0,59)]
     [int]$BackupStartMinute,
+    # Number of hours during which backups are allowed to run
     [ValidateRange(1,23)]
     [int]$BackupWindowDuration,
     # Retrieves frequencies from Get-RubrikSLA via the pipeline
@@ -163,39 +166,26 @@ function Set-RubrikSLA
     #region One-off
     Write-Verbose -Message 'Build the body'
     # Build the body for CDM versions 5 and above when the advanced SLA configuration is turned on
-    # if (($uri.contains('v2')) -and $AdvancedConfig) {
-    #   $body = @{
-    #     $resources.Body.name = $Name
-    #     frequencies = @()
-    #     allowedBackupWindows = @()
-    #     showAdvancedUi = $AdvancedConfig.IsPresent
-    #     advancedUiConfig = @()
-    #   }
-    # # Build the body for CDM versions 5 and above when the advanced SLA configuration is turned off
-    # } elseif ($uri.contains('v2')) {
-    #   $body = @{
-    #     $resources.Body.name = $Name
-    #     frequencies = @()
-    #     allowedBackupWindows = @()
-    #     showAdvancedUi = $AdvancedConfig.IsPresent
-    #   }
-    # # Build the body for CDM versions prior to 5.0
-    # } else {
-    #   $body = @{
-    #     $resources.Body.name = $Name
-    #     frequencies = @()
-    #     allowedBackupWindows = @()
-    #   }
-    # }
-
-    if ($uri.contains('v2')) {
+    if (($uri.contains('v2')) -and $AdvancedConfig) {
       $body = @{
         $resources.Body.name = $Name
+        allowedBackupWindows = @()
+        showAdvancedUi = $AdvancedConfig.IsPresent
+        advancedUiConfig = @()
+      }
+    # Build the body for CDM versions 5 and above when the advanced SLA configuration is turned off
+    } elseif ($uri.contains('v2')) {
+      $body = @{
+        $resources.Body.name = $Name
+        allowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
       }
+    # Build the body for CDM versions prior to 5.0
     } else {
       $body = @{
         $resources.Body.name = $Name
+        frequencies = @()
+        allowedBackupWindows = @()
       }
     }
     
@@ -396,35 +386,25 @@ function Set-RubrikSLA
     }
     
     # Retrieve the allowed backup window settings from pipeline
-    # if ($BackupWindows) {
-    #   if (($BackupWindows.startTimeAttributes.hour -ge 0) -and (-not $PSBoundParameters.ContainsKey('BackupStartHour'))) {
-    #     $BackupStartHour = $BackupWindows.startTimeAttributes.hour
-    #     Write-Verbose -Message "BackupStartHour retrieved from pipeline: $BackupStartHour"
-    #   }
-    #   if (($BackupWindows.startTimeAttributes.minutes -ge 0) -and (-not $PSBoundParameters.ContainsKey('BackupStartMinute'))) {
-    #     $BackupStartMinute = $BackupWindows.startTimeAttributes.minutes
-    #     Write-Verbose -Message "BackupStartMinute retrieved from pipeline: $BackupStartMinute"
-    #   }
-    #   if (($BackupWindows.durationInHours) -and (-not $BackupWindowDuration)) {
-    #     $BackupWindowDuration = $BackupWindows.durationInHours
-    #     Write-Verbose -Message "BackupWindowDuration retrieved from pipeline: $BackupWindowDuration"
-    #   }
-    #   $BackupStartTime = -join($BackupStartHour,":",$BackupStartMinute)
-    #   $BackupStopHour = $BackupStartHour + $BackupWindowDuration
-    #   if ($BackupStopHour -ge 24) {
-    #     $BackupStopHour = $BackupStopHour - 24
-    #   }
-    #   $BackupStopTime = -join($BackupStopHour,":",$BackupStartMinute)
-    #   Write-Verbose -Message "The backups are allowed to run between $BackupStartTime and $BackupStopTime"
-    # }
+    if ($BackupWindows) {
+      if (($BackupWindows.startTimeAttributes.hour -ge 0) -and (-not $PSBoundParameters.ContainsKey('BackupStartHour'))) {
+        $BackupStartHour = $BackupWindows.startTimeAttributes.hour
+      }
+      if (($BackupWindows.startTimeAttributes.minutes -ge 0) -and (-not $PSBoundParameters.ContainsKey('BackupStartMinute'))) {
+        $BackupStartMinute = $BackupWindows.startTimeAttributes.minutes
+      }
+      if (($BackupWindows.durationInHours) -and (-not $BackupWindowDuration)) {
+        $BackupWindowDuration = $BackupWindows.durationInHours
+      }
+    }
 
-    # # Populate the body with the allowed backup window settings
-    # if (($BackupStartHour -ge 0) -and ($BackupStartMinute -ge 0) -and $BackupWindowDuration) {
-    #   $body.allowedBackupWindows = @{
-    #     startTimeAttributes = @{hour=$BackupStartHour;minutes=$BackupStartMinute};
-    #     durationInHours = $BackupWindowDuration
-    #   }
-    # }
+    # Populate the body with the allowed backup window settings
+    if (($BackupStartHour -ge 0) -and ($BackupStartMinute -ge 0) -and $BackupWindowDuration) {
+      $body.allowedBackupWindows += @{
+          startTimeAttributes = @{hour=$BackupStartHour;minutes=$BackupStartMinute};
+          durationInHours = $BackupWindowDuration
+      }
+    }
 
     # Populate the body according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
     if ($HourlyFrequency -and $HourlyRetention) {
