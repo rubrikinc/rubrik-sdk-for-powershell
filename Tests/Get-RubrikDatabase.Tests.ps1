@@ -199,8 +199,8 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
                 Should -BeExactly 'MSSQLSERVER'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 5
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 5
     }
 
     Context -Name 'Parameter Validation' {
