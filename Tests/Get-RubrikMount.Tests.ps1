@@ -47,7 +47,7 @@ Describe -Name 'Public/Get-RubrikMount' -Tag 'Public', 'Get-RubrikMount' -Fixtur
                 'hostId'                = 'Host:::111'
             }
         }
-        It -Name 'No filter should return count of 4' -Test {
+        It -Name 'Filter should return count of 4' -Test {
             ( Get-RubrikMount).Count |
                 Should -BeExactly 4
         }
