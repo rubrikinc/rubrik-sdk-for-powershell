@@ -75,7 +75,7 @@ Describe -Name 'Public/Get-RubrikDatabaseRecoverableRange' -Tag 'Public', 'Get-R
             return ConvertFrom-Json $response
         }
         It -Name 'Query based on ID and time range' -Test {
-            ( Get-RubrikDatabaseRecoverableRange -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -BeforeTime '2019-01-03T01:00:00.000Z' -AfterTime '2019-01-01T01:00:00.000Z' ).Count |
+            @( Get-RubrikDatabaseRecoverableRange -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -BeforeTime '2019-01-03T01:00:00.000Z' -AfterTime '2019-01-01T01:00:00.000Z' ).Count |
                 Should -BeExactly 1
         }
         It -Name 'Results match expected values' -Test {

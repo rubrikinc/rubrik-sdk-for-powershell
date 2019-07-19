@@ -111,7 +111,7 @@ Describe -Name 'Public/Get-RubrikDatabaseMount' -Tag 'Public', 'Get-RubrikDataba
             return ConvertFrom-Json $response
         }
         It -Name 'Query based on ID' -Test {
-            ( Get-RubrikDatabaseMount -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' ).Count |
+            @( Get-RubrikDatabaseMount -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' ).Count |
                 Should -BeExactly 1
         }
         It -Name 'Results match expected values' -Test {
@@ -124,15 +124,15 @@ Describe -Name 'Public/Get-RubrikDatabaseMount' -Tag 'Public', 'Get-RubrikDataba
             $results.status | Should -BeExactly "Available"
         }
         It -Name 'Query based on MountedDatabaseName' -Test {
-            ( Get-RubrikDatabaseMount -MountedDatabaseName 'ExampleDB1-Mount1' ).Count |
+            @( Get-RubrikDatabaseMount -MountedDatabaseName 'ExampleDB1-Mount1' ).Count |
                 Should -BeExactly 1
         }
         It -Name 'Query based on SourceDatabaseName' -Test {
-            ( Get-RubrikDatabaseMount -SourceDatabaseName 'ExampleDB1' ).Count |
+            @( Get-RubrikDatabaseMount -SourceDatabaseName 'ExampleDB1' ).Count |
                 Should -BeExactly 1
         }
         It -Name 'Query based on TargetInstanceId' -Test {
-            ( Get-RubrikDatabaseMount -TargetInstanceId 'MssqlInstance:::12345678-1234-abcd-8910-1234567890ab' ).Count |
+            @( Get-RubrikDatabaseMount -TargetInstanceId 'MssqlInstance:::12345678-1234-abcd-8910-1234567890ab' ).Count |
                 Should -BeExactly 1
         }
         Assert-VerifiableMock
