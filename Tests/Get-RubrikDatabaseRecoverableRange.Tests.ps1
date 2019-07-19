@@ -71,7 +71,7 @@ Describe -Name 'Public/Get-RubrikDatabaseRecoverableRange' -Tag 'Public', 'Get-R
                     }
                 ],
                 "total": 1
-              }' -replace '\{0\}', (Get-Date -Year 2019 -Month 2 -Day 1).Date
+              }' -replace '\{0\}', (Get-Date -Year 2019 -Month 1 -Day 2).Date
             return ConvertFrom-Json $response
         }
         It -Name 'Query based on ID and time range' -Test {
