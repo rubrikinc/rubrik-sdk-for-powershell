@@ -179,7 +179,7 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
             return ConvertFrom-Json $response
         }
         It -Name 'one result returned' -Test {
-            ( Get-RubrikDatabase -ID 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' ).Count |
+            @( Get-RubrikDatabase -ID 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' ).Count |
                 Should -BeExactly 1
         }
         It -Name 'verify name' -Test {
