@@ -3,11 +3,12 @@ function Invoke-RubrikWebRequest {
 .SYNOPSIS
 Custom wrapper for Invoke-WebRequest, implemented to provide different parameter sets depending on PowerShell version
 #>
+    [cmdletbinding(SupportsShouldProcess)]
     param(
         $Uri,
         $Headers,
         $Method,
-        $Body 
+        $Body
     )
     
     if (Test-PowerShellSix) {
