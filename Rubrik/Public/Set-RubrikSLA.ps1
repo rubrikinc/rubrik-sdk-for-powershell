@@ -32,6 +32,14 @@ function Set-RubrikSLA
       while also keeping one snapshot per week for 4 weeks, created on Fridays. All other existing parameters will remain as they were.
 
       .EXAMPLE
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -BackupStartHour 22 -BackupStartMinute 00 -BackupWindowDuration 8
+      This will update the SLA Domain named "Gold" to take snapshots between 22:00PM and 6:00AM, while keeping all other existing parameters.
+
+      .EXAMPLE
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -FirstFullBackupStartHour 21 -FirstFullBackupStartMinute 30 -FirstFullBackupWindowDuration 57 -FirstFullBackupDay Friday
+      This will update the SLA Domain named "Gold" to take the first full snapshot between Friday 21:30PM and Monday 6:30AM, while keeping all other existing parameters.
+
+      .EXAMPLE
       Get-RubrikSLA -Name Gold | Set-RubrikSLA -AdvancedConfig
       This will update the SLA Domain named "Gold" to only enable Advanced Configuration
   #>
@@ -114,6 +122,16 @@ function Set-RubrikSLA
     # Number of hours during which backups are allowed to run
     [ValidateRange(1,23)]
     [int]$BackupWindowDuration,
+    # Hour from which the first full backup is allowed to run. Uses the 24-hour clock
+    [ValidateRange(0,23)]
+    [int]$FirstFullBackupStartHour,
+    # Minute of hour from which the first full backup is allowed to run
+    [ValidateRange(0,59)]
+    [int]$FirstFullBackupStartMinute,
+    [ValidateSet('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','1','2','3','4','5','6','7')]
+    [String]$FirstFullBackupDay,
+    # Number of hours during which the first full backup is allowed to run
+    [int]$FirstFullBackupWindowDuration,
     # Retrieves frequencies from Get-RubrikSLA via the pipeline
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
@@ -169,7 +187,9 @@ function Set-RubrikSLA
     if (($uri.contains('v2')) -and $AdvancedConfig) {
       $body = @{
         $resources.Body.name = $Name
+        $frequencies = @()
         allowedBackupWindows = @()
+        firstFullAllowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
         advancedUiConfig = @()
       }
@@ -177,7 +197,9 @@ function Set-RubrikSLA
     } elseif ($uri.contains('v2')) {
       $body = @{
         $resources.Body.name = $Name
+        $frequencies = @()
         allowedBackupWindows = @()
+        firstFullAllowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
       }
     # Build the body for CDM versions prior to 5.0
@@ -186,6 +208,7 @@ function Set-RubrikSLA
         $resources.Body.name = $Name
         frequencies = @()
         allowedBackupWindows = @()
+        firstFullAllowedBackupWindows =@()
       }
     }
     
@@ -398,11 +421,50 @@ function Set-RubrikSLA
       }
     }
 
+    # Retrieve the allowed backup window settings for the first full from pipeline
+    if ($FirstFullBackupWindows) {
+      if (($FirstFullBackupWindows.startTimeAttributes.hour -ge 0) -and (-not $PSBoundParameters.ContainsKey('FirstFullBackupStartHour'))) {
+        $FirstFullBackupStartHour = $FirstFullBackupWindows.startTimeAttributes.hour
+      }
+      if (($FirstFullBackupWindows.startTimeAttributes.minutes -ge 0) -and (-not $PSBoundParameters.ContainsKey('FirstFullBackupStartMinute'))) {
+        $FirstFullBackupStartMinute = $FirstFullBackupWindows.startTimeAttributes.minutes
+      }
+      if (($FirstFullBackupWindows.startTimeAttributes.dayOfWeek) -and (-not $PSBoundParameters.ContainsKey('FirstFullBackupDay'))) {
+        $FirstFullBackupDay = $FirstFullBackupWindows.startTimeAttributes.dayOfWeek
+      }
+      if (($FirstFullBackupWindows.durationInHours) -and (-not $FirstFullBackupWindowDuration)) {
+        $FirstFullBackupWindowDuration = $FirstFullBackupWindows.durationInHours
+      }
+    }
+
     # Populate the body with the allowed backup window settings
     if (($BackupStartHour -ge 0) -and ($BackupStartMinute -ge 0) -and $BackupWindowDuration) {
       $body.allowedBackupWindows += @{
           startTimeAttributes = @{hour=$BackupStartHour;minutes=$BackupStartMinute};
           durationInHours = $BackupWindowDuration
+      }
+    }
+
+    # Populate the body with the allowed backup window settings fort the first full
+    if (($FirstFullBackupStartHour -ge 0) -and ($FirstFullBackupStartMinute -ge 0) -and $FirstFullBackupDay -and $FirstFullBackupWindowDuration) {
+      if ($FirstFullBackupDay -eq 'Sunday') {
+        [int]$FirstFullBackupDay = 1
+      } elseif ($FirstFullBackupDay -eq 'Monday') {
+        [int]$FirstFullBackupDay = 2
+      } elseif ($FirstFullBackupDay -eq 'Tuesday') {
+        [int]$FirstFullBackupDay = 3
+      } elseif ($FirstFullBackupDay -eq 'Wednesday') {
+        [int]$FirstFullBackupDay = 4
+      } elseif ($FirstFullBackupDay -eq 'Thursday') {
+        [int]$FirstFullBackupDay = 5
+      } elseif ($FirstFullBackupDay -eq 'Friday') {
+        [int]$FirstFullBackupDay = 6
+      } elseif ($FirstFullBackupDay -eq 'Saturday') {
+        [int]$FirstFullBackupDay = 7
+      }          
+      $body.FirstFullAllowedBackupWindows += @{
+          startTimeAttributes = @{hour=$FirstFullBackupStartHour;minutes=$FirstFullBackupStartMinute;dayOfWeek=$FirstFullBackupDay};
+          durationInHours = $FirstFullBackupWindowDuration
       }
     }
 
