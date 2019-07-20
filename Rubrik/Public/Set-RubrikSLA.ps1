@@ -187,7 +187,7 @@ function Set-RubrikSLA
     if (($uri.contains('v2')) -and $AdvancedConfig) {
       $body = @{
         $resources.Body.name = $Name
-        $frequencies = @()
+        frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
@@ -197,7 +197,7 @@ function Set-RubrikSLA
     } elseif ($uri.contains('v2')) {
       $body = @{
         $resources.Body.name = $Name
-        $frequencies = @()
+        frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
