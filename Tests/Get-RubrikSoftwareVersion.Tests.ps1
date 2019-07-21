@@ -30,6 +30,6 @@ Describe -Name 'Public/Get-RubrikSoftwareVersion' -Tag 'Public', 'Get-RubrikSoft
                 Should -Throw "Cannot bind argument to parameter 'Server' because it is an empty string."
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 }
