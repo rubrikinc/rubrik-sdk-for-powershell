@@ -22,6 +22,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added ability to specify allowed backup window settings, both for the first full backup and subsequent incremental backups in Set-RubrikSLA to address [Issue 366](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/366)
 
+## 2019-07-17
+
+### Changed [Connect-Rubrik]
+
+* Added Userid to RubrikConnection variable when connecting using an API-token
+* Resolves [Issue 381](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/381)
+
 ## 2019-07-16
 
 ### Changed [New-RubrikSLA]
