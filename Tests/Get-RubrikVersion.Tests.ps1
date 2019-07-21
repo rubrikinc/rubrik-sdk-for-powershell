@@ -38,7 +38,7 @@ Describe -Name 'Public/Get-RubrikVersion' -Tag 'Public', 'Get-RubrikVersion' -Fi
                 Should -BeExactly 'Cluster_B'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
     }
 }

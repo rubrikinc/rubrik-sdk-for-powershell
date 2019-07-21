@@ -43,7 +43,7 @@ Describe -Name 'Public/Remove-RubrikMount' -Tag 'Public', 'Remove-RubrikMount' -
                 Should -Throw "Cannot bind argument to parameter 'Id' because it is an empty string."
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 }

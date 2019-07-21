@@ -41,7 +41,7 @@ Describe -Name 'Public/Set-RubrikSupportTunnel' -Tag 'Public', 'Set-RubrikSuppor
                 Should -Throw "Missing an argument for parameter 'EnableTunnel'. Specify a parameter of type 'System.Boolean' and try again."
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
     }
 }

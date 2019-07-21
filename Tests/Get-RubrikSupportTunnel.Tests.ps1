@@ -33,7 +33,7 @@ Describe -Name 'Public/Get-RubrikSupportTunnel' -Tag 'Public', 'Get-RubrikSuppor
                 Should -BeExactly 'True'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
     }
 }

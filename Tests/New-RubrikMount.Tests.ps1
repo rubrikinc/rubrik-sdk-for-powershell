@@ -55,7 +55,7 @@ Describe -Name 'Public/New-RubrikMount' -Tag 'Public', 'New-RubrikMount' -Fixtur
                 Should -Throw "Cannot process argument transformation on parameter 'PowerOn'. Cannot convert value `"System.String`" to type `"System.Boolean`"."
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
     }
 }
