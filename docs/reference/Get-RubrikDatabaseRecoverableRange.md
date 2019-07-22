@@ -13,8 +13,8 @@ Retrieves recoverable ranges for SQL Server databases.
 ## SYNTAX
 
 ```
-Get-RubrikDatabaseRecoverableRange [[-id] <String>] [[-StartDateTime] <DateTime>] [[-EndDateTime] <DateTime>]
- [[-AfterTime] <String>] [[-BeforeTime] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikDatabaseRecoverableRange [-id] <String> [-StartDateTime <DateTime>] [-EndDateTime <DateTime>]
+ [-AfterTime <String>] [-BeforeTime <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,7 +39,7 @@ Retrieve all recoverable ranges for the BAR database on the FOO host after '2018
 
 ### EXAMPLE 3
 ```
-Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange -EndTime '2018-04-01'
+Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange -EndDateTime '2018-04-01'
 ```
 
 Retrieve all recoverable ranges for the BAR database on the FOO host before '2018-04-01' after it's converted to UTC.
@@ -54,7 +54,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -70,7 +70,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -85,7 +85,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -100,7 +100,7 @@ Parameter Sets: (All)
 Aliases: after_time
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -115,7 +115,7 @@ Parameter Sets: (All)
 Aliases: before_time
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -130,7 +130,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -145,7 +145,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

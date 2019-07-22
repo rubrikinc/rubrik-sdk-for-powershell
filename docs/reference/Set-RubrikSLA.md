@@ -20,8 +20,12 @@ Set-RubrikSLA [-id] <String> [[-Name] <String>] [[-HourlyFrequency] <Int32>] [[-
  [[-MonthlyRetentionType] <String>] [[-QuarterlyFrequency] <Int32>] [[-QuarterlyRetention] <Int32>]
  [[-DayOfQuarter] <String>] [[-FirstQuarterStartMonth] <String>] [[-QuarterlyRetentionType] <String>]
  [[-YearlyFrequency] <Int32>] [[-YearlyRetention] <Int32>] [[-DayOfYear] <String>] [[-YearStartMonth] <String>]
- [-AdvancedConfig] [[-Frequencies] <Object[]>] [[-AdvancedFreq] <Object[]>] [[-Server] <String>]
- [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-AdvancedConfig] [[-BackupStartHour] <Int32>] [[-BackupStartMinute] <Int32>]
+ [[-BackupWindowDuration] <Int32>] [[-FirstFullBackupStartHour] <Int32>]
+ [[-FirstFullBackupStartMinute] <Int32>] [[-FirstFullBackupDay] <String>]
+ [[-FirstFullBackupWindowDuration] <Int32>] [[-Frequencies] <Object[]>] [[-AdvancedFreq] <Object[]>]
+ [[-BackupWindows] <Object[]>] [[-FirstFullBackupWindows] <Object[]>] [[-Server] <String>] [[-api] <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,6 +59,20 @@ while also keeping one snapshot per week for 4 weeks, created on Fridays.
 All other existing parameters will remain as they were.
 
 ### EXAMPLE 4
+```
+Get-RubrikSLA -Name Gold | Set-RubrikSLA -BackupStartHour 22 -BackupStartMinute 00 -BackupWindowDuration 8
+```
+
+This will update the SLA Domain named "Gold" to take snapshots between 22:00PM and 6:00AM, while keeping all other existing parameters.
+
+### EXAMPLE 5
+```
+Get-RubrikSLA -Name Gold | Set-RubrikSLA -FirstFullBackupStartHour 21 -FirstFullBackupStartMinute 30 -FirstFullBackupWindowDuration 57 -FirstFullBackupDay Friday
+```
+
+This will update the SLA Domain named "Gold" to take the first full snapshot between Friday 21:30PM and Monday 6:30AM, while keeping all other existing parameters.
+
+### EXAMPLE 6
 ```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -AdvancedConfig
 ```
@@ -461,6 +479,113 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -BackupStartHour
+Hour from which backups are allowed to run.
+Uses the 24-hour clock
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 25
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BackupStartMinute
+Minute of hour from which backups are allowed to run
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 26
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BackupWindowDuration
+Number of hours during which backups are allowed to run
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 27
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FirstFullBackupStartHour
+Hour from which the first full backup is allowed to run.
+Uses the 24-hour clock
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 28
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FirstFullBackupStartMinute
+Minute of hour from which the first full backup is allowed to run
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 29
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FirstFullBackupDay
+{{ Fill FirstFullBackupDay Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 30
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FirstFullBackupWindowDuration
+Number of hours during which the first full backup is allowed to run
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 31
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Frequencies
 Retrieves frequencies from Get-RubrikSLA via the pipeline
 
@@ -470,7 +595,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 25
+Position: 32
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -485,7 +610,37 @@ Parameter Sets: (All)
 Aliases: advancedUiConfig
 
 Required: False
-Position: 26
+Position: 33
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -BackupWindows
+Retrieves the allowed backup windows from Get-RubrikSLA via the pipeline
+
+```yaml
+Type: Object[]
+Parameter Sets: (All)
+Aliases: allowedBackupWindows
+
+Required: False
+Position: 34
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -FirstFullBackupWindows
+Retrieves the allowed backup windows for the first full backup from Get-RubrikSLA via the pipeline
+
+```yaml
+Type: Object[]
+Parameter Sets: (All)
+Aliases: firstFullAllowedBackupWindows
+
+Required: False
+Position: 35
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -500,7 +655,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 27
+Position: 36
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -515,7 +670,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 28
+Position: 37
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

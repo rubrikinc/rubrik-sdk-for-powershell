@@ -23,7 +23,11 @@ function Set-RubrikSQLInstance
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik's database id value
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()] 
     [String]$id,
     #Number of seconds between log backups if db s are in FULL or BULK_LOGGED
     #NOTE: Default of -1 is used to get around ints defaulting as 0

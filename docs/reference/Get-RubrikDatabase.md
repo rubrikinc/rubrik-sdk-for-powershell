@@ -12,10 +12,18 @@ Retrieves details on one or more databases known to a Rubrik cluster
 
 ## SYNTAX
 
+### ID
+```
+Get-RubrikDatabase [-id] <String> [-Relic] [-SLA <String>] [-Instance <String>] [-Hostname <String>]
+ [-ServerInstance <String>] [-InstanceID <String>] [-PrimaryClusterID <String>] [-SLAID <String>]
+ [-DetailedObject] [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
+### Query
 ```
 Get-RubrikDatabase [-Name <String>] [-Relic] [-SLA <String>] [-Instance <String>] [-Hostname <String>]
- [-ServerInstance <String>] [-InstanceID <String>] [-PrimaryClusterID <String>] [-id <String>]
- [-SLAID <String>] [-DetailedObject] [-Server <String>] [-api <String>] [<CommonParameters>]
+ [-ServerInstance <String>] [-InstanceID <String>] [-PrimaryClusterID <String>] [-SLAID <String>]
+ [-DetailedObject] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -86,12 +94,27 @@ This will return details on a single SQL instance matching the Rubrik ID of "Mss
 
 ## PARAMETERS
 
+### -id
+Rubrik's database id value
+
+```yaml
+Type: String
+Parameter Sets: ID
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Name
 Name of the database
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: Database
 
 Required: False
@@ -204,21 +227,6 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -id
-Rubrik's database id value
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

@@ -14,25 +14,25 @@ Sets Rubrik database properties
 
 ### preBackupScript
 ```
-Set-RubrikDatabase [-id <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
- [-CopyOnly] [-PreScriptPath <String>] [-PreScriptErrorAction <String>] [-PreTimeoutMs <Int32>]
- [-DisablePreBackupScript] [-MaxDataStreams <Int32>] [-SLAID <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-RubrikDatabase -id <String> [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>] [-CopyOnly]
+ [-PreScriptPath <String>] [-PreScriptErrorAction <String>] [-PreTimeoutMs <Int32>] [-DisablePreBackupScript]
+ [-MaxDataStreams <Int32>] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### postBackupScript
 ```
-Set-RubrikDatabase [-id <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
- [-CopyOnly] [-PostScriptPath <String>] [-PostScriptErrorAction <String>] [-PostTimeoutMs <Int32>]
+Set-RubrikDatabase -id <String> [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>] [-CopyOnly]
+ [-PostScriptPath <String>] [-PostScriptErrorAction <String>] [-PostTimeoutMs <Int32>]
  [-DisablePostBackupScript] [-MaxDataStreams <Int32>] [-SLAID <String>] [-Server <String>] [-api <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### SLA_Explicit
 ```
-Set-RubrikDatabase [-id <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
- [-CopyOnly] [-MaxDataStreams <Int32>] [-SLAID <String>] [-SLA <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-RubrikDatabase -id <String> [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>] [-CopyOnly]
+ [-MaxDataStreams <Int32>] [-SLAID <String>] [-SLA <String>] [-Server <String>] [-api <String>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -100,7 +100,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -PreScriptPath
-{{ Fill PreScriptPath Description }}
+Pre-backup script parameters
 
 ```yaml
 Type: String
@@ -215,7 +215,7 @@ Accept wildcard characters: False
 ```
 
 ### -PostScriptPath
-{{ Fill PostScriptPath Description }}
+Post-backup script parameters
 
 ```yaml
 Type: String

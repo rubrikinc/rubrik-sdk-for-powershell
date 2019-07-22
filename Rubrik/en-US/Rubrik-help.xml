@@ -2416,6 +2416,151 @@
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Get-RubrikDatabase</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+          <maml:name>id</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik's database id value</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="is_relic">
+          <maml:name>Relic</maml:name>
+          <maml:Description>
+            <maml:para>Filter results to include only relic (removed) databases</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>SLA</maml:name>
+          <maml:Description>
+            <maml:para>SLA Domain policy assigned to the database</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Instance</maml:name>
+          <maml:Description>
+            <maml:para>Name of the database instance</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Hostname</maml:name>
+          <maml:Description>
+            <maml:para>Name of the database host</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ServerInstance</maml:name>
+          <maml:Description>
+            <maml:para>ServerInstance name (combined hostname\instancename)</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="instance_id">
+          <maml:name>InstanceID</maml:name>
+          <maml:Description>
+            <maml:para>SQL InstanceID, used as a unique identifier</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="primary_cluster_id">
+          <maml:name>PrimaryClusterID</maml:name>
+          <maml:Description>
+            <maml:para>Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use _local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="effective_sla_domain_id">
+          <maml:name>SLAID</maml:name>
+          <maml:Description>
+            <maml:para>SLA id value</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>DetailedObject</maml:name>
+          <maml:Description>
+            <maml:para>DetailedObject will retrieved the detailed database object, the default behavior of the API is to only retrieve a subset of the database object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik server IP or FQDN</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>api</maml:name>
+          <maml:Description>
+            <maml:para>API version</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-RubrikDatabase</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Database">
           <maml:name>Name</maml:name>
           <maml:Description>
@@ -2511,18 +2656,6 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-          <maml:name>id</maml:name>
-          <maml:Description>
-            <maml:para>Rubrik's database id value</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="effective_sla_domain_id">
           <maml:name>SLAID</maml:name>
           <maml:Description>
@@ -2573,6 +2706,18 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>id</maml:name>
+        <maml:Description>
+          <maml:para>Rubrik's database id value</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Database">
         <maml:name>Name</maml:name>
         <maml:Description>
@@ -2661,18 +2806,6 @@
         <maml:name>PrimaryClusterID</maml:name>
         <maml:Description>
           <maml:para>Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use _local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-        <maml:name>id</maml:name>
-        <maml:Description>
-          <maml:para>Rubrik's database id value</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2817,7 +2950,7 @@
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Get-RubrikDatabaseFiles</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Id</maml:name>
           <maml:Description>
             <maml:para>Rubrik's id of the mount</maml:para>
@@ -2829,7 +2962,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>RecoveryDateTime</maml:name>
           <maml:Description>
             <maml:para>Recovery Point desired in the form of DateTime value</maml:para>
@@ -2841,7 +2974,22 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-RubrikDatabaseFiles</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+          <maml:name>Id</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik's id of the mount</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>time</maml:name>
           <maml:Description>
             <maml:para>Recovery Point desired in the form of a UTC string (yyyy-MM-ddTHH:mm:ss)</maml:para>
@@ -2853,7 +3001,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Server</maml:name>
           <maml:Description>
             <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -2865,7 +3013,7 @@
           </dev:type>
           <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>api</maml:name>
           <maml:Description>
             <maml:para>API version</maml:para>
@@ -2880,7 +3028,7 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Id</maml:name>
         <maml:Description>
           <maml:para>Rubrik's id of the mount</maml:para>
@@ -2892,7 +3040,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>RecoveryDateTime</maml:name>
         <maml:Description>
           <maml:para>Recovery Point desired in the form of DateTime value</maml:para>
@@ -2904,7 +3052,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>time</maml:name>
         <maml:Description>
           <maml:para>Recovery Point desired in the form of a UTC string (yyyy-MM-ddTHH:mm:ss)</maml:para>
@@ -2916,7 +3064,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Server</maml:name>
         <maml:Description>
           <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -2928,7 +3076,7 @@
         </dev:type>
         <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>api</maml:name>
         <maml:Description>
           <maml:para>API version</maml:para>
@@ -3231,7 +3379,7 @@
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Get-RubrikDatabaseRecoverableRange</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>id</maml:name>
           <maml:Description>
             <maml:para>Rubrik's database id value</maml:para>
@@ -3243,7 +3391,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>StartDateTime</maml:name>
           <maml:Description>
             <maml:para>Range Start as datetime</maml:para>
@@ -3255,7 +3403,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EndDateTime</maml:name>
           <maml:Description>
             <maml:para>Range End as datetime</maml:para>
@@ -3267,7 +3415,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="after_time">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="after_time">
           <maml:name>AfterTime</maml:name>
           <maml:Description>
             <maml:para>After time/Start time of range in ISO8601 format (2016-01-01T01:23:45.678Z)</maml:para>
@@ -3279,7 +3427,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="before_time">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="before_time">
           <maml:name>BeforeTime</maml:name>
           <maml:Description>
             <maml:para>Before time/end time of range in ISO8601 format (2016-01-01T01:23:45.678Z)</maml:para>
@@ -3291,7 +3439,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Server</maml:name>
           <maml:Description>
             <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -3303,7 +3451,7 @@
           </dev:type>
           <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>api</maml:name>
           <maml:Description>
             <maml:para>API version</maml:para>
@@ -3318,7 +3466,7 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>id</maml:name>
         <maml:Description>
           <maml:para>Rubrik's database id value</maml:para>
@@ -3330,7 +3478,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>StartDateTime</maml:name>
         <maml:Description>
           <maml:para>Range Start as datetime</maml:para>
@@ -3342,7 +3490,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>EndDateTime</maml:name>
         <maml:Description>
           <maml:para>Range End as datetime</maml:para>
@@ -3354,7 +3502,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="after_time">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="after_time">
         <maml:name>AfterTime</maml:name>
         <maml:Description>
           <maml:para>After time/Start time of range in ISO8601 format (2016-01-01T01:23:45.678Z)</maml:para>
@@ -3366,7 +3514,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="before_time">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="before_time">
         <maml:name>BeforeTime</maml:name>
         <maml:Description>
           <maml:para>Before time/end time of range in ISO8601 format (2016-01-01T01:23:45.678Z)</maml:para>
@@ -3378,7 +3526,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Server</maml:name>
         <maml:Description>
           <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -3390,7 +3538,7 @@
         </dev:type>
         <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>api</maml:name>
         <maml:Description>
           <maml:para>API version</maml:para>
@@ -3427,7 +3575,7 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange -EndTime '2018-04-01'</dev:code>
+        <dev:code>Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange -EndDateTime '2018-04-01'</dev:code>
         <dev:remarks>
           <maml:para>Retrieve all recoverable ranges for the BAR database on the FOO host before '2018-04-01' after it's converted to UTC.</maml:para>
         </dev:remarks>
@@ -16559,14 +16707,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-RubrikDatabase "DB1" | Protect-RubrikDatabase -SLA 'Gold'</dev:code>
+        <dev:code>Get-RubrikDatabase -Name "DB1" | Protect-RubrikDatabase -SLA 'Gold'</dev:code>
         <dev:remarks>
           <maml:para>This will assign the Gold SLA Domain to any database named "DB1"</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-RubrikDatabase "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -SLA 'Gold' -Confirm:$False</dev:code>
+        <dev:code>Get-RubrikDatabase -Name "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -SLA 'Gold' -Confirm:$False</dev:code>
         <dev:remarks>
           <maml:para>This will assign the Gold SLA Domain to any database named "DB1" residing on an instance named "MSSQLSERVER" without asking for confirmation</maml:para>
         </dev:remarks>
@@ -22302,7 +22450,7 @@
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Set-RubrikDatabase</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>id</maml:name>
           <maml:Description>
             <maml:para>Rubrik's database id value</maml:para>
@@ -22352,7 +22500,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>PreScriptPath</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill PreScriptPath Description }}</maml:para>
+            <maml:para>Pre-backup script parameters</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -22469,7 +22617,7 @@
       </command:syntaxItem>
       <command:syntaxItem>
         <maml:name>Set-RubrikDatabase</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>id</maml:name>
           <maml:Description>
             <maml:para>Rubrik's database id value</maml:para>
@@ -22519,7 +22667,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>PostScriptPath</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill PostScriptPath Description }}</maml:para>
+            <maml:para>Post-backup script parameters</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -22636,7 +22784,7 @@
       </command:syntaxItem>
       <command:syntaxItem>
         <maml:name>Set-RubrikDatabase</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>id</maml:name>
           <maml:Description>
             <maml:para>Rubrik's database id value</maml:para>
@@ -22768,7 +22916,7 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>id</maml:name>
         <maml:Description>
           <maml:para>Rubrik's database id value</maml:para>
@@ -22819,7 +22967,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>PreScriptPath</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill PreScriptPath Description }}</maml:para>
+          <maml:para>Pre-backup script parameters</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -22867,7 +23015,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>PostScriptPath</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill PostScriptPath Description }}</maml:para>
+          <maml:para>Post-backup script parameters</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -24693,53 +24841,65 @@
           </dev:type>
           <dev:defaultValue>January</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="25" aliases="none">
-          <maml:name>Frequencies</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="25" aliases="none">
+          <maml:name>BackupStartHour</maml:name>
           <maml:Description>
-            <maml:para>Retrieves frequencies from Get-RubrikSLA via the pipeline</maml:para>
+            <maml:para>Hour from which backups are allowed to run. Uses the 24-hour clock</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
-            <maml:name>Object[]</maml:name>
+            <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="26" aliases="advancedUiConfig">
-          <maml:name>AdvancedFreq</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="26" aliases="none">
+          <maml:name>BackupStartMinute</maml:name>
           <maml:Description>
-            <maml:para>Retrieves the advanced UI configuration parameters from Get-RubrikSLA via the pipeline</maml:para>
+            <maml:para>Minute of hour from which backups are allowed to run</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
-            <maml:name>Object[]</maml:name>
+            <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="27" aliases="none">
-          <maml:name>Server</maml:name>
+          <maml:name>BackupWindowDuration</maml:name>
           <maml:Description>
-            <maml:para>Rubrik server IP or FQDN</maml:para>
+            <maml:para>Number of hours during which backups are allowed to run</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
-            <maml:name>String</maml:name>
+            <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="28" aliases="none">
-          <maml:name>api</maml:name>
+          <maml:name>FirstFullBackupStartHour</maml:name>
           <maml:Description>
-            <maml:para>API version</maml:para>
+            <maml:para>Hour from which the first full backup is allowed to run. Uses the 24-hour clock</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
-            <maml:name>String</maml:name>
+            <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="29" aliases="none">
+          <maml:name>FirstFullBackupStartMinute</maml:name>
+          <maml:Description>
+            <maml:para>Minute of hour from which the first full backup is allowed to run</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>HourlyFrequency</maml:name>
@@ -24752,6 +24912,102 @@
             <maml:uri />
           </dev:type>
           <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="30" aliases="none">
+          <maml:name>FirstFullBackupDay</maml:name>
+          <maml:Description>
+            <maml:para>{{ Fill FirstFullBackupDay Description }}</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="31" aliases="none">
+          <maml:name>FirstFullBackupWindowDuration</maml:name>
+          <maml:Description>
+            <maml:para>Number of hours during which the first full backup is allowed to run</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="32" aliases="none">
+          <maml:name>Frequencies</maml:name>
+          <maml:Description>
+            <maml:para>Retrieves frequencies from Get-RubrikSLA via the pipeline</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Object[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="33" aliases="advancedUiConfig">
+          <maml:name>AdvancedFreq</maml:name>
+          <maml:Description>
+            <maml:para>Retrieves the advanced UI configuration parameters from Get-RubrikSLA via the pipeline</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Object[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="34" aliases="allowedBackupWindows">
+          <maml:name>BackupWindows</maml:name>
+          <maml:Description>
+            <maml:para>Retrieves the allowed backup windows from Get-RubrikSLA via the pipeline</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Object[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="35" aliases="firstFullAllowedBackupWindows">
+          <maml:name>FirstFullBackupWindows</maml:name>
+          <maml:Description>
+            <maml:para>Retrieves the allowed backup windows for the first full backup from Get-RubrikSLA via the pipeline</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Object[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="36" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik server IP or FQDN</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="37" aliases="none">
+          <maml:name>api</maml:name>
+          <maml:Description>
+            <maml:para>API version</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>HourlyRetention</maml:name>
@@ -25161,7 +25417,91 @@
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="25" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="25" aliases="none">
+        <maml:name>BackupStartHour</maml:name>
+        <maml:Description>
+          <maml:para>Hour from which backups are allowed to run. Uses the 24-hour clock</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="26" aliases="none">
+        <maml:name>BackupStartMinute</maml:name>
+        <maml:Description>
+          <maml:para>Minute of hour from which backups are allowed to run</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="27" aliases="none">
+        <maml:name>BackupWindowDuration</maml:name>
+        <maml:Description>
+          <maml:para>Number of hours during which backups are allowed to run</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="28" aliases="none">
+        <maml:name>FirstFullBackupStartHour</maml:name>
+        <maml:Description>
+          <maml:para>Hour from which the first full backup is allowed to run. Uses the 24-hour clock</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="29" aliases="none">
+        <maml:name>FirstFullBackupStartMinute</maml:name>
+        <maml:Description>
+          <maml:para>Minute of hour from which the first full backup is allowed to run</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="30" aliases="none">
+        <maml:name>FirstFullBackupDay</maml:name>
+        <maml:Description>
+          <maml:para>{{ Fill FirstFullBackupDay Description }}</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="31" aliases="none">
+        <maml:name>FirstFullBackupWindowDuration</maml:name>
+        <maml:Description>
+          <maml:para>Number of hours during which the first full backup is allowed to run</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="32" aliases="none">
         <maml:name>Frequencies</maml:name>
         <maml:Description>
           <maml:para>Retrieves frequencies from Get-RubrikSLA via the pipeline</maml:para>
@@ -25173,7 +25513,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="26" aliases="advancedUiConfig">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="33" aliases="advancedUiConfig">
         <maml:name>AdvancedFreq</maml:name>
         <maml:Description>
           <maml:para>Retrieves the advanced UI configuration parameters from Get-RubrikSLA via the pipeline</maml:para>
@@ -25185,7 +25525,31 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="27" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="34" aliases="allowedBackupWindows">
+        <maml:name>BackupWindows</maml:name>
+        <maml:Description>
+          <maml:para>Retrieves the allowed backup windows from Get-RubrikSLA via the pipeline</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Object[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="35" aliases="firstFullAllowedBackupWindows">
+        <maml:name>FirstFullBackupWindows</maml:name>
+        <maml:Description>
+          <maml:para>Retrieves the allowed backup windows for the first full backup from Get-RubrikSLA via the pipeline</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Object[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Object[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="36" aliases="none">
         <maml:name>Server</maml:name>
         <maml:Description>
           <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -25197,7 +25561,7 @@
         </dev:type>
         <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="28" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="37" aliases="none">
         <maml:name>api</maml:name>
         <maml:Description>
           <maml:para>API version</maml:para>
@@ -25265,6 +25629,20 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <dev:code>Get-RubrikSLA -Name Gold | Set-RubrikSLA -BackupStartHour 22 -BackupStartMinute 00 -BackupWindowDuration 8</dev:code>
+        <dev:remarks>
+          <maml:para>This will update the SLA Domain named "Gold" to take snapshots between 22:00PM and 6:00AM, while keeping all other existing parameters.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+        <dev:code>Get-RubrikSLA -Name Gold | Set-RubrikSLA -FirstFullBackupStartHour 21 -FirstFullBackupStartMinute 30 -FirstFullBackupWindowDuration 57 -FirstFullBackupDay Friday</dev:code>
+        <dev:remarks>
+          <maml:para>This will update the SLA Domain named "Gold" to take the first full snapshot between Friday 21:30PM and Monday 6:30AM, while keeping all other existing parameters.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 6 --------------------------</maml:title>
         <dev:code>Get-RubrikSLA -Name Gold | Set-RubrikSLA -AdvancedConfig</dev:code>
         <dev:remarks>
           <maml:para>This will update the SLA Domain named "Gold" to only enable Advanced Configuration</maml:para>
@@ -25293,7 +25671,7 @@
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Set-RubrikSQLInstance</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>id</maml:name>
           <maml:Description>
             <maml:para>Rubrik's database id value</maml:para>
@@ -25413,7 +25791,7 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>id</maml:name>
         <maml:Description>
           <maml:para>Rubrik's database id value</maml:para>

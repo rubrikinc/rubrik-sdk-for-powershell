@@ -13,7 +13,7 @@ Sets SQL Instance properties
 ## SYNTAX
 
 ```
-Set-RubrikSQLInstance [-id <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
+Set-RubrikSQLInstance [-id] <String> [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
  [-CopyOnly] [-SLAID <String>] [-SLA <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -38,8 +38,8 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: Named
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
