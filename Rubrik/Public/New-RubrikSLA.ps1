@@ -89,6 +89,24 @@ function New-RubrikSLA
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Does not apply to CDM versions prior to 5.0
     [switch]$AdvancedConfig,
+    [ValidateRange(0,23)]
+    [int]$BackupStartHour,
+    # Minute of hour from which backups are allowed to run
+    [ValidateRange(0,59)]
+    [int]$BackupStartMinute,
+    # Number of hours during which backups are allowed to run
+    [ValidateRange(1,23)]
+    [int]$BackupWindowDuration,
+    # Hour from which the first full backup is allowed to run. Uses the 24-hour clock
+    [ValidateRange(0,23)]
+    [int]$FirstFullBackupStartHour,
+    # Minute of hour from which the first full backup is allowed to run
+    [ValidateRange(0,59)]
+    [int]$FirstFullBackupStartMinute,
+    [ValidateSet('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','1','2','3','4','5','6','7')]
+    [String]$FirstFullBackupDay,
+    # Number of hours during which the first full backup is allowed to run
+    [int]$FirstFullBackupWindowDuration,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -127,6 +145,8 @@ function New-RubrikSLA
       $body = @{
         $resources.Body.name = $Name
         frequencies = @()
+        allowedBackupWindows = @()
+        firstFullAllowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
         advancedUiConfig = @()
       }
@@ -135,6 +155,8 @@ function New-RubrikSLA
       $body = @{
         $resources.Body.name = $Name
         frequencies = @()
+        allowedBackupWindows = @()
+        firstFullAllowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
       }
     # Build the body for CDM versions prior to 5.0
@@ -142,6 +164,8 @@ function New-RubrikSLA
       $body = @{
         $resources.Body.name = $Name
         frequencies = @()
+        allowedBackupWindows = @()
+        firstFullAllowedBackupWindows = @()
       }
     }
     
@@ -153,6 +177,37 @@ function New-RubrikSLA
     }
     if (-not ($uri.contains('v2'))) {
       $MonthlyRetention = $MonthlyRetention * 12
+    }
+
+    # Populate the body with the allowed backup window settings
+    if (($BackupStartHour -ge 0) -and ($BackupStartMinute -ge 0) -and $BackupWindowDuration) {
+      $body.allowedBackupWindows += @{
+          startTimeAttributes = @{hour=$BackupStartHour;minutes=$BackupStartMinute};
+          durationInHours = $BackupWindowDuration
+      }
+    }
+
+    # Populate the body with the allowed backup window settings fort the first full
+    if (($FirstFullBackupStartHour -ge 0) -and ($FirstFullBackupStartMinute -ge 0) -and $FirstFullBackupDay -and $FirstFullBackupWindowDuration) {
+      if ($FirstFullBackupDay -eq 'Sunday') {
+        [int]$FirstFullBackupDay = 1
+      } elseif ($FirstFullBackupDay -eq 'Monday') {
+        [int]$FirstFullBackupDay = 2
+      } elseif ($FirstFullBackupDay -eq 'Tuesday') {
+        [int]$FirstFullBackupDay = 3
+      } elseif ($FirstFullBackupDay -eq 'Wednesday') {
+        [int]$FirstFullBackupDay = 4
+      } elseif ($FirstFullBackupDay -eq 'Thursday') {
+        [int]$FirstFullBackupDay = 5
+      } elseif ($FirstFullBackupDay -eq 'Friday') {
+        [int]$FirstFullBackupDay = 6
+      } elseif ($FirstFullBackupDay -eq 'Saturday') {
+        [int]$FirstFullBackupDay = 7
+      }          
+      $body.FirstFullAllowedBackupWindows += @{
+          startTimeAttributes = @{hour=$FirstFullBackupStartHour;minutes=$FirstFullBackupStartMinute;dayOfWeek=$FirstFullBackupDay};
+          durationInHours = $FirstFullBackupWindowDuration
+      }
     }
 
     # Populate the body according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
