@@ -33,6 +33,7 @@ function Remove-RubrikDatabaseMount
   Param(
     # The Rubrik ID value of the mount
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     # Force unmount to deal with situations where host has been moved.
     [Switch]$Force,

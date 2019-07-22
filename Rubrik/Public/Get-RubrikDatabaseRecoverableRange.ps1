@@ -28,7 +28,7 @@ function Get-RubrikDatabaseRecoverableRange
       Retrieve all recoverable ranges for the BAR database on the FOO host after '2018-03-31T00:00:00.000Z'.
 
       .EXAMPLE
-      Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange -EndTime '2018-04-01'
+      Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange -EndDateTime '2018-04-01'
 
       Retrieve all recoverable ranges for the BAR database on the FOO host before '2018-04-01' after it's converted to UTC.
 
@@ -37,7 +37,11 @@ function Get-RubrikDatabaseRecoverableRange
   [CmdletBinding()]
   Param(
     # Rubrik's database id value
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     #Range Start as datetime
     [datetime]$StartDateTime,

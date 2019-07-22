@@ -58,7 +58,8 @@ function Set-RubrikDatabase
    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik's database id value
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+    [ValidateNotNullOrEmpty()] 
     [String]$id,
     #Number of seconds between log backups if db is in FULL or BULK_LOGGED
     #NOTE: Default of -1 is used to get around ints defaulting as 0
@@ -68,7 +69,7 @@ function Set-RubrikDatabase
     [int]$LogRetentionHours = -1,
     #Boolean declaration for copy only backups on the database.
     [Switch]$CopyOnly,
-  
+    #Pre-backup script parameters
     [Parameter(ParameterSetName = 'preBackupScript')]
     [string]$PreScriptPath,
     [Parameter(ParameterSetName = 'preBackupScript')]
@@ -78,7 +79,7 @@ function Set-RubrikDatabase
     [int]$PreTimeoutMs,
     [Parameter(ParameterSetName = 'preBackupScript')]
     [switch]$DisablePreBackupScript,
-
+    #Post-backup script parameters
     [Parameter(ParameterSetName = 'postBackupScript')]
     [string]$PostScriptPath,
     [Parameter(ParameterSetName = 'postBackupScript')]
@@ -88,8 +89,6 @@ function Set-RubrikDatabase
     [int]$PostTimeoutMs,
     [Parameter(ParameterSetName = 'postBackupScript')]
     [switch]$DisablePostBackupScript,
-
-
     #Number of max data streams Rubrik will use to back up the database
     #NOTE: Default of -1 is used to get around ints defaulting as 0
     [int]$MaxDataStreams = -1,
