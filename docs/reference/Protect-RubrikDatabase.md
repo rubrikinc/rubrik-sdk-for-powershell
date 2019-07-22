@@ -41,14 +41,14 @@ You will be asked to confirm each database you wish to protect, or you can use -
 
 ### EXAMPLE 1
 ```
-Get-RubrikDatabase "DB1" | Protect-RubrikDatabase -SLA 'Gold'
+Get-RubrikDatabase -Name "DB1" | Protect-RubrikDatabase -SLA 'Gold'
 ```
 
 This will assign the Gold SLA Domain to any database named "DB1"
 
 ### EXAMPLE 2
 ```
-Get-RubrikDatabase "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -SLA 'Gold' -Confirm:$False
+Get-RubrikDatabase -Name "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -SLA 'Gold' -Confirm:$False
 ```
 
 This will assign the Gold SLA Domain to any database named "DB1" residing on an instance named "MSSQLSERVER" without asking for confirmation

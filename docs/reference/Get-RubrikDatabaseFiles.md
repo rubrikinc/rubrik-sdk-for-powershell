@@ -12,9 +12,14 @@ Connects to Rubrik and retrieves all the data files for a SQL Server Database sn
 
 ## SYNTAX
 
+### RecoveryDateTime
 ```
-Get-RubrikDatabaseFiles [[-Id] <String>] [[-RecoveryDateTime] <DateTime>] [[-time] <String>]
- [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikDatabaseFiles [-Id] <String> [-RecoveryDateTime <DateTime>] [<CommonParameters>]
+```
+
+### Time
+```
+Get-RubrikDatabaseFiles [-Id] <String> [-time <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,7 +66,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -73,11 +78,11 @@ Recovery Point desired in the form of DateTime value
 
 ```yaml
 Type: DateTime
-Parameter Sets: (All)
+Parameter Sets: RecoveryDateTime
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -88,11 +93,11 @@ Recovery Point desired in the form of a UTC string (yyyy-MM-ddTHH:mm:ss)
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Time
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -103,11 +108,11 @@ Rubrik server IP or FQDN
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Time
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -118,11 +123,11 @@ API version
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Time
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
