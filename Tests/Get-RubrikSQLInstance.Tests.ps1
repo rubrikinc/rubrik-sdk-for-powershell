@@ -97,7 +97,7 @@ Describe -Name 'Public/Get-RubrikSQLInstance' -Tag 'Public', 'Get-RubrikSQLInsta
                 Should -BeExactly 2
         }
         It -Name 'should filter on Hostname' -Test {
-            ( Get-RubrikSQLInstance -Hostname 'sql01.example.us' ).Count |
+            @( Get-RubrikSQLInstance -Hostname 'sql01.example.us' ).Count |
                 Should -BeExactly 1
         }
         Assert-VerifiableMock
@@ -135,7 +135,7 @@ Describe -Name 'Public/Get-RubrikSQLInstance' -Tag 'Public', 'Get-RubrikSQLInsta
             return ConvertFrom-Json $response
         }
         It -Name 'one result returned' -Test {
-            ( Get-RubrikSQLInstance -ID 'MssqlInstance:::12345678-1234-abcd-8910-1234567890ab' ).Count |
+            @( Get-RubrikSQLInstance -ID 'MssqlInstance:::12345678-1234-abcd-8910-1234567890ab' ).Count |
                 Should -BeExactly 1
         }
         It -Name 'verify name' -Test {
