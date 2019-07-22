@@ -1,44 +1,44 @@
 #requires -Version 3
-function Get-RubrikAPIToken
+function Register-RubrikBackupService
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves a list of generated API tokens
+      Register the Rubrik Backup Service
 
       .DESCRIPTION
-      The Get-RubrikAPIToken cmdlet is used to pull a list of generated API tokens from the Rubrik cluster.
+      Register the Rubrik Backup Service for the specified VM
 
       .NOTES
-      Written by Mike Preston for community usage
-      Twitter: @mwpreston
-      GitHub: mwpreston
+      Written by Pierre-François Guglielmi
+      Twitter: @pfguglielmi
+      GitHub: pfguglielmi
 
       .LINK
-     http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikAPIToken.html
+      https://github.com/rubrikinc/rubrik-sdk-for-powershell
 
       .EXAMPLE
-      Get-RubrikAPIToken
-      This will return all generated API tokens belonging to the currently logged in user.
+      Get-RubrikVM -Name "demo-win01" | Register-RubrikBackupService -Verbose
+      Get the details of VMware VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster
+      
+      .EXAMPLE
+      Get-RubrikNutanixVM -Name "demo-ahv01" | Register-RubrikBackupService -Verbose
+      Get the details of Nutanix VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster
 
       .EXAMPLE
-      Get-RubrikAPIToken -tag roxie
-      This will return all generated API tokens belonging to the currently logged in user with a 'roxie' tag.
+      Get-RubrikHyperVVM -Name "demo-hyperv01" | Register-RubrikBackupService -Verbose
+      Get the details of Hyper-V VM demo-win01 and register the Rubrik Backup Service installed on it with the Rubrik cluster
 
       .EXAMPLE
-      Get-RubrikAPIToken -organizationId 1111-2222-3333
-      This will return all generated API tokens assigned to the currently logged in user with the specified organization id.
+      Register-RubrikBackupService -VMid VirtualMachine:::2af8fe5f-5b64-44dd-a9e0-ec063753b823-vm-37558
+      Register the Rubrik Backup Service installed on this VM with the Rubrik cluster by specifying the VM id
   #>
 
   [CmdletBinding()]
   Param(
-    # UserID to retrieve tokens from - defaults to currently logged in user
-    [ValidateNotNullorEmpty()]
-    [Alias('user_id')]
-    [String]$UserId = $rubrikconnection.userId,
-    # Tag assigned to the API Token
-    [String]$Tag,
-    # Organization ID the API Token belongs to.
-    [String]$OrganizationId,
+    # ID of the VM which agent needs to be registered
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Alias('VMid')]
+    [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -74,12 +74,6 @@ function Get-RubrikAPIToken
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    # Remove any api tokens generated for usage with web
-    $result = $result | Where-Object {$_.sessionType -ne 'Web'}
-    
-    if ($null -ne $result) {
-      @($result).ForEach{$_.PSObject.TypeNames.Insert(0,'Rubrik.APIToken')}
-    }
     return $result
 
   } # End of process

@@ -137,9 +137,9 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
                 Should -BeExactly 2
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Get-RubrikSLA -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 8
+        Assert-MockCalled -CommandName Get-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 8
     }
 
     Context -Name 'Single Result' {
@@ -179,7 +179,7 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
             return ConvertFrom-Json $response
         }
         It -Name 'one result returned' -Test {
-            ( Get-RubrikDatabase -ID 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' ).Count |
+            @( Get-RubrikDatabase -ID 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' ).Count |
                 Should -BeExactly 1
         }
         It -Name 'verify name' -Test {
@@ -199,8 +199,8 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
                 Should -BeExactly 'MSSQLSERVER'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 5
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 5
     }
 
     Context -Name 'Parameter Validation' {

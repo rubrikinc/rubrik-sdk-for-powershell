@@ -64,24 +64,24 @@ Describe -Name 'Public/Get-RubrikDatabaseRecoverableRange' -Tag 'Public', 'Get-R
                 "hasMore": false,
                 "data": [
                     {
-                      "beginTime": "2019-01-02T01:00:00.000Z",
-                      "endTime": "2019-01-02T01:00:00.000Z",
+                      "beginTime": "{0}",
+                      "endTime": "{0}",
                       "status": "OK",
                       "isMountAllowed": true
                     }
                 ],
                 "total": 1
-              }'
+              }' -replace '\{0\}', (Get-Date -Year 2019 -Month 1 -Day 2).Date
             return ConvertFrom-Json $response
         }
         It -Name 'Query based on ID and time range' -Test {
-            ( Get-RubrikDatabaseRecoverableRange -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -BeforeTime '2019-01-03T01:00:00.000Z' -AfterTime '2019-01-01T01:00:00.000Z' ).Count |
+            @( Get-RubrikDatabaseRecoverableRange -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -BeforeTime '2019-01-03T01:00:00.000Z' -AfterTime '2019-01-01T01:00:00.000Z' ).Count |
                 Should -BeExactly 1
         }
         It -Name 'Results match expected values' -Test {
             $results = Get-RubrikDatabaseRecoverableRange -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -BeforeTime '2019-01-03T01:00:00.000Z' -AfterTime '2019-01-01T01:00:00.000Z'
-            $results.beginTime.ToString('yyyy-MM-ddTHH:mm:ssZ') | Should -BeExactly '2019-01-02T01:00:00Z'
-            $results.endTime.ToString('yyyy-MM-ddTHH:mm:ssZ') | Should -BeExactly '2019-01-02T01:00:00Z'
+            ($results.beginTime -as [datetime]).ToString('yyyy-MM-ddTHH:mm:ssZ') | Should -BeExactly '2019-01-02T00:00:00Z'
+            ($results.endTime -as [datetime]).ToString('yyyy-MM-ddTHH:mm:ssZ') | Should -BeExactly '2019-01-02T00:00:00Z'
             $results.status | Should -BeExactly 'OK'
             $results.isMountAllowed | Should -BeExactly $true
         }
