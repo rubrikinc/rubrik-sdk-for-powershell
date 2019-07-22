@@ -101,8 +101,8 @@ Describe -Name 'Public/Get-RubrikSQLInstance' -Tag 'Public', 'Get-RubrikSQLInsta
                 Should -BeExactly 1
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 4
     }
 
     Context -Name 'Single Result' {
@@ -155,7 +155,7 @@ Describe -Name 'Public/Get-RubrikSQLInstance' -Tag 'Public', 'Get-RubrikSQLInsta
                 Should -BeExactly '12345678-1234-abcd-8910-1234567890ab'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 5
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 5
     }
 }

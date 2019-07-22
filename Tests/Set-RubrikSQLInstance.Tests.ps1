@@ -71,8 +71,8 @@ Describe -Name 'Public/Set-RubrikSQLInstance' -Tag 'Public', 'Set-RubrikSQLInsta
                 Should -BeExactly $false
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 7
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 7
     }
 
     Context -Name 'Parameter Validation' {
