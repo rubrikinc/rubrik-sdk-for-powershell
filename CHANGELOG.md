@@ -16,6 +16,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-20
+
+### Changed [Set-RubrikSLA]
+
+* Added ability to specify allowed backup window settings, both for the first full backup and subsequent incremental backups in Set-RubrikSLA to address [Issue 366](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/366)
+
+## 2019-07-19
+
+### Added [Various Unit Tests]
+
+* Added Unit Tests for Get-RubrikMount, Set-RubrikMount, New-RubrikMount, Remove-RubrikMount, Set-RubrikBlackout, Get-RubrikSupportTunnel, Set-RubrikSupportTunnel, Get-RubrikVersion, Get-RubrikAPIVersion and Get-RubrikSoftwareVersion
+* Added filtering abilities in Get-RubrikAPIData to support id and vmid filtering in the Get-RubrikMount cmdlet
+* Resolves [Issue 346](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/346)
+
 ## 2019-07-18 [Unit Tests]
 
 * Added unit tests for Get-RubrikDatabase, Get-RubrikDatabaseFiles, Get-RubrikDatabaseMount, Get-RubrikDatabaseRecoverableRange, New-RubrikDatabaseMount, Protect-RubrikDatabase, Remove-RubrikDatabaseMount, Restore-RubrikDatabase, Set-RubrikDatabase, Get-RubrikSQLInstance, Set-RubrikSQLInstace
