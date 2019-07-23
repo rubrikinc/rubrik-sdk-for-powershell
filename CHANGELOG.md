@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Removed unnecessary braces for the frequencies array in the request body when using API v2 to address [Issue 391](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/391)
 * Fixed the $FirstFullBackupDay variable to be an integer when the value is retrieved from the pipeline with Get-RubrikSLA
 
+### Fixed [Get-RubrikEvent]
+
+* Multiple limit flags were added to the GET query as reported in [Issue 353](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/353), this has been fixed
+
 ## 2019-07-22
 
 ### Changed [New-RubrikSLA]
