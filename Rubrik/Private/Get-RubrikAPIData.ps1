@@ -617,7 +617,7 @@ function Get-RubrikAPIData($endpoint) {
         }
         'Get-RubrikSnapshot'           = @{
             '1.0' = @{
-                Description = 'Retrieve information for all snapshots '
+                Description = 'Retrieve information for all snapshots'
                 URI         = @{
                     Fileset = '/api/v1/fileset/{id}/snapshot'
                     MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
@@ -626,7 +626,7 @@ function Get-RubrikAPIData($endpoint) {
                     ManagedVolume = '/api/internal/managed_volume/{id}/snapshot'
                     Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
-                    Oracle = '/api/internal/oracle/{id}/snapshot'
+                    Oracle = '/api/internal/oracle/db/{id}/snapshot'
                 }
                 Method      = 'Get'
                 Body        = ''
