@@ -76,6 +76,12 @@ function Get-RubrikSnapshot
   Process {
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    
+    # Exclusion for FileSet because limited API endpoints
+    if ($uri -match 'v1/fileset') {
+      Get-Rubrik
+    }
+    
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
@@ -84,7 +90,7 @@ function Get-RubrikSnapshot
     #region One-off
     if ($Date) 
     {
-      $result = Test-ReturnFilter -object (Test-DateDifference -date $($result.date) -compare $Date) -location 'date' -result $result
+      $result = Test-ReturnFilter -Object (Test-DateDifference -Date $($result.date) -Compare $Date) -Location 'date' -result $result
     }
     #endregion
     
