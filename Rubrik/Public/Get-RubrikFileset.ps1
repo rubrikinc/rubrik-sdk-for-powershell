@@ -37,6 +37,10 @@ function Get-RubrikFileset
       .EXAMPLE
       Get-RubrikFileset -Relic
       This will return all removed filesets that were formerly protected by Rubrik.
+      
+      .EXAMPLE
+      Get-RubrikFileset -DetailedObject
+      This will return the fileset object with all properties, including additional details such as snapshots taken of the Fileset object. Using this switch parameter negatively affects performance 
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'Query')]
