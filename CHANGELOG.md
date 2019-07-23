@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-22
+
+### Changed [New-RubrikSLA]
+
+* Added ability to specify allowed backup window settings, both for the first full backup and subsequent incremental backups in New-RubrikSLA to address [Issue 365](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/365)
+
 ## 2019-07-20
 
 ### Changed [Set-RubrikSLA]
