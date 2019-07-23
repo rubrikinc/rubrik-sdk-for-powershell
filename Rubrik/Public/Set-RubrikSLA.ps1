@@ -187,7 +187,6 @@ function Set-RubrikSLA
     if (($uri.contains('v2')) -and $AdvancedConfig) {
       $body = @{
         $resources.Body.name = $Name
-        frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
@@ -197,7 +196,6 @@ function Set-RubrikSLA
     } elseif ($uri.contains('v2')) {
       $body = @{
         $resources.Body.name = $Name
-        frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
@@ -430,7 +428,7 @@ function Set-RubrikSLA
         $FirstFullBackupStartMinute = $FirstFullBackupWindows.startTimeAttributes.minutes
       }
       if (($FirstFullBackupWindows.startTimeAttributes.dayOfWeek) -and (-not $PSBoundParameters.ContainsKey('FirstFullBackupDay'))) {
-        $FirstFullBackupDay = $FirstFullBackupWindows.startTimeAttributes.dayOfWeek
+        [int]$FirstFullBackupDay = $FirstFullBackupWindows.startTimeAttributes.dayOfWeek
       }
       if (($FirstFullBackupWindows.durationInHours) -and (-not $FirstFullBackupWindowDuration)) {
         $FirstFullBackupWindowDuration = $FirstFullBackupWindows.durationInHours
