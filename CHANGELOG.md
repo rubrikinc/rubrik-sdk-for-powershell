@@ -18,13 +18,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-07-22
 
+
 ### Fixed [Get-RubrikSnapshot]
 
- * No endpoint is available for FileSet snapshots, working has been created [Issue 393](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
+* No endpoint is available for FileSet snapshots, working has been created [Issue 393](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
  
- ### Added [Get-RubrikFileSet - DetailedObject parameter]
+### Added [Get-RubrikFileSet - DetailedObject parameter]
  
- * DetailedObject parameter has been added to Get-RubrikFileSet function to retrieve all object properties
+* DetailedObject parameter has been added to Get-RubrikFileSet function to retrieve all object properties
+
+### Changed [New-RubrikSLA]
+
+* Added ability to specify allowed backup window settings, both for the first full backup and subsequent incremental backups in New-RubrikSLA to address [Issue 365](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/365)
+
 
 ## 2019-07-20
 

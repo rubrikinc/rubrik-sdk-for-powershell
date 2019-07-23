@@ -1110,6 +1110,21 @@ function Get-RubrikAPIData($endpoint) {
                         frequency = 'frequency'
                         retention = 'retention'
                     }
+                    allowedBackupWindows = @{
+                        startTimeAttributes = @{
+                            minutes   = 'minutes'
+                            hour      = 'hour'
+                        }
+                        durationInHours  = 'durationInHours'
+                    }
+                    firstFullAllowedBackupWindows = @{
+                        startTimeAttributes = @{
+                            minutes   = 'minutes'
+                            hour      = 'hour'
+                            dayOfWeek = 'dayOfWeek'
+                        }
+                        durationInHours  = 'durationInHours'
+                    }    
                 }
                 Query       = ''
                 Result      = ''
@@ -1127,6 +1142,21 @@ function Get-RubrikAPIData($endpoint) {
                         frequency = 'frequency'
                         retention = 'retention'
                     }
+                    allowedBackupWindows = @{
+                        startTimeAttributes = @{
+                            minutes   = 'minutes'
+                            hour      = 'hour'
+                        }
+                        durationInHours  = 'durationInHours'
+                    }
+                    firstFullAllowedBackupWindows = @{
+                        startTimeAttributes = @{
+                            minutes   = 'minutes'
+                            hour      = 'hour'
+                            dayOfWeek = 'dayOfWeek'
+                        }
+                        durationInHours  = 'durationInHours'
+                    }    
                     advancedUiConfig = @{
                         timeUnit      = 'timeUnit'
                         retentionType = 'retentionType'

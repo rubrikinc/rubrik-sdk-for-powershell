@@ -20,7 +20,11 @@ New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] 
  [[-MonthlyRetentionType] <String>] [[-QuarterlyFrequency] <Int32>] [[-QuarterlyRetention] <Int32>]
  [[-DayOfQuarter] <String>] [[-FirstQuarterStartMonth] <String>] [[-QuarterlyRetentionType] <String>]
  [[-YearlyFrequency] <Int32>] [[-YearlyRetention] <Int32>] [[-DayOfYear] <String>] [[-YearStartMonth] <String>]
- [-AdvancedConfig] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-AdvancedConfig] [[-BackupStartHour] <Int32>] [[-BackupStartMinute] <Int32>]
+ [[-BackupWindowDuration] <Int32>] [[-FirstFullBackupStartHour] <Int32>]
+ [[-FirstFullBackupStartMinute] <Int32>] [[-FirstFullBackupDay] <String>]
+ [[-FirstFullBackupWindowDuration] <Int32>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -428,6 +432,112 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -BackupStartHour
+{{ Fill BackupStartHour Description }}
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 24
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BackupStartMinute
+Minute of hour from which backups are allowed to run
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 25
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BackupWindowDuration
+Number of hours during which backups are allowed to run
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 26
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FirstFullBackupStartHour
+Hour from which the first full backup is allowed to run.
+Uses the 24-hour clock
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 27
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FirstFullBackupStartMinute
+Minute of hour from which the first full backup is allowed to run
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 28
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FirstFullBackupDay
+{{ Fill FirstFullBackupDay Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 29
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FirstFullBackupWindowDuration
+Number of hours during which the first full backup is allowed to run
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 30
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Server
 Rubrik server IP or FQDN
 
@@ -437,7 +547,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 24
+Position: 31
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -452,7 +562,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 25
+Position: 32
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
