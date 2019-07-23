@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed [Get-RubrikSnapshot]
+
+ * No endpoint is available for FileSet snapshots, working has been created [Issue 393](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
+ 
+ ### Added [Get-RubrikFileSet - DetailedObject parameter]
+ 
+ * DetailedObject parameter has been added to Get-RubrikFileSet function to retrieve all object properties
+
 ## 2019-07-20
 
 ### Changed [Set-RubrikSLA]
