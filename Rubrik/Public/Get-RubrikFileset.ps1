@@ -39,37 +39,58 @@ function Get-RubrikFileset
       This will return all removed filesets that were formerly protected by Rubrik.
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Name of the fileset
+    [Parameter(
+      ParameterSetName='Query',
+      Position = 0,
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [Alias('Fileset')]
     [String]$Name,
     # Filter results to include only relic (removed) filesets
     [Alias('is_relic')]
+    [Parameter(ParameterSetName='Query')]
     [Switch]$Relic,
+    # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full Fileset object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Parameter(ParameterSetName='Query')]
+    [switch]$DetailedObject,
     # SLA Domain policy assigned to the database
+    [Parameter(ParameterSetName='Query')]
     [String]$SLA,
     # Name of the host using a fileset
+    [Parameter(ParameterSetName='Query')]
     [Alias('host_name')]
     [String]$HostName,
     # Filter the summary information based on the ID of a fileset template.
+    [Parameter(ParameterSetName='Query')]
     [Alias('template_id')]
     [String]$TemplateID,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Parameter(ParameterSetName='Query')]
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
     # Rubrik's Share id
+    [Parameter(ParameterSetName='Query')]
     [Alias('share_id')]
     [String]$ShareID,
     # Rubrik's fileset id
+    [Parameter(ParameterSetName='ID')]
     [Parameter(ValueFromPipelineByPropertyName = $true)]    
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     # SLA id value
+    [Parameter(ParameterSetName='Query')]
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,    
     # Rubrik server IP or FQDN
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
     [String]$api = $global:RubrikConnection.api
   )
 
@@ -109,7 +130,16 @@ function Get-RubrikFileset
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    return $result
+    # If the Get-RubrikFileset function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        Get-RubrikFileset -id $result[$i].id
+      }
+    } else {
+      return $result
+    }
 
   } # End of process
 } # End of function
