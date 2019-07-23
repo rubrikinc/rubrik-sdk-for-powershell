@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-22
+
 ### Fixed [Get-RubrikSnapshot]
 
  * No endpoint is available for FileSet snapshots, working has been created [Issue 393](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
