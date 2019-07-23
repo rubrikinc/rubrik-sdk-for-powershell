@@ -189,7 +189,21 @@ function New-RubrikSLA
 
     # Populate the body with the allowed backup window settings fort the first full
     if (($FirstFullBackupStartHour -ge 0) -and ($FirstFullBackupStartMinute -ge 0) -and $FirstFullBackupDay -and $FirstFullBackupWindowDuration) {
-      $FirstFullBackupDay = ([System.DayOfWeek]::$FirstFullBackupDay -as [int])+1
+      if ($FirstFullBackupDay -eq 'Sunday') {
+        [int]$FirstFullBackupDay = 1
+      } elseif ($FirstFullBackupDay -eq 'Monday') {
+        [int]$FirstFullBackupDay = 2
+      } elseif ($FirstFullBackupDay -eq 'Tuesday') {
+        [int]$FirstFullBackupDay = 3
+      } elseif ($FirstFullBackupDay -eq 'Wednesday') {
+        [int]$FirstFullBackupDay = 4
+      } elseif ($FirstFullBackupDay -eq 'Thursday') {
+        [int]$FirstFullBackupDay = 5
+      } elseif ($FirstFullBackupDay -eq 'Friday') {
+        [int]$FirstFullBackupDay = 6
+      } elseif ($FirstFullBackupDay -eq 'Saturday') {
+        [int]$FirstFullBackupDay = 7
+      }
       $body.FirstFullAllowedBackupWindows += @{
           startTimeAttributes = @{hour=$FirstFullBackupStartHour;minutes=$FirstFullBackupStartMinute;dayOfWeek=$FirstFullBackupDay};
           durationInHours = $FirstFullBackupWindowDuration
