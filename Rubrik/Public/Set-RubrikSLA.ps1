@@ -428,7 +428,7 @@ function Set-RubrikSLA
         $FirstFullBackupStartMinute = $FirstFullBackupWindows.startTimeAttributes.minutes
       }
       if (($FirstFullBackupWindows.startTimeAttributes.dayOfWeek) -and (-not $PSBoundParameters.ContainsKey('FirstFullBackupDay'))) {
-        $FirstFullBackupDay = $FirstFullBackupWindows.startTimeAttributes.dayOfWeek
+        [int]$FirstFullBackupDay = $FirstFullBackupWindows.startTimeAttributes.dayOfWeek
       }
       if (($FirstFullBackupWindows.durationInHours) -and (-not $FirstFullBackupWindowDuration)) {
         $FirstFullBackupWindowDuration = $FirstFullBackupWindows.durationInHours
