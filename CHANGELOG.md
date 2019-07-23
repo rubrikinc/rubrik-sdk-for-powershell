@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-22
+
+### Fixed [Get-RubrikSnapshot]
+
+* Incorrect endpoint was used for Oracle database in combination Get-RubrikSnapshot [Issue 394](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
+
 ## 2019-07-20
 
 ### Changed [Set-RubrikSLA]
