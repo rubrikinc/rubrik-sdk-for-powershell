@@ -27,6 +27,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed [Get-RubrikSnapshot]
 
+* No endpoint is available for FileSet snapshots, working has been created [Issue 393](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
+ 
+### Added [Get-RubrikFileSet - DetailedObject parameter]
+ 
+* DetailedObject parameter has been added to Get-RubrikFileSet function to retrieve all object properties
+
+### Fixed [Get-RubrikSnapshot]
+
 * Incorrect endpoint was used for Oracle database in combination Get-RubrikSnapshot [Issue 394](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
 
 ### Changed [New-RubrikSLA]
