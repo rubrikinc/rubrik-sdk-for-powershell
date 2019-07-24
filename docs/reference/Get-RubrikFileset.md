@@ -12,10 +12,16 @@ Retrieves details on one or more filesets known to a Rubrik cluster
 
 ## SYNTAX
 
+### Query (Default)
 ```
-Get-RubrikFileset [[-Name] <String>] [-Relic] [[-SLA] <String>] [[-HostName] <String>] [[-TemplateID] <String>]
- [[-PrimaryClusterID] <String>] [[-ShareID] <String>] [[-id] <String>] [[-SLAID] <String>] [[-Server] <String>]
- [[-api] <String>] [<CommonParameters>]
+Get-RubrikFileset [[-Name] <String>] [-Relic] [-DetailedObject] [-SLA <String>] [-HostName <String>]
+ [-TemplateID <String>] [-PrimaryClusterID <String>] [-ShareID <String>] [-id <String>] [-SLAID <String>]
+ [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
+### ID
+```
+Get-RubrikFileset [-id <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -60,6 +66,14 @@ Get-RubrikFileset -Relic
 
 This will return all removed filesets that were formerly protected by Rubrik.
 
+### EXAMPLE 6
+```
+Get-RubrikFileset -DetailedObject
+```
+
+This will return the fileset object with all properties, including additional details such as snapshots taken of the Fileset object.
+Using this switch parameter negatively affects performance
+
 ## PARAMETERS
 
 ### -Name
@@ -67,13 +81,13 @@ Name of the fileset
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: Fileset
 
 Required: False
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -82,8 +96,24 @@ Filter results to include only relic (removed) filesets
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: is_relic
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full Fileset object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Query
+Aliases:
 
 Required: False
 Position: Named
@@ -97,11 +127,11 @@ SLA Domain policy assigned to the database
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -112,11 +142,11 @@ Name of the host using a fileset
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: host_name
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -127,11 +157,11 @@ Filter the summary information based on the ID of a fileset template.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: template_id
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -143,11 +173,11 @@ Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting t
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: primary_cluster_id
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -158,11 +188,11 @@ Rubrik's Share id
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: share_id
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -173,11 +203,23 @@ Rubrik's fileset id
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases:
 
 Required: False
-Position: 7
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: ID
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -188,11 +230,11 @@ SLA id value
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Query
 Aliases: effective_sla_domain_id
 
 Required: False
-Position: 8
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -207,7 +249,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -222,7 +264,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
