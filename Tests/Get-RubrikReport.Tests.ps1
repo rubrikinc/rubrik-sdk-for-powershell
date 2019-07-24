@@ -19,7 +19,7 @@ Describe -Name 'Public/Get-RubrikReport' -Tag 'Public', 'Get-RubrikReport' -Fixt
     }
     #endregion
 
-    Context -Name 'Returning Results' {
+    Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
@@ -35,10 +35,11 @@ Describe -Name 'Public/Get-RubrikReport' -Tag 'Public', 'Get-RubrikReport' -Fixt
                 'id'                     = 'CustomReport:::22222'
             }
         }
-        It -Name 'Results returning' -Test {
+        It -Name 'No parameters returns all results' -Test {
             ( Get-RubrikReport).Count |
                 Should -BeExactly 2
         } 
+   
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
