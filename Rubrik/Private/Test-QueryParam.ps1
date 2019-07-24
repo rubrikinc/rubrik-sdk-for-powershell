@@ -86,7 +86,12 @@
     }
   }
   # After all query options are exhausted, build a new URI with all defined query options
-  $uri = New-QueryString -query $querystring -uri $uri -nolimit $true
+  
+  if ($parameters.name -contains 'limit') {
+    $uri = New-QueryString -query $querystring -uri $uri
+  } else {  
+    $uri = New-QueryString -query $querystring -uri $uri -nolimit $true
+  }
   Write-Verbose -Message "URI = $uri"
     
   return $uri
