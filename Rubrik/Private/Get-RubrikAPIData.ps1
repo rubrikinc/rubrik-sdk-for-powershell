@@ -1748,6 +1748,11 @@ function Get-RubrikAPIData($endpoint) {
                         }
                         durationInHours  = 'durationInHours'
                     }
+                    localRetentionLimit = 'localRetentionLimit'
+                    archivalSpecs       = @{
+                        locationId        = 'locationId'
+                        archivalThreshold = 'archivalThreshold'
+                    }
                 }
                 Query       = ''
                 Result      = ''
@@ -1783,6 +1788,12 @@ function Get-RubrikAPIData($endpoint) {
                             dayOfWeek = 'dayOfWeek'
                         }
                         durationInHours  = 'durationInHours'
+                    }
+                    localRetentionLimit = 'localRetentionLimit'
+                    archivalSpecs       = @{
+                        locationId        = 'locationId'
+                        polarisManagedId  = 'polarisManagedId'
+                        archivalThreshold = 'archivalThreshold'
                     }
                 }
                 Query       = ''

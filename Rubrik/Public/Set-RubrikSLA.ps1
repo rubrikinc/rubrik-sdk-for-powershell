@@ -132,6 +132,17 @@ function Set-RubrikSLA
     [String]$FirstFullBackupDay,
     # Number of hours during which the first full backup is allowed to run
     [int]$FirstFullBackupWindowDuration,
+    # Time in days to keep backup data locally on the cluster.
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('localRetentionLimit')]
+    [int]$LocalRetention,
+    # ID or the archival location
+    [String]$ArchivalLocation,
+    # Polaris Managed ID
+    [String]$PolarisID,
+    # Whether to enable Instant Archive
+    [switch]$InstantArchive,
     # Retrieves frequencies from Get-RubrikSLA via the pipeline
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
@@ -151,6 +162,10 @@ function Set-RubrikSLA
       ValueFromPipelineByPropertyName = $true)]
     [alias('firstFullAllowedBackupWindows')]
     [object[]] $FirstFullBackupWindows,
+    # Retrieves the archical specifications from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [object[]] $ArchivalSpecs,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -189,6 +204,7 @@ function Set-RubrikSLA
         $resources.Body.name = $Name
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
+        archivalSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
         advancedUiConfig = @()
       }
@@ -198,6 +214,7 @@ function Set-RubrikSLA
         $resources.Body.name = $Name
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
+        archivalSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
       }
     # Build the body for CDM versions prior to 5.0
@@ -207,6 +224,7 @@ function Set-RubrikSLA
         frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows =@()
+        archivalSpecs = @()
       }
     }
     
@@ -435,6 +453,21 @@ function Set-RubrikSLA
       }
     }
 
+    # Retrieve the archival specifications from pipeline
+    if ($ArchivalSpecs) {
+      if ($ArchivalSpecs.locationId -and (-not $ArchivalLocation)) {
+        $ArchivalLocation = $ArchivalSpecs.locationId
+      }
+      if ($ArchivalSpecs.polarisManagedId -and (-not $PolarisID)) {
+        $PolarisID = $ArchivalSpecs.polarisManagedId
+      }
+    }
+    # If LocalRetention is set directly, convert its value in seconds
+    if ($LocalRetention -lt 86400) {
+      $LocalRetention = $LocalRetention * 86400
+      Write-Verbose -Message "Local retention limit is set to $LocalRetention"
+    }
+
     # Populate the body with the allowed backup window settings
     if (($BackupStartHour -ge 0) -and ($BackupStartMinute -ge 0) -and $BackupWindowDuration) {
       $body.allowedBackupWindows += @{
@@ -465,6 +498,32 @@ function Set-RubrikSLA
           durationInHours = $FirstFullBackupWindowDuration
       }
     }
+
+    # Populate the body with the archival specifications
+    if ($uri.contains('v2')) {
+      if ($ArchivalLocation -and $PolarisID -and ($InstantArchive.IsPresent -eq $true)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocation;archivalThreshold=0;polarisManagedId=$PolarisID}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocation -and ($InstantArchive.IsPresent -eq $true)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocation;archivalThreshold=0}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocation -and $PolarisID -and ($InstantArchive.IsPresent -eq $false)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocation;archivalThreshold=$LocalRetention;polarisManagedId=$PolarisID}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocation -and ($InstantArchive.IsPresent -eq $false)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocation;archivalThreshold=$LocalRetention}
+        $body.localRetentionLimit = $LocalRetention
+      }
+    } else {
+      if ($ArchivalLocation -and ($InstantArchive.IsPresent -eq $true)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocation;archivalThreshold=0}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocation -and ($InstantArchive.IsPresent -eq $false)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocation;archivalThreshold=$LocalRetention}
+        $body.localRetentionLimit = $LocalRetention
+      }
+    }
+    
 
     # Populate the body according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
     if ($HourlyFrequency -and $HourlyRetention) {
