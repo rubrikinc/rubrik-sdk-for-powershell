@@ -16,8 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 2019-07-22
+## 2019-07-23
 
+### Changed [Set-RubrikSLA]
+
+* Removed unnecessary braces for the frequencies array in the request body when using API v2 to address [Issue 391](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/391)
+* Fixed the $FirstFullBackupDay variable to be an integer when the value is retrieved from the pipeline with Get-RubrikSLA
+
+## 2019-07-22
 
 ### Fixed [Get-RubrikSnapshot]
 
@@ -27,10 +33,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 * DetailedObject parameter has been added to Get-RubrikFileSet function to retrieve all object properties
 
+### Fixed [Get-RubrikSnapshot]
+
+* Incorrect endpoint was used for Oracle database in combination Get-RubrikSnapshot [Issue 394](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
+
 ### Changed [New-RubrikSLA]
 
 * Added ability to specify allowed backup window settings, both for the first full backup and subsequent incremental backups in New-RubrikSLA to address [Issue 365](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/365)
-
 
 ## 2019-07-20
 
