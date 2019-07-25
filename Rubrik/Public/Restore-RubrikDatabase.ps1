@@ -24,6 +24,11 @@ function Restore-RubrikDatabase
 
       Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database.
 
+      .EXAMPLE
+      Get-RubrikDatabase -Name db01 | Restore-RubrikDatabase -FinishRecovery -maxDataStreams 6 -timestampMs 3492661627000
+      
+      Restore using the pipeline to get the database ID.
+      
       .LINK
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabase.html
   #>
