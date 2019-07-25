@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-25
+
+### Fixed [Restore-RubrikDatabase]
+
+* Fixed bug in example, added additional example
+
 ## 2019-07-23
 
 ### Changed [Set-RubrikSLA]
