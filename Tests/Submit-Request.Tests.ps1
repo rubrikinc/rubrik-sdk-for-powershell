@@ -90,13 +90,12 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
             $false
         }
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
-            $null
+           [pscustomobject]@{
+                StatusCode = 204
+           }
         }
 
         It 'Status:Success' {
-           $WebResult = @{
-                StatusCode = 204
-           }
            $resources = @{
                 Method = 'Delete'
                 Success = 204
