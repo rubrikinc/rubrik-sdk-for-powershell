@@ -22253,7 +22253,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Restore-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -targetInstanceId MssqlInstance:::0085b247-e718-4177-869f-e3ae1f7bb503 -FinishRecovery -maxDataStreams 4 -timestampMs 1492661627000</dev:code>
+        <dev:code>Restore-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -FinishRecovery -maxDataStreams 4 -timestampMs 1492661627000</dev:code>
         <dev:remarks>
           <maml:para>Restore database to declared epoch ms timestamp.</maml:para>
         </dev:remarks>
@@ -22263,6 +22263,13 @@
         <dev:code>Restore-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase $db).latestRecoveryPoint) -maxDataStreams 1 -FinishRecovery</dev:code>
         <dev:remarks>
           <maml:para>Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Get-RubrikDatabase -Name db01 | Restore-RubrikDatabase -FinishRecovery -maxDataStreams 6 -timestampMs 3492661627000</dev:code>
+        <dev:remarks>
+          <maml:para>Restore using the pipeline to get the database ID.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
