@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-26
+
+### Changed [Set-RubrikSLA]
+
+* Added ability to configure archival and replication settings to address [Issue 368](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/368)
+
 ## 2019-07-23
 
 ### Changed [Set-RubrikSLA]
