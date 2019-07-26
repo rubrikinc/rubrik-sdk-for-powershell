@@ -107,6 +107,22 @@ function New-RubrikSLA
     [String]$FirstFullBackupDay,
     # Number of hours during which the first full backup is allowed to run
     [int]$FirstFullBackupWindowDuration,
+    # Whether to enable archival
+    [switch]$Archival,
+    # Time in days to keep backup data locally on the cluster.
+    [int]$LocalRetention,
+    # ID of the archival location
+    [String]$ArchivalLocationId,
+    # Polaris Managed ID
+    [String]$PolarisID,
+    # Whether to enable Instant Archive
+    [switch]$InstantArchive,
+    # Whether to enable replication
+    [switch]$Replication,
+    # ID of the replication target
+    [String]$ReplicationTargetId,
+    # Time in days to keep data on the replication target.
+    [int]$RemoteRetention,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -147,6 +163,8 @@ function New-RubrikSLA
         frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
+        archivalSpecs = @()
+        replicationSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
         advancedUiConfig = @()
       }
@@ -157,6 +175,8 @@ function New-RubrikSLA
         frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
+        archivalSpecs = @()
+        replicationSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
       }
     # Build the body for CDM versions prior to 5.0
@@ -166,6 +186,8 @@ function New-RubrikSLA
         frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
+        archivalSpecs = @()
+        replicationSpecs = @()
       }
     }
     
@@ -210,7 +232,41 @@ function New-RubrikSLA
       }
     }
 
-    # Populate the body according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
+    # Convert LocalRetention and RemoteRetention values to seconds
+    $LocalRetention = $LocalRetention * 86400
+    $RemoteRetention = $RemoteRetention * 86400
+
+    # Populate the body with archival specifications
+    if ($uri.contains('v2') -and $Archival) {
+      if ($ArchivalLocationId -and $PolarisID -and ($InstantArchive.IsPresent -eq $true)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1;polarisManagedId=$PolarisID}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $true)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocationId -and $PolarisID -and ($InstantArchive.IsPresent -eq $false)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention;polarisManagedId=$PolarisID}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $false)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention}
+        $body.localRetentionLimit = $LocalRetention
+      }
+    } elseif ($Archival) {
+        if ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $true)) {
+          $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1}
+          $body.localRetentionLimit = $LocalRetention
+        } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $false)) {
+          $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention}
+          $body.localRetentionLimit = $LocalRetention
+        }
+    }
+
+    # Populate the body with replication specifications
+    if ($Replication -and $ReplicationTargetId -and $RemoteRetention) {
+      $body.replicationSpecs += @{locationId=$ReplicationTargetId;retentionLimit=$RemoteRetention}
+    }
+
+    # Populate the body with frequencies and retentions according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
     if ($HourlyFrequency -and $HourlyRetention) {
       if (($uri.contains('v2')) -and $AdvancedConfig) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
