@@ -15,7 +15,7 @@ function Restore-RubrikDatabase
       GitHub: MikeFal
 
       .EXAMPLE
-      Restore-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -targetInstanceId MssqlInstance:::0085b247-e718-4177-869f-e3ae1f7bb503 -FinishRecovery -maxDataStreams 4 -timestampMs 1492661627000
+      Restore-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -FinishRecovery -maxDataStreams 4 -timestampMs 1492661627000
       
       Restore database to declared epoch ms timestamp.
 
@@ -24,6 +24,11 @@ function Restore-RubrikDatabase
 
       Restore the $db (where $db is the outoput of a Get-RubrikDatabase call) to the most recent recovery point for that database.
 
+      .EXAMPLE
+      Get-RubrikDatabase -Name db01 | Restore-RubrikDatabase -FinishRecovery -maxDataStreams 6 -timestampMs 3492661627000
+      
+      Restore using the pipeline to get the database ID.
+      
       .LINK
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabase.html
   #>
