@@ -572,7 +572,7 @@ function Set-RubrikSLA
       }
     } elseif ($Archival) {
         if ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $true)) {
-          $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=0}
+          $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1}
           $body.localRetentionLimit = $LocalRetention
         } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $false)) {
           $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention}
