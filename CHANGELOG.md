@@ -22,6 +22,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed bug in example, added additional example
 
+## 2019-07-24
+
+### Fixed [Submit-Request]
+
+* Now populating the $WebResult variable in order to show HTTP Status Codes/Descriptions as well as proper status messages for PowerShell versions prior to 6.
+* Address [Issue 402](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/402)
+
 ## 2019-07-23
 
 ### Changed [Set-RubrikSLA]
