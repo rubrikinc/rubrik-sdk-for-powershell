@@ -103,10 +103,13 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
            (Submit-Request -Uri 1 -Method Delete).Status | Should -BeExactly 'Success'
         }
 
-        It 'Status:Error' {
-            $WebResult = @{
-                StatusCode = 1337
+        Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
+            [pscustomobject]@{
+                 StatusCode = 1337
             }
+         }
+        
+        It 'Status:Error' {
             $resources = @{
                 Method = 'Delete'
                 Success = 204
