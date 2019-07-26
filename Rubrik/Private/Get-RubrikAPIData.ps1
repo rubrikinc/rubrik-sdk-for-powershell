@@ -1753,6 +1753,10 @@ function Get-RubrikAPIData($endpoint) {
                         locationId        = 'locationId'
                         archivalThreshold = 'archivalThreshold'
                     }
+                    replicationSpecs = @{
+                        locationId     = 'locationId'
+                        retentionLimit = 'retentionLimit'
+                    }
                 }
                 Query       = ''
                 Result      = ''
@@ -1794,6 +1798,10 @@ function Get-RubrikAPIData($endpoint) {
                         locationId        = 'locationId'
                         polarisManagedId  = 'polarisManagedId'
                         archivalThreshold = 'archivalThreshold'
+                    }
+                    replicationSpecs = @{
+                        locationId     = 'locationId'
+                        retentionLimit = 'retentionLimit'
                     }
                 }
                 Query       = ''
