@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-26
+
+### Added [Various Unit Tests]
+
+* Added Unit Tests for Get-RubrikFileset, Get-RubrikFilesetTemplate, New-RubrikFileset, New-RubrikFilesetTemplate, Protect-RubrikFilset, and Remove-RubrikFileset
+* Addresses [Issue 343](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/343)
+
 ## 2019-07-25
 
 ### Fixed [Restore-RubrikDatabase]
