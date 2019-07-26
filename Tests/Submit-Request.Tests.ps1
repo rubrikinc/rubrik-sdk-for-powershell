@@ -86,17 +86,13 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
     }
 
     Context -Name 'Method:Delete-Success/Error' {
-        Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {
-            $false
-        }
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
-            $null
+           [pscustomobject]@{
+                StatusCode = 204
+           }
         }
 
         It 'Status:Success' {
-           $WebResult = @{
-                StatusCode = 204
-           }
            $resources = @{
                 Method = 'Delete'
                 Success = 204
@@ -104,10 +100,13 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
            (Submit-Request -Uri 1 -Method Delete).Status | Should -BeExactly 'Success'
         }
 
-        It 'Status:Error' {
-            $WebResult = @{
-                StatusCode = 1337
+        Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
+            [pscustomobject]@{
+                 StatusCode = 1337
             }
+         }
+        
+        It 'Status:Error' {
             $resources = @{
                 Method = 'Delete'
                 Success = 204
@@ -117,14 +116,10 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         }
 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-PowerShellSix -Times 2
         Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 2
     }
 
     Context -Name 'Method:Other-EventObject' {
-        Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {
-            $false
-        }
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
             $EventJson
         }
@@ -141,14 +136,10 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         }
 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-PowerShellSix -Times 11
         Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 11
     }
 
     Context  -Name 'Method:Other-SLAObject' {
-        Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {
-            $false
-        }
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
             $SLAJson
         }
@@ -164,14 +155,10 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         }
 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-PowerShellSix -Times 29
         Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 29
     }
 
     Context -Name 'Error:Route not defined' {
-        Mock -CommandName Test-PowerShellSix -Verifiable -MockWith {
-            $false
-        }
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
             throw 'Route not defined.'
         }
@@ -181,7 +168,6 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         }
 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-PowerShellSix -Times 1
         Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 1
     }
 }
