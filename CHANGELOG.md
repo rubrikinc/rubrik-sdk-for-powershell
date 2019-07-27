@@ -29,6 +29,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed bug in example, added additional example
 
+### Added [Various Unit Tests]
+
+* Added unit tests for Get-RubrikReport, Get-RubrikReportData, New-RubrikReport, and Remove-RubrikReport.  Export-RubrikReport unit test already existed.
+* Addresses [Issue 342](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/342)
+
 ## 2019-07-24
 
 ### Fixed [Submit-Request]
