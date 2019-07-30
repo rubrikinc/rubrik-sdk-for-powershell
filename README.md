@@ -48,13 +48,6 @@ We glady welcome contributions from the community. From updating the documentati
 * [Contributing Guide](CONTRIBUTING.md)
 * [Code of Conduct](CODE_OF_CONDUCT.md)
 
-## Important Note
-As we continue to improve our Community PowerShell module we have begun work on the next version of the module. As we are working on refactoring the module we will focus our attention on the refactor branch. As a result of this code rewrite we are focussed on the 
-`rubrik-sdk-for-powershell/Refactor` branch. We do still take issues and pull requests but we are mostly focussed on bug fixes in the existing branch.
-
-### Moving forward
-We will continue to support the issues and pull requests coming in, but for the 4.0 version of the module we will focus on bug fixes and security risks. New features and functionality will be implemented in the refactored 4.1 release of the module. If you have any questions in regards to this feel free to reach out to us.
-
 # :pushpin: License
 
 * [MIT License](LICENSE)

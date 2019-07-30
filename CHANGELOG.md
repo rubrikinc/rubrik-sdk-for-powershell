@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-30
+
+### Changed [readme.md]
+
+* Removed references to the completed refactor branch [Issue 411](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/411)
+
 ## 2019-07-26
 
 ### Added [Various Unit Tests]
