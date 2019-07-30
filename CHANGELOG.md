@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed [Set-RubrikSLA]
 
 * Added ability to configure archival and replication settings to address [Issue 368](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/368)
+* Changed logic for $AdvancedConfig. It's not required anymore to set this parameter directly when piping from Get-RubrikSLA and advanced configuration was already enabled.
 
 ## 2019-07-23
 
