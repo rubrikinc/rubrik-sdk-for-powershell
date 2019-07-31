@@ -17,13 +17,49 @@ function New-RubrikSLA
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikSLA.html
 
       .EXAMPLE
-      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24
-      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours.
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7
+
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days.
 
       .EXAMPLE
-      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 24 -DailyFrequency 1 -DailyRetention 30
-      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 24 hours
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30
+
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days
       while also keeping one backup per day for 30 days.
+
+      .EXAMPLE
+      New-RubrikSLA -SLA 'Test1' -AdvancedConfig -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -WeeklyFrequency 1 -WeeklyRetention 4 -DayOfWeek Friday -YearlyFrequency 1 -YearlyRetention 3 -DayOfYear LastDay -YearStartMonth February
+
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days
+      while also keeping one backup per day for 30 days, one backup per week for 4 weeks and one backup per year for 3 years. 
+      The weekly backups will be created on Fridays and the yearly backups will be created on January 31 because the year is set
+      to start in February. The advanced SLA configuration can only be used with CDM version 5.0 and above.
+
+      .EXAMPLE
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -BackupStartHour 22 -BackupStartMinute 00 -BackupWindowDuration 8
+
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days. 
+      Backups are allowed to run between 22:00 and 6:00AM.
+
+      .EXAMPLE
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -FirstFullBackupStartHour 21 -FirstFullBackupStartMinute 30 -FirstFullBackupWindowDuration 57 -FirstFullBackupDay Friday
+
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days. 
+      The first full backup is allowed to be taken between Friday 21:30 and Monday 6:30AM.
+      
+      .EXAMPLE
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Archival -ArchivalLocationId 53aef5df-b628-4b61-aade-6520a2a5ba4d -LocalRetention 14 -InstantArchive
+
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days,
+      while also keeping one backup per day for 30 days. At the same time, data is immediately copied to the specified archival location 
+      and will be kept there for 14 days.
+
+      .EXAMPLE
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Replication -ReplicationTargetId 8b4fe6f6-cc87-4354-a125-b65e23cf8c90 -RemoteRetention 5
+      
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days,
+      while also keeping one backup per day for 30 days. At the same time, data is replicated to the specified target cluster 
+      and will be kept there for 5 days.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -107,6 +143,22 @@ function New-RubrikSLA
     [String]$FirstFullBackupDay,
     # Number of hours during which the first full backup is allowed to run
     [int]$FirstFullBackupWindowDuration,
+    # Whether to enable archival
+    [switch]$Archival,
+    # Time in days to keep backup data locally on the cluster.
+    [int]$LocalRetention,
+    # ID of the archival location
+    [String]$ArchivalLocationId,
+    # Polaris Managed ID
+    [String]$PolarisID,
+    # Whether to enable Instant Archive
+    [switch]$InstantArchive,
+    # Whether to enable replication
+    [switch]$Replication,
+    # ID of the replication target
+    [String]$ReplicationTargetId,
+    # Time in days to keep data on the replication target.
+    [int]$RemoteRetention,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -147,6 +199,8 @@ function New-RubrikSLA
         frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
+        archivalSpecs = @()
+        replicationSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
         advancedUiConfig = @()
       }
@@ -157,6 +211,8 @@ function New-RubrikSLA
         frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
+        archivalSpecs = @()
+        replicationSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
       }
     # Build the body for CDM versions prior to 5.0
@@ -166,6 +222,8 @@ function New-RubrikSLA
         frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
+        archivalSpecs = @()
+        replicationSpecs = @()
       }
     }
     
@@ -210,7 +268,41 @@ function New-RubrikSLA
       }
     }
 
-    # Populate the body according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
+    # Convert LocalRetention and RemoteRetention values to seconds
+    $LocalRetention = $LocalRetention * 86400
+    $RemoteRetention = $RemoteRetention * 86400
+
+    # Populate the body with archival specifications
+    if ($uri.contains('v2') -and $Archival) {
+      if ($ArchivalLocationId -and $PolarisID -and ($InstantArchive.IsPresent -eq $true)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1;polarisManagedId=$PolarisID}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $true)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocationId -and $PolarisID -and ($InstantArchive.IsPresent -eq $false)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention;polarisManagedId=$PolarisID}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $false)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention}
+        $body.localRetentionLimit = $LocalRetention
+      }
+    } elseif ($Archival) {
+        if ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $true)) {
+          $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1}
+          $body.localRetentionLimit = $LocalRetention
+        } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $false)) {
+          $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention}
+          $body.localRetentionLimit = $LocalRetention
+        }
+    }
+
+    # Populate the body with replication specifications
+    if ($Replication -and $ReplicationTargetId -and $RemoteRetention) {
+      $body.replicationSpecs += @{locationId=$ReplicationTargetId;retentionLimit=$RemoteRetention}
+    }
+
+    # Populate the body with frequencies and retentions according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
     if ($HourlyFrequency -and $HourlyRetention) {
       if (($uri.contains('v2')) -and $AdvancedConfig) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}

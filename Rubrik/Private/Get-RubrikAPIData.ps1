@@ -1125,6 +1125,15 @@ function Get-RubrikAPIData($endpoint) {
                             dayOfWeek = 'dayOfWeek'
                         }
                         durationInHours  = 'durationInHours'
+                    }
+                    localRetentionLimit = 'localRetentionLimit'
+                    archivalSpecs       = @{
+                        locationId        = 'locationId'
+                        archivalThreshold = 'archivalThreshold'
+                    }
+                    replicationSpecs = @{
+                        locationId     = 'locationId'
+                        retentionLimit = 'retentionLimit'
                     }    
                 }
                 Query       = ''
@@ -1143,6 +1152,10 @@ function Get-RubrikAPIData($endpoint) {
                         frequency = 'frequency'
                         retention = 'retention'
                     }
+                    advancedUiConfig = @{
+                        timeUnit      = 'timeUnit'
+                        retentionType = 'retentionType'
+                    }
                     allowedBackupWindows = @{
                         startTimeAttributes = @{
                             minutes   = 'minutes'
@@ -1157,11 +1170,17 @@ function Get-RubrikAPIData($endpoint) {
                             dayOfWeek = 'dayOfWeek'
                         }
                         durationInHours  = 'durationInHours'
-                    }    
-                    advancedUiConfig = @{
-                        timeUnit      = 'timeUnit'
-                        retentionType = 'retentionType'
                     }
+                    localRetentionLimit = 'localRetentionLimit'
+                    archivalSpecs       = @{
+                        locationId        = 'locationId'
+                        polarisManagedId  = 'polarisManagedId'
+                        archivalThreshold = 'archivalThreshold'
+                    }
+                    replicationSpecs = @{
+                        locationId     = 'locationId'
+                        retentionLimit = 'retentionLimit'
+                    }    
                 }
                 Query       = ''
                 Result      = ''
