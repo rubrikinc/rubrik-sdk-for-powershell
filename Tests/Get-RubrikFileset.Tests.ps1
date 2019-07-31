@@ -68,12 +68,6 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
                 Should -BeExactly 3
         }
 
-        It -Name '-NameFilter should not filter and use in-fix search-partial' -Test {
-            Write-Verbose ( Get-RubrikFileset -NameFilter 'Fileset2'|Out-string) -Verbose
-            @( Get-RubrikFileset -NameFilter 'Fileset2').Count |
-                Should -BeExactly 2
-        }
-
         It -Name '-HostName should filter and not use in-fix search' -Test {
             @( Get-RubrikFileset -HostName 'Server').Count |
                 Should -BeExactly 1
@@ -84,20 +78,15 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
                 Should -BeExactly 3
         }
 
-        It -Name '-HostNameFilter should not filter and use in-fix search-partial' -Test {
-            @( Get-RubrikFileset -HostNameFilter 'Server2').Count |
-                Should -BeExactly 2
-        }
-
         It -Name 'SLA mapping' -Test {
             ( Get-RubrikFileset -SLA 'sla_name').effectiveSlaDomainName |
                 Should -BeExactly 'sla_name'
         } 
    
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 8
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 6
         Assert-MockCalled -CommandName Get-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 8
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 6
     }
     Context -Name 'Parameter Validation' {
         It -Name 'ID Missing' -Test {
