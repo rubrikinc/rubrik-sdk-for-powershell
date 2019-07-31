@@ -45,6 +45,20 @@ Get-RubrikSQLInstance -Hostname msf-sql2016
 
 Retrieves all the SQL instances on host msf-sql2016
 
+### EXAMPLE 4
+```
+Get-RubrikSQLInstance -PrimaryClusterID local
+```
+
+Only return SQLInstances of the Rubrik cluster that is hosting the current REST API session.
+
+### EXAMPLE 5
+```
+Get-RubrikSQLInstance -PrimaryClusterID 8b4fe6f6-cc87-4354-a125-b65e23cf8c90
+```
+
+Only return SQLInstances of the specified id of the Rubrik cluster that is hosting the current REST API session.
+
 ## PARAMETERS
 
 ### -Name
@@ -109,7 +123,7 @@ Accept wildcard characters: False
 
 ### -PrimaryClusterID
 Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
-Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+Use: local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
 
 ```yaml
 Type: String

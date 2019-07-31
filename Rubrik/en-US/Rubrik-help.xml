@@ -8517,7 +8517,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="primary_cluster_id">
           <maml:name>PrimaryClusterID</maml:name>
           <maml:Description>
-            <maml:para>Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use _local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.</maml:para>
+            <maml:para>Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use: local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -8628,7 +8628,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="primary_cluster_id">
         <maml:name>PrimaryClusterID</maml:name>
         <maml:Description>
-          <maml:para>Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use _local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.</maml:para>
+          <maml:para>Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use: local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -8713,6 +8713,20 @@
         <dev:code>Get-RubrikSQLInstance -Hostname msf-sql2016</dev:code>
         <dev:remarks>
           <maml:para>Retrieves all the SQL instances on host msf-sql2016</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <dev:code>Get-RubrikSQLInstance -PrimaryClusterID local</dev:code>
+        <dev:remarks>
+          <maml:para>Only return SQLInstances of the Rubrik cluster that is hosting the current REST API session.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+        <dev:code>Get-RubrikSQLInstance -PrimaryClusterID 8b4fe6f6-cc87-4354-a125-b65e23cf8c90</dev:code>
+        <dev:remarks>
+          <maml:para>Only return SQLInstances of the specified id of the Rubrik cluster that is hosting the current REST API session.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
