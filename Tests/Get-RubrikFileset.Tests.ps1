@@ -54,17 +54,38 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
             }
         }
         It -Name 'No parameters returns all results' -Test {
-            ( Get-RubrikFileset).Count |
+            @( Get-RubrikFileset).Count |
                 Should -BeExactly 3
         }
 
         It -Name '-Name should filter and not use in-fix search' -Test {
-            ( Get-RubrikFileset -Name 'Fileset').Count |
+            @( Get-RubrikFileset -Name 'Fileset').Count |
                 Should -BeExactly 1
         }
 
         It -Name '-NameFilter should not filter and use in-fix search' -Test {
-            ( Get-RubrikFileset -NameFilter 'Fileset').Count |
+            @( Get-RubrikFileset -NameFilter 'Fileset').Count |
+                Should -BeExactly 3
+        }
+
+        It -Name '-NameFilter should not filter and use in-fix search-partial' -Test {
+            Write-Verbose ( Get-RubrikFileset -NameFilter 'Fileset2'|Out-string) -Verbose
+            @( Get-RubrikFileset -NameFilter 'Fileset2').Count |
+                Should -BeExactly 2
+        }
+
+        It -Name '-HostName should filter and not use in-fix search' -Test {
+            @( Get-RubrikFileset -HostName 'Server').Count |
+                Should -BeExactly 1
+        }
+
+        It -Name '-HostNameFilter should not filter and use in-fix search' -Test {
+            @( Get-RubrikFileset -HostNameFilter 'Server').Count |
+                Should -BeExactly 3
+        }
+
+        It -Name '-HostNameFilter should not filter and use in-fix search-partial' -Test {
+            @( Get-RubrikFileset -HostNameFilter 'Server2').Count |
                 Should -BeExactly 2
         }
 
@@ -74,9 +95,9 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
         } 
    
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Get-RubrikSLA -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 8
+        Assert-MockCalled -CommandName Get-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 8
     }
     Context -Name 'Parameter Validation' {
         It -Name 'ID Missing' -Test {
