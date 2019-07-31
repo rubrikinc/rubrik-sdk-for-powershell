@@ -23,6 +23,10 @@ function Get-RubrikReportData
       .EXAMPLE
       Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance'
       This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"
+
+      .EXAMPLE
+      Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance' -Limit 10
+      This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance", only returns the first 10 results.
   #>
 
   [CmdletBinding()]
