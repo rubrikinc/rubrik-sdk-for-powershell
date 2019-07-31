@@ -22,8 +22,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added support for archival and replication settings to New-RubrikSLA to address [Issue 367](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/367)
 
-## 2019-07-23
-
 ### Changed [Set-RubrikSLA]
 
 * Removed unnecessary braces for the frequencies array in the request body when using API v2 to address [Issue 391](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/391)
