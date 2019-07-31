@@ -45,7 +45,18 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
         It -Name 'No parameters returns all results' -Test {
             ( Get-RubrikFileset).Count |
                 Should -BeExactly 2
-        } 
+        }
+
+        It -Name '-Name should filter and not use in-fix search' -Test {
+            ( Get-RubrikFileset -Name 'Fileset').Count |
+                Should -BeExactly 1
+        }
+
+        It -Name '-NameFilter should not filter and use in-fix search' -Test {
+            ( Get-RubrikFileset -Name 'Fileset').Count |
+                Should -BeExactly 2
+        }
+
         It -Name 'SLA mapping' -Test {
             ( Get-RubrikFileset -SLA 'sla_name').effectiveSlaDomainName |
                 Should -BeExactly 'sla_name'
