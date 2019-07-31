@@ -51,7 +51,7 @@ function Get-RubrikReportData
     [ValidateSet('InCompliance','NonCompliance')]
     [String]$ComplianceStatus,  
     #limit the number of rows returned, defaults to maximum pageSize of 9999
-    [int]$limit = 9999,  
+    [int]$limit,
     #cursor start (if necessary)
     [string]$cursor,
     # Rubrik server IP or FQDN
@@ -78,6 +78,10 @@ function Get-RubrikReportData
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
   
+    # Set limit to default of 9999 if not set
+    if ($null -eq $PSBoundParameters.limit) {
+      $PSBoundParameters.Add('limit',9999) | Out-Null
+    }
   }
 
   Process {
