@@ -156,6 +156,24 @@ function Get-RubrikFileset
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
+    # This block of code will filter results if -Name or -Hostname are used, probably should move to a private function
+    if ('Query' -eq $PSCmdlet.ParameterSetName) {
+      if ($null -ne $PSBoundParameters.Name) {
+        $OldCount = @($Result).count
+
+        $result = $result | Where-Object {$Name -eq $_.name}
+
+        Write-Verbose ('Excluded results not matching -Name ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $Name,(@($Result).count-$OldCount),@($Result).count)
+      }
+      if ($null -ne $PSBoundParameters.HostName) {
+        $OldCount = @($Result).count
+
+        $result = $result | Where-Object {$HostName -eq $_.hostName}
+
+        Write-Verbose ('Excluded results not matching -HostName ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $HostName,(@($Result).count-$OldCount),@($Result).count)
+      }
+    }
+
     # If the Get-RubrikFileset function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
       for ($i = 0; $i -lt @($result).Count; $i++) {
