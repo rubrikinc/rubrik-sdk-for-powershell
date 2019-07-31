@@ -523,7 +523,6 @@ function Set-RubrikSLA
     # If RemoteRetention is set directly, convert its value in seconds
     if ($RemoteRetention -lt 86400) {
       $RemoteRetention = $RemoteRetention * 86400
-      Write-Verbose -Message "Local retention limit is set to $RemoteRetention"
     }
 
     # Populate the body with the allowed backup window settings
