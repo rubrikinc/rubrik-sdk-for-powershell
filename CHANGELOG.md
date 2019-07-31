@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-07-31
 
+### Fixed [Get-RubrikSQLInstance]
+
+* The Get-RubrikSQLInstance PrimaryClusterID had a bug as reported in issue [Issue 399](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/399)
+* Updated parameter help to correctly suggest `local` to be used
+* Added additional examples that describe usage of the -PrimaryClusterID parameter
+
 ### Changed [Get-RubrikReportData]
 
 * Default behavior of Get-RubrikReportData updated to reflect default behavior of other parameters, setting limit to maximum amount unless specified. [Issue 408](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/408)
