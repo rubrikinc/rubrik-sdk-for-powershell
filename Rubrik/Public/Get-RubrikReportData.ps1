@@ -46,8 +46,8 @@ function Get-RubrikReportData
     [Alias('compliance_status')]
     [ValidateSet('InCompliance','NonCompliance')]
     [String]$ComplianceStatus,  
-    #limit the number of rows returned
-    [int]$limit,  
+    #limit the number of rows returned, defaults to maximum pageSize of 9999
+    [int]$limit = 9999,  
     #cursor start (if necessary)
     [string]$cursor,
     # Rubrik server IP or FQDN
