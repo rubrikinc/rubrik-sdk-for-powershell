@@ -26,7 +26,8 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
-                'name'                   = 'Fileset1'
+                'name'                   = 'Fileset'
+                'hostname'               = 'Server'
                 'id'                     = 'Fileset:::111111-2222-3333-4444-555555555555'
                 'isRelic'                = 'False'
                 'effectiveSlaDomainName' = 'sla_name'
@@ -35,7 +36,17 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
             },
             @{ 
                 'name'                   = 'Fileset2'
+                'hostname'               = 'Server2'
                 'id'                     = 'Fileset:::111111-2222-3333-4444-6666666666666'
+                'isRelic'                = 'False'
+                'effectiveSlaDomainName' = 'sla_name2'
+                'effectiveSlaDomainId'   = 'sla_id2'
+                'primaryClusterId'       = 'cluster_id2'   
+            },
+            @{ 
+                'name'                   = 'Fileset20'
+                'hostname'               = 'Server20'
+                'id'                     = 'Fileset:::111111-2222-3333-4444-7777777777777'
                 'isRelic'                = 'False'
                 'effectiveSlaDomainName' = 'sla_name2'
                 'effectiveSlaDomainId'   = 'sla_id2'
@@ -44,7 +55,7 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
         }
         It -Name 'No parameters returns all results' -Test {
             ( Get-RubrikFileset).Count |
-                Should -BeExactly 2
+                Should -BeExactly 3
         }
 
         It -Name '-Name should filter and not use in-fix search' -Test {
@@ -53,7 +64,7 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
         }
 
         It -Name '-NameFilter should not filter and use in-fix search' -Test {
-            ( Get-RubrikFileset -Name 'Fileset').Count |
+            ( Get-RubrikFileset -NameFilter 'Fileset').Count |
                 Should -BeExactly 2
         }
 
