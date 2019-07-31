@@ -18,43 +18,45 @@ function New-RubrikSLA
 
       .EXAMPLE
       New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7
+
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days.
 
       .EXAMPLE
       New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30
+
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days
       while also keeping one backup per day for 30 days.
 
       .EXAMPLE
-      New-RubrikSLA -SLA 'Test1' -AdvancedConfig -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30
-      -WeeklyFrequency 1 -WeeklyRetention 4 -DayOfWeek Friday -YearlyFrequency 1 -YearlyRetention 3 -DayOfYear LastDay -YearStartMonth February
+      New-RubrikSLA -SLA 'Test1' -AdvancedConfig -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -WeeklyFrequency 1 -WeeklyRetention 4 -DayOfWeek Friday -YearlyFrequency 1 -YearlyRetention 3 -DayOfYear LastDay -YearStartMonth February
+
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days
       while also keeping one backup per day for 30 days, one backup per week for 4 weeks and one backup per year for 3 years. 
       The weekly backups will be created on Fridays and the yearly backups will be created on January 31 because the year is set
       to start in February. The advanced SLA configuration can only be used with CDM version 5.0 and above.
 
       .EXAMPLE
-      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 
-      -BackupStartHour 22 -BackupStartMinute 00 -BackupWindowDuration 8
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -BackupStartHour 22 -BackupStartMinute 00 -BackupWindowDuration 8
+
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days. 
       Backups are allowed to run between 22:00 and 6:00AM.
 
       .EXAMPLE
-      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 
-      -FirstFullBackupStartHour 21 -FirstFullBackupStartMinute 30 -FirstFullBackupWindowDuration 57 -FirstFullBackupDay Friday
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -FirstFullBackupStartHour 21 -FirstFullBackupStartMinute 30 -FirstFullBackupWindowDuration 57 -FirstFullBackupDay Friday
+
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days. 
       The first full backup is allowed to be taken between Friday 21:30 and Monday 6:30AM.
       
       .EXAMPLE
-      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Archival 
-      -ArchivalLocationId 53aef5df-b628-4b61-aade-6520a2a5ba4d -LocalRetention 14 -InstantArchive
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Archival -ArchivalLocationId 53aef5df-b628-4b61-aade-6520a2a5ba4d -LocalRetention 14 -InstantArchive
+
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days,
       while also keeping one backup per day for 30 days. At the same time, data is immediately copied to the specified archival location 
       and will be kept there for 14 days.
 
       .EXAMPLE
-      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Replication 
-      -ReplicationTargetId 8b4fe6f6-cc87-4354-a125-b65e23cf8c90 -RemoteRetention 5
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Replication -ReplicationTargetId 8b4fe6f6-cc87-4354-a125-b65e23cf8c90 -RemoteRetention 5
+      
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days,
       while also keeping one backup per day for 30 days. At the same time, data is replicated to the specified target cluster 
       and will be kept there for 5 days.
