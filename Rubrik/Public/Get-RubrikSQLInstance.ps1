@@ -1,34 +1,37 @@
 #requires -Version 3
 function Get-RubrikSQLInstance
 {
-  <#  
-      .SYNOPSIS
-      Gets internal Rubrik object that represents a SQL Server instance
+<#  
+    .SYNOPSIS
+    Gets internal Rubrik object that represents a SQL Server instance
 
-      .DESCRIPTION
-      Returns internal Rubrik object that represents a SQL Server instance. This 
+    .DESCRIPTION
+    Returns internal Rubrik object that represents a SQL Server instance. This 
 
-      .NOTES
-      Written by Mike Fal for community usage
-      Twitter: @Mike_Fal
-      GitHub: MikeFal
+    .NOTES
+    Written by Mike Fal for community usage
+    Twitter: @Mike_Fal
+    GitHub: MikeFal
 
-      .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+    .LINK
+    http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
-      .EXAMPLE
-      Get-RubrikSQLInstance -Name MSSQLSERVER
-      Retrieve all default SQL instances managed by Rubrik
+    .EXAMPLE
+    Get-RubrikSQLInstance -Name MSSQLSERVER
+    Retrieve all default SQL instances managed by Rubrik
 
-      .EXAMPLE
-      Get-RubrikSQLInstance -ServerInstance msf-sql2016
-      Retrieve the default SQL instance on host msf-sql2016
+    .EXAMPLE
+    Get-RubrikSQLInstance -ServerInstance msf-sql2016
+    Retrieve the default SQL instance on host msf-sql2016
 
-      .EXAMPLE
-      Get-RubrikSQLInstance -Hostname msf-sql2016
-      Retrieves all the SQL instances on host msf-sql2016
+    .EXAMPLE
+    Get-RubrikSQLInstance -Hostname msf-sql2016
+    Retrieves all the SQL instances on host msf-sql2016
 
-  #>
+    .EXAMPLE
+    Get-RubrikSQLInstance -PrimaryClusterID local
+    Only return local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+#>
 
   [CmdletBinding()]
   Param(
