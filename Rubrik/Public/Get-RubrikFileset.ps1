@@ -62,22 +62,30 @@ function Get-RubrikFileset
     [switch]$DetailedObject,
     # SLA Domain policy assigned to the database
     [Parameter(ParameterSetName='Query')]
+    [ValidateNotNullOrEmpty()]
     [String]$SLA,
-    # Name of the host using a fileset
+    # Exact name of the host using a fileset
     [Parameter(ParameterSetName='Query')]
     [Alias('host_name')]
+    [ValidateNotNullOrEmpty()]
     [String]$HostName,
+    [Parameter(ParameterSetName='HostFilter')]
+    [ValidateNotNullOrEmpty()]
+    [String]$HostNameFilter,
     # Filter the summary information based on the ID of a fileset template.
     [Parameter(ParameterSetName='Query')]
     [Alias('template_id')]
+    [ValidateNotNullOrEmpty()]
     [String]$TemplateID,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Parameter(ParameterSetName='Query')]
     [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,        
+    [ValidateNotNullOrEmpty()]
+    [String]$PrimaryClusterID,
     # Rubrik's Share id
     [Parameter(ParameterSetName='Query')]
     [Alias('share_id')]
+    [ValidateNotNullOrEmpty()]
     [String]$ShareID,
     # Rubrik's fileset id
     [Parameter(ParameterSetName='ID')]
@@ -87,7 +95,8 @@ function Get-RubrikFileset
     # SLA id value
     [Parameter(ParameterSetName='Query')]
     [Alias('effective_sla_domain_id')]
-    [String]$SLAID,    
+    [ValidateNotNullOrEmpty()]
+    [String]$SLAID,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Query')]
     [Parameter(ParameterSetName='ID')]
