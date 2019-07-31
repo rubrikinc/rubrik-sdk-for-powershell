@@ -78,9 +78,10 @@ function Get-RubrikReportData
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
   
-    # Set limit to default of 9999 if not set
+    # Set limit to default of 9999 if not set, both limit and psboundparameters are set, this is because New-BodyString builds the query using both variables
     if ($null -eq $PSBoundParameters.limit) {
       $PSBoundParameters.Add('limit',9999) | Out-Null
+      $limit = 9999
     }
   }
 
