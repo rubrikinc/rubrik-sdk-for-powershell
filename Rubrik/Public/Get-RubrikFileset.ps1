@@ -31,6 +31,18 @@ function Get-RubrikFileset
       This will return details on the fileset named "C_Drive" assigned to any hosts with an SLA Domain matching "Gold"
 
       .EXAMPLE
+      Get-RubrikFileset -NameFilter '_Drive' -SLA Gold
+      This will return details on the filesets that contain the string "_Drive" in its name and are assigned to any hosts with an SLA Domain matching "Gold"
+
+      .EXAMPLE
+      Get-RubrikFileset -HostName 'mssqlserver01' -SLA Gold
+      This will return details on the filesets for the hostname "mssqlserver01" and are assigned to any hosts with an SLA Domain matching "Gold"
+
+      .EXAMPLE
+      Get-RubrikFileset -HostNameFilter 'mssql' -SLA Gold
+      This will return details on the filesets that contain the string "mssql" in its parent's hostname and are assigned to any hosts with an SLA Domain matching "Gold"
+
+      .EXAMPLE
       Get-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
       This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
 
@@ -55,7 +67,7 @@ function Get-RubrikFileset
     [String]$Name,
     [Parameter(ParameterSetName='Filter')]
     [ValidateNotNullOrEmpty()]
-    [String]$Filter,
+    [String]$NameFilter,
     # Exact name of the host using a fileset
     [Parameter(ParameterSetName='Query')]
     [Alias('host_name')]
@@ -64,7 +76,7 @@ function Get-RubrikFileset
     [String]$HostName,
     [Parameter(ParameterSetName='Filter')]
     [ValidateNotNullOrEmpty()]
-    [String]$HostFilter,
+    [String]$HostNameFilter,
     # Rubrik's fileset id
     [Parameter(ParameterSetName='ID')]
     [Parameter(ValueFromPipelineByPropertyName = $true)]    
