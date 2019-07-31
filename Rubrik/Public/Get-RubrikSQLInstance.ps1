@@ -1,34 +1,41 @@
 #requires -Version 3
 function Get-RubrikSQLInstance
 {
-  <#  
-      .SYNOPSIS
-      Gets internal Rubrik object that represents a SQL Server instance
+<#  
+    .SYNOPSIS
+    Gets internal Rubrik object that represents a SQL Server instance
 
-      .DESCRIPTION
-      Returns internal Rubrik object that represents a SQL Server instance. This 
+    .DESCRIPTION
+    Returns internal Rubrik object that represents a SQL Server instance. This 
 
-      .NOTES
-      Written by Mike Fal for community usage
-      Twitter: @Mike_Fal
-      GitHub: MikeFal
+    .NOTES
+    Written by Mike Fal for community usage
+    Twitter: @Mike_Fal
+    GitHub: MikeFal
 
-      .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+    .LINK
+    http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
-      .EXAMPLE
-      Get-RubrikSQLInstance -Name MSSQLSERVER
-      Retrieve all default SQL instances managed by Rubrik
+    .EXAMPLE
+    Get-RubrikSQLInstance -Name MSSQLSERVER
+    Retrieve all default SQL instances managed by Rubrik
 
-      .EXAMPLE
-      Get-RubrikSQLInstance -ServerInstance msf-sql2016
-      Retrieve the default SQL instance on host msf-sql2016
+    .EXAMPLE
+    Get-RubrikSQLInstance -ServerInstance msf-sql2016
+    Retrieve the default SQL instance on host msf-sql2016
 
-      .EXAMPLE
-      Get-RubrikSQLInstance -Hostname msf-sql2016
-      Retrieves all the SQL instances on host msf-sql2016
+    .EXAMPLE
+    Get-RubrikSQLInstance -Hostname msf-sql2016
+    Retrieves all the SQL instances on host msf-sql2016
 
-  #>
+    .EXAMPLE
+    Get-RubrikSQLInstance -PrimaryClusterID local
+    Only return SQLInstances of the Rubrik cluster that is hosting the current REST API session.
+
+    .EXAMPLE
+    Get-RubrikSQLInstance -PrimaryClusterID 8b4fe6f6-cc87-4354-a125-b65e23cf8c90
+    Only return SQLInstances of the specified id of the Rubrik cluster that is hosting the current REST API session.
+#>
 
   [CmdletBinding()]
   Param(
@@ -41,7 +48,7 @@ function Get-RubrikSQLInstance
        [String]$Hostname,
        #ServerInstance name (combined hostname\instancename)
        [String]$ServerInstance,
-       # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+       # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use: local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
        [Alias('primary_cluster_id')]
        [String]$PrimaryClusterID,    
        # Rubrik's database id value
