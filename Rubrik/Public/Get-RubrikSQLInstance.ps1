@@ -30,7 +30,11 @@ function Get-RubrikSQLInstance
 
     .EXAMPLE
     Get-RubrikSQLInstance -PrimaryClusterID local
-    Only return local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    Only return SQLInstances of the Rubrik cluster that is hosting the current REST API session.
+
+    .EXAMPLE
+    Get-RubrikSQLInstance -PrimaryClusterID 8b4fe6f6-cc87-4354-a125-b65e23cf8c90
+    Only return SQLInstances of the specified id of the Rubrik cluster that is hosting the current REST API session.
 #>
 
   [CmdletBinding()]
