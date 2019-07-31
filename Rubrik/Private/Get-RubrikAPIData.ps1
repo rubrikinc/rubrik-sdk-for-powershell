@@ -659,6 +659,7 @@ function Get-RubrikAPIData($endpoint) {
                 Body        = ''
                 Query       = @{
                     instance_id = 'instance_id'
+                    primary_cluster_id = 'primary_cluster_id'
                 }
                 Result      = 'data'
                 Filter      = @{
