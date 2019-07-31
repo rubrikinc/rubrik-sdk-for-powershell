@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-31
+
+### Changed [Get-RubrikReportData]
+
+* Default behavior of Get-RubrikReportData updated to reflect default behavior of other parameters, setting limit to maximum amount unless specified. [Issue 408](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/408)
+
 ## 2019-07-30
 
 ### Changed [readme.md]
