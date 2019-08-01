@@ -23,8 +23,11 @@ Set-RubrikSLA [-id] <String> [[-Name] <String>] [[-HourlyFrequency] <Int32>] [[-
  [-AdvancedConfig] [[-BackupStartHour] <Int32>] [[-BackupStartMinute] <Int32>]
  [[-BackupWindowDuration] <Int32>] [[-FirstFullBackupStartHour] <Int32>]
  [[-FirstFullBackupStartMinute] <Int32>] [[-FirstFullBackupDay] <String>]
- [[-FirstFullBackupWindowDuration] <Int32>] [[-Frequencies] <Object[]>] [[-AdvancedFreq] <Object[]>]
- [[-BackupWindows] <Object[]>] [[-FirstFullBackupWindows] <Object[]>] [[-Server] <String>] [[-api] <String>]
+ [[-FirstFullBackupWindowDuration] <Int32>] [-Archival] [[-LocalRetention] <Int32>]
+ [[-ArchivalLocationId] <String>] [[-PolarisID] <String>] [-InstantArchive] [-Replication]
+ [[-ReplicationTargetId] <String>] [[-RemoteRetention] <Int32>] [[-Frequencies] <Object[]>]
+ [[-AdvancedFreq] <Object[]>] [[-BackupWindows] <Object[]>] [[-FirstFullBackupWindows] <Object[]>]
+ [[-ArchivalSpecs] <Object[]>] [[-ReplicationSpecs] <Object[]>] [[-Server] <String>] [[-api] <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -74,10 +77,46 @@ This will update the SLA Domain named "Gold" to take the first full snapshot bet
 
 ### EXAMPLE 6
 ```
+Get-RubrikSLA -Name Gold | Set-RubrikSLA -Archival -ArchivalLocationId 64e27685-f1d9-4243-a2d4-78dbf5e8b43d -LocalRetention 30
+```
+
+This will update the SLA Domain named "Gold" to keep data locally for 30 days before sending it to the specified archival location.
+
+### EXAMPLE 7
+```
+Get-RubrikSLA -Name Gold | Set-RubrikSLA -InstantArchive
+```
+
+This will update the SLA Domain named "Gold" to enable Instant Archive, assuming that archival was already configured.
+Ommitting this parameter will disable Instant Archive.
+
+### EXAMPLE 8
+```
+Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication -ReplicationTargetId eeece05e-980f-4d32-953e-d236b65ff6fd -RemoteRetention 7
+```
+
+This will update the SLA Domain named "Gold" to replicate snapshots to the specified cluster and keep them for 7 days remotely.
+
+### EXAMPLE 9
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -AdvancedConfig
 ```
 
 This will update the SLA Domain named "Gold" to only enable Advanced Configuration
+
+### EXAMPLE 10
+```
+Get-RubrikSLA -Name Gold | Set-RubrikSLA -Archival:$false
+```
+
+This will update the SLA Domain named "Gold" to only disable archival
+
+### EXAMPLE 11
+```
+Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication:$false
+```
+
+This will update the SLA Domain named "Gold" to only disable replication
 
 ## PARAMETERS
 
@@ -143,7 +182,7 @@ Accept wildcard characters: False
 ```
 
 ### -HourlyRetentionType
-Retention type to apply to hourly snapshots when $AdvancedConfig is used.
+Retention type to apply to hourly snapshots when advanced configuration is enabled.
 Does not apply to CDM versions prior to 5.0
 
 ```yaml
@@ -190,7 +229,7 @@ Accept wildcard characters: False
 ```
 
 ### -DailyRetentionType
-Retention type to apply to daily snapshots when $AdvancedConfig is used.
+Retention type to apply to daily snapshots when advanced configuration is enabled.
 Does not apply to CDM versions prior to 5.0
 
 ```yaml
@@ -236,7 +275,7 @@ Accept wildcard characters: False
 ```
 
 ### -DayOfWeek
-Day of week for the weekly snapshots when $AdvancedConfig is used.
+Day of week for the weekly snapshots when advanced configuration is enabled.
 The default is Saturday.
 Does not apply to CDM versions prior to 5.0
 
@@ -284,7 +323,7 @@ Accept wildcard characters: False
 ```
 
 ### -DayOfMonth
-Day of month for the monthly snapshots when $AdvancedConfig is used.
+Day of month for the monthly snapshots when advanced configuration is enabled.
 The default is the last day of the month.
 Does not apply to CDM versions prior to 5.0
 
@@ -349,7 +388,7 @@ Accept wildcard characters: False
 ```
 
 ### -DayOfQuarter
-Day of quarter for the quarterly snapshots when $AdvancedConfig is used.
+Day of quarter for the quarterly snapshots when advanced configuration is enabled.
 The default is the last day of the quarter.
 Does not apply to CDM versions prior to 5.0
 
@@ -366,7 +405,7 @@ Accept wildcard characters: False
 ```
 
 ### -FirstQuarterStartMonth
-Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used.
+Month that starts the first quarter of the year for the quarterly snapshots when advanced configuration is enabled.
 The default is January.
 Does not apply to CDM versions prior to 5.0
 
@@ -430,7 +469,7 @@ Accept wildcard characters: False
 ```
 
 ### -DayOfYear
-Day of year for the yearly snapshots when $AdvancedConfig is used.
+Day of year for the yearly snapshots when advanced configuration is enabled.
 The default is the last day of the year.
 Does not apply to CDM versions prior to 5.0
 
@@ -447,7 +486,7 @@ Accept wildcard characters: False
 ```
 
 ### -YearStartMonth
-Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used.
+Month that starts the first quarter of the year for the quarterly snapshots when advanced configuration is enabled.
 The default is January.
 Does not apply to CDM versions prior to 5.0
 
@@ -470,12 +509,12 @@ Does not apply to CDM versions prior to 5.0
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: showAdvancedUi
 
 Required: False
 Position: Named
 Default value: False
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -586,6 +625,126 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Archival
+Whether to enable archival
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LocalRetention
+Time in days to keep backup data locally on the cluster.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: localRetentionLimit
+
+Required: False
+Position: 32
+Default value: 0
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ArchivalLocationId
+ID of the archival location
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 33
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PolarisID
+Polaris Managed ID
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 34
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InstantArchive
+Whether to enable Instant Archive
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Replication
+Whether to enable replication
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReplicationTargetId
+ID of the replication target
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 35
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoteRetention
+Time in days to keep data on the replication target.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 36
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Frequencies
 Retrieves frequencies from Get-RubrikSLA via the pipeline
 
@@ -595,7 +754,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 32
+Position: 37
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -610,7 +769,7 @@ Parameter Sets: (All)
 Aliases: advancedUiConfig
 
 Required: False
-Position: 33
+Position: 38
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -625,7 +784,7 @@ Parameter Sets: (All)
 Aliases: allowedBackupWindows
 
 Required: False
-Position: 34
+Position: 39
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -640,7 +799,37 @@ Parameter Sets: (All)
 Aliases: firstFullAllowedBackupWindows
 
 Required: False
-Position: 35
+Position: 40
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ArchivalSpecs
+Retrieves the archical specifications from Get-RubrikSLA via the pipeline
+
+```yaml
+Type: Object[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 41
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ReplicationSpecs
+Retrieves the replication specifications from Get-RubrikSLA via the pipeline
+
+```yaml
+Type: Object[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 42
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -655,7 +844,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 36
+Position: 43
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -670,7 +859,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 37
+Position: 44
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
