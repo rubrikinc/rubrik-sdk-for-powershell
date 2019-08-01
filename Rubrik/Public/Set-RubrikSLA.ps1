@@ -76,6 +76,7 @@ function Set-RubrikSLA
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
     [Alias('SLA')]
+    [ValidateNotNullOrEmpty()]
     [String]$Name,
     # Hourly frequency to take snapshots
     [int]$HourlyFrequency,
@@ -163,14 +164,17 @@ function Set-RubrikSLA
     [alias('localRetentionLimit')]
     [int]$LocalRetention,
     # ID of the archival location
+    [ValidateNotNullOrEmpty()]
     [String]$ArchivalLocationId,
     # Polaris Managed ID
+    [ValidateNotNullOrEmpty()]
     [String]$PolarisID,
     # Whether to enable Instant Archive
     [switch]$InstantArchive,
     # Whether to enable replication
     [switch]$Replication,
     # ID of the replication target
+    [ValidateNotNullOrEmpty()]
     [String]$ReplicationTargetId,
     # Time in days to keep data on the replication target.
     [int]$RemoteRetention,
