@@ -40,8 +40,28 @@ function Set-RubrikSLA
       This will update the SLA Domain named "Gold" to take the first full snapshot between Friday 21:30PM and Monday 6:30AM, while keeping all other existing parameters.
 
       .EXAMPLE
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -Archival -ArchivalLocationId 64e27685-f1d9-4243-a2d4-78dbf5e8b43d -LocalRetention 30
+      This will update the SLA Domain named "Gold" to keep data locally for 30 days before sending it to the specified archival location.
+
+      .EXAMPLE
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -InstantArchive
+      This will update the SLA Domain named "Gold" to enable Instant Archive, assuming that archival was already configured. Ommitting this parameter will disable Instant Archive.
+
+      .EXAMPLE
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication -ReplicationTargetId eeece05e-980f-4d32-953e-d236b65ff6fd -RemoteRetention 7
+      This will update the SLA Domain named "Gold" to replicate snapshots to the specified cluster and keep them for 7 days remotely.
+
+      .EXAMPLE
       Get-RubrikSLA -Name Gold | Set-RubrikSLA -AdvancedConfig
       This will update the SLA Domain named "Gold" to only enable Advanced Configuration
+
+      .EXAMPLE
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -Archival:$false
+      This will update the SLA Domain named "Gold" to only disable archival
+
+      .EXAMPLE
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication:$false
+      This will update the SLA Domain named "Gold" to only disable replication
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -56,33 +76,34 @@ function Set-RubrikSLA
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
     [Alias('SLA')]
+    [ValidateNotNullOrEmpty()]
     [String]$Name,
     # Hourly frequency to take snapshots
     [int]$HourlyFrequency,
     # Number of days or weeks to retain the hourly snapshots. For CDM versions prior to 5.0 this value must be set in days
     [int]$HourlyRetention,
-    # Retention type to apply to hourly snapshots when $AdvancedConfig is used. Does not apply to CDM versions prior to 5.0
+    # Retention type to apply to hourly snapshots when advanced configuration is enabled. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Daily','Weekly')]
     [String]$HourlyRetentionType='Daily',
     # Daily frequency to take snapshots
     [int]$DailyFrequency,
     # Number of days or weeks to retain the daily snapshots. For CDM versions prior to 5.0 this value must be set in days
     [int]$DailyRetention,
-    # Retention type to apply to daily snapshots when $AdvancedConfig is used. Does not apply to CDM versions prior to 5.0
+    # Retention type to apply to daily snapshots when advanced configuration is enabled. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Daily','Weekly')]
     [String]$DailyRetentionType='Daily',
     # Weekly frequency to take snapshots
     [int]$WeeklyFrequency,
     # Number of weeks to retain the weekly snapshots
     [int]$WeeklyRetention,
-    # Day of week for the weekly snapshots when $AdvancedConfig is used. The default is Saturday. Does not apply to CDM versions prior to 5.0
+    # Day of week for the weekly snapshots when advanced configuration is enabled. The default is Saturday. Does not apply to CDM versions prior to 5.0
     [ValidateSet('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday')]
     [String]$DayOfWeek='Saturday',
     # Monthly frequency to take snapshots
     [int]$MonthlyFrequency,
     # Number of months, quarters or years to retain the monthly backups. For CDM versions prior to 5.0, this value must be set in years
     [int]$MonthlyRetention,
-    # Day of month for the monthly snapshots when $AdvancedConfig is used. The default is the last day of the month. Does not apply to CDM versions prior to 5.0
+    # Day of month for the monthly snapshots when advanced configuration is enabled. The default is the last day of the month. Does not apply to CDM versions prior to 5.0
     [ValidateSet('FirstDay','Fifteenth','LastDay')]
     [String]$DayOfMonth='LastDay',
     # Retention type to apply to monthly snapshots. Does not apply to CDM versions prior to 5.0
@@ -92,10 +113,10 @@ function Set-RubrikSLA
     [int]$QuarterlyFrequency,
     # Number of quarters or years to retain the monthly snapshots. Does not apply to CDM versions prior to 5.0
     [int]$QuarterlyRetention,
-    # Day of quarter for the quarterly snapshots when $AdvancedConfig is used. The default is the last day of the quarter. Does not apply to CDM versions prior to 5.0
+    # Day of quarter for the quarterly snapshots when advanced configuration is enabled. The default is the last day of the quarter. Does not apply to CDM versions prior to 5.0
     [ValidateSet('FirstDay','LastDay')]
     [String]$DayOfQuarter='LastDay',
-    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used. The default is January. Does not apply to CDM versions prior to 5.0
+    # Month that starts the first quarter of the year for the quarterly snapshots when advanced configuration is enabled. The default is January. Does not apply to CDM versions prior to 5.0
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$FirstQuarterStartMonth='January',
     # Retention type to apply to quarterly snapshots. The default is Quarterly. Does not apply to CDM versions prior to 5.0
@@ -105,13 +126,16 @@ function Set-RubrikSLA
     [int]$YearlyFrequency,
     # Number of years to retain the yearly snapshots
     [int]$YearlyRetention,
-    # Day of year for the yearly snapshots when $AdvancedConfig is used. The default is the last day of the year. Does not apply to CDM versions prior to 5.0
+    # Day of year for the yearly snapshots when advanced configuration is enabled. The default is the last day of the year. Does not apply to CDM versions prior to 5.0
     [ValidateSet('FirstDay','LastDay')]
     [String]$DayOfYear='LastDay',
-    # Month that starts the first quarter of the year for the quarterly snapshots when $AdvancedConfig is used. The default is January. Does not apply to CDM versions prior to 5.0
+    # Month that starts the first quarter of the year for the quarterly snapshots when advanced configuration is enabled. The default is January. Does not apply to CDM versions prior to 5.0
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Does not apply to CDM versions prior to 5.0
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('showAdvancedUi')]
     [switch]$AdvancedConfig,
     # Hour from which backups are allowed to run. Uses the 24-hour clock
     [ValidateRange(0,23)]
@@ -132,6 +156,28 @@ function Set-RubrikSLA
     [String]$FirstFullBackupDay,
     # Number of hours during which the first full backup is allowed to run
     [int]$FirstFullBackupWindowDuration,
+    # Whether to enable archival
+    [switch]$Archival,
+    # Time in days to keep backup data locally on the cluster.
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('localRetentionLimit')]
+    [int]$LocalRetention,
+    # ID of the archival location
+    [ValidateNotNullOrEmpty()]
+    [String]$ArchivalLocationId,
+    # Polaris Managed ID
+    [ValidateNotNullOrEmpty()]
+    [String]$PolarisID,
+    # Whether to enable Instant Archive
+    [switch]$InstantArchive,
+    # Whether to enable replication
+    [switch]$Replication,
+    # ID of the replication target
+    [ValidateNotNullOrEmpty()]
+    [String]$ReplicationTargetId,
+    # Time in days to keep data on the replication target.
+    [int]$RemoteRetention,
     # Retrieves frequencies from Get-RubrikSLA via the pipeline
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
@@ -151,6 +197,14 @@ function Set-RubrikSLA
       ValueFromPipelineByPropertyName = $true)]
     [alias('firstFullAllowedBackupWindows')]
     [object[]] $FirstFullBackupWindows,
+    # Retrieves the archical specifications from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [object[]] $ArchivalSpecs,
+    # Retrieves the replication specifications from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [object[]] $ReplicationSpecs,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -184,21 +238,25 @@ function Set-RubrikSLA
     #region One-off
     Write-Verbose -Message 'Build the body'
     # Build the body for CDM versions 5 and above when the advanced SLA configuration is turned on
-    if (($uri.contains('v2')) -and $AdvancedConfig) {
+    if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
       $body = @{
         $resources.Body.name = $Name
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
-        showAdvancedUi = $AdvancedConfig.IsPresent
+        archivalSpecs = @()
+        replicationSpecs = @()
+        showAdvancedUi = $true
         advancedUiConfig = @()
-      }
+     }
     # Build the body for CDM versions 5 and above when the advanced SLA configuration is turned off
     } elseif ($uri.contains('v2')) {
       $body = @{
         $resources.Body.name = $Name
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
-        showAdvancedUi = $AdvancedConfig.IsPresent
+        archivalSpecs = @()
+        replicationSpecs = @()
+        showAdvancedUi = $false
       }
     # Build the body for CDM versions prior to 5.0
     } else {
@@ -207,14 +265,16 @@ function Set-RubrikSLA
         frequencies = @()
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows =@()
+        archivalSpecs = @()
+        replicationSpecs = @()
       }
     }
-    
+
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
 
     # Retrieve snapshot frequencies from pipeline for CDM versions 5 and above when advanced SLA configuration is turned on
-    if (($uri.contains('v2')) -and ($Frequencies) -and ($AdvancedConfig)) {
+    if (($uri.contains('v2')) -and ($Frequencies) -and ($AdvancedConfig -eq $true)) {
       $Frequencies[0].psobject.properties.name | ForEach-Object {
         if ($_ -eq 'Hourly') {
           if (($Frequencies.$_.frequency) -and (-not $HourlyFrequency)) {
@@ -382,13 +442,13 @@ function Set-RubrikSLA
       }
     } elseif ($HourlyRetention -or $MonthlyRetention) {
       # Ensure the hourly retention set via the cli parameter is converted to hours for CDM versions prior to 5.0, and 5.x when advanced SLA configuration is disabled
-      if ($HourlyRetention -and (-not $AdvancedConfig)) {
-          $HourlyRetention = ($HourlyRetention * 24)
+      if ($HourlyRetention -and $PSBoundParameters.ContainsKey('AdvancedConfig') -and ($AdvancedConfig -eq $false)) {
+        $HourlyRetention = $HourlyRetention * 24
         }
       # Ensure the monthly retention set via the cli parameter is converted to months for CDM versions prior to 5.0
-        if ($MonthlyRetention -and (-not ($uri.contains('v2')))) {
-          $MonthlyRetention = ($MonthlyRetention * 12)
-        }
+      if ($MonthlyRetention -and (-not ($uri.contains('v2')))) {
+        $MonthlyRetention = $MonthlyRetention * 12
+      }
     }
 
     # Retrieve advanced retention unit parameters from pipeline for CDM 5.0
@@ -435,6 +495,40 @@ function Set-RubrikSLA
       }
     }
 
+    # Retrieve the archival specifications from pipeline
+    if ($ArchivalSpecs) {
+      if ($ArchivalSpecs.locationId -and (-not $ArchivalLocationId)) {
+        $ArchivalLocationId = $ArchivalSpecs.locationId
+      }
+      if ($ArchivalSpecs.polarisManagedId -and (-not $PolarisID)) {
+        $PolarisID = $ArchivalSpecs.polarisManagedId
+      }
+      if (-not ($PSBoundParameters.ContainsKey('Archival'))) {
+        $Archival = $true
+      }
+    }
+    # If LocalRetention is set directly, convert its value in seconds
+    if ($LocalRetention -lt 86400) {
+      $LocalRetention = $LocalRetention * 86400
+    }
+
+    # Retrieve the replication specifications from pipeline
+    if ($ReplicationSpecs) {
+      if ($ReplicationSpecs.locationId -and (-not $ReplicationTargetId)) {
+        $ReplicationTargetId = $ReplicationSpecs.locationId
+      }
+      if ($ReplicationSpecs.retentionLimit -and (-not $RemoteRetention)) {
+        $RemoteRetention = $ReplicationSpecs.retentionLimit
+      }
+      if (-not ($PSBoundParameters.ContainsKey('Replication'))) {
+        $Replication = $true
+      }
+    }
+    # If RemoteRetention is set directly, convert its value in seconds
+    if ($RemoteRetention -lt 86400) {
+      $RemoteRetention = $RemoteRetention * 86400
+    }
+
     # Populate the body with the allowed backup window settings
     if (($BackupStartHour -ge 0) -and ($BackupStartMinute -ge 0) -and $BackupWindowDuration) {
       $body.allowedBackupWindows += @{
@@ -466,9 +560,39 @@ function Set-RubrikSLA
       }
     }
 
-    # Populate the body according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
+    # Populate the body with archival specifications
+    if ($uri.contains('v2') -and $Archival) {
+      if ($ArchivalLocationId -and $PolarisID -and ($InstantArchive.IsPresent -eq $true)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1;polarisManagedId=$PolarisID}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $true)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocationId -and $PolarisID -and ($InstantArchive.IsPresent -eq $false)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention;polarisManagedId=$PolarisID}
+        $body.localRetentionLimit = $LocalRetention
+      } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $false)) {
+        $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention}
+        $body.localRetentionLimit = $LocalRetention
+      }
+    } elseif ($Archival) {
+        if ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $true)) {
+          $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=1}
+          $body.localRetentionLimit = $LocalRetention
+        } elseif ($ArchivalLocationId -and ($InstantArchive.IsPresent -eq $false)) {
+          $body.archivalSpecs += @{locationId=$ArchivalLocationId;archivalThreshold=$LocalRetention}
+          $body.localRetentionLimit = $LocalRetention
+        }
+    }
+
+    # Populate the body with replication specifications
+    if ($Replication -and $ReplicationTargetId -and $RemoteRetention) {
+      $body.replicationSpecs += @{locationId=$ReplicationTargetId;retentionLimit=$RemoteRetention}
+    }
+
+    # Populate the body with frequencies according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
     if ($HourlyFrequency -and $HourlyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
         $body.advancedUiConfig += @{timeUnit='Hourly';retentionType=$HourlyRetentionType}
       } elseif ($uri.contains('v2')) {
@@ -484,7 +608,7 @@ function Set-RubrikSLA
     }
     
     if ($DailyFrequency -and $DailyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
         $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionType}
       } elseif ($uri.contains('v2')) {
@@ -500,7 +624,7 @@ function Set-RubrikSLA
     }    
 
     if ($WeeklyFrequency -and $WeeklyRetention) { 
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention;dayOfWeek=$DayOfWeek}}
         $body.advancedUiConfig += @{timeUnit='Weekly';retentionType='Weekly'}
       } elseif ($uri.contains('v2')) {
@@ -517,7 +641,7 @@ function Set-RubrikSLA
     }    
 
     if ($MonthlyFrequency -and $MonthlyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
         $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionType}
       } elseif ($uri.contains('v2')) {
@@ -533,7 +657,7 @@ function Set-RubrikSLA
     }  
 
     if ($QuarterlyFrequency -and $QuarterlyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
         $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionType}
       } elseif ($uri.contains('v2')) {
@@ -545,7 +669,7 @@ function Set-RubrikSLA
     }  
 
     if ($YearlyFrequency -and $YearlyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
         $body.advancedUiConfig += @{timeUnit='Yearly';retentionType='Yearly'}
       } elseif ($uri.contains('v2')) {
