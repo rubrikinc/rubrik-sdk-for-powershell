@@ -76,15 +76,22 @@ function Get-RubrikSnapshot
   Process {
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    
+    # Exclusion for FileSet because limited API endpoint functionality, using expanded properties to gather snapshot details
+    if ($uri -match 'v1/fileset') {
+      $result = (Get-RubrikFileset -Id $Id).snapshots
+    } else {
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    }    
+
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     
     #region One-off
     if ($Date) 
     {
-      $result = Test-ReturnFilter -object (Test-DateDifference -date $($result.date) -compare $Date) -location 'date' -result $result
+      $result = Test-ReturnFilter -Object (Test-DateDifference -Date $($result.date) -Compare $Date) -Location 'date' -result $result
     }
     #endregion
     

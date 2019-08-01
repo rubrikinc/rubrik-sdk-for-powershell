@@ -16,6 +16,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-07-31
+
+### Fixed [Get-RubrikSQLInstance]
+
+* The Get-RubrikSQLInstance PrimaryClusterID had a bug as reported in issue [Issue 399](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/399)
+* Updated parameter help to correctly suggest `local` to be used
+* Added additional examples that describe usage of the -PrimaryClusterID parameter
+
+## 2019-07-30
+
+### Changed [readme.md]
+
+* Removed references to the completed refactor branch [Issue 411](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/411)
+
 ## 2019-07-26
 
 ### Changed [Set-RubrikSLA]
@@ -23,14 +37,57 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added ability to configure archival and replication settings to address [Issue 368](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/368)
 * Changed logic for $AdvancedConfig. It's not required anymore to set this parameter directly when piping from Get-RubrikSLA and advanced configuration was already enabled.
 
+### Added [Various Unit Tests]
+
+* Added Unit Tests for Get-RubrikFileset, Get-RubrikFilesetTemplate, New-RubrikFileset, New-RubrikFilesetTemplate, Protect-RubrikFilset, and Remove-RubrikFileset
+* Addresses [Issue 343](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/343)
+
+## 2019-07-25
+
+### Fixed [Restore-RubrikDatabase]
+
+* Fixed bug in example, added additional example
+
+### Added [Various Unit Tests]
+
+* Added unit tests for Get-RubrikReport, Get-RubrikReportData, New-RubrikReport, and Remove-RubrikReport.  Export-RubrikReport unit test already existed.
+* Addresses [Issue 342](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/342)
+
+## 2019-07-24
+
+### Fixed [Submit-Request]
+
+* Now populating the $WebResult variable in order to show HTTP Status Codes/Descriptions as well as proper status messages for PowerShell versions prior to 6.
+* Address [Issue 402](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/402)
+
 ## 2019-07-23
+
+### Changed [New-RubrikSLA]
+
+* Added support for archival and replication settings to New-RubrikSLA to address [Issue 367](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/367)
 
 ### Changed [Set-RubrikSLA]
 
 * Removed unnecessary braces for the frequencies array in the request body when using API v2 to address [Issue 391](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/391)
 * Fixed the $FirstFullBackupDay variable to be an integer when the value is retrieved from the pipeline with Get-RubrikSLA
 
+### Fixed [Get-RubrikEvent]
+
+* Multiple limit flags were added to the GET query as reported in [Issue 353](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/353), this has been fixed
+
 ## 2019-07-22
+
+### Fixed [Get-RubrikSnapshot]
+
+* No endpoint is available for FileSet snapshots, working has been created [Issue 393](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
+ 
+### Added [Get-RubrikFileSet - DetailedObject parameter]
+ 
+* DetailedObject parameter has been added to Get-RubrikFileSet function to retrieve all object properties
+
+### Fixed [Get-RubrikSnapshot]
+
+* Incorrect endpoint was used for Oracle database in combination Get-RubrikSnapshot [Issue 394](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/394)
 
 ### Changed [New-RubrikSLA]
 

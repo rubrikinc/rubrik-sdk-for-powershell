@@ -617,7 +617,7 @@ function Get-RubrikAPIData($endpoint) {
         }
         'Get-RubrikSnapshot'           = @{
             '1.0' = @{
-                Description = 'Retrieve information for all snapshots '
+                Description = 'Retrieve information for all snapshots'
                 URI         = @{
                     Fileset = '/api/v1/fileset/{id}/snapshot'
                     MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
@@ -626,7 +626,7 @@ function Get-RubrikAPIData($endpoint) {
                     ManagedVolume = '/api/internal/managed_volume/{id}/snapshot'
                     Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
-                    Oracle = '/api/internal/oracle/{id}/snapshot'
+                    Oracle = '/api/internal/oracle/db/{id}/snapshot'
                 }
                 Method      = 'Get'
                 Body        = ''
@@ -659,6 +659,7 @@ function Get-RubrikAPIData($endpoint) {
                 Body        = ''
                 Query       = @{
                     instance_id = 'instance_id'
+                    primary_cluster_id = 'primary_cluster_id'
                 }
                 Result      = 'data'
                 Filter      = @{
@@ -1124,6 +1125,15 @@ function Get-RubrikAPIData($endpoint) {
                             dayOfWeek = 'dayOfWeek'
                         }
                         durationInHours  = 'durationInHours'
+                    }
+                    localRetentionLimit = 'localRetentionLimit'
+                    archivalSpecs       = @{
+                        locationId        = 'locationId'
+                        archivalThreshold = 'archivalThreshold'
+                    }
+                    replicationSpecs = @{
+                        locationId     = 'locationId'
+                        retentionLimit = 'retentionLimit'
                     }    
                 }
                 Query       = ''
@@ -1142,6 +1152,10 @@ function Get-RubrikAPIData($endpoint) {
                         frequency = 'frequency'
                         retention = 'retention'
                     }
+                    advancedUiConfig = @{
+                        timeUnit      = 'timeUnit'
+                        retentionType = 'retentionType'
+                    }
                     allowedBackupWindows = @{
                         startTimeAttributes = @{
                             minutes   = 'minutes'
@@ -1156,11 +1170,17 @@ function Get-RubrikAPIData($endpoint) {
                             dayOfWeek = 'dayOfWeek'
                         }
                         durationInHours  = 'durationInHours'
-                    }    
-                    advancedUiConfig = @{
-                        timeUnit      = 'timeUnit'
-                        retentionType = 'retentionType'
                     }
+                    localRetentionLimit = 'localRetentionLimit'
+                    archivalSpecs       = @{
+                        locationId        = 'locationId'
+                        polarisManagedId  = 'polarisManagedId'
+                        archivalThreshold = 'archivalThreshold'
+                    }
+                    replicationSpecs = @{
+                        locationId     = 'locationId'
+                        retentionLimit = 'retentionLimit'
+                    }    
                 }
                 Query       = ''
                 Result      = ''
