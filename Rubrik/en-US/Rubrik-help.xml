@@ -7484,7 +7484,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
           <maml:name>limit</maml:name>
           <maml:Description>
-            <maml:para>limit the number of rows returned</maml:para>
+            <maml:para>limit the number of rows returned, defaults to maximum pageSize of 9999</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -7595,7 +7595,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
         <maml:name>limit</maml:name>
         <maml:Description>
-          <maml:para>limit the number of rows returned</maml:para>
+          <maml:para>limit the number of rows returned, defaults to maximum pageSize of 9999</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -7661,6 +7661,13 @@
         <dev:code>Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance'</dev:code>
         <dev:remarks>
           <maml:para>This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance' -Limit 10</dev:code>
+        <dev:remarks>
+          <maml:para>This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance", only returns the first 10 results.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

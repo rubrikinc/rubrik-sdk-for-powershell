@@ -37,6 +37,13 @@ Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -Complian
 
 This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"
 
+### EXAMPLE 3
+```
+Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance' -Limit 10
+```
+
+This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance", only returns the first 10 results.
+
 ## PARAMETERS
 
 ### -id
@@ -130,7 +137,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
-limit the number of rows returned
+limit the number of rows returned, defaults to maximum pageSize of 9999
 
 ```yaml
 Type: Int32
