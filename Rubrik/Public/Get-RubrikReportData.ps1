@@ -23,6 +23,10 @@ function Get-RubrikReportData
       .EXAMPLE
       Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance'
       This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"
+
+      .EXAMPLE
+      Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance' -Limit 10
+      This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance", only returns the first 10 results.
   #>
 
   [CmdletBinding()]
@@ -46,8 +50,8 @@ function Get-RubrikReportData
     [Alias('compliance_status')]
     [ValidateSet('InCompliance','NonCompliance')]
     [String]$ComplianceStatus,  
-    #limit the number of rows returned
-    [int]$limit,  
+    #limit the number of rows returned, defaults to maximum pageSize of 9999
+    [int]$limit,
     #cursor start (if necessary)
     [string]$cursor,
     # Rubrik server IP or FQDN
@@ -74,6 +78,11 @@ function Get-RubrikReportData
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
   
+    # Set limit to default of 9999 if not set, both limit and psboundparameters are set, this is because New-BodyString builds the query using both variables
+    if ($null -eq $PSBoundParameters.limit) {
+      $PSBoundParameters.Add('limit',9999) | Out-Null
+      $limit = 9999
+    }
   }
 
   Process {
