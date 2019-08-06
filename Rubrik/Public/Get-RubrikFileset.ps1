@@ -154,7 +154,7 @@ function Get-RubrikFileset
     if (-not [string]::IsNullOrWhiteSpace($HostNameFilter)) {
       $HostName = $HostNameFilter
     }
-    if ($null -ne $NameFilter) {
+    if (-not [string]::IsNullOrWhiteSpace($NameFilter)) {
       $Name = $NameFilter
     }
   
