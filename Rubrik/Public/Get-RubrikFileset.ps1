@@ -175,14 +175,15 @@ function Get-RubrikFileset
 
         $result = $result | Where-Object {$Name -eq $_.name}
 
-        Write-Verbose ('Excluded results not matching -Name ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $Name,(@($Result).count-$OldCount),@($Result).count)
+        Write-Verbose ('Excluded results not matching -Name ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $Name,($OldCount-@($Result).count),@($Result).count)
       }
+      
       if ($null -ne $PSBoundParameters.HostName) {
         $OldCount = @($Result).count
 
         $result = $result | Where-Object {$HostName -eq $_.hostName}
 
-        Write-Verbose ('Excluded results not matching -HostName ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $HostName,(@($Result).count-$OldCount),@($Result).count)
+        Write-Verbose ('Excluded results not matching -HostName ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $HostName,($OldCount-@($Result).count),@($Result).count)
       }
     }
 
