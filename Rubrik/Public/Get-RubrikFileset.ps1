@@ -147,8 +147,16 @@ function Get-RubrikFileset
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
-    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Load API data for $($resources.URI)"
     Write-Verbose -Message "Description: $($resources.Description)"
+
+    # Set Hostname and Name parameters if the filter parameters are specified. Logic later on in the script will do additional filtering
+    if (-not [string]::IsNullOrWhiteSpace($HostNameFilter)) {
+      $HostName = $HostNameFilter
+    }
+    if ($null -ne $NameFilter) {
+      $Name = $NameFilter
+    }
   
   }
 
@@ -177,7 +185,7 @@ function Get-RubrikFileset
 
         Write-Verbose ('Excluded results not matching -Name ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $Name,($OldCount-@($Result).count),@($Result).count)
       }
-      
+
       if ($null -ne $PSBoundParameters.HostName) {
         $OldCount = @($Result).count
 
