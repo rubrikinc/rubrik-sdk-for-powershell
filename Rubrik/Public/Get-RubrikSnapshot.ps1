@@ -54,7 +54,6 @@ function Get-RubrikSnapshot
   [CmdletBinding()]
   Param(
     # Rubrik id of the protected object
-    # [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Query')]
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Date')]
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Latest')]
