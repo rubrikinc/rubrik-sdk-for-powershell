@@ -12,9 +12,22 @@ Retrieves all of the snapshots (backups) for any given object
 
 ## SYNTAX
 
+### Latest
 ```
-Get-RubrikSnapshot [-id] <String> [[-CloudState] <Int32>] [-OnDemandSnapshot] [[-Date] <DateTime>]
- [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikSnapshot -id <String> [-CloudState <Int32>] [-OnDemandSnapshot] [-Latest] [-Server <String>]
+ [-api <String>] [<CommonParameters>]
+```
+
+### Date
+```
+Get-RubrikSnapshot -id <String> [-CloudState <Int32>] [-OnDemandSnapshot] -Date <DateTime> [-Range <Int32>]
+ [-ExactMatch] [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
+### Query
+```
+Get-RubrikSnapshot -id <String> [-CloudState <Int32>] [-OnDemandSnapshot] [-Server <String>] [-api <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,19 +46,48 @@ This will return all snapshot (backup) data for the virtual machine id of "Virtu
 
 ### EXAMPLE 2
 ```
+Get-RubrikSnapshot -id 'Fileset:::01234567-8910-1abc-d435-0abc1234d567'
+```
+
+This will return all snapshot (backup) data for the fileset with id of "Fileset:::01234567-8910-1abc-d435-0abc1234d567"
+
+### EXAMPLE 3
+```
 Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
 ```
 
-This will return the closest matching snapshot to March 21st, 2017 for any virtual machine named "Server1"
+This will return the closest matching snapshot, within 1 day, to March 21st, 2017 for any virtual machine named "Server1"
 
-### EXAMPLE 3
+### EXAMPLE 4
+```
+Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3
+```
+
+This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1"
+
+### EXAMPLE 5
+```
+Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3 -ExactMatch
+```
+
+This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1".
+-ExactMatch specifies that no results are returned if a match is not found, otherwise all snapshots are returned.
+
+### EXAMPLE 6
 ```
 Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date (Get-Date)
 ```
 
 This will return the closest matching snapshot to the current date and time for any virtual machine named "Server1"
 
-### EXAMPLE 4
+### EXAMPLE 7
+```
+Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Latest
+```
+
+This will return the latest snapshot for the virtual machine named "Server1"
+
+### EXAMPLE 8
 ```
 Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
 ```
@@ -63,7 +105,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -78,7 +120,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -104,12 +146,59 @@ Date of the snapshot
 
 ```yaml
 Type: DateTime
-Parameter Sets: (All)
+Parameter Sets: Date
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Range
+Range of how many days away from $Date to search for the closest matching snapshot.
+Defaults to one day.
+
+```yaml
+Type: Int32
+Parameter Sets: Date
 Aliases:
 
 Required: False
-Position: 3
-Default value: None
+Position: Named
+Default value: 1
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExactMatch
+Return no results if a matching date isn't found.
+Otherwise, all snapshots are returned if no match is made.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Date
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Latest
+Return the latest snapshot
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Latest
+Aliases:
+
+Required: True
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -123,7 +212,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -138,7 +227,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
