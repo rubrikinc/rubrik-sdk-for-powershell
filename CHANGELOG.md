@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-07-31
 
+### Changed [Get-RubrikFileset]
+
+* Behavior of `-Name` and `-Hostname` changed to only do an exact match as reported in [Issue 384](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/384)
+* Added new `-NameFilter` and `-HostNameFilter` parameters to allow for in-fix matching
+* Added new tests for `Get-RubrikFileSet`
+
 ### Fixed [Get-RubrikSQLInstance]
 
 * The Get-RubrikSQLInstance PrimaryClusterID had a bug as reported in issue [Issue 399](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/399)

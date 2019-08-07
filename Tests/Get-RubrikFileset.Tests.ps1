@@ -26,7 +26,8 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
-                'name'                   = 'Fileset1'
+                'name'                   = 'Fileset'
+                'hostname'               = 'Server'
                 'id'                     = 'Fileset:::111111-2222-3333-4444-555555555555'
                 'isRelic'                = 'False'
                 'effectiveSlaDomainName' = 'sla_name'
@@ -35,7 +36,17 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
             },
             @{ 
                 'name'                   = 'Fileset2'
+                'hostname'               = 'Server2'
                 'id'                     = 'Fileset:::111111-2222-3333-4444-6666666666666'
+                'isRelic'                = 'False'
+                'effectiveSlaDomainName' = 'sla_name2'
+                'effectiveSlaDomainId'   = 'sla_id2'
+                'primaryClusterId'       = 'cluster_id2'   
+            },
+            @{ 
+                'name'                   = 'Fileset20'
+                'hostname'               = 'Server20'
+                'id'                     = 'Fileset:::111111-2222-3333-4444-7777777777777'
                 'isRelic'                = 'False'
                 'effectiveSlaDomainName' = 'sla_name2'
                 'effectiveSlaDomainId'   = 'sla_id2'
@@ -43,18 +54,39 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
             }
         }
         It -Name 'No parameters returns all results' -Test {
-            ( Get-RubrikFileset).Count |
-                Should -BeExactly 2
-        } 
+            @( Get-RubrikFileset).Count |
+                Should -BeExactly 3
+        }
+
+        It -Name '-Name should filter and not use in-fix search' -Test {
+            @( Get-RubrikFileset -Name 'Fileset').Count |
+                Should -BeExactly 1
+        }
+
+        It -Name '-NameFilter should not filter and use in-fix search' -Test {
+            @( Get-RubrikFileset -NameFilter 'Fileset').Count |
+                Should -BeExactly 3
+        }
+
+        It -Name '-HostName should filter and not use in-fix search' -Test {
+            @( Get-RubrikFileset -HostName 'Server').Count |
+                Should -BeExactly 1
+        }
+
+        It -Name '-HostNameFilter should not filter and use in-fix search' -Test {
+            @( Get-RubrikFileset -HostNameFilter 'Server').Count |
+                Should -BeExactly 3
+        }
+
         It -Name 'SLA mapping' -Test {
             ( Get-RubrikFileset -SLA 'sla_name').effectiveSlaDomainName |
                 Should -BeExactly 'sla_name'
         } 
    
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Get-RubrikSLA -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 6
+        Assert-MockCalled -CommandName Get-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 6
     }
     Context -Name 'Parameter Validation' {
         It -Name 'ID Missing' -Test {

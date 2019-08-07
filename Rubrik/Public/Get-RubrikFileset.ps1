@@ -31,6 +31,18 @@ function Get-RubrikFileset
       This will return details on the fileset named "C_Drive" assigned to any hosts with an SLA Domain matching "Gold"
 
       .EXAMPLE
+      Get-RubrikFileset -NameFilter '_Drive' -SLA Gold
+      This will return details on the filesets that contain the string "_Drive" in its name and are assigned to any hosts with an SLA Domain matching "Gold"
+
+      .EXAMPLE
+      Get-RubrikFileset -HostName 'mssqlserver01' -SLA Gold
+      This will return details on the filesets for the hostname "mssqlserver01" and are assigned to any hosts with an SLA Domain matching "Gold"
+
+      .EXAMPLE
+      Get-RubrikFileset -HostNameFilter 'mssql' -SLA Gold
+      This will return details on the filesets that contain the string "mssql" in its parent's hostname and are assigned to any hosts with an SLA Domain matching "Gold"
+
+      .EXAMPLE
       Get-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
       This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
 
@@ -53,47 +65,69 @@ function Get-RubrikFileset
     [ValidateNotNullOrEmpty()]
     [Alias('Fileset')]
     [String]$Name,
-    # Filter results to include only relic (removed) filesets
-    [Alias('is_relic')]
-    [Parameter(ParameterSetName='Query')]
-    [Switch]$Relic,
-    # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full Fileset object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
-    [Parameter(ParameterSetName='Query')]
-    [switch]$DetailedObject,
-    # SLA Domain policy assigned to the database
-    [Parameter(ParameterSetName='Query')]
-    [String]$SLA,
-    # Name of the host using a fileset
+    [Parameter(ParameterSetName='Filter')]
+    [ValidateNotNullOrEmpty()]
+    [String]$NameFilter,
+    # Exact name of the host using a fileset
     [Parameter(ParameterSetName='Query')]
     [Alias('host_name')]
+    [ValidateNotNullOrEmpty()]
+    # Partial match of hostname, using an 'in fix' search.
     [String]$HostName,
-    # Filter the summary information based on the ID of a fileset template.
-    [Parameter(ParameterSetName='Query')]
-    [Alias('template_id')]
-    [String]$TemplateID,
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
-    [Parameter(ParameterSetName='Query')]
-    [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,        
-    # Rubrik's Share id
-    [Parameter(ParameterSetName='Query')]
-    [Alias('share_id')]
-    [String]$ShareID,
+    [Parameter(ParameterSetName='Filter')]
+    [ValidateNotNullOrEmpty()]
+    [String]$HostNameFilter,
     # Rubrik's fileset id
     [Parameter(ParameterSetName='ID')]
     [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [ValidateNotNullOrEmpty()]
     [String]$id,
+    # Filter results to include only relic (removed) filesets
+    [Alias('is_relic')]
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='Filter')]
+    [Switch]$Relic,
+    # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full Fileset object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='Filter')]
+    [switch]$DetailedObject,
+    # SLA Domain policy assigned to the database
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='Filter')]
+    [ValidateNotNullOrEmpty()]
+    [String]$SLA,
+    # Filter the summary information based on the ID of a fileset template.
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='Filter')]
+    [Alias('template_id')]
+    [ValidateNotNullOrEmpty()]
+    [String]$TemplateID,
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='Filter')]
+    [Alias('primary_cluster_id')]
+    [ValidateNotNullOrEmpty()]
+    [String]$PrimaryClusterID,
+    # Rubrik's Share id
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='Filter')]
+    [Alias('share_id')]
+    [ValidateNotNullOrEmpty()]
+    [String]$ShareID,
     # SLA id value
     [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='Filter')]
     [Alias('effective_sla_domain_id')]
-    [String]$SLAID,    
+    [ValidateNotNullOrEmpty()]
+    [String]$SLAID,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='Filter')]
     [Parameter(ParameterSetName='ID')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='Filter')]
     [Parameter(ParameterSetName='ID')]
     [String]$api = $global:RubrikConnection.api
   )
@@ -113,8 +147,16 @@ function Get-RubrikFileset
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
-    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Load API data for $($resources.URI)"
     Write-Verbose -Message "Description: $($resources.Description)"
+
+    # Set Hostname and Name parameters if the filter parameters are specified. Logic later on in the script will do additional filtering
+    if (-not [string]::IsNullOrWhiteSpace($HostNameFilter)) {
+      $HostName = $HostNameFilter
+    }
+    if (-not [string]::IsNullOrWhiteSpace($NameFilter)) {
+      $Name = $NameFilter
+    }
   
   }
 
@@ -133,6 +175,25 @@ function Get-RubrikFileset
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
+
+    # This block of code will filter results if -Name or -Hostname are used, probably should move to a private function
+    if ('Query' -eq $PSCmdlet.ParameterSetName) {
+      if ($null -ne $PSBoundParameters.Name) {
+        $OldCount = @($Result).count
+
+        $result = $result | Where-Object {$Name -eq $_.name}
+
+        Write-Verbose ('Excluded results not matching -Name ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $Name,($OldCount-@($Result).count),@($Result).count)
+      }
+
+      if ($null -ne $PSBoundParameters.HostName) {
+        $OldCount = @($Result).count
+
+        $result = $result | Where-Object {$HostName -eq $_.hostName}
+
+        Write-Verbose ('Excluded results not matching -HostName ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $HostName,($OldCount-@($Result).count),@($Result).count)
+      }
+    }
 
     # If the Get-RubrikFileset function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
