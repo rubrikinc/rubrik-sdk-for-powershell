@@ -104,7 +104,7 @@ Describe -Name 'Public/Get-RubrikSnapshot' -Tag 'Public', 'Get-RubrikSnapshot' -
               Should -BeExactly "b42ed6ba-760e-425f-a35d-c7dc5636b55d"
         }
         It -Name 'Get specific snapshot' -Test {
-          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date "8/3/19" ).id |
+          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 3 -Month 8 -Year 2019) ).id |
               Should -BeExactly "ca214725-6dcd-49b4-88ae-45780b16879a"
         }
         It -Name 'Get on demand snapshots' -Test {
@@ -116,19 +116,19 @@ Describe -Name 'Public/Get-RubrikSnapshot' -Tag 'Public', 'Get-RubrikSnapshot' -
               Should -BeExactly "4d70bd92-71b3-44cd-8bbb-0a89c0247bfd"
         }
         It -Name 'Test -ExactMatch' -Test {
-          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date "8/3/18" -ExactMatch ) |
+          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 30 -Month 7 -Year 2019).Date -ExactMatch ) |
               Should -BeExactly $null
         }
         It -Name 'Test -Range' -Test {
-          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date "8/8/19" -Range 3).id |
+          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 8 -Month 8 -Year 2019).Date -Range 3).id |
               Should -BeExactly "b42ed6ba-760e-425f-a35d-c7dc5636b55d"
         }
         It -Name 'Test -Range and -ExactMatch' -Test {
-          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date "8/8/19" -Range 3 -ExactMatch ).id |
+          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 8 -Month 8 -Year 2019).Date -Range 3 -ExactMatch ).id |
               Should -BeExactly "b42ed6ba-760e-425f-a35d-c7dc5636b55d"
         }
         It -Name 'Test -Range with out of range date' -Test {
-          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date "8/10/19" -Range 3 ).Count |
+          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 10 -Month 8 -Year 2019).Date -Range 3 ).Count |
               Should -BeExactly 5
         }
         Assert-VerifiableMock
