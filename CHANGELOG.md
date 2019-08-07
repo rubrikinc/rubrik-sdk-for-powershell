@@ -16,6 +16,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-08-06
+
+### Changed [Get-RubrikSnapshot]
+* Added -Latest parameter to return latest snapshot data
+* Added -Range to use with -Date. This specifies how many days away from the given date to search for the closest matching snapshot. Defaults to one day.
+* Added -ExactMatch to use with -Date. This causes no results to be returned if a matching date isn't found. Otherwise, all snapshots are returned if no match is made.
+* Added unit tests for Get-RubrikSnapshot
+* Updated Test-DateDifference, a private function used by Get-RubrikSnapshot, to support the -Range parameter
+
 ## 2019-07-31
 
 ### Changed [Get-RubrikFileset]
