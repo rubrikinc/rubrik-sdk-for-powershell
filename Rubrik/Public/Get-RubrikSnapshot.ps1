@@ -94,7 +94,7 @@ function Get-RubrikSnapshot
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
@@ -111,7 +111,7 @@ function Get-RubrikSnapshot
     if ($uri -match 'v1/fileset') {
       $result = (Get-RubrikFileset -Id $Id).snapshots
     } else {
-      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     }    
 
@@ -137,7 +137,7 @@ function Get-RubrikSnapshot
         $result = $null
       }
       else {
-        $result = Test-ReturnFilter -Object $datesearch  -Location 'date' -result $result
+        $result = Test-ReturnFilter -Object $datesearch -Location 'date' -result $result
       }
     } 
     #endregion
