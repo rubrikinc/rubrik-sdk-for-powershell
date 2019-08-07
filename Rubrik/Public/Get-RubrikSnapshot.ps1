@@ -23,12 +23,28 @@ function Get-RubrikSnapshot
       This will return all snapshot (backup) data for the virtual machine id of "VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345"
 
       .EXAMPLE
+      Get-RubrikSnapshot -id 'Fileset:::01234567-8910-1abc-d435-0abc1234d567'
+      This will return all snapshot (backup) data for the fileset with id of "Fileset:::01234567-8910-1abc-d435-0abc1234d567"
+
+      .EXAMPLE
       Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
-      This will return the closest matching snapshot to March 21st, 2017 for any virtual machine named "Server1"
+      This will return the closest matching snapshot, within 1 day, to March 21st, 2017 for any virtual machine named "Server1"
+
+      .EXAMPLE
+      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3
+      This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1"
+
+      .EXAMPLE
+      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3 -ExactMatch
+      This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1". -ExactMatch specifies that no results are returned if a match is not found, otherwise all snapshots are returned.
 
       .EXAMPLE
       Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date (Get-Date)
       This will return the closest matching snapshot to the current date and time for any virtual machine named "Server1"
+
+      .EXAMPLE
+      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Latest
+      This will return the latest snapshot for the virtual machine named "Server1"
 
       .EXAMPLE
       Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
@@ -38,14 +54,29 @@ function Get-RubrikSnapshot
   [CmdletBinding()]
   Param(
     # Rubrik id of the protected object
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    # [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Query')]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Date')]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Latest')]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     # Filter results based on where in the cloud the snapshot lives
     [Int]$CloudState,
     # Filter results to show only snapshots that were created on demand
     [Switch]$OnDemandSnapshot,
     # Date of the snapshot
+    [Parameter(Mandatory = $true,ParameterSetName='Date')]
+    [ValidateNotNullOrEmpty()]
     [Datetime]$Date,
+    # Range of how many days away from $Date to search for the closest matching snapshot. Defaults to one day.
+    [Parameter(ParameterSetName='Date')]
+    [Int]$Range = 1,
+    # Return no results if a matching date isn't found. Otherwise, all snapshots are returned if no match is made.
+    [Parameter(ParameterSetName='Date')]
+    [Switch]$ExactMatch,    
+    # Return the latest snapshot
+    [Parameter(Mandatory = $true,ParameterSetName='Latest')]
+    [Switch]$Latest,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -91,8 +122,25 @@ function Get-RubrikSnapshot
     #region One-off
     if ($Date) 
     {
-      $result = Test-ReturnFilter -Object (Test-DateDifference -Date $($result.date) -Compare $Date) -Location 'date' -result $result
-    }
+      $datesearch = Test-DateDifference -Date $($result.date) -Compare $Date -Range $Range
+      # If $datesearch is $null, a matching date was not found. If $ExactMatch is specified in this case, return $null
+      if($null -eq $datesearch -and $ExactMatch) {
+        $result = $null
+      }
+      else {
+        $result = Test-ReturnFilter -Object $datesearch -Location 'date' -result $result
+      }
+    } 
+    elseif ($Latest) {
+      $datesearch = Test-DateDifference -Date $($result.date) -Compare (Get-Date) -Range 999999999
+      # If $datesearch is $null, a matching date was not found, so return $null
+      if($null -eq $datesearch) {
+        $result = $null
+      }
+      else {
+        $result = Test-ReturnFilter -Object $datesearch  -Location 'date' -result $result
+      }
+    } 
     #endregion
     
     return $result

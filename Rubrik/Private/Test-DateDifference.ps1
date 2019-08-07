@@ -1,4 +1,4 @@
-﻿function Test-DateDifference([array]$date,[datetime]$compare)
+﻿function Test-DateDifference([array]$date,[datetime]$compare,[int]$range)
 {
   # The Test-DateDifference function is used to compare a series of dates against a desired date to find the closest matching date/time
   # The Rubrik API returns snapshot dates down to the millisecond, but the user may not provide this much detail in their Date argument
@@ -8,12 +8,12 @@
   
   # A simple hashtable is created to compare each date value against one another
   # The value that is closest to 0 (e.g. least distance away from the $compare date) is stored
-  # A "placeholder" value of 1 is used to find the first value within one day of $compare
+  # $range defines how many days away from $compare to search for the closest match. Ex: $range = 3 will look within a 3 day period to find a match
   # Otherwise, the date of $null is returned meaning no match
   Write-Verbose -Message "Finding closest matching date"
   $datematrix = @{
     date  = $null
-    value = 1
+    value = $range
   }
  
   foreach ($_ in $date)
