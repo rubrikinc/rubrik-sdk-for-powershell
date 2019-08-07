@@ -14,8 +14,15 @@ Retrieves details on one or more filesets known to a Rubrik cluster
 
 ### Query (Default)
 ```
-Get-RubrikFileset [[-Name] <String>] [-Relic] [-DetailedObject] [-SLA <String>] [-HostName <String>]
- [-TemplateID <String>] [-PrimaryClusterID <String>] [-ShareID <String>] [-id <String>] [-SLAID <String>]
+Get-RubrikFileset [[-Name] <String>] [-HostName <String>] [-id <String>] [-Relic] [-DetailedObject]
+ [-SLA <String>] [-TemplateID <String>] [-PrimaryClusterID <String>] [-ShareID <String>] [-SLAID <String>]
+ [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
+### Filter
+```
+Get-RubrikFileset [-NameFilter <String>] [-HostNameFilter <String>] [-id <String>] [-Relic] [-DetailedObject]
+ [-SLA <String>] [-TemplateID <String>] [-PrimaryClusterID <String>] [-ShareID <String>] [-SLAID <String>]
  [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
@@ -54,19 +61,40 @@ This will return details on the fileset named "C_Drive" assigned to any hosts wi
 
 ### EXAMPLE 4
 ```
+Get-RubrikFileset -NameFilter '_Drive' -SLA Gold
+```
+
+This will return details on the filesets that contain the string "_Drive" in its name and are assigned to any hosts with an SLA Domain matching "Gold"
+
+### EXAMPLE 5
+```
+Get-RubrikFileset -HostName 'mssqlserver01' -SLA Gold
+```
+
+This will return details on the filesets for the hostname "mssqlserver01" and are assigned to any hosts with an SLA Domain matching "Gold"
+
+### EXAMPLE 6
+```
+Get-RubrikFileset -HostNameFilter 'mssql' -SLA Gold
+```
+
+This will return details on the filesets that contain the string "mssql" in its parent's hostname and are assigned to any hosts with an SLA Domain matching "Gold"
+
+### EXAMPLE 7
+```
 Get-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
 ```
 
 This will return the filset matching the Rubrik global id value of "Fileset:::111111-2222-3333-4444-555555555555"
 
-### EXAMPLE 5
+### EXAMPLE 8
 ```
 Get-RubrikFileset -Relic
 ```
 
 This will return all removed filesets that were formerly protected by Rubrik.
 
-### EXAMPLE 6
+### EXAMPLE 9
 ```
 Get-RubrikFileset -DetailedObject
 ```
@@ -91,43 +119,12 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Relic
-Filter results to include only relic (removed) filesets
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Query
-Aliases: is_relic
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DetailedObject
-DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full Fileset object unless we query directly by ID.
-Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Query
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SLA
-SLA Domain policy assigned to the database
+### -NameFilter
+{{ Fill NameFilter Description }}
 
 ```yaml
 Type: String
-Parameter Sets: Query
+Parameter Sets: Filter
 Aliases:
 
 Required: False
@@ -138,7 +135,8 @@ Accept wildcard characters: False
 ```
 
 ### -HostName
-Name of the host using a fileset
+Exact name of the host using a fileset
+Partial match of hostname, using an 'in fix' search.
 
 ```yaml
 Type: String
@@ -152,44 +150,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TemplateID
-Filter the summary information based on the ID of a fileset template.
+### -HostNameFilter
+{{ Fill HostNameFilter Description }}
 
 ```yaml
 Type: String
-Parameter Sets: Query
-Aliases: template_id
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PrimaryClusterID
-Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
-Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
-
-```yaml
-Type: String
-Parameter Sets: Query
-Aliases: primary_cluster_id
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ShareID
-Rubrik's Share id
-
-```yaml
-Type: String
-Parameter Sets: Query
-Aliases: share_id
+Parameter Sets: Filter
+Aliases:
 
 Required: False
 Position: Named
@@ -203,7 +170,7 @@ Rubrik's fileset id
 
 ```yaml
 Type: String
-Parameter Sets: Query
+Parameter Sets: Query, Filter
 Aliases:
 
 Required: False
@@ -225,12 +192,104 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Relic
+Filter results to include only relic (removed) filesets
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Query, Filter
+Aliases: is_relic
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full Fileset object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Query, Filter
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SLA
+SLA Domain policy assigned to the database
+
+```yaml
+Type: String
+Parameter Sets: Query, Filter
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TemplateID
+Filter the summary information based on the ID of a fileset template.
+
+```yaml
+Type: String
+Parameter Sets: Query, Filter
+Aliases: template_id
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PrimaryClusterID
+Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
+Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+
+```yaml
+Type: String
+Parameter Sets: Query, Filter
+Aliases: primary_cluster_id
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShareID
+Rubrik's Share id
+
+```yaml
+Type: String
+Parameter Sets: Query, Filter
+Aliases: share_id
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SLAID
 SLA id value
 
 ```yaml
 Type: String
-Parameter Sets: Query
+Parameter Sets: Query, Filter
 Aliases: effective_sla_domain_id
 
 Required: False
