@@ -19,6 +19,21 @@ function Get-RubrikManagedVolume
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
+      Get-RubrikManagedVolume
+      
+      Retrieves all Rubrik Managed Volumes, active and relics
+
+      .EXAMPLE
+      Get-RubrikManagedVolume -Relic
+      
+      Retrieves all Rubrik Managed Volumes that are relics
+
+      .EXAMPLE
+      Get-RubrikManagedVolume -Relic:$false
+      
+      Retrieves all Rubrik Managed Volumes that are not relics
+
+      .EXAMPLE
       Get-RubrikManagedVolume -name sqltest
 
       Get a managed volume named sqltest
