@@ -53,23 +53,26 @@ function Get-RubrikManagedVolume
     [ValidateNotNullOrEmpty()]
     [String]$Name,
     # SLA name that the managed volume is protected under
+    [Parameter(ParameterSetName='Name')]
+    [Parameter(ParameterSetName='ID')]
+    [ValidateNotNullOrEmpty()]
     [String]$SLA,
     # SLA id that the managed volume is protected under
+    [Parameter(ParameterSetName='Name')]
+    [Parameter(ParameterSetName='ID')]
     [Alias('effective_sla_domain_id')]
+    [ValidateNotNullOrEmpty()]
     [String]$SLAID,
     # Filter results to include only relic (removed) databases
     [Parameter(ParameterSetName='Name')]
     [Parameter(ParameterSetName='ID')]
-    [Parameter(ParameterSetName='SLAName')]
-    [Parameter(ParameterSetName='SLAID')]
     [Alias('is_relic')]
     [Switch]$Relic,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [Parameter(ParameterSetName='Name')]
     [Parameter(ParameterSetName='ID')]
-    [Parameter(ParameterSetName='SLAName')]
-    [Parameter(ParameterSetName='SLAID')]
+    [ValidateNotNullOrEmpty()]
     [String]$PrimaryClusterID,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
