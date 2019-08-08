@@ -46,6 +46,17 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
                 'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890abc'
                 'effectiveSlaDomainName'    = 'Bronze'
                 'configuredSlaDomainName'   = 'Bronze'
+            },
+            @{
+                'id'                        = 'ManagedVolume:::33333'
+                'isDeleted'                 = 'False'
+                'primaryClusterId'          = 'local'
+                'name'                      = 'LinMV'
+                'isRelic'                   = 'False'
+                'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890bac'
+                'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890bac'
+                'effectiveSlaDomainName'    = 'Silver'
+                'configuredSlaDomainName'   = 'Silver'
             }
         }
         
