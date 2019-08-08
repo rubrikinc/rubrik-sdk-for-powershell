@@ -48,7 +48,6 @@ function Get-RubrikManagedVolume
     # Name of managed volume
     [Parameter(
       ParameterSetName='Name',
-      Mandatory = $true,
       Position = 0,
       ValueFromPipelineByPropertyName = $true
     )]
