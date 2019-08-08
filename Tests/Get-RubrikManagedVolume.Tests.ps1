@@ -22,7 +22,7 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Test-RubrikSLA -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 'slaid' = '12345678-1234-abcd-8910-1234567890ab' }
+            @{ 'slaid' = '12345678-1234-abcd-8910-1234567890cab' }
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
@@ -52,7 +52,7 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
                 'isDeleted'                 = 'False'
                 'primaryClusterId'          = 'local'
                 'name'                      = 'LinMV'
-                'isRelic'                   = 'False'
+                'isRelic'                   = 'True'
                 'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890bac'
                 'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890bac'
                 'effectiveSlaDomainName'    = 'Silver'
@@ -62,32 +62,29 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
         
         It -Name 'Should Return count of 2' -Test {
             (Get-RubrikManagedVolume).Count |
-                Should -BeExactly 2
+                Should -BeExactly 3
         }
         It -Name 'Name filter non existant should return count of 0' -Test {
             (Get-RubrikManagedVolume -Name 'nonexistant').Count |
                 Should -BeExactly 0
-        } 
+        }
         It -Name 'Name Filter - ID should be ManagedVolume:::22222' -Test {
             (Get-RubrikManagedVolume -name 'SQLMV').id |
                 Should -BeExactly 'ManagedVolume:::22222'
-        } 
+        }
         It -Name 'SLA Filter should be count of 1' -Test {
             (Get-RubrikManagedVolume -SLA "Bronze" | Measure-Object).Count |
                 Should -BeExactly 1
-        } 
-        It -Name 'SLA ID Filter should be count of 1' -Test {
-            (Get-RubrikManagedVolume -SLAID "12345678-1234-abcd-8910-1234567890abc" | Measure-Object).Count |
-                Should -BeExactly 1
-        } 
+        }
         It -Name 'Missing ID Exception' -Test {
             { Get-RubrikManagedVolume -id  } |
                 Should -Throw "Missing an argument for parameter 'id'. Specify a parameter of type 'System.String' and try again."
-        } 
+        }
         It -Name 'Null or empty ID Exception' -Test {
             { Get-RubrikManagedVolume -id '' } |
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
-        } 
+        }
+        
 
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
