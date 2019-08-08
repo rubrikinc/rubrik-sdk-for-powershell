@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed [Get-RubrikManagedVolume]
 
-* Changed behavior of -Relic switch, by default now retrieves both relic and non-relics. -Relic or -Relic:$false in addition to that
+* Changed behavior of `-Relic` switch, by default now retrieves both relic and non-relics. `-Relic` or `-Relic:$false` in addition to that
 * Added additional unit tests
 * Created parameter sets and improved parameter validation [Issue 351](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/351)
 
