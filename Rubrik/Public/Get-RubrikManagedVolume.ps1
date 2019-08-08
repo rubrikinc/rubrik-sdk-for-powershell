@@ -99,6 +99,10 @@ function Get-RubrikManagedVolume
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
   
+    # If the switch parameter was not explicitly specified remove from query params 
+    if(-not $PSBoundParameters.ContainsKey('Relic')) {
+      $Resources.Query.Remove('is_relic')
+    }
   }
 
   Process {
