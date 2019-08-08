@@ -31,8 +31,8 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
                 'primaryClusterId'          = 'local'
                 'name'                      = 'OracleMV'
                 'isRelic'                   = 'False'
-                'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890ab'
-                'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890ab'
+                'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890cab'
+                'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890cab'
                 'effectiveSlaDomainName'    = 'Gold'
                 'configuredSlaDomainName'   = 'Gold'
             },
@@ -65,11 +65,19 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
             (Get-RubrikManagedVolume -SLA "Bronze" | Measure-Object).Count |
                 Should -BeExactly 1
         } 
+        It -Name 'SLA ID Filter should be count of 1' -Test {
+            (Get-RubrikManagedVolume -SLAID "12345678-1234-abcd-8910-1234567890abc" | Measure-Object).Count |
+                Should -BeExactly 1
+        } 
         It -Name 'Missing ID Exception' -Test {
             { Get-RubrikManagedVolume -id  } |
                 Should -Throw "Missing an argument for parameter 'id'. Specify a parameter of type 'System.String' and try again."
         } 
-        
+        It -Name 'Null or empty ID Exception' -Test {
+            { Get-RubrikManagedVolume -id '' } |
+                Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
+        } 
+
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
