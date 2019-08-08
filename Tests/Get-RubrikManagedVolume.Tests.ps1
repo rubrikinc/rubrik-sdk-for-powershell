@@ -85,10 +85,9 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         }
         
-
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 4
     }
 
 }
