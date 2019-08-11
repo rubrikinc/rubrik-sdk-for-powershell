@@ -179,11 +179,11 @@ function Get-RubrikFileset
     # This block of code will filter results if -Name or -Hostname are used, probably should move to a private function
     if ('Query' -eq $PSCmdlet.ParameterSetName) {
       if ($null -ne $PSBoundParameters.Name) {
-        $result = Select-ExactMatch -Parameter Name -Value $Name -Result $Result
+        $result = Select-ExactMatch -Parameter Name -Result $Result
       }
 
       if ($null -ne $PSBoundParameters.HostName) {
-        $result = Select-ExactMatch -Parameter HostName -Value $HostName -Result $Result
+        $result = Select-ExactMatch -Parameter HostName -Result $Result
       }
     }
 
