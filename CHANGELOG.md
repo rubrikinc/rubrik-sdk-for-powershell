@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-08-12
+
+### Added [Select-ExactMatch] private function
+
+* As requested in issue [Issue 419](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/419)
+
+### Changed [Get-RubrikFileset]
+
+* Now uses new private function instead of the custom code in the function
+
 ## 2019-08-06
 
 ### Changed [Get-RubrikSnapshot]
