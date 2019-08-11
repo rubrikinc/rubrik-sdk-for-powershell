@@ -7,9 +7,9 @@ Helper function, filters API data when infix search is used
 This function only selects exact matches based on 
 
 .EXAMPLE
-$result = Select-ExactMatch -Parameter Name -Value $Name -Result $Result
+$result = Select-ExactMatch -Parameter Name -Result $Result
 
-Filters based on the Name parameter and the 
+Filters based on the Name parameter, only exact matches will be returned. Additional results supplied by the API endpoints will be filtered out
 #>
     [CmdletBinding()]
     param (
