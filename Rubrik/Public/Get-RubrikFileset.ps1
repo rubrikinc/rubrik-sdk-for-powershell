@@ -183,7 +183,7 @@ function Get-RubrikFileset
       }
 
       if ($null -ne $PSBoundParameters.HostName) {
-        $result = Select-ExactMatch -Parameter Name -Value $Name -Result $Result
+        $result = Select-ExactMatch -Parameter HostName -Value $HostName -Result $Result
       }
     }
 
