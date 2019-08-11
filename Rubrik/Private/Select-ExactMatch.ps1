@@ -13,6 +13,6 @@ function Select-ExactMatch {
 
         return $result | Where-Object {$Value -eq $_.$Parameter}
 
-        Write-Verbose ('Excluded results not matching -Name ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $Name,($OldCount-@($Result).count),@($Result).count)
+        Write-Verbose ('Excluded results not matching -{0} ''{1}'' {2} object(s) filtered, {3} object(s) remaining' -f $Parameter,$Value,($OldCount-@($Result).count),@($Result).count)
     }
 }
