@@ -3,14 +3,16 @@ function Select-ExactMatch {
         [parameter(Mandatory)]
         [string] $Parameter,
         [parameter(Mandatory)]
-        [string] $Value
+        [string] $Value,
+        [parameter(Mandatory)]
+        $Result
     )
 
-    if ($null -ne $PSBoundParameters.Name) {
+    process {
         $OldCount = @($Result).count
 
-        $result = $result | Where-Object {$Name -eq $_.name}
+        return $result | Where-Object {$Value -eq $_.$Parameter}
 
         Write-Verbose ('Excluded results not matching -Name ''{0}'' {1} object(s) filtered, {2} object(s) remaining' -f $Name,($OldCount-@($Result).count),@($Result).count)
-      }
+    }
 }
