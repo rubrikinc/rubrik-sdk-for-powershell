@@ -6,6 +6,11 @@ Helper function, filters API data when infix search is used
 .DESCRIPTION
 This function only selects exact matches based on 
 
+.NOTES
+Written by Jaap Brasser for community usage
+Twitter: @jaap_brasser
+GitHub: jaapbrasser
+
 .EXAMPLE
 $result = Select-ExactMatch -Parameter Name -Result $Result
 
