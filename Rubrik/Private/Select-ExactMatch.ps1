@@ -4,7 +4,7 @@ function Select-ExactMatch {
 Helper function, filters API data when infix search is used
 
 .DESCRIPTION
-This function only selects exact matches based on 
+This function only selects exact matches based on the name provided in $Parameter
 
 .NOTES
 Written by Jaap Brasser for community usage
