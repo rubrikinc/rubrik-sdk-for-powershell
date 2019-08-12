@@ -104,7 +104,7 @@ Describe -Name 'Public/Get-RubrikSnapshot' -Tag 'Public', 'Get-RubrikSnapshot' -
               Should -BeExactly "b42ed6ba-760e-425f-a35d-c7dc5636b55d"
         }
         It -Name 'Get specific snapshot' -Test {
-          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 3 -Month 8 -Year 2019) ).id |
+          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 3 -Month 8 -Year 2019).Date ).id |
               Should -BeExactly "ca214725-6dcd-49b4-88ae-45780b16879a"
         }
         It -Name 'Get on demand snapshots' -Test {
