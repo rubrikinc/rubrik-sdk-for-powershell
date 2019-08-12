@@ -12,9 +12,16 @@ Gets data on a Rubrik managed volume
 
 ## SYNTAX
 
+### Name (Default)
 ```
-Get-RubrikManagedVolume [[-id] <String>] [[-Name] <String>] [[-SLA] <String>] [[-SLAID] <String>] [-Relic]
- [[-PrimaryClusterID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikManagedVolume [[-Name] <String>] [-SLA <String>] [-SLAID <String>] [-Relic]
+ [-PrimaryClusterID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
+### ID
+```
+Get-RubrikManagedVolume [-id] <String> [-SLA <String>] [-SLAID <String>] [-Relic] [-PrimaryClusterID <String>]
+ [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,19 +33,40 @@ with Rubrik.
 
 ### EXAMPLE 1
 ```
+Get-RubrikManagedVolume
+```
+
+Retrieves all Rubrik Managed Volumes, active and relics
+
+### EXAMPLE 2
+```
+Get-RubrikManagedVolume -Relic
+```
+
+Retrieves all Rubrik Managed Volumes that are relics
+
+### EXAMPLE 3
+```
+Get-RubrikManagedVolume -Relic:$false
+```
+
+Retrieves all Rubrik Managed Volumes that are not relics
+
+### EXAMPLE 4
+```
 Get-RubrikManagedVolume -name sqltest
 ```
 
 Get a managed volume named sqltest
 
-### EXAMPLE 2
+### EXAMPLE 5
 ```
 Get-RubrikManagedVolume -SLA 'Foo'
 ```
 
 Get all managed volumes protected by the 'Foo' SLA domain.
 
-### EXAMPLE 3
+### EXAMPLE 6
 ```
 Get-RubrikManagedVolume -Name 'Bar'
 ```
@@ -52,10 +80,10 @@ id of managed volume
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: ID
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -67,13 +95,13 @@ Name of managed volume
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Name
 Aliases:
 
 Required: False
-Position: 2
+Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -86,7 +114,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -101,7 +129,7 @@ Parameter Sets: (All)
 Aliases: effective_sla_domain_id
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -124,7 +152,7 @@ Accept wildcard characters: False
 
 ### -PrimaryClusterID
 Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
-Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+Use local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
 
 ```yaml
 Type: String
@@ -132,7 +160,7 @@ Parameter Sets: (All)
 Aliases: primary_cluster_id
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -147,7 +175,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -162,7 +190,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
