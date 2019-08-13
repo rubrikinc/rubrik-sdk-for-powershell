@@ -61,12 +61,8 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
             {Get-RubrikEvent -Name doesnotexist -ErrorAction Stop} |
                 Should -Throw
         }
-        It -Name 'Time property should be a string' -Test {
-            (Get-RubrikEvent)[0].Time |
-                Should -BeOfType String
-        }
         It -Name 'Date property should be a datetime object' -Test {
-            (Get-RubrikEvent)[0].Date |
+            (Get-RubrikEvent)[1].Date |
                 Should -BeOfType DateTime
         }
         
