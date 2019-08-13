@@ -24,8 +24,16 @@ Describe -Name 'Private/Convert-APIDateTime' -Tag 'Private', 'Convert-APIDateTim
     }
     
     Context -Name 'Error handling' -Fixture {
-        It -Name 'February 30' -Test {
-            Convert-APIDateTime -DateTimeString 'Mon Mar 11 09:12:14 UTC 2017' |
+        It -Name 'February 30 - Should not have output' -Test {
+            Convert-APIDateTime -DateTimeString 'Mon Feb 30 09:12:14 UTC 2017' |
+                Should -BeExactly $null
+        }
+        It -Name 'Movember - Should not have output' -Test {
+            Convert-APIDateTime -DateTimeString 'Mon Mov 30 09:12:14 UTC 2018' |
+                Should -BeExactly $null
+        }
+        It -Name '25th hour - Should not have output' -Test {
+            Convert-APIDateTime -DateTimeString 'Mon Sep 30 25:12:14 UTC 2018' |
                 Should -BeExactly $null
         }
     }
