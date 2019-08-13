@@ -67,7 +67,7 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
         }
         
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
     }
 }
