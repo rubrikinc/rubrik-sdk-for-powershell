@@ -16,6 +16,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-08-13
+
+### Added [Convert-ApiDateTime] private function
+
+* Function is used to convert API time strings to date time objects
+* Created associated unit tests to validate behavior of function
+
+### Changed [Get-RubrikEvent]
+
+* Added new `date` property to output, uses new Convert-APIDateTime function for conversion [Issue 426](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/426)
+* Added additional unit tests to validate proper date time conversion
+
 ## 2019-08-12
 
 ### Added [Select-ExactMatch] private function
