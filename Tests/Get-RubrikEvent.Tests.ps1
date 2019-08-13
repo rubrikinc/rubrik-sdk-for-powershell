@@ -65,6 +65,10 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
             (Get-RubrikEvent)[0].Time |
                 Should -BeOfType String
         }
+        It -Name 'Date property should be a datetime object' -Test {
+            (Get-RubrikEvent)[0].Date |
+                Should -BeOfType DateTime
+        }
         
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
