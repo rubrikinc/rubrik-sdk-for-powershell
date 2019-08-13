@@ -26,26 +26,31 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
                 'name'                   = 'VirtualMachine01'
                 'id'                     = 'VirtualMachine:::11111'
                 'eventType'              = 'Replication'
+                'time'                   = 'Mon Aug 10 07:12:14 UTC 2019'
             },
             @{ 
                 'name'                   = 'VirtualMachine02'
                 'id'                     = 'VirtualMachine:::22222'
                 'eventType'              = 'Backup'
+                'time'                   = 'Mon Aug 11 07:12:14 UTC 2019'
             },
             @{ 
                 'name'                   = 'VirtualMachine03'
                 'id'                     = 'VirtualMachine:::33333'
                 'eventType'              = 'CloudNativeSource'
+                'time'                   = 'Mon Aug 12 07:12:14 UTC 2019'
             },
             @{ 
                 'name'                   = 'VirtualMachine04'
                 'id'                     = 'VirtualMachine:::44444'
                 'eventType'              = 'Replication'
+                'time'                   = 'Mon Aug 13 07:12:14 UTC 2019'
             },
             @{ 
                 'name'                   = 'VirtualMachine05'
                 'id'                     = 'VirtualMachine:::55555'
                 'eventType'              = 'Replication'
+                'time'                   = 'Mon Aug 14 07:12:14 UTC 2019'
             }
         }
         It -Name 'Should Return count of 5' -Test {
@@ -56,7 +61,11 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
             {Get-RubrikEvent -Name doesnotexist -ErrorAction Stop} |
                 Should -Throw
         }
-
+        It -Name 'Time property should be a string' -Test {
+            (Get-RubrikEvent)[0].Time |
+                Should -BeOfType String
+        }
+        
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
