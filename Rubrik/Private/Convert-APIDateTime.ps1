@@ -40,7 +40,6 @@ Thursday, August 8, 2019 8:31:36 PM
         try {
             [DateTime]::ParseExact($NewDateTimeString,'MM dd HH:mm:ss yyyy',$null)
         } catch {
-            Write-Error $_
         }
     }
 }
