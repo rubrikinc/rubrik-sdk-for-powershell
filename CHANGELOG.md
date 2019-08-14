@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-08-14
+
+### Changed [Test-ReturnFormat] private function
+
+* Improved detection of empty strings
+
+### Changed [Get-RubrikEvent]
+
+* Added validation for `time` field, if `time` field does not exist it will not add `date` property [Issue 428](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/428)
+
 ## 2019-08-13
 
 ### Added [Convert-ApiDateTime] private function
