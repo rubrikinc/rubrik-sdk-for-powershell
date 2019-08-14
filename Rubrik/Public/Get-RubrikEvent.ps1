@@ -120,10 +120,12 @@ function Get-RubrikEvent
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
     # Add 'date' property to the output by converting 'time' property to datetime object
-    $result = $result | ForEach-Object {
-      Select-Object -InputObject $_ -Property *,@{
-        name = 'date'
-        expression = {Convert-APIDateTime -DateTimeString $_.time}
+    if (($null -ne $result) -and ($null -ne ($result | Select-Object -ExpandProperty time))) {
+      $result = $result | ForEach-Object {
+        Select-Object -InputObject $_ -Property *,@{
+          name = 'date'
+          expression = {Convert-APIDateTime -DateTimeString $_.time}
+        }
       }
     }
     
