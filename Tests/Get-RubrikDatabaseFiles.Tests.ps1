@@ -67,8 +67,8 @@ Describe -Name 'Public/Get-RubrikDatabaseFiles' -Tag 'Public', 'Get-RubrikDataba
         }
 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
     }
 
     Context -Name 'Parameter Validation' {
