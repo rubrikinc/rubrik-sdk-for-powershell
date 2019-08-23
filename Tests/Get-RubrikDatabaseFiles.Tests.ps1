@@ -40,14 +40,6 @@ Describe -Name 'Public/Get-RubrikDatabaseFiles' -Tag 'Public', 'Get-RubrikDataba
               ]'
             return ConvertFrom-Json $response
         }
-        Mock -CommandName Test-ReturnFormat -Verifiable -ModuleName 'Rubrik' -MockWith {
-            param(
-                $api,
-                $result,
-                $localtion
-            )
-            $result  
-        }
         
         It -Name 'Should return two results' -Test {
             ( Get-RubrikDatabaseFiles -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -time '2010-01-01T00:00:00.000Z').Count |
@@ -69,7 +61,6 @@ Describe -Name 'Public/Get-RubrikDatabaseFiles' -Tag 'Public', 'Get-RubrikDataba
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
-        Assert-MockCalled -CommandName Test-ReturnFormat -ModuleName 'Rubrik' -Exactly 2
     }
 
     Context -Name 'Parameter Validation' {

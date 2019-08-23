@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Set IgnoreCase on state parameter for Set-RubrikLogShipping as parameters must be uppercase to process in API call.
 * Addresses [Issue 344](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/344)
 
+### Fixed [Get-RubrikDatabaseFiles]
+
+* Updated Api information for function in `Get-RubrikApiData` [Issue 430](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/430)
+
 ## 2019-08-14
 
 ### Changed [Test-ReturnFormat] private function
