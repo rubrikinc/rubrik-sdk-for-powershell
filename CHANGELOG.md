@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-08-23
+
+### Fixed [Get-RubrikDatabaseFiles]
+
+* Updated Api information for function in `Get-RubrikApiData` [Issue 430](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/430)
+
 ## 2019-08-14
 
 ### Changed [Test-ReturnFormat] private function
