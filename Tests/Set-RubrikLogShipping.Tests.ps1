@@ -32,6 +32,14 @@ Describe -Name 'Public/Set-RubrikLogShipping' -Tag 'Public', 'Set-RubrikLogShipp
             ( Set-RubrikLogShipping -id '111111' -state STANDBY).status |
                 Should -BeExactly 'QUEUED'
         }
+        It -Name 'Should return correct id' -Test {
+            ( Set-RubrikLogShipping -id '111111' -state STANDBY).id |
+                Should -BeExactly 'MSSQL_APPLY_LOGS_11111'
+        }
+        It -Name 'Should return correct progress' -Test {
+            ( Set-RubrikLogShipping -id '111111' -state STANDBY).progress |
+                Should -BeExactly '0'
+        }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
