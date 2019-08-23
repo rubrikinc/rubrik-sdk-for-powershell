@@ -20,8 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added [Various Unit Tests]
 
-* Added unit tests for New-RubrikLogShipping, New-RubrikLogBackup, Get-RubrikLogShipping, Set-RubrikLogShipping, Reset-RubrikLogShipping, and Remove-RubrikLogShipping
-* Set IgnoreCase on state parameter for Set-RubrikLogShipping as parameters must be uppercase to process in API call.
+* Added unit tests for `New-RubrikLogShipping`, `New-RubrikLogBackup`, `Get-RubrikLogShipping`, `Set-RubrikLogShipping`, `Reset-RubrikLogShipping`, and `Remove-RubrikLogShipping`
+* Set `IgnoreCase` on state parameter for `Set-RubrikLogShipping` as parameters must be uppercase to process in API call.
 * Addresses [Issue 344](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/344)
 
 ### Fixed [Get-RubrikDatabaseFiles]
