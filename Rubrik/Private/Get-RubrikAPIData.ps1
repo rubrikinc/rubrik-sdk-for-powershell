@@ -189,7 +189,7 @@ function Get-RubrikAPIData($endpoint) {
                 Query       = @{
                     time = 'time'
                 }
-                Result      = 'data'
+                Result      = ''
                 Filter      = ''
                 Success     = '200'
             }
