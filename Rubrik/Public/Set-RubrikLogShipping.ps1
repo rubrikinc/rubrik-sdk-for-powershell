@@ -26,7 +26,7 @@ function Set-RubrikLogShipping
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     
-    [ValidateSet("RESTORING", "STANDBY")]
+    [ValidateSet("RESTORING", "STANDBY",IgnoreCase=$false)]
     [String]$state,
 
     [Alias('shouldDisconnectStandbyUsers')]
