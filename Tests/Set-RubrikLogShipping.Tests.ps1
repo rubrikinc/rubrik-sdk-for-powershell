@@ -40,9 +40,10 @@ Describe -Name 'Public/Set-RubrikLogShipping' -Tag 'Public', 'Set-RubrikLogShipp
             ( Set-RubrikLogShipping -id '111111' -state STANDBY).progress |
                 Should -BeExactly '0'
         }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
     }
 
     Context -Name 'Parameter Validation' {
