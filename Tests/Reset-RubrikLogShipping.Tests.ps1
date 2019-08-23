@@ -32,9 +32,10 @@ Describe -Name 'Public/Reset-RubrikLogShipping' -Tag 'Public', 'Reset-RubrikLogS
             ( Reset-RubrikLogShipping -id '111111' -state STANDBY).status |
                 Should -BeExactly 'QUEUED'
         }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter Validation' {
