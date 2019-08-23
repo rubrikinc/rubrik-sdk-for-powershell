@@ -36,7 +36,7 @@ Describe -Name 'Public/New-RubrikLogBackup' -Tag 'Public', 'New-RubrikLogBackup'
         
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
     Context -Name 'Parameter Validation' {
         It -Name 'Parameter id is missing' -Test {

@@ -38,7 +38,7 @@ Describe -Name 'Public/Get-RubrikLogShipping' -Tag 'Public', 'Get-RubrikLogShipp
         It -Name 'No parameters returns all results' -Test {
             ( Get-RubrikLogShipping).Count |
                 Should -BeExactly 2
-        } 
+        }
    
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1

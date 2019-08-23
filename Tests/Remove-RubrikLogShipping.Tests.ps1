@@ -33,9 +33,10 @@ Describe -Name 'Public/Remove-RubrikLogShipping' -Tag 'Public', 'Remove-RubrikLo
             ( Remove-RubrikLogShipping -id MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab ).status |
                 Should -BeExactly 'QUEUED'
         }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter Validation' {
