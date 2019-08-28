@@ -13,7 +13,6 @@ function New-RubrikLogShipping
   Twitter: lumnah
   GitHub: clumnah
   
-
   .LINK
   http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 

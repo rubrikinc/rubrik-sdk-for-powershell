@@ -101,7 +101,6 @@ function Export-RubrikDatabase
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $Id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
 
-
     #region One-off
     Write-Verbose -Message "Build the body"
     $body = @{
@@ -125,7 +124,6 @@ function Export-RubrikDatabase
       if($TargetLogFilePath){ $body.Add('targetLogFilePath',$TargetLogFilePath) }
     }
 
-
     if($RecoveryLSN){
       $body.recoveryPoint += @{lsnPoint=@{lsn=$RecoveryLSN}}
     } else {
@@ -139,7 +137,6 @@ function Export-RubrikDatabase
     $body = ConvertTo-Json $body -Depth 10
     Write-Verbose -Message "Body = $body"
     #endregion
-
 
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
