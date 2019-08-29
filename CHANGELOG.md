@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-08-28
+
+### Changed [New-RubrikLogShipping]
+
+* Changed `New-RubrikLogShipping` If-statement validation to check based on object instead of string
+
 ## 2019-08-23
 
 ### Added [Various Unit Tests]
