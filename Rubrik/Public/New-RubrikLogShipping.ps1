@@ -96,16 +96,14 @@ function New-RubrikLogShipping
       $body.Add($resources.Body.maxDataStreams,$MaxDataStreams)
     }
 
-    if([string]::IsNullOrWhiteSpace($TargetFilePaths) -eq $false)
-    {
+    if($TargetFilePaths) {
       if($TargetDataFilePath -or $TargetLogFilePath) {Write-Warning 'Use of -TargetFilePaths overrides -TargetDataFilePath and -TargetLogFilePath.'}
       $body.Add('targetFilePaths',$TargetFilePaths)
-    } 
-    else 
-    {
+    } else {
       if($TargetDataFilePath){ $body.Add('targetDataFilePath',$TargetDataFilePath) }
       if($TargetLogFilePath){ $body.Add('targetLogFilePath',$TargetLogFilePath) }
     }
+    
     $body = ConvertTo-Json $body
     Write-Verbose -Message "Body = $body"
     #endregion
