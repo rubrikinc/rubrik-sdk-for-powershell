@@ -34,6 +34,11 @@ Describe -Name 'Public/New-RubrikLogShipping' -Tag 'Public', 'New-RubrikLogShipp
                 Should -BeExactly 'QUEUED'
         }
         
+        It -Name 'Should invoke new log shipping restore with QUEUED status' -Test {
+            ( New-RubrikLogShipping -Id 'databaseid' -targetInstanceId 'instance' -targetDatabaseName 'db').id |
+                Should -BeExactly 'RESTORE_MSSQL_DB_11111'
+        }
+        
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
