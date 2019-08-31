@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-08-30
+
+### Changed [New-RubrikLogShipping.Tests]
+
+* Changed functionality of `New-RubrikLogShipping.Tests` to use inModuleScope
+
 ## 2019-08-28
 
 ### Changed [New-RubrikLogShipping]
