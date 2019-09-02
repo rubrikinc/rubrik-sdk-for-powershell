@@ -118,14 +118,14 @@ function New-RubrikBootStrap
     }
 
     # Default DNS servers to 8.8.8.8
-    if($dnsNameServers -eq '') {
+    if([string]::IsNullOrEmpty($dnsNameServers)) {
       $dnsNameServers = @(
         '8.8.8.8'
       )
     }
 
     # Default DNS search domains to an empty array
-    if($dnsSearchDomains -eq '') {
+    if([string]::IsNullOrEmpty($dnsSearchDomains)) {
       $dnsSearchDomains = @()
     }
 
