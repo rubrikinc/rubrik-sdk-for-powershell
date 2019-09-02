@@ -93,8 +93,43 @@ Describe -Name 'Public/New-RubrikBootstrap' -Tag 'Public', 'New-RubrikBootstrap'
         }
         
         Context -Name 'Validate one off region works as expected' {
+            $BootStrapHash = @{
+                name = 'rubrik-edge' 
+                dnsNameservers = @('192.168.11.1')
+                dnsSearchDomains = @('corp.us','branch.corp.us')
+                ntpserverconfigs = @(@{server = 'pool.ntp.org'})
+                adminUserInfo = @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
+                nodeconfigs = @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+            }
             
+            Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+                param($uri,$header,$method,$body)
+                return $body
+            }
             
+            It -Name 'Nulled ntpserverconfigs should add default ntp server' -Test {
+                $BootStrapHash.ntpserverconfigs = $null
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -BeLike '*pool.ntp.org*'
+            }
+            
+            It -Name 'Nulled dnsSearchDomains should not appear in body' -Test {
+                $BootStrapHash.dnsSearchDomains = $null
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -Not -BeLike '*dnsSearchDomains*'
+            }
+            
+            It -Name 'Nulled dnsNameServers should set Google dns as default' -Test {
+                $BootStrapHash.dnsNameServers = $null
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -BeLike '*8.8.8.8*'
+            }
+            
+            It -Name 'Multiple node configuration should be present in request' -Test {
+                $BootStrapHash.nodeconfigs = @{
+                    node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}
+                    node2 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}
+                }
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -BeLike '*node1*'
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -BeLike '*node2*'
+            }
         }
     }
 }
