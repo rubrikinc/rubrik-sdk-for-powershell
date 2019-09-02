@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-09-02
 
-### Added [*BootStrap] unit tests
+### Added [-RubrikBootStrap] unit tests
 
 * Created unit tests for both `Get-RubrikBootStrap` and `New-RubrikBootStrap` as requested in [Issue 383](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/383)
 * Updated documentation
