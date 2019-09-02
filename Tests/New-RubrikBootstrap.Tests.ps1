@@ -30,15 +30,43 @@ Describe -Name 'Public/New-RubrikBootstrap' -Tag 'Public', 'New-RubrikBootstrap'
                 $true
             }
 
-            It -Name 'Should run without error' -Test {
+            It -Name 'Should run without error - With all values provided' -Test {
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -BeExactly $true
+            }
+            
+            It -Name 'Should run without error - With nulled dnsNameServers' -Test {
+                $BootStrapHash.dnsNameServers = $null
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -BeExactly $true
+            }
+            
+            It -Name 'Should run without error - With nulled DNSsearchdomains' -Test {
+                $BootStrapHash.dnsSearchDomains = $null
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -BeExactly $true
+            }
+            
+            It -Name 'Should run without error - With empty DNSsearchdomains' -Test {
+                $BootStrapHash.dnsSearchDomains = ''
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -BeExactly $true
+            }
+            
+            It -Name 'Should run without error - With nulled ntpserverconfigs' -Test {
+                $BootStrapHash.ntpserverconfigs = $null
+                ( New-RubrikBootstrap @BootStrapHash ) | Should -BeExactly $true
+            }
+            
+            It -Name 'Should run without error - Multiple node configuration' -Test {
+                $BootStrapHash.nodeconfigs = @{
+                    node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}
+                    node2 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}
+                }
                 ( New-RubrikBootstrap @BootStrapHash ) | Should -BeExactly $true
             }
             
             Assert-VerifiableMock
-            Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
+            Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 6
         }
         
-        Context -Name 'ValidationScript of $nodeConfigs Parameter' {
+        Context -Name 'ValidationScript of -nodeConfigs Parameter' {
             It -Name 'Empty nodeconfigs should throw error' -Test {
                 $BootStrapHash.nodeconfigs = ''
                 {(New-RubrikBootstrap @BootStrapHash)} | 
@@ -62,6 +90,11 @@ Describe -Name 'Public/New-RubrikBootstrap' -Tag 'Public', 'New-RubrikBootstrap'
                 {(New-RubrikBootstrap @BootStrapHash)} | 
                 Should -Throw "Cannot validate argument on parameter 'nodeConfigs'. node configuration for node1 missing property gateway"
             }
+        }
+        
+        Context -Name 'Validate one off region works as expected' {
+            
+            
         }
     }
 }
