@@ -39,14 +39,16 @@ Describe -Name 'Public/New-RubrikBootstrap' -Tag 'Public', 'New-RubrikBootstrap'
         }
         
         Context -Name 'ValidationScript of $nodeConfigs Parameter' {
-            Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-                $true
+            It -Name 'Empty nodeconfigs should throw error' -Test {
+                $BootStrapHash.nodeconfigs = ''
+                {(New-RubrikBootstrap @BootStrapHash)} | 
+                Should -Throw "Cannot validate argument on parameter 'nodeConfigs'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
             }
             
-            It -Name 'Incorrect address should throw error' -Test {
+            It -Name 'Junk data should throw error' -Test {
                 $BootStrapHash.nodeconfigs = 'Junk data'
                 {(New-RubrikBootstrap @BootStrapHash)} | 
-                Should -Throw "Cannot validate argument on parameter 'nodeConfigs'. node configuration for node1 value address is null or empty"
+                Should -Throw "node configuration should be a hashtable, refer to the documentation on how to structure a bootstrap request"
             }
             
             It -Name 'Incorrect address should throw error' -Test {
