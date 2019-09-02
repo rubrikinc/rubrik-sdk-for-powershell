@@ -130,6 +130,9 @@ Describe -Name 'Public/New-RubrikBootstrap' -Tag 'Public', 'New-RubrikBootstrap'
                 ( New-RubrikBootstrap @BootStrapHash ) | Should -BeLike '*node1*'
                 ( New-RubrikBootstrap @BootStrapHash ) | Should -BeLike '*node2*'
             }
+            
+            Assert-VerifiableMock
+            Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 5
         }
     }
 }
