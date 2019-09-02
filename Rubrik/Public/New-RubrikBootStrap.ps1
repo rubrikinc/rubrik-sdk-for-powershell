@@ -142,7 +142,7 @@ function New-RubrikBootStrap
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -Headers @{"content-type"="application/json"} -method $($resources.Method) -body $body
+    $result = Submit-Request -uri $uri -Header @{"content-type"="application/json"} -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
