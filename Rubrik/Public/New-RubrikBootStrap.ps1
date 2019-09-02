@@ -56,7 +56,10 @@ function New-RubrikBootStrap
     $adminUserInfo, 
     # Node Configuration Hashtable
     [Parameter(Mandatory = $true)]
-    [ValidateScript({             
+    [ValidateScript({
+      if ('HashTable' -ne $_.GetType().Name) {
+        Throw "node configuration should be a hashtable, refer to the documentation on how to structure a bootstrap request"
+      }
       $requiredProperties = @("address","gateway","netmask")
       ForEach($node in $_.Keys) {
         $ipConfig = $_[$node].managementIpConfig
