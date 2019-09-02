@@ -22,6 +22,7 @@ function Get-RubrikBootStrap
     [ValidateNotNullOrEmpty()]
     [String] $id = 'me',
     # Rubrik server IP or FQDN
+    [parameter(Mandatory)]
     [ValidateNotNullOrEmpty()]
     [String] $Server,
     # Bootstrap Request ID
