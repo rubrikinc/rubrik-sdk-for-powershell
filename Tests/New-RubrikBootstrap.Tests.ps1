@@ -25,7 +25,7 @@ Describe -Name 'Public/New-RubrikBootstrap' -Tag 'Public', 'New-RubrikBootstrap'
         }
         #endregion
 
-        Context -Name 'New Log Shipping Results' {
+        Context -Name 'Test script logic' {
             Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
                 $true
             }
@@ -35,10 +35,31 @@ Describe -Name 'Public/New-RubrikBootstrap' -Tag 'Public', 'New-RubrikBootstrap'
             }
             
             Assert-VerifiableMock
-            Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
+            Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
         }
-        Context -Name 'Parameter Validation' {
-            # TODO
+        
+        Context -Name 'ValidationScript of $nodeConfigs Parameter' {
+            Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+                $true
+            }
+            
+            It -Name 'Incorrect address should throw error' -Test {
+                $BootStrapHash.nodeconfigs = 'Junk data'
+                {(New-RubrikBootstrap @BootStrapHash)} | 
+                Should -Throw "Cannot validate argument on parameter 'nodeConfigs'. node configuration for node1 value address is null or empty"
+            }
+            
+            It -Name 'Incorrect address should throw error' -Test {
+                $BootStrapHash.nodeconfigs = @{node1 = @{managementIpConfig = @{address = $null; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+                {(New-RubrikBootstrap @BootStrapHash)} | 
+                Should -Throw "Cannot validate argument on parameter 'nodeConfigs'. node configuration for node1 value address is null or empty"
+            }
+            
+            It -Name 'Missing gateway should throw error' -Test {
+                $BootStrapHash.nodeconfigs = @{node1 = @{managementIpConfig = @{address = '1.1.1.1'; netmask = '255.255.255.0'}}}
+                {(New-RubrikBootstrap @BootStrapHash)} | 
+                Should -Throw "Cannot validate argument on parameter 'nodeConfigs'. node configuration for node1 missing property gateway"
+            }
         }
     }
 }
