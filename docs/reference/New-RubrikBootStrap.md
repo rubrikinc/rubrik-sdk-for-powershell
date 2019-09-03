@@ -28,13 +28,29 @@ This will send a bootstrap request
 https://gist.github.com/nshores/104f069570740ea645d67a8aeab19759
 ```
 
-New-RubrikBootStrap -Server 169.254.11.25 
+New-RubrikBootStrap -Server 169.254.11.25
 -name 'rubrik-edge' 
 -dnsNameservers @('192.168.11.1')
 -dnsSearchDomains @('corp.us','branch.corp.us')
 -ntpserverconfigs @(@{server = 'pool.ntp.org'})
 -adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
 -nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+
+### EXAMPLE 2
+```
+$BootStrapHash = @{
+```
+
+Server = 169.254.11.25
+  name = 'rubrik-edge' 
+  dnsNameservers = @('192.168.11.1')
+  dnsSearchDomains = @('corp.us','branch.corp.us')
+  ntpserverconfigs = @(@{server = 'pool.ntp.org'})
+  adminUserInfo = @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
+  nodeconfigs = @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+}
+
+New-RubrikBootStrap @BootStrapHash
 
 ## PARAMETERS
 

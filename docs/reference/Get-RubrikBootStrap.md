@@ -13,7 +13,7 @@ Connects to Rubrik cluster and retrieves the bootstrap process progress.
 ## SYNTAX
 
 ```
-Get-RubrikBootStrap [[-id] <String>] [[-Server] <String>] [[-RequestId] <String>] [<CommonParameters>]
+Get-RubrikBootStrap [[-id] <String>] [-Server] <String> [[-RequestId] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,7 +53,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 2
 Default value: None
 Accept pipeline input: False

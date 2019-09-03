@@ -2314,7 +2314,7 @@
           </dev:type>
           <dev:defaultValue>Me</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Server</maml:name>
           <maml:Description>
             <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -2353,7 +2353,7 @@
         </dev:type>
         <dev:defaultValue>Me</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Server</maml:name>
         <maml:Description>
           <maml:para>Rubrik server IP or FQDN</maml:para>
@@ -11827,7 +11827,15 @@
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>https://gist.github.com/nshores/104f069570740ea645d67a8aeab19759</dev:code>
         <dev:remarks>
-          <maml:para>New-RubrikBootStrap -Server 169.254.11.25  -name 'rubrik-edge'  -dnsNameservers @('192.168.11.1') -dnsSearchDomains @('corp.us','branch.corp.us') -ntpserverconfigs @(@{server = 'pool.ntp.org'}) -adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'} -nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}</maml:para>
+          <maml:para>New-RubrikBootStrap -Server 169.254.11.25 -name 'rubrik-edge'  -dnsNameservers @('192.168.11.1') -dnsSearchDomains @('corp.us','branch.corp.us') -ntpserverconfigs @(@{server = 'pool.ntp.org'}) -adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'} -nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>$BootStrapHash = @{</dev:code>
+        <dev:remarks>
+          <maml:para>Server = 169.254.11.25   name = 'rubrik-edge'    dnsNameservers = @('192.168.11.1')   dnsSearchDomains = @('corp.us','branch.corp.us')   ntpserverconfigs = @(@{server = 'pool.ntp.org'})   adminUserInfo = @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}   nodeconfigs = @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}} }</maml:para>
+          <maml:para>New-RubrikBootStrap @BootStrapHash</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
