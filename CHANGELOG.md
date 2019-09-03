@@ -16,6 +16,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-09-02
+
+### Added [-RubrikBootStrap] unit tests
+
+* Created unit tests for both `Get-RubrikBootStrap` and `New-RubrikBootStrap` as requested in [Issue 383](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/383)
+* Updated documentation
+
+### Changed [New-RubrikBootstrap]
+
+* Enhanced validation of strings and validatescript block
+
+## 2019-08-30
+
+### Changed [New-RubrikLogShipping.Tests]
+
+* Changed functionality of `New-RubrikLogShipping.Tests` to use inModuleScope
+
 ## 2019-08-28
 
 ### Changed [New-RubrikLogShipping]

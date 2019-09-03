@@ -12,21 +12,32 @@ function New-RubrikBootStrap
       #DNS Param must be an array even if only passing a single server
       #NTP Must be an array than contains hash table for each server object
       #Nodeconfigs Param must be a hash table object.
-
             
       .LINK
       https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap
             
       .EXAMPLE
       https://gist.github.com/nshores/104f069570740ea645d67a8aeab19759
-      New-RubrikBootStrap -Server 169.254.11.25 
+      New-RubrikBootStrap -Server 169.254.11.25
       -name 'rubrik-edge' 
       -dnsNameservers @('192.168.11.1')
       -dnsSearchDomains @('corp.us','branch.corp.us')
       -ntpserverconfigs @(@{server = 'pool.ntp.org'})
       -adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
       -nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+          
+      .EXAMPLE
+      $BootStrapHash = @{
+        Server = 169.254.11.25
+        name = 'rubrik-edge' 
+        dnsNameservers = @('192.168.11.1')
+        dnsSearchDomains = @('corp.us','branch.corp.us')
+        ntpserverconfigs = @(@{server = 'pool.ntp.org'})
+        adminUserInfo = @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
+        nodeconfigs = @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+      }
       
+      New-RubrikBootStrap @BootStrapHash      
   #>
 
   [CmdletBinding()]
@@ -56,7 +67,10 @@ function New-RubrikBootStrap
     $adminUserInfo, 
     # Node Configuration Hashtable
     [Parameter(Mandatory = $true)]
-    [ValidateScript({             
+    [ValidateScript({
+      if ('HashTable' -ne $_.GetType().Name) {
+        Throw "node configuration should be a hashtable, refer to the documentation on how to structure a bootstrap request"
+      }
       $requiredProperties = @("address","gateway","netmask")
       ForEach($node in $_.Keys) {
         $ipConfig = $_[$node].managementIpConfig
@@ -115,14 +129,14 @@ function New-RubrikBootStrap
     }
 
     # Default DNS servers to 8.8.8.8
-    if($dnsNameServers -eq '') {
+    if([string]::IsNullOrEmpty($dnsNameServers)) {
       $dnsNameServers = @(
         '8.8.8.8'
       )
     }
 
     # Default DNS search domains to an empty array
-    if($dnsSearchDomains -eq '') {
+    if([string]::IsNullOrEmpty($dnsSearchDomains)) {
       $dnsSearchDomains = @()
     }
 
@@ -142,7 +156,7 @@ function New-RubrikBootStrap
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -Headers @{"content-type"="application/json"} -method $($resources.Method) -body $body
+    $result = Submit-Request -uri $uri -Header @{"content-type"="application/json"} -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 

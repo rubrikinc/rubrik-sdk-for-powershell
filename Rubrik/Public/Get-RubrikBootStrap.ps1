@@ -6,11 +6,8 @@ function Get-RubrikBootStrap
       Connects to Rubrik cluster and retrieves the bootstrap process progress.
             
       .DESCRIPTION
-      This function is created to pull the status of a cluster bootstrap request. 
-            
-      .NOTES
+      This function is created to pull the status of a cluster bootstrap request.
       
-            
       .LINK
       https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap
             
@@ -25,6 +22,7 @@ function Get-RubrikBootStrap
     [ValidateNotNullOrEmpty()]
     [String] $id = 'me',
     # Rubrik server IP or FQDN
+    [parameter(Mandatory)]
     [ValidateNotNullOrEmpty()]
     [String] $Server,
     # Bootstrap Request ID
