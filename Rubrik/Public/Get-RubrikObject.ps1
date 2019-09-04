@@ -32,28 +32,14 @@ function Get-RubrikObject
     [Parameter(Mandatory=$true,ParameterSetName='FilterByID')]
     [ValidateNotNullOrEmpty()]    
     [String]$id, 
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
-    [String]$PrimaryClusterID,   
-    # Filter results to return VMware VMs  
-    [Switch]$IncludeVMwareVMs,
-    # Filter results to return Nutanix VMs
-    [Switch]$IncludeNutanixVMs,
-    # Filter results to return Hyper-V VMs
-    [Switch]$IncludeHyperVVMs,
-    # Filter results to return MSSQL Databases
-    [Switch]$IncludeMSSQLDBs,
-    # Filter results to return Oracle Databases
-    [Switch]$IncludeOracleDBs,
-    # Filter results to return Filesets
-    [Switch]$IncludeFilesets,
-    # Filter results to return Volume Groups
-    [Switch]$IncludeVolumeGroups,
-    # Filter results to return ManagedVolumes
-    [Switch]$IncludeManagedVolumes,
-    # Filter results to return SLA Domains
-    [Switch]$IncludeSLADomains,
-    # Filter results to return Physical Hosts
-    [Switch]$IncludePhysicalHosts,
+    # Filter Objects to include
+    [ValidateSet("VMwareVM","NutanixVM","HyperVVM","MSSSQLDB","OracleDB","Fileset","VolumeGroup","ManagedVolume","SLADomain","PhysicalHost",
+                 "NasShare","FilesetTemplate","AvailabilityGroup","DatabaseMount","Event","LDAPObject","LogShipping")]
+    [String[]]$ObjectsToInclude, 
+    # Filter Objects to exclude
+    [ValidateSet("VMwareVM","NutanixVM","HyperVVM","MSSSQLDB","OracleDB","Fileset","VolumeGroup","ManagedVolume","SLADomain","PhysicalHost",
+                 "NasShare","FilesetTemplate","AvailabilityGroup","DatabaseMount","Event","LDAPObject","LogShipping")]
+    [String[]]$ObjectsToExclude,     
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -72,57 +58,70 @@ function Get-RubrikObject
 
   Process {
 
-    # Build parameter queries for individual cmdlets
-    $IndividualCmdletParams = ""
-    If ($PrimaryClusterID) { $IndividualCmdletParams += " -PrimaryClusterID '$PrimaryClusterId'" }
-    if ($Name) { $IndividualCmdletParams +=' | where-object { $_.Name -like ' + "'$Name' }" }
-    if ($id) { $IndividualCmdletParams += ' | where-object { $_.id -like ' + "'$id' }" }
-
-    # Hashtable containing information around each object type.
+    # Hashtable containing information around each object type. Name must match ValidateSet in ObjectsToInclude parameter
     $ObjectTypes =
     @{
-        "VMwareVMs"       = [pscustomobject]@{ ParameterName = 'IncludeVMwareVMs'; ObjectTypeLabel = "VMwareVM"; associatedCmdlet = "Get-RubrikVM $IndividualCmdletParams"; parameterPassed = $IncludeVMwareVMs}
-        "NutanixVMs"      = [pscustomobject]@{ ParameterName = 'IncludeNutanixVMs'; ObjectTypeLabel = "NutanixVM"; associatedCmdlet = "Get-RubrikNutanixVM $IndividualCmdletParams"; parameterPassed = $IncludeNutanixVMs}
-        "HyperVVMs"       = [pscustomobject]@{ ParameterName = 'IncludeHyperVVMs'; ObjectTypeLabel = "HyperVVM"; associatedCmdlet = "Get-RubrikHyperVVM $IndividualCmdletParams"; parameterPassed = $IncludeHyperVVMs}
-        "MSSQLDBs"        = [pscustomobject]@{ ParameterName = 'IncludeMSSSQLDBs'; ObjectTypeLabel = "MSSQLDB"; associatedCmdlet = "Get-RubrikDatabase $IndividualCmdletParams"; parameterPassed = $IncludeMSSQLDBs}
-        "OracleDBs"       = [pscustomobject]@{ ParameterName = 'IncludeOracleDBs'; ObjectTypeLabel = "OracleDB"; associatedCmdlet = "Get-RubrikOracleDB $IndividualCmdletParams"; parameterPassed = $IncludeOracleDBs}
-        "Filesets"        = [pscustomobject]@{ ParameterName = 'IncludeFilesets'; ObjectTypeLabel = "Fileset"; associatedCmdlet = "Get-RubrikFileset $IndividualCmdletParams"; parameterPassed = $IncludeFilesets}
-        "VolumeGroups"    = [pscustomobject]@{ ParameterName = 'IncludeVolumeGroups'; ObjectTypeLabel = "VolumeGroup"; associatedCmdlet = "Get-RubrikVolumeGroup $IndividualCmdletParams"; parameterPassed = $IncludeVolumeGroups}
-        "ManagedVolumes"  = [pscustomobject]@{ ParameterName = 'IncludeManagedVolumes'; ObjectTypeLabel = "ManagedVolume"; associatedCmdlet = "Get-RubrikManagedVolume $IndividualCmdletParams"; parameterPassed = $IncludeManagedVolumes}
-        "SLADomains"      = [pscustomobject]@{ ParameterName = 'IncludeSLADomains'; ObjectTypeLabel = "SLADomain"; associatedCmdlet = "Get-RubrikSLA $IndividualCmdletParams"; parameterPassed = $IncludeSLADomains}
-        "PhysicalHosts"   = [pscustomobject]@{ ParameterName = 'IncludePhysicalHosts'; ObjectTypeLabel = "PhysicalHost"; associatedCmdlet = "Get-RubrikHost $IndividualCmdletParams"; parameterPassed = $IncludePhysicalHosts}
+        "VMwareVM"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVM"; FriendlyName = "VMware VMs"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "NutanixVM"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNutanixVM"; FriendlyName = "Nutanix VMs"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "HyperVVM"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikHyperVVM"; FriendlyName = "HyperV VMs"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "MSSQLDB"           = [pscustomobject]@{ associatedCmdlet = "Get-RubrikDatabase"; FriendlyName = "MSSQL DBs"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "OracleDB"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikOracleDB"; FriendlyName = "Oracle DBs"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "Fileset"           = [pscustomobject]@{ associatedCmdlet = "Get-RubrikFileset"; FriendlyName = "Filesets"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "VolumeGroup"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVolumeGroup"; FriendlyName = "Volume Groups"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "ManagedVolume"     = [pscustomobject]@{ associatedCmdlet = "Get-RubrikManagedVolume"; FriendlyName = "Managed Volumes"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "SLADomain"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSLA"; FriendlyName = "SLA Domains"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "PhysicalHost"      = [pscustomobject]@{ associatedCmdlet = "Get-RubrikHost"; FriendlyName = "Physical Hosts"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "NasShare"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNasShare"; FriendlyName = "NAS Shares"; SupportsNameSearch = $false; SupportsIDSearch = $true }
+        "FilesetTemplate"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikFilesetTemplate"; FriendlyName = "Fileset Templates"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "AvailabilityGroup" = [pscustomobject]@{ associatedCmdlet = "Get-RubrikAvailabilityGroup"; FriendlyName = "Availability Groups"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "DatabaseMount"     = [pscustomobject]@{ associatedCmdlet = "Get-RubrikDatabaseMount"; FriendlyName = "Database Mounts"; SupportsNameSearch = $false; SupportsIDSearch = $true }
+        "Event"             = [pscustomobject]@{ associatedCmdlet = "Get-RubrikEvent"; FriendlyName = "Events"; SupportsNameSearch = $false; SupportsIDSearch = $true }
+        "LDAPObject"        = [pscustomobject]@{ associatedCmdlet = "Get-RubrikLDAP"; FriendlyName = "LDAP Objects"; SupportsNameSearch = $true; SupportsIDSearch = $true }
+        "LogShipping"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikLogShipping"; FriendlyName = "Log Shipping Targets"; SupportsNameSearch = $false; SupportsIDSearch = $true }
     }
 
-    # Iterate through all objects unless filter object parameters have been implicity specified.
-    $ProcessAllObjectTypes = $true
-    
-    # Determine if and the number of object types needed to parse from parameters passed
-    $TotalObjectTypes = 0
-    ForEach ($key in $ObjectTypes.Keys) {
-      # If individual object type filter has been passed, override processing all object types
-      if ($ObjectTypes[$key].parameterPassed)  {
-        $ProcessAllObjectTypes = $false
-        $TotalObjectTypes += 1
-      }
+    # Create new variable to use in order to determine which objects to parse.
+    # Since $ObjectsToInclude has a ValidateSet, we cannot simply copy Object Type keys to it.
+    # If no objects were passed as a parameter, include all objects
+    If ($ObjectsToInclude) { $ObjectsToParse = [System.Collections.ArrayList]$ObjectsToInclude }
+    else { 
+      $ObjectsToParse = [System.Collections.ArrayList]$ObjectTypes.Keys
+      If ($ObjectsToExclude) {
+        foreach ($ObjectType in $ObjectsToExclude) {
+          $ObjectsToParse.Remove($ObjectType)
+        }
+      } 
     }
-   
-    # If no individual object types were passed in parameters set progress bar counter to count of all object types.
-    if ($ProcessAllObjectTypes) { $TotalObjectTypes = $ObjectTypes.Count}
+
+    # Build parameter queries for individual cmdlets
+    $IndividualCmdletParams = ""
+    # Add PrimaryClusterID if passed
+    If ($PrimaryClusterID) { $IndividualCmdletParams += " -PrimaryClusterID '$PrimaryClusterId'" }
+    # Add Name filter if passed
+    if ($Name) { 
+      $IndividualCmdletParams +=' | where-object { $_.Name -like ' + "'$Name' }" 
+      # retrieve and remove objects not supporting name search
+      $ObjectTypes.GetEnumerator() | Where-Object {$_.Value.SupportsIDSearch -eq $false} | ForEach-Object {$ObjectsToParse.Remove($_.Name)}
+    }
+    if ($id) { 
+      $IndividualCmdletParams += ' | where-object { $_.id -like ' + "'$id' }" 
+      # retrieve and remove objects not supporting ID search
+      $ObjectTypes.GetEnumerator() | Where-Object {$_.Value.SupportsIdSearch -eq $false} | ForEach-Object {$ObjectsToParse.Remove($_.Name)}
+    }
+
+    # initialize counters for progress bar
+    $TotalObjectTypes = $ObjectsToParse.Count
+    $Completed = 0
 
     # Initialize Result
     $Result = @()
-    
-    # Completed counter for progress message
-    $Completed = 0
-    # Parse individual or all object types
-    ForEach ($key in $ObjectTypes.Keys) {
-      if ($ObjectTypes[$key].parameterPassed -or $ProcessAllObjectTypes) {
-        $completed += 1
-        Write-Progress -Activity "Searching Rubrik Objects - Operation $completed out of $TotalObjectTypes - $($ObjectTypes[$key].ObjectTypeLabel)"
-        # Build out cmdlet syntax and execute
-        $comm = $ObjectTypes[$key].associatedCmdlet + " | Select-Object -Property *, @{label='objectType';expression={'"+$ObjectTypes[$key].ObjectTypeLabel+"'}}"
-        $Result += Invoke-Expression -Command $comm
-      }
+
+    ForEach ($ObjectType in $ObjectsToParse) {
+      $completed += 1
+      Write-Progress -Activity "Searching Rubrik Objects - Operation $completed out of $TotalObjectTypes - $($ObjectTypes[$ObjectType].FriendlyName)"
+      $comm = $ObjectTypes[$ObjectType].associatedCmdlet + $IndividualCmdletParams + " | Select-Object -Property *, @{label='objectType';expression={'"+$ObjectType+"'}}"
+      Write-Host $comm
+      $Result += Invoke-Expression -Command $comm
     }
     Write-Progress -Activity "Searching Rubrik Objects - Completed" -Completed
 
