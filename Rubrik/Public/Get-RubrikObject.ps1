@@ -120,7 +120,6 @@ function Get-RubrikObject
       $completed += 1
       Write-Progress -Activity "Searching Rubrik Objects - Operation $completed out of $TotalObjectTypes - $($ObjectTypes[$ObjectType].FriendlyName)"
       $comm = $ObjectTypes[$ObjectType].associatedCmdlet + $IndividualCmdletParams + " | Select-Object -Property *, @{label='objectType';expression={'"+$ObjectType+"'}}"
-      Write-Host $comm
       $Result += Invoke-Expression -Command $comm
     }
     Write-Progress -Activity "Searching Rubrik Objects - Completed" -Completed
