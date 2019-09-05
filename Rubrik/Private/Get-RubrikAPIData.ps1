@@ -698,6 +698,23 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikVCD'         = @{
+            '1.0' = @{
+                Description = 'Retrieve summary information for all vCD cluster objects'
+                URI         = '/api/internal/vcd/cluster'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    name   = 'name'
+                    status = 'status'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Hostname' = 'hostname'
+                }
+                Success     = '200'
+            }
+        }
        'Get-RubrikVCenter'         = @{
             '1.0' = @{
                 Description = 'Retrieves all vCenter settings of the Rubrik cluster'
