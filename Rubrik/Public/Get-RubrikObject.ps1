@@ -17,9 +17,28 @@ function Get-RubrikObject
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikObject.html
 
       .EXAMPLE
-      Get-RubrikObject
-      This will return all known objects within the Rubrik cluster
+      Get-RubrikObject -NameFilter 'test*'
+      This will return all known objects within the Rubrik cluster matching the given name pattern
 
+      .EXAMPLE
+      Get-RubrikObject -IDFilter '1111-2222-3333-*'
+      This will return all known objects within the Rubrik cluster matching the given id pattern
+
+      .EXAMPLE 
+      Get-RubrikObject -NameFilter 'test*' -IncludeObjectClass VirtualMachines
+      This will return all known Virtual Machines within the Rubrik cluster matching the given name pattern
+
+      .EXAMPLE
+      Get-RubrikObject -NameFilter 'test*' -ExcludeObjectClass Databases
+      This will return all known objects within the Rubrik cluster except those related to databases matching the given name pattern
+
+      .EXAMPLE
+      Get-RubrikObject -NameFilter 'test*' -IncludeObjectType VMwareVM,OracleDB
+      This will return all known VMware VMs and Oracle Databases within the Rubrik cluster matching the given name pattern
+
+      .EXAMPLE
+      Get-RubrikObject -NameFilter 'test*' -ExcludeObjectType NutanixVM,APIToken
+      This will return all known objects within the Rubrik cluster except Nutanix VMs and API tokens matching the given name pattern
       #>
 
   [CmdletBinding()]
