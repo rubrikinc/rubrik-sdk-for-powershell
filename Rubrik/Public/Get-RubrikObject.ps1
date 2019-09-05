@@ -163,22 +163,40 @@ function Get-RubrikObject
     $TotalObjectTypes = $ObjectsToParse.Count
     $Completed = 0
 
-    # Initialize Result
-    $Result = @()
-
     # Parse individual objects
-    ForEach ($ObjectType in $ObjectsToParse) {
+    $result = ForEach ($ObjectType in $ObjectsToParse) {
       $completed += 1
       Write-Progress -Activity "Searching Rubrik Objects - Operation $completed out of $TotalObjectTypes - $($ObjectTypes[$ObjectType].FriendlyName)"
-      if ($NameFilter) {
-        $CmdletFilter = ' | where-object { $_.' + $ObjectTypes[$ObjectType].NameField + ' -like ' + "'$NameFilter' }"
+
+      $CmdletSplat = if ('name') {
+        @{
+          Name = 'blah'
+        }
+      } elseif ('namefilter') {
+        @{
+          NameFilter = 'blah'
+        }
+      } elseif ('id') {
+        @{
+          Id = 'id-blah-blah-blah'
+        }
       }
-      if ($IDFilter) {
-        $CmdletFilter = ' | where-object { $_.id -like ' + "'$IDFilter' }"
+
+      $WhereSplat = if ($NameFilter) {
+          @{
+            FilterScript = { $_.$ObjectTypes[$ObjectType].NameField -like $NameFilter }
+          }
+        }
+        if ($IDFilter) {
+          @{
+            FilterScript = { $_.id -like $IDFilter }
+          }
+        }
       }
-      $SelectProperties = " | Select-Object -Property *, @{label='objectTypeMatch';expression={'"+$ObjectType+"'}}"
-      $comm = $ObjectTypes[$ObjectType].associatedCmdlet + $CmdletFilter + $SelectProperties
-      $Result += Invoke-Expression -Command $comm
+
+      $SelectSplat = @{Property = *, @{label='objectTypeMatch';expression={"+$ObjectType+"}}}
+
+      & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat | Where-Object @WhereSplat | Select-Object @SelectSplat
     }
     Write-Progress -Activity "Searching Rubrik Objects - Completed" -Completed
 
