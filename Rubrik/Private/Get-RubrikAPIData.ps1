@@ -698,6 +698,31 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikVApp'                 = @{
+            '1.0' = @{
+                Description = 'Get summary of all the vCD vApps'
+                URI         = '/api/internal/vcd/vapp'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    name                    = 'name'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name'             = 'name'
+                    'SLA'              = 'effectiveSlaDomainName'
+                    'SourceObjectId'   = 'effectiveSlaSourceObjectId'
+                    'SourceObjectName' = 'effectiveSlaSourceObjectName'
+                    'vcdClusterId'     = 'vcdClusterId'
+                    'vcdClusterName'   = 'vcdClusterName'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikVCD'         = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all vCD cluster objects'
