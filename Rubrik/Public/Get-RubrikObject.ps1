@@ -117,6 +117,7 @@ function Get-RubrikObject
         "APIToken"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikAPIToken"; FriendlyName = "API Tokens"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Tag"; ObjectClass = "InternalRubrikObjects" }
     }
 
+    Write-Verbose -Message "Calculating which objects to parsed based on parameters specified"
     $ObjectsToParse = [System.Collections.ArrayList]@()
     # IF includes are passed, add them to arraylist
     If ($IncludeObjectClass -or $IncludeObjectType)
@@ -128,10 +129,15 @@ function Get-RubrikObject
           If ($NameFilter) {
             If ($_.Value.SupportsNameSearch) {
               [void]$ObjectsToParse.Add($_.Name)
+              Write-Verbose -Message "Adding $($_.Name) due to membership of $($ObjectClass) Object Class"
+            }
+            else {
+              Write-Verbose -Message "the $($_.Name) is a member of the $($ObjectClass) Object Class, however name search is not supported - skipping"
             }
           }
           # Else we are searching by ID - currently all objects support id search so just add.
           else {
+            Write-Verbose -Message "Adding $($_.Name) due to membership of $($ObjectClass) Object Class"
             [void]$ObjectsToParse.Add($_.Name)
           }
         }
@@ -142,17 +148,23 @@ function Get-RubrikObject
         If ($NameFilter) {
           If ($ObjectTypes["$ObjectType"].SupportsNameSearch) {
             [void]$ObjectsToParse.Add($ObjectType)
+            Write-Verbose -Message "Adding $($ObjectType) - Explicitly specified"
+          }
+          else {
+            Write-Verbose -Message "$($ObjectType) was explicitly specified however doesn't support name search - skipping"
           }
         }
         # Else we are searching by ID - currently all objects support id search so just add.
         else {
           [void]$ObjectsToParse.Add($ObjectType)
+          Write-Verbose -Message "Adding $($ObjectType) - Explicitly specified"
         }
       }
     }
     else {
       # Else, no includes are passed - let's assume we want to process all object types
-      $ObjectsToParse = [System.Collections.ArrayList]$ObjectTypes.Keys    
+      $ObjectsToParse = [System.Collections.ArrayList]$ObjectTypes.Keys
+      Write-Verbose -Message "No included parameters specified - adding all object types."    
     }
     # If excludes are passed, remove them from arraylist
     if ($ExcludeObjectClass -or $ExcludeObjectType) {
@@ -160,16 +172,18 @@ function Get-RubrikObject
       foreach ($ObjectClass in $ExcludeObjectClass) {
         $ObjectTypes.GetEnumerator() | Where-Object {$_.Value.ObjectClass -contains "$ObjectClass"} | ForEach-Object {
           [void]$ObjectsToParse.Remove($_.Name)
+          Write-Verbose -Message "Removing $($_.Name) due to membership of $($ObjectClass)"
         } 
       }
       # Remove and implicitly sent object types
       foreach ($ObjectType in $ExcludeObjectType) {
         $ObjectsToParse.Remove($ObjectType)
+        Write-Verbose -Message "Removing $($ObjectType) - Explicitly specified"
       }
     }
     #Ensure objects only have one entry in arraylist
     $ObjectsToParse = $ObjectsToParse | Select-Object -Unique
-
+    Write-Verbose -Message "Continuing to process $($ObjectsToParse)"
     # Initialize counters for progress bar
     $TotalObjectTypes = $ObjectsToParse.Count
     $Completed = 0
@@ -187,6 +201,7 @@ function Get-RubrikObject
           $WhereSplat = @{}
         }
         else {
+          $CmdletSplat  = @{}
           $WhereSplat = @{filterscript = [ScriptBlock]::Create('$_.'+"$($ObjectTypes[$ObjectType].NameField) -like '$NameFilter'")}
         }
       }
