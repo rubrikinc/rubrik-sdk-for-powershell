@@ -102,7 +102,7 @@ Describe -Name 'Public/Get-RubrikVApp' -Tag 'Public', 'Get-RubrikVApp' -Fixture 
                     ],
                     "slaAssignment": "Direct",
                     "effectiveSlaSourceObjectId": "VcdVapp:::01234567-8910-1abc-d435-0abc1234d569",
-                    "effectiveSlaSourceObjectName": "vApp02",
+                    "effectiveSlaSourceObjectName": "vApp03",
                     "vcdClusterName": "VMware vCloud Director",
                     "vcdClusterId": "01234567-8910-1abc-d435-0abc1234d567",
                     "configuredSlaDomainId": "01234567-8910-1abc-d435-0abc1234d568",
@@ -131,7 +131,7 @@ Describe -Name 'Public/Get-RubrikVApp' -Tag 'Public', 'Get-RubrikVApp' -Fixture 
                     ],
                     "slaAssignment": "Direct",
                     "effectiveSlaSourceObjectId": "VcdVapp:::01234567-8910-1abc-d435-0abc1234d570",
-                    "effectiveSlaSourceObjectName": "vApp04",
+                    "effectiveSlaSourceObjectName": "vApp 04",
                     "vcdClusterName": "VMware vCloud Director",
                     "vcdClusterId": "01234567-8910-1abc-d435-0abc1234d567",
                     "configuredSlaDomainId": "01234567-8910-1abc-d435-0abc1234d568",
@@ -175,8 +175,8 @@ Describe -Name 'Public/Get-RubrikVApp' -Tag 'Public', 'Get-RubrikVApp' -Fixture 
         }
 
         It -Name 'filtering on SourceObjectName should return one result' -Test {
-            ( Get-RubrikVApp -SourceObjectName 'vApp 04' ).name |
-                Should -BeExactly "VcdVapp:::01234567-8910-1abc-d435-0abc1234d570"
+            ( Get-RubrikVApp -SourceObjectName 'vApp03' ).id |
+                Should -BeExactly "VcdVapp:::01234567-8910-1abc-d435-0abc1234d569"
         }
 
         It -Name 'filtering on Relics only should return one result' -Test {
@@ -344,7 +344,6 @@ Describe -Name 'Public/Get-RubrikVApp' -Tag 'Public', 'Get-RubrikVApp' -Fixture 
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 4
     }
 
-    <#
     Context -Name 'Parameter Validation' {
         It -Name 'Parameter Name cannot be $null' -Test {
             { Get-RubrikVApp -Name $null } |
@@ -363,9 +362,12 @@ Describe -Name 'Public/Get-RubrikVApp' -Tag 'Public', 'Get-RubrikVApp' -Fixture 
                 Should -Throw "Cannot validate argument on parameter 'ID'"
         }
         It -Name 'Parameters Id and Name cannot be simultaneously used' -Test {
-            { Get-RubrikVApp -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -Name 'swagsanta' } |
+            { Get-RubrikVApp -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -Name 'foo' } |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
+        It -Name 'Parameter SLAAssignment must be valid' -Test {
+            { Get-RubrikVApp -SLAAssignment 'foo' } |
+                Should -Throw "Cannot validate argument on parameter 'SLAAssignment'"
+        }
     }
-    #>
 }
