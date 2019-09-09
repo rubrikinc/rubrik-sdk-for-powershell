@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-09-09
+
+### Added [Various Unit Tests]
+
+* Created unit tests for Get-RubrikAvailabilityGroup, Get-RubrikOrganization, Get-RubrikRequest, Get-RubrikUnmanagedObject, Remove-RubrikUnmanagedObject, Set-RubrikAvailabilityGroup, and Sync-RubrikTag.  Get-RubrikSnapshot was already present.
+* Resolves [Issue 347](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/347)
+
 ## 2019-09-02
 
 ### Added [-RubrikBootStrap] unit tests
