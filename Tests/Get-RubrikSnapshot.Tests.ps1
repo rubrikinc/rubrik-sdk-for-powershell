@@ -120,11 +120,11 @@ Describe -Name 'Public/Get-RubrikSnapshot' -Tag 'Public', 'Get-RubrikSnapshot' -
               Should -BeExactly $null
         }
         It -Name 'Test -Range' -Test {
-          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 8 -Month 8 -Year 2019).Date -Range 3).id |
+          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 8 -Month 8 -Year 2019).Date -Range 4).id |
               Should -BeExactly "b42ed6ba-760e-425f-a35d-c7dc5636b55d"
         }
         It -Name 'Test -Range and -ExactMatch' -Test {
-          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 8 -Month 8 -Year 2019).Date -Range 3 -ExactMatch ).id |
+          ( Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Date (Get-Date -Day 8 -Month 8 -Year 2019).Date -Range 4 -ExactMatch ).id |
               Should -BeExactly "b42ed6ba-760e-425f-a35d-c7dc5636b55d"
         }
         It -Name 'Test -Range with out of range date' -Test {
