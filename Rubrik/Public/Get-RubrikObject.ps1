@@ -187,21 +187,16 @@ function Get-RubrikObject
           $WhereSplat = @{}
         }
         else {
-          $filterscript = '$_.'+$($ObjectTypes[$ObjectType].NameField)+" -like '$NameFilter'"
-          $CmdletSplat = @{}
-          $WhereSplat = @{} 
-          $WhereSplat.Add("FilterScript",[ScriptBlock]::Create($filterscript))
+          $WhereSplat = @{filterscript = [ScriptBlock]::Create('$_.'+"$($ObjectTypes[$ObjectType].NameField) -like '$NameFilter'")}
         }
       }
       if ($IDFilter) {
         $CmdletSplat = @{}
-        $WhereSplat = @{} 
-        $filterscript = '$_.id -like '+"'$IdFilter'"
-        $WhereSplat.Add("FilterScript",[ScriptBlock]::Create($filterscript))
+        $WhereSplat = @{filterscript = [ScriptBlock]::Create('$_.id -like '+"'$IdFilter'")}
       }
 
       if ($CmdletSplat.NameFilter) {
-        $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat | Select-Object @SelectSplat
+        $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat
         $ReturnedObjects | Add-Member -NotePropertyName 'objectTypeMatch' -NotePropertyValue $ObjectType 
         # Only way I can figure out how to stop the total, data, links, hasmore from being returned when no results are found
         if ($ReturnedObjects.total -ne 0) {
