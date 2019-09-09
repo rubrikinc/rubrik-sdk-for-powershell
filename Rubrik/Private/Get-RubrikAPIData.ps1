@@ -1337,6 +1337,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '204'
             }
         }
+        'Protect-RubrikVApp'             = @{
+            '1.0' = @{
+                Description = 'Update a vCD vApp with the specified SLA Domain.'
+                URI         = '/api/internal/vcd/vapp/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    configuredSlaDomainId = 'configuredSlaDomainId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Protect-RubrikVM'             = @{
             '1.0' = @{
                 Description = 'Update a VM with the specified SLA Domain.'
