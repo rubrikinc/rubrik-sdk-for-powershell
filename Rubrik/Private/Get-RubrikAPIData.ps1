@@ -723,6 +723,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikVAppSnapshot'                = @{
+            '1.0' = @{
+                Description = 'Retrieve information of a vCD vApp snapshot'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}'
+                Method      = 'Get'
+                Body        = ''
+                Query           = @{
+                    id          = 'id'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikVCD'         = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all vCD cluster objects'

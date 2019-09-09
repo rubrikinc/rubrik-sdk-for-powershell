@@ -83,7 +83,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
                'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
                'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 
-               'Get-RubrikUnmanagedObject', 'Get-RubrikVApp', 
+               'Get-RubrikUnmanagedObject', 'Get-RubrikVApp', 'Get-RubrikVAppSnapshot',
                'Get-RubrikVCD', 'Get-RubrikVCenter',  
                'Get-RubrikVersion', 'Get-RubrikVM', 'Get-RubrikVMSnapshot',  
                'Get-RubrikVMwareDatastore', 'Get-RubrikVMwareHost', 'Get-RubrikVolumeGroup', 
