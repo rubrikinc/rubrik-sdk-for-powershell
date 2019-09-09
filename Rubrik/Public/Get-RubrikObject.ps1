@@ -199,16 +199,23 @@ function Get-RubrikObject
         if ($ObjectTypes[$ObjectType].NameSearchType -eq 'NameFilter') {
           # Remove * from string
           $NameFilterMod = $NameFilter -replace '\*'
-          $CmdletSplat = @{ NameFilter = "$NameFilterMod" }
+          $CmdletSplat = @{ 
+            NameFilter = "$NameFilterMod" 
+            ErrorAction = "SilentlyContinue"
+          }
           $WhereSplat = @{}
         }
         else {
-          $CmdletSplat  = @{}
+          $CmdletSplat  = @{
+            ErrorAction = "SilentlyContinue"
+          }
           $WhereSplat = @{filterscript = [ScriptBlock]::Create('$_.'+"$($ObjectTypes[$ObjectType].NameField) -like '$NameFilter'")}
         }
       }
       if ($IDFilter) {
-        $CmdletSplat = @{}
+        $CmdletSplat = @{
+          ErrorAction = "SilentlyContinue"
+        }
         $WhereSplat = @{filterscript = [ScriptBlock]::Create('$_.id -like '+"'$IdFilter'")}
       }
 
@@ -221,7 +228,7 @@ function Get-RubrikObject
         }
       }
       if ($WhereSplat.FilterScript) {
-        $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet | Where-Object @WhereSplat 
+        $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat | Where-Object @WhereSplat 
         $ReturnedObjects | Add-Member -NotePropertyName 'objectTypeMatch' -NotePropertyValue $ObjectType 
         $Result += $ReturnedObjects
       }
