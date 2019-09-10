@@ -40,7 +40,7 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
         it -Name "Get-RubrikAPIData - <f> test" -TestCases $cases { 
             param($v,$f)
             if ($ExcludedFunctions -contains $f) {
-                $methodresult = $true
+                $methodresult, $uriresult = $true
             } else {            
             $v | ForEach-Object -Begin {
                 $methodresult = New-Object System.Collections.Generic.List[System.Boolean]
