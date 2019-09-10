@@ -32,7 +32,6 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
     #endregion
 
     Context -Name "Function specific tests" -Fixture {
-        
         # This variable contains an array of functions that should be excluded from API endpoint testing 
         $ExcludedFunctions = @(
             'Get-RubrikObject'
