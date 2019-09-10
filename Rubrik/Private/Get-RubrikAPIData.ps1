@@ -1933,6 +1933,23 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikVCD'         = @{
+            '1.0' = @{
+                Description = 'Updates settings of a vCD connection'
+                URI         = '/api/internal/vcd/cluster/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    hostname              = "hostname"
+                    username              = "username"
+                    password              = "password"
+                    configuredSlaDomainId = "configuredSlaDomainId"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Set-RubrikVM'                 = @{
             '1.0' = @{
                 Description = 'Update VM with specified properties'
