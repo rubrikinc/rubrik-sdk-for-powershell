@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-09-10
+
+### Added [Unit test for Invoke-RubrikRestCall]
+
+* Created unit test for Invoke-RubrikRestCall
+* Addresses [Issue 348](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/348)
+
 ## 2019-09-09
 
 ### Added [Various Unit Tests]
