@@ -32,9 +32,16 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
     #endregion
 
     Context -Name "Function specific tests" -Fixture {
-
+        
+        $ExcludedFunctions = @(
+            'Get-RubrikObject'
+        )
+        
         it -Name "Get-RubrikAPIData - <f> test" -TestCases $cases { 
             param($v,$f)
+            if ($ExcludedFunctions -contains $f) {
+                $methodresult = $true
+            } else {            
             $v | ForEach-Object -Begin {
                 $methodresult = New-Object System.Collections.Generic.List[System.Boolean]
                 $uriresult = New-Object System.Collections.Generic.List[System.Boolean]
@@ -45,6 +52,7 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
                     $methodresult.add($resources.Method -In @('Get','Post','Patch','Delete','Put')) | Out-Null
                     $uriresult.add($null -ne $resources.URI) | Out-Null
                 } catch {}
+            }
             }
 
             $methodresult | Should -Contain $true
