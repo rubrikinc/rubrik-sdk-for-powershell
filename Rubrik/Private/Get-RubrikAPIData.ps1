@@ -2160,6 +2160,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Update-RubrikVCD'         = @{
+            '1.0' = @{
+                Description = 'Refresh the metadata for the specified vCD Server'
+                URI         = '/api/internal/vcd/cluster/{id}/refresh'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Update-RubrikVMwareVM'         = @{
             '1.0' = @{
                 Description = 'Refresh the metadata for the specified VMware VM'
