@@ -627,6 +627,7 @@ function Get-RubrikAPIData($endpoint) {
                     Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
                     Oracle = '/api/internal/oracle/db/{id}/snapshot'
+                    VcdVapp = '/api/internal/vcd/vapp/{id}/snapshot'
                 }
                 Method      = 'Get'
                 Body        = ''

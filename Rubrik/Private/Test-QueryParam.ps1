@@ -52,6 +52,11 @@
         Write-Verbose -Message 'Loading OracleDatabase API data'
         $uri = ('https://'+$Server+$resources.URI.Oracle) -replace '{id}', $id
       }
+      'VcdVapp::*'
+      {
+        Write-Verbose -Message 'Loading vCD API data'
+        $uri = ('https://'+$Server+$resources.URI.VcdVapp) -replace '{id}', $id
+      }
       default
       {
         throw 'The supplied id value has no matching endpoint'
