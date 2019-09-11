@@ -429,6 +429,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikNode'              = @{
+            '1.0' = @{
+                Description = 'Retrieve information on nodes within the Rubrik Cluster'
+                URI         = '/api/internal/cluster/{id}/node'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikNutanixVM'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all Nutanix VMs'
