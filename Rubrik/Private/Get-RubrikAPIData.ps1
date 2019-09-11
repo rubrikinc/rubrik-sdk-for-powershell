@@ -1254,6 +1254,7 @@ function Get-RubrikAPIData($endpoint) {
                     VMware  = '/api/v1/vmware/vm/{id}/snapshot'
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
                     Oracle = '/api/internal/oracle/db/{id}/snapshot'
+                    VcdVapp = '/api/internal/vcd/vapp/{id}/snapshot'
                 }
                 Method      = 'Post'
                 Body        = @{
