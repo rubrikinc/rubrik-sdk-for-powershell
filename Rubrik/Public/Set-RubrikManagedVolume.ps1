@@ -44,6 +44,8 @@ function Set-RubrikManagedVolume
     # The SLA Domain name in Rubrik
     [Parameter(ParameterSetName = 'SLA_Explicit')]
     [String]$SLA,
+    # Managed Volume Name
+    [String]$Name,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
