@@ -51,6 +51,10 @@ Describe -Name 'Public/Set-RubrikManagedVolume' -Tag 'Public', 'Set-RubrikManage
             { Set-RubrikManagedVolume -Id 'ManagedVolume:::11111' -VolumeSize 'seven' } |
                 Should -Throw "Cannot process argument transformation on parameter 'VolumeSize'. Cannot convert value `"seven`" to type `"System.Int64`"."
         }
+        It -Name 'Name cannot be null or empty' -Test {
+            { Set-RubrikManagedVolume -Id 'ManagedVolume:::11111' -Name $null } |
+                Should -Throw "Cannot validate argument on parameter 'Name'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
+        }
 
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
