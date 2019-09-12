@@ -597,6 +597,21 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikAdvancedSetting'         = @{
+            '1.0' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                    BrikCount       = '/api/internal/cluster/{id}/brik_count'
+                    DiskCapacity    = '/api/internal/cluster/{id}/disk_capacity'
+                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikSLA'                = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all SLA Domains'
