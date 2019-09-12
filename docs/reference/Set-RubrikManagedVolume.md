@@ -14,7 +14,7 @@ Sets Rubrik Managed Volume properties
 
 ```
 Set-RubrikManagedVolume -id <String> [-VolumeSize <Int64>] [-exportConfig <PSObject[]>] [-SLAID <String>]
- [-SLA <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-SLA <String>] [-Name <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,6 +32,11 @@ Protect the specified managed volume with the 'Gold' SLA domain
 ### EXAMPLE 2
 ```
 Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -VolumeSize 536870912000
+```
+
+### EXAMPLE 3
+```
+Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -Name 'NewName'
 ```
 
 Resize the specified managed volume to 536870912000 bytes (500GB)
@@ -100,6 +105,21 @@ Accept wildcard characters: False
 
 ### -SLA
 The SLA Domain name in Rubrik
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Managed Volume Name
 
 ```yaml
 Type: String
