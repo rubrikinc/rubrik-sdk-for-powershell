@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-09-12
+
+### Changed [Added ability to rename Managed Volumes]
+
+* Added -Name parameter to Set-RubrikManagedVolume.  Name already existed within the body definition in Get-RubrikAPIData
+* Addresses [Issue 447](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/447)
+
 ## 2019-09-10
 
 ### Added [Unit test for Invoke-RubrikRestCall]
