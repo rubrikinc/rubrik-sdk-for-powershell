@@ -1,5 +1,5 @@
 #Requires -Version 3
-function Get-RubrikAdvancedSetting
+function Get-RubrikClusterInfo
 {
   <#  
       .SYNOPSIS
@@ -14,17 +14,15 @@ function Get-RubrikAdvancedSetting
       GitHub: mwpreston
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikAdvancedSetting.html
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikClusterInfo.html
             
       .EXAMPLE
-      Get-RubrikAdvancedSetting 
+      Get-RubrikClusterInfo 
       This will return the information around the nodes which are member of the currently authenticated cluster
   #>
 
   [CmdletBinding()]
   Param(
-    # ID of the Rubrik cluster or me for self - Note: Cross cluster lookups are not yet supported
-    [String]$id = 'me',
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -54,21 +52,27 @@ function Get-RubrikAdvancedSetting
   Process {
     $result = New-Object -TypeName psobject
     foreach ($key in $resources.URI.Keys ) {
-        Write-Verbose -Message "$($Resources.URI[$key])"
-
         $uri = New-URIString -server $Server -endpoint $Resources.URI[$key] -id $id
-        Write-Verbose -Message "$uri"
-        #$uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-        #$body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
         $iresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
         switch ($key) {
-            "BrikCount" {
-                # Add brikcount to result
-                $result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult.count
+            {$_ -in "BrikCount","CPUCoresCount"} { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult.count }
+            {$_ -in "DiskCapacityInTb","FlashCapacityInTb"} { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue ($iresult.bytes / 1TB) }
+            "MemoryCapacityInGb" { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue ($iresult.bytes / 1GB) }
+            "ConnectedToPolaris"  { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult.isConnected }
+            "NodeCount"         { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult.total }
+            "Platform"         { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult.platform }
+            {$_ -in "HasTPM","OnlyAzureSupport","IsEncrypted","IsHardwareEncrypted","IsOnCloud","IsRegistered","IsSingleNode" }  { 
+              $result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult.value 
             }
-            "DiskCapacity" {
-                $result | Add-Member -NotePropertyName "$key" -NotePropertyValue ($iresult.bytes / 1TB)
+            "GeneralInfo" {
+              $result | Add-Member -NotePropertyName "Name" -NotePropertyValue $iresult.name 
+              $result | Add-Member -NotePropertyName "Id" -NotePropertyValue $iresult.id 
+              $result | Add-Member -NotePropertyName "APIVersion" -NotePropertyValue $iresult.apiVersion 
+              $result | Add-Member -NotePropertyName "timezone" -NotePropertyValue $iresult.timezone 
+              $result | Add-Member -NotePropertyName "geolocation" -NotePropertyValue $iresult.geolocation 
+              $result | Add-Member -NotePropertyName "acceptedEulaVersion" -NotePropertyValue $iresult.acceptedEulaVersion 
             }
+            
         }
     }
 
