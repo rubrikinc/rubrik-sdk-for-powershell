@@ -23,6 +23,9 @@ function Set-RubrikManagedVolume
 
       .EXAMPLE
       Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -VolumeSize 536870912000
+      
+      .EXAMPLE
+      Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -Name 'NewName'
 
       Resize the specified managed volume to 536870912000 bytes (500GB)
 
@@ -45,6 +48,7 @@ function Set-RubrikManagedVolume
     [Parameter(ParameterSetName = 'SLA_Explicit')]
     [String]$SLA,
     # Managed Volume Name
+    [ValidateNotNullOrEmpty()]
     [String]$Name,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
