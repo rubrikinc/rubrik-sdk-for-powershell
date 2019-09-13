@@ -724,6 +724,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikVAppRecoverOptions'                = @{
+            '1.0' = @{
+                Description = 'Retrieves instant recovery options on one or more vCD vApps'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}/instant_recover/options'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{}
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikVAppSnapshot'                = @{
             '1.0' = @{
                 Description = 'Retrieve information of a vCD vApp snapshot'
@@ -1587,6 +1599,31 @@ function Get-RubrikAPIData($endpoint) {
                     }
                     finishRecovery = 'finishRecovery'
                     maxDataStreams = 'maxDataStreams'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
+        'Restore-RubrikVApp'       = @{
+            '1.0' = @{
+                Description = 'Restores a given snapshot for a vCD vApp'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}/instant_recover'
+                Method      = 'Post'
+                Body        = @{
+                    vmsToRestore = @{
+                        name   		= 'name'
+                        vcdMoid     = 'vcdMoid'
+                        networkConnections = @{
+                            nicIndex		= 'nicIndex'
+                            addressingMode	= 'addressingMode'
+                            ipAddress		= 'ipAddress'
+                            isConnected		= 'isConnected'
+                            vappNetworkName	= 'vappNetworkName'
+                        }
+                    }
+                    shouldPowerOnVmsAfterRecovery = 'shouldPowerOnVmsAfterRecovery'
                 }
                 Query       = ''
                 Result      = ''
