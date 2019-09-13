@@ -221,9 +221,9 @@ function Get-RubrikObject
 
       if ($CmdletSplat.NameFilter) {
         $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat
-        $ReturnedObjects | Add-Member -NotePropertyName 'objectTypeMatch' -NotePropertyValue $ObjectType 
         # Only way I can figure out how to stop the total, data, links, hasmore from being returned when no results are found
         if ($ReturnedObjects.total -ne 0) {
+          $ReturnedObjects | Add-Member -NotePropertyName 'objectTypeMatch' -NotePropertyValue $ObjectType
           $Result += $ReturnedObjects
         }
       }
