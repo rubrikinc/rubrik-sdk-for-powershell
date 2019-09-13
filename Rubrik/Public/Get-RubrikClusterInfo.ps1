@@ -71,6 +71,7 @@ function Get-RubrikClusterInfo
               $result | Add-Member -NotePropertyName "timezone" -NotePropertyValue $iresult.timezone 
               $result | Add-Member -NotePropertyName "geolocation" -NotePropertyValue $iresult.geolocation 
               $result | Add-Member -NotePropertyName "acceptedEulaVersion" -NotePropertyValue $iresult.acceptedEulaVersion 
+              $result | Add-Member -NotePropertyName "softwareVersion" -NotePropertyValue $iresult.version 
             }
             
         }
