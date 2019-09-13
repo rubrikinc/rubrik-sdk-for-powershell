@@ -17,34 +17,73 @@ function Restore-RubrikVApp
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
-      Restore-RubrikVApp -id '7acdf6cd-2c9f-4661-bd29-b67d86ace70b'
+      Restore-RubrikVApp -id '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -PowerOn:$true
       This will restore the vApp snapshot with an id of 7acdf6cd-2c9f-4661-bd29-b67d86ace70b
       
       .EXAMPLE
-      (Get-RubrikVApp 'vApp01' -PrimaryClusterID local | Get-RubrikSnapshot -Latest).id | Restore-RubrikVApp
+      (Get-RubrikVApp 'vApp01' -PrimaryClusterID local | Get-RubrikSnapshot -Latest).id | Restore-RubrikVApp -PowerOn:$true
       This will retreive the latest snapshot from the given vApp 'vApp01' and restore it
-  #>
+
+      .EXAMPLE
+      $id = (Get-RubrikVApp -Name "Sushi Roller" -PrimaryClusterID local | Get-RubrikSnapshot -Latest ).id
+      $recoveropts = Get-RubrikVAppRecoverOptions -Id $id
+      $restorableVms = $recoveropts.restorableVms
+      $vm = @()
+      $vm += $restorableVms[0]
+      Restore-RubrikVApp -id $id -Partial $vm -PowerOn:$false
+      This will retreive the latest snapshot from the given vApp 'vApp01' and perform a partial restore on the first VM in the vApp.
+      This is an advanced use case and the user is responsible for parsing the output from Get-RubrikVAppRecoverOptions.
+      Syntax of the object passed with the -Partial Parameter must match the format of the object returned from (Get-RubrikVAppRecoverOptions).restorableVms
+#>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik id of the vApp snapshot to restore
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Full')]
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Partial')]
+    [ValidateNotNullOrEmpty()]
     [Alias('snapshot_id')]
     [String]$id,
     # Perform a Partial vApp restore. Default operation is a Full vApp restore, unless this parameter is specified.
-    [Switch]$Partial,
+    [Parameter(Mandatory = $true,ParameterSetName='Partial')]
+    [ValidateNotNullOrEmpty()]
+    [ValidateScript({
+        if ('PSCustomObject' -ne $_.GetType().Name) {
+          Throw "Partial parameter should be a PSCustomObject"
+        }
+        $requiredProperties = @("name","vcdMoid","networkConnections")
+        ForEach($item in $requiredProperties) {
+            if(!$_.PSObject.Properties.Name.Contains($item)) {
+                Throw "Object passed via Partial parameter missing property $($item)"
+            }
+        }
+        return $true
+       })]
+    [PSCustomObject]$Partial,
     # Disable NICs upon restoration. The NIC(s) will be disabled, but remain mapped to their existing network.
+    [Parameter(ParameterSetName='Full')]
     [Switch]$DisableNetwork,
     # Remove network mapping upon restoration. The NIC(s) will not be connected to any existing networks.
+    [Parameter(ParameterSetName='Full')]
     [Switch]$NoMapping,
     # Remove network interfaces from the restored vApp virtual machines.
+    [Parameter(ParameterSetName='Full')]
     [Switch]$RemoveNetworkDevices,
+    # Map all vApp virtual machine NICs to specified network.
+    [Parameter(ParameterSetName='Full')]
+    [ValidateNotNullOrEmpty()]
+    [String]$NetworkMapping,
     # Power on vApp after restoration.
-    [Parameter(Mandatory = $true)]
+    [Parameter(ParameterSetName='Full',Mandatory = $true)]
+    [Parameter(ParameterSetName='Partial',Mandatory = $true)]
     [Bool]$PowerOn,
     # Rubrik server IP or FQDN
+    [Parameter(ParameterSetName='Full')]
+    [Parameter(ParameterSetName='Partial')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
+    [Parameter(ParameterSetName='Full')]
+    [Parameter(ParameterSetName='Partial')]
     [String]$api = $global:RubrikConnection.api
   )
 
@@ -70,8 +109,17 @@ function Restore-RubrikVApp
 
   Process {
     #region oneoff
-    if($Partial) {}
+    if($Partial) {
+        Write-Verbose -Message "Performing Partial vApp Recovery"
+        $resources.Body.vmsToRestore = @()
+        $resources.Body.vmsToRestore += $Partial
+        $resources.Body.shouldPowerOnVmsAfterRecovery = $PowerOn
+
+        $body = ConvertTo-Json -InputObject $resources.Body -Depth 4
+        Write-Verbose -Message "REST Body $($body)"
+    }
     else {
+        Write-Verbose -Message "Performing Full vApp Recovery"
         $recoveropts = Get-RubrikVAppRecoverOptions -id $id
         $resources.Body.vmsToRestore = $recoveropts.restorableVms
         $resources.Body.shouldPowerOnVmsAfterRecovery = $PowerOn
@@ -80,7 +128,7 @@ function Restore-RubrikVApp
             foreach($vm in $resources.Body.vmsToRestore) {
                 foreach($network in $vm.networkConnections) {
                     $network.isConnected = $false
-                    #$network.Properties.Remove('vappNetworkName') ?
+                    Write-Verbose -Message "Disabled NIC $($network.nicIndex) on $($vm.Name)"
                 }
             }
         }
@@ -88,7 +136,8 @@ function Restore-RubrikVApp
         if($NoMapping) {
             foreach($vm in $resources.Body.vmsToRestore) {
                 foreach($network in $vm.networkConnections) {
-                    $network.Properties.Remove('vappNetworkName')
+                    Write-Verbose -Message "Unmapping $($network.vappNetworkName) from $($vm.Name)"
+                    $network.PSObject.Properties.Remove('vappNetworkName')
                 }
             }
         }
@@ -97,18 +146,32 @@ function Restore-RubrikVApp
             foreach($vm in $resources.Body.vmsToRestore) {
                 $vm.networkConnections = @()
             }
+            Write-Verbose -Message "Removed all NICs from vApp"
         }
 
         if($NetworkMapping) {
             # Check RubrikVAppRecoverOptions to verify
+            $found = $false
+            Write-Verbose -Message "Validating $($NetworkMapping) network"
+            foreach($network in $recoveropts.availableVappNetworks) {
+                if($network.name -eq $NetworkMapping) {
+                    $found = $true
+                    Write-Verbose -Message "Validated $($NetworkMapping) network"
+                }
+            }
+            if($false -eq $found) {
+                throw "$($NetworkMapping) is not a valid network for this vApp. Please supply a valid network."
+            }
             foreach($vm in $resources.Body.vmsToRestore) {
                 foreach($network in $vm.networkConnections) {
+                    Write-Verbose -Message "Mapping NIC $($network.nicIndex) to $($NetworkMapping) network"
                     $network.vappNetworkName = $NetworkMapping
                 }
             }
         }
 
         $body = ConvertTo-Json -InputObject $resources.Body -Depth 4
+        Write-Verbose -Message "REST Body $($body)"
     }
     #endregion
 
