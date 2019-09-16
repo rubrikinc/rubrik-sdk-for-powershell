@@ -158,6 +158,36 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikClusterInfo'         = @{
+            '1.0' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                    BrikCount       = '/api/internal/cluster/me/brik_count'
+                    DiskCapacityInTb    = '/api/internal/cluster/me/disk_capacity'
+                    FlashCapacityInTb    = '/api/internal/cluster/me/flash_capacity'
+                    MemoryCapacityInGb  =  '/api/internal/cluster/me/memory_capacity'
+                    CPUCoresCount       = '/api/internal/node/*/cpu_cores_count'
+                    ConnectedToPolaris    = '/api/internal/cluster/me/global_manager'
+                    NodeCount           = '/api/internal/cluster/me/node'
+                    HasTPM              = '/api/internal/cluster/me/has_tpm'
+                    OnlyAzureSupport    = '/api/internal/cluster/me/is_azure_cloud_only'
+                    IsEncrypted         = '/api/internal/cluster/me/is_encrypted'
+                    IsHardwareEncrypted = '/api/internal/cluster/me/is_hardware_encrypted'
+                    IsOnCloud      = '/api/internal/cluster/me/is_on_cloud'
+                    IsRegistered      = '/api/internal/cluster/me/is_registered'
+                    IsSingleNode      = '/api/internal/cluster/me/is_single_node'
+                    Platform          = '/api/internal/cluster/me/platforminfo'
+                    GeneralInfo         = '/api/v1/cluster/me'
+
+                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikDatabase'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Microsoft SQL databases.'
@@ -224,6 +254,21 @@ function Get-RubrikAPIData($endpoint) {
                     after_time = 'after_time'
                 }
                 Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikDNSSetting'         = @{
+            '1.0' = @{
+                Description = 'Retrieves DNS settings of the Rubrik cluster'
+                URI         = @{
+                    DNSServers       = '/api/internal/cluster/me/dns_nameserver'
+                    DNSSearchDomain  = '/api/internal/cluster/me/dns_search_domain'
+                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
                 Filter      = ''
                 Success     = '200'
             }
@@ -593,36 +638,6 @@ function Get-RubrikAPIData($endpoint) {
                 Body        = ''
                 Query       = ''
                 Result      = 'settings'
-                Filter      = ''
-                Success     = '200'
-            }
-        }
-        'Get-RubrikClusterInfo'         = @{
-            '1.0' = @{
-                Description = 'Retrieves advanced settings of the Rubrik cluster'
-                URI         = @{
-                    BrikCount       = '/api/internal/cluster/me/brik_count'
-                    DiskCapacityInTb    = '/api/internal/cluster/me/disk_capacity'
-                    FlashCapacityInTb    = '/api/internal/cluster/me/flash_capacity'
-                    MemoryCapacityInGb  =  '/api/internal/cluster/me/memory_capacity'
-                    CPUCoresCount       = '/api/internal/node/*/cpu_cores_count'
-                    ConnectedToPolaris    = '/api/internal/cluster/me/global_manager'
-                    NodeCount           = '/api/internal/cluster/me/node'
-                    HasTPM              = '/api/internal/cluster/me/has_tpm'
-                    OnlyAzureSupport    = '/api/internal/cluster/me/is_azure_cloud_only'
-                    IsEncrypted         = '/api/internal/cluster/me/is_encrypted'
-                    IsHardwareEncrypted = '/api/internal/cluster/me/is_hardware_encrypted'
-                    IsOnCloud      = '/api/internal/cluster/me/is_on_cloud'
-                    IsRegistered      = '/api/internal/cluster/me/is_registered'
-                    IsSingleNode      = '/api/internal/cluster/me/is_single_node'
-                    Platform          = '/api/internal/cluster/me/platforminfo'
-                    GeneralInfo         = '/api/v1/cluster/me'
-
-                }
-                Method      = 'Get'
-                Body        = ''
-                Query       = ''
-                Result      = ''
                 Filter      = ''
                 Success     = '200'
             }

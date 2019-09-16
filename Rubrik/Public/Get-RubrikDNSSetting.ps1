@@ -1,12 +1,12 @@
 #Requires -Version 3
-function Get-RubrikNode
+function Get-RubrikDNSSetting
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves node information for a given cluster
+      Connects to Rubrik and retrieves DNS Settings assigned to a given cluster
             
       .DESCRIPTION
-      The Get-RubrikNode cmdlet will retrieve information around the node members of a given cluster.
+      The Get-RubrikDNSSetting cmdlet will retrieve information around the node members of a given cluster.
             
       .NOTES
       Written by Mike Preston for community usage
@@ -14,11 +14,11 @@ function Get-RubrikNode
       GitHub: mwpreston
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikNode.html
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDNSSetting.html
             
       .EXAMPLE
-      Get-RubrikNode 
-      This will return the information around the nodes which are member of the currently authenticated cluster
+      Get-RubrikDNSSetting 
+      This will return the information around the DNS settings of the currently authenticated cluster
   #>
 
   [CmdletBinding()]
