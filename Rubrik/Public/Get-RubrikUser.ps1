@@ -19,6 +19,18 @@ function Get-RubrikUser
       .EXAMPLE
       Get-RubrikUser
       This will return settings of all of the user accounts configured within the Rubrik cluster.
+
+      .EXAMPLE
+      Get-RubrikUser -local
+      This will return settings of all of the local user accounts configured within the Rubrik cluster.
+
+      .EXAMPLE
+      Get-RubrikUser -username 'john.doe'
+      This will return settings for the user account with the username of john.doe configured within the Rubrik cluster.
+  
+      .EXAMPLE
+      Get-RubrikUser -authDomainId '1111-222-333'
+      This will return settings of all of the user accounts belonging to the specified authoriation domain.
   #>
 
   [CmdletBinding()]
