@@ -1205,7 +1205,7 @@ function Get-RubrikAPIData($endpoint) {
         }
         'New-RubrikUser'             = @{
             '1.0' = @{
-                Description = 'Creats a new Rubrik user.'
+                Description = 'Creates a new Rubrik user.'
                 URI         = '/api/internal/user'
                 Method      = 'Post'
                 Body        = @{
