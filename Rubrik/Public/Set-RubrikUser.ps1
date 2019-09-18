@@ -30,7 +30,7 @@ function Set-RubrikUser
     # User ID
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)] 
     [String]$id,
-    # Password for newly created user
+    # Password for the user
     [SecureString]$Password,
     # Users first name
     [String]$FirstName,
