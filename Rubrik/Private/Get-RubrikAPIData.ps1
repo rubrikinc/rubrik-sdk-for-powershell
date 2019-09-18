@@ -2085,6 +2085,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Remove-RubrikUser' = @{
+            '1.0' = @{
+                Description = 'Deletes a specified user from the Rubrik cluster'
+                URI         = '/api/internal/user/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Set-RubrikLogShipping' = @{
             '1.0' = @{
                 Description = 'Update a specified log shipping configuration'

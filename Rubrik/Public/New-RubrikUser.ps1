@@ -17,13 +17,12 @@ function New-RubrikUser
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikUser.html
 
       .EXAMPLE
-      New-RubrikUser -Name 'Server1.example.com'
-      This will register a host that resolves to the name "Server1.example.com"
+      New-RubrikUser -Username 'jdoe' -password (ConvertTo-SecureString -String 'secretpassword123!secret' -asplaintext -force)
+      This will create a new user with a username of jdoe and the specified password
 
       .EXAMPLE
-      New-RubrikUser -Name 'NAS.example.com' -HasAgent $false
-      This will register a host that resolves to the name "NAS.example.com" without using the Rubrik Backup Service
-      In this case, the example host is a NAS share.
+      New-RubrikUser -Username 'jdoe' -password (ConvertTo-SecureString -String 'secretpassword123!secret' -asplaintext -force) -FirstName 'John' -LastName 'Doe'
+      This will create a new user with a username of jdoe, the specified password, firstname of John, and LastName as Doe
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]

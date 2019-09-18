@@ -1,12 +1,12 @@
 #requires -Version 3
-function Set-RubrikUser
+function Remove-RubrikUser
 {
-  <#  
+  <#
       .SYNOPSIS
-      Updates and existing user
+      Removes a Rubrik user
 
       .DESCRIPTION
-      The Set-RubrikUser cmdlet is used to update the attributes of an existing Rubrik user.
+      The Remove-RubrikUser cmdlet is used to remove a user from the Rubrik cluster.
 
       .NOTES
       Written by Mike Preston for community usage
@@ -14,34 +14,24 @@ function Set-RubrikUser
       GitHub: mwpreston
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikUser.html
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikUser.html
 
       .EXAMPLE
-      Set-RubrikUser -id '11111' -password (ConvertTo-SecureString -string 'supersecretpassword' -asplaintext -force)
-      This will set the specified password for the user account with the specified id.
+      Remove-RubrikUser -id "11111111-2222-3333-4444-555555555555"
+      This will remove the user matching id "11111111-2222-3333-4444-555555555555".
 
       .EXAMPLE
-      Set-RubrikUser -id '11111' -LastName 'Smith'
-      This will change the user matching the specified id last name to 'Smith'
+      Get-RubrikUser -Username 'john.doe' | Remove-RubrikUser
+      This will remove the user with the matching username of john.doe
+
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # User ID
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)] 
+    # ID of user to remove.
+    [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
-    # Password for newly created user
-    [SecureString]$Password,
-    # Users first name
-    [String]$FirstName,
-    #Users last name
-    [String]$LastName,
-    #Users email
-    [String]$EmailAddress,
-    #Users Contact Number
-    [String]$ContactNumber,
-    #MFA Server ID associated to user
-    [String]$MFAServerId,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -52,27 +42,24 @@ function Set-RubrikUser
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
 
-    # Convert SecureString password to send to API endpoint as string
-    if ($null -ne $password) {[String]$Password = [String](New-Object PSCredential "user",$Password).GetNetworkCredential().Password}
-    
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
