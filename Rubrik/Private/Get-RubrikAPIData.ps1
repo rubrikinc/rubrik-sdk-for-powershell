@@ -354,6 +354,21 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikUser'         = @{
+            '1.0' = @{
+                Description = 'Retrieves settings related to a given user within the Rubrik cluster'
+                URI         = '/api/internal/user'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    username = 'username'
+                    auth_domain_id = 'auth_domain_id'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikManagedVolume'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Rubrik Managed Volumes'
