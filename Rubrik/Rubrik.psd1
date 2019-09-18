@@ -112,7 +112,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikSetting', 
                'Set-RubrikSLA', 'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel', 
                'Set-RubrikVCenter', 'Set-RubrikVM', 'Set-RubrikVolumeFilterDriver', 
-               'Start-RubrikManagedVolumeSnapshot', 
+               'Set-RubrikUser', 'Start-RubrikManagedVolumeSnapshot', 
                'Stop-RubrikManagedVolumeSnapshot', 'Sync-RubrikAnnotation', 
                'Sync-RubrikTag', 'Update-RubrikHost', 'Update-RubrikVCenter', 
                'Update-RubrikVMwareVM')

@@ -1898,6 +1898,25 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikUser'             = @{
+            '1.0' = @{
+                Description = 'Updates a Rubrik user.'
+                URI         = '/api/internal/user/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    password            = 'password'
+                    firstName           = 'firstName'
+                    lastName            = 'lastName'
+                    emailAddress        = 'emailAddress'
+                    contactNumber       = 'contactNumber'
+                    mfaServerId         = 'mfaServerId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Set-RubrikVM'                 = @{
             '1.0' = @{
                 Description = 'Update VM with specified properties'
