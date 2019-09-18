@@ -74,6 +74,9 @@ function New-RubrikUser
 
   Process {
 
+    # Convert SecureString password to send to API endpoint as string
+    [String]$Password = [String](New-Object PSCredential "user",$Password).GetNetworkCredential().Password
+    
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

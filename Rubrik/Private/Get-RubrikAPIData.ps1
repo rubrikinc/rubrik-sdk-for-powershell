@@ -1203,6 +1203,26 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '201'
             }
         }
+        'New-RubrikUser'             = @{
+            '1.0' = @{
+                Description = 'Creats a new Rubrik user.'
+                URI         = '/api/internal/user'
+                Method      = 'Post'
+                Body        = @{
+                    username           = 'username'
+                    password           = 'password'
+                    firstName           = 'firstName'
+                    lastName            = 'lastName'
+                    emailAddress        = 'emailAddress'
+                    contactNumber       = 'contactNumber'
+                    mfaServerId         = 'mfaServerId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'New-RubrikSnapshot'           = @{
             '1.0' = @{
                 Description = 'Create an on-demand snapshot for the given object ID'
