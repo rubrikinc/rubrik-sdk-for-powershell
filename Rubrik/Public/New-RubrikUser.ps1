@@ -28,12 +28,24 @@ function New-RubrikUser
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # The IPv4 address of the host or the resolvable hostname of the host
-    [Parameter(Mandatory = $true)]
-    [Alias('Hostname')]
-    [String]$Name,
-    # Set to $false to register a host that will be accessed through network shares
-    [Bool]$HasAgent,
+    # Username to assign to the created user
+    [Parameter(Mandatory=$true)]
+    [ValidateNotNullorEmpty()]
+    [String]$Username,
+    # Password for newly created user
+    [Parameter(Mandatory=$true)]
+    [ValidateNotNullorEmpty()]
+    [SecureString]$Password,
+    # Users first name
+    [String]$FirstName,
+    #Users last name
+    [String]$LastName,
+    #Users email
+    [String]$EmailAddress,
+    #Users Contact Number
+    [String]$ContactNumber,
+    #MFA Server ID associated to user
+    [String]$MFAServerId,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

@@ -21,8 +21,8 @@ function Get-RubrikUser
       This will return settings of all of the user accounts configured within the Rubrik cluster.
 
       .EXAMPLE
-      Get-RubrikUser -local
-      This will return settings of all of the local user accounts configured within the Rubrik cluster.
+      Get-RubrikUser -authDomainId 'local'
+      This will return settings of all of the user accounts belonging to the local authoriation domain.
 
       .EXAMPLE
       Get-RubrikUser -username 'john.doe'
@@ -41,10 +41,7 @@ function Get-RubrikUser
     # AuthDomainId to filter on
     [Parameter(ParameterSetName='Query')]
     [Alias('auth_domain_id')] 
-    [String]$authDomainId ,
-    # Filter only by local users
-    [Parameter(ParameterSetName='Query')]
-    [Switch]$local,
+    [String]$authDomainId,
     # User ID
     [Parameter(ParameterSetName='ID',Mandatory = $true)] 
     [String]$id,
@@ -79,8 +76,10 @@ function Get-RubrikUser
   }
 
   Process {
-    if ($local) {
-      $authDomainId = (Get-RubrikLDAP | Where {$_.domainType -eq 'LOCAL'}).id
+
+    # If local is passed for auth domain, get the local auth domain ID.
+    if ($authDomainId -eq 'local') {
+      $authDomainId = (Get-RubrikLDAP | Where-Object {$_.domainType -eq 'LOCAL'}).id
     }
     $uri = New-URIString -server $Server -endpoint ($resources.URI)
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
