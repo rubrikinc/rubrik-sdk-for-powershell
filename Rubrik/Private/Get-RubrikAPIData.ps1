@@ -1209,8 +1209,8 @@ function Get-RubrikAPIData($endpoint) {
                 URI         = '/api/internal/user'
                 Method      = 'Post'
                 Body        = @{
-                    username           = 'username'
-                    password           = 'password'
+                    username            = 'username'
+                    password            = 'password'
                     firstName           = 'firstName'
                     lastName            = 'lastName'
                     emailAddress        = 'emailAddress'
