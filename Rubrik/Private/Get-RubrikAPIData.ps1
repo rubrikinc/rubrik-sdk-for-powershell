@@ -111,6 +111,39 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Export-RubrikVApp'       = @{
+            '1.0' = @{
+                Description = 'Exports a given snapshot for a vCD vApp'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}/export'
+                Method      = 'Post'
+                Body        = @{
+                    exportMode  = 'exportMode'
+                    networksToRestore = [System.Collections.ArrayList]@()
+                    vmsToExport = @( 
+                        @{
+                            name   		= 'name'
+                            vcdMoid     = 'vcdMoid'
+                            networkConnections = @{
+                                nicIndex		= 'nicIndex'
+                                addressingMode	= 'addressingMode'
+                                ipAddress		= 'ipAddress'
+                                isConnected		= 'isConnected'
+                                vappNetworkName	= 'vappNetworkName'
+                            }
+                        }
+                    )
+                    shouldPowerOnVmsAfterRecovery = 'shouldPowerOnVmsAfterRecovery'
+                    newVappParams = @{
+                        name     = 'name'
+                        orgVdcId = 'orgVdcId'
+                    }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Get-RubrikAPIToken'         = @{
             '5.0' = @{
                 Description = 'Retrieves list of generated API tokens from the Rubrik cluster'
@@ -724,6 +757,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikVAppExportOptions'                = @{
+            '1.0' = @{
+                Description = 'Retrieves options options on one or more vCD vApps'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}/export/options'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    export_mode         = 'export_mode'
+                    target_vapp_id      = 'target_vapp_id'
+                    target_org_vdc_id   = 'target_org_vdc_id'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikVAppRecoverOptions'                = @{
             '1.0' = @{
                 Description = 'Retrieves instant recovery options on one or more vCD vApps'
@@ -731,7 +780,7 @@ function Get-RubrikAPIData($endpoint) {
                 Method      = 'Get'
                 Body        = ''
                 Query       = @{}
-                Result      = 'data'
+                Result      = ''
                 Filter      = ''
                 Success     = '200'
             }
