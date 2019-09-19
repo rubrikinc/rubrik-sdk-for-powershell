@@ -35,7 +35,7 @@
                                 <PropertyName>sourceDatabaseName</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                               <PropertyName>moutedDatabaseName</PropertyName>
+                               <PropertyName>mountedDatabaseName</PropertyName>
                             </TableColumnItem>                            
                             <TableColumnItem>
                                <PropertyName>targetRootName</PropertyName>
