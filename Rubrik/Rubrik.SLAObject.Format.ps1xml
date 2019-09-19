@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.SLAObject</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Name</Label>
+                        <Width>30</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Base Frequency</Label>
+                        <Width>14</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Count</Label>
+                        <Width>12</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Archival Location</Label>
+                        <Width>18</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Replication Target</Label>
+                        <Width>19</Width>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <Wrap />
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>name</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <ScriptBlock>if ($_.frequencies.hourly) {'{0} Hours' -f $_.frequencies.hourly.frequency} elseif ($_.frequencies.daily) {'{0} Days' -f $_.frequencies.daily.frequency}</ScriptBlock>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>numProtectedObjects</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>
