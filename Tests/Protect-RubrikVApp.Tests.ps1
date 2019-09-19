@@ -78,7 +78,7 @@ Describe -Name 'Public/Protect-RubrikVApp' -Tag 'Public', 'Protect-RubrikVApp' -
         }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Times 1∂        
+        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Times 1        
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
     }
 
