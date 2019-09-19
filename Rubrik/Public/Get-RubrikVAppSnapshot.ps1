@@ -11,6 +11,7 @@ function Get-RubrikVAppSnapshot
       .NOTES
       Written by Matt Elliott for community usage
       Twitter: @NetworkBrouhaha
+      Github: shamsway
 
       .LINK
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/
