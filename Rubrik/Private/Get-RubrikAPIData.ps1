@@ -195,6 +195,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectLabel = 'Rubrik.MSSQLDatabaseFiles'
             }
         }
         'Get-RubrikDatabaseMount'      = @{
@@ -214,6 +215,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectLabel = 'Rubrik.MSSQLDatabaseMount'
             }
         }
         'Get-RubrikDatabaseRecoverableRange'           = @{

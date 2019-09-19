@@ -9,6 +9,5 @@ function Set-ObjectTypeName($typename,$result)
         }
     }
 
-    #$result.ForEach{$_.PSObject.TypeNames.Insert(0,$typename)}
     return $result
 }
