@@ -79,11 +79,6 @@ function Get-RubrikAPIToken
   
     $result = Set-ObjectTypeName -TypeName $resources.ObjectLabel -result $result
     return $result
-<#
-    if ($null -ne $result) {
-      @($result).ForEach{$_.PSObject.TypeNames.Insert(0,'Rubrik.APIToken')}
-    }
-    
-#>
+
   } # End of process
 } # End of function

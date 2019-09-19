@@ -4,21 +4,24 @@
         <View>
             <Name>Default</Name>
             <ViewSelectedBy>
-                <TypeName>Rubrik.VMwareVM</TypeName>
+                <TypeName>Rubrik.MSSQLDatabase</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
                         <Label>Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Operating System</Label>
+                        <Label>Instance Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Recovery Model</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>SLA Domain</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Label>RBS Status</Label>
                     </TableColumnHeader>
                 </TableHeaders>
                 <TableRowEntries>
@@ -26,16 +29,19 @@
                         <Wrap />
                         <TableColumnItems>
                             <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
                                 <PropertyName>name</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>guestOsName</PropertyName>
+                               <PropertyName>instanceName</PropertyName>
+                            </TableColumnItem>                            
+                            <TableColumnItem>
+                               <PropertyName>recoveryModel</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                               <PropertyName>effectiveSlaDomainName</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                 <ScriptBlock>$_.agentStatus.agentStatus</ScriptBlock>
+                                <PropertyName>effectiveSlaDomainName</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

@@ -64,7 +64,8 @@ PowerShellVersion = '4.0'
 
 # Format files (.ps1xml) to be loaded when importing this module
 FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefinitions/Rubrik.VMwareVM.ps1xml',
-                'ObjectDefinitions/Rubrik.APIToken.ps1xml', 'ObjectDefinitions/RubrikAvailabilityGroup.ps1xml')
+                'ObjectDefinitions/Rubrik.APIToken.ps1xml', 'ObjectDefinitions/RubrikAvailabilityGroup.ps1xml',
+                'ObjectDefinitions/Rubrik.MSSQLDatabase.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()

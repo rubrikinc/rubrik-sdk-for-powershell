@@ -180,6 +180,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Instance' = 'instanceName'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.MSSQLDatabase'
             }
         }
         'Get-RubrikDatabaseFiles'      = @{
