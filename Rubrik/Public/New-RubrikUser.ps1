@@ -44,7 +44,7 @@ function New-RubrikUser
     #Users Contact Number
     [String]$ContactNumber,
     #MFA Server ID associated to user
-    [String]$MFAServerId,
+    [String]$MfaServerId,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

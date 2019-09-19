@@ -45,10 +45,10 @@ function Get-RubrikUser
     # AuthDomainId to filter on
     [Parameter(ParameterSetName='Query')]
     [Alias('auth_domain_id')] 
-    [String]$authDomainId,
+    [String]$AuthDomainId,
     # User ID
     [Parameter(ParameterSetName='ID',Mandatory = $true,ValueFromPipelineByPropertyName = $true)] 
-    [String]$id,
+    [String]$Id,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Query')]
     [Parameter(ParameterSetName='ID')]
@@ -82,8 +82,8 @@ function Get-RubrikUser
   Process {
 
     # If local is passed for auth domain, get the local auth domain ID.
-    if ($authDomainId -eq 'local') {
-      $authDomainId = (Get-RubrikLDAP | Where-Object {$_.domainType -eq 'LOCAL'}).id
+    if ($AuthDomainId -eq 'local') {
+      $AuthDomainId = (Get-RubrikLDAP | Where-Object {$_.domainType -eq 'LOCAL'}).id
     }
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri

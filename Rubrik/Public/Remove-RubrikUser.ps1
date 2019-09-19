@@ -31,7 +31,7 @@ function Remove-RubrikUser
     # ID of user to remove.
     [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
-    [String]$id,
+    [String]$Id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
