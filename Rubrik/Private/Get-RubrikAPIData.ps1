@@ -157,6 +157,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLAID'    = 'effectiveSlaDomainId'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.AvailabilityGroup'
             }
         }
         'Get-RubrikDatabase'           = @{
