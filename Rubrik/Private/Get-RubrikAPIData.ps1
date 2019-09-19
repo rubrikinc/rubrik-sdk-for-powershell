@@ -614,6 +614,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.SLAObject'
             }
             '5.0' = @{
                 Description = 'Retrieve summary information for all SLA Domains'
@@ -628,6 +629,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.SLAObject'
             }
         }
         'Get-RubrikSnapshot'           = @{
@@ -791,6 +793,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.VMwareVMObject'
             }
         }
         'Get-RubrikVolumeGroup'                 = @{
@@ -1328,6 +1331,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectLabel = 'Rubrik.VMwareVMObject'
             }
         }
         'Update-RubrikHost'             = @{
@@ -1950,6 +1954,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectLabel = 'Rubrik.VMwareVMObject'
             }
         }
         'Set-RubrikVCenter'         = @{
