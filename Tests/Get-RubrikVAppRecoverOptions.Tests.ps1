@@ -66,7 +66,7 @@ Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikV
             return ConvertFrom-Json -InputObject $recoveroptsjson  -Depth 5
         }
 
-        It -Name 'Should return QUEUED status' -Test {
+        It -Name 'Expected results returned' -Test {
             $result = Get-RubrikVAppRecoverOptions -id '01234567-8910-1abc-d435-0abc1234d567'
             $result.restorableVms[0].name | Should -BeExactly 'vApp01'
             $result.availableVappNetworks[0].name | Should -BeExactly 'network01'

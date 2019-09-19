@@ -2,7 +2,7 @@ Remove-Module -Name 'Rubrik' -ErrorAction 'SilentlyContinue'
 Import-Module -Name './Rubrik/Rubrik.psd1' -Force
 
 $result = @{
-    'id'        = 'VCD_REFRESH_01234567-8910-1abc-d435-0abc1234d567_01234567-8910-1abc-d435-0abc1234d567:::0'
+    'id'        = 'VCD_VAPP_RESTORE_01234567-8910-1abc-d435-0abc1234d567_01234567-8910-1abc-d435-0abc1234d567:::0'
     'status'    = 'QUEUED'
     'progress'  = '0'            
 }
