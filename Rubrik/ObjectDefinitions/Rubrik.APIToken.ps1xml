@@ -9,24 +9,16 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Label>Name</Label>
-                        <Width>30</Width>
+                        <Label>ID</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Base Frequency</Label>
-                        <Width>14</Width>
+                        <Label>Tag</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Object Count</Label>
-                        <Width>12</Width>
+                        <Label>Expires</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Archival Location</Label>
-                        <Width>18</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Label>Replication Target</Label>
-                        <Width>19</Width>
+                        <Label>Last Activity</Label>
                     </TableColumnHeader>
                 </TableHeaders>
                 <TableRowEntries>
@@ -34,17 +26,16 @@
                         <Wrap />
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>name</PropertyName>
+                                <PropertyName>id</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <ScriptBlock>if ($_.frequencies.hourly) {'{0} Hours' -f $_.frequencies.hourly.frequency} elseif ($_.frequencies.daily) {'{0} Days' -f $_.frequencies.daily.frequency}</ScriptBlock>
+                                <PropertyName>tag</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                               <PropertyName>numProtectedObjects</PropertyName>
+                               <PropertyName>expirationTime</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                            </TableColumnItem>
-                            <TableColumnItem>
+                                <PropertyName>lastUsageTime</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

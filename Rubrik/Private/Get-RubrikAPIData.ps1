@@ -126,6 +126,7 @@ function Get-RubrikAPIData($endpoint) {
                     'organizationId'    = 'organizationId'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.APIToken'
             }
         }       
         'Get-RubrikAPIVersion'         = @{
