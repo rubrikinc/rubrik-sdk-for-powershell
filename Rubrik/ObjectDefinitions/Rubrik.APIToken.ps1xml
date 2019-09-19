@@ -4,7 +4,7 @@
         <View>
             <Name>Default</Name>
             <ViewSelectedBy>
-                <TypeName>Rubrik.SLAObject</TypeName>
+                <TypeName>Rubrik.APIToken</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>

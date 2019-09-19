@@ -4,20 +4,29 @@
         <View>
             <Name>Default</Name>
             <ViewSelectedBy>
-                <TypeName>Rubrik.VMwareVMObject</TypeName>
+                <TypeName>Rubrik.SLADomain</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
                         <Label>Name</Label>
+                        <Width>30</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Operating System</Label>
+                        <Label>Base Frequency</Label>
+                        <Width>14</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
+                        <Label>Object Count</Label>
+                        <Width>12</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>RBS Status</Label>
+                        <Label>Archival Location</Label>
+                        <Width>18</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Replication Target</Label>
+                        <Width>19</Width>
                     </TableColumnHeader>
                 </TableHeaders>
                 <TableRowEntries>
@@ -28,13 +37,14 @@
                                 <PropertyName>name</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>guestOsName</PropertyName>
+                                <ScriptBlock>if ($_.frequencies.hourly) {'{0} Hours' -f $_.frequencies.hourly.frequency} elseif ($_.frequencies.daily) {'{0} Days' -f $_.frequencies.daily.frequency}</ScriptBlock>
                             </TableColumnItem>
                             <TableColumnItem>
-                               <PropertyName>effectiveSlaDomainName</PropertyName>
+                               <PropertyName>numProtectedObjects</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                 <ScriptBlock>$_.agentStatus.agentStatus</ScriptBlock>
+                            </TableColumnItem>
+                            <TableColumnItem>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>
