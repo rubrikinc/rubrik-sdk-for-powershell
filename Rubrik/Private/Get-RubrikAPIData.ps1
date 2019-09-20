@@ -283,6 +283,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA' = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.Fileset'
             }
         }
         'Get-RubrikFilesetTemplate'    = @{
@@ -301,6 +302,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectLabel = 'Rubrik.FilesetTemplate'
             }
         }
         'Get-RubrikHost'               = @{
