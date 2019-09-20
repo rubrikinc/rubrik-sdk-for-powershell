@@ -701,6 +701,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Hostname' = 'rootProperties.rootName'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.MSSQLInstance'
             }
         }
         'Get-RubrikSupportTunnel'      = @{
@@ -729,6 +730,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectLabel = 'Rubrik.UnmanagedObject'
             }
         }
        'Get-RubrikVCenter'         = @{
