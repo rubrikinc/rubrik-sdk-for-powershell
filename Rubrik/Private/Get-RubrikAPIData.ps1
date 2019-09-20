@@ -532,6 +532,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectLabel = 'Rubrik.Report'
             }
             '4.1' = @{
                 Description = 'Retrieve summary information for each report.'
