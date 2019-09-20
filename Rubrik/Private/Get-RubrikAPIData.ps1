@@ -144,6 +144,23 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Export-RubrikVcdTemplate'       = @{
+            '1.0' = @{
+                Description = 'Exports a given vCD template'
+                URI         = '/api/v1/vcd/vapp/template/snapshot/{id}/export'
+                Method      = 'Post'
+                Body        = @{
+                    name            = 'name'
+                    catalogId       = 'catalogId'
+                    orgVdcId        = 'orgVdcId'
+                    storagePolicyId = 'storagePolicyId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Get-RubrikAPIToken'         = @{
             '5.0' = @{
                 Description = 'Retrieves list of generated API tokens from the Rubrik cluster'
@@ -759,7 +776,7 @@ function Get-RubrikAPIData($endpoint) {
         }
         'Get-RubrikVAppExportOptions'                = @{
             '1.0' = @{
-                Description = 'Retrieves options options on one or more vCD vApps'
+                Description = 'Retrieves export options for a vCD vApp'
                 URI         = '/api/internal/vcd/vapp/snapshot/{id}/export/options'
                 Method      = 'Get'
                 Body        = ''
@@ -775,11 +792,27 @@ function Get-RubrikAPIData($endpoint) {
         }
         'Get-RubrikVAppRecoverOptions'                = @{
             '1.0' = @{
-                Description = 'Retrieves instant recovery options on one or more vCD vApps'
+                Description = 'Retrieves instant recovery options for a vCD vApp'
                 URI         = '/api/internal/vcd/vapp/snapshot/{id}/instant_recover/options'
                 Method      = 'Get'
                 Body        = ''
                 Query       = @{}
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikVcdTemplateExportOptions'                = @{
+            '1.0' = @{
+                Description = 'Retrieves export options for a vCD Template'
+                URI         = '/api/v1/vcd/vapp/template/snapshot/{id}/export/options'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    catalog_id  = 'catalog_id'
+                    name        = 'name'
+                    org_vdc_id  = 'org_vdc_id'
+                }
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
