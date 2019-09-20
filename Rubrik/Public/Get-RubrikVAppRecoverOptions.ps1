@@ -3,10 +3,10 @@ function Get-RubrikVAppRecoverOptions
 {
   <#  
       .SYNOPSIS
-      Retrieves instant recovery options on one or more vCD vApps known to a Rubrik cluster
+      Retrieves instant recovery options a vCD vApp known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVAppRecoverOptions cmdlet is used to retrieve instant recovery options on one or more vCD vApps known to a Rubrik cluster
+      The Get-RubrikVAppRecoverOptions cmdlet is used to retrieve instant recovery options for a vCD vApp known to a Rubrik cluster
 
       .NOTES
       Written by Matt Elliott for community usage
@@ -19,7 +19,7 @@ function Get-RubrikVAppRecoverOptions
       .EXAMPLE
       $SnapshotID = (Get-RubrikVApp -Name 'vApp01' | Get-RubrikSnapshot -Latest).id
       Get-RubrikVAppRecoverOptions -id $SnapshotID
-      This will return details on the specific snapshot.
+      This will return recovery options on the specific snapshot.
   #>
 
   [CmdletBinding()]

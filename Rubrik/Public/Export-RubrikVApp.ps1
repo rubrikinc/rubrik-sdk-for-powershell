@@ -50,6 +50,7 @@ function Export-RubrikVApp
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Partial')]
     [ValidateNotNullOrEmpty()]
     [String]$id,
+    # Rubrik snapshot id of the vApp to export
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Full')]
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true,ParameterSetName='Partial')]
     [ValidateNotNullOrEmpty()]
