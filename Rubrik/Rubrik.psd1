@@ -64,7 +64,7 @@ PowerShellVersion = '4.0'
 
 # Format files (.ps1xml) to be loaded when importing this module
 FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefinitions/Rubrik.VMwareVM.ps1xml',
-                'ObjectDefinitions/Rubrik.APIToken.ps1xml', 'ObjectDefinitions/RubrikAvailabilityGroup.ps1xml',
+                'ObjectDefinitions/Rubrik.APIToken.ps1xml', 'ObjectDefinitions/Rubrik.AvailabilityGroup.ps1xml',
                 'ObjectDefinitions/Rubrik.MSSQLDatabase.ps1xml','ObjectDefinitions/Rubrik.MSSQLDatabaseFiles.ps1xml',
                 'ObjectDefinitions/Rubrik.MSSQLDatabaseMount.ps1xml','ObjectDefinitions/Rubrik.Event.ps1xml',
                 'ObjectDefinitions/Rubrik.Fileset.ps1xml','ObjectDefinitions/Rubrik.FilesetTemplate.ps1xml',
