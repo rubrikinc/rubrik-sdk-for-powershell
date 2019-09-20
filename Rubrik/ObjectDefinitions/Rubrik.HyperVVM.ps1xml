@@ -15,7 +15,7 @@
                         <Label>Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>SLA Domain/Label>
+                        <Label>SLA Domain</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Relic</Label>

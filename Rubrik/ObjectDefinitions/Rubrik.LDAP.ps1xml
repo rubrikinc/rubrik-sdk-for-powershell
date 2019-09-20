@@ -15,7 +15,7 @@
                         <Label>Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>DNS Name/Label>
+                        <Label>DNS Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Domain Type</Label>

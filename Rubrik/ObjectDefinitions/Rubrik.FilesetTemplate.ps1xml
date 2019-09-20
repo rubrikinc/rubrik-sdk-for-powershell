@@ -15,7 +15,7 @@
                         <Label>Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Operating System/Label>
+                        <Label>Operating System</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Includes</Label>

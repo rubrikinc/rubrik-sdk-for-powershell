@@ -15,7 +15,7 @@
                         <Label>Location</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Primary Database Name/Label>
+                        <Label>Primary Database Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Secondary Database Name</Label>

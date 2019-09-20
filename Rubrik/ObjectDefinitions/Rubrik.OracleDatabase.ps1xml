@@ -15,7 +15,7 @@
                         <Label>Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>SID/Label>
+                        <Label>SID</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>SLA Domain</Label>

@@ -15,7 +15,7 @@
                         <Label>Hostname</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Export/Label>
+                        <Label>Export</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Type</Label>

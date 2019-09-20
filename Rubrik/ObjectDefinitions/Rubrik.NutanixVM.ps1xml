@@ -15,7 +15,7 @@
                         <Label>Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Cluster Name/Label>
+                        <Label>Cluster Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>SLA Domain</Label>

@@ -15,7 +15,7 @@
                         <Label>Time</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Status/Label>
+                        <Label>Status</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Event Type</Label>

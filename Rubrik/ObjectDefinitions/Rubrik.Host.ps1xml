@@ -15,7 +15,7 @@
                         <Label>Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Hostname/Label>
+                        <Label>Hostname</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Operating System</Label>
