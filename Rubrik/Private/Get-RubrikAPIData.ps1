@@ -344,6 +344,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.HyperVVM'
             }
         }
         'Get-RubrikLDAP'         = @{
