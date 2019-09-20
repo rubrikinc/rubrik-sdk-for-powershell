@@ -499,6 +499,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.OracleDatabase'
             }
         }        
         'Get-RubrikOrganization'                 = @{
