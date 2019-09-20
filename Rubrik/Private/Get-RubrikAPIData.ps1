@@ -322,6 +322,7 @@ function Get-RubrikAPIData($endpoint) {
                     Name            = 'name'
                 }
                 Success     = '200'
+                ObjectClass = 'Rubrik.Host'
             }
         }
         'Get-RubrikHyperVVM'                 = @{

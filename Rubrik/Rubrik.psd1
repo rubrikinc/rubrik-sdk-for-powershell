@@ -67,7 +67,8 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
                 'ObjectDefinitions/Rubrik.APIToken.ps1xml', 'ObjectDefinitions/RubrikAvailabilityGroup.ps1xml',
                 'ObjectDefinitions/Rubrik.MSSQLDatabase.ps1xml','ObjectDefinitions/Rubrik.MSSQLDatabaseFiles.ps1xml',
                 'ObjectDefinitions/Rubrik.MSSQLDatabaseMount.ps1xml','ObjectDefinitions/Rubrik.Event.ps1xml',
-                'ObjectDefinitions/Rubrik.Fileset.ps1xml','ObjectDefinitions/Rubrik.FilesetTemplate.ps1xml')
+                'ObjectDefinitions/Rubrik.Fileset.ps1xml','ObjectDefinitions/Rubrik.FilesetTemplate.ps1xml',
+                'ObjectDefinitions/Rubrik.Host.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
