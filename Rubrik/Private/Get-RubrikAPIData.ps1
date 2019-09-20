@@ -780,6 +780,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.VMwareHost'
             }
         }
         'Get-RubrikVersion'            = @{
@@ -836,6 +837,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.VolumeGroup'
             }
         }
         'Get-RubrikVolumeGroupMount'                 = @{
