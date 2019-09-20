@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-09-19
+
+### Added initial support for VMware vCloud Director (vCD) API endpoints in CDM
+
+* Added cmdlets `Update-RubrikVCD`, `Set-RubrikVCD`, `Restore-RubrikVApp`, `Protect-RubrikVApp`, `Get-RubrikVcdTemplateExportOptions`, `Get-RubrikVCD`, `Get-RubrikVappSnapshot`, `RubrikVAppRecoverOptions`, `Get-RubrikVAppExportOptions`, `Get-RubrikVApp`, `Export-RubrikVcdTemplate`, `Export-RubrikVApp` and related tests as requested in [Issue 273](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/273)
+* Updated `Get-RubrikSnapshot` to support vCD vApps
+* Misc bug fixes and typos corrected
+
 ## 2019-09-02
 
 ### Added [-RubrikBootStrap] unit tests
