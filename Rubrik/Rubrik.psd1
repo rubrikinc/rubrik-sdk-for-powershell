@@ -70,7 +70,8 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
                 'ObjectDefinitions/Rubrik.Fileset.ps1xml','ObjectDefinitions/Rubrik.FilesetTemplate.ps1xml',
                 'ObjectDefinitions/Rubrik.Host.ps1xml','ObjectDefinitions/Rubrik.HyperVVM.ps1xml',
                 'ObjectDefinitions/Rubrik.LDAP.ps1xml','ObjectDefinitions/Rubrik.LogShipping.ps1xml',
-                'ObjectDefinitions/Rubrik.ManagedVolume.ps1xml','ObjectDefinitions/Rubrik.NASShare.ps1xml')
+                'ObjectDefinitions/Rubrik.ManagedVolume.ps1xml','ObjectDefinitions/Rubrik.NASShare.ps1xml',
+                'ObjectDefinitions/Rubrik.NutanixVM.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
