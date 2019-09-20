@@ -110,8 +110,8 @@ function Get-RubrikHyperVVM
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $
-    #$result = Set-ObjectTypeName -TypeName $resources.ObjectLabel -result $result
+    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    $result = Set-ObjectTypeName -TypeName $resources.ObjectLabel -result $result
 
 
     return $result
