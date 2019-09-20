@@ -362,6 +362,7 @@ function Get-RubrikAPIData($endpoint) {
                     Name = 'name'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.LDAP'
             }
         }
         'Get-RubrikUser'         = @{
