@@ -454,6 +454,7 @@ function Get-RubrikAPIData($endpoint) {
                     exportPoint = 'exportPoint'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.NASShare'
             }
         }
         'Get-RubrikNutanixVM'                 = @{
