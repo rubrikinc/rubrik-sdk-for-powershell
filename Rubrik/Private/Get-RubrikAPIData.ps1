@@ -747,6 +747,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.vCenter'
             }
         }
         'Get-RubrikVMwareDatastore'         = @{
@@ -762,6 +763,7 @@ function Get-RubrikAPIData($endpoint) {
                     'dataStoreType' = 'dataStoreType'
                 }
                 Success     = '200'
+                ObjectLabel = 'Rubrik.VMwareDatastore'
             }
         }
         'Get-RubrikVMwareHost'         = @{
