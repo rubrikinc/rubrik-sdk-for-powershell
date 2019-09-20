@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.Event</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Time</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Status/Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Event Type</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Type</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Name</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <Wrap />
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>time</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>eventStatus</PropertyName>
+                            </TableColumnItem>                            
+                            <TableColumnItem>
+                               <PropertyName>eventType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>objectType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>objectName</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>

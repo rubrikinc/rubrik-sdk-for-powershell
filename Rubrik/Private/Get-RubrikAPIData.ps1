@@ -256,6 +256,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectLabel = 'Rubrik.Event'
             }
         }
         'Get-RubrikFileset'            = @{
