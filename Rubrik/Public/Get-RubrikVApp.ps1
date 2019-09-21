@@ -6,7 +6,7 @@ function Get-RubrikVApp
       Connects to Rubrik and retrieves the current Rubrik vCD vApp settings
             
       .DESCRIPTION
-      The Get-RubrikVApp cmdlet will retrieve the all vCD vApp settings actively running on the system. This does require authentication.
+      The Get-RubrikVApp cmdlet retrieves all the vCD vApp settings actively running on the system. This requires authentication with your Rubrik cluster.
             
       .NOTES
       Written by Matt Elliott for community usage
@@ -21,7 +21,7 @@ function Get-RubrikVApp
       This will return details on all vCD vApps named "vApp01".
 
       .EXAMPLE
-      Get-RubrikVApp -Name 'Server1' -SLA Gold
+      Get-RubrikVApp -Name 'Server1' -SLA 'Gold'
       This will return details on all vCD vApps named "Server1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
