@@ -3,10 +3,10 @@ function Get-RubrikVAppSnapshot
 {
   <#  
       .SYNOPSIS
-      Retrieves details on one or more virtual machines known to a Rubrik cluster
+      Retrieves details on one or more virtual machines known to the Rubrik cluster as a vApp
 
       .DESCRIPTION
-      The Get-RubrikVAppSnapshot cmdlet is used to pull a detailed information from a vCD vApp snapshot
+      The Get-RubrikVAppSnapshot cmdlet is used to pull detailed information from a vCD vApp snapshot
 
       .NOTES
       Written by Matt Elliott for community usage
