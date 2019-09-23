@@ -41,7 +41,7 @@
                                <PropertyName>secondaryDatabaseName</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>status</PropertyName>
+                               <ScriptBlock>$_.status.status</ScriptBlock>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>
