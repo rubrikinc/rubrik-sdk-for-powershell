@@ -3,10 +3,10 @@ function Get-RubrikUser
 {
   <#  
       .SYNOPSIS
-      Gets settings of a local Rubrik user
+      Gets settings of a Rubrik user
 
       .DESCRIPTION
-      The Get-RubrikUser cmdlet is used to query the Rubrik cluster to retrieve a list of settings around a local Rubrik user account.
+      The Get-RubrikUser cmdlet is used to query the Rubrik cluster to retrieve a list of settings around a Rubrik user account.
 
       .NOTES
       Written by Mike Preston for community usage

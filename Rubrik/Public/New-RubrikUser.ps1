@@ -7,6 +7,7 @@ function New-RubrikUser
 
       .DESCRIPTION
       The New-RubrikUser cmdlet is used to create a new user within the Rubrik cluster.
+      NOTE: The underlying API endpoints used by this cmdlet are restricted. API token authentication cannot be used with this cmdlet. You must use username/password authentication. 
 
       .NOTES
       Written by Mike Preston for community usage
