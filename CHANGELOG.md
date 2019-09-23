@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-09-19
+
+### Added [Cmdlets to manage Rubrik users]
+
+* Added Get-RubrikUser, New-RubrikUser, Remove-RubrikUser and Set-RubrikUser and respective unit tests to manage user accounts.
+* Addresses [Issue 244](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/244)
+
 ## 2019-09-12
 
 ### Changed [Added ability to rename Managed Volumes]
