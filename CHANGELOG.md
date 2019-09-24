@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added ps1xml files to a newly created ObjectDefinitions folder definining the listed objects below
 * Imported all ps1xml files from within the psd1 manifest for the listed objects below
 * TypeName format files created for Rubrik.APIToken, Rubrik.AvailabilityGroup, Rubrik.Event, Rubrik.Fileset, Rubrik.FilesetTemplate, Rubrik.Host, Rubrik.HyperVVM, Rubrik.LDAP, Rubrik.LogShipping, Rubrik.ManagedVolume, Rubrik.MSSQLDatabase, Rubrik.MSSQLDatabaseFiles, Rubrik.MSSQLDatabaseMount, Rubrik.NASShare, Rubrik.NutanixVM, Rubrik.OracleDatabase, Rubrik.Report, RubrikSLADomain, Rubrik.SLADomainv1, Rubrik.UnmanagedObject, Rubrik.User, Rubrik.vCenter, Rubrik.VMwareDatastore, Rubrik.VMwareHost, Rubrik.VMwareVM, and Rubrik.VolumeGroup
+* Addresses [Issue 323](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/323)
 
 ## 2019-09-19
 
