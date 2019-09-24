@@ -248,7 +248,11 @@ function Export-RubrikVApp
         $resources.Body.newVappParams.name = $vapp.name + "-" + [string](Get-Date -Format "ddd MMM yyyy HH:mm:ss 'GMT'K")
         Write-Verbose -Message "Exported vApp will be named $($resources.Body.newVappParams.name)"
         $resources.Body.newVappParams.orgVdcId = $orgvdc
-        $resources.Body.vmsToExport = $vapp.vms
+        $resources.Body.vmsToExport = [System.Collections.ArrayList]@()
+        foreach($vm in $vapp.vms) {         
+            $resources.Body.vmsToExport.Add($vm)
+            Write-Verbose -Message "Added $($vm.name) to request"
+        }
 
         # Build networksToRestore based on networks collected from vApp
         $resources.Body.networksToRestore = [System.Collections.ArrayList]@()
