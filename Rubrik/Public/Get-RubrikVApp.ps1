@@ -17,6 +17,10 @@ function Get-RubrikVApp
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
+      Get-RubrikDatabase
+      This will return details on all vCD vApps that are currently or formerly protected by Rubrik.
+
+      .EXAMPLE
       Get-RubrikVApp -Name 'vApp01'
       This will return details on all vCD vApps named "vApp01".
 
@@ -27,6 +31,10 @@ function Get-RubrikVApp
       .EXAMPLE
       Get-RubrikVApp -Relic
       This will return all removed vCD vApps that were formerly protected by Rubrik.
+      
+      .EXAMPLE
+      Get-RubrikVApp -Relic:false
+      This will return all vCD vApps that are currently protected by Rubrik.
 
       .EXAMPLE
       Get-RubrikVApp -SourceObjectId 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567'
@@ -139,6 +147,11 @@ function Get-RubrikVApp
         $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
     }
     #endregion
+    
+    # If the switch parameter was not explicitly specified remove from query params
+    if(-not $PSBoundParameters.ContainsKey('Relic')) {
+      $Resources.Query.Remove('is_relic')
+    }    
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
