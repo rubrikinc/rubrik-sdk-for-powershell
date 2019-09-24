@@ -632,7 +632,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
-                ObjectTName = 'Rubrik.SLADomain'
+                ObjectTName = 'Rubrik.SLADomainv1'
             }
             '5.0' = @{
                 Description = 'Retrieve summary information for all SLA Domains'

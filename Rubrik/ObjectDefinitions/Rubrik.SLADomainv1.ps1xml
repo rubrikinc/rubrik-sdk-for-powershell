@@ -4,7 +4,7 @@
         <View>
             <Name>Default</Name>
             <ViewSelectedBy>
-                <TypeName>Rubrik.SLADomain</TypeName>
+                <TypeName>Rubrik.SLADomainv1</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>
@@ -40,7 +40,9 @@
                                 <ScriptBlock>if ($_.frequencies.hourly) {'{0} Hours' -f $_.frequencies.hourly.frequency} elseif ($_.frequencies.daily) {'{0} Days' -f $_.frequencies.daily.frequency}</ScriptBlock>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>numProtectedObjects</PropertyName>
+                                <ScriptBlock>
+                                    $_.numVcdVapps + $_.numWindowsHosts + $_.numShares + $_.numNutanixVms + $_.numDbs + $_.numVms + $_.numEc2Instances + $_.numManagedVolumes + $_.numHypervVMs + $_.numLinuxHosts + $_.numFilesets
+                                </ScriptBlock>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <ScriptBlock>$_.archivalSpecs.locationId</ScriptBlock>
