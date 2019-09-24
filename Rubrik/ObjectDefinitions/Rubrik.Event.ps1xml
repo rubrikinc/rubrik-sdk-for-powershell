@@ -18,9 +18,6 @@
                         <Label>Status</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Event Type</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
                         <Label>Object Type</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
@@ -29,20 +26,22 @@
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
-                        <Wrap />
+                       
                         <TableColumnItems>
                             <TableColumnItem>
                                 <PropertyName>id</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>time</PropertyName>
+                                <ScriptBlock>
+                                    $splitdate = $_.time.split(' ')
+                                    $newdate = $splitdate[1] + " " + $splitdate[2] + " " + $splitdate[3] + " " + $splitdate[5]
+                                    $d= [DateTime]::ParseExact($newdate,"MMM dd HH:mm:ss yyyy",$null)
+                                    Get-Date $d -Format "dd/MM/yyyy HH:ss"
+                                </ScriptBlock>    
                             </TableColumnItem>
                             <TableColumnItem>
                                <PropertyName>eventStatus</PropertyName>
                             </TableColumnItem>                            
-                            <TableColumnItem>
-                               <PropertyName>eventType</PropertyName>
-                            </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>objectType</PropertyName>
                             </TableColumnItem>

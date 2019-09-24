@@ -9,24 +9,24 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
+                        <Width>45</Width>
                         <Label>ID</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
+                        <Width>25</Width>
                         <Label>Username</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
+                        <Width>15</Width>
                         <Label>First Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Last Name</Label>
                     </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Label>emailAddress</Label>
-                    </TableColumnHeader>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
-                        <Wrap />
+                        
                         <TableColumnItems>
                             <TableColumnItem>
                                 <PropertyName>id</PropertyName>
@@ -39,9 +39,6 @@
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>lastName</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>emailAddress</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>
