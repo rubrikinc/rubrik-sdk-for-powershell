@@ -63,7 +63,7 @@ Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikV
                   }
                 ]
               }'
-            return ConvertFrom-Json -InputObject $recoveroptsjson  -Depth 5
+            return ConvertFrom-Json -InputObject $recoveroptsjson
         }
 
         It -Name 'Expected results returned' -Test {
