@@ -62,7 +62,7 @@ Describe -Name 'Public/Restore-RubrikVApp' -Tag 'Public', 'Restore-RubrikVApp' -
               }
             ]
           }'
-        $recoveropts = ConvertFrom-Json -InputObject $recoveroptsjson  -Depth 5
+        $recoveropts = ConvertFrom-Json -InputObject $recoveroptsjson 
 
         $vmjson = '{
             "name": "vApp01",
@@ -78,7 +78,7 @@ Describe -Name 'Public/Restore-RubrikVApp' -Tag 'Public', 'Restore-RubrikVApp' -
             ]
           }'
         
-        $vm = ConvertFrom-Json -InputObject $vmjson -Depth 5
+        $vm = ConvertFrom-Json -InputObject $vmjson
 
         $result = @{
             'id'        = 'VCD_REFRESH_01234567-8910-1abc-d435-0abc1234d567_01234567-8910-1abc-d435-0abc1234d567:::0'
