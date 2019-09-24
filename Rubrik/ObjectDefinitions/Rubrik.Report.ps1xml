@@ -29,7 +29,6 @@
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
-                        <Wrap />
                         <TableColumnItems>
                             <TableColumnItem>
                                 <PropertyName>id</PropertyName>
