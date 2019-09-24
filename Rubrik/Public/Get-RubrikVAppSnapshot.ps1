@@ -23,6 +23,7 @@ function Get-RubrikVAppSnapshot
 
   [CmdletBinding()]
   Param(
+    # ID of the snapshot
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [String]$id,

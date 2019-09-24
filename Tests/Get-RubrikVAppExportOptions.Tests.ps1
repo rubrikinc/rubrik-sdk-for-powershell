@@ -70,7 +70,7 @@ Describe -Name 'Public/Get-RubrikVAppExportOptions' -Tag 'Public', 'Get-RubrikVA
                   }
                 ]
               }'
-            return ConvertFrom-Json -InputObject $exportoptsjson -Depth 5
+            return ConvertFrom-Json -InputObject $exportoptsjson
         }
 
         It -Name 'Expected results returned' -Test {

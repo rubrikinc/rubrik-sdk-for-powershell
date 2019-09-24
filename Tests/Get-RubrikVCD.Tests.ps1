@@ -44,7 +44,7 @@ Describe -Name 'Public/Get-RubrikVCD' -Tag 'Public', 'Get-RubrikVCD' -Fixture {
         }
 
         It -Name 'should return one result with no parameters' -Test {
-            ( Get-RubrikVCD -Name 'VMware vCloud Director' ).Length |
+            ( Get-RubrikVCD -Name 'VMware vCloud Director' | Measure-Object ).Count |
                 Should -BeExactly 1
         }
 
@@ -64,7 +64,7 @@ Describe -Name 'Public/Get-RubrikVCD' -Tag 'Public', 'Get-RubrikVCD' -Fixture {
         }
 
         It -Name 'should return one result with all parameters' -Test {
-            ( Get-RubrikVCD -Name 'VMware vCloud Director' -Hostname 'vcd.example.com' -Status 'Connected' ).Length |
+            ( Get-RubrikVCD -Name 'VMware vCloud Director' -Hostname 'vcd.example.com' -Status 'Connected' | Measure-Object ).Count |
                 Should -BeExactly 1
         }
 

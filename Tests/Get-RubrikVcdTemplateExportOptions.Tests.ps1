@@ -42,7 +42,7 @@ Describe -Name 'Public/Get-RubrikVcdTemplateExportOptions' -Tag 'Public', 'Get-R
                   ]
                 }
               }'
-            return ConvertFrom-Json -InputObject $exportoptsjson  -Depth 5
+            return ConvertFrom-Json -InputObject $exportoptsjson 
         }
 
         It -Name 'Expected results returned' -Test {
@@ -69,7 +69,7 @@ Describe -Name 'Public/Get-RubrikVcdTemplateExportOptions' -Tag 'Public', 'Get-R
                   ]
                 }
             }'
-            return ConvertFrom-Json -InputObject $exportoptsjson  -Depth 5
+            return ConvertFrom-Json -InputObject $exportoptsjson 
         }
 
         It -Name 'Expected results returned' -Test {
@@ -110,7 +110,7 @@ Describe -Name 'Public/Get-RubrikVcdTemplateExportOptions' -Tag 'Public', 'Get-R
                   ]
                 }
               }'
-            return ConvertFrom-Json -InputObject $exportoptsjson  -Depth 5
+            return ConvertFrom-Json -InputObject $exportoptsjson 
         }
 
         It -Name 'Expected results returned' -Test {
