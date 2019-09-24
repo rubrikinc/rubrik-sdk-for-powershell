@@ -25,7 +25,7 @@ function Restore-RubrikVApp
       This will retreive the latest snapshot from the given vApp 'vApp01' and restore it
 
       .EXAMPLE
-      $id = (Get-RubrikVApp -Name "Sushi Roller" -PrimaryClusterID local | Get-RubrikSnapshot -Latest ).id
+      $id = (Get-RubrikVApp -Name "vApp01" -PrimaryClusterID local | Get-RubrikSnapshot -Latest ).id
       $recoveropts = Get-RubrikVAppRecoverOptions -Id $id
       $restorableVms = $recoveropts.restorableVms
       $vm = @()
