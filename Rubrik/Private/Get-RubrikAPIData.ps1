@@ -378,6 +378,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectLabel = 'Rubrik.User'
             }
         }
         'Get-RubrikManagedVolume'           = @{
