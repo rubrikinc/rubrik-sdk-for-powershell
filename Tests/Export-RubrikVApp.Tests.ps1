@@ -82,7 +82,7 @@ Describe -Name 'Public/Export-RubrikVApp' -Tag 'Public', 'Export-RubrikVApp' -Fi
                   }
                 ]
           }'
-        $vapp = ConvertFrom-Json -InputObject $vappjson  -Depth 8
+        $vapp = ConvertFrom-Json -InputObject $vappjson
 
         $vmjson = '{
             "name": "vApp01",
@@ -98,7 +98,7 @@ Describe -Name 'Public/Export-RubrikVApp' -Tag 'Public', 'Export-RubrikVApp' -Fi
             ]
           }'
         
-        $vm = ConvertFrom-Json -InputObject $vmjson -Depth 3
+        $vm = ConvertFrom-Json -InputObject $vmjson
 
         $result = @{
             'id'        = 'VCD_VAPP_EXPORT_01234567-8910-1abc-d435-0abc1234d567_01234567-8910-1abc-d435-0abc1234d567:::0'
@@ -221,7 +221,7 @@ Describe -Name 'Public/Export-RubrikVApp' -Tag 'Public', 'Export-RubrikVApp' -Fi
                 ]
               }'
             
-            $vm = ConvertFrom-Json -InputObject $vmjson -Depth 3
+            $vm = ConvertFrom-Json -InputObject $vmjson
 
             Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
                 $true

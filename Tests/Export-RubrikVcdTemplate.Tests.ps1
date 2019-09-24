@@ -74,7 +74,7 @@ Describe -Name 'Public/Export-RubrikVcdTemplate' -Tag 'Public', 'Export-RubrikVc
                   }
                 ]
           }'
-        $vapp = ConvertFrom-Json -InputObject $vappjson  -Depth 8
+        $vapp = ConvertFrom-Json -InputObject $vappjson
 
         $result = @{
             'id'        = 'VCD_VAPP_EXPORT_01234567-8910-1abc-d435-0abc1234d567_01234567-8910-1abc-d435-0abc1234d567:::0'
