@@ -77,7 +77,7 @@ function Get-RubrikAPIToken
     # Remove any api tokens generated for usage with web
     $result = $result | Where-Object {$_.sessionType -ne 'Web'}
   
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectLabel -result $result
+    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
     return $result
 
   } # End of process
