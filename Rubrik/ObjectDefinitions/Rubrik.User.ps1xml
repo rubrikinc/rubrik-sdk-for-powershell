@@ -9,10 +9,6 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Width>45</Width>
-                        <Label>ID</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
                         <Width>25</Width>
                         <Label>Username</Label>
                     </TableColumnHeader>
@@ -23,13 +19,14 @@
                     <TableColumnHeader>
                         <Label>Last Name</Label>
                     </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Width>45</Width>
+                        <Label>ID</Label>
+                    </TableColumnHeader>                    
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
-                            <TableColumnItem>
-                                <PropertyName>id</PropertyName>
-                            </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>username</PropertyName>
                             </TableColumnItem>
@@ -39,6 +36,9 @@
                             <TableColumnItem>
                                 <PropertyName>lastName</PropertyName>
                             </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>                            
                         </TableColumnItems>
                     </TableRowEntry>
                 </TableRowEntries>

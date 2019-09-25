@@ -9,9 +9,6 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Label>ID</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
                         <Label>Time</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
@@ -23,19 +20,19 @@
                     <TableColumnHeader>
                         <Label>Object Name</Label>
                     </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry> 
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>id</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
                                 <ScriptBlock>
                                     $splitdate = $_.time.split(' ')
                                     $newdate = $splitdate[1] + " " + $splitdate[2] + " " + $splitdate[3] + " " + $splitdate[5]
                                     $d= [DateTime]::ParseExact($newdate,"MMM dd HH:mm:ss yyyy",$null)
-                                    Get-Date $d -Format "dd/MM/yyyy HH:ss"
+                                    Get-Date $d -Format "dd/MM/yyyy HH:mm:ss"
                                 </ScriptBlock>    
                             </TableColumnItem>
                             <TableColumnItem>
@@ -46,6 +43,9 @@
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>objectName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

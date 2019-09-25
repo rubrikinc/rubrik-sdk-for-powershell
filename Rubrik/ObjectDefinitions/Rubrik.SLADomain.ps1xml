@@ -9,9 +9,6 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Label>ID</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
                         <Label>Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
@@ -26,13 +23,13 @@
                     <TableColumnHeader>
                         <Label>Replication Target</Label>
                     </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>                    
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
-                            <TableColumnItem>
-                                <PropertyName>id</PropertyName>
-                            </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>name</PropertyName>
                             </TableColumnItem>
@@ -48,6 +45,9 @@
                             <TableColumnItem>
                                 <ScriptBlock>$_.replicationSpecs.locationId</ScriptBlock>
                             </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>                            
                         </TableColumnItems>
                     </TableRowEntry>
                 </TableRowEntries>

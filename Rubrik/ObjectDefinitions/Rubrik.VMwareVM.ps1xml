@@ -9,9 +9,6 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Label>Id</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
                         <Label>Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
@@ -23,13 +20,13 @@
                     <TableColumnHeader>
                         <Label>RBS Status</Label>
                     </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Id</Label>
+                    </TableColumnHeader>                    
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
-                            <TableColumnItem>
-                                <PropertyName>id</PropertyName>
-                            </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>name</PropertyName>
                             </TableColumnItem>
@@ -42,6 +39,9 @@
                             <TableColumnItem>
                                  <ScriptBlock>$_.agentStatus.agentStatus</ScriptBlock>
                             </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>                            
                         </TableColumnItems>
                     </TableRowEntry>
                 </TableRowEntries>

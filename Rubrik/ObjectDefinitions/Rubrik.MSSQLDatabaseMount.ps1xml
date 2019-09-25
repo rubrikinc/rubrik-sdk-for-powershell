@@ -9,9 +9,6 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Label>ID</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
                         <Label>Original Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
@@ -23,13 +20,13 @@
                     <TableColumnHeader>
                         <Label>Status</Label>
                     </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>                    
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
-                            <TableColumnItem>
-                                <PropertyName>id</PropertyName>
-                            </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>sourceDatabaseName</PropertyName>
                             </TableColumnItem>
@@ -42,6 +39,9 @@
                             <TableColumnItem>
                                 <PropertyName>status</PropertyName>
                             </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>                            
                         </TableColumnItems>
                     </TableRowEntry>
                 </TableRowEntries>

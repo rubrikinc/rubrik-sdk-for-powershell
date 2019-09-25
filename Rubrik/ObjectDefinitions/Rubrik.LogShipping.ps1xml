@@ -9,9 +9,6 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Label>ID</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
                         <Label>Location</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
@@ -23,13 +20,13 @@
                     <TableColumnHeader>
                         <Label>Status</Label>
                     </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>                    
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
-                            <TableColumnItem>
-                                <PropertyName>id</PropertyName>
-                            </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>location</PropertyName>
                             </TableColumnItem>
@@ -42,6 +39,9 @@
                             <TableColumnItem>
                                <ScriptBlock>$_.status.status</ScriptBlock>
                             </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>                            
                         </TableColumnItems>
                     </TableRowEntry>
                 </TableRowEntries>
