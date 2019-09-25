@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.AvailabilityGroup</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>SLA Domain</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Log Backup Frequency (Seconds)</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Log Retention (hours)</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Copy Only</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>name</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>effectiveSlaDomainName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>logBackupFrequencyInSeconds</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>logRetentionHours</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>copyOnly</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>

@@ -63,7 +63,20 @@ PowerShellVersion = '4.0'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-# FormatsToProcess = @()
+FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefinitions/Rubrik.VMwareVM.ps1xml',
+                'ObjectDefinitions/Rubrik.APIToken.ps1xml', 'ObjectDefinitions/Rubrik.AvailabilityGroup.ps1xml',
+                'ObjectDefinitions/Rubrik.MSSQLDatabase.ps1xml','ObjectDefinitions/Rubrik.MSSQLDatabaseFiles.ps1xml',
+                'ObjectDefinitions/Rubrik.MSSQLDatabaseMount.ps1xml','ObjectDefinitions/Rubrik.Event.ps1xml',
+                'ObjectDefinitions/Rubrik.Fileset.ps1xml','ObjectDefinitions/Rubrik.FilesetTemplate.ps1xml',
+                'ObjectDefinitions/Rubrik.Host.ps1xml','ObjectDefinitions/Rubrik.HyperVVM.ps1xml',
+                'ObjectDefinitions/Rubrik.LDAP.ps1xml','ObjectDefinitions/Rubrik.LogShipping.ps1xml',
+                'ObjectDefinitions/Rubrik.ManagedVolume.ps1xml','ObjectDefinitions/Rubrik.NASShare.ps1xml',
+                'ObjectDefinitions/Rubrik.NutanixVM.ps1xml','ObjectDefinitions/Rubrik.OracleDatabase.ps1xml',
+                'ObjectDefinitions/Rubrik.Report.ps1xml','ObjectDefinitions/Rubrik.MSSQLInstance.ps1xml',
+                'ObjectDefinitions/Rubrik.UnmanagedObject.ps1xml','ObjectDefinitions/Rubrik.vCenter.ps1xml',
+                'ObjectDefinitions/Rubrik.VMwareDatastore.ps1xml','ObjectDefinitions/Rubrik.VMwareHost.ps1xml',
+                'ObjectDefinitions/Rubrik.VolumeGroup.ps1xml','ObjectDefinitions/Rubrik.User.ps1xml',
+                'ObjectDefinitions/Rubrik.SLADomainv1.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()

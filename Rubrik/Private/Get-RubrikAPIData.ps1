@@ -126,6 +126,7 @@ function Get-RubrikAPIData($endpoint) {
                     'organizationId'    = 'organizationId'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.APIToken'
             }
         }       
         'Get-RubrikAPIVersion'         = @{
@@ -156,6 +157,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLAID'    = 'effectiveSlaDomainId'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.AvailabilityGroup'
             }
         }
         'Get-RubrikDatabase'           = @{
@@ -178,6 +180,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Instance' = 'instanceName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.MSSQLDatabase'
             }
         }
         'Get-RubrikDatabaseFiles'      = @{
@@ -192,6 +195,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.MSSQLDatabaseFiles'
             }
         }
         'Get-RubrikDatabaseMount'      = @{
@@ -211,6 +215,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.MSSQLDatabaseMount'
             }
         }
         'Get-RubrikDatabaseRecoverableRange'           = @{
@@ -251,6 +256,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.Event'
             }
         }
         'Get-RubrikFileset'            = @{
@@ -277,6 +283,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA' = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.Fileset'
             }
         }
         'Get-RubrikFilesetTemplate'    = @{
@@ -295,6 +302,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.FilesetTemplate'
             }
         }
         'Get-RubrikHost'               = @{
@@ -314,6 +322,7 @@ function Get-RubrikAPIData($endpoint) {
                     Name            = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.Host'
             }
         }
         'Get-RubrikHyperVVM'                 = @{
@@ -335,6 +344,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.HyperVVM'
             }
         }
         'Get-RubrikLDAP'         = @{
@@ -352,6 +362,7 @@ function Get-RubrikAPIData($endpoint) {
                     Name = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.LDAP'
             }
         }
         'Get-RubrikUser'         = @{
@@ -367,6 +378,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.User'
             }
         }
         'Get-RubrikManagedVolume'           = @{
@@ -386,6 +398,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'      = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.ManagedVolume'
             }
         }
         'Get-RubrikManagedVolumeExport'           = @{
@@ -442,6 +455,7 @@ function Get-RubrikAPIData($endpoint) {
                     exportPoint = 'exportPoint'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.NASShare'
             }
         }
         'Get-RubrikNutanixVM'                 = @{
@@ -463,6 +477,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.NutanixVM'
             }
         }
         'Get-RubrikOracleDB'                = @{
@@ -485,6 +500,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.OracleDatabase'
             }
         }        
         'Get-RubrikOrganization'                 = @{
@@ -517,6 +533,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.Report'
             }
             '4.1' = @{
                 Description = 'Retrieve summary information for each report.'
@@ -530,6 +547,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.Report'
             }
         }
         'Get-RubrikReportData'         = @{
@@ -614,6 +632,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomainv1'
             }
             '5.0' = @{
                 Description = 'Retrieve summary information for all SLA Domains'
@@ -628,6 +647,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomain'
             }
         }
         'Get-RubrikSnapshot'           = @{
@@ -683,6 +703,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Hostname' = 'rootProperties.rootName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.MSSQLInstance'
             }
         }
         'Get-RubrikSupportTunnel'      = @{
@@ -711,6 +732,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.UnmanagedObject'
             }
         }
        'Get-RubrikVCenter'         = @{
@@ -727,6 +749,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.vCenter'
             }
         }
         'Get-RubrikVMwareDatastore'         = @{
@@ -742,6 +765,7 @@ function Get-RubrikAPIData($endpoint) {
                     'dataStoreType' = 'dataStoreType'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareDatastore'
             }
         }
         'Get-RubrikVMwareHost'         = @{
@@ -758,6 +782,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareHost'
             }
         }
         'Get-RubrikVersion'            = @{
@@ -791,6 +816,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareVM'
             }
         }
         'Get-RubrikVolumeGroup'                 = @{
@@ -813,6 +839,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VolumeGroup'
             }
         }
         'Get-RubrikVolumeGroupMount'                 = @{
@@ -1328,6 +1355,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareVM'
             }
         }
         'Update-RubrikHost'             = @{
@@ -1950,6 +1978,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareVM'
             }
         }
         'Set-RubrikVCenter'         = @{
@@ -2044,6 +2073,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.LogShipping'
             }
         }
         'New-RubrikLogShipping' = @{

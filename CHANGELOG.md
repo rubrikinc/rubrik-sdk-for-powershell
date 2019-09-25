@@ -16,6 +16,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-09-24
+
+### Added [Private Function to apply TypeName information to objects]
+
+* Functionality created in order to make display of return results for certain objects more user friendly.
+* Added private function Set-ObjectTypeName which applies a given TypeName definition to cmdlet results.
+* Added ObjectTName parameter within Get-RubrikAPIData to the listed objects below
+* Added ps1xml files to a newly created ObjectDefinitions folder definining the listed objects below
+* Imported all ps1xml files from within the psd1 manifest for the listed objects below
+* TypeName format files created for Rubrik.APIToken, Rubrik.AvailabilityGroup, Rubrik.Event, Rubrik.Fileset, Rubrik.FilesetTemplate, Rubrik.Host, Rubrik.HyperVVM, Rubrik.LDAP, Rubrik.LogShipping, Rubrik.ManagedVolume, Rubrik.MSSQLDatabase, Rubrik.MSSQLDatabaseFiles, Rubrik.MSSQLDatabaseMount, Rubrik.NASShare, Rubrik.NutanixVM, Rubrik.OracleDatabase, Rubrik.Report, RubrikSLADomain, Rubrik.SLADomainv1, Rubrik.UnmanagedObject, Rubrik.User, Rubrik.vCenter, Rubrik.VMwareDatastore, Rubrik.VMwareHost, Rubrik.VMwareVM, and Rubrik.VolumeGroup
+* Addresses [Issue 323](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/323)
+
 ## 2019-09-19
 
 ### Added [Cmdlets to manage Rubrik users]
