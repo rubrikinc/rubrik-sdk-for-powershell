@@ -71,7 +71,7 @@ PowerShellVersion = '4.0'
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
                'Export-RubrikReport', 'Export-RubrikVM', 'Export-RubrikVApp',
-               'Export-RubrikVcdTemplate', 'Get-RubrikAPIToken', 'Get-RubrikAPIVersion', 
+               'Export-RubrikVCDTemplate', 'Get-RubrikAPIToken', 'Get-RubrikAPIVersion', 
                'Get-RubrikAvailabilityGroup', 'Get-RubrikBootStrap', 'Get-RubrikDatabase', 
                'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 
                'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikEvent', 
@@ -83,7 +83,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
                'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
                'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 'Get-RubrikVAppExportOptions',
-               'Get-RubrikVAppRecoverOptions', 'Get-RubrikVcdTemplateExportOptions', 'Get-RubrikUnmanagedObject', 
+               'Get-RubrikVAppRecoverOptions', 'Get-RubrikVCDTemplateExportOptions', 'Get-RubrikUnmanagedObject', 
                'Get-RubrikVApp', 'Get-RubrikVAppSnapshot', 'Get-RubrikVCD', 'Get-RubrikVCenter',  
                'Get-RubrikVersion', 'Get-RubrikVM', 'Get-RubrikVMSnapshot',  
                'Get-RubrikVMwareDatastore', 'Get-RubrikVMwareHost', 'Get-RubrikVolumeGroup', 

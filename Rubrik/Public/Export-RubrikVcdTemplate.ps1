@@ -1,12 +1,12 @@
 #requires -Version 3
-function Export-RubrikVcdTemplate
+function Export-RubrikVCDTemplate
 {
   <#  
       .SYNOPSIS
       Exports a given vCD template
 
       .DESCRIPTION
-      The Export-RubrikVcdTemplate cmdlet exports the specified vCD template
+      The Export-RubrikVCDTemplate cmdlet exports the specified vCD template
 
       .NOTES
       Written by Matt Elliott for community usage
@@ -17,7 +17,7 @@ function Export-RubrikVcdTemplate
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
-      Export-RubrikVcdTemplate -id '01234567-8910-1abc-d435-0abc1234d567' -Name 'Template-Export' -catalogid '01234567-8910-1abc-d435-0abc1234d567' -orgvdcid '01234567-8910-1abc-d435-0abc1234d567'
+      Export-RubrikVCDTemplate -id '01234567-8910-1abc-d435-0abc1234d567' -Name 'Template-Export' -catalogid '01234567-8910-1abc-d435-0abc1234d567' -orgvdcid '01234567-8910-1abc-d435-0abc1234d567'
       This exports the vCD Template snapshot with ID 01234567-8910-1abc-d435-0abc1234d567 to the vCD catalog with ID 01234567-8910-1abc-d435-0abc1234d567. 
       The template will be exported to Org vDC ID with 01234567-8910-1abc-d435-0abc1234d567 temporarily, before being imported to the vCD catalog. This should be an Org vDC in the same vCD Org where the target catalog exists.
       Finding needed IDs can be done directly via API, or via a command similar to (Invoke-RubrikRESTCall -Endpoint 'vcd/hierarchy/VcdOrg:::01234567-8910-1abc-d435-0abc1234d567/children' -api 'internal' -Method GET).data
