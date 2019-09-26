@@ -3,10 +3,10 @@ function Get-RubrikVCD
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves the current Rubrik vCD settings
+      Connect to Rubrik and retrieve the current Rubrik vCD settings
             
       .DESCRIPTION
-      The Get-RubrikVCD cmdlet will retrieve the all vCD settings actively running on the system. This does require authentication.
+      The Get-RubrikVCD cmdlet retrieves all vCD settings actively running on the system. This requires authentication.
             
       .NOTES
       Written by Matt Elliott for community usage
@@ -18,19 +18,19 @@ function Get-RubrikVCD
             
       .EXAMPLE
       Get-RubrikVCD
-      This will return the vCD settings on the currently connected Rubrik cluster
+      This returns the vCD settings on the currently connected Rubrik cluster
 
       .EXAMPLE
       Get-RubrikVCD -Name 'My vCD Cluster'
-      This will return the vCD settings on the currently connected Rubrik cluster matching the name 'My vCD Cluster'
+      This returns the vCD settings on the currently connected Rubrik cluster matching the name 'My vCD Cluster'
 
       .EXAMPLE
       Get-RubrikVCD -Hostname 'vcd.example.com'
-      This will return the vCD settings on the currently connected Rubrik cluster matching the hostname 'vcd.example.com'
+      This returns the vCD settings on the currently connected Rubrik cluster matching the hostname 'vcd.example.com'
 
       .EXAMPLE
       Get-RubrikVCD -Status 'Connected'
-      This will return the vCD settings on the currently connected Rubrik cluster with the status of 'Connected'
+      This returns the vCD settings on the currently connected Rubrik cluster with the status of 'Connected'
   #>
 
   [CmdletBinding()]

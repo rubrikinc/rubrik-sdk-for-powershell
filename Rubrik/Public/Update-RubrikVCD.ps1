@@ -3,10 +3,10 @@ function Update-RubrikVCD
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik to refresh the metadata for the specified vCD Server
+      Connects to Rubrik and refreshes the metadata for the specified vCD Server
             
       .DESCRIPTION
-      The Update-RubrikVCD cmdlet will refresh all vCD metadata known to the connected Rubrik cluster.
+      The Update-RubrikVCD cmdlet refreshes all vCD metadata known to the connected Rubrik cluster.
             
       .NOTES
       Written by Matt Eliott for community usage

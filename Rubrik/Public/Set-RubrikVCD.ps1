@@ -6,7 +6,7 @@ function Set-RubrikVCD
         Connects to Rubrik and modifies an existing vCD connection
             
         .DESCRIPTION
-        The Set-RubrikVCD cmdlet modifies an existing vCloud Director connection on the system. This does require authentication.
+        The Set-RubrikVCD cmdlet modifies an existing vCloud Director connection on the system. This requires authentication.
             
         .NOTES
         Written by Matt Elliott for community usage

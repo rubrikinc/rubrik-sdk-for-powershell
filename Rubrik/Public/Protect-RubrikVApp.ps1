@@ -8,7 +8,7 @@ function Protect-RubrikVApp
       .DESCRIPTION
       The Protect-RubrikVApp cmdlet will update a vCD vApp's SLA Domain assignment within the Rubrik cluster.
       The SLA Domain contains all policy-driven values needed to protect workloads.
-      Note that this function requires the vApp ID value, not the name of the vApp, since vApp names are not unique across clusters.
+      Note that this function requires the vApp ID value and not the vApp name. This is because vApp names may not be unique across clusters.
       It is suggested that you first use Get-RubrikVApp to narrow down the one or more vApps to protect, and then pipe the results to Protect-RubrikVApp.
       You will be asked to confirm each vApp you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
             
@@ -25,7 +25,7 @@ function Protect-RubrikVApp
       This will assign the Gold SLA Domain to any vApp named "vApp1"
 
       .EXAMPLE
-      Get-RubrikVApp "vApp1" -SLA Silver | Protect-RubrikVApp -SLA 'Gold' -Confirm:$False
+      Get-RubrikVApp "vApp1" -SLA 'Silver' | Protect-RubrikVApp -SLA 'Gold' -Confirm:$False
       This will assign the Gold SLA Domain to any vApp named "vApp1" that is currently assigned to the Silver SLA Domain
       without asking for confirmation
   #>

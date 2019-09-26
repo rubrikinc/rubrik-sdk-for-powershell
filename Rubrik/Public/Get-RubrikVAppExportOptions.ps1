@@ -6,12 +6,12 @@ function Get-RubrikVAppExportOptions
       Retrieves export for a vCD vApp known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVAppExportOptions cmdlet is used to retrieve export options for a vCD vApp known to a Rubrik cluster
+      The Get-RubrikVAppExportOptions cmdlet retrieves export options for a vCD vApp known to a Rubrik cluster
 
       .NOTES
       Written by Matt Elliott for community usage
       Twitter: @NetworkBrouhaha
-      Github: shamsway
+      GitHub: shamsway
 
       .LINK
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/
@@ -19,7 +19,7 @@ function Get-RubrikVAppExportOptions
       .EXAMPLE
       $SnapshotID = (Get-RubrikVApp -Name 'vApp01' | Get-RubrikSnapshot -Latest).id
       Get-RubrikVAppExportOptions -id $SnapshotID -ExportMode 'ExportToNewVapp'
-      This will return export options on the specific snapshot.
+      This returns available export options for the specific snapshot.
   #>
 
   [CmdletBinding()]

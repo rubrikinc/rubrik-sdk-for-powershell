@@ -6,12 +6,12 @@ function Get-RubrikVcdTemplateExportOptions
       Retrieves export options for a vCD Template known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVcdTemplateExportOptions cmdlet is used to retrieve export for a vCD Template known to a Rubrik cluster
+      The Get-RubrikVcdTemplateExportOptions cmdlet retrieves export options for a vCD Template known to a Rubrik cluster
 
       .NOTES
       Written by Matt Elliott for community usage
       Twitter: @NetworkBrouhaha
-      Github: shamsway
+      GitHub: shamsway
 
       .LINK
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/

@@ -17,32 +17,32 @@ function Get-RubrikVApp
       https://github.com/rubrikinc/PowerShell-Module
 
       .EXAMPLE
-      Get-RubrikDatabase
-      This will return details on all vCD vApps that are currently or formerly protected by Rubrik.
+      Get-RubrikVApp
+      This returns details on all vCD vApps that are currently or formerly protected by Rubrik.
 
       .EXAMPLE
       Get-RubrikVApp -Name 'vApp01'
-      This will return details on all vCD vApps named "vApp01".
+      This returns details on all vCD vApps named "vApp01".
 
       .EXAMPLE
       Get-RubrikVApp -Name 'Server1' -SLA 'Gold'
-      This will return details on all vCD vApps named "Server1" that are protected by the Gold SLA Domain.
+      This returns details on all vCD vApps named "Server1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
       Get-RubrikVApp -Relic
-      This will return all removed vCD vApps that were formerly protected by Rubrik.
+      This returns all removed vCD vApps that were formerly protected by Rubrik.
       
       .EXAMPLE
       Get-RubrikVApp -Relic:false
-      This will return all vCD vApps that are currently protected by Rubrik.
+      This returns all vCD vApps that are currently protected by Rubrik.
 
       .EXAMPLE
       Get-RubrikVApp -SourceObjectId 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567'
-      This will return details on all vCD vApps with the Source Object ID  "VcdVapp:::01234567-8910-1abc-d435-0abc1234d567"
+      This returns details on all vCD vApps with the Source Object ID  "VcdVapp:::01234567-8910-1abc-d435-0abc1234d567"
 
       .EXAMPLE
       Get-RubrikVApp -vcdClusterId 'Vcd:::01234567-8910-1abc-d435-0abc1234d567'
-      This will return details on all vCD vApps on the vCD Cluster with id "Vcd:::01234567-8910-1abc-d435-0abc1234d567"
+      This returns details on all vCD vApps on the vCD Cluster with id "Vcd:::01234567-8910-1abc-d435-0abc1234d567"
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'Query')]

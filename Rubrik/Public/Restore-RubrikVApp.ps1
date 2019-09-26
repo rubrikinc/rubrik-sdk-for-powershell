@@ -11,18 +11,18 @@ function Restore-RubrikVApp
       .NOTES
       Written by Matt Elliott for community usage
       Twitter: @NetworkBrouhaha
-      Github: shamsway
+      GitHub: shamsway
       
       .LINK
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
       Restore-RubrikVApp -id '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -PowerOn:$true
-      This will restore the vApp snapshot with an id of 7acdf6cd-2c9f-4661-bd29-b67d86ace70b
+      This restores the vApp snapshot with an id of 7acdf6cd-2c9f-4661-bd29-b67d86ace70b
       
       .EXAMPLE
       (Get-RubrikVApp 'vApp01' -PrimaryClusterID local | Get-RubrikSnapshot -Latest).id | Restore-RubrikVApp -PowerOn:$true
-      This will retreive the latest snapshot from the given vApp 'vApp01' and restore it
+      This retreives the latest snapshot from the given vApp 'vApp01' and restores it
 
       .EXAMPLE
       $id = (Get-RubrikVApp -Name "vApp01" -PrimaryClusterID local | Get-RubrikSnapshot -Latest ).id
@@ -31,7 +31,7 @@ function Restore-RubrikVApp
       $vm = @()
       $vm += $restorableVms[0]
       Restore-RubrikVApp -id $id -Partial $vm -PowerOn:$false
-      This will retreive the latest snapshot from the given vApp 'vApp01' and perform a partial restore on the first VM in the vApp.
+      This retreives the latest snapshot from the given vApp 'vApp01' and performs a partial restore on the first VM in the vApp.
       This is an advanced use case and the user is responsible for parsing the output from Get-RubrikVAppRecoverOptions.
       Syntax of the object passed with the -Partial Parameter must match the format of the object returned from (Get-RubrikVAppRecoverOptions).restorableVms
 #>
