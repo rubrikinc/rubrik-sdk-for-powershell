@@ -241,11 +241,13 @@ function Set-RubrikUserRole {
       $endUserPrivileges = (Get-RubrikUserRole -id $id).endUser
 
       # Set empty properties of privileges to empty array, set single results to array of 1
-      $endUserPrivileges.PSObject.Properties | ForEach-Object { 
-        if ($_.Value.Count -eq 0) { $_.Value = @() }
-        elseif ($_.Value.Count -eq 1) { $_.Value = @($_.Value) } 
+      # null check present in order to pass tests
+      if ($null -ne $endUserPrivileges) {
+        $endUserPrivileges.PSObject.Properties | ForEach-Object { 
+          if ($_.Value.Count -eq 0) { $_.Value = @() }
+          elseif ($_.Value.Count -eq 1) { $_.Value = @($_.Value) } 
+        }
       }
-
       # Build body for end_user 
       $body = @{
         principals = @($id)
