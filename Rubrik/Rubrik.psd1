@@ -95,10 +95,10 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikOracleDB', 'Get-RubrikOrganization', 'Get-RubrikReport', 
                'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
                'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
-               'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 
+               'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 'Get-RubrikUserAuthorization'
                'Get-RubrikUnmanagedObject', 'Get-RubrikUser', 'Get-RubrikVCenter', 
                'Get-RubrikVersion', 'Get-RubrikVM', 'Get-RubrikVMSnapshot', 
-               'Get-RubrikVMwareDatastore', 'Get-RubrikVMwareHost', 
+               'Get-RubrikVMwareDatastore', 'Get-RubrikVMwareHost', 'Get-RubrikUserRole',
                'Get-RubrikVolumeGroup', 'Get-RubrikVolumeGroupMount', 
                'Invoke-RubrikRESTCall', 'Move-RubrikMountVMDK', 'New-RubrikAPIToken', 
                'New-RubrikBootStrap', 'New-RubrikDatabaseMount', 'New-RubrikFileset', 
@@ -126,7 +126,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Set-RubrikNutanixVM', 'Set-RubrikSetting', 'Set-RubrikSLA', 
                'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel', 'Set-RubrikUser', 
                'Set-RubrikVCenter', 'Set-RubrikVM', 'Set-RubrikVolumeFilterDriver', 
-               'Start-RubrikManagedVolumeSnapshot', 
+               'Set-RubrikUserRole', 'Start-RubrikManagedVolumeSnapshot', 
                'Stop-RubrikManagedVolumeSnapshot', 'Sync-RubrikAnnotation', 
                'Sync-RubrikTag', 'Update-RubrikHost', 'Update-RubrikVCenter', 
                'Update-RubrikVMwareVM')
