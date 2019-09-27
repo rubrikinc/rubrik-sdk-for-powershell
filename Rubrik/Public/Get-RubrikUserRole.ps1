@@ -59,10 +59,6 @@ function Get-RubrikUserRole
 
   Process {
 
-    #if ($Admin) {
-    #    $resources.URI = "$($resources.URI)/role/admin"
-    #}
-
     $uri = New-URIString -server $Server -endpoint ($resources.URI)
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
