@@ -30,7 +30,7 @@ Describe -Name 'Public/Set-RubrikUserRole' -Tag 'Public', 'Set-RubrikUserRole' -
             }
         }
         It -Name 'User is updated' -Test {
-            ( Set-RubrikUserRole -id 'User:11111' -NoAccess ).principal |
+            ( Set-RubrikUserRole -id 'User:11111' -NoAccess).principal |
                 Should -BeExactly "User:111-222-333"
         } 
    
