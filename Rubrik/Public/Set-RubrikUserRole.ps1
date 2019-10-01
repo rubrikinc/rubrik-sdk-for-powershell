@@ -31,6 +31,7 @@ function Set-RubrikUserRole {
     [Parameter(ParameterSetName = "NoAccess", Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
     [Parameter(ParameterSetName = "EndUserAdd", Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
     [Parameter(ParameterSetName = "EndUserRemove", Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ParameterSetName = "ReadOnlyAdmin", Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
     [Alias('principals')]
     [String[]]$Id,
     
@@ -38,6 +39,7 @@ function Set-RubrikUserRole {
     [Parameter(ParameterSetName = "Admin", Mandatory = $true)]
     [Switch]$Admin,
     
+
     # Sets users role to End User
     [Parameter(ParameterSetName = "EndUserAdd", Mandatory = $true)]
     [Parameter(ParameterSetName = "EndUserRemove", Mandatory = $true)]
@@ -46,7 +48,12 @@ function Set-RubrikUserRole {
     # Sets users role to No Access (Removes all access from user)
     [Parameter(ParameterSetName = "NoAccess", Mandatory = $true)]
     [Switch]$NoAccess,
-    
+ 
+        
+    # Sets users role to No Access (Removes all access from user)
+    [Parameter(ParameterSetName = "ReadOnlyAdmin", Mandatory = $true)]
+    [Switch]$ReadOnlyAdmin,
+
     # Specifies -Privileges should be added to the users authorizations
     [Parameter(ParameterSetName = "EndUserAdd", Mandatory = $true)]
     [Switch]$Add,  
@@ -124,141 +131,106 @@ function Set-RubrikUserRole {
   }
 
   Process {
-    
-    # Update PSBoundParameters for correct processing for New-BodyString
-    if ($EndUser) {
-      $PSBoundParameters.Remove('Admin') | Out-Null
-      $PSBoundParameters.Remove('NoAccess') | Out-Null
-   
-      # Save Original URI as we will be re-using $resources.URI
-      $originalUri = $resources.URI
 
-      # ADMIN DELETE START ------ Send DELETE to admin role endpoint
-      $resources.URI = "$originalUri/admin"
-      $resources.Method = "DELETE"
-      $uri = New-URIString -server $Server -endpoint ($resources.URI)
-      
-      # Build body for admin delete
-      $body = @{
-        principals = @($id)
-        privileges = @{
-          fullAdmin = @("Global:::All")
+
+    function Update-Role {
+      Param ([string]$role, [string]$roleUri,[string]$roleMethod)
+      $resources.Method = $roleMethod
+
+      # Build body based on role
+      switch ($role) {
+        "admin" {
+          $body = @{
+            principals = @($id)
+            privileges = @{
+              fullAdmin = @("Global:::All")
+            }
+          } 
+        }
+        "end_user" {
+          # Build body for end_user add/delete
+          $body = @{
+            principals = @($id)
+            privileges = @{
+              viewEvent              = $EventObjects
+              restoreWithoutDownload = $RestoreWithoutDownloadObjects
+              destructiveRestore     = $RestoreWithOverwriteObjects
+              onDemandSnapshot       = $OnDemandSnapshotObjects
+              viewReport             = $ReportObjects
+              restore                = $RestoreObjects
+              provisionOnInfra       = $InfrastructureObjects
+            }
+          }
+        }
+        "read_only_admin" {
+          $body = @{
+            principals = @($id)
+            privileges = @{
+              basic = @("Global:::All")
+            }
+          } 
+        }
+        "end_user_clear" {
+          # Retrieve current end user privileges from user to use in deletion body
+          $endUserPrivileges = (Get-RubrikUserRole -id $id).endUser
+          # Set empty properties of privileges to empty array, set single results to array of 1
+          # null check present in order to pass tests
+          if ($null -ne $endUserPrivileges) {
+            $endUserPrivileges.PSObject.Properties | ForEach-Object { 
+              if ($_.Value.Count -eq 0) { $_.Value = @() }
+              elseif ($_.Value.Count -eq 1) { $_.Value = @($_.Value) } 
+            }
+          }
+          # Build body for end_user 
+          $body = @{
+            principals = @($id)
+            privileges = $endUserPrivileges
+          }
         }
       }
       $body = ConvertTO-Json $body
-      
-      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-      $result = Test-FilterObject -filter ($resources.Filter) -result $result
-      # ADMIN DELETE END ------
-
-      # END_USER ADD/REMOVE START ----- Send POST or DELETE TO end_user endpoint
-      $resources.URI = "$originalUri/end_user"
-      $uri = New-URIString -server $Server -endpoint ($resources.URI)
-      
-      # Check if we are adding or removing authorizations for end user
-      if ($Add) {
-        $resources.Method = "POST"
-      }
-      if ($Remove) {
-        $resources.Method = "DELETE"
-      }
-
-      # Build body for end_user add/delete
-      $body = @{
-        principals = @($id)
-        privileges = @{
-          viewEvent = $EventObjects
-          restoreWithoutDownload = $RestoreWithoutDownloadObjects
-          destructiveRestore = $RestoreWithOverwriteObjects
-          onDemandSnapshot = $OnDemandSnapshotObjects
-          viewReport = $ReportObjects
-          restore = $RestoreObjects
-          provisionOnInfra = $InfrastructureObjects
-        }
-      }
-      $body = ConvertTO-Json $body
-
-      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-      $result = Test-FilterObject -filter ($resources.Filter) -result $result
-      # END_USER add/delete END -------
-    } 
-    elseif ($Admin) {
-      $PSBoundParameters.Remove('NoAccess') | Out-Null
-      $PSBoundParameters.Remove('EndUser') | Out-Null
-
-      # ADMIN POST START - send POST to admin endpoint
-      $resources.URI = "$($resources.URI)/admin"
-      $uri = New-URIString -server $Server -endpoint ($resources.URI)
-      $resources.Method = "POST"
-
-      # Build body for admin 
-      $body = @{
-        principals = @($id)
-        privileges = @{
-          fullAdmin = @("Global:::All")
-        }
-      }
-      $body = ConvertTO-Json $body
-
+      $uri = New-URIString -server $Server -endpoint "$roleUri"
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
       $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
       $result = Test-FilterObject -filter ($resources.Filter) -result $result
     }
+
+    if ($Admin) {
+      # Create Admin, leave other roles in tact
+      $result = Update-Role -roleUri "$($resources.Uri)/admin" -role "admin" -roleMethod "POST"
+    }
+    elseif ($EndUser) {
+      # Delete Admin
+      $result = Update-Role -roleUri "$($resources.Uri)/admin" -role "admin" -roleMethod "DELETE"
+
+      # Check if we are adding or removing authorizations for end user
+      if ($Add) {
+        $result = Update-Role -roleUri "$($resources.Uri)/end_user" -role "end_user" -roleMethod "POST"
+      }
+      if ($Remove) {
+        $result = Update-Role -roleUri "$($resources.Uri)/end_user" -role "end_user" -roleMethod "DELETE"
+      }
+    }
+    elseif ($ReadOnlyAdmin) {
+      # Delete Admin
+      $result = Update-Role -roleUri "$($resources.Uri)/admin" -role "admin" -roleMethod "DELETE"
+
+      # Delete End User current perms
+      $result = Update-Role -roleUri "$($resources.Uri)/end_user" -role "end_user_clear" -roleMethod "DELETE"
+
+      #Add Read Only Admin
+      $result = Update-Role -roleUri "$($resources.Uri)/read_only_admin" -role "read_only_admin" -roleMethod "POST"
+     
+    }
     elseif ($NoAccess) {
-      $PSBoundParameters.Remove('Admin') | Out-Null
-      $PSBoundParameters.Remove('EndUser') | Out-Null
-
-      # Save Original URI as we will be re-using $resources.URI
-      $originalUri = $resources.URI
-
-      # ADMIN DELETE START - send DELETE to admin endpoint
-      $resources.URI = "$originalUri/admin"
-      $uri = New-URIString -server $Server -endpoint ($resources.URI)
-      $resources.Method = "DELETE"
-
-      # Build body for admin 
-      $body = @{
-        principals = @($id)
-        privileges = @{
-          fullAdmin = @("Global:::All")
-        }
-      }
-      $body = ConvertTO-Json $body
-
-      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-      $result = Test-FilterObject -filter ($resources.Filter) -result $result
-      # ADMIN DELETE END -------
-
-      # END_USER DELETE START ------- send DELETE to end_user endpoint
-      $resources.URI = "$originalUri/end_user"
-      $uri = New-URIString -server $Server -endpoint ($resources.URI)
-      $resources.Method = "DELETE"
-
-      # Retrieve current end user privileges from user to use in deletion body
-      $endUserPrivileges = (Get-RubrikUserRole -id $id).endUser
-
-      # Set empty properties of privileges to empty array, set single results to array of 1
-      # null check present in order to pass tests
-      if ($null -ne $endUserPrivileges) {
-        $endUserPrivileges.PSObject.Properties | ForEach-Object { 
-          if ($_.Value.Count -eq 0) { $_.Value = @() }
-          elseif ($_.Value.Count -eq 1) { $_.Value = @($_.Value) } 
-        }
-      }
-      # Build body for end_user 
-      $body = @{
-        principals = @($id)
-        privileges = $endUserPrivileges
-      }
-      $body = ConvertTO-Json $body
-
-      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-      $result = Test-FilterObject -filter ($resources.Filter) -result $result
-      # END_USER DELETE END ----------
+      # Delete Admin
+      $result = Update-Role -roleUri "$($resources.Uri)/admin" -role "admin" -roleMethod "DELETE"
+    
+      # Delete End User
+      $result = Update-Role -roleUri "$($resources.Uri)/end_user" -role "end_user_clear" -roleMethod "DELETE"
+    
+      # Delete Read Only Admin
+      $result = Update-Role -roleUri "$($resources.Uri)/read_only_admin" -role "read_only_admin" -roleMethod "DELETE"
     }
 
     return $result
