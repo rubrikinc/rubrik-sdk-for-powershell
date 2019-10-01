@@ -189,10 +189,9 @@ function Get-RubrikObject
     # Initialize counters for progress bar
     $TotalObjectTypes = $ObjectsToParse.Count
     $Completed = 0
-    $Result = @()
 
     # Loop through Object Types
-    ForEach ($ObjectType in $ObjectsToParse){
+    $result = ForEach ($ObjectType in $ObjectsToParse){
       $completed += 1
       Write-Progress -Activity "Searching Rubrik Objects - Operation $completed out of $TotalObjectTypes - $($ObjectTypes[$ObjectType].FriendlyName)"
       if ($NameFilter) {
@@ -223,15 +222,14 @@ function Get-RubrikObject
         $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat
         # Only way I can figure out how to stop the total, data, links, hasmore from being returned when no results are found
         if ($ReturnedObjects.total -ne 0 -and $null -ne $ReturnedObjects) {
-          $ReturnedObjects | Add-Member -NotePropertyName 'objectTypeMatch' -NotePropertyValue $ObjectType
-          $Result += $ReturnedObjects
+          $ReturnedObjects | Add-Member -NotePropertyName 'objectTypeMatch' -NotePropertyValue $ObjectType -PassThru
         }
       }
       if ($WhereSplat.FilterScript) {
-        $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat | Where-Object @WhereSplat 
-        $ReturnedObjects | Add-Member -NotePropertyName 'objectTypeMatch' -NotePropertyValue $ObjectType 
-        $Result += $ReturnedObjects
-      }
+          $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat | Where-Object @WhereSplat 
+          $ReturnedObjects | Add-Member -NotePropertyName 'objectTypeMatch' -NotePropertyValue $ObjectType -PassThru
+        }
+      
     }
     Write-Progress -Activity "Searching Rubrik Objects - Completed" -Completed
 
