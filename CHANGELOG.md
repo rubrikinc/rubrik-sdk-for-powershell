@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-01
+
+### Added [cmdlets to set and delete user roles and permissions]
+
+* Added Get-RubrikUserRole and Set-RubrikUserRole in order to get and configure user roles and permissions.
+* Addresses [Issue 108](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/108)
+
 ## 2019-09-24
 
 ### Added [Private Function to apply TypeName information to objects]
