@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added [cmdlets to set and delete user roles and permissions]
 
 * Added Get-RubrikUserRole and Set-RubrikUserRole in order to get and configure user roles and permissions.
+* Added private function Update-RubrikuserRole to handle the addition and removal of permissions for the various roles.
 * Addresses [Issue 108](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/108)
 
 ## 2019-09-24
