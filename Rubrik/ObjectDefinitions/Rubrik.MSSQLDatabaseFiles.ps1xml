@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.MSSQLDatabaseFiles</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>File ID</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Logical Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Original Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>File Type</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Original Path</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>fileId</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>logicalName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>originalName</PropertyName>
+                            </TableColumnItem>                            
+                            <TableColumnItem>
+                               <PropertyName>fileType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>originalPath</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>

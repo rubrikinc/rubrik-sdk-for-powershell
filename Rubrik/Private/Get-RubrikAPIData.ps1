@@ -111,6 +111,56 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Export-RubrikVApp'       = @{
+            '1.0' = @{
+                Description = 'Exports a given snapshot for a vCD vApp'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}/export'
+                Method      = 'Post'
+                Body        = @{
+                    exportMode  = 'exportMode'
+                    networksToRestore = [System.Collections.ArrayList]@()
+                    vmsToExport = @( 
+                        @{
+                            name   		= 'name'
+                            vcdMoid     = 'vcdMoid'
+                            networkConnections = @{
+                                nicIndex		= 'nicIndex'
+                                addressingMode	= 'addressingMode'
+                                ipAddress		= 'ipAddress'
+                                isConnected		= 'isConnected'
+                                vappNetworkName	= 'vappNetworkName'
+                            }
+                        }
+                    )
+                    shouldPowerOnVmsAfterRecovery = 'shouldPowerOnVmsAfterRecovery'
+                    newVappParams = @{
+                        name     = 'name'
+                        orgVdcId = 'orgVdcId'
+                    }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
+        'Export-RubrikVcdTemplate'       = @{
+            '1.0' = @{
+                Description = 'Exports a given vCD template'
+                URI         = '/api/v1/vcd/vapp/template/snapshot/{id}/export'
+                Method      = 'Post'
+                Body        = @{
+                    name            = 'name'
+                    catalogId       = 'catalogId'
+                    orgVdcId        = 'orgVdcId'
+                    storagePolicyId = 'storagePolicyId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Get-RubrikAPIToken'         = @{
             '5.0' = @{
                 Description = 'Retrieves list of generated API tokens from the Rubrik cluster'
@@ -126,6 +176,7 @@ function Get-RubrikAPIData($endpoint) {
                     'organizationId'    = 'organizationId'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.APIToken'
             }
         }       
         'Get-RubrikAPIVersion'         = @{
@@ -156,6 +207,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLAID'    = 'effectiveSlaDomainId'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.AvailabilityGroup'
             }
         }
         'Get-RubrikDatabase'           = @{
@@ -178,6 +230,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Instance' = 'instanceName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.MSSQLDatabase'
             }
         }
         'Get-RubrikDatabaseFiles'      = @{
@@ -192,6 +245,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.MSSQLDatabaseFiles'
             }
         }
         'Get-RubrikDatabaseMount'      = @{
@@ -211,6 +265,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.MSSQLDatabaseMount'
             }
         }
         'Get-RubrikDatabaseRecoverableRange'           = @{
@@ -251,6 +306,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.Event'
             }
         }
         'Get-RubrikFileset'            = @{
@@ -277,6 +333,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA' = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.Fileset'
             }
         }
         'Get-RubrikFilesetTemplate'    = @{
@@ -295,6 +352,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.FilesetTemplate'
             }
         }
         'Get-RubrikHost'               = @{
@@ -314,6 +372,7 @@ function Get-RubrikAPIData($endpoint) {
                     Name            = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.Host'
             }
         }
         'Get-RubrikHyperVVM'                 = @{
@@ -335,6 +394,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.HyperVVM'
             }
         }
         'Get-RubrikLDAP'         = @{
@@ -352,6 +412,23 @@ function Get-RubrikAPIData($endpoint) {
                     Name = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.LDAP'
+            }
+        }
+        'Get-RubrikUser'         = @{
+            '1.0' = @{
+                Description = 'Retrieves settings related to a given user within the Rubrik cluster'
+                URI         = '/api/internal/user'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    username = 'username'
+                    auth_domain_id = 'auth_domain_id'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.User'
             }
         }
         'Get-RubrikManagedVolume'           = @{
@@ -371,6 +448,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'      = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.ManagedVolume'
             }
         }
         'Get-RubrikManagedVolumeExport'           = @{
@@ -427,6 +505,7 @@ function Get-RubrikAPIData($endpoint) {
                     exportPoint = 'exportPoint'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.NASShare'
             }
         }
         'Get-RubrikNutanixVM'                 = @{
@@ -448,6 +527,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.NutanixVM'
             }
         }
         'Get-RubrikOracleDB'                = @{
@@ -470,6 +550,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.OracleDatabase'
             }
         }        
         'Get-RubrikOrganization'                 = @{
@@ -502,6 +583,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.Report'
             }
             '4.1' = @{
                 Description = 'Retrieve summary information for each report.'
@@ -515,6 +597,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.Report'
             }
         }
         'Get-RubrikReportData'         = @{
@@ -599,6 +682,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomainv1'
             }
             '5.0' = @{
                 Description = 'Retrieve summary information for all SLA Domains'
@@ -613,6 +697,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomain'
             }
         }
         'Get-RubrikSnapshot'           = @{
@@ -627,6 +712,7 @@ function Get-RubrikAPIData($endpoint) {
                     Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
                     Oracle = '/api/internal/oracle/db/{id}/snapshot'
+                    VcdVapp = '/api/internal/vcd/vapp/{id}/snapshot'
                 }
                 Method      = 'Get'
                 Body        = ''
@@ -668,6 +754,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Hostname' = 'rootProperties.rootName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.MSSQLInstance'
             }
         }
         'Get-RubrikSupportTunnel'      = @{
@@ -696,6 +783,107 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.UnmanagedObject'
+            }
+        }
+        'Get-RubrikVApp'                 = @{
+            '1.0' = @{
+                Description = 'Get summary of all the vCD vApps'
+                URI         = '/api/internal/vcd/vapp'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    name                    = 'name'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name'             = 'name'
+                    'SLA'              = 'effectiveSlaDomainName'
+                    'SourceObjectId'   = 'effectiveSlaSourceObjectId'
+                    'SourceObjectName' = 'effectiveSlaSourceObjectName'
+                    'vcdClusterId'     = 'vcdClusterId'
+                    'vcdClusterName'   = 'vcdClusterName'
+                }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikVAppExportOptions'                = @{
+            '1.0' = @{
+                Description = 'Retrieves export options for a vCD vApp'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}/export/options'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    export_mode         = 'export_mode'
+                    target_vapp_id      = 'target_vapp_id'
+                    target_org_vdc_id   = 'target_org_vdc_id'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikVAppRecoverOptions'                = @{
+            '1.0' = @{
+                Description = 'Retrieves instant recovery options for a vCD vApp'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}/instant_recover/options'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{}
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikVcdTemplateExportOptions'                = @{
+            '1.0' = @{
+                Description = 'Retrieves export options for a vCD Template'
+                URI         = '/api/v1/vcd/vapp/template/snapshot/{id}/export/options'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    catalog_id  = 'catalog_id'
+                    name        = 'name'
+                    org_vdc_id  = 'org_vdc_id'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikVAppSnapshot'                = @{
+            '1.0' = @{
+                Description = 'Retrieve information of a vCD vApp snapshot'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}'
+                Method      = 'Get'
+                Body        = ''
+                Query           = @{
+                    id          = 'id'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikVCD'         = @{
+            '1.0' = @{
+                Description = 'Retrieve summary information for all vCD cluster objects'
+                URI         = '/api/internal/vcd/cluster'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    name   = 'name'
+                    status = 'status'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Hostname' = 'hostname'
+                }
+                Success     = '200'
             }
         }
        'Get-RubrikVCenter'         = @{
@@ -712,6 +900,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.vCenter'
             }
         }
         'Get-RubrikVMwareDatastore'         = @{
@@ -727,6 +916,7 @@ function Get-RubrikAPIData($endpoint) {
                     'dataStoreType' = 'dataStoreType'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareDatastore'
             }
         }
         'Get-RubrikVMwareHost'         = @{
@@ -743,6 +933,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Name' = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareHost'
             }
         }
         'Get-RubrikVersion'            = @{
@@ -776,6 +967,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareVM'
             }
         }
         'Get-RubrikVolumeGroup'                 = @{
@@ -798,6 +990,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'  = 'effectiveSlaDomainName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VolumeGroup'
             }
         }
         'Get-RubrikVolumeGroupMount'                 = @{
@@ -1188,6 +1381,26 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '201'
             }
         }
+        'New-RubrikUser'             = @{
+            '1.0' = @{
+                Description = 'Creates a new Rubrik user.'
+                URI         = '/api/internal/user'
+                Method      = 'Post'
+                Body        = @{
+                    username            = 'username'
+                    password            = 'password'
+                    firstName           = 'firstName'
+                    lastName            = 'lastName'
+                    emailAddress        = 'emailAddress'
+                    contactNumber       = 'contactNumber'
+                    mfaServerId         = 'mfaServerId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'New-RubrikSnapshot'           = @{
             '1.0' = @{
                 Description = 'Create an on-demand snapshot for the given object ID'
@@ -1197,6 +1410,7 @@ function Get-RubrikAPIData($endpoint) {
                     VMware  = '/api/v1/vmware/vm/{id}/snapshot'
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
                     Oracle = '/api/internal/oracle/db/{id}/snapshot'
+                    VcdVapp = '/api/internal/vcd/vapp/{id}/snapshot'
                 }
                 Method      = 'Post'
                 Body        = @{
@@ -1281,6 +1495,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '204'
             }
         }
+        'Protect-RubrikVApp'             = @{
+            '1.0' = @{
+                Description = 'Update a vCD vApp with the specified SLA Domain.'
+                URI         = '/api/internal/vcd/vapp/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    configuredSlaDomainId = 'configuredSlaDomainId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Protect-RubrikVM'             = @{
             '1.0' = @{
                 Description = 'Update a VM with the specified SLA Domain.'
@@ -1293,6 +1521,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareVM'
             }
         }
         'Update-RubrikHost'             = @{
@@ -1515,6 +1744,31 @@ function Get-RubrikAPIData($endpoint) {
                     }
                     finishRecovery = 'finishRecovery'
                     maxDataStreams = 'maxDataStreams'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
+        'Restore-RubrikVApp'       = @{
+            '1.0' = @{
+                Description = 'Restores a given snapshot for a vCD vApp'
+                URI         = '/api/internal/vcd/vapp/snapshot/{id}/instant_recover'
+                Method      = 'Post'
+                Body        = @{
+                    vmsToRestore = @{
+                        name   		= 'name'
+                        vcdMoid     = 'vcdMoid'
+                        networkConnections = @{
+                            nicIndex		= 'nicIndex'
+                            addressingMode	= 'addressingMode'
+                            ipAddress		= 'ipAddress'
+                            isConnected		= 'isConnected'
+                            vappNetworkName	= 'vappNetworkName'
+                        }
+                    }
+                    shouldPowerOnVmsAfterRecovery = 'shouldPowerOnVmsAfterRecovery'
                 }
                 Query       = ''
                 Result      = ''
@@ -1863,6 +2117,42 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikVCD'         = @{
+            '1.0' = @{
+                Description = 'Updates settings of a vCD connection'
+                URI         = '/api/internal/vcd/cluster/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    hostname              = "hostname"
+                    username              = "username"
+                    password              = "password"
+                    configuredSlaDomainId = "configuredSlaDomainId"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikUser'             = @{
+            '1.0' = @{
+                Description = 'Updates a Rubrik user.'
+                URI         = '/api/internal/user/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    password            = 'password'
+                    firstName           = 'firstName'
+                    lastName            = 'lastName'
+                    emailAddress        = 'emailAddress'
+                    contactNumber       = 'contactNumber'
+                    mfaServerId         = 'mfaServerId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Set-RubrikVM'                 = @{
             '1.0' = @{
                 Description = 'Update VM with specified properties'
@@ -1896,6 +2186,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareVM'
             }
         }
         'Set-RubrikVCenter'         = @{
@@ -1990,6 +2281,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.LogShipping'
             }
         }
         'New-RubrikLogShipping' = @{
@@ -2031,6 +2323,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Remove-RubrikUser' = @{
+            '1.0' = @{
+                Description = 'Deletes a specified user from the Rubrik cluster'
+                URI         = '/api/internal/user/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Set-RubrikLogShipping' = @{
             '1.0' = @{
                 Description = 'Update a specified log shipping configuration'
@@ -2065,6 +2369,18 @@ function Get-RubrikAPIData($endpoint) {
             '1.0' = @{
                 Description = 'Refresh the metadata for the specified vCenter Server'
                 URI         = '/api/v1/vmware/vcenter/{id}/refresh'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
+        'Update-RubrikVCD'         = @{
+            '1.0' = @{
+                Description = 'Refresh the metadata for the specified vCD Server'
+                URI         = '/api/internal/vcd/cluster/{id}/refresh'
                 Method      = 'Post'
                 Body        = ''
                 Query       = ''
