@@ -1966,9 +1966,7 @@ function Get-RubrikAPIData($endpoint) {
                 Method      = 'POST'
                 Body        = @{
                     principals      = 'principals'
-                    privileges      = @{
-                        
-                    }
+                    privileges      = @{ }
                 }
                 Query       = ''
                 Result      = 'Data'
