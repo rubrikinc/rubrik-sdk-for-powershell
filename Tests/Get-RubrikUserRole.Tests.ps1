@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Get-RubrikUser' -Tag 'Public', 'Get-RubrikUser' -Fixture {
+Describe -Name 'Public/Get-RubrikUserRole' -Tag 'Public', 'Get-RubrikUserRole' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
