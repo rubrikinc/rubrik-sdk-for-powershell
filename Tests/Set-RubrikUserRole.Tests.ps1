@@ -21,12 +21,13 @@ Describe -Name 'Public/Set-RubrikUserRole' -Tag 'Public', 'Set-RubrikUserRole' -
 
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
-        Mock -CommandName Get-RubrikUserRole -Verifiable -ModuleName 'Rubrik' -MockWith { }
+        Mock -CommandName Update-RubrikUserRole  -ModuleName 'Rubrik' -Mockwith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'orgranizationID'   = 'Organization:::111-22-333'
+            @{
+                'readOnlyAdmin'     = '@{basic=}'
+                'admin'             = '@{fullAdmin=}'
                 'principal'         = 'User:111-222-333'
-                'privileges'        = '@{viewEvent=; restore=;}'
+                'endUser'           = '@{restore="VirtualMachine:111}'           
             }
         }
         It -Name 'User is updated' -Test {
@@ -36,7 +37,7 @@ Describe -Name 'Public/Set-RubrikUserRole' -Tag 'Public', 'Set-RubrikUserRole' -
    
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Get-RubrikUserRole -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Update-RubrikUserRole -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
     }
     Context -Name 'Parameter Validation' {
