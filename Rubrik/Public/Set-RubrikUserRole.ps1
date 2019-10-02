@@ -21,7 +21,7 @@ function Set-RubrikUserRole {
 
       .EXAMPLE
       Set-RubrikUserRole -id 'User:::1111-2222-3333' -ReadOnlyAdmin
-      This will set the specifed users role to read only admin
+      This will set the specifed users role to read only admin. Valid on Rubrik CDM 5.0 and later
 
       .EXAMPLE
       Set-RubrikUserRole -id 'User:::1111-2222-3333' -EndUser -Add -RestoreObjects 'VirtualMachine:::1111-222'
@@ -144,6 +144,7 @@ function Set-RubrikUserRole {
 
   Process {
 
+    $ver = [float]$rubrikconnection.version.substring(0,3)
     if ($Admin) {
       # Create Admin, leave other roles in tact
       $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/admin" -role "admin" -roleMethod "POST"
@@ -152,9 +153,10 @@ function Set-RubrikUserRole {
       # Delete Admin
       $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/admin" -role "admin" -roleMethod "DELETE"
 
-      # Delete Read Only Admin
-      $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/read_only_admin" -role "read_only_admin" -roleMethod "DELETE"
-      
+      if ($ver -ge 5) {
+        # Delete Read Only Admin
+        $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/read_only_admin" -role "read_only_admin" -roleMethod "DELETE"
+      }
       # Check if we are adding or removing authorizations for end user
       if ($Add) {
         $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/end_user" -role "end_user" -roleMethod "POST"
@@ -164,15 +166,19 @@ function Set-RubrikUserRole {
       }
     }
     elseif ($ReadOnlyAdmin) {
-      # Delete Admin
-      $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/admin" -role "admin" -roleMethod "DELETE"
+      if ($ver -ge 5) {
+        # Delete Admin
+        $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/admin" -role "admin" -roleMethod "DELETE"
 
-      # Delete End User current perms
-      $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/end_user" -role "end_user_clear" -roleMethod "DELETE"
+        # Delete End User current perms
+        $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/end_user" -role "end_user_clear" -roleMethod "DELETE"
 
-      #Add Read Only Admin
-      $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/read_only_admin" -role "read_only_admin" -roleMethod "POST"
-     
+        #Add Read Only Admin
+        $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/read_only_admin" -role "read_only_admin" -roleMethod "POST"
+      }
+      else {
+        Write-Warning -Message "Read Only Admin is only supported on Rubrik CDM 5.0 or later"
+      }
     }
     elseif ($NoAccess) {
       # Delete Admin
@@ -180,9 +186,10 @@ function Set-RubrikUserRole {
     
       # Delete End User
       $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/end_user" -role "end_user_clear" -roleMethod "DELETE"
-    
-      # Delete Read Only Admin
-      $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/read_only_admin" -role "read_only_admin" -roleMethod "DELETE"
+      if ($ver -ge 5) {
+        # Delete Read Only Admin
+        $result = Update-RubrikUserRole -roleUri "$($resources.Uri)/read_only_admin" -role "read_only_admin" -roleMethod "DELETE"
+      }
     }
     $result = Get-RubrikUserRole -id $id
     return $result
