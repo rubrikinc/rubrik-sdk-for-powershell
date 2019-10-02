@@ -95,7 +95,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikOracleDB', 'Get-RubrikOrganization', 'Get-RubrikReport', 
                'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
                'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
-               'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 'Get-RubrikUserAuthorization'
+               'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 
                'Get-RubrikUnmanagedObject', 'Get-RubrikUser', 'Get-RubrikVCenter', 
                'Get-RubrikVersion', 'Get-RubrikVM', 'Get-RubrikVMSnapshot', 
                'Get-RubrikVMwareDatastore', 'Get-RubrikVMwareHost', 'Get-RubrikUserRole',
