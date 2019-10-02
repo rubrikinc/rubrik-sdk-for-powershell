@@ -16,12 +16,24 @@ function Set-RubrikUserRole {
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikUserRole.html
 
       .EXAMPLE
-      Set-RubrikUserRole
-      This will set the specified password for the user account with the specified id.
+      Set-RubrikUserRole -id 'User:::1111-2222-3333' -Admin
+      This will set the specifed users role to admin
 
       .EXAMPLE
-      Set-RubrikUserRole
-      This will change the user matching the specified id last name to 'Smith'
+      Set-RubrikUserRole -id 'User:::1111-2222-3333' -ReadOnlyAdmin
+      This will set the specifed users role to read only admin
+
+      .EXAMPLE
+      Set-RubrikUserRole -id 'User:::1111-2222-3333' -EndUser -Add -RestoreObjects 'VirtualMachine:::1111-222'
+      This will set the specifed users role to end user, granting access to restore the specified virtual machine
+
+      .EXAMPLE
+      Set-RubrikUserRole -id 'User:::1111-2222-3333' -EndUser -Remove -RestoreObjects 'VirtualMachine:::1111-222'
+      This will set the specifed users role to end user, removing access to restore the specified virtual machine
+
+      .EXAMPLE
+      Set-RubrikUserRole -id 'User:::1111-2222-3333' -NoAccess
+      This will remove all permissions on the Rubrik cluster for the specified user.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]

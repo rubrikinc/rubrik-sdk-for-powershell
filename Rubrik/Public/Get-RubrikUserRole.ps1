@@ -17,12 +17,12 @@ function Get-RubrikUserRole
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikUserRole.html
 
       .EXAMPLE
-      Get-RubrikUserRole
-      This will set the specified password for the user account with the specified id.
+      Get-RubrikUserRole -id 'User:::1111-2222-3333'
+      Retrieves the role information for the user account with the specified id.
 
       .EXAMPLE
-      Get-RubrikUserRole
-      This will change the user matching the specified id last name to 'Smith'
+      Get-RubrikUser -Username 'jdoe' | Get-RubrikUserRole
+      Retrieves the role information for the user with a username of 'jdoe'
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
