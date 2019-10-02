@@ -1,4 +1,7 @@
 function Update-RubrikUserRole($role, $roleUri, $roleMethod) {
+  # function used to build out different bodies and update user roles based on parameters.
+  
+  # Set the Method
   $resources.Method = $roleMethod
 
   # Build body based on role
@@ -12,7 +15,6 @@ function Update-RubrikUserRole($role, $roleUri, $roleMethod) {
       } 
     }
     "end_user" {
-      # Build body for end_user add/delete
       $body = @{
         principals = @($id)
         privileges = @{
