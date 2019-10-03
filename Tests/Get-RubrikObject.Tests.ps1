@@ -96,10 +96,10 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'id'    = 'VM:11111'
             }
         }
-        It -Name 'ObjectClass - should return count of 4' -Test {
-            ( Get-RubrikObject -NameFilter 'demo*' -IDFilter 'VMwareVM').Count |
+        It -Name 'ObjectClass - should return count of 1' -Test {
+            ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM').Count |
                 Should -BeExactly 1
-        }        
+        }
     }
 
     Context -Name 'Parameter Validation' {
