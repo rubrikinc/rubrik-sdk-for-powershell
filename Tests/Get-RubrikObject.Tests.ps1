@@ -67,6 +67,16 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
             }
         }  
         
+        Context -Name 'Test Added Property' {
+            Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+            Mock -CommandName Get-RubrikVM -ModuleName 'Rubrik' -MockWith {
+                @{
+                    'name'  = 'demo1'
+                    'id'    = 'VM:11111'
+                }
+            }
+        }
+        
         It -Name 'Name Filtering - should return count of 3' -Test {
             ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM','MSSQLDB').Count |
                 Should -BeExactly 3
@@ -82,6 +92,8 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
     }
+    
+    
 
     Context -Name 'Parameter Validation' {
         It -Name 'IDFilter Missing' -Test {
