@@ -88,23 +88,29 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
         Assert-MockCalled -CommandName Get-RubrikDatabase -ModuleName 'Rubrik' -Exactly 2
     }
     
-    Context -Name 'Test Added Property' {
+    Context -Name 'Tests for Added objectTypeMatch Property' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
-        Mock -CommandName Get-RubrikVM -ModuleName 'Rubrik' -MockWith {
+        Mock -CommandName Get-RubrikVM -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'name'  = 'demo1'
                 'id'    = 'VM:11111'
             }
         }
         It -Name 'ObjectClass - should return count of 1' -Test {
-            ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM').Count |
+            @( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM').Count |
                 Should -BeExactly 1
         }
         It -Name 'ObjectClass - objectTypeMatch property should exist' -Test {
+            ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM').psobject.properties.name |
+                Should -Contain 'objectTypeMatch'
+        }
+        It -Name 'ObjectClass - objectTypeMatch property should be VMwareVM' -Test {
             ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM').objectTypeMatch |
-                Should -BeExactly 'Jaap'
+                Should -BeExactly 'VMwareVM'
         }
         
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Get-RubrikVM -ModuleName 'Rubrik' -Exactly 3
     }
 
     Context -Name 'Parameter Validation' {
@@ -132,7 +138,5 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
             { Get-RubrikObject -NameFilter 'test' -ExcludeObjectClass 'nonexistant' } |
                 Should -Throw "Cannot validate argument on parameter 'ExcludeObjectClass'."
         }
-
     }
-
 }
