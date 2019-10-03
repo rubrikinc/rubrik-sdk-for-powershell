@@ -44,7 +44,7 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'name' = 'HyperVVM'
                 'id'   = 'HyperV:22222'
             }
-        }   
+        }
         Mock -CommandName Get-RubrikNutanixVM -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'name'  = 'demonutanix'
@@ -54,7 +54,7 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'name' = 'NutanixVM'
                 'id'   = 'Nutanix:22222'
             }
-        }   
+        }
         Mock -CommandName Get-RubrikMount -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Get-RubrikDatabase -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
@@ -65,8 +65,8 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'name' = 'bigdatabase'
                 'id'   = 'MSSQL:22222'
             }
-        }  
-        
+        }
+
         It -Name 'Name Filtering - should return count of 3' -Test {
             ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM','MSSQLDB').Count |
                 Should -BeExactly 3
@@ -79,7 +79,7 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
             ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectClass 'VirtualMachines').Count |
                 Should -BeExactly 4
         }
-                
+
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
         Assert-MockCalled -CommandName Get-RubrikVM -ModuleName 'Rubrik' -Exactly 3
