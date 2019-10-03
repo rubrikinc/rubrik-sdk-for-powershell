@@ -100,6 +100,11 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
             ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM').Count |
                 Should -BeExactly 1
         }
+        It -Name 'ObjectClass - objectTypeMatch property should exist' -Test {
+            ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM').objectTypeMatch |
+                Should -BeExactly 'Jaap'
+        }
+        
     }
 
     Context -Name 'Parameter Validation' {
