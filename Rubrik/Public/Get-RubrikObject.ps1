@@ -2,44 +2,44 @@
 function Get-RubrikObject
 {
   <#  
-      .SYNOPSIS
-      Retrieve summary information for all objects that are registered with a Rubrik cluster.
+    .SYNOPSIS
+    Retrieve summary information for all objects that are registered with a Rubrik cluster.
 
-      .DESCRIPTION
-      The Get-RubrikObject cmdlet is used to retrive information on one or more objects existing within the Rubrik cluster. Rubrik objects consist of any type of VM, Host, Fileset, NAS Share, cloud instance, etc.
+    .DESCRIPTION
+    The Get-RubrikObject cmdlet is used to retrive information on one or more objects existing within the Rubrik cluster. Rubrik objects consist of any type of VM, Host, Fileset, NAS Share, cloud instance, etc.
 
-      .NOTES
-      Written by Mike Preston for community usage
-      Twitter: @mwpreston
-      GitHub: mwpreston
+    .NOTES
+    Written by Mike Preston for community usage
+    Twitter: @mwpreston
+    GitHub: mwpreston
 
-      .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikObject.html
+    .LINK
+    http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikObject.html
 
-      .EXAMPLE
-      Get-RubrikObject -NameFilter 'test*'
-      This will return all known objects within the Rubrik cluster matching the given name pattern
+    .EXAMPLE
+    Get-RubrikObject -NameFilter 'test*'
+    This will return all known objects within the Rubrik cluster matching the given name pattern
 
-      .EXAMPLE
-      Get-RubrikObject -IDFilter '1111-2222-3333-*'
-      This will return all known objects within the Rubrik cluster matching the given id pattern
+    .EXAMPLE
+    Get-RubrikObject -IDFilter '1111-2222-3333-*'
+    This will return all known objects within the Rubrik cluster matching the given id pattern
 
-      .EXAMPLE 
-      Get-RubrikObject -NameFilter 'test*' -IncludeObjectClass VirtualMachines
-      This will return all known Virtual Machines within the Rubrik cluster matching the given name pattern
+    .EXAMPLE 
+    Get-RubrikObject -NameFilter 'test*' -IncludeObjectClass VirtualMachines
+    This will return all known Virtual Machines within the Rubrik cluster matching the given name pattern
 
-      .EXAMPLE
-      Get-RubrikObject -NameFilter 'test*' -ExcludeObjectClass Databases
-      This will return all known objects within the Rubrik cluster except those related to databases matching the given name pattern
+    .EXAMPLE
+    Get-RubrikObject -NameFilter 'test*' -ExcludeObjectClass Databases
+    This will return all known objects within the Rubrik cluster except those related to databases matching the given name pattern
 
-      .EXAMPLE
-      Get-RubrikObject -NameFilter 'test*' -IncludeObjectType VMwareVM,OracleDB
-      This will return all known VMware VMs and Oracle Databases within the Rubrik cluster matching the given name pattern
+    .EXAMPLE
+    Get-RubrikObject -NameFilter 'test*' -IncludeObjectType VMwareVM,OracleDB
+    This will return all known VMware VMs and Oracle Databases within the Rubrik cluster matching the given name pattern
 
-      .EXAMPLE
-      Get-RubrikObject -NameFilter 'test*' -ExcludeObjectType NutanixVM,APIToken
-      This will return all known objects within the Rubrik cluster except Nutanix VMs and API tokens matching the given name pattern
-      #>
+    .EXAMPLE
+    Get-RubrikObject -NameFilter 'test*' -ExcludeObjectType NutanixVM,APIToken
+    This will return all known objects within the Rubrik cluster except Nutanix VMs and API tokens matching the given name pattern
+  #>
 
   [CmdletBinding()]
   Param(
