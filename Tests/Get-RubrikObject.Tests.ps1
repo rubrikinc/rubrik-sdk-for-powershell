@@ -21,7 +21,7 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
 
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
-        Mock -CommandName Get-RubrikVM -ModuleName 'Rubrik' -MockWith {
+        Mock -CommandName Get-RubrikVM -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'name'  = 'demo1'
                 'id'    = 'VM:11111'
@@ -35,7 +35,7 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'id'   = 'VM:22222'
             }
         }
-        Mock -CommandName Get-RubrikHyperVVM  -ModuleName 'Rubrik' -MockWith {
+        Mock -CommandName Get-RubrikHyperVVM -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'name'  = 'demohyperV'
                 'id'    = 'HyperV:11111'
@@ -45,7 +45,7 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'id'   = 'HyperV:22222'
             }
         }   
-        Mock -CommandName Get-RubrikNutanixVM  -ModuleName 'Rubrik' -MockWith {
+        Mock -CommandName Get-RubrikNutanixVM -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'name'  = 'demonutanix'
                 'id'    = 'Nutanix:1111'
@@ -55,8 +55,8 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'id'   = 'Nutanix:22222'
             }
         }   
-        Mock -CommandName Get-RubrikMount -ModuleName 'Rubrik' -MockWith {}
-        Mock -CommandName Get-RubrikDatabase  -ModuleName 'Rubrik' -MockWith {
+        Mock -CommandName Get-RubrikMount -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Get-RubrikDatabase -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'name'  = 'demodatabase'
                 'id'    = 'MSSQL:11111'
@@ -66,16 +66,6 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'id'   = 'MSSQL:22222'
             }
         }  
-        
-        Context -Name 'Test Added Property' {
-            Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
-            Mock -CommandName Get-RubrikVM -ModuleName 'Rubrik' -MockWith {
-                @{
-                    'name'  = 'demo1'
-                    'id'    = 'VM:11111'
-                }
-            }
-        }
         
         It -Name 'Name Filtering - should return count of 3' -Test {
             ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectType 'VMwareVM','MSSQLDB').Count |
@@ -90,10 +80,23 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 Should -BeExactly 4
         } 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Get-RubrikVM -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Get-RubrikHyperVVM -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Get-RubrikNutanixVM -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Get-RubrikMount -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Get-RubrikDatabase -ModuleName 'Rubrik' -Exactly 3
     }
     
-    
+    Context -Name 'Test Added Property' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Get-RubrikVM -ModuleName 'Rubrik' -MockWith {
+            @{
+                'name'  = 'demo1'
+                'id'    = 'VM:11111'
+            }
+        }
+    }
 
     Context -Name 'Parameter Validation' {
         It -Name 'IDFilter Missing' -Test {
