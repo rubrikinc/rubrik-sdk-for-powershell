@@ -55,7 +55,7 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'id'   = 'Nutanix:22222'
             }
         }   
-        Mock -CommandName Get-RubrikMount -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Get-RubrikMount -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Get-RubrikDatabase -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'name'  = 'demodatabase'
@@ -78,14 +78,14 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
         It -Name 'ObjectClass - should return count of 4' -Test {
             ( Get-RubrikObject -NameFilter 'demo*' -IncludeObjectClass 'VirtualMachines').Count |
                 Should -BeExactly 4
-        } 
+        }
+                
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
         Assert-MockCalled -CommandName Get-RubrikVM -ModuleName 'Rubrik' -Exactly 3
-        Assert-MockCalled -CommandName Get-RubrikHyperVVM -ModuleName 'Rubrik' -Exactly 3
-        Assert-MockCalled -CommandName Get-RubrikNutanixVM -ModuleName 'Rubrik' -Exactly 3
-        Assert-MockCalled -CommandName Get-RubrikMount -ModuleName 'Rubrik' -Exactly 3
-        Assert-MockCalled -CommandName Get-RubrikDatabase -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Get-RubrikHyperVVM -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Get-RubrikNutanixVM -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Get-RubrikDatabase -ModuleName 'Rubrik' -Exactly 2
     }
     
     Context -Name 'Test Added Property' {
@@ -96,6 +96,10 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'id'    = 'VM:11111'
             }
         }
+        It -Name 'ObjectClass - should return count of 4' -Test {
+            ( Get-RubrikObject -NameFilter 'demo*' -IDFilter 'VMwareVM').Count |
+                Should -BeExactly 1
+        }        
     }
 
     Context -Name 'Parameter Validation' {
