@@ -7,7 +7,7 @@ trigger:
 - master
 
 jobs:
-- job: ubuntu-jobs
+- job: ubuntu_jobs
   displayName: 'ubuntu-jobs'
 
   pool:
