@@ -35,8 +35,8 @@ Describe -Name 'Public/Get-RubrikUserRole' -Tag 'Public', 'Get-RubrikUserRole' -
         } 
    
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
     Context -Name 'Parameter Validation' {
         It -Name 'ID Missing' -Test {
