@@ -73,7 +73,7 @@ jobs:
       pwsh: false
       targetType: Inline
       script: ./azure-pipelines/scripts/build.ps1
-    -env:
-        SourceBranch: $(system.pullRequest.sourceBranch)
-        TargetBranch: $(system.pullRequest.targetBranch)
-        PRNumber: $(system.pullRequest.pullRequestNumber)
+  -env:
+      SourceBranch: $(system.pullRequest.sourceBranch)
+      TargetBranch: $(system.pullRequest.targetBranch)
+      PRNumber: $(system.pullRequest.pullRequestNumber)
