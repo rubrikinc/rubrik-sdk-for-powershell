@@ -53,4 +53,7 @@ steps:
     echo "Build.TriggeredBy.BuildNumber: " $(Build.TriggeredBy.BuildNumber)
     echo "Build.TriggeredBy.ProjectID: " $(Build.TriggeredBy.ProjectID)
     echo "Common.TestResultsDirectory: " $(Common.TestResultsDirectory)
+    echo "System Vars"
+    echo "system.pullRequest.sourceBranch: " $(system.pullRequest.sourceBranch)
+    echo "system.pullRequest.targetBranch: " $(system.pullRequest.targetBranch)
   displayName: 'Display environment variables'
