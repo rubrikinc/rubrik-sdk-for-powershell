@@ -19,5 +19,5 @@ steps:
   displayName: 'Run a multi-line script'
 
 - script: |
-    echo $Build.SourceBranch
+    echo $(Build.SourceBranch)
   displayName: 'Display environment variables'
