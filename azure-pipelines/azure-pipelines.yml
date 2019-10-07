@@ -6,6 +6,7 @@
 trigger:
 - master
 
+jobs:
 - job: ubuntu-jobs
   displayname: 'ubuntu-jobs'
 
