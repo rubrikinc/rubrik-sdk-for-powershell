@@ -1,22 +1,11 @@
 ﻿# Line break for readability in AppVeyor console
 Write-Host -Object ''
 
-Write-Output $env:SourceBranch
-Write-Host $env:PRNumber
-Write-Host $env:targetBranch
-<#
 # Make sure we're using the Master branch and that it's not a pull request
 # Environmental Variables Guide: https://www.appveyor.com/docs/environment-variables/
-if ($env:APPVEYOR_REPO_BRANCH -ne 'master')
-{
-    Write-Warning -Message "Skipping version increment and publish for branch $env:APPVEYOR_REPO_BRANCH"
-}
-elseif ($env:APPVEYOR_PULL_REQUEST_NUMBER -gt 0)
-{
-    Write-Warning -Message "Skipping version increment and publish for pull request #$env:APPVEYOR_PULL_REQUEST_NUMBER"
-}
-else
-{
+if ($env:targetBranch -ne 'master') {
+    Write-Warning -Message "Skipping version increment and publish for branch $env:targetBranch"
+} else {
     # We're going to add 1 to the revision value since a new commit has been merged to Master
     # This means that the major / minor / build values will be consistent across GitHub and the Gallery
     Try
@@ -28,7 +17,7 @@ else
         $manifest = Test-ModuleManifest -Path $manifestPath
         [System.Version]$version = $manifest.Version
         Write-Output "Old Version: $version"
-        [String]$newVersion = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, $version.Build, $env:APPVEYOR_BUILD_NUMBER)
+        [String]$newVersion = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, $version.Build, $env:PRNumber)
         Write-Output "New Version: $newVersion"
 
         # Update the manifest with the new version value and fix the weird string replace bug
@@ -55,7 +44,7 @@ else
     Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
     New-MarkdownHelp -Module Rubrik -OutputFolder '.\docs\reference\' -Force
     New-ExternalHelp -Path '.\docs\reference\' -OutputPath '.\Rubrik\en-US\' -Force
-    . .\tests\docs.ps1
+    . .\azure-pipelines\scripts\docs.ps1
     Write-Host -Object ''
 
     # Publish the new version to the PowerShell Gallery
@@ -64,7 +53,7 @@ else
         # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
         $PM = @{
             Path        = '.\Rubrik'
-            NuGetApiKey = $env:NuGetApiKey
+            NuGetApiKey = 1 #$env:NuGetApiKey
             ErrorAction = 'Stop'
         }
         Publish-Module @PM
@@ -98,4 +87,3 @@ else
         throw $_
     }
 }
-#>
