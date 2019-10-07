@@ -1,7 +1,7 @@
 ﻿[string[]]$PowerShellModules = @("Pester", "posh-git", "platyPS", "InvokeBuild")
 [string[]]$PackageProviders = @('NuGet', 'PowerShellGet')
 [string[]]$ChocolateyPackages = @('calibre')
-[string[]]$NodeModules = @('gitbook-cli', 'gitbook-summary')
+[string[]]$NodeModules = @('gitbook-cli')
 
 # Line break for readability in AppVeyor console
 Write-Host -Object ''
