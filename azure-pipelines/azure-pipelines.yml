@@ -67,12 +67,12 @@ jobs:
   pool:
     vmImage: 'windows-2019'
   steps:
-  - task: PowerShell@2
-    displayName: 'Install pre-reqs'
-    inputs:
-      pwsh: false
-      targetType: Inline
-      script: ./azure-pipelines/scripts/install.ps1
+#  - task: PowerShell@2
+#    displayName: 'Install pre-reqs'
+#    inputs:
+#      pwsh: false
+#      targetType: Inline
+#      script: ./azure-pipelines/scripts/install.ps1
   - task: PowerShell@2
     displayName: 'Deployment scripts'
     inputs:
@@ -83,3 +83,4 @@ jobs:
       SourceBranch: $(system.pullRequest.sourceBranch)
       TargetBranch: $(system.pullRequest.targetBranch)
       PRNumber: $(system.pullRequest.pullRequestNumber)
+      LocalPath: $(Build.Repository.LocalPath)
