@@ -51,7 +51,6 @@ function Set-RubrikUserRole {
     [Parameter(ParameterSetName = "Admin", Mandatory = $true)]
     [Switch]$Admin,
     
-
     # Sets users role to End User
     [Parameter(ParameterSetName = "EndUserAdd", Mandatory = $true)]
     [Parameter(ParameterSetName = "EndUserRemove", Mandatory = $true)]
@@ -60,8 +59,7 @@ function Set-RubrikUserRole {
     # Sets users role to No Access (Removes all access from user)
     [Parameter(ParameterSetName = "NoAccess", Mandatory = $true)]
     [Switch]$NoAccess,
- 
-        
+         
     # Sets users role to No Access (Removes all access from user)
     [Parameter(ParameterSetName = "ReadOnlyAdmin", Mandatory = $true)]
     [Switch]$ReadOnlyAdmin,
