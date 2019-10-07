@@ -41,7 +41,7 @@ if ($env:targetBranch -ne 'master') {
 
     # Create new markdown and XML help files
     Write-Host "Building new function documentation" -ForegroundColor Yellow
-    Import-Module -Name "$PSScriptRoot\..\Rubrik" -Force
+    Import-Module -Name "$env:LocalPath\..\Rubrik" -Force
     New-MarkdownHelp -Module Rubrik -OutputFolder '.\docs\reference\' -Force
     New-ExternalHelp -Path '.\docs\reference\' -OutputPath '.\Rubrik\en-US\' -Force
     . .\azure-pipelines\scripts\docs.ps1
