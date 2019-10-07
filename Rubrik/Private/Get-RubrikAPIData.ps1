@@ -431,6 +431,20 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.User'
             }
         }
+        'Get-RubrikUserRole'         = @{
+            '1.0' = @{
+                Description = 'Retrieves settings related to a given users role and authorization within the Rubrik cluster'
+                URI         = '/api/internal/authorization'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    principals = 'principals'
+                }
+                Result      = 'Data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikManagedVolume'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Rubrik Managed Volumes'
@@ -2149,6 +2163,21 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Query       = ''
                 Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikUserRole'             = @{
+            '1.0' = @{
+                Description = 'Updates a Rubrik user role and authorizations.'
+                URI         = '/api/internal/authorization/role'
+                Method      = 'POST'
+                Body        = @{
+                    principals      = 'principals'
+                    privileges      = @{ }
+                }
+                Query       = ''
+                Result      = 'Data'
                 Filter      = ''
                 Success     = '200'
             }
