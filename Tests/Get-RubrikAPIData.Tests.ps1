@@ -32,19 +32,28 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
     #endregion
 
     Context -Name "Function specific tests" -Fixture {
-
+        # This variable contains an array of functions that should be excluded from API endpoint testing 
+        $ExcludedFunctions = @(
+            'Get-RubrikObject'
+        )
+        
         it -Name "Get-RubrikAPIData - <f> test" -TestCases $cases { 
             param($v,$f)
-            $v | ForEach-Object -Begin {
-                $methodresult = New-Object System.Collections.Generic.List[System.Boolean]
-                $uriresult = New-Object System.Collections.Generic.List[System.Boolean]
-            } -Process {
-                $global:rubrikConnection.version = $_
-                try {
-                    $resources = Get-RubrikAPIData -endpoint $f
-                    $methodresult.add($resources.Method -In @('Get','Post','Patch','Delete','Put')) | Out-Null
-                    $uriresult.add($null -ne $resources.URI) | Out-Null
-                } catch {}
+            if ($ExcludedFunctions -contains $f) {
+                $methodresult = $true
+                $uriresult = $true
+            } else {            
+                $v | ForEach-Object -Begin {
+                    $methodresult = New-Object System.Collections.Generic.List[System.Boolean]
+                    $uriresult = New-Object System.Collections.Generic.List[System.Boolean]
+                } -Process {
+                    $global:rubrikConnection.version = $_
+                    try {
+                        $resources = Get-RubrikAPIData -endpoint $f
+                        $methodresult.add($resources.Method -In @('Get','Post','Patch','Delete','Put')) | Out-Null
+                        $uriresult.add($null -ne $resources.URI) | Out-Null
+                    } catch {}
+                }
             }
 
             $methodresult | Should -Contain $true

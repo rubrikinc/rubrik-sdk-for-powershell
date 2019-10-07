@@ -27,23 +27,23 @@ function Get-RubrikSnapshot
       This will return all snapshot (backup) data for the fileset with id of "Fileset:::01234567-8910-1abc-d435-0abc1234d567"
 
       .EXAMPLE
-      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
+      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
       This will return the closest matching snapshot, within 1 day, to March 21st, 2017 for any virtual machine named "Server1"
 
       .EXAMPLE
-      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3
+      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3
       This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1"
 
       .EXAMPLE
-      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3 -ExactMatch
+      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3 -ExactMatch
       This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1". -ExactMatch specifies that no results are returned if a match is not found, otherwise all snapshots are returned.
 
       .EXAMPLE
-      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Date (Get-Date)
+      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date (Get-Date)
       This will return the closest matching snapshot to the current date and time for any virtual machine named "Server1"
 
       .EXAMPLE
-      Get-Rubrikvm 'Server1' | Get-RubrikSnapshot -Latest
+      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Latest
       This will return the latest snapshot for the virtual machine named "Server1"
 
       .EXAMPLE
