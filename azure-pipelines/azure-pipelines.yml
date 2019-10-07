@@ -8,7 +8,7 @@ trigger:
 
 jobs:
 - job: ubuntu-jobs
-  displayname: 'ubuntu-jobs'
+  displayName: 'ubuntu-jobs'
 
   pool:
     vmImage: 'ubuntu-latest'
