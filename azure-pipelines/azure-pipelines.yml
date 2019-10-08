@@ -62,21 +62,21 @@ jobs:
       echo "system.pullRequest.targetBranch " $(system.pullRequest.targetBranch)
     displayName: 'Display environment variables'
 
-- job: Windows_PowerShell_on_Server_2019
-  displayName: 'Windows PowerShell on Server 2019'
+- job: PowerShell_on_Ubuntu
+  displayName: 'PowerShell on Ubuntu'
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'ubuntu-latest'
   steps:
   - task: PowerShell@2
     displayName: 'Install pre-reqs'
     inputs:
-      pwsh: false
+      pwsh: true
       targetType: Inline
       script: ./azure-pipelines/scripts/install.ps1
   - task: PowerShell@2
     displayName: 'Deployment scripts'
     inputs:
-      pwsh: false
+      pwsh: true
       targetType: Inline
       script: ./azure-pipelines/scripts/build.ps1
     env:
