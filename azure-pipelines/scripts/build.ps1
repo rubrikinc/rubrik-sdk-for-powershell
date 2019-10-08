@@ -17,7 +17,7 @@ if ($env:targetBranch -ne 'master') {
         $manifest = Test-ModuleManifest -Path $manifestPath
         [System.Version]$version = $manifest.Version
         Write-Output "Old Version: $version"
-        [String]$newVersion = "$($version.Major, $version.Minor, ($manifest.version.revision+1))"
+        [String]$newVersion = "$($version.Major).$($version.Minor).$($manifest.version.revision+1)"
         Write-Output "New Version: $newVersion"
 
         # Update the manifest with the new version value and fix the weird string replace bug
