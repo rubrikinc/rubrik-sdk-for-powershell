@@ -11,11 +11,8 @@ ForEach ($Provider in $PackageProviders) {
     }
 }
 
-if ($PSVersionTable.PSVersion.Major -ge 6) {
-    'PowerShellGet' | ForEach-Object {
-        Uninstall-Module -Name $_ -Force
-    }
-}
+Get-Module PowerShellGet -ListAvailable
+Find-Module PowerShellGet
 
 # Install the PowerShell Modules
 ForEach ($Module in $PowerShellModules) {
