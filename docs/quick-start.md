@@ -29,7 +29,7 @@ Common PowerShell module paths include:
 1. Open a Powershell console with the Run as Administrator option.
 1. Run `Set-ExecutionPolicy` using the parameter RemoteSigned or Bypass.
 1. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository.
-1. Alternatively `Install-Module -Name Rubrik -Scope AllUsers `can be execute be used if you would like to install the module for all users on the current system.
+1. Alternatively `Install-Module -Name Rubrik -Scope AllUsers` can be execute be used if you would like to install the module for all users on the current system.
 
 ## Option 2: Installer Script
 
@@ -115,8 +115,8 @@ Now that you have the Rubrik module installed on your workstation, here are a fe
 
 To begin, connect to a Rubrik cluster. To keep things simple, we'll do the first command without any supplied parameters.
 
-*   Open a PowerShell session
-*   Type `Connect-Rubrik` and press enter.
+* Open a PowerShell session
+* Type `Connect-Rubrik` and press enter.
 
 A prompt will appear asking you for a server. Enter the IP address or fully qualified domain name (FQDN) of any node in the cluster. An additional prompt will appear asking for your user credentials. Once entered, you will see details about the newly created connection.
 
@@ -187,7 +187,6 @@ The `-SLA` portion is a parameter and "Gold" is a value for the parameter. This 
 
 For a full list of available parameters and examples, use `Get-Help Get-RubrikSLA -Full`. Every Rubrik command has native help available.
 
-
 ## Modifying Data
 
 Not every command will be about gathering data. Sometimes you'll want to modify or delete data, too. The process is nearly the same, although some safeguards have been implemented to protect against errant modifications. Let's start with an simple one.
@@ -237,7 +236,6 @@ By setting this, for the duration of your current PowerShell session, `Protect-R
 ## Gather data for reporting
 
 If we want to know the status of backups for certain workloads or SLAs we can easily gather this data using the PowerShell module.
-
 
 ``` PowerShell
 Get-RubrikVM -SLAID 'Gold'
