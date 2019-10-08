@@ -100,7 +100,7 @@ jobs:
   - task: PowerShell@2
     displayName: 'Run Unit Tests'
     inputs:
-      pwsh: true
+      pwsh: false
       targetType: Inline
       script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
     env:
