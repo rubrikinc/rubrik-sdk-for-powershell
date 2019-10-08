@@ -107,11 +107,21 @@ jobs:
       LocalPath: $(Build.Repository.LocalPath)
 
 - job: Build_Using_Windows_PowerShell_on_Server_2019
+  dependsOn: 
+    - Unit_Tests_On_PowerShell_Server_2019
+    - Unit_Tests_On_PowerShell_Ubuntu
+    - Unit_Tests_On_Windows_PowerShell_Server_2019
+  condition: |
+    and
+    (
+      in(dependencies.Unit_Tests_On_PowerShell_Server_2019.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+      in(dependencies.Unit_Tests_On_PowerShell_Ubuntu.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+      in(dependencies.Unit_Tests_On_Windows_PowerShell_Server_2019.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+    )
   displayName: 'Build Using Windows PowerShell on Server 2019'
   pool:
     vmImage: 'windows-2019'
   steps:
-    dependsOn: and(Unit_Tests_On_PowerShell_Server_2019, Unit_Tests_On_PowerShell_Ubuntu, Unit_Tests_On_Windows_PowerShell_Server_2019)
   - task: PowerShell@2
     displayName: 'Install pre-reqs'
     inputs:
@@ -119,7 +129,6 @@ jobs:
       targetType: Inline
       script: ./azure-pipelines/scripts/install.ps1
   - task: PowerShell@2
-  dependsOn: and(Unit_Tests_On_PowerShell_Server_2019, Unit_Tests_On_PowerShell_Ubuntu, Unit_Tests_On_Windows_PowerShell_Server_2019)
     displayName: 'Deployment scripts'
     inputs:
       pwsh: false
