@@ -17,7 +17,7 @@ if ($env:targetBranch -ne 'master') {
         $manifest = Test-ModuleManifest -Path $manifestPath
         [System.Version]$version = $manifest.Version
         Write-Output "Old Version: $version"
-        [String]$newVersion = New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, $manifest.version.revision+1)
+        [String]$newVersion = "$($version.Major, $version.Minor, ($manifest.version.revision+1))"
         Write-Output "New Version: $newVersion"
 
         # Update the manifest with the new version value and fix the weird string replace bug
@@ -67,23 +67,23 @@ if ($env:targetBranch -ne 'master') {
     }
 
     # Publish the new version back to Master on GitHub
-    Try
-    {
-        # Set up a path to the git.exe cmd, import posh-git to give us control over git, and then push changes to GitHub
-        # Note that "update version" is included in the appveyor.yml file's "skip a build" regex to avoid a loop
-        $env:Path += ";$env:ProgramFiles\Git\cmd"
-        Import-Module posh-git -ErrorAction Stop
-        git checkout master
-        git add --all
-        git status
-        git commit -s -m "Update version to $newVersion"
-        git push origin master
-        Write-Host "Rubrik PowerShell Module version $newVersion published to GitHub." -ForegroundColor Cyan
-    }
-    Catch
-    {
-        # Sad panda; it broke
-        Write-Warning "Publishing update $newVersion to GitHub failed."
-        throw $_
-    }
+    #Try
+    #{
+    #    # Set up a path to the git.exe cmd, import posh-git to give us control over git, and then push changes to GitHub
+    #    # Note that "update version" is included in the appveyor.yml file's "skip a build" regex to avoid a loop
+    #    $env:Path += ";$env:ProgramFiles\Git\cmd"
+    #    Import-Module posh-git -ErrorAction Stop
+    #    git checkout master
+    #    git add --all
+    #    git status
+    #    git commit -s -m "Update version to $newVersion"
+    #    git push origin master
+    #    Write-Host "Rubrik PowerShell Module version $newVersion published to GitHub." -ForegroundColor Cyan
+    #}
+    #Catch
+    #{
+    #    # Sad panda; it broke
+    #    Write-Warning "Publishing update $newVersion to GitHub failed."
+    #    throw $_
+    #}
 }
