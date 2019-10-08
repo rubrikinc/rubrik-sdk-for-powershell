@@ -6,8 +6,6 @@ $PesterSplat = @{
     OutputFile = "$env:LocalPath\Tests\$env:JobName.xml"
 }
 
-$PSVersionTable
-
 if (6 -le $PSVersionTable.PSVersion.Major) {
     Write-Output 'Executing PowerShell Core tests'
     $PesterSplat.Script = "$env:LocalPath\Tests\Get-RubrikAPIData.Tests.ps1"
@@ -19,6 +17,6 @@ if (6 -le $PSVersionTable.PSVersion.Major) {
 
 if ($TestResult.FailedCount -gt 0) {
     exit 1
-  } else {
+} else {
     "We're happy little campers"
-  }
+}
