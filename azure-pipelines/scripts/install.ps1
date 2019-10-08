@@ -11,7 +11,11 @@ ForEach ($Provider in $PackageProviders) {
     }
 }
 
-Remove-Module -Name PackageManagement -Force
+if ($PSVersionTable.PSVersion.Major -ge 6) {
+    'Packagemanagement', 'PowerShellGet' | ForEach-Object {
+        Uninstall-Module -Name $_ -Force
+    }
+}
 
 # Install the PowerShell Modules
 ForEach ($Module in $PowerShellModules) {
