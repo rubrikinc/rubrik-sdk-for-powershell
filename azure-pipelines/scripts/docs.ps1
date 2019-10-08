@@ -1,9 +1,10 @@
 # Create new markdown and XML help files
-Write-Host "Building new function documentation" -ForegroundColor Yellow
+Write-Object 'Building new function documentation'
 New-MarkdownHelp -Module Rubrik -OutputFolder "$env:LocalPath\docs\reference\" -Force
 New-ExternalHelp -Path "$env:LocalPath\docs\reference\" -OutputPath "$env:LocalPath\Rubrik\en-US\" -Force
 
 # Custom Generate Summary.md
+Write-Object 'Generate custom markdown SUMMARY.md'
 $MarkDown = "# Rubrik SDK for PowerShell`n`n"
 $MarkDown += "## User Documentation`n`n"
 
@@ -57,3 +58,6 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\reference" -Exclude 'readme.md' 
 
 # Write Markdown to file
 Set-Content -Value $MarkDown -Path "$env:LocalPath\docs\SUMMARY.md"
+
+# End message
+Write-Object 'Completed GitBook documentation generation'
