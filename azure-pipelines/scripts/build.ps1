@@ -74,7 +74,7 @@ if ($env:TargetBranch -ne 'master') {
     Try
     {
         Import-Module posh-git -ErrorAction Stop
-        git add --all
+        git add --all --renormalize
         git status
         git commit -s -m "Update version to $newVersion"
         git push -u origin $env:SourceBranch
