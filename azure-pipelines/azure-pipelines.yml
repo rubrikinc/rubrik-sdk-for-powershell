@@ -62,8 +62,53 @@ jobs:
       echo "system.pullRequest.targetBranch " $(system.pullRequest.targetBranch)
     displayName: 'Display environment variables'
 
-- job: Windows_PowerShell_on_Server_2019
-  displayName: 'Windows PowerShell on Server 2019'
+
+
+- job: Unit_Tests_On_PowerShell_Server_2019
+  displayName: 'Unit Tests on PowerShell, Server 2019'
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Deployment scripts'
+    inputs:
+      pwsh: true
+      targetType: Inline
+      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
+    env:
+      LocalPath: $(Build.Repository.LocalPath)
+
+- job: Unit_Tests_On_PowerShell_Ubuntu
+  displayName: 'Unit Tests on PowerShell, Ubuntu'
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Deployment scripts'
+    inputs:
+      pwsh: true
+      targetType: Inline
+      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
+    env:
+      LocalPath: $(Build.Repository.LocalPath)
+
+- job: Unit_Tests_On_Windows_PowerShell_Server_2019
+  displayName: 'Unit Tests on Windows PowerShell, Server 2019'
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Deployment scripts'
+    inputs:
+      pwsh: true
+      targetType: Inline
+      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
+    env:
+      LocalPath: $(Build.Repository.LocalPath)
+
+- job: Build_Using_Windows_PowerShell_on_Server_2019
+  displayName: 'Build Using Windows PowerShell on Server 2019'
+  dependsOn: and(Unit_Tests_On_PowerShell_Server_2019, Unit_Tests_On_PowerShell_Ubuntu, Unit_Tests_On_Windows_PowerShell_Server_2019)
   pool:
     vmImage: 'windows-2019'
   steps:
@@ -90,49 +135,3 @@ jobs:
       artifactName: 'PipelinesScripts'
       targetPath: .
     condition: failed()
-
-- job: PowerShell_on_Server_2019
-  displayName: 'PowerShell on Server 2019'
-  pool:
-    vmImage: 'windows-2019'
-  steps:
-  - task: PowerShell@2
-    displayName: 'Install pre-reqs'
-    inputs:
-      pwsh: true
-      targetType: Inline
-      script: ./azure-pipelines/scripts/install.ps1
-  - task: PowerShell@2
-    displayName: 'Deployment scripts'
-    inputs:
-      pwsh: true
-      targetType: Inline
-      script: ./azure-pipelines/scripts/build.ps1
-    env:
-      SourceBranch: $(system.pullRequest.sourceBranch)
-      TargetBranch: $(system.pullRequest.targetBranch)
-      PRNumber: $(system.pullRequest.pullRequestNumber)
-      LocalPath: $(Build.Repository.LocalPath)
-
-- job: PowerShell_on_Ubuntu
-  displayName: 'PowerShell on Ubuntu'
-  pool:
-    vmImage: 'ubuntu-latest'
-  steps:
-  - task: PowerShell@2
-    displayName: 'Install pre-reqs'
-    inputs:
-      pwsh: true
-      targetType: Inline
-      script: ./azure-pipelines/scripts/install.ps1
-  - task: PowerShell@2
-    displayName: 'Deployment scripts'
-    inputs:
-      pwsh: true
-      targetType: Inline
-      script: ./azure-pipelines/scripts/build.ps1
-    env:
-      SourceBranch: $(system.pullRequest.sourceBranch)
-      TargetBranch: $(system.pullRequest.targetBranch)
-      PRNumber: $(system.pullRequest.pullRequestNumber)
-      LocalPath: $(Build.Repository.LocalPath)
