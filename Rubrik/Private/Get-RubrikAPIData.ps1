@@ -15,20 +15,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = 'The expected HTTP status code for a successful call'
             }
         }
-        #'Connect-Rubrik'               = @{
-        #    '3.0' = @{
-        #        Description = 'Create a new login session'
-        #        URI         = '/api/v1/session'
-        #        Method      = 'Post'
-        #        Body        = ''
-        #        Query       = @{
-        #            organization_id = 'organization_id'
-        #        }
-        #        Result      = ''
-        #        Filter      = ''
-        #        Success     = '200'
-        #    }
-        #}
+        'Connect-Rubrik'               = @{
+            '3.0' = @{
+                Description = 'Create a new login session'
+                URI         = '/api/v1/session'
+                Method      = 'Post'
+                Body        = ''
+                Query       = @{
+                    organization_id = 'organization_id'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Disconnect-Rubrik'            = @{
             '1.0' = @{
                 Description = 'Closes a user session and invalidates the session token'
