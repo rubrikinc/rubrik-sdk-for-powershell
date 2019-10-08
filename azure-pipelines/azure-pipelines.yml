@@ -77,6 +77,7 @@ jobs:
       script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
     env:
       LocalPath: $(Build.Repository.LocalPath)
+      JobName: $(Agent.JobName)
 
 - job: Unit_Tests_On_PowerShell_Ubuntu
   displayName: 'Unit Tests on PowerShell, Ubuntu'
@@ -91,6 +92,7 @@ jobs:
       script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
     env:
       LocalPath: $(Build.Repository.LocalPath)
+      JobName: $(Agent.JobName)
 
 - job: Unit_Tests_On_Windows_PowerShell_Server_2019
   displayName: 'Unit Tests on Windows PowerShell, Server 2019'
@@ -105,6 +107,7 @@ jobs:
       script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
     env:
       LocalPath: $(Build.Repository.LocalPath)
+      JobName: $(Agent.JobName)
 
 - job: Build_Using_Windows_PowerShell_on_Server_2019
   dependsOn: 
