@@ -62,80 +62,80 @@ jobs:
       echo "system.pullRequest.targetBranch " $(system.pullRequest.targetBranch)
     displayName: 'Display environment variables'
 
-- job: Unit_Tests_On_PowerShell_Ubuntu
-  displayName: 'Unit Tests on PowerShell, Ubuntu'
-  pool:
-    vmImage: 'ubuntu-latest'
-  steps:
-  - task: PowerShell@2
-    displayName: 'Run Unit Tests'
-    inputs:
-      pwsh: true
-      targetType: Inline
-      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
-    env:
-      LocalPath: $(Build.Repository.LocalPath)
-      JobName: $(Agent.JobName)
-
-- job: Unit_Tests_On_PowerShell_macOS
-  displayName: 'Unit Tests on PowerShell, macOS'
-  pool:
-    vmImage: 'macOS-latest'
-  steps:
-  - task: PowerShell@2
-    displayName: 'Run Unit Tests'
-    inputs:
-      pwsh: true
-      targetType: Inline
-      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
-    env:
-      LocalPath: $(Build.Repository.LocalPath)
-      JobName: $(Agent.JobName)
-
-- job: Unit_Tests_On_PowerShell_Server_2019
-  displayName: 'Unit Tests on PowerShell, Server 2019'
-  pool:
-    vmImage: 'windows-2019'
-  steps:
-  - task: PowerShell@2
-    displayName: 'Run Unit Tests'
-    inputs:
-      pwsh: true
-      targetType: Inline
-      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
-    env:
-      LocalPath: $(Build.Repository.LocalPath)
-      JobName: $(Agent.JobName)
-
-- job: Unit_Tests_On_Windows_PowerShell_Server_2019
-  displayName: 'Unit Tests on Windows PowerShell, Server 2019'
-  pool:
-    vmImage: 'windows-2019'
-  steps:
-  - task: PowerShell@2
-    displayName: 'Run Unit Tests'
-    inputs:
-      pwsh: false
-      targetType: Inline
-      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
-    env:
-      LocalPath: $(Build.Repository.LocalPath)
-      JobName: $(Agent.JobName)
+#- job: Unit_Tests_On_PowerShell_Ubuntu
+#  displayName: 'Unit Tests on PowerShell, Ubuntu'
+#  pool:
+#    vmImage: 'ubuntu-latest'
+#  steps:
+#  - task: PowerShell@2
+#    displayName: 'Run Unit Tests'
+#    inputs:
+#      pwsh: true
+#      targetType: Inline
+#      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
+#    env:
+#      LocalPath: $(Build.Repository.LocalPath)
+#      JobName: $(Agent.JobName)
+#
+#- job: Unit_Tests_On_PowerShell_macOS
+#  displayName: 'Unit Tests on PowerShell, macOS'
+#  pool:
+#    vmImage: 'macOS-latest'
+#  steps:
+#  - task: PowerShell@2
+#    displayName: 'Run Unit Tests'
+#    inputs:
+#      pwsh: true
+#      targetType: Inline
+#      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
+#    env:
+#      LocalPath: $(Build.Repository.LocalPath)
+#      JobName: $(Agent.JobName)
+#
+#- job: Unit_Tests_On_PowerShell_Server_2019
+#  displayName: 'Unit Tests on PowerShell, Server 2019'
+#  pool:
+#    vmImage: 'windows-2019'
+#  steps:
+#  - task: PowerShell@2
+#    displayName: 'Run Unit Tests'
+#    inputs:
+#      pwsh: true
+#      targetType: Inline
+#      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
+#    env:
+#      LocalPath: $(Build.Repository.LocalPath)
+#      JobName: $(Agent.JobName)
+#
+#- job: Unit_Tests_On_Windows_PowerShell_Server_2019
+#  displayName: 'Unit Tests on Windows PowerShell, Server 2019'
+#  pool:
+#    vmImage: 'windows-2019'
+#  steps:
+#  - task: PowerShell@2
+#    displayName: 'Run Unit Tests'
+#    inputs:
+#      pwsh: false
+#      targetType: Inline
+#      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
+#    env:
+#      LocalPath: $(Build.Repository.LocalPath)
+#      JobName: $(Agent.JobName)
 
 - job: Build_Using_Windows_PowerShell_on_Server_2019
-  dependsOn: 
-    - Unit_Tests_On_PowerShell_Server_2019
-    - Unit_Tests_On_PowerShell_Ubuntu
-    - Unit_Tests_On_Windows_PowerShell_Server_2019
-    - Unit_Tests_On_PowerShell_macOS
-  condition: |
-    and
-    (
-      in(dependencies.Unit_Tests_On_PowerShell_Server_2019.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-      in(dependencies.Unit_Tests_On_Windows_PowerShell_Server_2019.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-      in(dependencies.Unit_Tests_On_PowerShell_Ubuntu.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-      in(dependencies.Unit_Tests_On_PowerShell_macOS.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-    )
+#  dependsOn: 
+#    - Unit_Tests_On_PowerShell_Server_2019
+#    - Unit_Tests_On_PowerShell_Ubuntu
+#    - Unit_Tests_On_Windows_PowerShell_Server_2019
+#    - Unit_Tests_On_PowerShell_macOS
+#  condition: |
+#    and
+#    (
+#      in(dependencies.Unit_Tests_On_PowerShell_Server_2019.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+#      in(dependencies.Unit_Tests_On_Windows_PowerShell_Server_2019.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+#      in(dependencies.Unit_Tests_On_PowerShell_Ubuntu.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+#      in(dependencies.Unit_Tests_On_PowerShell_macOS.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+#    )
   displayName: 'Build Using Windows PowerShell on Server 2019'
   pool:
     vmImage: 'windows-2019'
