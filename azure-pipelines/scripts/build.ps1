@@ -52,23 +52,23 @@ if ($env:TargetBranch -ne 'master') {
     Write-Host -Object ''
 
     # Publish the new version to the PowerShell Gallery
-    Try
-    {
-        # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
-        $PublishSplat = @{
-            Path        = "$env:LocalPath\Rubrik"
-            NuGetApiKey = 1 #$env:NuGetApiKey
-            ErrorAction = 'Stop'
-        }
-        Publish-Module @PublishSplat
-        Write-Host "Rubrik PowerShell Module version $newVersion published to the PowerShell Gallery." -ForegroundColor Cyan
-    }
-    Catch
-    {
-        # Sad panda; it broke
-        Write-Warning "Publishing update $newVersion to the PowerShell Gallery failed."
-        throw $_
-    }
+    #Try
+    #{
+    #    # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
+    #    $PublishSplat = @{
+    #        Path        = "$env:LocalPath\Rubrik"
+    #        NuGetApiKey = 1 #$env:NuGetApiKey
+    #        ErrorAction = 'Stop'
+    #    }
+    #    Publish-Module @PublishSplat
+    #    Write-Host "Rubrik PowerShell Module version $newVersion published to the PowerShell Gallery." -ForegroundColor Cyan
+    #}
+    #Catch
+    #{
+    #    # Sad panda; it broke
+    #    Write-Warning "Publishing update $newVersion to the PowerShell Gallery failed."
+    #    throw $_
+    #}
 
      Publish the new version back to Master on GitHub
     Try

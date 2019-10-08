@@ -17,7 +17,6 @@
 
 * [Workflow](workflow/readme.md)
     * [Flow Audit](workflow/flow_audit.md)
-    * [readme](workflow/readme.md)
 
 * [Reference](workflow/readme.md)
     * [Connect-Rubrik](reference/Connect-Rubrik.md)
@@ -105,7 +104,6 @@
     * [Protect-RubrikTag](reference/Protect-RubrikTag.md)
     * [Protect-RubrikVApp](reference/Protect-RubrikVApp.md)
     * [Protect-RubrikVM](reference/Protect-RubrikVM.md)
-    * [readme](reference/readme.md)
     * [Register-RubrikBackupService](reference/Register-RubrikBackupService.md)
     * [Remove-RubrikAPIToken](reference/Remove-RubrikAPIToken.md)
     * [Remove-RubrikDatabaseMount](reference/Remove-RubrikDatabaseMount.md)
