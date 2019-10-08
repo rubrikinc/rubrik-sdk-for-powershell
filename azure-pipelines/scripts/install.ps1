@@ -11,12 +11,15 @@ ForEach ($Provider in $PackageProviders) {
     }
 }
 
-Remove-Module PowerShellGet -Force
-
 # Install the PowerShell Modules
 ForEach ($Module in $PowerShellModules) {
     If (!(Get-Module -ListAvailable $Module -ErrorAction SilentlyContinue) -or $Module -eq 'PowerShellGet') {
         Install-Module $Module -Scope CurrentUser -Force -Repository PSGallery
     }
+    
+    if ($Module -eq 'PowerShellGet') {
+        Remove-Module $Module -Force
+    }
+    
     Import-Module $Module -Force
 }
