@@ -17,14 +17,5 @@ ForEach ($Module in $PowerShellModules) {
         Install-Module $Module -Scope CurrentUser -Force -Repository PSGallery
     }
     
-    if ($Module -eq 'PowerShellGet') {
-        'Triggered'
-        Get-Module
-        Remove-Module $Module -Force
-        Remove-Module PackageManagement -Force
-        'Does it get here?'
-        Get-Module
-    }
-    
-    Import-Module $Module -Force
+    Import-Module $Module -Force -ErrorAction SilentlyContinue
 }
