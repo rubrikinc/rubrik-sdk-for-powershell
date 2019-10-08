@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.Event</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Time</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Status</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Type</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry> 
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <ScriptBlock>
+                                    $splitdate = $_.time.split(' ')
+                                    $newdate = $splitdate[1] + " " + $splitdate[2] + " " + $splitdate[3] + " " + $splitdate[5]
+                                    $d= [DateTime]::ParseExact($newdate,"MMM dd HH:mm:ss yyyy",$null)
+                                    Get-Date $d -Format "dd/MM/yyyy HH:mm:ss"
+                                </ScriptBlock>    
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>eventStatus</PropertyName>
+                            </TableColumnItem>                            
+                            <TableColumnItem>
+                                <PropertyName>objectType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>objectName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>

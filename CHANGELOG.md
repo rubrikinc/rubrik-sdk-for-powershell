@@ -16,6 +16,41 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-01
+
+### Added [cmdlets to set and delete user roles and permissions]
+
+* Added Get-RubrikUserRole and Set-RubrikUserRole in order to get and configure user roles and permissions.
+* Added private function Update-RubrikuserRole to handle the addition and removal of permissions for the various roles.
+* Addresses [Issue 108](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/108)
+
+## 2019-09-26
+
+### Added initial support for VMware vCloud Director (vCD) API endpoints in CDM
+
+* Added cmdlets `Update-RubrikVCD`, `Set-RubrikVCD`, `Restore-RubrikVApp`, `Protect-RubrikVApp`, `Get-RubrikVcdTemplateExportOptions`, `Get-RubrikVCD`, `Get-RubrikVappSnapshot`, `RubrikVAppRecoverOptions`, `Get-RubrikVAppExportOptions`, `Get-RubrikVApp`, `Export-RubrikVCDTemplate`, `Export-RubrikVApp` and related tests as requested in [Issue 273](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/273)
+* Updated `Get-RubrikSnapshot` to support vCD vApps
+* Misc bug fixes and typos corrected
+
+## 2019-09-24
+
+### Added [Private Function to apply TypeName information to objects]
+
+* Functionality created in order to make display of return results for certain objects more user friendly.
+* Added private function Set-ObjectTypeName which applies a given TypeName definition to cmdlet results.
+* Added ObjectTName parameter within Get-RubrikAPIData to the listed objects below
+* Added ps1xml files to a newly created ObjectDefinitions folder definining the listed objects below
+* Imported all ps1xml files from within the psd1 manifest for the listed objects below
+* TypeName format files created for Rubrik.APIToken, Rubrik.AvailabilityGroup, Rubrik.Event, Rubrik.Fileset, Rubrik.FilesetTemplate, Rubrik.Host, Rubrik.HyperVVM, Rubrik.LDAP, Rubrik.LogShipping, Rubrik.ManagedVolume, Rubrik.MSSQLDatabase, Rubrik.MSSQLDatabaseFiles, Rubrik.MSSQLDatabaseMount, Rubrik.NASShare, Rubrik.NutanixVM, Rubrik.OracleDatabase, Rubrik.Report, RubrikSLADomain, Rubrik.SLADomainv1, Rubrik.UnmanagedObject, Rubrik.User, Rubrik.vCenter, Rubrik.VMwareDatastore, Rubrik.VMwareHost, Rubrik.VMwareVM, and Rubrik.VolumeGroup
+* Addresses [Issue 323](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/323)
+
+## 2019-09-19
+
+### Added [Cmdlets to manage Rubrik users]
+
+* Added Get-RubrikUser, New-RubrikUser, Remove-RubrikUser and Set-RubrikUser and respective unit tests to manage user accounts.
+* Addresses [Issue 244](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/244)
+
 ## 2019-09-12
 
 ### Changed [Added ability to rename Managed Volumes]
@@ -31,6 +66,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Addresses [Issue 348](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/348)
 
 ## 2019-09-09
+
+### Added [Get-RubrikObject]
+
+* Created Get-RubrikObject cmdlet and respective Unit test.
+* Addresses [Issue 349](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/349)
 
 ### Added [Various Unit Tests]
 
