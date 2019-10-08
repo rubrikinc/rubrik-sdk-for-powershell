@@ -51,18 +51,16 @@ if ($env:TargetBranch -ne 'master') {
     . .\azure-pipelines\scripts\docs.ps1
     Write-Host -Object ''
 
-
-    gcm Publish-Module
     # Publish the new version to the PowerShell Gallery
     Try
     {
         # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
-        $PM = @{
-            Path        = '.\Rubrik'
+        $PublishSplat = @{
+            Path        = "$env:LocalPath\Rubrik"
             NuGetApiKey = 1 #$env:NuGetApiKey
             ErrorAction = 'Stop'
         }
-        Publish-Module @PM
+        Publish-Module @PublishSplat
         Write-Host "Rubrik PowerShell Module version $newVersion published to the PowerShell Gallery." -ForegroundColor Cyan
     }
     Catch
@@ -79,7 +77,7 @@ if ($env:TargetBranch -ne 'master') {
         git add --all
         git status
         git commit -s -m "Update version to $newVersion"
-        git push origin master
+        git push -u origin $env:SourceBranch
         Write-Host "Rubrik PowerShell Module version $newVersion published to GitHub." -ForegroundColor Cyan
     }
     Catch
