@@ -70,6 +70,35 @@ jobs:
   - task: PowerShell@2
     displayName: 'Install pre-reqs'
     inputs:
+      pwsh: false
+      targetType: Inline
+      script: ./azure-pipelines/scripts/install.ps1
+  - task: PowerShell@2
+    displayName: 'Deployment scripts'
+    inputs:
+      pwsh: false
+      targetType: Inline
+      script: ./azure-pipelines/scripts/build.ps1
+    env:
+      SourceBranch: $(system.pullRequest.sourceBranch)
+      TargetBranch: $(system.pullRequest.targetBranch)
+      PRNumber: $(system.pullRequest.pullRequestNumber)
+      LocalPath: $(Build.Repository.LocalPath)
+  - task: PublishPipelineArtifact@0
+    displayName: 'Publish Repository as artifact'
+    inputs:
+      artifactName: 'PipelinesScripts'
+      targetPath: .
+    condition: failed()
+
+- job: PowerShell_on_Server_2019
+  displayName: 'PowerShell on Server 2019'
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Install pre-reqs'
+    inputs:
       pwsh: true
       targetType: Inline
       script: ./azure-pipelines/scripts/install.ps1
@@ -84,9 +113,26 @@ jobs:
       TargetBranch: $(system.pullRequest.targetBranch)
       PRNumber: $(system.pullRequest.pullRequestNumber)
       LocalPath: $(Build.Repository.LocalPath)
-  - task: PublishPipelineArtifact@0
-    displayName: 'Publish Repository as artifact'
+
+- job: PowerShell_on_Ubuntu
+  displayName: 'PowerShell on Ubuntu'
+  pool:
+    vmImage: 'ubuntu'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Install pre-reqs'
     inputs:
-      artifactName: 'PipelinesScripts'
-      targetPath: .
-    condition: failed()
+      pwsh: true
+      targetType: Inline
+      script: ./azure-pipelines/scripts/install.ps1
+  - task: PowerShell@2
+    displayName: 'Deployment scripts'
+    inputs:
+      pwsh: true
+      targetType: Inline
+      script: ./azure-pipelines/scripts/build.ps1
+    env:
+      SourceBranch: $(system.pullRequest.sourceBranch)
+      TargetBranch: $(system.pullRequest.targetBranch)
+      PRNumber: $(system.pullRequest.pullRequestNumber)
+      LocalPath: $(Build.Repository.LocalPath)

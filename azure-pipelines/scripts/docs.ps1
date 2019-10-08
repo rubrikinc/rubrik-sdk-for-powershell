@@ -1,7 +1,11 @@
 # Create new markdown and XML help files
 Write-Output 'Building new function documentation'
-New-MarkdownHelp -Module Rubrik -OutputFolder "$env:LocalPath\docs\reference\" -Force
-New-ExternalHelp -Path "$env:LocalPath\docs\reference\" -OutputPath "$env:LocalPath\Rubrik\en-US\" -Force
+
+$MarkdownFiles = New-MarkdownHelp -Module Rubrik -OutputFolder "$env:LocalPath\docs\reference\" -Force | Measure-Object | Select-Object -ExpandProperty Count
+Write-Output "Created $MarkdownFiles markdown help files in '$env:LocalPath\docs\reference\'"
+
+$ExternalHelp = New-ExternalHelp -Path "$env:LocalPath\docs\reference\" -OutputPath "$env:LocalPath\Rubrik\en-US\" -Force
+Write-Output "Created $($ExternalHelp.Name) external help file in '$env:LocalPath\Rubrik\en-US\'"
 
 # Custom Generate Summary.md
 Write-Output 'Generate custom markdown SUMMARY.md'
