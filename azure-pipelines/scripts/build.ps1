@@ -44,7 +44,7 @@ if ($env:targetBranch -ne 'master') {
     Import-Module -Name "$env:LocalPath\Rubrik" -Force
     New-MarkdownHelp -Module Rubrik -OutputFolder "$env:LocalPath\docs\reference\" -Force
     New-ExternalHelp -Path "$env:LocalPath\docs\reference\" -OutputPath "$env:LocalPath\Rubrik\en-US\" -Force
-    . .\azure-pipelines\scripts\docs.ps1
+    #. .\azure-pipelines\scripts\docs.ps1
     Write-Host -Object ''
 
     # Publish the new version to the PowerShell Gallery
