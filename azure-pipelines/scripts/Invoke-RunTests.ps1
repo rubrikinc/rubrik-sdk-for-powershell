@@ -6,6 +6,8 @@ $PesterSplat = @{
     OutputFile = "$env:LocalPath\Tests\$env:JobName.xml"
 }
 
+$PSVersionTable
+
 if (6 -ge $PSVersionTable.PSVersion.Major) {
     Write-Output 'Executing PowerShell Core tests'
     $PesterSplat.Script = "$env:LocalPath\Tests\Get-RubrikAPIData.Tests.ps1"
