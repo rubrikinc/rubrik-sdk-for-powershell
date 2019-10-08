@@ -1,4 +1,4 @@
-﻿[string[]]$PowerShellModules = @('posh-git', 'platyPS', 'InvokeBuild', 'PowerShellGet')
+﻿[string[]]$PowerShellModules = @('posh-git', 'platyPS', 'PowerShellGet')
 [string[]]$PackageProviders = @('NuGet', 'PowerShellGet')
 
 # Line break for readability in console
@@ -10,6 +10,8 @@ ForEach ($Provider in $PackageProviders) {
         Install-PackageProvider $Provider -Force -ForceBootstrap -Scope CurrentUser
     }
 }
+
+Remove-Module -Name PackageManagement -Force
 
 # Install the PowerShell Modules
 ForEach ($Module in $PowerShellModules) {
