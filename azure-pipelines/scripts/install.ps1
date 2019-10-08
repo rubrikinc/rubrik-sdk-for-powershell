@@ -18,8 +18,11 @@ ForEach ($Module in $PowerShellModules) {
     }
     
     if ($Module -eq 'PowerShellGet') {
+        'Triggered'
+        Get-Module
         Remove-Module PackageManagement -Force
         Remove-Module $Module -Force
+        Get-Module
     }
     
     Import-Module $Module -Force
