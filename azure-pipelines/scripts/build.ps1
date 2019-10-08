@@ -41,9 +41,9 @@ if ($env:targetBranch -ne 'master') {
 
     # Create new markdown and XML help files
     Write-Host "Building new function documentation" -ForegroundColor Yellow
-    Import-Module -Name "$env:LocalPath\..\Rubrik" -Force
-    New-MarkdownHelp -Module Rubrik -OutputFolder '.\docs\reference\' -Force
-    New-ExternalHelp -Path '.\docs\reference\' -OutputPath '.\Rubrik\en-US\' -Force
+    Import-Module -Name "$env:LocalPath\rubrik-sdk-for-powershell\Rubrik" -Force
+    New-MarkdownHelp -Module Rubrik -OutputFolder "$env:LocalPath\rubrik-sdk-for-powershell\docs\reference\" -Force
+    New-ExternalHelp -Path "$env:LocalPath\rubrik-sdk-for-powershell\docs\reference\" -OutputPath "$env:LocalPath\rubrik-sdk-for-powershell\Rubrik\en-US\" -Force
     . .\azure-pipelines\scripts\docs.ps1
     Write-Host -Object ''
 
