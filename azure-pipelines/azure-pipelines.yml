@@ -62,7 +62,35 @@ jobs:
       echo "system.pullRequest.targetBranch " $(system.pullRequest.targetBranch)
     displayName: 'Display environment variables'
 
+- job: Unit_Tests_On_PowerShell_Ubuntu
+  displayName: 'Unit Tests on PowerShell, Ubuntu'
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Run Unit Tests'
+    inputs:
+      pwsh: true
+      targetType: Inline
+      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
+    env:
+      LocalPath: $(Build.Repository.LocalPath)
+      JobName: $(Agent.JobName)
 
+- job: Unit_Tests_On_PowerShell_macOS
+  displayName: 'Unit Tests on PowerShell, macOS'
+  pool:
+    vmImage: 'macOS-latest'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Run Unit Tests'
+    inputs:
+      pwsh: true
+      targetType: Inline
+      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
+    env:
+      LocalPath: $(Build.Repository.LocalPath)
+      JobName: $(Agent.JobName)
 
 - job: Unit_Tests_On_PowerShell_Server_2019
   displayName: 'Unit Tests on PowerShell, Server 2019'
@@ -88,36 +116,6 @@ jobs:
     displayName: 'Run Unit Tests'
     inputs:
       pwsh: false
-      targetType: Inline
-      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
-    env:
-      LocalPath: $(Build.Repository.LocalPath)
-      JobName: $(Agent.JobName)
-
-- job: Unit_Tests_On_PowerShell_Ubuntu
-  displayName: 'Unit Tests on PowerShell, Ubuntu'
-  pool:
-    vmImage: 'ubuntu-latest'
-  steps:
-  - task: PowerShell@2
-    displayName: 'Run Unit Tests'
-    inputs:
-      pwsh: true
-      targetType: Inline
-      script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
-    env:
-      LocalPath: $(Build.Repository.LocalPath)
-      JobName: $(Agent.JobName)
-
-- job: Unit_Tests_On_PowerShell_macOS
-  displayName: 'Unit Tests on PowerShell, macOS'
-  pool:
-    vmImage: 'macOS-latest'
-  steps:
-  - task: PowerShell@2
-    displayName: 'Run Unit Tests'
-    inputs:
-      pwsh: true
       targetType: Inline
       script: ./azure-pipelines/scripts/Invoke-RunTests.ps1
     env:
