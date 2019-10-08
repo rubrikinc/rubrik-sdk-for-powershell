@@ -64,4 +64,4 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\reference" -Exclude 'readme.md' 
 Set-Content -Value $MarkDown -Path "$env:LocalPath\docs\SUMMARY.md"
 
 # End message
-Write-Object 'Completed GitBook documentation generation'
+Write-Output 'Completed GitBook documentation generation'
