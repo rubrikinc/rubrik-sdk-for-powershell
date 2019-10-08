@@ -70,7 +70,7 @@ jobs:
     vmImage: 'windows-2019'
   steps:
   - task: PowerShell@2
-    displayName: 'Deployment scripts'
+    displayName: 'Run Unit Tests'
     inputs:
       pwsh: true
       targetType: Inline
@@ -84,7 +84,7 @@ jobs:
     vmImage: 'ubuntu-latest'
   steps:
   - task: PowerShell@2
-    displayName: 'Deployment scripts'
+    displayName: 'Run Unit Tests'
     inputs:
       pwsh: true
       targetType: Inline
@@ -98,7 +98,7 @@ jobs:
     vmImage: 'windows-2019'
   steps:
   - task: PowerShell@2
-    displayName: 'Deployment scripts'
+    displayName: 'Run Unit Tests'
     inputs:
       pwsh: true
       targetType: Inline

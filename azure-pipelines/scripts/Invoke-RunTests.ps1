@@ -1,3 +1,4 @@
+Install-Module -Name Pester -Force
 if (6 -ge $PSVersionTable.PSVersion.Major) {
     Write-Output 'Executing PowerShell Core tests'
     Invoke-Pester -Script "$env:LocalPath\Tests\Get-RubrikAPIData.Tests.ps1"
