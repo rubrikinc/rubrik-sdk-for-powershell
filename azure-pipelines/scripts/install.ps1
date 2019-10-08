@@ -1,9 +1,7 @@
-﻿[string[]]$PowerShellModules = @("Pester", "posh-git", "platyPS", "InvokeBuild")
+﻿[string[]]$PowerShellModules = @("posh-git", "platyPS", "InvokeBuild")
 [string[]]$PackageProviders = @('NuGet', 'PowerShellGet')
-[string[]]$ChocolateyPackages = @('calibre')
-[string[]]$NodeModules = @('gitbook-cli')
 
-# Line break for readability in AppVeyor console
+# Line break for readability in console
 Write-Host -Object ''
 
 # Install package providers for PowerShell Modules
@@ -20,9 +18,3 @@ ForEach ($Module in $PowerShellModules) {
     }
     Import-Module $Module
 }
-
-# Install Chocolatey packages
-ForEach ($Package in $ChocolateyPackages) {choco install $Package -y --no-progress}
-
-# Install Node packages
-ForEach ($Module in $NodeModules) {npm install -g $Module}
