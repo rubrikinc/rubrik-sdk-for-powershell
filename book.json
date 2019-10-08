@@ -1,0 +1,6 @@
+{
+    "root": "./docs",
+    "description": "This is a community project that provides a Microsoft PowerShell module for managing and monitoring Rubrik's Cloud Data Management fabric by way of published RESTful APIs.",
+    "language": "en",
+    "plugins": ["expandable-chapters-small"]
+}
