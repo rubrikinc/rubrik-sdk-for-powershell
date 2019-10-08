@@ -1,3 +1,10 @@
+    # Create new markdown and XML help files
+Write-Host "Building new function documentation" -ForegroundColor Yellow
+New-MarkdownHelp -Module Rubrik -OutputFolder "$env:LocalPath\docs\reference\" -Force
+New-ExternalHelp -Path "$env:LocalPath\docs\reference\" -OutputPath "$env:LocalPath\Rubrik\en-US\" -Force
+
+
+
 $StageFolder = '.\compiled_docs'
 
 # Create a Staging folder and copy items in for compiling
