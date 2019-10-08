@@ -117,7 +117,7 @@ jobs:
 - job: PowerShell_on_Ubuntu
   displayName: 'PowerShell on Ubuntu'
   pool:
-    vmImage: 'ubuntu'
+    vmImage: 'ubuntu-latest'
   steps:
   - task: PowerShell@2
     displayName: 'Install pre-reqs'
