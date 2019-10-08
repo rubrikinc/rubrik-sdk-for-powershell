@@ -12,7 +12,7 @@ ForEach ($Provider in $PackageProviders) {
 }
 
 if ($PSVersionTable.PSVersion.Major -ge 6) {
-    'Packagemanagement', 'PowerShellGet' | ForEach-Object {
+    'PowerShellGet' | ForEach-Object {
         Uninstall-Module -Name $_ -Force
     }
 }
