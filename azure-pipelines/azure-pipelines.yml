@@ -62,10 +62,10 @@ jobs:
       echo "system.pullRequest.targetBranch " $(system.pullRequest.targetBranch)
     displayName: 'Display environment variables'
 
-- job: PowerShell_on_Ubuntu
-  displayName: 'PowerShell on Ubuntu'
+- job: Windows_PowerShell_on_Server_2019
+  displayName: 'Windows PowerShell on Server 2019'
   pool:
-    vmImage: 'ubuntu-latest'
+    vmImage: 'windows-2019'
   steps:
   - task: PowerShell@2
     displayName: 'Install pre-reqs'
@@ -89,4 +89,4 @@ jobs:
     inputs:
       artifactName: 'PipelinesScripts'
       targetPath: .
-    condition: succeededOrFailed()
+    condition: failed()
