@@ -14,7 +14,6 @@ if (6 -le $PSVersionTable.PSVersion.Major) {
     $TestResult = Invoke-Pester @PesterSplat
 } else {
     Write-Output 'Executing Windows PowerShell tests'
-
     $TestResult = Invoke-Pester @PesterSplat
 }
 
