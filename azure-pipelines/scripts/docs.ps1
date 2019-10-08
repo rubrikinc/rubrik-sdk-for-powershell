@@ -37,12 +37,8 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\workflow" -Exclude 'readme.md' |
         default {$_}
     }
     $uri = "$($_.Directory.BaseName)/$($_.Name)"
-    
-    if ($_.basename -eq 'readme') {
-        $MarkDown += "* [$Reference]($uri)`n"
-    } else {
-        $MarkDown += "    * [$Reference]($uri)`n"
-    }
+
+    $MarkDown += "    * [$Reference]($uri)`n"
 } -End {
     $MarkDown += "`n"
 }
@@ -56,11 +52,7 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\reference" -Exclude 'readme.md' 
     }
     $uri = "$($_.Directory.BaseName)/$($_.Name)"
     
-    if ($_.BaseName -eq 'readme') {
-        $MarkDown += "* [$Reference]($uri)`n"
-    } else {
-        $MarkDown += "    * [$Reference]($uri)`n"
-    }
+    $MarkDown += "    * [$Reference]($uri)`n"
 }
 
 # Write Markdown to file
