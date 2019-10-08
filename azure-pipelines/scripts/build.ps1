@@ -6,15 +6,15 @@ Get-ChildItem -Path Env:
 
 # Make sure we're using the Master branch and that it's not a pull request
 # Environmental Variables Guide: https://www.appveyor.com/docs/environment-variables/
-if ($env:targetBranch -ne 'master') {
-    Write-Warning -Message "Skipping version increment and publish for branch $env:targetBranch"
+if ($env:TargetBranch -ne 'master') {
+    Write-Warning -Message "Skipping version increment and publish for branch $env:TargetBranch"
 } else {
     # We're going to add 1 to the revision value since a new commit has been merged to Master
     # This means that the major / minor / build values will be consistent across GitHub and the Gallery
     Try
     {
         # This is where the module manifest lives
-        $manifestPath = '.\Rubrik\Rubrik.psd1'
+        $manifestPath = "$env:LocalPath\Rubrik\Rubrik.psd1"
 
         # Start by importing the manifest to determine the version, then add 1 to the revision
         $manifest = Test-ModuleManifest -Path $manifestPath
