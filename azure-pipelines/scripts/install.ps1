@@ -1,4 +1,4 @@
-﻿[string[]]$PowerShellModules = @("posh-git", "platyPS", "InvokeBuild")
+﻿[string[]]$PowerShellModules = @('posh-git', 'platyPS', 'InvokeBuild', 'PowerShellGet')
 [string[]]$PackageProviders = @('NuGet', 'PowerShellGet')
 
 # Line break for readability in console
