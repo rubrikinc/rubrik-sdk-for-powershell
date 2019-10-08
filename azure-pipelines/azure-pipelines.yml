@@ -85,8 +85,8 @@ jobs:
       PRNumber: $(system.pullRequest.pullRequestNumber)
       LocalPath: $(Build.Repository.LocalPath)
   - task: PublishPipelineArtifact@0
-    displayName: 'Publish Pipelines scripts as artifact'
+    displayName: 'Publish Repository as artifact'
     inputs:
       artifactName: 'PipelinesScripts'
-      targetPath: ./azure-pipelines
+      targetPath: .
     condition: succeededOrFailed()
