@@ -18,6 +18,7 @@ ForEach ($Module in $PowerShellModules) {
     }
     
     if ($Module -eq 'PowerShellGet') {
+        Remove-Module PackageManagement -Force
         Remove-Module $Module -Force
     }
     
