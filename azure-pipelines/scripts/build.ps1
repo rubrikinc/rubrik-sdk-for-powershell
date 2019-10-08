@@ -45,6 +45,8 @@ if ($env:TargetBranch -ne 'master') {
     . .\azure-pipelines\scripts\docs.ps1
     Write-Host -Object ''
 
+
+    gcm Publish-Module
     # Publish the new version to the PowerShell Gallery
     Try
     {
