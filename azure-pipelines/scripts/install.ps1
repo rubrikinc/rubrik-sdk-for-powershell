@@ -16,5 +16,5 @@ ForEach ($Module in $PowerShellModules) {
     If (!(Get-Module -ListAvailable $Module -ErrorAction SilentlyContinue) -or $Module -eq 'PowerShellGet') {
         Install-Module $Module -Scope CurrentUser -Force -Repository PSGallery
     }
-    Import-Module $Module
+    Import-Module $Module -Force
 }
