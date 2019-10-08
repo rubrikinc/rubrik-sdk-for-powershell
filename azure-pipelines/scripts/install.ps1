@@ -11,8 +11,7 @@ ForEach ($Provider in $PackageProviders) {
     }
 }
 
-Get-Module PowerShellGet -ListAvailable
-Find-Module PowerShellGet
+Remove-Module PowerShellGet -Force
 
 # Install the PowerShell Modules
 ForEach ($Module in $PowerShellModules) {
