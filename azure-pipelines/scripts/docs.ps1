@@ -34,7 +34,7 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\documentation" | ForEach-Object 
 $MarkDown += "## User Documentation`n`n"
 
 # Workflow folder
-Get-ChildItem -LiteralPath "$env:LocalPath\docs\workflow" -Exclude 'readme.md' | ForEach-Object -Begin {
+Get-ChildItem -LiteralPath "$env:LocalPath\docs\workflow" | ForEach-Object -Begin {
     $MarkDown += "* [Workflow](workflow/readme.md)`n"
 } -Process {
     $Reference = switch ($_.BaseName) {
@@ -43,13 +43,15 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\workflow" -Exclude 'readme.md' |
     }
     $uri = "$($_.Directory.BaseName)/$($_.Name)"
 
-    $MarkDown += "    * [$Reference]($uri)`n"
+    if ($_.basename -ne 'readme') {
+        $MarkDown += "    * [$Reference]($uri)`n"
+    }
 } -End {
     $MarkDown += "`n"
 }
 
 # Reference folder
-Get-ChildItem -LiteralPath "$env:LocalPath\docs\reference" -Exclude 'readme.md' | ForEach-Object -Begin {
+Get-ChildItem -LiteralPath "$env:LocalPath\docs\reference" | ForEach-Object -Begin {
     $MarkDown += "* [Reference](workflow/readme.md)`n"
 } -Process {
     $Reference = switch ($_.BaseName) {
@@ -57,7 +59,9 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\reference" -Exclude 'readme.md' 
     }
     $uri = "$($_.Directory.BaseName)/$($_.Name)"
     
-    $MarkDown += "    * [$Reference]($uri)`n"
+    if ($_.basename -ne 'readme') {
+        $MarkDown += "    * [$Reference]($uri)`n"
+    }
 }
 
 # Write Markdown to file
