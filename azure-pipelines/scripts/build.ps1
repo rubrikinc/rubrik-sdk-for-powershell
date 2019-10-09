@@ -70,7 +70,7 @@ if ($env:TargetBranch -ne 'master') {
     #    throw $_
     #}
 
-    Write-Output -Object 'Publish the new version back to its branch on GitHub...'
+    Write-Output -Object 'Publish the new version back to its branch on GitHub'
     Try
     {
         Import-Module posh-git -ErrorAction Stop
