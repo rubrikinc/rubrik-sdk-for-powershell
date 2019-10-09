@@ -34,8 +34,8 @@ Describe -Name 'Public/New-RubrikOrganization' -Tag 'Public', 'New-RubrikOrganiz
         } 
    
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
     Context -Name 'Parameter Validation' {
         It -Name 'Parameter name cannot be $null' -Test {

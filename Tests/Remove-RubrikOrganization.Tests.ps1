@@ -38,8 +38,8 @@ Describe -Name 'Public/Remove-RubrikOrganization' -Tag 'Public', 'Remove-RubrikO
         }
 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
     }
     
     Context -Name 'Parameter Validation' {
