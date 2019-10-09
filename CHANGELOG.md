@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-08
+
+### Added [cmdlets to add and remove organizations]
+* Added Add-RubrikOrganization and Remove-RubrikOrganization to add and remove organizations, and associated unit tests
+* Addresses [Issue 338](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/338)
+
 ## 2019-10-01
 
 ### Added [cmdlets to set and delete user roles and permissions]
