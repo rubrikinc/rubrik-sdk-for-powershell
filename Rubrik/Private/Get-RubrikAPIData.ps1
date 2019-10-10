@@ -595,6 +595,20 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.NASShare'
             }
         }
+        'Get-RubrikNetworkThrottle'              = @{
+            '1.0' = @{
+                Description = 'Retrieve information network throttling within the Rubrik Cluster'
+                URI         = '/api/internal/network_throttle'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    'resource_id' = 'resource_id'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikNode'              = @{
             '1.0' = @{
                 Description = 'Retrieve information on nodes within the Rubrik Cluster'
@@ -678,6 +692,18 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = @{
                     'name' = 'name'
                 }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikProxySetting'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the configured proxy server within the Rubrik cluster'
+                URI         = '/api/internal/node_management/proxy_config'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
                 Success     = '200'
             }
         }
