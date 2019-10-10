@@ -240,6 +240,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikClusterNetworkInterface'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the network interfaces configured on nodes within the Rubrik cluster'
+                URI         = '/api/internal/cluster/me/network_interface'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    interface = 'interface'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Node'  = 'node'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikDatabase'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Microsoft SQL databases.'
@@ -460,6 +476,18 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.LDAP'
             }
         }
+        'Get-RubrikLoginBanner'         = @{
+            '5.0' = @{
+                Description = 'Retrieves the Login Banner text of the Rubrik Cluster'
+                URI         = '/api/internal/cluster/me/login_banner'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''''
+                Success     = '200'
+            }
+        }
         'Get-RubrikUser'         = @{
             '1.0' = @{
                 Description = 'Retrieves settings related to a given user within the Rubrik cluster'
@@ -571,6 +599,18 @@ function Get-RubrikAPIData($endpoint) {
             '1.0' = @{
                 Description = 'Retrieve information on nodes within the Rubrik Cluster'
                 URI         = '/api/internal/cluster/{id}/node'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikNTPServer'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the configured NTP servers within the Rubrik cluster'
+                URI         = '/api/internal/cluster/me/ntp_server'
                 Method      = 'Get'
                 Body        = ''
                 Query       = ''
