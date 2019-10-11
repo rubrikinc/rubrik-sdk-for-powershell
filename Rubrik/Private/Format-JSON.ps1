@@ -4,10 +4,10 @@
 #>
 
 function ExpandPayload($response) {
-<#
-.SYNOPSIS
-This function use the .Net JSON Serializer in order to 
-#>
+  <#
+    .SYNOPSIS
+    This function use the .Net JSON Serializer in order to bypass the maxJson Length limitation
+  #>
   [void][System.Reflection.Assembly]::LoadWithPartialName('System.Web.Extensions')
   return ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
         MaxJsonLength = 67108864
@@ -16,10 +16,10 @@ This function use the .Net JSON Serializer in order to
 
 
 function ParseItem($jsonItem) {
-<#
-.SYNOPSIS
-Main function that determines the type of object and calls either ParseJsonObject or ParseJsonArray
-#>
+  <#
+    .SYNOPSIS
+    Main function that determines the type of object and calls either ParseJsonObject or ParseJsonArray
+  #>
   if($jsonItem.PSObject.TypeNames -match 'Array') {
     return ParseJsonArray -jsonArray ($jsonItem)
   } elseif($jsonItem.PSObject.TypeNames -match 'Dictionary') {
@@ -30,10 +30,10 @@ Main function that determines the type of object and calls either ParseJsonObjec
 }
 
 function ParseJsonObject($jsonObj) {
-<#
-.SYNOPSIS
-Converts JSON to PowerShell Custom objects
-#>
+  <#
+    .SYNOPSIS
+    Converts JSON to PowerShell Custom objects
+  #>
   $result = New-Object -TypeName PSCustomObject
   foreach ($key in $jsonObj.Keys) 
   {
@@ -51,10 +51,10 @@ Converts JSON to PowerShell Custom objects
 }
 
 function ParseJsonArray($jsonArray) {
-<#
-.SYNOPSIS
-Expands the array and feeds this back into ParseItem, in case of nested arrays this might occur multiple times
-#>
+  <#
+    .SYNOPSIS
+    Expands the array and feeds this back into ParseItem, in case of nested arrays this might occur multiple times
+  #>
   $result = @()
   $jsonArray | ForEach-Object -Process {
     $result += , (ParseItem -jsonItem $_)

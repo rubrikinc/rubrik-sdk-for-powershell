@@ -18,14 +18,15 @@ function ConvertTo-EpochMS{
 
       .EXAMPLE
       ConvertTo-EpochMS -DateTimeValue (Get-Date)
-#>
-[CmdletBinding()]
-param(
-    [DateTime]$DateTimeValue
-)
+
+      1570800771005.35
+  #>
+    [CmdletBinding()]
+    param(
+        [DateTime]$DateTimeValue
+    )
 
     $return = (New-TimeSpan -Start ([datetime]'1970-01-01Z').ToUniversalTime() -End $DateTimeValue.ToUniversalTime()).TotalMilliseconds
-
     return $return
 
 }
