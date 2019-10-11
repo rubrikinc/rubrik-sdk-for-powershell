@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-11
+
+### Changed [Added documentation to all private functions]
+* Added documentation in all private functions including synopsis, description, parameter help and examples where appropriate
+* Addresses [Issue 378](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/378)
+
 ## 2019-10-08
 
 ### Added [cmdlets to add and remove organizations]

@@ -1,9 +1,21 @@
-﻿function Test-QueryObject($object,$location,$query)
-{
-  # The Test-QueryObject function is used to build a custom query string for supported endpoints
-  # $object = The parent function's variable holding the user generated query data
-  # $location = The key/value pair that contains the correct query name value
-  # $params = An array of query values that are added based on which $objects have been passed by the user
+﻿function Test-QueryObject($object, $location, $query) {
+  <#
+    .SYNOPSIS
+    Builds a query string for an endpoint
+
+    .DESCRIPTION
+    The Test-QueryObject function is used to build a custom query string for supported endpoints
+
+    .PARAMETER object
+    The parent function's variable holding the user generated query data
+    
+    .PARAMETER location
+    The key/value pair that contains the correct query name value
+    
+    .PARAMETER params
+    An array of query values that are added based on which $objects have been passed by the user
+  #>
+  
   Write-Debug -Message ($PSBoundParameters | Out-String)
 
   if ((-not [string]::IsNullOrWhiteSpace($object)) -and ($location)) {
