@@ -1197,6 +1197,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'New-RubrikOrganization'      = @{
+            '1.0' = @{
+                Description = 'Adds an organization to a Rubrik cluster'
+                URI         = '/api/internal/organization'
+                Method      = 'Post'
+                Body        = @{
+                    name = "name"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        }
         'New-RubrikVCenter'      = @{
             '1.0' = @{
                 Description = 'Create VMware vCenter connection'
@@ -1825,6 +1839,18 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '202'
+            }
+        }
+        'Remove-RubrikOrganization'           = @{
+            '1.0' = @{
+                Description = 'Remove an organization from a Rubrik cluster'
+                URI         = '/api/internal/organization/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
             }
         }
         'Remove-RubrikReport'          = @{

@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.509'
+ModuleVersion = '4.0.0.510'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -108,7 +108,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'New-RubrikFilesetTemplate', 'New-RubrikHost', 'New-RubrikLDAP', 
                'New-RubrikLogBackup', 'New-RubrikLogShipping', 
                'New-RubrikManagedVolume', 'New-RubrikManagedVolumeExport', 
-               'New-RubrikMount', 'New-RubrikNASShare', 'New-RubrikReport', 
+               'New-RubrikMount', 'New-RubrikNASShare', 'New-RubrikOrganization', 'New-RubrikReport', 
                'New-RubrikSLA', 'New-RubrikSnapshot', 'New-RubrikUser',  
                'New-RubrikVCenter', 'New-RubrikVMDKMount', 'New-RubrikVolumeGroupMount', 
                'Protect-RubrikDatabase', 'Protect-RubrikFileset', 
@@ -118,8 +118,8 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Remove-RubrikDatabaseMount', 'Remove-RubrikFileset', 
                'Remove-RubrikHost', 'Remove-RubrikLogShipping', 
                'Remove-RubrikManagedVolume', 'Remove-RubrikManagedVolumeExport', 
-               'Remove-RubrikMount', 'Remove-RubrikNASShare', 'Remove-RubrikReport', 
-               'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
+               'Remove-RubrikMount', 'Remove-RubrikNASShare', 'Remove-RubrikOrganization',
+               'Remove-RubrikReport', 'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
                'Remove-RubrikUser', 'Remove-RubrikVCenter', 'Remove-RubrikVMSnapshot', 
                'Remove-RubrikVolumeGroupMount', 'Reset-RubrikLogShipping', 
                'Restore-RubrikDatabase', 'Restore-RubrikVApp', 'Set-RubrikAvailabilityGroup', 
