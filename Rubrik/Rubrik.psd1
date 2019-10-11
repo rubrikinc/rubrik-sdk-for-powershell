@@ -86,7 +86,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Export-RubrikReport', 'Export-RubrikVM', 'Export-RubrikVApp',
                'Export-RubrikVCDTemplate', 'Get-RubrikAPIToken', 'Get-RubrikAPIVersion', 
                'Get-RubrikAvailabilityGroup', 'Get-RubrikBootStrap', 'Get-RubrikClusterNetworkInterface'
-               'Get-RubrikDatabase', 
+               'Get-RubrikDatabase', 'Get-RubrikEmailSetting',
                'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 'Get-RubrikClusterInfo', 
                'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikDNSSetting', 'Get-RubrikEvent', 
                'Get-RubrikFileset', 'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 
@@ -95,9 +95,9 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikMount', 'Get-RubrikNASShare', 'Get-RubrikNTPServer', 'Get-RubrikNutanixVM', 
                'Get-RubrikOracleDB', 'Get-RubrikOrganization', 'Get-RubrikReport', 'Get-RubrikNetworkThrottle'
                'Get-RubrikProxySetting', 'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
-               'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
+               'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSNMPSetting', 'Get-RubrikSoftwareVersion', 
                'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 'Get-RubrikVAppExportOptions',
-               'Get-RubrikObject', 'Get-RubrikUserRole', 'Get-RubrikLoginBanner',
+               'Get-RubrikObject', 'Get-RubrikUserRole', 'Get-RubrikLoginBanner', 'Get-RubrikNotificationSetting',
                'Get-RubrikVAppRecoverOptions', 'Get-RubrikVCDTemplateExportOptions', 'Get-RubrikUnmanagedObject', 
                'Get-RubrikUser', 'Get-RubrikVApp', 'Get-RubrikVAppSnapshot', 'Get-RubrikVCD',   
                'Get-RubrikVCenter', 'Get-RubrikVersion', 'Get-RubrikVM', 'Get-RubrikVMSnapshot',  

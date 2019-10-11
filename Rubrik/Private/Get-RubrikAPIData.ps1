@@ -344,6 +344,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikEmailSetting'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the configured email settings within the Rubrik cluster'
+                URI         = '/api/internal/smtp_instance'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikEvent'               = @{
             '1.0' = @{
                 Description = 'Retrieve information for the latest of related events that match the value specified in any of the following categories: type, status, or ID, and limit events by date.'
@@ -621,6 +633,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikNotificationSetting'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the configured notification settings within the Rubrik cluster'
+                URI         = '/api/internal/notification_setting'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikNTPServer'           = @{
             '1.0' = @{
                 Description = 'Returns details of the configured NTP servers within the Rubrik cluster'
@@ -859,6 +883,18 @@ function Get-RubrikAPIData($endpoint) {
                     'CloudState'       = 'cloudState'
                     'OnDemandSnapshot' = 'isOnDemandSnapshot'
                 }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikSNMPSetting'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the configured SNMP settings within the Rubrik cluster'
+                URI         = '/api/internal/cluster/me/snmp_configuration'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
                 Success     = '200'
             }
         }
