@@ -33,7 +33,7 @@ function New-RubrikHost
     [Alias('Hostname')]
     [String]$Name,
     # Set to $false to register a host that will be accessed through network shares
-    [Bool]$HasAgent,
+    [Switch]$HasAgent,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -61,7 +61,8 @@ function New-RubrikHost
   }
 
   Process {
-
+    # If the switch parameter was not explicitly specified remove from query params 
+    if(-not $PSBoundParameters.ContainsKey('HasAgent')) { $Resources.Body.Remove('hasAgent') }
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
