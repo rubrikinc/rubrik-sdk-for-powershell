@@ -79,13 +79,13 @@ function Export-RubrikVM
 
   Process {
 
-    # If the switch parameter was not explicitly specified remove from query params 
-    if(-not $PSBoundParameters.ContainsKey('DisableNetwork')) { $Resources.Query.Remove('disableNetwork') }
-    if(-not $PSBoundParameters.ContainsKey('RemoveNetworkDevices')) { $Resources.Query.Remove('removeNetworkDevices') }
-    if(-not $PSBoundParameters.ContainsKey('KeepMACAddresses')) { $Resources.Query.Remove('keepMacAddresses') }
-    if(-not $PSBoundParameters.ContainsKey('UnregisterVM')) { $Resources.Query.Remove('unregisterVm') }
-    if(-not $PSBoundParameters.ContainsKey('PowerOn')) { $Resources.Query.Remove('powerOn') }
-    if(-not $PSBoundParameters.ContainsKey('RecoverTags')) { $Resources.Query.Remove('shouldRecoverTags') }
+    # If the switch parameter was not explicitly specified remove from body params 
+    if(-not $PSBoundParameters.ContainsKey('DisableNetwork')) { $Resources.Body.Remove('disableNetwork') }
+    if(-not $PSBoundParameters.ContainsKey('RemoveNetworkDevices')) { $Resources.Body.Remove('removeNetworkDevices') }
+    if(-not $PSBoundParameters.ContainsKey('KeepMACAddresses')) { $Resources.Body.Remove('keepMacAddresses') }
+    if(-not $PSBoundParameters.ContainsKey('UnregisterVM')) { $Resources.Body.Remove('unregisterVm') }
+    if(-not $PSBoundParameters.ContainsKey('PowerOn')) { $Resources.Body.Remove('powerOn') }
+    if(-not $PSBoundParameters.ContainsKey('RecoverTags')) { $Resources.Body.Remove('shouldRecoverTags') }
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
