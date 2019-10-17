@@ -77,9 +77,5 @@ Describe -Name 'Public/Get-RubrikOrganization' -Tag 'Public', 'Get-RubrikOrganiz
             { Get-RubrikOrganization -id } |
                 Should -Throw "Missing an argument for parameter 'ID'. Specify a parameter of type 'System.String' and try again."
         }      
-        It -Name 'isGlobal must be Boolean' -Test {
-            { Get-RubrikOrganization -isGlobal 'notabool' } |
-                Should -Throw "Cannot process argument transformation on parameter 'isGlobal'. "
-        }
     }
 }
