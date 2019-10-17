@@ -42,18 +42,7 @@ Describe -Name 'Public/New-RubrikMount' -Tag 'Public', 'New-RubrikMount' -Fixtur
             { New-RubrikMount -id ''  } |
                 Should -Throw "Cannot bind argument to parameter 'Id' because it is an empty string."
         }
-        It -Name 'Validate Disable Network Boolean' -Test {
-            { New-RubrikMount -id 'id' -DisableNetwork yes  } |
-                Should -Throw "Cannot process argument transformation on parameter 'DisableNetwork'. Cannot convert value `"System.String`" to type `"System.Boolean`"."
-        }
-        It -Name 'Validate Remove Network Devices Boolean' -Test {
-            { New-RubrikMount -id 'id' -RemoveNetworkDevices yes  } |
-                Should -Throw "Cannot process argument transformation on parameter 'RemoveNetworkDevices'. Cannot convert value `"System.String`" to type `"System.Boolean`"."
-        }
-        It -Name 'Validate PowerOn Boolean' -Test {
-            { New-RubrikMount -id 'id' -PowerOn yes  } |
-                Should -Throw "Cannot process argument transformation on parameter 'PowerOn'. Cannot convert value `"System.String`" to type `"System.Boolean`"."
-        }
+
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
