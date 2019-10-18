@@ -21,7 +21,7 @@ function New-RubrikHost
       This will register a host that resolves to the name "Server1.example.com"
 
       .EXAMPLE
-      New-RubrikHost -Name 'NAS.example.com' -HasAgent $false
+      New-RubrikHost -Name 'NAS.example.com' -HasAgent:$false
       This will register a host that resolves to the name "NAS.example.com" without using the Rubrik Backup Service
       In this case, the example host is a NAS share.
   #>

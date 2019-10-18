@@ -19,8 +19,11 @@ function Get-RubrikOrganization
 
       .EXAMPLE
       Get-RubrikOrganization
-
       Returns a complete list of all Rubrik organizations.
+
+      .EXAMPLE
+      Get-RubrikOrganization -isGlobal:$false
+      Returns a list of non global of all Rubrik organizations.
   #>
 
   [CmdletBinding()]
