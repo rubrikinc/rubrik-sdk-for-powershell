@@ -29,7 +29,7 @@ Describe -Name 'Public/Set-RubrikVM' -Tag 'Public', 'Set-RubrikVM' -Fixture {
             }
         }
         It -Name 'Should set PauseBackups' -Test {
-            ( Set-RubrikVM -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -PauseBackups $true).isVmPaused |
+            ( Set-RubrikVM -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -PauseBackups ).isVmPaused |
                 Should -BeExactly $true
         }
         Assert-VerifiableMock
