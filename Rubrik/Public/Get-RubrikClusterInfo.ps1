@@ -56,7 +56,7 @@ function Get-RubrikClusterInfo
         $iresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
         switch ($key) {
             {$_ -in "BrikCount","CPUCoresCount"} { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult.count }
-            {$_ -in "DiskCapacityInTb","FlashCapacityInTb"} { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue ($iresult.bytes / 1TB) }
+            #{$_ -in "DiskCapacityInTb","FlashCapacityInTb"} { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue ($iresult.bytes / 1TB) }
             "MemoryCapacityInGb" { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue ($iresult.bytes / 1GB) }
             "ConnectedToPolaris"  { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult.isConnected }
             "NodeCount"         { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult.total }
@@ -72,6 +72,9 @@ function Get-RubrikClusterInfo
               $result | Add-Member -NotePropertyName "geolocation" -NotePropertyValue $iresult.geolocation 
               $result | Add-Member -NotePropertyName "acceptedEulaVersion" -NotePropertyValue $iresult.acceptedEulaVersion 
               $result | Add-Member -NotePropertyName "softwareVersion" -NotePropertyValue $iresult.version 
+            }
+            "Status" {
+              $result | Add-Member -NotePropertyName "Status" -NotePropertyValue $iresult.status
             }
             
         }
