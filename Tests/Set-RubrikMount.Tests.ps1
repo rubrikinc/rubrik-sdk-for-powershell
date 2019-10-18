@@ -31,7 +31,7 @@ Describe -Name 'Public/Set-RubrikMount' -Tag 'Public', 'Set-RubrikMount' -Fixtur
             }
         }
         It -Name 'Should return poweredOff status' -Test {
-            (Set-RubrikMount -id '11-22-33' -PowerOn $false).powerStatus |
+            (Set-RubrikMount -id '11-22-33' -PowerOn:$false).powerStatus |
                 Should -BeExactly 'poweredOff'
         }
         It -Name 'Parameter ID cannot be $null' -Test {
@@ -42,10 +42,6 @@ Describe -Name 'Public/Set-RubrikMount' -Tag 'Public', 'Set-RubrikMount' -Fixtur
             { Set-RubrikMount -Id '' } |
                 Should -Throw "Cannot bind argument to parameter 'id' because it is an empty string."
         } 
-        It -Name 'Validate PowerOn Boolean' -Test {
-            { Set-RubrikMount -id 'id' -PowerOn yes  } |
-                Should -Throw "Cannot process argument transformation on parameter 'PowerOn'. Cannot convert value `"System.String`" to type `"System.Boolean`"."
-        }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
