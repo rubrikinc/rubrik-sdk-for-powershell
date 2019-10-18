@@ -29,7 +29,7 @@ Describe -Name 'Public/Set-RubrikNutanixVM' -Tag 'Public', 'Set-RubrikNutanixVM'
             }
         }
         It -Name 'Should set PauseBackups' -Test {
-            ( Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -PauseBackups $true).isVmPaused |
+            ( Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -PauseBackups).isVmPaused |
                 Should -BeExactly $true
         }
         Assert-VerifiableMock
