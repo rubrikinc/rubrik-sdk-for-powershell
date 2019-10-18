@@ -1,7 +1,11 @@
-<#
-    Helper function to retrieve API data from Rubrik
-#>
 function Get-RubrikAPIData($endpoint) {
+    <#
+        .SYNOPSIS
+        Helper function to retrieve API data from Rubrik
+
+        .DESCRIPTION
+        Function which defines the structure of each cmdlet's API request and response based on the software version the connected Rubrik cluster.
+    #>
     $api = @{
         Example                        = @{
             '1.0' = @{
@@ -1598,6 +1602,8 @@ function Get-RubrikAPIData($endpoint) {
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
                     Oracle = '/api/internal/oracle/db/{id}/snapshot'
                     VcdVapp = '/api/internal/vcd/vapp/{id}/snapshot'
+                    Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
+                    HyperV = '/api/internal/hyperv/vm/{id}/snapshot'
                 }
                 Method      = 'Post'
                 Body        = @{
