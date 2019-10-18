@@ -1,12 +1,12 @@
 #Requires -Version 3
-function Get-RubrikClusterInfo
+function Get-RubrikClusterStorage
 {
   <#  
       .SYNOPSIS
       Connects to Rubrik and retrieves node information for a given cluster
             
       .DESCRIPTION
-      The Get-RubrikClusterInfo cmdlet will retrieve various information and settings for a given cluster.
+      The Get-RubrikClusterStorage cmdlet will retrieve various capacity and usage information about cluster storage.
             
       .NOTES
       Written by Mike Preston for community usage
@@ -14,11 +14,11 @@ function Get-RubrikClusterInfo
       GitHub: mwpreston
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikClusterInfo.html
+      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikClusterStorage.html
             
       .EXAMPLE
-      Get-RubrikClusterInfo 
-      This will return the advanced settings and information around the currently authenticated cluster.
+      Get-RubrikClusterStorage
+      This will return the storage capacity and usage information about the authenticated cluster.
   #>
 
   [CmdletBinding()]
@@ -50,34 +50,23 @@ function Get-RubrikClusterInfo
   }
 
   Process {
-    
+    $precision = 2
+
     $result = @{}
     foreach ($key in $resources.URI.Keys ) {
         $uri = New-URIString -server $Server -endpoint $Resources.URI[$key] -id $id
         $iresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
         switch ($key) {
-            {$_ -in "BrikCount","CPUCoresCount"} { $result.Add($key, $iresult.count) }
-            
-            "MemoryCapacityInGb" { $result.add($key,($iresult.bytes / 1GB)) } 
-            "ConnectedToPolaris"  { $result.add($key,$iresult.isConnected) } 
-            "NodeCount"         { $result.add($key, $iresult.total) } 
-            "Platform"         { $result.add($key,$iresult.platform ) } 
-            {$_ -in "HasTPM","OnlyAzureSupport","IsEncrypted","IsHardwareEncrypted","IsOnCloud","IsRegistered","IsSingleNode" }  { 
-              $result.add($key, $iresult.value )  
-            }
-            "GeneralInfo" {
-              $result.add("Name", $iresult.name) 
-              $result.add("Id",$iresult.id  ) | Add-Member -NotePropertyName "Id" -NotePropertyValue $iresult.id 
-              $result.add("APIVersion", $iresult.apiVersion)
-              $result.add("timezone",$iresult.timezone ) 
-              $result.add("geolocation", $iresult.geolocation)
-              $result.add("acceptedEulaVersion",$iresult.acceptedEulaVersion) 
-              $result.add("softwareVersion", $iresult.version) 
-            }
-            "Status" {
-              $result.add("ClusterStatus",$iresult.status ) 
-            }
-            
+            #{$_ -in "DiskCapacityInTb","FlashCapacityInTb"} { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue ([Math]::round(($iresult.bytes/1TB),$precision)) }
+            {$_ -in "DiskCapacityInTb","FlashCapacityInTb"} { $result.Add($key, ([Math]::round(($iresult.bytes/1TB),$precision))) }
+            "StorageOverview" {
+              $result.add("TotalUsableStorageInTb",([Math]::round(($iresult.total/1TB),$precision)))
+              $result.add("UsedStorageInTb",([Math]::round(($iresult.used/1TB),$precision)))
+              $result.add("AvailableStorageInTb",([Math]::round(($iresult.available/1TB),$precision)))
+              $result.add("SnapshotStorageInTb",([Math]::round(($iresult.snapshot/1TB),$precision)))
+              $result.add("LiveMountStorageInGb",([Math]::round(($iresult.livemount/1GB),$precision)))
+              $result.add("MiscellaneousStorageInGb",([Math]::round(($iresult.miscellaneous/1GB),$precision)))
+            }           
         }
     }
 

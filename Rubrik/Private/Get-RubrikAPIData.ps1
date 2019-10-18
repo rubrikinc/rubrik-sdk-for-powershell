@@ -219,8 +219,6 @@ function Get-RubrikAPIData($endpoint) {
                 Description = 'Retrieves advanced settings of the Rubrik cluster'
                 URI         = @{
                     BrikCount           = '/api/internal/cluster/me/brik_count'
-                    #DiskCapacityInTb    = '/api/internal/cluster/me/disk_capacity'
-                    #FlashCapacityInTb   = '/api/internal/cluster/me/flash_capacity'
                     MemoryCapacityInGb  =  '/api/internal/cluster/me/memory_capacity'
                     CPUCoresCount       = '/api/internal/node/*/cpu_cores_count'
                     ConnectedToPolaris  = '/api/internal/cluster/me/global_manager'
@@ -258,6 +256,22 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = @{
                     'Node'  = 'node'
                 }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikClusterStorage'         = @{
+            '1.0' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                        StorageOverview     = '/api/internal/stats/system_storage'
+                        DiskCapacityInTb    = '/api/internal/cluster/me/disk_capacity'
+                        FlashCapacityInTb   = '/api/internal/cluster/me/flash_capacity'
+                               }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
                 Success     = '200'
             }
         }
