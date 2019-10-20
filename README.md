@@ -1,6 +1,6 @@
 # Rubrik SDK for PowerShell
 
-[![Build Status](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_apis/build/status/rubrikinc.rubrik-sdk-for-powershell?branchName=master)](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_build/latest?definitionId=3&branchName=development)
+[![Build Status](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_apis/build/status/rubrikinc.rubrik-sdk-for-powershell?branchName=devel)](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_build/latest?definitionId=3&branchName=devel)
 [![Build Status](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_apis/build/status/rubrikinc.rubrik-sdk-for-powershell?branchName=master)](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_build/latest?definitionId=3&branchName=master)
 
 This is a community project that provides a Microsoft PowerShell module for managing and monitoring Rubrik's Cloud Data Management fabric by way of published RESTful APIs. If you're looking to perform interactive automation, setting up scheduled tasks, leverage an orchestration engine, or need ad-hoc operations, this module is intended to be valuable to your needs.
