@@ -266,6 +266,8 @@ function Get-RubrikAPIData($endpoint) {
                         StorageOverview     = '/api/internal/stats/system_storage'
                         DiskCapacityInTb    = '/api/internal/cluster/me/disk_capacity'
                         FlashCapacityInTb   = '/api/internal/cluster/me/flash_capacity'
+                        CloudStorage        = '/api/internal/stats/cloud_storage/physical'
+                        DailyGrowth         = '/api/internal/report/summary/average_local_growth_per_day'
                                }
                 Method      = 'Get'
                 Body        = ''

@@ -51,25 +51,26 @@ function Get-RubrikClusterStorage
 
   Process {
     $precision = 2
-
+    $tb = 1000000000000
+    $gb = 1000000000000000
     $result = @{}
     foreach ($key in $resources.URI.Keys ) {
         $uri = New-URIString -server $Server -endpoint $Resources.URI[$key] -id $id
         $iresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
         switch ($key) {
-            #{$_ -in "DiskCapacityInTb","FlashCapacityInTb"} { $result | Add-Member -NotePropertyName "$key" -NotePropertyValue ([Math]::round(($iresult.bytes/1TB),$precision)) }
-            {$_ -in "DiskCapacityInTb","FlashCapacityInTb"} { $result.Add($key, ([Math]::round(($iresult.bytes/1TB),$precision))) }
+            {$_ -in "DiskCapacityInTb","FlashCapacityInTb"} { $result.Add($key, ([Math]::round(($iresult.bytes/$tb),$precision))) }
             "StorageOverview" {
-              $result.add("TotalUsableStorageInTb",([Math]::round(($iresult.total/1TB),$precision)))
-              $result.add("UsedStorageInTb",([Math]::round(($iresult.used/1TB),$precision)))
-              $result.add("AvailableStorageInTb",([Math]::round(($iresult.available/1TB),$precision)))
-              $result.add("SnapshotStorageInTb",([Math]::round(($iresult.snapshot/1TB),$precision)))
-              $result.add("LiveMountStorageInGb",([Math]::round(($iresult.livemount/1GB),$precision)))
-              $result.add("MiscellaneousStorageInGb",([Math]::round(($iresult.miscellaneous/1GB),$precision)))
-            }           
+                $result.add("TotalUsableStorageInTb",([Math]::round(($iresult.total/$tb),$precision)))
+                $result.add("UsedStorageInTb",([Math]::round(($iresult.used/$tb),$precision)))
+                $result.add("AvailableStorageInTb",([Math]::round(($iresult.available/$tb),$precision)))
+                $result.add("SnapshotStorageInTb",([Math]::round(($iresult.snapshot/$tb),$precision)))
+                $result.add("LiveMountStorageInGb",([Math]::round(($iresult.livemount/$gb),$precision)))
+                $result.add("MiscellaneousStorageInGb",([Math]::round(($iresult.miscellaneous/$gb),$precision)))
+            }
+            "CloudStorage" { $result.add("ArchivalUsageInTb", ([Math]::round(($iresult.value/$tb),$precision))) }
+            "DailyGrowth" { $result.add("AverageGrowthPerDayInGb", ([Math]::round(($iresult.bytes/$gb),$precision))) }           
         }
     }
-
     return $result
 
   } # End of process
