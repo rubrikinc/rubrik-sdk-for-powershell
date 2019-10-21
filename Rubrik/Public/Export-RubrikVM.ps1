@@ -39,18 +39,18 @@ function Export-RubrikVM
     # Name of the exported VM 
     [String]$VMName,
     # Whether the network should be disabled upon restoration. This should be set true to avoid ip conflict if source VM still exists. 
-    [Bool]$DisableNetwork,
+    [Switch]$DisableNetwork,
     # Whether to remove network interfaces from the restored virtual machine. Default is false.
-    [Bool]$RemoveNetworkDevices,
+    [Switch]$RemoveNetworkDevices,
     # Whether to assign MAC addresses from source virtual machine to exported virtual machine. Default is false.
-    [Bool]$KeepMACAddresses,
+    [Switch]$KeepMACAddresses,
     # Whether the newly restored virtual machine is unregistered from vCenter. Default is false.
-    [Bool]$UnregisterVM,
+    [Switch]$UnregisterVM,
     # Whether the VM should be powered on after restoration. Default is true.
-    [Bool]$PowerOn,
+    [Switch]$PowerOn,
     # Whether to recover vSphere tags
     [Alias('shouldRecoverTags')]
-    [Bool]$RecoverTags,
+    [Switch]$RecoverTags,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -78,6 +78,14 @@ function Export-RubrikVM
   }
 
   Process {
+
+    # If the switch parameter was not explicitly specified remove from body params 
+    if(-not $PSBoundParameters.ContainsKey('DisableNetwork')) { $Resources.Body.Remove('disableNetwork') }
+    if(-not $PSBoundParameters.ContainsKey('RemoveNetworkDevices')) { $Resources.Body.Remove('removeNetworkDevices') }
+    if(-not $PSBoundParameters.ContainsKey('KeepMACAddresses')) { $Resources.Body.Remove('keepMacAddresses') }
+    if(-not $PSBoundParameters.ContainsKey('UnregisterVM')) { $Resources.Body.Remove('unregisterVm') }
+    if(-not $PSBoundParameters.ContainsKey('PowerOn')) { $Resources.Body.Remove('powerOn') }
+    if(-not $PSBoundParameters.ContainsKey('RecoverTags')) { $Resources.Body.Remove('shouldRecoverTags') }
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri

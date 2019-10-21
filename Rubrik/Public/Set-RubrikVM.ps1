@@ -21,6 +21,10 @@ function Set-RubrikVM
             This will pause backups on any virtual machine named "Server1"
 
             .EXAMPLE
+            Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups:$false
+            This will unpause backups on any virtual machine named "Server1"
+
+            .EXAMPLE
             Get-RubrikVM -SLA Platinum | Set-RubrikVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 -UseArrayIntegration 
             This will find all virtual machines in the Platinum SLA Domain and set their snapshot consistency to crash consistent (no application quiescence)
             while also limiting the number of active hypervisor snapshots to 2 and enable storage array (SAN) snapshots for ingest
@@ -44,10 +48,10 @@ function Set-RubrikVM
         [int]$MaxNestedSnapshots,
         # Whether to pause or resume backups/archival for this VM.
         [Alias('isVmPaused')]
-        [Bool]$PauseBackups,
+        [Switch]$PauseBackups,
         # User setting to dictate whether to use storage array snaphots for ingest. This setting only makes sense for VMs where array based ingest is possible.
         [Alias('isArrayIntegrationEnabled')]
-        [Bool]$UseArrayIntegration,
+        [Switch]$UseArrayIntegration,
         # Rubrik server IP or FQDN
         [String]$Server = $global:RubrikConnection.server,
         # API version
@@ -82,7 +86,8 @@ function Set-RubrikVM
             $SnapConsistency = $SnapConsistency -replace 'AUTOMATIC', 'UNKNOWN'
         }
         #endregion             
-        
+        if(-not $PSBoundParameters.ContainsKey('PauseBackups')) { $Resources.Body.Remove('isVmPaused') }
+        if(-not $PSBoundParameters.ContainsKey('UseArrayIntegration')) { $Resources.Body.Remove('isArrayIntegrationEnabled') }
         $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
         $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
         $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

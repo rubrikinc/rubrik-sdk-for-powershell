@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-18
+
+### Changed [ Various cmdlets updated to remove boolean parameters and change to Switch]
+
+* Migrated boolean parameters to switch parameters in order to provide a more consistent approach accross all cmdlets.
+* **Note: This has the possibility of providing breaking changes as the syntax of calling the parameters like '-Parameter $true' will no longer be supported.**
+* For Example: Export-RubrikVM -PowerOn $False will continue to run, however the $False gets assigned to the VM Name.  Get-RubrikOrganization -isGlobal $true will now fail.  Will need to ensure these are addressed in the release notes.
+* Cmdlets affected are `Export-RubrikVM`, `Get-RubrikEvent`, `Get-RubrikOrganization`, `New-RubrikHost`, `New-RubrikMount`, `Set-RubrikMount`, `Set-RubrikNutanixVM`, `Set-RubrikSupportTunnel` and `Set-RubrikVM`
+* Addresses [Issue 352](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/352)
+
 ## 2019-10-17
 
 ### Changed [Added Nutanix/Hyper-V support to New-RubrikSnapshot]
