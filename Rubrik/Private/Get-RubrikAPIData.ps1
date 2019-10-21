@@ -263,11 +263,13 @@ function Get-RubrikAPIData($endpoint) {
             '1.0' = @{
                 Description = 'Retrieves advanced settings of the Rubrik cluster'
                 URI         = @{
-                        StorageOverview     = '/api/internal/stats/system_storage'
-                        DiskCapacityInTb    = '/api/internal/cluster/me/disk_capacity'
-                        FlashCapacityInTb   = '/api/internal/cluster/me/flash_capacity'
-                        CloudStorage        = '/api/internal/stats/cloud_storage/physical'
-                        DailyGrowth         = '/api/internal/report/summary/average_local_growth_per_day'
+                        StorageOverview         = '/api/internal/stats/system_storage'
+                        DiskCapacityInTb        = '/api/internal/cluster/me/disk_capacity'
+                        FlashCapacityInTb       = '/api/internal/cluster/me/flash_capacity'
+                        CloudStorage            = '/api/internal/stats/cloud_storage/physical'
+                        CloudStorageIngested    = '/api/internal/stats/cloud_storage/ingested'
+                        LocalStorageIngested    = '/api/internal/stats/snapshot_storage/ingested'
+                        DailyGrowth             = '/api/internal/report/summary/average_local_growth_per_day'
                                }
                 Method      = 'Get'
                 Body        = ''

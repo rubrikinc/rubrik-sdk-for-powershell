@@ -50,9 +50,9 @@ function Get-RubrikClusterStorage
   }
 
   Process {
-    $precision = 2
+    $precision = 1
     $tb = 1000000000000
-    $gb = 1000000000000000
+    $gb = 1000000000
     $result = @{}
     foreach ($key in $resources.URI.Keys ) {
         $uri = New-URIString -server $Server -endpoint $Resources.URI[$key] -id $id
@@ -66,11 +66,35 @@ function Get-RubrikClusterStorage
                 $result.add("SnapshotStorageInTb",([Math]::round(($iresult.snapshot/$tb),$precision)))
                 $result.add("LiveMountStorageInGb",([Math]::round(($iresult.livemount/$gb),$precision)))
                 $result.add("MiscellaneousStorageInGb",([Math]::round(($iresult.miscellaneous/$gb),$precision)))
+                $SnapshotStorageInBy = $iresult.snapshot # For later usage
+                $AvailableStorageInBy = $iresult.available # for later calculations
             }
-            "CloudStorage" { $result.add("ArchivalUsageInTb", ([Math]::round(($iresult.value/$tb),$precision))) }
-            "DailyGrowth" { $result.add("AverageGrowthPerDayInGb", ([Math]::round(($iresult.bytes/$gb),$precision))) }           
+            "CloudStorage" {  
+              $result.add("ArchivalUsageInTb", ([Math]::round(($iresult.value/$tb),$precision))) 
+              $ArchivalUsageInBy = $iresult.value # for later usage
+            }
+            "DailyGrowth" { 
+              $result.add("AverageGrowthPerDayInGb", ([Math]::round(($iresult.bytes/$gb),$precision))) 
+              $DailyGrowthInBy = $iresult.bytes # for later calculations
+            }
+            "CloudStorageIngested" { 
+              $result.add("TotalArchiveStorageIngestedInTb",([Math]::round(($iresult.value/$tb),$precision)))
+              $IngestedArchiveStorageInB = $iresult.value
+            } 
+            "LocalStorageIngested" { 
+              $result.add("TotalLocalStorageIngestedInTb",([Math]::round(($iresult.value/$tb),$precision)))
+              $IngestedLocalStorageInB = $iresult.value
+            } 
         }
     }
+    
+    # Calculate data reduction numbers with ingested storage, and estimated runway,add to results
+    $ArchivalDataReduction = [Math]::round(100 - (($ArchivalUsageInBy/$IngestedArchiveStorageInB) * 100),1)
+    $result.Add("ArchivalDataReductionPercent",$ArchivalDataReduction)
+    $LocalDataReduction = [Math]::round(100-(($SnapshotStorageInBy/$IngestedLocalStorageInB)*100),1)
+    $result.Add("LocalDataReductionPercent",$LocalDataReduction)
+    $EstimatedRunwayInDays = [Math]::round(($AvailableStorageInBy/$DailyGrowthInBy)) 
+    $result.Add("EstimatedRunwayInDays", $EstimatedRunwayInDays)
     return $result
 
   } # End of process
