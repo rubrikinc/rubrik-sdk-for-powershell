@@ -64,6 +64,28 @@ Describe -Name 'Public/Get-RubrikOrganization' -Tag 'Public', 'Get-RubrikOrganiz
             (Get-RubrikOrganization -Name 'nonexistant').count |
                 Should -BeExactly 0
         }
+        
+        It -Name 'Verify switch param - isGlobal:$true - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikOrganization -isGlobal -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*is_global=True*'
+        }
+        
+        It -Name 'Verify switch param - isGlobal:$false - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikOrganization -isGlobal:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*is_global=False*'
+        }
+        
+        It -Name 'Verify switch param - No isGlobal - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikOrganization -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*isGlobal*'
+        }
+        
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 4
