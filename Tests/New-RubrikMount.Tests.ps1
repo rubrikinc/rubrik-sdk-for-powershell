@@ -107,7 +107,7 @@ Describe -Name 'Public/New-RubrikMount' -Tag 'Public', 'New-RubrikMount' -Fixtur
         }
 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 10
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 10
     }
 }
