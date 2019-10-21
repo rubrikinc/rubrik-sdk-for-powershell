@@ -19,6 +19,33 @@ Describe -Name 'Public/Export-RubrikVM' -Tag 'Public', 'Export-RubrikVM' -Fixtur
     }
     #endregion
 
+    Context -Name 'Switch Parameters' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        
+        It -Name 'Verify switch param - DisableNetwork:$true - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -DisableNetwork -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*disableNetwork*true*'
+        }
+        
+        It -Name 'Verify switch param - DisableNetwork:$false - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -DisableNetwork:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*disableNetwork*false*'
+        }
+        
+        It -Name 'Verify switch param - No DisableNetwork - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*disableNetwork*'
+        }
+    }
+    
+    
     Context -Name 'Parameters' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
