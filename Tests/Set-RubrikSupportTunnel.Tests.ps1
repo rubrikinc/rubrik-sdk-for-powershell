@@ -29,19 +29,26 @@ Describe -Name 'Public/Set-RubrikSupportTunnel' -Tag 'Public', 'Set-RubrikSuppor
             }
         }
         It -Name 'Enabling Tunnel' -Test {
-            (Set-RubrikSupportTunnel -EnableTunnel $true).isTunnelEnabled |
+            (Set-RubrikSupportTunnel -EnableTunnel).isTunnelEnabled |
                 Should -BeExactly 'True'
         }
-        It -Name 'Parameter EnableTunnel cannot be $null' -Test {
-            { Set-RubrikSupportTunnel -EnableTunnel $null } |
-                Should -Throw "Cannot process argument transformation on parameter 'EnableTunnel'. Cannot convert value `"`" to type `"System.Boolean`". Boolean parameters accept only Boolean values and numbers, such as `$True, `$False, 1 or 0."
+        
+        It -Name 'Verify switch param - EnableTunnel:$true - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikSupportTunnel -EnableTunnel -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*isTunnelEnabled*true*'
         }
-        It -Name 'Parameter EnableTunnel must be specified' -Test {
-            { Set-RubrikSupportTunnel -EnableTunnel } |
-                Should -Throw "Missing an argument for parameter 'EnableTunnel'. Specify a parameter of type 'System.Boolean' and try again."
+        
+        It -Name 'Verify switch param - EnableTunnel:$false - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikSupportTunnel -EnableTunnel:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*isTunnelEnabled*false*'
         }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 3
     }
 }

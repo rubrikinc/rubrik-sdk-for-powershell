@@ -47,11 +47,11 @@ function New-RubrikMount
     # Name of the data store to use/create on the host 
     [String]$DatastoreName,
     # Whether the network should be disabled on mount.This should be set true to avoid ip conflict in case of static IPs. 
-    [Bool]$DisableNetwork,
+    [Switch]$DisableNetwork,
     # Whether the network devices should be removed on mount.
-    [Bool]$RemoveNetworkDevices,
+    [Switch]$RemoveNetworkDevices,
     # Whether the VM should be powered on after mount.
-    [Bool]$PowerOn,
+    [Switch]$PowerOn,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -79,7 +79,11 @@ function New-RubrikMount
   }
 
   Process {
-
+    # If the switch parameter was not explicitly specified remove from body params 
+    if(-not $PSBoundParameters.ContainsKey('DisableNetwork')) { $Resources.Body.Remove('disableNetwork') }
+    if(-not $PSBoundParameters.ContainsKey('RemoveNetworkDevices')) { $Resources.Body.Remove('removeNetworkDevices') }
+    if(-not $PSBoundParameters.ContainsKey('PowerOn')) { $Resources.Body.Remove('powerOn') }
+    
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

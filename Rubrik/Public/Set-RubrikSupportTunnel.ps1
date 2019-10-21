@@ -18,24 +18,24 @@ function Set-RubrikSupportTunnel
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
-      Set-RubrikSupportTunnel -EnableTunnel $false
+      Set-RubrikSupportTunnel -EnableTunnel:$false
       This will disable the Support Tunnel for the Rubrik cluster
 
       .EXAMPLE
-      Set-RubrikSupportTunnel -EnableTunnel $true
+      Set-RubrikSupportTunnel -EnableTunnel
       This will enable the Support Tunnel for the Rubrik cluster and set the inactivity timeout to infinite (no timeout)
 
       .EXAMPLE
-      Set-RubrikSupportTunnel -EnableTunnel $true -Timeout 100
+      Set-RubrikSupportTunnel -EnableTunnel -Timeout 100
       This will enable the Support Tunnel for the Rubrik cluster and set the inactivity timeout to 100 seconds
   #>
 
   [CmdletBinding()]
   Param(
-    # Status of the Support Tunnel. Choose $true to enable or $false to disable.
+    # Status of the Support Tunnel. Choose to enable or -EnableTunnel:$false to disable.
     [Parameter(Mandatory = $true)]
     [Alias('isTunnelEnabled')]
-    [Bool]$EnableTunnel,
+    [Switch]$EnableTunnel,
     # Tunnel inactivity timeout in seconds. Only valid when setting $EnableTunnel to $true.
     [Alias('inactivityTimeoutInSeconds')]
     [int]$Timeout,    
@@ -66,7 +66,7 @@ function Set-RubrikSupportTunnel
   }
 
   Process {
-
+    if(-not $PSBoundParameters.ContainsKey('EnableTunnel')) { $Resources.Body.Remove('isTunnelEnabled') }
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

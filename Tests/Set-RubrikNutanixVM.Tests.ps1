@@ -25,16 +25,38 @@ Describe -Name 'Public/Set-RubrikNutanixVM' -Tag 'Public', 'Set-RubrikNutanixVM'
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
                 'id'                     = 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333'
-                'isVmPaused'             = $true
+                'isPaused'             = $true
             }
         }
         It -Name 'Should set PauseBackups' -Test {
-            ( Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -PauseBackups $true).isVmPaused |
+            ( Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -PauseBackups).isPaused |
                 Should -BeExactly $true
         }
+        
+        It -Name 'Verify switch param - PauseBackups:$true - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -PauseBackups -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*isPaused*true*'
+        }
+        
+        It -Name 'Verify switch param - PauseBackups:$false - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -PauseBackups:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*isPaused*false*'
+        }
+        
+        It -Name 'Verify switch param - No PauseBackups - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*isPaused*'
+        }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 4
     }
 
     Context -Name 'Parameter/SnapConsistency' {
@@ -49,9 +71,10 @@ Describe -Name 'Public/Set-RubrikNutanixVM' -Tag 'Public', 'Set-RubrikNutanixVM'
             ( Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -SnapConsistency 'CRASH_CONSISTENT').snapshotConsistencyMandate |
                 Should -BeExactly 'CRASH_CONSISTENT'
         }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
     
     Context -Name 'Parameter Validation' {
