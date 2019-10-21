@@ -34,6 +34,28 @@ Describe -Name 'Public/Set-RubrikMount' -Tag 'Public', 'Set-RubrikMount' -Fixtur
             (Set-RubrikMount -id '11-22-33' -PowerOn:$false).powerStatus |
                 Should -BeExactly 'poweredOff'
         }
+        
+        It -Name 'Verify switch param - PowerOn:$true - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikMount -id '11-22-33' -PowerOn -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*powerStatus*true*'
+        }
+        
+        It -Name 'Verify switch param - PowerOn:$false - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikMount -id '11-22-33' -PowerOn:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*powerStatus*false*'
+        }
+        
+        It -Name 'Verify switch param - No PowerOn - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikMount -id '11-22-33' -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*powerStatus*'
+        }
+        
         It -Name 'Parameter ID cannot be $null' -Test {
             { Set-RubrikMount -Id $null } |
                 Should -Throw "Cannot bind argument to parameter 'id' because it is an empty string."
