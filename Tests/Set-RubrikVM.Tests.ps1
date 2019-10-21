@@ -28,13 +28,36 @@ Describe -Name 'Public/Set-RubrikVM' -Tag 'Public', 'Set-RubrikVM' -Fixture {
                 'isVmPaused'             = $true
             }
         }
+        
         It -Name 'Should set PauseBackups' -Test {
             ( Set-RubrikVM -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -PauseBackups ).isVmPaused |
                 Should -BeExactly $true
         }
+        
+        It -Name 'Verify switch param - PauseBackups:$true - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikVM -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -PauseBackups -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*isVmPaused*true*'
+        }
+        
+        It -Name 'Verify switch param - PauseBackups:$false - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikVM -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -PauseBackups:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*isVmPaused*false*'
+        }
+        
+        It -Name 'Verify switch param - No PauseBackups - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikVM -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*isVmPaused*'
+        }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 4
     }
 
     Context -Name 'Parameter/SnapConsistency' {
@@ -50,8 +73,8 @@ Describe -Name 'Public/Set-RubrikVM' -Tag 'Public', 'Set-RubrikVM' -Fixture {
                 Should -BeExactly 'CRASH_CONSISTENT'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
     
     Context -Name 'Parameter Validation' {
