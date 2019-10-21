@@ -32,6 +32,28 @@ Describe -Name 'Public/Set-RubrikSupportTunnel' -Tag 'Public', 'Set-RubrikSuppor
             (Set-RubrikSupportTunnel -EnableTunnel).isTunnelEnabled |
                 Should -BeExactly 'True'
         }
+        
+        It -Name 'Verify switch param - EnableTunnel:$true - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikSupportTunnel -EnableTunnel -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*isTunnelEnabled*true*'
+        }
+        
+        It -Name 'Verify switch param - EnableTunnel:$false - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikSupportTunnel -EnableTunnel:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*isTunnelEnabled*false*'
+        }
+        
+        It -Name 'Verify switch param - No EnableTunnel - Switch Param' -Test {
+            $Output = & {
+                Set-RubrikSupportTunnel -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*isTunnelEnabled*'
+        }
+        
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
