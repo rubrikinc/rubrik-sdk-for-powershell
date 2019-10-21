@@ -83,18 +83,22 @@ function Get-RubrikClusterStorage
             } 
             "LocalStorageIngested" { 
               $result.add("TotalLocalStorageIngestedInTb",([Math]::round(($iresult.value/$tb),$precision)))
-              $IngestedLocalStorageInB = $iresult.value
+              $IngestedLocalStorageInBy = $iresult.value
             } 
         }
     }
     
     # Calculate data reduction numbers with ingested storage, and estimated runway,add to results
-    $ArchivalDataReduction = [Math]::round(100 - (($ArchivalUsageInBy/$IngestedArchiveStorageInB) * 100),1)
+    if ($IngestedArchiveStorageInB -eq 0 -or $null -eq $IngestedArchiveStorageInB) { $ArchivalDataReduction = "Not Available" }
+    else { $ArchivalDataReduction = [Math]::round(100 - (($ArchivalUsageInBy/$IngestedArchiveStorageInB) * 100),1) }
     $result.Add("ArchivalDataReductionPercent",$ArchivalDataReduction)
-    $LocalDataReduction = [Math]::round(100-(($SnapshotStorageInBy/$IngestedLocalStorageInB)*100),1)
+    if ($IngestedLocalStorageInBy -eq 0 -or $null -eq $IngestedLocalStorageInBy) { $LocalDataReduction = "Not Available" }
+    else { $LocalDataReduction = [Math]::round(100-(($SnapshotStorageInBy/$IngestedLocalStorageInBy)*100),1) }
     $result.Add("LocalDataReductionPercent",$LocalDataReduction)
-    $EstimatedRunwayInDays = [Math]::round(($AvailableStorageInBy/$DailyGrowthInBy)) 
+    if ($DailyGrowthInBy -eq 0 -or $null -eq $DailyGrowthInBy) { $EstimatedRunwayInDays = "Not Available"}
+    else { $EstimatedRunwayInDays = [Math]::round(($AvailableStorageInBy/$DailyGrowthInBy)) }
     $result.Add("EstimatedRunwayInDays", $EstimatedRunwayInDays)
+    
     return $result
 
   } # End of process
