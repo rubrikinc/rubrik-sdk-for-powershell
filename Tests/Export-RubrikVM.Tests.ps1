@@ -148,6 +148,10 @@ Describe -Name 'Public/Export-RubrikVM' -Tag 'Public', 'Export-RubrikVM' -Fixtur
             }
             (-join $Output) | Should -Not -BeLike '*RecoverTags*'
         }
+        
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 18
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 18
     }
         
     Context -Name 'Parameters' {
