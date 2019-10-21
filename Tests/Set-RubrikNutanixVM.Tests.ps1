@@ -71,6 +71,7 @@ Describe -Name 'Public/Set-RubrikNutanixVM' -Tag 'Public', 'Set-RubrikNutanixVM'
             ( Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -SnapConsistency 'CRASH_CONSISTENT').snapshotConsistencyMandate |
                 Should -BeExactly 'CRASH_CONSISTENT'
         }
+        
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
