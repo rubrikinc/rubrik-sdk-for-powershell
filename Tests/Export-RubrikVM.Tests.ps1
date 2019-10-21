@@ -43,9 +43,113 @@ Describe -Name 'Public/Export-RubrikVM' -Tag 'Public', 'Export-RubrikVM' -Fixtur
             }
             (-join $Output) | Should -Not -BeLike '*disableNetwork*'
         }
+        
+        It -Name 'Verify switch param - RemoveNetworkDevices:$true - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -RemoveNetworkDevices -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*RemoveNetworkDevices*true*'
+        }
+        
+        It -Name 'Verify switch param - RemoveNetworkDevices:$false - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -RemoveNetworkDevices:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*RemoveNetworkDevices*false*'
+        }
+        
+        It -Name 'Verify switch param - No RemoveNetworkDevices - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*RemoveNetworkDevices*'
+        }
+        
+        It -Name 'Verify switch param - KeepMACAddresses:$true - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -KeepMACAddresses -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*KeepMACAddresses*true*'
+        }
+        
+        It -Name 'Verify switch param - KeepMACAddresses:$false - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -KeepMACAddresses:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*KeepMACAddresses*false*'
+        }
+        
+        It -Name 'Verify switch param - No KeepMACAddresses - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*KeepMACAddresses*'
+        }
+        
+        It -Name 'Verify switch param - UnregisterVM:$true - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -UnregisterVM -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*UnregisterVM*true*'
+        }
+        
+        It -Name 'Verify switch param - UnregisterVM:$false - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -UnregisterVM:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*UnregisterVM*false*'
+        }
+        
+        It -Name 'Verify switch param - No UnregisterVM - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*UnregisterVM*'
+        }
+        
+        It -Name 'Verify switch param - PowerOn:$true - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -PowerOn -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*PowerOn*true*'
+        }
+        
+        It -Name 'Verify switch param - PowerOn:$false - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -PowerOn:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*PowerOn*false*'
+        }
+        
+        It -Name 'Verify switch param - No PowerOn - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*PowerOn*'
+        }
+        
+        It -Name 'Verify switch param - RecoverTags:$true - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -RecoverTags -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*RecoverTags*true*'
+        }
+        
+        It -Name 'Verify switch param - RecoverTags:$false - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -RecoverTags:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*RecoverTags*false*'
+        }
+        
+        It -Name 'Verify switch param - No RecoverTags - Switch Param' -Test {
+            $Output = & {
+                Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*RecoverTags*'
+        }
     }
-    
-    
+        
     Context -Name 'Parameters' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
