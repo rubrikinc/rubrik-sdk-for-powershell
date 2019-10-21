@@ -23,11 +23,11 @@ Describe -Name 'Public/Get-RubrikClusterInfo' -Tag 'Public', 'Get-RubrikClusterI
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
-                'name'                   = 'ClusterName'
-                'cpuCoresC'              = '32'
-                'id'                     = '111111-2222-3333-4444-555555555555'
-                'DiskCapacityInTb'       = '12'
-                'FlashCapacityInTb'      = '2'   
+                'name'                 = 'ClusterName'
+                'cpuCoresC'            = '32'
+                'id'                   = '111111-2222-3333-4444-555555555555'
+                'isRegistered'         = 'False'
+                'softwareVersion'      = '5.0.2'   
             }
         }
         It -Name 'No parameters returns all results' -Test {
@@ -42,6 +42,6 @@ Describe -Name 'Public/Get-RubrikClusterInfo' -Tag 'Public', 'Get-RubrikClusterI
 
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 32
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 30
     }
 }
