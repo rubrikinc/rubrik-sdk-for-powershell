@@ -20,35 +20,35 @@ Describe -Name 'Public/Get-RubrikClusterNetworkInterface' -Tag 'Public', 'Get-Ru
     #endregion
 
     Context -Name 'Returned Results' {
-        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
-                'node'                 = 'RVM11111'
-                'interfaceType'        = 'Management'
-                'ipAddress'            = '10.10.10.101'
-                'interfaceName'        = 'bond0'
-                'netmask'              = '255.255.255.0'   
+                'node'          = 'RVM11111'
+                'interfaceType' = 'Management'
+                'ipAddress'     = '10.10.10.101'
+                'interfaceName' = 'bond0'
+                'netmask'       = '255.255.255.0'   
             },
             @{ 
-                'node'                 = 'RVM22222'
-                'interfaceType'        = 'Management'
-                'ipAddress'            = '10.10.10.102'
-                'interfaceName'        = 'bond0'
-                'netmask'              = '255.255.255.0'   
+                'node'          = 'RVM22222'
+                'interfaceType' = 'Management'
+                'ipAddress'     = '10.10.10.102'
+                'interfaceName' = 'bond0'
+                'netmask'       = '255.255.255.0'   
             },
             @{ 
-                'node'                 = 'RVM33333'
-                'interfaceType'        = 'Management'
-                'ipAddress'            = '10.10.10.103'
-                'interfaceName'        = 'bond0'
-                'netmask'              = '255.255.255.0'   
+                'node'          = 'RVM33333'
+                'interfaceType' = 'Management'
+                'ipAddress'     = '10.10.10.103'
+                'interfaceName' = 'bond0'
+                'netmask'       = '255.255.255.0'   
             },
             @{ 
-                'node'                 = 'RVM44444'
-                'interfaceType'        = 'Management'
-                'ipAddress'            = '10.10.10.104'
-                'interfaceName'        = 'bond0'
-                'netmask'              = '255.255.255.0'   
+                'node'          = 'RVM44444'
+                'interfaceType' = 'Management'
+                'ipAddress'     = '10.10.10.104'
+                'interfaceName' = 'bond0'
+                'netmask'       = '255.255.255.0'   
             }
 
         }

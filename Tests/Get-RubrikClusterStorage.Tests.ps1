@@ -20,24 +20,24 @@ Describe -Name 'Public/Get-RubrikClusterStorage' -Tag 'Public', 'Get-RubrikClust
     #endregion
 
     Context -Name 'Returned Results' {
-        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
-                'EstimatedRunwayInDays'             = '6629'
-                'ArchivalUsageInTb'                 = '2.5'
-                'UsedStorageInTb'                   = '2.5'
-                'MiscellaneousStorageInGb'          = '0'
-                'AvailableStorageInTb'              = '27.6'   
-                'ArchivalDataReductionPercent'      = '55.6'
-                'FlashCapacityInTb'                 = '1.9'
-                'SnapshotStorageInTb'               = '2.7'
-                'TotalLocalStorageIngestedInTb'     = '11.9'
-                'LiveMountStorageInGb'              = '0'
-                'AverageGrowthPerDayInGb'           = '4.2'
-                'TotalArchiveStorageIngestedInTb'   = '5.7'
-                'DiskCapacityInTb'                  = '46'
-                'TotalUsableStorageInTb'            = '30.1'
-                'LocalDataReductionPercent'         = '77'
+                'EstimatedRunwayInDays'           = '6629'
+                'ArchivalUsageInTb'               = '2.5'
+                'UsedStorageInTb'                 = '2.5'
+                'MiscellaneousStorageInGb'        = '0'
+                'AvailableStorageInTb'            = '27.6'   
+                'ArchivalDataReductionPercent'    = '55.6'
+                'FlashCapacityInTb'               = '1.9'
+                'SnapshotStorageInTb'             = '2.7'
+                'TotalLocalStorageIngestedInTb'   = '11.9'
+                'LiveMountStorageInGb'            = '0'
+                'AverageGrowthPerDayInGb'         = '4.2'
+                'TotalArchiveStorageIngestedInTb' = '5.7'
+                'DiskCapacityInTb'                = '46'
+                'TotalUsableStorageInTb'          = '30.1'
+                'LocalDataReductionPercent'       = '77'
             }
         }
         It -Name 'No parameters returns all results' -Test {

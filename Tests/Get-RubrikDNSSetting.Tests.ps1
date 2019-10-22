@@ -20,11 +20,11 @@ Describe -Name 'Public/Get-RubrikDNSSetting' -Tag 'Public', 'Get-RubrikDNSSettin
     #endregion
 
     Context -Name 'Returned Results' {
-        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
-                'DNSServers'             = @("192.168.150.1","10.10.1.5")
-                'DNSSearchDomain'        = @("lab.local","domain.local")
+                'DNSServers'      = @("192.168.150.1", "10.10.1.5")
+                'DNSSearchDomain' = @("lab.local", "domain.local")
             }
         }
         It -Name 'No parameters returns all results' -Test {

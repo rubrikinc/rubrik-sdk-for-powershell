@@ -20,15 +20,15 @@ Describe -Name 'Public/Get-RubrikEmailSetting' -Tag 'Public', 'Get-RubrikEmailSe
     #endregion
 
     Context -Name 'Returned Results' {
-        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
-                'fromEmailId'   = 'rubrikCluster@test.com'
-                'smtpUsername'  = 'emailuser'
-                'smtpHostname'  = 'smtp.test.com'
-                'smtpPort'      = '25'
-                'smtpSecurity'  = 'NONE'
-                'id'            = '1111-2222-33333'   
+                'fromEmailId'  = 'rubrikCluster@test.com'
+                'smtpUsername' = 'emailuser'
+                'smtpHostname' = 'smtp.test.com'
+                'smtpPort'     = '25'
+                'smtpSecurity' = 'NONE'
+                'id'           = '1111-2222-33333'   
             }
         }
         It -Name 'No parameters returns all results' -Test {
