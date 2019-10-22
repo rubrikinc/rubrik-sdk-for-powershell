@@ -78,9 +78,14 @@ function Get-RubrikDatabase
     [String]$Hostname,
     #ServerInstance name (combined hostname\instancename)
     [String]$ServerInstance,
+    #Availability Group Name
+    [String]$AvailabilityGroupName,
     #SQL InstanceID, used as a unique identifier
     [Alias('instance_id')]
     [string]$InstanceID,
+    #SQL AvailabilityGroupID, used as a unique identifier
+    [Alias('availability_group_id')]
+    [string]$AvailabilityGroupID,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,    
@@ -115,14 +120,18 @@ function Get-RubrikDatabase
 
     #region one-off
     if($ServerInstance){
-
       $SIobj = ConvertFrom-SqlServerInstance $ServerInstance
       $Hostname = $SIobj.hostname
       $Instance = $SIobj.instancename
     }
       
-   if($Hostname.Length -gt 0 -and $Instance.Length -gt 0 -and $InstanceID.Length -eq 0){
+    if($Hostname.Length -gt 0 -and $Instance.Length -gt 0 -and $InstanceID.Length -eq 0){
       $InstanceID = (Get-RubrikSQLInstance -Hostname $Hostname -Name $Instance).id
+    }
+
+    if($PSBoundParameters.ContainsKey('AvailabilityGroupName')){
+      $AvailabilityGroupID = (Get-RubrikAvailabilityGroup -GroupName $AvailabilityGroupName).id
+      if ($AvailabilGroupID.count -gt 1){$HostName = $AvailabilityGroupName}
     }
     #endregion
   }
