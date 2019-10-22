@@ -55,6 +55,9 @@ function Get-RubrikDNSSetting
     foreach ($key in $resources.URI.Keys ) {
         $uri = New-URIString -server $Server -endpoint $Resources.URI[$key] -id $id
         $iresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+        # support for < 5.0
+        if ($null -ne $iresult.data ) { $iresult = $iresult.data }
+        
         switch ($key) {
             "DNSServers"        {$result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult}
             "DNSSearchDomain"   {$result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult}
