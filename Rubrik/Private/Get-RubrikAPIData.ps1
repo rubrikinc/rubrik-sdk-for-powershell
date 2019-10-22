@@ -286,7 +286,24 @@ function Get-RubrikAPIData($endpoint) {
             }
         }
         'Get-RubrikClusterStorage'         = @{
-            '1.0' = @{
+            '4.2' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                        StorageOverview         = '/api/internal/stats/system_storage'
+                        DiskCapacityInTb        = '/api/internal/cluster/me/disk_capacity'
+                        FlashCapacityInTb       = '/api/internal/cluster/me/flash_capacity'
+                        CloudStorage            = '/api/internal/stats/cloud_storage'
+                        LocalStorageIngested    = '/api/internal/stats/snapshot_storage/ingested'
+                        DailyGrowth             = '/api/internal/report/summary/average_local_growth_per_day'
+                               }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.0' = @{
                 Description = 'Retrieves advanced settings of the Rubrik cluster'
                 URI         = @{
                         StorageOverview         = '/api/internal/stats/system_storage'
