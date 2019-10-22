@@ -700,7 +700,7 @@ function Get-RubrikAPIData($endpoint) {
             }
         }
         'Get-RubrikNotificationSetting'           = @{
-            '1.0' = @{
+            '5.0' = @{
                 Description = 'Returns details of the configured notification settings within the Rubrik cluster'
                 URI         = '/api/internal/notification_setting'
                 Method      = 'Get'
