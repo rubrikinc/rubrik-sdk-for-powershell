@@ -61,8 +61,15 @@ function Get-RubrikNTPServer
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-
+    
+    # backwards support for 4.2 and earlier as they don't contain the server attribute
+    if ($null -eq $result.server) { 
+      $ntpserver = $result
+      $result = [pscustomobject]@{
+        server = $ntpserver
+      }
+    }
     return $result
-
+    
   } # End of process
 } # End of function
