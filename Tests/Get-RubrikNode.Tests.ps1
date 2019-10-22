@@ -47,21 +47,18 @@ Describe -Name 'Public/Get-RubrikNode' -Tag 'Public', 'Get-RubrikNode' -Fixture 
                 'status'                 = 'OK'
             }
         }
-        It -Name 'Should Return count of 5' -Test {
+        It -Name 'Should Return count of 4' -Test {
             (Get-RubrikNode).Count |
-                Should -BeExactly 5
+                Should -BeExactly 4
         }
         It -Name 'Should not run with Name parameter' -Test {
             {Get-RubrikNode -Name doesnotexist -ErrorAction Stop} |
                 Should -Throw
         }
-        It -Name 'Date property should be a datetime object' -Test {
-            (Get-RubrikNode)[1].Date |
-                Should -BeOfType DateTime
-        }
+
         
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 }

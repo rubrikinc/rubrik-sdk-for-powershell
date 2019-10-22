@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Get-RubrikClusterInfo' -Tag 'Public', 'Get-RubrikClusterInfo' -Fixture {
+Describe -Name 'Public/Get-RubrikNTPServer' -Tag 'Public', 'Get-RubrikNTPServer' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -20,28 +20,24 @@ Describe -Name 'Public/Get-RubrikClusterInfo' -Tag 'Public', 'Get-RubrikClusterI
     #endregion
 
     Context -Name 'Returned Results' {
-        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
-                'name'            = 'ClusterName'
-                'cpuCoresC'       = '32'
-                'id'              = '111111-2222-3333-4444-555555555555'
-                'isRegistered'    = 'False'
-                'softwareVersion' = '5.0.2'   
+                'server'                 = 'ntp.server.com' 
             }
         }
         It -Name 'No parameters returns all results' -Test {
-            @( Get-RubrikClusterInfo).Count |
+            @( Get-RubrikNTPServer | Measure-Object).Count |
                 Should -BeExactly 1
         }
 
-        It -Name 'Name should be ClusterName' -Test {
-            @( Get-RubrikClusterInfo).Name |
-                Should -BeExactly 'ClusterName'
+        It -Name 'Server should be ntp.server.com' -Test {
+            @( Get-RubrikNTPServer).server |
+                Should -BeExactly 'ntp.server.com'
         }
 
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 30
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
     }
 }
