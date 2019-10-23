@@ -21,7 +21,7 @@ function New-RubrikHost
       This will register a host that resolves to the name "Server1.example.com"
 
       .EXAMPLE
-      New-RubrikHost -Name 'NAS.example.com' -HasAgent $false
+      New-RubrikHost -Name 'NAS.example.com' -HasAgent:$false
       This will register a host that resolves to the name "NAS.example.com" without using the Rubrik Backup Service
       In this case, the example host is a NAS share.
   #>
@@ -33,7 +33,7 @@ function New-RubrikHost
     [Alias('Hostname')]
     [String]$Name,
     # Set to $false to register a host that will be accessed through network shares
-    [Bool]$HasAgent,
+    [Switch]$HasAgent,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -55,13 +55,14 @@ function New-RubrikHost
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
-    Write-Verbose -Message "Load API data for $Function"
+    Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
   
   }
 
   Process {
-    
+    # If the switch parameter was not explicitly specified remove from query params 
+    if(-not $PSBoundParameters.ContainsKey('HasAgent')) { $Resources.Body.Remove('hasAgent') }
     $uri = New-URIString -server $Server -endpoint ($resources.URI)
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
