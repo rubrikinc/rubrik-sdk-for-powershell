@@ -23,6 +23,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Scoped the ID variable to local within the URI construction of New-RubrikHost as it was pulling ID variables set within the global scope and causing errors
 * Resolves [Issue 470](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/470)
 
+## 2019-10-18
+
+### Changed [ Various cmdlets updated to remove boolean parameters and change to Switch]
+
+* Migrated boolean parameters to switch parameters in order to provide a more consistent approach accross all cmdlets.
+* **Note: This has the possibility of providing breaking changes as the syntax of calling the parameters like '-Parameter $true' will no longer be supported.**
+* For Example: Export-RubrikVM -PowerOn $False will continue to run, however the $False gets assigned to the VM Name.  Get-RubrikOrganization -isGlobal $true will now fail.  Will need to ensure these are addressed in the release notes.
+* Cmdlets affected are `Export-RubrikVM`, `Get-RubrikEvent`, `Get-RubrikOrganization`, `New-RubrikHost`, `New-RubrikMount`, `Set-RubrikMount`, `Set-RubrikNutanixVM`, `Set-RubrikSupportTunnel` and `Set-RubrikVM`
+* Addresses [Issue 352](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/352)
+
+## 2019-10-17
+
+### Changed [Added Nutanix/Hyper-V support to New-RubrikSnapshot]
+* Modified URI list in Get-RubrikAPIData for New-RubrikSnapshot to include support for Nutanix and Hyper-V
+* Addresses [Issue 466](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/466)
+
+## 2019-10-11
+
+### Changed [Added documentation to all private functions]
+* Added documentation in all private functions including synopsis, description, parameter help and examples where appropriate
+* Addresses [Issue 378](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/378)
+
+## 2019-10-08
+
+### Added [cmdlets to add and remove organizations]
+* Added Add-RubrikOrganization and Remove-RubrikOrganization to add and remove organizations, and associated unit tests
+* Addresses [Issue 338](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/338)
+
 ## 2019-10-01
 
 ### Added [cmdlets to set and delete user roles and permissions]

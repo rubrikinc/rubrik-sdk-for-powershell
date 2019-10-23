@@ -1,21 +1,21 @@
 function Select-ExactMatch {
-<#
-.SYNOPSIS
-Helper function, filters API data when infix search is used to provide an exact match
+    <#
+        .SYNOPSIS
+        Helper function, filters API data when infix search is used to provide an exact match
 
-.DESCRIPTION
-This function only selects exact matches based on the name provided in $Parameter
+        .DESCRIPTION
+        This function only selects exact matches based on the name provided in $Parameter
 
-.NOTES
-Written by Jaap Brasser for community usage
-Twitter: @jaap_brasser
-GitHub: jaapbrasser
+        .NOTES
+        Written by Jaap Brasser for community usage
+        Twitter: @jaap_brasser
+        GitHub: jaapbrasser
 
-.EXAMPLE
-$result = Select-ExactMatch -Parameter Name -Result $Result
+        .EXAMPLE
+        $result = Select-ExactMatch -Parameter Name -Result $Result
 
-Filters based on the Name parameter, only exact matches will be returned. Additional results supplied by the API endpoints will be filtered out
-#>
+        Filters based on the Name parameter, only exact matches will be returned. Additional results supplied by the API endpoints will be filtered out
+    #>
     [CmdletBinding()]
     param (
         [parameter(Mandatory)]

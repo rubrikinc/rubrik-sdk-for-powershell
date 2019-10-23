@@ -76,14 +76,14 @@ function Get-RubrikEvent
     [Alias('object_type')]
     [parameter()]
     [string]$ObjectType,
-    # A Boolean value that determines whether to show only on the most recent event in the series. When 'true' only the most recent event in the series are shown. When 'false' all events in the series are shown. The default value is 'true'.
+    # A switch value that determines whether to show only on the most recent event in the series. When 'true' only the most recent event in the series are shown. When 'false' all events in the series are shown. The default value is 'true'.
     [Alias('show_only_latest')]
     [parameter()]
-    [bool]$ShowOnlyLatest,
-    # A Boolean value that determines whether to filter only on the most recent event in the series. When 'true' only the most recent event in the series are filtered. When 'false' all events in the series are filtered. The default value is 'true'.
+    [Switch]$ShowOnlyLatest,
+    # A Switch value that determines whether to filter only on the most recent event in the series. When 'true' only the most recent event in the series are filtered. When 'false' all events in the series are filtered. The default value is 'true'.
     [Alias('filter_only_on_latest')]
     [parameter()]
-    [bool]$FilterOnlyOnLatest,
+    [Switch]$FilterOnlyOnLatest,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -111,6 +111,10 @@ function Get-RubrikEvent
   }
 
   Process {
+
+    # If the switch parameter was not explicitly specified remove from query params 
+    if(-not $PSBoundParameters.ContainsKey('ShowOnlyLatest')) { $Resources.Query.Remove('show_only_latest') }
+    if(-not $PSBoundParameters.ContainsKey('FilterOnlyOnLatest')) { $Resources.Query.Remove('filter_only_on_latest') }
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI)
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri

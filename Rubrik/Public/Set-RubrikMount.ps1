@@ -17,7 +17,7 @@ function Set-RubrikMount
       http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikMount.html
 
       .EXAMPLE
-      Get-RubrikMount -id '11111111-2222-3333-4444-555555555555' | Set-RubrikMount -PowerOn:$true
+      Get-RubrikMount -id '11111111-2222-3333-4444-555555555555' | Set-RubrikMount -PowerOn
       This will send a power on request to "Server1"
 
       .EXAMPLE
@@ -32,7 +32,7 @@ function Set-RubrikMount
     [String]$id,
     # Configuration for the change power status request
     [Alias('powerStatus')]
-    [Bool]$PowerOn,
+    [Switch]$PowerOn,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -60,7 +60,7 @@ function Set-RubrikMount
   }
 
   Process {
-
+    if(-not $PSBoundParameters.ContainsKey('PowerOn')) { $Resources.Body.Remove('powerStatus') }
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

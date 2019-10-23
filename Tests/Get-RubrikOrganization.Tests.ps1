@@ -64,9 +64,31 @@ Describe -Name 'Public/Get-RubrikOrganization' -Tag 'Public', 'Get-RubrikOrganiz
             (Get-RubrikOrganization -Name 'nonexistant').count |
                 Should -BeExactly 0
         }
+        
+        It -Name 'Verify switch param - isGlobal:$true - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikOrganization -isGlobal -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*is_global=True*'
+        }
+        
+        It -Name 'Verify switch param - isGlobal:$false - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikOrganization -isGlobal:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*is_global=False*'
+        }
+        
+        It -Name 'Verify switch param - No isGlobal - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikOrganization -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*isGlobal*'
+        }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 4
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 7
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 7
     }
     Context -Name 'Parameter Validation' {
         It -Name 'Name Missing' -Test {
@@ -77,9 +99,5 @@ Describe -Name 'Public/Get-RubrikOrganization' -Tag 'Public', 'Get-RubrikOrganiz
             { Get-RubrikOrganization -id } |
                 Should -Throw "Missing an argument for parameter 'ID'. Specify a parameter of type 'System.String' and try again."
         }      
-        It -Name 'isGlobal must be Boolean' -Test {
-            { Get-RubrikOrganization -isGlobal 'notabool' } |
-                Should -Throw "Cannot process argument transformation on parameter 'isGlobal'. "
-        }
     }
 }

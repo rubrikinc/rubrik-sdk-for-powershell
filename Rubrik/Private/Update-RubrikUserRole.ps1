@@ -1,6 +1,21 @@
 function Update-RubrikUserRole($role, $roleUri, $roleMethod) {
-  # function used to build out different bodies and update user roles based on parameters.
-  
+  <#
+    .SYNOPSIS
+    Updates a users role within Rubrik
+
+    .DESCRIPTION
+    The Update-RubrikUserRole function is used to create and submit the proper request to the proper endpoint in order to update a users role within the Rubrik cluster.
+
+    .PARAMETER role
+    The role to update (admin/end_user/no_access/etc)
+    
+    .PARAMETER roleUri
+    The URI to use when constructing the API request
+
+    .PARAMETER roleMethod
+    The HTTP Method to apply to the API request.
+  #>
+   
   # Set the Method
   $resources.Method = $roleMethod
 
