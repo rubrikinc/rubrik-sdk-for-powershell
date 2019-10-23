@@ -66,8 +66,50 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
                 Should -BeOfType DateTime
         }
         
+        It -Name 'Verify switch param - ShowOnlyLatest:$true - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikEvent -ShowOnlyLatest -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*show_only_latest=true*'
+        }
+        
+        It -Name 'Verify switch param - ShowOnlyLatest:$false - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikEvent -ShowOnlyLatest:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*show_only_latest=false*'
+        }
+        
+        It -Name 'Verify switch param - No ShowOnlyLatest - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikEvent -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*show_only_latest='
+        }
+        
+        It -Name 'Verify switch param - FilterOnlyOnLatest:$true - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikEvent -FilterOnlyOnLatest -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*filter_only_on_latest=true*'
+        }
+        
+        It -Name 'Verify switch param - FilterOnlyOnLatest:$false - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikEvent -FilterOnlyOnLatest:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*filter_only_on_latest=false*'
+        }
+        
+        It -Name 'Verify switch param - No FilterOnlyOnLatest - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikEvent -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*filter_only_on_latest='
+        }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 8
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 8
     }
 }
