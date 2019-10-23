@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-22
+
+### Fixed [Scoped ID variable to local in New-RubrikHost]
+
+* Scoped the ID variable to local within the URI construction of New-RubrikHost as it was pulling ID variables set within the global scope and causing errors
+* Resolves [Issue 470](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/470)
+
 ## 2019-10-18
 
 ### Changed [ Various cmdlets updated to remove boolean parameters and change to Switch]
