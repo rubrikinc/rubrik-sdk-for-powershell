@@ -19,26 +19,42 @@ Describe -Name 'Public/New-RubrikHost' -Tag 'Public', 'New-RubrikHost' -Fixture 
     }
     #endregion
 
-    Context -Name 'Parameter Validation' {
+    Context -Name 'Reponse Validation' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 id = "11111-11111-11111"
-                name = "MyNewServer"
-                hostname = "MyNewServer"
+                name = "MyNewServer.Rubrik.com"
+                hostname = "MyNewServer.Rubrik.com"
                 primaryClusterId = "22222-22222-22222"
-                operatingSystem = "MacOS"
+                operatingSystem = "macOS"
             }
         }
 
-        It -Name 'Should create mount with QUEUED status' -Test {
-            ( New-RubrikHost -Id 'snapshotid').status |
-                Should -BeExactly 'QUEUED'
+        It -Name 'Should create new Rubrik host with correct name' -Test {
+            ( New-RubrikHost -Name 'MyNewServer.Rubrik.com').Name |
+                Should -BeExactly 'MyNewServer.Rubrik.com'
         }
         
+        It -Name 'Should create new Rubrik host with correct hostname' -Test {
+            ( New-RubrikHost -Name 'MyNewServer.Rubrik.com').hostname |
+                Should -BeExactly 'MyNewServer.Rubrik.com'
+        }
+        
+        It -Name 'Should create new Rubrik host with correct operating system' -Test {
+            ( New-RubrikHost -Name 'MyNewServer.Rubrik.com').operatingSystem |
+                Should -BeExactly 'macOS'
+        }
+        
+        It -Name 'Verify switch param - No PauseBackups - Switch Param' -Test {
+            $Output = & {
+                New-RubrikHost -Name 'MyNewServer.Rubrik.com' -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*hostname*:*MyNewServer.Rubrik.com*'
+        }
 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 4
     }
 }
