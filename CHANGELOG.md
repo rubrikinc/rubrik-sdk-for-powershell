@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-24
+
+### Added [Added Availability Group parameters to Get-RubrikDatabase]
+
+* Added `-AvailabilityGroupID` and `AvailabilityGroupName` parameters to `Get-RubrikDatabase`
+* Added unit tests to validate the new functionality
+
 ## 2019-10-18
 
 ### Changed [ Various cmdlets updated to remove boolean parameters and change to Switch]
