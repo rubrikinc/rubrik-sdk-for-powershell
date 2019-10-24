@@ -51,6 +51,16 @@ function Get-RubrikDatabase
       .EXAMPLE
       Get-RubrikDatabase -InstanceID MssqlInstance:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
       This will return details on a single SQL instance matching the Rubrik ID of "MssqlInstance:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+      
+      .EXAMPLE
+      Get-RubrikDatabase -AvailabilityGroupName BestAvailabilityGroup
+      
+      This will return all databases in the BestAvailabilityGroup AG. If it matches multiple availability group names it will default to querying by host name instead
+      
+      .EXAMPLE
+      Get-RubrikDatabase -AvailabilityGroupID 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90'
+      
+      Query for databases by availability group ID
   #>
 
   [CmdletBinding()]
@@ -78,11 +88,11 @@ function Get-RubrikDatabase
     [String]$Hostname,
     #ServerInstance name (combined hostname\instancename)
     [String]$ServerInstance,
-    #Availability Group Name
-    [String]$AvailabilityGroupName,
     #SQL InstanceID, used as a unique identifier
     [Alias('instance_id')]
     [string]$InstanceID,
+    #Availability Group Name
+    [String]$AvailabilityGroupName,
     #SQL AvailabilityGroupID, used as a unique identifier
     [Alias('availability_group_id')]
     [string]$AvailabilityGroupID,
