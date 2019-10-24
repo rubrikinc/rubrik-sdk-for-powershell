@@ -91,9 +91,9 @@ function Get-RubrikDatabase
     #SQL InstanceID, used as a unique identifier
     [Alias('instance_id')]
     [string]$InstanceID,
-    #Availability Group Name
+    # Availability Group Name
     [String]$AvailabilityGroupName,
-    #SQL AvailabilityGroupID, used as a unique identifier
+    # SQL AvailabilityGroupID, used as a unique identifier
     [Alias('availability_group_id')]
     [string]$AvailabilityGroupID,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
