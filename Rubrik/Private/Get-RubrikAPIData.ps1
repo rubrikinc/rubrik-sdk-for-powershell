@@ -234,6 +234,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'      = 'effectiveSlaDomainName'
                     'Hostname' = 'rootProperties.rootName'
                     'Instance' = 'instanceName'
+                    'AvailabilityGroupID' = 'availabilityGroupId'
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.MSSQLDatabase'
