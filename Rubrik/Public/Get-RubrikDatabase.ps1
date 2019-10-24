@@ -131,7 +131,7 @@ function Get-RubrikDatabase
 
     if($PSBoundParameters.ContainsKey('AvailabilityGroupName')){
       $AvailabilityGroupID = (Get-RubrikAvailabilityGroup -GroupName $AvailabilityGroupName).id
-      if ($AvailabilGroupID.count -gt 1){$HostName = $AvailabilityGroupName}
+      if ($AvailabilityGroupID.count -gt 1){$HostName = $AvailabilityGroupName}
     }
     #endregion
   }
