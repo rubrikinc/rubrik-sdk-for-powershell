@@ -217,4 +217,75 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
     }
+    Context -Name 'Validate AG Group filtering' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Get-RubrikAvailabilityGroup -Verifiable -ParameterFilter {$GroupName -eq 'BestAG'} -Module 'Rubrik' -MockWith {
+            [pscustomobject]@{
+                id = 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90'
+            }
+        }
+        Mock -CommandName Get-RubrikAvailabilityGroup -Verifiable -ModuleName 'Rubrik' -MockWith {} 
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            $response = '{  
+                "hasMore":false,
+                "data":[  
+                    {
+                        "availabilityGroupId": "MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90",
+                        "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
+                        "effectiveSlaDomainName": "Gold",
+                        "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
+                        "instanceName": "MSSQLSERVER",
+                        "name": "DB1"
+                    },
+                    {
+                        "availabilityGroupId": "MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90",
+                        "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
+                        "effectiveSlaDomainName": "Gold",
+                        "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
+                        "instanceName": "MSSQLSERVER",
+                        "name": "DB2"
+                    },
+                    {
+                        "availabilityGroupId": "MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef00",
+                        "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
+                        "effectiveSlaDomainName": "Gold",
+                        "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
+                        "instanceName": "MSSQLSERVER",
+                        "name": "DB3"
+                    }
+                ],
+                "total":3
+            }'
+            return ConvertFrom-Json $response
+        }
+        It -Name 'Get all databases' -Test {
+            (Get-RubrikDatabase).Count |
+                Should -BeExactly 3
+        }
+        It -Name 'Get Databases by availability group ID' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupID 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90').Count |
+                Should -BeExactly 2
+        }
+        It -Name 'Get Databases by availability group Name' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupName BestAG).count |
+                Should -BeExactly 2
+        }
+        It -Name 'Get Databases by availability group name - Verify ID' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupName BestAG).availabilityGroupId |
+                Should -Contain 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90'
+        }
+        It -Name 'Get Databases by availability group name and database name' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupName BestAG -Name DB2).Name |
+                Should -BeExactly 'DB2'
+        }        
+        It -Name 'Get Databases by incorrect availability group name, return no results' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupName WorstAG) |
+                Should -BeNullOrEmpty
+        }
+        
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 6
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 6
+        Assert-MockCalled -CommandName Get-RubrikAvailabilityGroup -ModuleName 'Rubrik' -Exactly 4
+    }
 }
