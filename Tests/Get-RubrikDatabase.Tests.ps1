@@ -219,7 +219,7 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
     }
     Context -Name 'Validate AG Group filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
-        Mock -CommandName Get-RubrikAvailabilityGroup -Verifiable -ParameterFilter {$GroupName = 'BestAG'} -Module 'Rubrik' -MockWith {
+        Mock -CommandName Get-RubrikAvailabilityGroup -Verifiable -ParameterFilter {$GroupName -eq 'BestAG'} -Module 'Rubrik' -MockWith {
             [pscustomobject]@{
                 id = 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90'
             }
@@ -266,13 +266,26 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
             (Get-RubrikDatabase -AvailabilityGroupID 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90').Count |
                 Should -BeExactly 2
         }
-        It -Name 'Get Databases by availability group name' -Test {
-            (Get-RubrikDatabase -AvailabilityGroupName BestAG).Id |
+        It -Name 'Get Databases by availability group Name' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupName BestAG).count |
+                Should -BeExactly 2
+        }
+        It -Name 'Get Databases by availability group name - Verify ID' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupName BestAG).availabilityGroupId |
                 Should -Contain 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90'
         }
-        It -Name 'Get Databases by incorrect availability group namme' -Test {
+        It -Name 'Get Databases by availability group name and database name' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupName BestAG -Name DB2).Name |
+                Should -BeExactly 'DB2'
+        }        
+        It -Name 'Get Databases by incorrect availability group name, return no results' -Test {
             (Get-RubrikDatabase -AvailabilityGroupName WorstAG) |
                 Should -BeNullOrEmpty
         }
+        
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 6
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 6
+        Assert-MockCalled -CommandName Get-RubrikAvailabilityGroup -ModuleName 'Rubrik' -Exactly 4
     }
 }
