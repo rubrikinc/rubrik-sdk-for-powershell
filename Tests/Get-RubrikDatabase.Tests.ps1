@@ -232,6 +232,7 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
                     {
                         "availabilityGroupId": "MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90",
                         "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
+                        "effectiveSlaDomainName": "Gold",
                         "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
                         "instanceName": "MSSQLSERVER",
                         "name": "DB1"
@@ -239,6 +240,7 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
                     {
                         "availabilityGroupId": "MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90",
                         "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
+                        "effectiveSlaDomainName": "Gold",
                         "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
                         "instanceName": "MSSQLSERVER",
                         "name": "DB2"
@@ -246,16 +248,31 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
                     {
                         "availabilityGroupId": "MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef00",
                         "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
+                        "effectiveSlaDomainName": "Gold",
                         "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
                         "instanceName": "MSSQLSERVER",
                         "name": "DB3"
                     }
-                ]
+                ],
+                "total":3
             }'
+            return ConvertFrom-Json $response
+        }
+        It -Name 'Get all databases' -Test {
+            (Get-RubrikDatabase).Count |
+                Should -BeExactly 3
         }
         It -Name 'Get Databases by availability group ID' -Test {
             (Get-RubrikDatabase -AvailabilityGroupID 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90').Count |
                 Should -BeExactly 2
+        }
+        It -Name 'Get Databases by availability group name' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupName BestAG).Id |
+                Should -Contain 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90'
+        }
+        It -Name 'Get Databases by incorrect availability group namme' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupName WorstAG) |
+                Should -BeNullOrEmpty
         }
     }
 }
