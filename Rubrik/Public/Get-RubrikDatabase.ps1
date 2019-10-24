@@ -131,7 +131,13 @@ function Get-RubrikDatabase
 
     if($PSBoundParameters.ContainsKey('AvailabilityGroupName')){
       $AvailabilityGroupID = (Get-RubrikAvailabilityGroup -GroupName $AvailabilityGroupName).id
-      if ($AvailabilityGroupID.count -gt 1){$HostName = $AvailabilityGroupName}
+      if ($AvailabilityGroupID.count -gt 1) {
+        $HostName = $AvailabilityGroupName
+      } elseif ([string]::IsNullOrEmpty($AvailabilityGroupID)) {
+        Write-Warning -Message 'Availability Group Name does not match existing availability group, please verify the name.'
+        $AvailabilityGroupID = 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-999999999999'
+      }
+      $PSBoundParameters.Add('AvailabilityGroupID',$AvailabilityGroupID)
     }
     #endregion
   }
