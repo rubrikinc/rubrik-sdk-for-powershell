@@ -217,4 +217,45 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
     }
+    Context -Name 'Validate AG Group filtering' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Get-RubrikAvailabilityGroup -Verifiable -ParameterFilter {$GroupName = 'BestAG'} -Module 'Rubrik' -MockWith {
+            [pscustomobject]@{
+                id = 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90'
+            }
+        }
+        Mock -CommandName Get-RubrikAvailabilityGroup -Verifiable -ModuleName 'Rubrik' -MockWith {} 
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            $response = '{  
+                "hasMore":false,
+                "data":[  
+                    {
+                        "availabilityGroupId": "MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90",
+                        "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
+                        "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
+                        "instanceName": "MSSQLSERVER",
+                        "name": "DB1"
+                    },
+                    {
+                        "availabilityGroupId": "MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90",
+                        "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
+                        "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
+                        "instanceName": "MSSQLSERVER",
+                        "name": "DB2"
+                    },
+                    {
+                        "availabilityGroupId": "MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef00",
+                        "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
+                        "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
+                        "instanceName": "MSSQLSERVER",
+                        "name": "DB3"
+                    }
+                ]
+            }'
+        }
+        It -Name 'Get Databases by availability group ID' -Test {
+            (Get-RubrikDatabase -AvailabilityGroupID 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90').Count |
+                Should -BeExactly 2
+        }
+    }
 }
