@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-24
+
+### Added [Added Availability Group parameters to Get-RubrikDatabase]
+
+* Added `-AvailabilityGroupID` and `AvailabilityGroupName` parameters to `Get-RubrikDatabase`
+* Added unit tests to validate the new functionality
+
 ## 2019-10-22
 
 ### Added [Various GET cmdlets to retrieve cluster information]
@@ -23,6 +30,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added various cmdlets and respective unit tests to support retrieving information from the Rubrik cluster. Development mainly driven from the As Built Report module.
 * New cmdlets are `Get-RubrikClusterInfo`, `Get-RubrikClusterNetworkInterface`, `Get-RubrikClusterStorage`, `Get-RubrikDNSSetting`, `Get-RubrikEmailSetting`, `Get-RubrikLoginBanner`, `Get-RubrikNTPServer`, `Get-RubrikNetworkThrottle`, `Get-RubrikNode`, `Get-RubrikNotificationSetting`, `Get-RubrikProxySetting`, and `GetRubrikSnmpSetting`
 * These cmdlets also resolve [Issue 208](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/208)
+
+## 2019-10-22
+
+### Fixed [Scoped ID variable to local in New-RubrikHost]
+
+* Scoped the ID variable to local within the URI construction of New-RubrikHost as it was pulling ID variables set within the global scope and causing errors
+* Resolves [Issue 470](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/470)
 
 ## 2019-10-18
 

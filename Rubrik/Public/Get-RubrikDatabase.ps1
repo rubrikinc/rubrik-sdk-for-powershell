@@ -51,6 +51,16 @@ function Get-RubrikDatabase
       .EXAMPLE
       Get-RubrikDatabase -InstanceID MssqlInstance:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
       This will return details on a single SQL instance matching the Rubrik ID of "MssqlInstance:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+      
+      .EXAMPLE
+      Get-RubrikDatabase -AvailabilityGroupName BestAvailabilityGroup
+      
+      This will return all databases in the BestAvailabilityGroup AG. If it matches multiple availability group names it will default to querying by host name instead
+      
+      .EXAMPLE
+      Get-RubrikDatabase -AvailabilityGroupID 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-abbaabcdef90'
+      
+      Query for databases by availability group ID
   #>
 
   [CmdletBinding()]
@@ -81,6 +91,11 @@ function Get-RubrikDatabase
     #SQL InstanceID, used as a unique identifier
     [Alias('instance_id')]
     [string]$InstanceID,
+    # Availability Group Name
+    [String]$AvailabilityGroupName,
+    # SQL AvailabilityGroupID, used as a unique identifier
+    [Alias('availability_group_id')]
+    [string]$AvailabilityGroupID,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,    
@@ -115,14 +130,25 @@ function Get-RubrikDatabase
 
     #region one-off
     if($ServerInstance){
-
       $SIobj = ConvertFrom-SqlServerInstance $ServerInstance
       $Hostname = $SIobj.hostname
       $Instance = $SIobj.instancename
     }
       
-   if($Hostname.Length -gt 0 -and $Instance.Length -gt 0 -and $InstanceID.Length -eq 0){
+    if($Hostname.Length -gt 0 -and $Instance.Length -gt 0 -and $InstanceID.Length -eq 0){
       $InstanceID = (Get-RubrikSQLInstance -Hostname $Hostname -Name $Instance).id
+    }
+
+    if($PSBoundParameters.ContainsKey('AvailabilityGroupName')){
+      $AvailabilityGroupID = (Get-RubrikAvailabilityGroup -GroupName $AvailabilityGroupName).id
+      if ($AvailabilityGroupID.count -gt 1) {
+        Write-Warning -Message 'Multiple availability group ids detected, querying by HostName instead'
+        $HostName = $AvailabilityGroupName
+      } elseif ([string]::IsNullOrEmpty($AvailabilityGroupID)) {
+        Write-Warning -Message 'Availability Group Name does not match existing availability group, please verify the AG name.'
+        $AvailabilityGroupID = 'MssqlAvailabilityGroup:::12345678-1234-abcd-8910-999999999999'
+      }
+      $PSBoundParameters.Add('AvailabilityGroupID',$AvailabilityGroupID)
     }
     #endregion
   }

@@ -325,6 +325,7 @@ function Get-RubrikAPIData($endpoint) {
         'Get-RubrikDatabase'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Microsoft SQL databases.'
+                Function    = 'Get-RubrikDatabase'
                 URI         = '/api/v1/mssql/db'
                 Method      = 'Get'
                 Body        = ''
@@ -333,6 +334,7 @@ function Get-RubrikAPIData($endpoint) {
                     effective_sla_domain_id = 'effective_sla_domain_id'
                     primary_cluster_id      = 'primary_cluster_id'
                     is_relic                = 'is_relic'
+                    availability_group_id   = 'availability_group_id'
                 }
                 Result      = 'data'
                 Filter      = @{
@@ -340,6 +342,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'      = 'effectiveSlaDomainName'
                     'Hostname' = 'rootProperties.rootName'
                     'Instance' = 'instanceName'
+                    'AvailabilityGroupID' = 'availabilityGroupId'
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.MSSQLDatabase'
