@@ -1,9 +1,17 @@
-<#
-Helper function to convert a local format string to datetime
-#>
-function ConvertFrom-LocalDate()
-{
+function ConvertFrom-LocalDate() {
+    <#
+        .SYNOPSIS
+        Function to convert a locally formatted date string to a datetime object
 
+        .DESCRIPTION
+        This function may be used to convert various locally formatted date strings into a properly formated datetime object.
+        This allows for the use of specific functions and properties only available on the datetime object.
+
+        .EXAMPLE
+        ConvertFrom-LocalDate "01/06/2012 19:31"
+
+        June 1, 2012 7:31:59 PM
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true,HelpMessage = 'Date in your computer local date format',ValueFromPipeline = $true)]

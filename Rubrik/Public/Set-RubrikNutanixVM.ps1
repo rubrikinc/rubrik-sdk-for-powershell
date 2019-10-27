@@ -21,6 +21,10 @@ function Set-RubrikNutanixVM
             This will pause backups on any virtual machine named "Server1"
 
             .EXAMPLE
+            Get-RubrikNutanixVM 'Server1' | Set-RubrikNutanixVM -PauseBackups:$false
+            This will unpause backups on any virtual machine named "Server1"
+
+            .EXAMPLE
             Get-RubrikNutanixVM -SLA Platinum | Set-RubrikNutanixVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 -UseArrayIntegration 
             This will find all virtual machines in the Platinum SLA Domain and set their snapshot consistency to crash consistent (no application quiescence)
             while also limiting the number of active hypervisor snapshots to 2 and enable storage array (SAN) snapshots for ingest
@@ -38,7 +42,7 @@ function Set-RubrikNutanixVM
         [String]$SnapConsistency,
         # Whether to pause or resume backups/archival for this VM.
         [Alias('isPaused')]
-        [Bool]$PauseBackups,
+        [Switch]$PauseBackups,
         # Rubrik server IP or FQDN
         [String]$Server = $global:RubrikConnection.server,
         # API version
@@ -74,6 +78,7 @@ function Set-RubrikNutanixVM
 
     Process {        
         
+        if(-not $PSBoundParameters.ContainsKey('PauseBackups')) { $Resources.Body.Remove('isPaused') }
         
         $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
         $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri

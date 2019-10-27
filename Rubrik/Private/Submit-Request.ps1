@@ -1,5 +1,27 @@
 ﻿
 function Submit-Request {
+    <#
+        .SYNOPSIS
+        Sends data to an endpoint and formats the response
+
+        .DESCRIPTION
+        This is function is used by nearly every cmdlet in order to form and send the request off to an API endpoint.
+        The results are then formated for further use and returned.
+
+        .PARAMETER uri
+        The endpoint's URI
+        
+        .PARAMETER header
+        The header containing authentication details
+        
+        .PARAMETER method
+        The action (method) to perform on the endpoint
+
+        .PARAMETER body
+        Any optional body data being submitted to the endpoint
+    #>
+
+
     [cmdletbinding(supportsshouldprocess=$true)]
     param(
         $uri,
@@ -7,11 +29,6 @@ function Submit-Request {
         $method = $($resources.Method),
         $body
     )
-    # The Submit-Request function is used to send data to an endpoint and then format the response for further use
-    # $uri = The endpoint's URI
-    # $header = The header containing authentication details
-    # $method = The action (method) to perform on the endpoint
-    # $body = Any optional body data being submitted to the endpoint
 
     if ($PSCmdlet.ShouldProcess($id, $resources.Description)) {
         try {

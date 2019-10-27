@@ -1,39 +1,36 @@
-﻿#requires -Version 3
-function New-RubrikHost
+#requires -Version 3
+function Remove-RubrikOrganization
 {
   <#  
       .SYNOPSIS
-      Registers a host with a Rubrik cluster.
+      Remove an organization from a Rubrik cluster.
 
       .DESCRIPTION
-      The New-RubrikHost cmdlet is used to register a host with the Rubrik cluster. This could be a host leveraging the Rubrik Backup Service or directly as with the case of NAS shares.
+      The Remove-RubrikOrganization cmdlet is used to remove an existing orgazniation from a Rubrik cluster.
 
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
+      Written by Matt Elliott for community usage
+      Twitter: @NetworkBrouhaha
+      GitHub: shamsway
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikHost.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/
 
       .EXAMPLE
-      New-RubrikHost -Name 'Server1.example.com'
-      This will register a host that resolves to the name "Server1.example.com"
+      Get-RubrikOrganization -Name "MyOrg" | Remove-RubrikOrganization
+      This will remove the organization named "MyOrg"
 
       .EXAMPLE
-      New-RubrikHost -Name 'NAS.example.com' -HasAgent:$false
-      This will register a host that resolves to the name "NAS.example.com" without using the Rubrik Backup Service
-      In this case, the example host is a NAS share.
+      Remove-RubrikOrganization -ID 'Organization:::01234567-8910-1abc-d435-0abc1234d567'
+      This will remove the organization with ID "Organization:::01234567-8910-1abc-d435-0abc1234d567"
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
-    # The IPv4 address of the host or the resolvable hostname of the host
-    [Parameter(Mandatory = $true)]
-    [Alias('Hostname')]
-    [String]$Name,
-    # Set to $false to register a host that will be accessed through network shares
-    [Switch]$HasAgent,
+    # ID of the organization to remove
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
+    [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -61,8 +58,7 @@ function New-RubrikHost
   }
 
   Process {
-    # If the switch parameter was not explicitly specified remove from query params 
-    if(-not $PSBoundParameters.ContainsKey('HasAgent')) { $Resources.Body.Remove('hasAgent') }
+
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

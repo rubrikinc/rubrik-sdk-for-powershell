@@ -34,6 +34,69 @@ Describe -Name 'Public/New-RubrikMount' -Tag 'Public', 'New-RubrikMount' -Fixtur
                 Should -BeExactly 'QUEUED'
         }
         
+        It -Name 'Verify switch param - DisableNetwork:$true - Switch Param' -Test {
+            $Output = & {
+                New-RubrikMount -Id 'snapshotid' -DisableNetwork -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*disableNetwork*true*'
+        }
+        
+        It -Name 'Verify switch param - DisableNetwork:$false - Switch Param' -Test {
+            $Output = & {
+                New-RubrikMount -Id 'snapshotid' -DisableNetwork:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*disableNetwork*false*'
+        }
+        
+        It -Name 'Verify switch param - No DisableNetwork - Switch Param' -Test {
+            $Output = & {
+                New-RubrikMount -Id 'snapshotid' -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*disableNetwork*'
+        }
+        
+        It -Name 'Verify switch param - RemoveNetworkDevices:$true - Switch Param' -Test {
+            $Output = & {
+                New-RubrikMount -Id 'snapshotid' -RemoveNetworkDevices -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*RemoveNetworkDevices*true*'
+        }
+        
+        It -Name 'Verify switch param - RemoveNetworkDevices:$false - Switch Param' -Test {
+            $Output = & {
+                New-RubrikMount -Id 'snapshotid' -RemoveNetworkDevices:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*RemoveNetworkDevices*false*'
+        }
+        
+        It -Name 'Verify switch param - No RemoveNetworkDevices - Switch Param' -Test {
+            $Output = & {
+                New-RubrikMount -Id 'snapshotid' -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*RemoveNetworkDevices*'
+        }
+        
+        It -Name 'Verify switch param - PowerOn:$true - Switch Param' -Test {
+            $Output = & {
+                New-RubrikMount -Id 'snapshotid' -PowerOn -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*PowerOn*true*'
+        }
+        
+        It -Name 'Verify switch param - PowerOn:$false - Switch Param' -Test {
+            $Output = & {
+                New-RubrikMount -Id 'snapshotid' -PowerOn:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*PowerOn*false*'
+        }
+        
+        It -Name 'Verify switch param - No PowerOn - Switch Param' -Test {
+            $Output = & {
+                New-RubrikMount -Id 'snapshotid' -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*PowerOn*'
+        }
+        
         It -Name 'Parameter id is missing' -Test {
             { New-RubrikMount -Id  } |
                 Should -Throw "Missing an argument for parameter 'Id'. Specify a parameter of type 'System.String' and try again."
@@ -42,20 +105,9 @@ Describe -Name 'Public/New-RubrikMount' -Tag 'Public', 'New-RubrikMount' -Fixtur
             { New-RubrikMount -id ''  } |
                 Should -Throw "Cannot bind argument to parameter 'Id' because it is an empty string."
         }
-        It -Name 'Validate Disable Network Boolean' -Test {
-            { New-RubrikMount -id 'id' -DisableNetwork yes  } |
-                Should -Throw "Cannot process argument transformation on parameter 'DisableNetwork'. Cannot convert value `"System.String`" to type `"System.Boolean`"."
-        }
-        It -Name 'Validate Remove Network Devices Boolean' -Test {
-            { New-RubrikMount -id 'id' -RemoveNetworkDevices yes  } |
-                Should -Throw "Cannot process argument transformation on parameter 'RemoveNetworkDevices'. Cannot convert value `"System.String`" to type `"System.Boolean`"."
-        }
-        It -Name 'Validate PowerOn Boolean' -Test {
-            { New-RubrikMount -id 'id' -PowerOn yes  } |
-                Should -Throw "Cannot process argument transformation on parameter 'PowerOn'. Cannot convert value `"System.String`" to type `"System.Boolean`"."
-        }
+
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 10
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 10
     }
 }

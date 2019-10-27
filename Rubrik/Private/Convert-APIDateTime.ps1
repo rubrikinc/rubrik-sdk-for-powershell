@@ -1,13 +1,17 @@
 function Convert-APIDateTime {
-<#
-.SYNOPSIS
-Function to convert specific date time format from API endpoint to a datetime object
+    <#
+        .SYNOPSIS
+        Converts a string to a datetime object
 
-.EXAMPLE
-Convert-APIDateTime "Thu Aug 08 20:31:36 UTC 2019" 
+        .DESCRIPTION
+        The Rubrik API endpoints often return dates within the response. These dates are treated as strings within the response. 
+        This function may be used to convert these returned date strings into a properly formated datetime object.
 
-Thursday, August 8, 2019 8:31:36 PM
-#>
+        .EXAMPLE
+        Convert-APIDateTime "Thu Aug 08 20:31:36 UTC 2019" 
+
+        Thursday, August 8, 2019 8:31:36 PM
+    #>
     [cmdletbinding()]
     param(
         [parameter(

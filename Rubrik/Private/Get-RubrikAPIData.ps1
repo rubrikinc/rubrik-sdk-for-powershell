@@ -1,7 +1,11 @@
-<#
-    Helper function to retrieve API data from Rubrik
-#>
 function Get-RubrikAPIData($endpoint) {
+    <#
+        .SYNOPSIS
+        Helper function to retrieve API data from Rubrik
+
+        .DESCRIPTION
+        Function which defines the structure of each cmdlet's API request and response based on the software version the connected Rubrik cluster.
+    #>
     $api = @{
         Example                        = @{
             '1.0' = @{
@@ -1038,6 +1042,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'New-RubrikOrganization'      = @{
+            '1.0' = @{
+                Description = 'Adds an organization to a Rubrik cluster'
+                URI         = '/api/internal/organization'
+                Method      = 'Post'
+                Body        = @{
+                    name = "name"
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        }
         'New-RubrikVCenter'      = @{
             '1.0' = @{
                 Description = 'Create VMware vCenter connection'
@@ -1425,6 +1443,8 @@ function Get-RubrikAPIData($endpoint) {
                     VolumeGroup = '/api/internal/volume_group/{id}/snapshot'
                     Oracle = '/api/internal/oracle/db/{id}/snapshot'
                     VcdVapp = '/api/internal/vcd/vapp/{id}/snapshot'
+                    Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
+                    HyperV = '/api/internal/hyperv/vm/{id}/snapshot'
                 }
                 Method      = 'Post'
                 Body        = @{
@@ -1666,6 +1686,18 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '202'
+            }
+        }
+        'Remove-RubrikOrganization'           = @{
+            '1.0' = @{
+                Description = 'Remove an organization from a Rubrik cluster'
+                URI         = '/api/internal/organization/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
             }
         }
         'Remove-RubrikReport'          = @{
