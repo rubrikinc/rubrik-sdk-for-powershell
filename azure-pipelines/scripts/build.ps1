@@ -51,7 +51,7 @@ if ($env:TargetBranch -eq 'master') {
         # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
         $PublishSplat = @{
             Path        = "$env:LocalPath\Rubrik"
-            NuGetApiKey = 1 #$env:NuGetApiKey
+            NuGetApiKey = $env:GalleryAPIKey
             ErrorAction = 'Stop'
         }
         Publish-Module @PublishSplat

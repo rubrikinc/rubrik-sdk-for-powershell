@@ -27,6 +27,7 @@ jobs:
       TargetBranch: $(system.pullRequest.targetBranch)
       PRNumber: $(system.pullRequest.pullRequestNumber)
       LocalPath: $(Build.Repository.LocalPath)
+      GalleryAPIKey: $(PowerShellGalleryAPIKey)
   - task: PublishPipelineArtifact@0
     displayName: 'Publish Repository as artifact'
     inputs:
