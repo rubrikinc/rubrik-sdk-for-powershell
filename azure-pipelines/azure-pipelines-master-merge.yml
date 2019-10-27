@@ -51,3 +51,23 @@ jobs:
       artifactName: 'PipelinesScripts'
       targetPath: .
     condition: failed()
+    
+- job: Commit_Changes_From_DevOps_To_GitHub
+  displayname: "Commit Changes From DevOps To GitHub"
+  dependsOn: Build_Using_Windows_PowerShell_on_Server_2019
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - checkout: self
+    persistCredentials: true
+  - script: |
+      git config --global user.email "noreply@jaapbrasser.com"
+      git config --global user.name "jaapbrasser"
+      git branch master
+      git checkout master
+      git status
+      git branch
+      git add *
+      git commit -m "[skip ci] Adding changes from Azure DevOps Pipelines"
+      git push -u origin master
+    
