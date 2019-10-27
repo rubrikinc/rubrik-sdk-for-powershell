@@ -10,7 +10,6 @@ try {
     Write-Output "Old Version: $version"
 
     if ($env:TargetBranch -ne 'master') {
-        
         $WebRequestSplat = @{
             Uri = 'https://raw.githubusercontent.com/rubrikinc/rubrik-sdk-for-powershell/devel/Rubrik/Rubrik.psd1'
             UseBasicParsing = $true
@@ -47,21 +46,21 @@ Import-Module -Name "$env:LocalPath\Rubrik\Rubrik.psd1" -Force
 . .\azure-pipelines\scripts\docs.ps1
 Write-Host -Object ''
 
-# Publish the new version to the PowerShell Gallery
-#Try
-#{
-#    # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
-#    $PublishSplat = @{
-#        Path        = "$env:LocalPath\Rubrik"
-#        NuGetApiKey = 1 #$env:NuGetApiKey
-#        ErrorAction = 'Stop'
-#    }
-#    Publish-Module @PublishSplat
-#    Write-Host "Rubrik PowerShell Module version $newVersion published to the PowerShell Gallery." -ForegroundColor Cyan
-#}
-#Catch
-#{
-#    # Sad panda; it broke
-#    Write-Warning "Publishing update $newVersion to the PowerShell Gallery failed."
-#    throw $_
-#}
+if ($env:TargetBranch -eq 'master') {
+    try {
+        # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
+        $PublishSplat = @{
+            Path        = "$env:LocalPath\Rubrik"
+            NuGetApiKey = 1 #$env:NuGetApiKey
+            ErrorAction = 'Stop'
+        }
+        Publish-Module @PublishSplat
+        Write-Host "Rubrik PowerShell Module version $newVersion published to the PowerShell Gallery." -ForegroundColor Cyan
+    } catch {
+        # Sad panda; it broke
+        Write-Warning "Publishing update $newVersion to the PowerShell Gallery failed."
+        throw $_
+    }
+} elseif ($env:TargetBranch -eq 'devel') {
+    # todo, prerelease deployments for devel
+}
