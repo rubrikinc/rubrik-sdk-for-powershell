@@ -5,8 +5,25 @@ trigger:
 pr: none
 
 jobs:
+- job: Verify_Skip_CI_Not_Present
+  displayname: "Verify is [skip ci] is not specified"
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - checkout: self
+    persistCredentials: true
+  - script: |
+      gitlog=$(git log --oneline -1) 
+      regex="\[skip ci\]"
+      if [[ $gitlog =~ $regex ]]
+      then
+        exit 1
+      fi
+    
 - job: Build_Using_Windows_PowerShell_on_Server_2019
   displayName: 'Build Using Windows PowerShell on Server 2019'
+  dependsOn: Verify_Skip_CI_Not_Present
+  condition: in(dependencies.Verify_Skip_CI_Not_Present.result, 'Succeeded')
   pool:
     vmImage: 'windows-2019'
   steps:
