@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-28
+
+### Added [Function property to Get-RubrikAPIData]
+
+* Added a new property `Function` to the output of Get-RubrikAPIData, this fixes an issue with verbose output as indicated in [Issue 480](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/480)
+
 ## 2019-10-24
 
 ### Added [Added Availability Group parameters to Get-RubrikDatabase]
