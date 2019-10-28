@@ -55,7 +55,7 @@ function New-RubrikHost
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
-    Write-Verbose -Message "Load API data for $($resources.Function)"
+    Write-Verbose -Message "Load API data for $Function"
     Write-Verbose -Message "Description: $($resources.Description)"
   
   }
@@ -63,7 +63,8 @@ function New-RubrikHost
   Process {
     # If the switch parameter was not explicitly specified remove from query params 
     if(-not $PSBoundParameters.ContainsKey('HasAgent')) { $Resources.Body.Remove('hasAgent') }
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+
+    $uri = New-URIString -server $Server -endpoint ($resources.URI)
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body

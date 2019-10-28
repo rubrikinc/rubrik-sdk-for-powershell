@@ -225,6 +225,7 @@ function Get-RubrikAPIData($endpoint) {
                     effective_sla_domain_id = 'effective_sla_domain_id'
                     primary_cluster_id      = 'primary_cluster_id'
                     is_relic                = 'is_relic'
+                    availability_group_id   = 'availability_group_id'
                 }
                 Result      = 'data'
                 Filter      = @{
@@ -232,6 +233,7 @@ function Get-RubrikAPIData($endpoint) {
                     'SLA'      = 'effectiveSlaDomainName'
                     'Hostname' = 'rootProperties.rootName'
                     'Instance' = 'instanceName'
+                    'AvailabilityGroupID' = 'availabilityGroupId'
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.MSSQLDatabase'
@@ -343,7 +345,6 @@ function Get-RubrikAPIData($endpoint) {
         'Get-RubrikFilesetTemplate'    = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all fileset templates, including: ID and name of the fileset template, fileset template creation timestamp, array of the included filepaths, array of the excluded filepaths.'
-                Function    = 'Get-RubrikFilesetTemplate'
                 URI         = '/api/v1/fileset_template'
                 Method      = 'Get'
                 Body        = ''
