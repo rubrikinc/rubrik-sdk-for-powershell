@@ -2538,5 +2538,7 @@ function Get-RubrikAPIData($endpoint) {
     }
 
     Write-Verbose -Message "Selected $key API Data for $endpoint"
+    # Add the function name to resolve issue #480
+    $api.$endpoint.$key.Add('Function',$endpoint) 
     return $api.$endpoint.$key
 } # End of function
