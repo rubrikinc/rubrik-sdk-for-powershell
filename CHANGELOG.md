@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-29
+
+### Fixed behavior of -primary_cluster_id
+
+* Removed the case-sensitivity issues as listed in [Issue 469](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/469)
+* Updated behavior of New-QueryString, stop adding ?limit to non-Get calls
+
 ## 2019-10-28
 
 ### Added [Function property to Get-RubrikAPIData]
