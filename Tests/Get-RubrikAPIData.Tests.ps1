@@ -60,6 +60,19 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
             $uriresult | Should -Contain $true
         }
     }
+    
+    Context -Name "Should contain Function property as output" {
+        It -Name 'Verify property exists' -Test {
+            $functions = ( Get-ChildItem -Path './Rubrik/Public' |
+                Where-Object extension -eq '.ps1').Name.Replace('.ps1','')
+            $ignorelist = @('Invoke-RubrikRESTCall','Move-RubrikMountVMDK','Sync-RubrikAnnotation','Sync-RubrikTag','Get-RubrikObject') 
+            $functions = $functions | Where-Object {$ignorelist -notcontains $_}
+            $functions | ForEach-Object {
+                (Get-RubrikAPIData -Endpoint $_).Function |
+                Should -BeExactly $_
+            }
+        }
+    }
 
     Context -Name "Failure tests, validate incorrect input" -Fixture {
         It -Name 'Get-RubrikAPIData - Incorrect version number, should fail' -Test {
