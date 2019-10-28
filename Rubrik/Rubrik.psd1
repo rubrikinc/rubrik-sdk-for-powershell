@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.0.510'
+ModuleVersion = '4.0.512'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -127,7 +127,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Set-RubrikLogShipping', 'Set-RubrikManagedVolume', 'Set-RubrikMount', 
                'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikSetting', 
                'Set-RubrikSLA', 'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel',
-               'Set-RubrikUser','Set-RubrikUserRole', 'Set-RubrikVCD', 
+               'Set-RubrikUser', 'Set-RubrikUserRole', 'Set-RubrikVCD', 
                'Set-RubrikVCenter', 'Set-RubrikVM', 'Set-RubrikVolumeFilterDriver', 
                'Start-RubrikManagedVolumeSnapshot', 
                'Stop-RubrikManagedVolumeSnapshot', 'Sync-RubrikAnnotation', 

@@ -29,7 +29,7 @@ Common PowerShell module paths include:
 1. Open a Powershell console with the Run as Administrator option.
 1. Run `Set-ExecutionPolicy` using the parameter RemoteSigned or Bypass.
 1. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository.
-1. Alternatively `Install-Module -Name Rubrik -Scope AllUsers `can be execute be used if you would like to install the module for all users on the current system.
+1. Alternatively `Install-Module -Name Rubrik -Scope AllUsers` can be execute be used if you would like to install the module for all users on the current system.
 
 ## Option 2: Installer Script
 
@@ -115,12 +115,12 @@ Now that you have the Rubrik module installed on your workstation, here are a fe
 
 To begin, connect to a Rubrik cluster. To keep things simple, we'll do the first command without any supplied parameters.
 
-*   Open a PowerShell session
-*   Type `Connect-Rubrik` and press enter.
+* Open a PowerShell session
+* Type `Connect-Rubrik` and press enter.
 
 A prompt will appear asking you for a server. Enter the IP address or fully qualified domain name (FQDN) of any node in the cluster. An additional prompt will appear asking for your user credentials. Once entered, you will see details about the newly created connection.
 
-![alt text](/img/image1.png)
+![alt text](/docs/img/image1.png)
 
 At this point, you are authenticated and ready to begin issuing commands to the cluster. This token will be valid for the duration of the PowerShell session. If you close your PowerShell console or open an additional console you will have to re-authenticate using the `Connect-Rubrik` function.
 
@@ -137,7 +137,7 @@ For details on a command, use the PowerShell help command `Get-Help`. For exampl
 Get-Help Connect-Rubrik
 ```
 
-![alt text](/img/image2.png)
+![alt text](/docs/img/image2.png)
 
 This will display a description about the command. For details and examples, use the `-Full` parameter on the end.
 
@@ -145,7 +145,7 @@ This will display a description about the command. For details and examples, use
 Get-Help Connect-Rubrik -Full
 ```
 
-![alt text](/img/image3.png)
+![alt text](/docs/img/image3.png)
 
 As this is a lot of help to process, the help function can be used instead of Get-Help, to get scrolling output.
 
@@ -153,7 +153,7 @@ As this is a lot of help to process, the help function can be used instead of Ge
 help Connect-Rubrik -Full
 ```
 
-![alt text](/img/image4.png)
+![alt text](/docs/img/image4.png)
 
 ## Gathering Data
 
@@ -165,7 +165,7 @@ We'll start by looking up the version running on the Rubrik cluster. Enter the c
 Get-RubrikVersion
 ```
 
-![alt text](/img/image5.png)
+![alt text](/docs/img/image5.png)
 
 The result is fairly simple: the command will output the cluster's code version. How about something a bit more complex? Try getting all of the SLA Domain details from the cluster. Here's the command:
 
@@ -173,7 +173,7 @@ The result is fairly simple: the command will output the cluster's code version.
 Get-RubrikSLA
 ```
 
-![alt text](/img/image6.png)
+![alt text](/docs/img/image6.png)
 
 A lot of stuff should be scrolling across the screen. You're seeing details on every SLA Domain known by the cluster at a very detailed level. If you want to see just one SLA Domain, tell the command to limit the results. You can do this by using a parameter. Parameters are ways to control a function. Try it with this example:.
 
@@ -181,12 +181,11 @@ A lot of stuff should be scrolling across the screen. You're seeing details on e
 Get-RubrikSLA -SLA 'Gold'
 ```
 
-![alt text](/img/image7.png)
+![alt text](/docs/img/image7.png)
 
 The `-SLA` portion is a parameter and "Gold" is a value for the parameter. This effectively asks the function to limit results to one SLA Domain: Gold. Easy, right?
 
 For a full list of available parameters and examples, use `Get-Help Get-RubrikSLA -Full`. Every Rubrik command has native help available.
-
 
 ## Modifying Data
 
@@ -198,7 +197,7 @@ This example works best if you have a test virtual machine that you are not conc
 Get-RubrikVM -VM "JBrasser-Win"
 ```
 
-![alt text](/img/image8.png)
+![alt text](/docs/img/image8.png)
 
 Make sure to replace `"JBrasser-Win"` with the actual name of the virtual machine. If you received data back from Rubrik, you can be sure that this virtual machine is known to the cluster and can be modified.
 
@@ -214,7 +213,7 @@ Get-RubrikVM -VM 'Name' | Protect-RubrikVM -SLA 'Gold'
 
 Before the change is made, a prompt will appear asking you to confirm the change.
 
-![alt text](/img/image9.png)
+![alt text](/docs/img/image9.png)
 
 This is a safeguard. You can either take the default action of "Yes" by pressing enter, or type "N" if you entered the wrong name or changed your mind. If you want to skip the confirmation check all together, use the `-Confirm:$false` parameter like this:
 
@@ -230,14 +229,13 @@ Additionally, it is also possible to either set the confirmation preference for 
 $PSDefaultParameterValues = @{"Rubrik\Protect-RubrikVM:Confirm" = $false}
 ```
 
-![alt text](/img/image10.png)
+![alt text](/docs/img/image10.png)
 
 By setting this, for the duration of your current PowerShell session, `Protect-RubrikVM` will no longer prompt for confirmation.
 
 ## Gather data for reporting
 
 If we want to know the status of backups for certain workloads or SLAs we can easily gather this data using the PowerShell module.
-
 
 ``` PowerShell
 Get-RubrikVM -SLAID 'Gold'
@@ -249,7 +247,7 @@ We can use the SLAID parameter of Get-RubrikVM to only gather a list of VMs that
 Get-RubrikVM -SLAID 'Gold' | Measure-Object
 ```
 
-![alt text](/img/image10.png)
+![alt text](/docs/img/image10.png)
 
 If we want to make this output readable, we could also choose to only display either the output or the count-property:
 
@@ -271,7 +269,7 @@ Get-RubrikVM | Where-Object {$_.EffectiveSlaDomainName -ne 'Unprotected'} |
 Group-Object -Property EffectiveSlaDomainName | Sort-Object -Property Count -Descending
 ```
 
-![alt text](/img/image14.png)
+![alt text](/docs/img/image14.png)
 
 We can use the `Group-Object` cmdlet to group objects together, by then piping this through to the `Sort-Object` cmdlet we can sort on the number of assigned workloads to each SLA. This can information can be used to directly query the system, without having to login to the Rubrik Cluster and retrieving this information from the interface.
 
@@ -290,7 +288,7 @@ In the first example we will use PowerShell to generate a `.csv` file for us:
 } | Export-Csv -Path ./Example-SLA.csv -NoTypeInformation
 ```
 
-![alt text](/img/image11.png)
+![alt text](/docs/img/image11.png)
 
 If you have a spreadsheet application installed, we can now open this spreadsheet by running the following code:
 
@@ -298,7 +296,7 @@ If you have a spreadsheet application installed, we can now open this spreadshee
 Invoke-Item ./Example-SLA.csv
 ```
 
-![alt text](/img/image12.png)
+![alt text](/docs/img/image12.png)
 
 Now if we would like to make changes we can easily edit the `.csv` file. Once we have made the desired modifications, for example changes the SLAs for certain mission critical VMs to Gold, we can apply this configuration to our Rubrik Cluster:
 

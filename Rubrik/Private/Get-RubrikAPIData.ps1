@@ -325,7 +325,6 @@ function Get-RubrikAPIData($endpoint) {
         'Get-RubrikDatabase'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Microsoft SQL databases.'
-                Function    = 'Get-RubrikDatabase'
                 URI         = '/api/v1/mssql/db'
                 Method      = 'Get'
                 Body        = ''
@@ -481,7 +480,6 @@ function Get-RubrikAPIData($endpoint) {
         'Get-RubrikFilesetTemplate'    = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all fileset templates, including: ID and name of the fileset template, fileset template creation timestamp, array of the included filepaths, array of the excluded filepaths.'
-                Function    = 'Get-RubrikFilesetTemplate'
                 URI         = '/api/v1/fileset_template'
                 Method      = 'Get'
                 Body        = ''
@@ -2761,5 +2759,7 @@ function Get-RubrikAPIData($endpoint) {
     }
 
     Write-Verbose -Message "Selected $key API Data for $endpoint"
+    # Add the function name to resolve issue #480
+    $api.$endpoint.$key.Add('Function',$endpoint) 
     return $api.$endpoint.$key
 } # End of function
