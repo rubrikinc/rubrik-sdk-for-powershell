@@ -1,6 +1,5 @@
 ﻿#requires -Version 3
-function Get-RubrikReportData
-{
+function Get-RubrikReportData {
   <#  
       .SYNOPSIS
       Retrieve table data for a specific Envision report
@@ -90,7 +89,7 @@ function Get-RubrikReportData
 
     if ($limit -eq -1) {
       # can change default limit to 100 to test reports which don't hit max limitS
-      $limit = 9999
+      $limit = 150
       $returnAll = $true
     }
     
@@ -107,21 +106,18 @@ function Get-RubrikReportData
     if ($returnAll -and $result.hasMore -eq 'True') {
       # duplicate response to save initial returned data
       $nextresult = $result
+      $PSBoundParameters.Add('cursor',$nextresult.cursor)
+      
       Write-Verbose -Message "Result limits hit. Retrieving remaining data based on pagination"
-      $has_more = 'True'
-      $additionalDGRows = while ($has_more -eq 'True') {
-        $cursor = $nextresult.cursor
-        if(-not $PSBoundParameters.ContainsKey('cursor')) {
-          $PSBoundParameters.Add('cursor',$cursor)
-        }
-        $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-        $nextresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-        $has_more = $nextresult.hasMore
-        $nextresult.dataGrid
-      }
+      $result.dataGrid += 
+        do {
+          $cursor = $nextresult.cursor
+          $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+          $nextresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+          $nextresult.dataGrid
+          Write-Verbose $nextresult.hasMore
+        } while ($nextresult.hasMore -eq 'True')
     }
-
-    $result.dataGrid += $additionalDGRows
     $result.hasMore = 'False'
 
     return $result
