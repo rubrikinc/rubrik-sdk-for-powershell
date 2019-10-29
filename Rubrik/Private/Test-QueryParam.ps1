@@ -90,8 +90,9 @@
   
   if ($parameters.name -contains 'limit') {
     $uri = New-QueryString -query $querystring -uri $uri
-  }
-  else {  
+  } elseif ($resource.method -ne 'Get') {
+    $uri = New-QueryString -query $querystring -uri $uri
+  } else {  
     $uri = New-QueryString -query $querystring -uri $uri -nolimit $true
   }
   Write-Verbose -Message "URI = $uri"
