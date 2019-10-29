@@ -35,7 +35,7 @@ Describe -Name 'Public/Get-RubrikReportData' -Tag 'Public', 'Get-RubrikReportDat
         } 
         It -Name 'Sets hasMore to false' -Test {
             (Get-RubrikReportData -id 1111 -limit -1).hasMore | 
-            Should -BeExactly 'False'
+            Should -BeExactly 'false'
         }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 2
