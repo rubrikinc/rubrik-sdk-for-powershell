@@ -103,7 +103,7 @@ function Get-RubrikReportData {
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body 
 
     # if limit has been set to -1
-    if ($returnAll -and $result.hasMore -eq 'True') {
+    if ($returnAll -and $result.hasMore -eq 'true') {
       # duplicate response to save initial returned data
       $nextresult = $result
       $PSBoundParameters.Add('cursor',$nextresult.cursor)
@@ -116,9 +116,9 @@ function Get-RubrikReportData {
           $nextresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
           $nextresult.dataGrid
           Write-Verbose $nextresult.hasMore
-        } while ($nextresult.hasMore -eq 'True')
+        } while ($nextresult.hasMore -eq 'true')
     }
-    $result.hasMore = 'False'
+    $result.hasMore = 'false'
 
     return $result
 
