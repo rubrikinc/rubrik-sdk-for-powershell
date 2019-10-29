@@ -26,16 +26,20 @@ Describe -Name 'Public/Get-RubrikReportData' -Tag 'Public', 'Get-RubrikReportDat
                 'columns'               = @('TaskStatus','TaskType','ObjectId','ObjectName')
                 'cursor'                = '1111-2222-3333'
                 'reportTemplate'        = 'ProtectionTaskDetails'
-                'datagrid'              = @('OracleDatabase','Backup','11111','OracleHR')
+                'datagrid'              = @('OracleDatabase','Backup','11111','OracleHR')  
             }
         }
         It -Name 'Returns reportTemplate' -Test {
             ( Get-RubrikReportData -id 1111).reportTemplate |
                 Should -BeExactly 'ProtectionTaskDetails'
         } 
+        It -Name 'Sets hasMore to false' -Test {
+            (Get-RubrikReportData -id 1111 -limit -1).hasMore | 
+            Should -BeExactly 'False'
+        }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 2
     }
     Context -Name 'Parameter Validation' {
         It -Name 'ID Missing' -Test {
