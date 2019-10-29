@@ -27,6 +27,10 @@ function Get-RubrikReportData
       .EXAMPLE
       Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance' -Limit 10
       This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance", only returns the first 10 results.
+
+      .EXAMPLE
+      Get-RubrikReport -Name 'Object Protection Summary' | Get-RubrikReportData -Limit -1
+      This will return all of the table data from the "Object Protection Summary" report. Note: Using '-Limit -1' may affect performance for reports containing large amounts of data.
   #>
 
   [CmdletBinding()]
@@ -50,7 +54,7 @@ function Get-RubrikReportData
     [Alias('compliance_status')]
     [ValidateSet('InCompliance','NonCompliance')]
     [String]$ComplianceStatus,  
-    #limit the number of rows returned, defaults to maximum pageSize of 9999
+    #limit the number of rows returned, defaults to maximum pageSize of 9999. Use a value of '-1' to remove limit restrictions
     [int]$limit,
     #cursor start (if necessary)
     [string]$cursor,
@@ -83,6 +87,13 @@ function Get-RubrikReportData
       $PSBoundParameters.Add('limit',9999) | Out-Null
       $limit = 9999
     }
+
+    if ($limit -eq -1) {
+      # can change default limit to 100 to test reports which don't hit max limitS
+      $limit = 9999
+      $returnAll = $true
+    }
+    
   }
 
   Process {
@@ -90,9 +101,28 @@ function Get-RubrikReportData
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body 
+
+    # if limit has been set to -1
+    if ($returnAll -and $result.hasMore -eq 'True') {
+      # duplicate response to save initial returned data
+      $nextresult = $result
+      Write-Verbose -Message "Result limits hit. Retrieving remaining data based on pagination"
+      $has_more = 'True'
+      $additionalDGRows = while ($has_more -eq 'True') {
+        $cursor = $nextresult.cursor
+        if(-not $PSBoundParameters.ContainsKey('cursor')) {
+          $PSBoundParameters.Add('cursor',$cursor)
+        }
+        $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+        $nextresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+        $has_more = $nextresult.hasMore
+        $nextresult.dataGrid
+      }
+    }
+
+    $result.dataGrid += $additionalDGRows
+    $result.hasMore = 'False'
 
     return $result
 
