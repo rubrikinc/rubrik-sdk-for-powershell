@@ -37,7 +37,7 @@
                                 <PropertyName>effectiveSlaDomainName</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <ScriptBlock>if ($_.volumes) {$.volumes.mountPoints}</ScriptBlock>
+                                <ScriptBlock>if ($null -ne $_.volumes) {$.volumes.mountPoints}</ScriptBlock>
                             </TableColumnItem>                            
                             <TableColumnItem>
                                 <PropertyName>id</PropertyName>
