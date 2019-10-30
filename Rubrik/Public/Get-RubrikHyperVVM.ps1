@@ -50,7 +50,7 @@ function Get-RubrikHyperVVM
     [Parameter(ParameterSetName='Query')]
     [ValidateSet('Derived', 'Direct','Unassigned')]
     [String]$SLAAssignment,     
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Parameter(ParameterSetName='Query')]    
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
