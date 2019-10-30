@@ -20,9 +20,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added [-DetailedObject parameter in Get-RubrikVolumeGroup]
 
-* Changed default display
+* Changed default display of Get-RubrikVolumeGroup
 * Added `-DetailedObject` parameter to `Get-RubrikVolumeGroup`
 * Addresses [Issue 487](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/487)
+
+### Fixed [Documenation referencing _local]
+
+* Replaced occurances of _local with local within documenation around the primary_cluster_id.
+* Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
 
 ## 2019-10-29
 
