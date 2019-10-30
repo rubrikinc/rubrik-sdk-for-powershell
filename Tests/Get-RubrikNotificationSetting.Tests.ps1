@@ -15,7 +15,7 @@ Describe -Name 'Public/Get-RubrikNotificationSetting' -Tag 'Public', 'Get-Rubrik
         header  = @{ 'Authorization' = 'Bearer test-authorization' }
         time    = (Get-Date)
         api     = 'v1'
-        version = '4.0.5'
+        version = '5.0'
     }
     #endregion
 
@@ -38,7 +38,7 @@ Describe -Name 'Public/Get-RubrikNotificationSetting' -Tag 'Public', 'Get-Rubrik
             }
         }
         It -Name 'No parameters returns all results' -Test {
-            @( Get-RubrikNotificationSetting).Count |
+            ( Get-RubrikNotificationSetting  | Measure-Object ).Count |
                 Should -BeExactly 2
         }
 
