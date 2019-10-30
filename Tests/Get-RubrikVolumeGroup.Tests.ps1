@@ -25,7 +25,7 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
             @{ 'slaid' = 'SLA1' }
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
+            @{
                 'name'                   = 'VG01'
                 'id'                     = 'VolumeGroup:::11111'
                 'hostname'               = 'VG01.domain.local'
@@ -41,7 +41,7 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
                 'effectiveSlaDomainId'   = 'SLA1'
                 'hostId'                 = 'host02'
             },
-            @{ 
+            @{
                 'name'                   = 'VG03'
                 'id'                     = 'VolumeGroup:::33333'
                 'hostname'               = 'VG03.domain.local'
@@ -49,7 +49,7 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
                 'effectiveSlaDomainId'   = 'SLA2'
                 'hostId'                 = 'host03'
             },
-            @{ 
+            @{
                 'name'                   = 'VG04'
                 'id'                     = 'VolumeGroup:::44444'
                 'hostname'               = 'VG04.domain.local'
@@ -73,11 +73,11 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
         It -Name 'Missing ID Exception' -Test {
             { Get-RubrikVolumeGroup -id  } |
                 Should -Throw "Missing an argument for parameter 'id'. Specify a parameter of type 'System.String' and try again."
-        } 
+        }
         It -Name 'Missing Name Exception' -Test {
             { Get-RubrikVolumeGroup -name  } |
                 Should -Throw "Missing an argument for parameter 'name'. Specify a parameter of type 'System.String' and try again."
-        } 
+        }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
         Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
