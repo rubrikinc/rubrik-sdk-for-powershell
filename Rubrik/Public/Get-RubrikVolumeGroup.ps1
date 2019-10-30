@@ -47,7 +47,7 @@ function Get-RubrikVolumeGroup
     [Switch]$Relic,
     # SLA Domain policy assigned to the volume group
     [String]$SLA, 
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
     # Volume group id
@@ -101,10 +101,10 @@ function Get-RubrikVolumeGroup
     
     # If the Get-RubrikVolumeGroup function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
-      $result = for ($i = 0; $i -lt @($result).Count; $i++) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
         $Percentage = [int]($i/@($result).count*100)
         Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-        Get-RubrikVolumeGroup -id $result[$i].id | ForEach-Object {
+        $updatedresult = Get-RubrikVolumeGroup -id $result[$i].id | ForEach-Object {
           Select-Object -InputObject $_ -Property *,@{
             name = 'includes'
             expression = {
@@ -112,18 +112,11 @@ function Get-RubrikVolumeGroup
             }
           }
         }
+        Set-ObjectTypeName -TypeName $resources.ObjectTName -result $updatedresult
       }
     } else {
-      $selectsplat
-      $result = $result | Select-Object -Property *,@{
-        name = 'includes'
-        expression = {
-          if ($null -ne $_.volumes) {$_.volumes.mountPoints}
-        }
-      }
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
     }
-
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-    return $result
   } # End of process
 } # End of function
