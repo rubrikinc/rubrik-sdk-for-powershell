@@ -85,9 +85,6 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
     }
     Context -Name 'DetailedObject querying' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
-        Mock -CommandName Test-RubrikSLA -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 'slaid' = 'SLA1' }
-        }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
                 'name'                   = 'VG01'
@@ -107,14 +104,17 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
                 Should -BeExactly 1
         }
 
-        It -Name 'Requesting volumes property should be empty by default' -Test {
+        It -Name 'Requesting volumes property should be /etc when queried by id' -Test {
             ( Get-RubrikVolumeGroup -id VolumeGroup:::11111).Volumes.mountPoints |
                 Should -BeExactly '/etc'
         }
 
-        It -Name 'Requesting volumes property should be empty by default' -Test {
+        It -Name 'Requesting volumes property should be /etc when using -DetailedObject' -Test {
             ( Get-RubrikVolumeGroup -DetailedObject).Volumes.mountPoints |
                 Should -BeExactly '/etc'
         }
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 4
     }    
 }
