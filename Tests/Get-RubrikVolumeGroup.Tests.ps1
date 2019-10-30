@@ -83,4 +83,38 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
         Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
     }
+    Context -Name 'DetailedObject querying' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-RubrikSLA -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{ 'slaid' = 'SLA1' }
+        }
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{ 
+                'name'                   = 'VG01'
+                'id'                     = 'VolumeGroup:::11111'
+                'hostname'               = 'VG01.domain.local'
+                'effectiveSlaDomainName' = 'Gold'
+                'effectiveSlaDomainId'   = 'SLA1'
+                'hostId'                 = 'host01'
+                'volumes'                = @{
+                    'mountPoints' = '/etc'
+                }
+            }
+        }
+
+        It -Name 'Requesting all should return count of 1' -Test {
+            @( Get-RubrikVolumeGroup).Count |
+                Should -BeExactly 1
+        }
+
+        It -Name 'Requesting volumes property should be empty by default' -Test {
+            ( Get-RubrikVolumeGroup -id VolumeGroup:::11111).Volumes.mountPoints |
+                Should -BeExactly '/etc'
+        }
+
+        It -Name 'Requesting volumes property should be empty by default' -Test {
+            ( Get-RubrikVolumeGroup -DetailedObject).Volumes.mountPoints |
+                Should -BeExactly '/etc'
+        }
+    }    
 }
