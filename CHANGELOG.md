@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-30
+
+### Added [-DetailedObject parameter in Get-RubrikVolumeGroup]
+
+* Changed default display
+* Added `-DetailedObject` parameter to `Get-RubrikVolumeGroup`
+* Addresses [Issue 487](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/487)
+
 ## 2019-10-29
 
 ### Changed [-Limit parameter in Get-RubrikReportData]
