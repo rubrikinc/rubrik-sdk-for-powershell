@@ -16,6 +16,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-30
+
+### Fixed [Documenation referencing _local]
+
+* Replaced occurances of _local with local within documenation around the primary_cluster_id.
+* Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
+
+## 2019-10-29
+
+### Changed [-Limit parameter in Get-RubrikReportData]
+
+* Added checks within Get-RubrikReportData to detect a limit value of -1. If detected, the cmdlet will perform recursion until all paginations has occured.
+* Addresses [Issue 440](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/440) and [Issue 485](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/485) in getting around the maximum limit defined within the API of 10000.
+
+### Fixed behavior of -primary_cluster_id
+
+* Removed the case-sensitivity issues as listed in [Issue 469](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/469)
+* Updated behavior of New-QueryString, stop adding ?limit to non-Get calls
+
 ## 2019-10-28
 
 ### Added [Function property to Get-RubrikAPIData]

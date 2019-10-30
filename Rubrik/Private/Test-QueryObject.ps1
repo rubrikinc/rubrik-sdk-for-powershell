@@ -21,6 +21,9 @@
   if ((-not [string]::IsNullOrWhiteSpace($object)) -and ($location)) {
     # This builds the individual query item for the endpoint
     # Example: /vmware/vm?search_value=SE-CWAHL-WIN&limit=9999 contains 2 queries - search_value and limit
+    if (($location -eq 'primary_cluster_id') -and ($object -in ('local','me'))) { 
+      $object = $object.toLower() 
+    }
     return "$location=$object"
   }
 }
