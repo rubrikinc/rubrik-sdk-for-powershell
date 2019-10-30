@@ -87,7 +87,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Export-RubrikVCDTemplate', 'Get-RubrikAPIToken', 'Get-RubrikAPIVersion', 
                'Get-RubrikAvailabilityGroup', 'Get-RubrikBootStrap', 'Get-RubrikDatabase', 
                'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 
-               'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikEvent', 
+               'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikDatabaseRecoveryPoint','Get-RubrikEvent', 
                'Get-RubrikFileset', 'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 
                'Get-RubrikHyperVVM', 'Get-RubrikLDAP', 'Get-RubrikLogShipping', 
                'Get-RubrikManagedVolume', 'Get-RubrikManagedVolumeExport', 
@@ -131,7 +131,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Start-RubrikManagedVolumeSnapshot', 
                'Stop-RubrikManagedVolumeSnapshot', 'Sync-RubrikAnnotation', 
                'Sync-RubrikTag', 'Update-RubrikHost', 'Update-RubrikVCD', 
-               'Update-RubrikVCenter', 'Update-RubrikVMwareVM')
+               'Update-RubrikVCenter', 'Update-RubrikVMwareVM','Wait-RubrikRequest')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
