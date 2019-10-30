@@ -15,7 +15,7 @@ Describe -Name 'Public/Get-RubrikClusterInfo' -Tag 'Public', 'Get-RubrikClusterI
         header  = @{ 'Authorization' = 'Bearer test-authorization' }
         time    = (Get-Date)
         api     = 'v1'
-        version = '4.0.5'
+        version = '5.0'
     }
     #endregion
 

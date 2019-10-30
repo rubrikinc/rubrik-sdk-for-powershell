@@ -15,7 +15,7 @@ Describe -Name 'Public/Get-RubrikClusterStorage' -Tag 'Public', 'Get-RubrikClust
         header  = @{ 'Authorization' = 'Bearer test-authorization' }
         time    = (Get-Date)
         api     = 'v1'
-        version = '4.0.5'
+        version = '5.0'
     }
     #endregion
 
