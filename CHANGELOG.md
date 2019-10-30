@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-10-30
+
+### Fixed [Documenation referencing _local]
+
+* Replaced occurances of _local with local within documenation around the primary_cluster_id.
+* Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
+
 ## 2019-10-29
 
 ### Changed [-Limit parameter in Get-RubrikReportData]
