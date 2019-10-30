@@ -6,7 +6,7 @@ function Get-RubrikVolumeGroup
       Retrieves details on one or more volume groups known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVolumeGroup cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of volume groups
+      The Get-RubrikVolumeGroup cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of volume groups. By default the 'Includes' property is not populated, unless when querying by ID or by using the -DetailedObject parameter
 
       .NOTES
       Written by Pierre Flammer for community usage
@@ -26,6 +26,14 @@ function Get-RubrikVolumeGroup
       .EXAMPLE
       Get-RubrikVolumeGroup -Relic
       This will return all removed volume groups that were formerly protected by Rubrik.
+
+      .EXAMPLE
+      Get-RubrikVolumeGroup -DetailedObject
+      This will return full details on all volume groups available on the Rubrik Cluster, this query will take longer as multiple API calls are required. The 'Includes' property will be populated
+
+      .EXAMPLE
+      Get-RubrikVolumeGroup -Id VolumeGroup:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
+      This will return full details on for the specified VolumeGroup ID
   #>
 
   [CmdletBinding()]
