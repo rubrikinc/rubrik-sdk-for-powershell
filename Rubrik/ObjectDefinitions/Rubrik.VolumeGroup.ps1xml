@@ -37,7 +37,7 @@
                                 <PropertyName>effectiveSlaDomainName</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <ScriptBlock>if ($_.volumes) {$.volumes.mountPoints} else {(Get-RubrikVolumeGroup -Id $_.id).volumes.mountPoints}</ScriptBlock>
+                                <ScriptBlock>if ($_.volumes) {$.volumes.mountPoints}</ScriptBlock>
                             </TableColumnItem>                            
                             <TableColumnItem>
                                 <PropertyName>id</PropertyName>
