@@ -48,6 +48,8 @@ function Get-RubrikVolumeGroup
     # SLA id value
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,    
+    # DetailedObject will retrieved the detailed VolumeGroup object, the default behavior of the API is to only retrieve a subset of the full VolumeGroup object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
