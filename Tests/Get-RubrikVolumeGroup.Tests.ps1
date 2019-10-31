@@ -105,12 +105,12 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
         }
 
         It -Name 'Requesting volumes property should be /etc when queried by id' -Test {
-            ( Get-RubrikVolumeGroup -id VolumeGroup:::11111).Volumes.mountPoints |
+            ( Get-RubrikVolumeGroup -id VolumeGroup:::11111).includes |
                 Should -BeExactly '/etc'
         }
 
         It -Name 'Requesting volumes property should be /etc when using -DetailedObject' -Test {
-            ( Get-RubrikVolumeGroup -DetailedObject).Volumes.mountPoints |
+            ( Get-RubrikVolumeGroup -Name VG01 -DetailedObject).includes |
                 Should -BeExactly '/etc'
         }
         Assert-VerifiableMock
