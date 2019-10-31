@@ -104,17 +104,10 @@ function Get-RubrikVolumeGroup
       for ($i = 0; $i -lt @($result).Count; $i++) {
         $Percentage = [int]($i/@($result).count*100)
         Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-        $updatedresult = Get-RubrikVolumeGroup -id $result[$i].id | ForEach-Object {
-          Select-Object -InputObject $_ -Property *,@{
-            name = 'includes'
-            expression = {
-              if ($null -ne $_.volumes) {$_.volumes.mountPoints}
-            }
-          }
-        }
+        $updatedresult = Get-RubrikVolumeGroup -id $result[$i].id
         Set-ObjectTypeName -TypeName $resources.ObjectTName -result $updatedresult
       }
-    } elseif ($PSBoundParameters.containskey('id')) {
+    } elseif ($PSBoundParameters.containskey('id') -and (-not $DetailedObject)) {
       $result = $result | Select-Object -Property *,@{
         name = 'includes'
         expression = {
