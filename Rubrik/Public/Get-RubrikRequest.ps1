@@ -1,6 +1,5 @@
 ﻿#Requires -Version 3
-function Get-RubrikRequest 
-{
+function Get-RubrikRequest {
   <#  
       .SYNOPSIS
       Connects to Rubrik and retrieves details on an async request
@@ -25,12 +24,14 @@ function Get-RubrikRequest
   [CmdletBinding()]
   Param(
     # ID of an asynchronous request
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # The type of request
     [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset','mssql','vmware/vm','hyperv/vm','managed_volume')]
+    [ValidateSet('fileset', 'mssql', 'vmware/vm', 'hyperv/vm', 'managed_volume')]
     [String]$Type,    
+    # Wait for Request to Complete
+    [Switch]$WaitForCompletion,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -65,18 +66,37 @@ function Get-RubrikRequest
     $uri = $uri -replace '{type}', $Type
     #Place any internal API request calls into this collection, the replace will fix the URI
     $internaltypes = @('managed_volume')
-    if($internaltypes -contains $Type){
+    if ($internaltypes -contains $Type) {
       $uri = $uri -replace 'v1', 'internal'
     }
     #endregion
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+
+    #We added new code that will now wait for the Rubrik Async Request to complete. Once completion has happened, we return back the request object. 
+    #region WaitForCompletion
+    if ($WaitForCompletion) {
+      $ExitList = @("SUCCEEDED", "FAILED")
+      do {
+        $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+        $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+        $result = Test-FilterObject -filter ($resources.Filter) -result $result
+        $result
+        If ($result.progress -gt 0) {
+          Write-Verbose "$($result.id) is $($result.status) $($result.progress) complete"
+          Write-Progress -Activity "$($result.id) is $($result.status)" -status "Progress $($result.progress)" -percentComplete ($result.progress)
+        }
+        else {
+          Write-Progress -Activity "$($result.id)" -status "Job Queued" -percentComplete (0)
+        }
+        Start-Sleep -Seconds 1
+      } while ($result.status -notin $ExitList) 	
+    }
+    #endregion
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-
     return $result
-
   } # End of process
 } # End of function
