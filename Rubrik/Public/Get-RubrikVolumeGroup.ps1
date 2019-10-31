@@ -114,6 +114,15 @@ function Get-RubrikVolumeGroup
         }
         Set-ObjectTypeName -TypeName $resources.ObjectTName -result $updatedresult
       }
+    } elseif ($PSBoundParameters.containskey('id')) {
+      $result = $result | Select-Object -Property *,@{
+        name = 'includes'
+        expression = {
+          if ($null -ne $_.volumes) {$_.volumes.mountPoints}
+        }
+      }
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
     } else {
       $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
       return $result
