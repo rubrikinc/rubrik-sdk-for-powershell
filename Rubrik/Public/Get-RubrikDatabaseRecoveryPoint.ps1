@@ -34,24 +34,30 @@ function Get-RubrikDatabaseRecoveryPoint {
         http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseRecoverypoint.html
 
         .EXAMPLE
-        Get-RubrikDatabaseRecoveryPoint -RubrikDatabaseID "MssqlDatabase:::10dd9979-fdcb-4dc2-b212-20efffd39102" -Latest 
+        Get-RubrikDatabaseRecoveryPoint -id "MssqlDatabase:::10dd9979-fdcb-4dc2-b212-20efffd39102" -Latest 
         This will return back a date time combination that prepresents the latest recovery point known to Rubrik about this database. This will include the last snapshot and any transaction log backup taken since that 
         last snapshot was taken. 
 
         .EXAMPLE
-        Get-RubrikDatabaseRecoveryPoint -RubrikDatabaseID "MssqlDatabase:::10dd9979-fdcb-4dc2-b212-20efffd39102" -LastFull
+        Get-RubrikDatabaseRecoveryPoint -id  "MssqlDatabase:::10dd9979-fdcb-4dc2-b212-20efffd39102" -LastFull
         This will return back a date time combination that prepresents the recovery point known to Rubrik about this database based on the most recent snapshot taken.
 
         .EXAMPLE
-        Get-RubrikDatabaseRecoveryPoint -RubrikDatabaseID "MssqlDatabase:::10dd9979-fdcb-4dc2-b212-20efffd39102" -RestoreTime 02:00:00
+        Get-RubrikDatabaseRecoveryPoint -id  "MssqlDatabase:::10dd9979-fdcb-4dc2-b212-20efffd39102" -RestoreTime 02:00:00
         This will return back a date time combination that represents todays date at 2am, but converted to UTC. The time entered into the RestoreTime field will be in local time. 
 
         .EXAMPLE
-        Get-RubrikDatabaseRecoveryPoint -RubrikDatabaseID "MssqlDatabase:::10dd9979-fdcb-4dc2-b212-20efffd39102" -RestoreTime "2019-10-19 20:00:00"
+        Get-RubrikDatabaseRecoveryPoint -id  "MssqlDatabase:::10dd9979-fdcb-4dc2-b212-20efffd39102" -RestoreTime "2019-10-19 20:00:00"
         This will return back a date time combination that represents the local date time value entered into the RestoreTme field, converted to UTC. 
     #>
     param(
-        [string]$RubrikDatabaseID,
+        # Rubrik's database id value
+        [Parameter(
+            Position = 0,
+            Mandatory = $true,
+            ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullOrEmpty()] 
+        [string]$id,
         [Parameter(ParameterSetName = 'Latest')]
         [switch]$Latest,
         [Parameter(ParameterSetName = 'LastFull')]
@@ -60,18 +66,21 @@ function Get-RubrikDatabaseRecoveryPoint {
         [datetime]$RestoreTime
     )
     if ($PSBoundParameters.ContainsKey('Latest')) {
-        $LatestRecoveryPoint = (Get-RubrikDatabase -id $RubrikDatabaseID).latestRecoveryPoint
+        $LatestRecoveryPoint = (Get-RubrikDatabase -id $id ).latestRecoveryPoint
         $RecoveryDateTime = $LatestRecoveryPoint
     }
     if ($PSBoundParameters.ContainsKey('LastFull')) {
-        $RubrikSnapshot = Get-RubrikSnapshot -id $RubrikDatabaseId | Sort-Object date -Descending | Select-object -First 1
+        $RubrikSnapshot = Get-RubrikSnapshot -id $id  | Sort-Object date -Descending | Select-object -First 1
         $RecoveryDateTime = $RubrikSnapshot.date
     }
     if ($PSBoundParameters.ContainsKey('RestoreTime')) {
         $RawRestoreDate = (get-date -Date $RestoreTime)
         Write-Verbose ("RawRestoreDate is: $RawRestoreDate")
-        $Now = Get-Date
-        if ($RawRestoreDate -ge $Now) { $RecoveryDateTime = $RawRestoreDate.AddDays(-1) } 
+        $Now = (Get-Date).ToUniversalTime()
+        if ($RawRestoreDate -ge $Now) { 
+            $RecoveryDateTime = $RawRestoreDate.AddDays(-1)
+            Write-Verbose ("RecoveryDateTime is: $RecoveryDateTime") 
+        } 
         else { $RecoveryDateTime = $RawRestoreDate }
         $RecoveryDateTime = $RecoveryDateTime.ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.fffZ')
     }
