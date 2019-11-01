@@ -22,13 +22,19 @@ Describe -Name 'Public/Get-RubrikDatabaseRecoveryPoint' -Tag 'Public', 'Get-Rubr
     Context -Name 'No Rubrik API Calls' {
         It -Name 'User enters in date and time' -Test {
             $date = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.fffZ')
-            Get-RubrikDatabaseRecoveryPoint -RubrikDatabaseID 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -RestoreTime $date | Should -Be $date
+            Get-RubrikDatabaseRecoveryPoint -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -RestoreTime $date | Should -Be $date
         }
 
         It -Name 'User enters in just the time' -Test {
-            $date = '14:00'
+            $date = (Get-Date).ToUniversalTime().ToString('HH:mm')
             $today_at_date = $(Get-Date $date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.fffZ')
-            Get-RubrikDatabaseRecoveryPoint -RubrikDatabaseID 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -RestoreTime $date | Should -Be $today_at_date
+            Get-RubrikDatabaseRecoveryPoint -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -RestoreTime $date | Should -Be $today_at_date
+        }
+
+        It -Name 'User enters date in the future' -Test {
+            $date = (Get-Date).AddDays(1).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.fffZ')
+            $today_at_date = $(Get-Date $date).AddDays(-1).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.fffZ')
+            Get-RubrikDatabaseRecoveryPoint -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -RestoreTime $date | Should -Be $today_at_date
         }
     }
     Context -Name 'With Rubrik API Calls' {
@@ -97,7 +103,7 @@ Describe -Name 'Public/Get-RubrikDatabaseRecoveryPoint' -Tag 'Public', 'Get-Rubr
                 return ConvertFrom-Json $response
             }
 
-            Get-RubrikDatabaseRecoveryPoint -RubrikDatabaseID 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -Latest | Should -Be '2019-10-25T00:44:16.000Z'
+            (Get-RubrikDatabaseRecoveryPoint -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -Latest) | Should -Be (Get-Date -Date '2019-10-25T00:44:16.000Z').ToUniversalTime()
         }
                 
         It -Name 'When user uses LastFull switch' -Test {
@@ -177,7 +183,7 @@ Describe -Name 'Public/Get-RubrikDatabaseRecoveryPoint' -Tag 'Public', 'Get-Rubr
                     }'
                 return ConvertFrom-Json $response
             }
-            Get-RubrikDatabaseRecoveryPoint -RubrikDatabaseID 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -LastFull | Should -Be '2019-08-05T01:00:00.000Z'
+            Get-RubrikDatabaseRecoveryPoint -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -LastFull | Should -Be (Get-Date -Date '2019-08-05T01:00:00.000Z').ToUniversalTime()
         }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
