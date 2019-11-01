@@ -56,6 +56,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-10-22
 
+### Added [Various GET cmdlets to retrieve cluster information]
+
+* Added various cmdlets and respective unit tests to support retrieving information from the Rubrik cluster. Development mainly driven from the As Built Report module.
+* New cmdlets are `Get-RubrikClusterInfo`, `Get-RubrikClusterNetworkInterface`, `Get-RubrikClusterStorage`, `Get-RubrikDNSSetting`, `Get-RubrikEmailSetting`, `Get-RubrikLoginBanner`, `Get-RubrikNTPServer`, `Get-RubrikNetworkThrottle`, `Get-RubrikNode`, `Get-RubrikNotificationSetting`, `Get-RubrikProxySetting`, and `GetRubrikSnmpSetting`
+* These cmdlets also resolve [Issue 208](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/208)
+
+## 2019-10-22
+
 ### Fixed [Scoped ID variable to local in New-RubrikHost]
 
 * Scoped the ID variable to local within the URI construction of New-RubrikHost as it was pulling ID variables set within the global scope and causing errors
@@ -74,18 +82,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 2019-10-17
 
 ### Changed [Added Nutanix/Hyper-V support to New-RubrikSnapshot]
+
 * Modified URI list in Get-RubrikAPIData for New-RubrikSnapshot to include support for Nutanix and Hyper-V
 * Addresses [Issue 466](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/466)
 
 ## 2019-10-11
 
 ### Changed [Added documentation to all private functions]
+
 * Added documentation in all private functions including synopsis, description, parameter help and examples where appropriate
 * Addresses [Issue 378](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/378)
 
 ## 2019-10-08
 
 ### Added [cmdlets to add and remove organizations]
+
 * Added Add-RubrikOrganization and Remove-RubrikOrganization to add and remove organizations, and associated unit tests
 * Addresses [Issue 338](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/338)
 
