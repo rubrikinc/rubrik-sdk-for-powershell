@@ -13,12 +13,12 @@
 
 ----
 
-## User Documentation
+## Command Documentation
 
 * [Workflow](workflow/readme.md)
     * [Flow Audit](workflow/flow_audit.md)
 
-* [Reference](workflow/readme.md)
+* [Reference](/reference-readme.md)
     * [Connect-Rubrik](reference/Connect-Rubrik.md)
     * [Disconnect-Rubrik](reference/Disconnect-Rubrik.md)
     * [Export-RubrikDatabase](reference/Export-RubrikDatabase.md)
