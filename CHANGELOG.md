@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-02
+
+### Changed [Updated documentation links to new GitBook]
+
+* Updated the links to point to rubrik.gitbook.io from rubrikinc.gitbook.io
+
 ## 2019-10-28
 
 ### Added [Function property to Get-RubrikAPIData]
