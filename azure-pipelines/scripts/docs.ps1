@@ -52,7 +52,7 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\workflow" | ForEach-Object -Begi
 
 # Reference folder
 Get-ChildItem -LiteralPath "$env:LocalPath\docs\reference" | ForEach-Object -Begin {
-    $MarkDown += "* [Reference](/reference-readme.md)`n"
+    $MarkDown += "* [Reference](documentation/reference_readme.md)`n"
 } -Process {
     $Reference = switch ($_.BaseName) {
         default {$_}
