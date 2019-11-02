@@ -14,7 +14,7 @@ function Update-RubrikVCenter
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Update-RubrikVCenter.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Update-RubrikVCenter
       
       .EXAMPLE
       Get-RubrikVCenter -Name 'vcsa.domain.local' | Update-RubrikVCenter

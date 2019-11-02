@@ -15,7 +15,7 @@ function Get-RubrikDatabaseMount
       GitHub: MikeFal
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseMount.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabaseMount
             
       .EXAMPLE
       Get-RubrikDatabaseMount

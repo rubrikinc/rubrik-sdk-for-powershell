@@ -16,7 +16,7 @@ function Get-RubrikDatabase
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabase.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabase
 
       .EXAMPLE
       Get-RubrikDatabase -Name 'DB1' -SLA Gold

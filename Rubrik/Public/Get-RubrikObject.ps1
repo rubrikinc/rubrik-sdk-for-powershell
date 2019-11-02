@@ -14,7 +14,7 @@ function Get-RubrikObject
     GitHub: mwpreston
 
     .LINK
-    http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikObject.html
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikObject
 
     .EXAMPLE
     Get-RubrikObject -NameFilter 'test*'

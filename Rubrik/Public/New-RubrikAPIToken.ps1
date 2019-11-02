@@ -14,7 +14,7 @@ function New-RubrikAPIToken
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikAPIToken.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikAPIToken
 
       .EXAMPLE
       New-RubrikAPIToken

@@ -32,7 +32,7 @@ function Export-RubrikDatabase
       $targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
       
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Export-RubrikDatabase.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Export-RubrikDatabase
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
