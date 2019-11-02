@@ -47,7 +47,7 @@ function Get-RubrikHost
     [ValidateSet('Windows','Linux','Any','None')]
     [Alias('operating_system_type')]
     [String]$Type,
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,
     # ID of the registered host

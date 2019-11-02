@@ -68,7 +68,7 @@ function Get-RubrikVM
     [ValidateSet('Derived', 'Direct','Unassigned')]
     [Alias('sla_assignment')]
     [String]$SLAAssignment,     
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Parameter(ParameterSetName='Query')]
     [ValidateNotNullOrEmpty()]
     [Alias('primary_cluster_id')]
