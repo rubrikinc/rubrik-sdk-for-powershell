@@ -1,3 +1,5 @@
+<!-- Please submit Pull Requests to the Devel branch. No Pull Requests are accepted to the Master branch -->
+
 # Description
 
 Please describe your pull request in detail.
