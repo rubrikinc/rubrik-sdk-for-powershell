@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-02
+
+### Fixed [Documenation referencing _local / **local**]
+
+* Replaced occurances of _local or **local** with local within documenation around the primary_cluster_id.
+* Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
+
 ## 2019-10-30
 
 ### Added [-DetailedObject parameter in Get-RubrikVolumeGroup]
