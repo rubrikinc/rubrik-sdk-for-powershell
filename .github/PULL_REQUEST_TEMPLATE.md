@@ -35,7 +35,7 @@ Go over all the following points, and put an `x` in all the boxes that apply. If
 - [ ] My code follows the code style of this project.
 - [ ] My change requires a change to the documentation.
 - [ ] I have updated the documentation accordingly.
-- [ ] I have read the **[CONTRIBUTION](http://rubrikinc.github.io/PowerShell-Module/documentation/contribution.html)** document.
+- [ ] I have read the **[CONTRIBUTION](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/user-documentation/contribution)** document.
 - [ ] I have updated the CHANGELOG file accordingly for the version that this merge modifies.
 - [ ] I have added tests to cover my changes.
 - [ ] All new and existing tests passed.
