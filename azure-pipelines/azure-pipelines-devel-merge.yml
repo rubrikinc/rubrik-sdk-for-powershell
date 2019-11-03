@@ -12,13 +12,9 @@ jobs:
   steps:
   - checkout: self
     persistCredentials: true
-  - script: |
-      gitlog=$(git log --oneline -1) 
-      regex="\[skip ci\]"
-      if [[ $gitlog =~ $regex ]]
-      then
-        exit 1
-      fi
+  - task: ShellScript@2
+  inputs:
+    scriptPath: ./azure-pipelines/scripts/git-check-skipci.sh
     
 - job: Build_Using_Windows_PowerShell_on_Server_2019
   displayName: 'Build Using Windows PowerShell on Server 2019'
@@ -60,14 +56,7 @@ jobs:
   steps:
   - checkout: self
     persistCredentials: true
-  - script: |
-      git config --global user.email "noreply@jaapbrasser.com"
-      git config --global user.name "jaapbrasser"
-      git branch devel
-      git checkout devel
-      git status
-      git branch
-      git add *
-      git commit -m "[skip ci] Adding changes from Azure DevOps Pipelines"
-      git push -u origin devel
+  - task: ShellScript@2
+  inputs:
+    scriptPath: ./azure-pipelines/scripts/git-devel-merge.sh
     
