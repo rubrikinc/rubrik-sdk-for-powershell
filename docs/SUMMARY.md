@@ -1,22 +1,19 @@
-# Rubrik SDK for PowerShell
+# Table of contents
+
+* [Introduction](README.md)
 
 ## User Documentation
 
-* [Contribution](documentation/contribution.md)
-* [FAQ](documentation/faq.md)
-* [Getting Started](documentation/getting_started.md)
-* [Installation](documentation/installation.md)
-* [Licensing](documentation/licensing.md)
-* [Project Architecture](documentation/project_architecture.md)
-* [Requirements](documentation/requirements.md)
-* [Support](documentation/support.md)
-
-----
+* [Contribution](user-documentation/contribution.md)
+* [FAQ](user-documentation/faq.md)
+* [Getting Started](user-documentation/getting_started.md)
+* [Installation](user-documentation/installation.md)
+* [Licensing](user-documentation/licensing.md)
+* [Project Architecture](user-documentation/project_architecture.md)
+* [Requirements](user-documentation/requirements.md)
+* [Support](user-documentation/support.md)
 
 ## Command Documentation
-
-* [Workflow](workflow/readme.md)
-    * [Flow Audit](workflow/flow_audit.md)
 
 * [Reference](documentation/reference_readme.md)
     * [Connect-Rubrik](reference/Connect-Rubrik.md)
@@ -151,4 +148,3 @@
     * [Update-RubrikVCD](reference/Update-RubrikVCD.md)
     * [Update-RubrikVCenter](reference/Update-RubrikVCenter.md)
     * [Update-RubrikVMwareVM](reference/Update-RubrikVMwareVM.md)
-
