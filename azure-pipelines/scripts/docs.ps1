@@ -1,3 +1,6 @@
+# Import Module
+Import-Module .\Rubrik\Rubrik.psd1 -Force
+
 # Create new markdown and XML help files
 Write-Output 'Building new function documentation'
 
