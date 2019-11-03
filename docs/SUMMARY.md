@@ -16,7 +16,7 @@
 ## Command Documentation
 
 * [Workflow](command-documentation/workflow/readme.md)
-    * [Flow Audit](workflow/flow_audit.md)
+    * [Flow Audit](command-documentation/workflow/flow_audit.md)
 * [Reference](command-documentation/reference/readme.md)
     * [Connect-Rubrik](command-documentation/reference/Connect-Rubrik.md)
     * [Disconnect-Rubrik](command-documentation/reference/Disconnect-Rubrik.md)
