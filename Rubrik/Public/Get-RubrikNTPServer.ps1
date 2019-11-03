@@ -14,7 +14,7 @@ function Get-RubrikNTPServer
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/Get-RubrikNTPServer.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNTPServer
             
       .EXAMPLE
       Get-RubrikNTPServer

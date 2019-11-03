@@ -14,7 +14,7 @@ function Get-RubrikProxySetting
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/Get-RubrikProxySetting.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikProxySetting
             
       .EXAMPLE
       Get-RubrikProxySetting

@@ -14,7 +14,7 @@ function Get-RubrikSNMPSetting
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/Get-RubrikSNMPSetting.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikSNMPSetting
             
       .EXAMPLE
       Get-RubrikSNMPSetting

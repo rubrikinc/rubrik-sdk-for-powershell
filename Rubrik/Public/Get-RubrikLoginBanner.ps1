@@ -14,7 +14,7 @@ function Get-RubrikLoginBanner
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/Get-RubrikLoginBanner.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikLoginBanner
             
       .EXAMPLE
       Get-RubrikLoginBanner

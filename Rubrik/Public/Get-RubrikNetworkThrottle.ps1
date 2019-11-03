@@ -14,7 +14,7 @@ function Get-RubrikNetworkThrottle
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/Get-RubrikNetworkThrottle.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNetworkThrottle
             
       .EXAMPLE
       Get-RubrikNetworkThrottle 
