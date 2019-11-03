@@ -14,7 +14,7 @@ function Get-RubrikDNSSetting
       GitHub: mwpreston
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDNSSetting.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/Get-RubrikDNSSetting.html
             
       .EXAMPLE
       Get-RubrikDNSSetting 
