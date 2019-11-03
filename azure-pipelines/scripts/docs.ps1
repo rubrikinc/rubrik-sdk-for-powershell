@@ -41,7 +41,7 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\command-documentation\workflow" 
         'flow_audit' {'Flow Audit'}
         default {$_}
     }
-    $uri = "$($_.Directory.BaseName)/$($_.Name)"
+    $uri = "command-documentation/$($_.Directory.BaseName)/$($_.Name)"
 
     if ($_.basename -ne 'readme') {
         $MarkDown += "    * [$Reference]($uri)`n"
@@ -57,7 +57,7 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\command-documentation\reference"
     $Reference = switch ($_.BaseName) {
         default {$_}
     }
-    $uri = "$($_.Directory.BaseName)/$($_.Name)"
+    $uri = "command-documentation/$($_.Directory.BaseName)/$($_.Name)"
     
     if ($_.basename -ne 'readme') {
         $MarkDown += "    * [$Reference]($uri)`n"
