@@ -1,32 +1,30 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikNASShare
 schema: 2.0.0
 ---
 
 # Set-RubrikNASShare
 
 ## SYNOPSIS
-
 Change settings for a NAS share
 
 ## SYNTAX
 
-```text
+```
 Set-RubrikNASShare [-Id] <String> [[-ExportPoint] <String>] [[-Credential] <PSCredential>] [[-Server] <String>]
  [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-Update NAS share settings that are configured in Rubrik, such as updating the export point or change the NAS credentials
+Update NAS share settings that are configured in Rubrik, such as updating the export point or
+change the NAS credentials
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikNASShare -name 'FOO' | Set-RubrikNASShare -ExportPoint 'TEMP'
 ```
 
@@ -35,7 +33,6 @@ Update the NAS Share FOO with the export point of TEMP.
 ## PARAMETERS
 
 ### -Id
-
 NAS Share ID
 
 ```yaml
@@ -51,7 +48,6 @@ Accept wildcard characters: False
 ```
 
 ### -ExportPoint
-
 New export point for the share
 
 ```yaml
@@ -67,7 +63,6 @@ Accept wildcard characters: False
 ```
 
 ### -Credential
-
 New NAS Share credential
 
 ```yaml
@@ -83,7 +78,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -99,7 +93,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -115,18 +108,19 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal Twitter: @Mike\_Fal GitHub: MikeFal Any other links you'd like here
+Written by Mike Fal
+Twitter: @Mike_Fal
+GitHub: MikeFal
+Any other links you'd like here
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikNASShare](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikNASShare)
 

@@ -1,37 +1,33 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikLogBackup
 schema: 2.0.0
 ---
 
 # New-RubrikLogBackup
 
 ## SYNOPSIS
-
 Runs an on demand log backup for the specified database id.
 
 ## SYNTAX
 
-```text
+```
 New-RubrikLogBackup [-id] <String> [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 This cmdlet initiates an on-demand transaction log backup for a specific SQL Server database.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikLogBackup -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38
 ```
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikDatabase -ServerInstance FOO -Name BAR | New-RubrikLogBackup
 ```
 
@@ -40,7 +36,6 @@ Iniitaite a log backup for the BAR database on the FOO instance.
 ## PARAMETERS
 
 ### -id
-
 Rubrik's id of the object
 
 ```yaml
@@ -56,7 +51,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -72,7 +66,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -88,18 +81,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikLogBackup](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikLogBackup)
 

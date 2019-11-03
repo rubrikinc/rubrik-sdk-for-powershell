@@ -1,59 +1,55 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikAPIToken.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikAPIToken
 schema: 2.0.0
 ---
 
 # New-RubrikAPIToken
 
 ## SYNOPSIS
-
 Creates a new Rubrik API Token.
 
 ## SYNTAX
 
-```text
+```
 New-RubrikAPIToken [[-OrganizationId] <String>] [[-Expiration] <Int32>] [[-Tag] <String>] [[-Server] <String>]
  [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The New-RubrikAPIToken cmdlet is used to generate a new API Token for the Rubrik cluster using the role and permissions of the currently logged in session. The token can then be used in making API requests without having to resort to basic authorization.
+The New-RubrikAPIToken cmdlet is used to generate a new API Token for the Rubrik cluster using the role and permissions of the currently logged in session.
+The token can then be used in making API requests without having to resort to basic authorization.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikAPIToken
 ```
 
-This will generate a new API Token named "API Token" that lasts for 60 minutes \(1 hour\).
+This will generate a new API Token named "API Token" that lasts for 60 minutes (1 hour).
 
 ### EXAMPLE 2
-
-```text
+```
 New-RubrikAPIToken -Expiration 2880 -Tag "2-Day Token"
 ```
 
-This will generate a new API Token named "2-Day Token" that lasts for 2880 minutes \(48 hours / 2 days\).
+This will generate a new API Token named "2-Day Token" that lasts for 2880 minutes (48 hours / 2 days).
 
 ### EXAMPLE 3
-
-```text
+```
 New-RubrikAPIToken -Expiration 10080 -Tag "Dev Org Weekly Token" -OrganizationId "Organization:::11111111-2222-3333-4444-555555555555"
 ```
 
-This will generate a new API Token named "Dev Org Weekly Token" that lasts for 10080 minutes \(7 days\) in the organization matching id value "Organization:::11111111-2222-3333-4444-555555555555". This assumes that the current session that is requested the token has authority in that organization.
+This will generate a new API Token named "Dev Org Weekly Token" that lasts for 10080 minutes (7 days) in the organization matching id value "Organization:::11111111-2222-3333-4444-555555555555".
+This assumes that the current session that is requested the token has authority in that organization.
 
 ## PARAMETERS
 
 ### -OrganizationId
-
-Bind the new session to the specified organization. When this parameter is not specified, the session will be bound to an organization chosen according to the user's preferences and authorizations.
+Bind the new session to the specified organization.
+When this parameter is not specified, the session will be bound to an organization chosen according to the user's preferences and authorizations.
 
 ```yaml
 Type: String
@@ -68,8 +64,10 @@ Accept wildcard characters: False
 ```
 
 ### -Expiration
-
-This value specifies an interval in minutes. The token expires at the end of the interval. By default, this value is 60 \(1 hour\). This value cannot exceed 525600 \(365 days\).
+This value specifies an interval in minutes.
+The token expires at the end of the interval.
+By default, this value is 60 (1 hour).
+This value cannot exceed 525600 (365 days).
 
 ```yaml
 Type: Int32
@@ -84,8 +82,8 @@ Accept wildcard characters: False
 ```
 
 ### -Tag
-
-Name assigned to the token. The default value is "API Token".
+Name assigned to the token.
+The default value is "API Token".
 
 ```yaml
 Type: String
@@ -100,7 +98,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -116,7 +113,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -132,18 +128,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikAPIToken.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikAPIToken.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikAPIToken](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikAPIToken)
 

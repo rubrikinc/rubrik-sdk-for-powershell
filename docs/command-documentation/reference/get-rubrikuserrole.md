@@ -1,41 +1,36 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikUserRole.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikUserRole
 schema: 2.0.0
 ---
 
 # Get-RubrikUserRole
 
 ## SYNOPSIS
-
 Gets information around a users role
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikUserRole [-Id] <String[]> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Get-RubrikUserRole cmdlet is used retrieve information and authorizations around a users role within the Rubrik cluster.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikUserRole -id 'User:::1111-2222-3333'
 ```
 
 Retrieves the role information for the user account with the specified id.
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikUser -Username 'jdoe' | Get-RubrikUserRole
 ```
 
@@ -44,7 +39,6 @@ Retrieves the role information for the user with a username of 'jdoe'
 ## PARAMETERS
 
 ### -Id
-
 User ID
 
 ```yaml
@@ -60,7 +54,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -76,7 +69,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -92,8 +84,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -108,7 +100,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -124,18 +115,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Preston for community usage Twitter: @mwpreston GitHub: mwpreston
+Written by Mike Preston for community usage
+Twitter: @mwpreston
+GitHub: mwpreston
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikUserRole.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikUserRole.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikUserRole](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikUserRole)
 

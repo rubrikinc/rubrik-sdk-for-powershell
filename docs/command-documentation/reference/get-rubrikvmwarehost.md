@@ -1,43 +1,39 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVMwareHost.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVMwareHost
 schema: 2.0.0
 ---
 
 # Get-RubrikVMwareHost
 
 ## SYNOPSIS
-
 Connects to Rubrik and retrieves a list of ESXi hosts registered
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikVMwareHost [[-Name] <String>] [[-Server] <String>] [[-PrimaryClusterID] <String>] [[-api] <String>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Get-RubrikVMwareHost cmdlet will retrieve all of the registered ESXi hosts within the authenticated Rubrik cluster.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikVMwareHost
 ```
 
 This will return a listing of all of the ESXi hosts known to the connected Rubrik cluster
 
-Get-RubrikVMwareHost -PrimarClusterId local This will return a listing of all of the ESXi hosts whose primary cluster is that of the connected Rubrik cluster.
+Get-RubrikVMwareHost -PrimarClusterId local
+This will return a listing of all of the ESXi hosts whose primary cluster is that of the connected Rubrik cluster.
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikVMwareHost -Name 'esxi01'
 ```
 
@@ -46,7 +42,6 @@ This will return a listing of all of the ESXi hosts named 'esxi01' registered wi
 ## PARAMETERS
 
 ### -Name
-
 ESXi Host Name
 
 ```yaml
@@ -62,7 +57,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -78,8 +72,8 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryClusterID
-
-Filter the summary information based on the primarycluster\_id of the primary Rubrik cluster. Use 'local' as the primary\_cluster\_id of the Rubrik cluster that is hosting the current REST API session.
+Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
+Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
 
 ```yaml
 Type: String
@@ -94,7 +88,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -110,18 +103,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Preston for community usage Twitter: @mwpreston GitHub: mwpreston
+Written by Mike Preston for community usage
+Twitter: @mwpreston
+GitHub: mwpreston
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVMwareHost.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVMwareHost.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVMwareHost](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVMwareHost)
 

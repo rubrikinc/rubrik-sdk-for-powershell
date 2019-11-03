@@ -1,31 +1,29 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/rubrikinc/PowerShell-Module'
+online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
 # Get-RubrikLDAP
 
 ## SYNOPSIS
-
 Connects to Rubrik and retrieves the current Rubrik LDAP settings
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikLDAP [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikLDAP cmdlet will retrieve the LDAP settings actively running on the system. This does require authentication.
+The Get-RubrikLDAP cmdlet will retrieve the LDAP settings actively running on the system.
+This does require authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikLDAP
 ```
 
@@ -34,7 +32,6 @@ This will return the running LDAP settings on the currently connected Rubrik clu
 ## PARAMETERS
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -50,7 +47,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -66,15 +62,13 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
 Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
 
 ## RELATED LINKS

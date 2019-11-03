@@ -1,48 +1,44 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabaseRecoverableRange
 schema: 2.0.0
 ---
 
 # Get-RubrikDatabaseRecoverableRange
 
 ## SYNOPSIS
-
 Retrieves recoverable ranges for SQL Server databases.
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikDatabaseRecoverableRange [-id] <String> [-StartDateTime <DateTime>] [-EndDateTime <DateTime>]
  [-AfterTime <String>] [-BeforeTime <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikDatabaseRecoverableRange cmdlet retrieves recoverable ranges for SQL Server databases protected by Rubrik.
+The Get-RubrikDatabaseRecoverableRange cmdlet retrieves recoverable ranges for
+SQL Server databases protected by Rubrik.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange
 ```
 
 Retrieve all recoverable ranges for the BAR database on the FOO host.
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange -BeforeTime '2018-03-31T00:00:00.000Z'
 ```
 
 Retrieve all recoverable ranges for the BAR database on the FOO host after '2018-03-31T00:00:00.000Z'.
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange -EndDateTime '2018-04-01'
 ```
 
@@ -51,7 +47,6 @@ Retrieve all recoverable ranges for the BAR database on the FOO host before '201
 ## PARAMETERS
 
 ### -id
-
 Rubrik's database id value
 
 ```yaml
@@ -67,7 +62,6 @@ Accept wildcard characters: False
 ```
 
 ### -StartDateTime
-
 Range Start as datetime
 
 ```yaml
@@ -83,7 +77,6 @@ Accept wildcard characters: False
 ```
 
 ### -EndDateTime
-
 Range End as datetime
 
 ```yaml
@@ -99,8 +92,7 @@ Accept wildcard characters: False
 ```
 
 ### -AfterTime
-
-After time/Start time of range in ISO8601 format \(2016-01-01T01:23:45.678Z\)
+After time/Start time of range in ISO8601 format (2016-01-01T01:23:45.678Z)
 
 ```yaml
 Type: String
@@ -115,8 +107,7 @@ Accept wildcard characters: False
 ```
 
 ### -BeforeTime
-
-Before time/end time of range in ISO8601 format \(2016-01-01T01:23:45.678Z\)
+Before time/end time of range in ISO8601 format (2016-01-01T01:23:45.678Z)
 
 ```yaml
 Type: String
@@ -131,7 +122,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -147,7 +137,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -163,18 +152,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabaseRecoverableRange](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabaseRecoverableRange)
 

@@ -1,59 +1,60 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReportData.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikReportData
 schema: 2.0.0
 ---
 
 # Get-RubrikReportData
 
 ## SYNOPSIS
-
 Retrieve table data for a specific Envision report
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikReportData [-id] <String> [[-Name] <String>] [[-TaskType] <String>] [[-TaskStatus] <String>]
  [[-ObjectType] <String>] [[-ComplianceStatus] <String>] [[-limit] <Int32>] [[-cursor] <String>]
  [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Get-RubrikReportData cmdlet is used to pull table data from a specific Envision report
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData
 ```
 
 This will return table data from the "SLA Compliance Summary" report
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance'
 ```
 
 This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance' -Limit 10
 ```
 
 This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance", only returns the first 10 results.
 
+### EXAMPLE 4
+```
+Get-RubrikReport -Name 'Object Protection Summary' | Get-RubrikReportData -Limit -1
+```
+
+This will return all of the table data from the "Object Protection Summary" report.
+Note: Using '-Limit -1' may affect performance for reports containing large amounts of data.
+
 ## PARAMETERS
 
 ### -id
-
 The ID of the report
 
 ```yaml
@@ -69,7 +70,6 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-
 Search table data by object name
 
 ```yaml
@@ -85,7 +85,6 @@ Accept wildcard characters: False
 ```
 
 ### -TaskType
-
 Filter table data on task type
 
 ```yaml
@@ -101,7 +100,6 @@ Accept wildcard characters: False
 ```
 
 ### -TaskStatus
-
 Filter table data on task status
 
 ```yaml
@@ -117,7 +115,6 @@ Accept wildcard characters: False
 ```
 
 ### -ObjectType
-
 Filter table data on object type
 
 ```yaml
@@ -133,7 +130,6 @@ Accept wildcard characters: False
 ```
 
 ### -ComplianceStatus
-
 Filter table data on compliance status
 
 ```yaml
@@ -149,8 +145,8 @@ Accept wildcard characters: False
 ```
 
 ### -limit
-
-limit the number of rows returned, defaults to maximum pageSize of 9999
+limit the number of rows returned, defaults to maximum pageSize of 9999.
+Use a value of '-1' to remove limit restrictions
 
 ```yaml
 Type: Int32
@@ -165,8 +161,7 @@ Accept wildcard characters: False
 ```
 
 ### -cursor
-
-cursor start \(if necessary\)
+cursor start (if necessary)
 
 ```yaml
 Type: String
@@ -181,7 +176,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -197,7 +191,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -213,18 +206,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReportData.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikReportData.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikReportData](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikReportData)
 

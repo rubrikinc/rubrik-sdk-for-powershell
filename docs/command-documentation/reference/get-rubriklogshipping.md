@@ -1,19 +1,19 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikLogShipping
 schema: 2.0.0
 ---
 
 # Get-RubrikLogShipping
 
 ## SYNOPSIS
-
-Retrieves all log shipping configuration objects. Results can be filtered and sorted.
+Retrieves all log shipping configuration objects.
+Results can be filtered and sorted.
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikLogShipping [[-id] <String>] [[-PrimaryDatabaseId] <String>] [[-PrimaryDatabaseName] <String>]
  [[-SecondaryDatabaseName] <String>] [[-location] <String>] [[-status] <String>] [[-limit] <String>]
  [[-offset] <String>] [[-sort_by] <String>] [[-sort_order] <String>] [[-Server] <String>] [[-api] <String>]
@@ -21,30 +21,27 @@ Get-RubrikLogShipping [[-id] <String>] [[-PrimaryDatabaseId] <String>] [[-Primar
 ```
 
 ## DESCRIPTION
-
-Retrieves all log shipping configuration objects. Results can be filtered and sorted.
+Retrieves all log shipping configuration objects.
+Results can be filtered and sorted.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get all log shipping configurations
 ```
 
 Get-RubrikLogShipping
 
 ### EXAMPLE 2
-
-```text
+```
 Get all log shipping configurations for a given database
 ```
 
 Get-RubrkLogShipping -PrimaryDatabase 'AdventureWorks2014'
 
 ### EXAMPLE 3
-
-```text
+```
 Get all log shipping configurations for a given location (log shipping secondary server)
 ```
 
@@ -53,6 +50,7 @@ Get-RubrkLogShipping -location am1-chrilumn-w1.rubrikdemo.com\MSSQLSERVER
 ## PARAMETERS
 
 ### -id
+{{ Fill id Description }}
 
 ```yaml
 Type: String
@@ -67,6 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryDatabaseId
+{{ Fill PrimaryDatabaseId Description }}
 
 ```yaml
 Type: String
@@ -81,6 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryDatabaseName
+{{ Fill PrimaryDatabaseName Description }}
 
 ```yaml
 Type: String
@@ -95,6 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -SecondaryDatabaseName
+{{ Fill SecondaryDatabaseName Description }}
 
 ```yaml
 Type: String
@@ -109,7 +110,6 @@ Accept wildcard characters: False
 ```
 
 ### -location
-
 Log Shipping Target Server
 
 ```yaml
@@ -125,6 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -status
+{{ Fill status Description }}
 
 ```yaml
 Type: String
@@ -139,6 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### -limit
+{{ Fill limit Description }}
 
 ```yaml
 Type: String
@@ -153,6 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -offset
+{{ Fill offset Description }}
 
 ```yaml
 Type: String
@@ -166,7 +169,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -sort\_by
+### -sort_by
+{{ Fill sort_by Description }}
 
 ```yaml
 Type: String
@@ -180,7 +184,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -sort\_order
+### -sort_order
+{{ Fill sort_order Description }}
 
 ```yaml
 Type: String
@@ -195,7 +200,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -211,7 +215,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -227,18 +230,19 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Lumnah Twitter: @lumnah GitHub: clumnah Any other links you'd like here
+Written by Chris Lumnah
+Twitter: @lumnah
+GitHub: clumnah
+Any other links you'd like here
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikLogShipping](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikLogShipping)
 

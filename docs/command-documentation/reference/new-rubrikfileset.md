@@ -1,40 +1,36 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikFileset
 schema: 2.0.0
 ---
 
 # New-RubrikFileset
 
 ## SYNOPSIS
-
 {required: high level overview}
 
 ## SYNTAX
 
-```text
+```
 New-RubrikFileset [-TemplateID] <String> [[-HostID] <String>] [[-ShareID] <String>] [[-Server] <String>]
  [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 {required: more detailed description of the function's purpose}
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikFileset -TemplateID '1111-1111-1111-1111' -HostID 'Host::::2222-2222-2222-2222'
 ```
 
 Creates a new fileset on the specified host, using the selected template.
 
 ### EXAMPLE 2
-
-```text
+```
 New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id
 ```
 
@@ -43,7 +39,6 @@ Creates a new fileset for the BAR NAS, using the FOO template.
 ## PARAMETERS
 
 ### -TemplateID
-
 Fileset Template ID to use for the new fileset
 
 ```yaml
@@ -59,7 +54,6 @@ Accept wildcard characters: False
 ```
 
 ### -HostID
-
 HostID - Used for Windows or Linux Filesets
 
 ```yaml
@@ -75,7 +69,6 @@ Accept wildcard characters: False
 ```
 
 ### -ShareID
-
 ShareID - used for NAS shares
 
 ```yaml
@@ -91,7 +84,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -107,7 +99,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -123,18 +114,19 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by {required} Twitter: {optional} GitHub: {optional} Any other links you'd like here
+Written by {required}
+Twitter: {optional}
+GitHub: {optional}
+Any other links you'd like here
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikFileset](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikFileset)
 

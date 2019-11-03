@@ -1,41 +1,37 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikAvailabilityGroup
 schema: 2.0.0
 ---
 
 # Set-RubrikAvailabilityGroup
 
 ## SYNOPSIS
-
 Sets the protection values of an Availability Group
 
 ## SYNTAX
 
-```text
+```
 Set-RubrikAvailabilityGroup [[-id] <String>] [[-LogBackupFrequencyInSeconds] <Int32>]
  [[-LogRetentionHours] <Int32>] [-CopyOnly] [[-SLA] <String>] [[-SLAID] <String>] [[-Server] <String>]
  [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Set-RubrikAvailabilityGroup cmdlet is used to set the protetion values of an Availability Group in Rubrik.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikAvailabilityGroup -GroupName 'am1-sql16ag-1ag' | Set-RubrikAvailabilityGroup -SLA GOLD
 ```
 
 This will set the SLA Domain to GOLD for this Availability Group
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikAvailabilityGroup -GroupName 'am1-sql16ag-1ag' | Set-RubrikAvailabilityGroup -SLA GOLD -LogBackupFrequencyInSeconds 3600 -LogRetentionHours 168
 ```
 
@@ -44,7 +40,6 @@ This will set the SLA Domain to GOLD for this Availability Group with a log back
 ## PARAMETERS
 
 ### -id
-
 Availability Group ID
 
 ```yaml
@@ -60,7 +55,6 @@ Accept wildcard characters: False
 ```
 
 ### -LogBackupFrequencyInSeconds
-
 How often we should backup the transaction log
 
 ```yaml
@@ -76,7 +70,6 @@ Accept wildcard characters: False
 ```
 
 ### -LogRetentionHours
-
 How long should we keep the backup for
 
 ```yaml
@@ -92,7 +85,6 @@ Accept wildcard characters: False
 ```
 
 ### -CopyOnly
-
 Boolean declaration for copy only backups on the database.
 
 ```yaml
@@ -108,7 +100,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLA
-
 SLA Domain Name
 
 ```yaml
@@ -124,7 +115,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
-
 SLA Domain ID
 
 ```yaml
@@ -140,7 +130,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -156,7 +145,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -172,18 +160,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Lumnah for community usage Twitter: @lumnah GitHub: clumnah
+Written by Chris Lumnah for community usage
+Twitter: @lumnah
+GitHub: clumnah
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikAvailabilityGroup](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikAvailabilityGroup)
 

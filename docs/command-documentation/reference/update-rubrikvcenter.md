@@ -1,40 +1,35 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Update-RubrikVCenter.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Update-RubrikVCenter
 schema: 2.0.0
 ---
 
 # Update-RubrikVCenter
 
 ## SYNOPSIS
-
 Connects to Rubrik to refresh the metadata for the specified vCenter Server
 
 ## SYNTAX
 
-```text
+```
 Update-RubrikVCenter [-id] <String> [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Update-RubrikVCenter cmdlet will refresh all vCenter metadata known to the connected Rubrik cluster.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikVCenter -Name 'vcsa.domain.local' | Update-RubrikVCenter
 ```
 
 This will refresh the vCenter metadata on the currently connected Rubrik cluster
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikVCenter | Update-RubrikVCenter
 ```
 
@@ -43,7 +38,6 @@ This will refresh the vCenter metadata for all connecter vCenter instances on th
 ## PARAMETERS
 
 ### -id
-
 vCenter id value from the Rubrik Cluster
 
 ```yaml
@@ -59,7 +53,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -75,7 +68,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -91,18 +83,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Update-RubrikVCenter.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Update-RubrikVCenter.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Update-RubrikVCenter](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Update-RubrikVCenter)
 

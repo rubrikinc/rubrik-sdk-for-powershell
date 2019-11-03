@@ -1,29 +1,25 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikUserRole.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikUserRole
 schema: 2.0.0
 ---
 
 # Set-RubrikUserRole
 
 ## SYNOPSIS
-
 Updates an existing users role
 
 ## SYNTAX
 
 ### ReadOnlyAdmin
-
-```text
+```
 Set-RubrikUserRole -Id <String[]> [-ReadOnlyAdmin] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### EndUserRemove
-
-```text
+```
 Set-RubrikUserRole -Id <String[]> [-EndUser] [-Remove] [-EventObjects <String[]>]
  [-RestoreWithoutDownloadObjects <String[]>] [-RestoreWithOverwriteObjects <String[]>]
  [-OnDemandSnapshotObjects <String[]>] [-ReportObjects <String[]>] [-RestoreObjects <String[]>]
@@ -32,8 +28,7 @@ Set-RubrikUserRole -Id <String[]> [-EndUser] [-Remove] [-EventObjects <String[]>
 ```
 
 ### EndUserAdd
-
-```text
+```
 Set-RubrikUserRole -Id <String[]> [-EndUser] [-Add] [-EventObjects <String[]>]
  [-RestoreWithoutDownloadObjects <String[]>] [-RestoreWithOverwriteObjects <String[]>]
  [-OnDemandSnapshotObjects <String[]>] [-ReportObjects <String[]>] [-RestoreObjects <String[]>]
@@ -42,60 +37,53 @@ Set-RubrikUserRole -Id <String[]> [-EndUser] [-Add] [-EventObjects <String[]>]
 ```
 
 ### NoAccess
-
-```text
+```
 Set-RubrikUserRole -Id <String[]> [-NoAccess] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### Admin
-
-```text
+```
 Set-RubrikUserRole -Id <String[]> [-Admin] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Set-RubrikUserRole cmdlet is used modify a users role and authorizations to objects within the Rubrik cluster
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Set-RubrikUserRole -id 'User:::1111-2222-3333' -Admin
 ```
 
 This will set the specifed users role to admin
 
 ### EXAMPLE 2
-
-```text
+```
 Set-RubrikUserRole -id 'User:::1111-2222-3333' -ReadOnlyAdmin
 ```
 
-This will set the specifed users role to read only admin. Valid on Rubrik CDM 5.0 and later
+This will set the specifed users role to read only admin.
+Valid on Rubrik CDM 5.0 and later
 
 ### EXAMPLE 3
-
-```text
+```
 Set-RubrikUserRole -id 'User:::1111-2222-3333' -EndUser -Add -RestoreObjects 'VirtualMachine:::1111-222'
 ```
 
 This will set the specifed users role to end user, granting access to restore the specified virtual machine
 
 ### EXAMPLE 4
-
-```text
+```
 Set-RubrikUserRole -id 'User:::1111-2222-3333' -EndUser -Remove -RestoreObjects 'VirtualMachine:::1111-222'
 ```
 
 This will set the specifed users role to end user, removing access to restore the specified virtual machine
 
 ### EXAMPLE 5
-
-```text
+```
 Set-RubrikUserRole -id 'User:::1111-2222-3333' -NoAccess
 ```
 
@@ -104,7 +92,6 @@ This will remove all permissions on the Rubrik cluster for the specified user.
 ## PARAMETERS
 
 ### -Id
-
 User ID
 
 ```yaml
@@ -120,7 +107,6 @@ Accept wildcard characters: False
 ```
 
 ### -Admin
-
 Sets users role to Admin
 
 ```yaml
@@ -136,7 +122,6 @@ Accept wildcard characters: False
 ```
 
 ### -EndUser
-
 Sets users role to End User
 
 ```yaml
@@ -152,8 +137,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoAccess
-
-Sets users role to No Access \(Removes all access from user\)
+Sets users role to No Access (Removes all access from user)
 
 ```yaml
 Type: SwitchParameter
@@ -168,8 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -ReadOnlyAdmin
-
-Sets users role to No Access \(Removes all access from user\)
+Sets users role to No Access (Removes all access from user)
 
 ```yaml
 Type: SwitchParameter
@@ -184,7 +167,6 @@ Accept wildcard characters: False
 ```
 
 ### -Add
-
 Specifies -Privileges should be added to the users authorizations
 
 ```yaml
@@ -200,7 +182,6 @@ Accept wildcard characters: False
 ```
 
 ### -Remove
-
 Specifies -Privileges should be removed from the users authorizations
 
 ```yaml
@@ -216,7 +197,6 @@ Accept wildcard characters: False
 ```
 
 ### -EventObjects
-
 Event Objects to grant or revoke access to
 
 ```yaml
@@ -232,7 +212,6 @@ Accept wildcard characters: False
 ```
 
 ### -RestoreWithoutDownloadObjects
-
 Objects which can be restored, with file download disabled
 
 ```yaml
@@ -248,7 +227,6 @@ Accept wildcard characters: False
 ```
 
 ### -RestoreWithOverwriteObjects
-
 Objects which can be restored, overwriting original
 
 ```yaml
@@ -264,7 +242,6 @@ Accept wildcard characters: False
 ```
 
 ### -OnDemandSnapshotObjects
-
 Objects allowing On-Demand Snapshots
 
 ```yaml
@@ -280,7 +257,6 @@ Accept wildcard characters: False
 ```
 
 ### -ReportObjects
-
 Report objects
 
 ```yaml
@@ -296,7 +272,6 @@ Accept wildcard characters: False
 ```
 
 ### -RestoreObjects
-
 Objects which can be restored
 
 ```yaml
@@ -312,7 +287,6 @@ Accept wildcard characters: False
 ```
 
 ### -InfrastructureObjects
-
 Infrastructure Objects allowing provisioning of restores/live mounts
 
 ```yaml
@@ -328,7 +302,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -344,7 +317,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -360,8 +332,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -376,7 +348,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -392,18 +363,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Preston for community usage Twitter: @mwpreston GitHub: mwpreston
+Written by Mike Preston for community usage
+Twitter: @mwpreston
+GitHub: mwpreston
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikUserRole.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikUserRole.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikUserRole](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikUserRole)
 

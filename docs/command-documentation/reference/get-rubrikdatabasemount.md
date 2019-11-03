@@ -1,75 +1,67 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseMount.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabaseMount
 schema: 2.0.0
 ---
 
 # Get-RubrikDatabaseMount
 
 ## SYNOPSIS
-
 Connects to Rubrik and retrieves details on mounts for a SQL Server Database
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikDatabaseMount [[-Id] <String>] [[-SourceDatabaseId] <String>] [[-SourceDatabaseName] <String>]
  [[-TargetInstanceId] <String>] [[-MountedDatabaseName] <String>] [[-Server] <String>] [[-api] <String>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikMount cmdlet will accept one of several different query parameters and retireve the database Live Mount information for that criteria.
+The Get-RubrikMount cmdlet will accept one of several different query parameters
+and retireve the database Live Mount information for that criteria.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikDatabaseMount
 ```
 
 This will return details on all mounted databases.
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'
 ```
 
 This will return details on mount id "11111111-2222-3333-4444-555555555555".
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikDatabaseMount -source_database_id (Get-RubrikDatabase -HostName FOO -Instance MSSQLSERVER -Database BAR).id
 ```
 
 This will return details for any mounts found using the id value from a database named BAR on the FOO default instance.
 
 ### EXAMPLE 4
-
-```text
+```
 Get-RubrikDatabaseMount -source_database_name BAR
 ```
 
 This returns any mounts where the source database is named BAR.
 
 ### EXAMPLE 5
-
-```text
+```
 Get-RubrikDatabaseMount -mounted_database_name BAR_LM
 ```
 
-This returns any mounts with the name BAR\_LM
+This returns any mounts with the name BAR_LM
 
 ## PARAMETERS
 
 ### -Id
-
 Rubrik's id of the mount
 
 ```yaml
@@ -85,7 +77,6 @@ Accept wildcard characters: False
 ```
 
 ### -SourceDatabaseId
-
 Filters live mounts by database source id
 
 ```yaml
@@ -101,7 +92,6 @@ Accept wildcard characters: False
 ```
 
 ### -SourceDatabaseName
-
 Filters live mounts by database source name
 
 ```yaml
@@ -117,7 +107,6 @@ Accept wildcard characters: False
 ```
 
 ### -TargetInstanceId
-
 Filters live mounts by database source name
 
 ```yaml
@@ -133,7 +122,6 @@ Accept wildcard characters: False
 ```
 
 ### -MountedDatabaseName
-
 Filters live mounts by database source name
 
 ```yaml
@@ -149,7 +137,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -165,7 +152,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -181,18 +167,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal for community usage Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal for community usage
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseMount.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseMount.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabaseMount](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabaseMount)
 

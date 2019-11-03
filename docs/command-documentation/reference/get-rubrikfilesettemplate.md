@@ -1,49 +1,43 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFilesetTemplate.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikFilesetTemplate
 schema: 2.0.0
 ---
 
 # Get-RubrikFilesetTemplate
 
 ## SYNOPSIS
-
 Retrieves details on one or more fileset templates known to a Rubrik cluster
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikFilesetTemplate [[-Name] <String>] [[-OperatingSystemType] <String>] [[-shareType] <String>]
  [[-PrimaryClusterID] <String>] [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Get-RubrikFilesetTemplate cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of fileset templates
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikFilesetTemplate -Name 'Template1'
 ```
 
 This will return details on all fileset templates named "Template1"
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikFilesetTemplate -OperatingSystemType 'Linux'
 ```
 
 This will return details on all fileset templates that can be used against a Linux operating system type
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikFilesetTemplate -id '11111111-2222-3333-4444-555555555555'
 ```
 
@@ -52,8 +46,8 @@ This will return details on the fileset template matching id "11111111-2222-3333
 ## PARAMETERS
 
 ### -Name
-
-Retrieve fileset templates with a name matching the provided name. The search is performed as a case-insensitive infix search.
+Retrieve fileset templates with a name matching the provided name.
+The search is performed as a case-insensitive infix search.
 
 ```yaml
 Type: String
@@ -68,8 +62,8 @@ Accept wildcard characters: False
 ```
 
 ### -OperatingSystemType
-
-Filter the summary information based on the operating system type of the fileset. Accepted values: 'Windows', 'Linux'
+Filter the summary information based on the operating system type of the fileset.
+Accepted values: 'Windows', 'Linux'
 
 ```yaml
 Type: String
@@ -84,8 +78,8 @@ Accept wildcard characters: False
 ```
 
 ### -shareType
-
-Filter the summary information based on the share type of the fileset. Accepted values: 'NFS', 'SMB'
+Filter the summary information based on the share type of the fileset.
+Accepted values: 'NFS', 'SMB'
 
 ```yaml
 Type: String
@@ -100,8 +94,8 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryClusterID
-
-Filter the summary information based on the primarycluster\_id of the primary Rubrik cluster. Use **\_local** as the primary\_cluster\_id of the Rubrik cluster that is hosting the current REST API session.
+Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
+Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
 
 ```yaml
 Type: String
@@ -116,7 +110,6 @@ Accept wildcard characters: False
 ```
 
 ### -id
-
 The ID of the fileset template
 
 ```yaml
@@ -132,7 +125,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -148,7 +140,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -164,18 +155,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFilesetTemplate.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFilesetTemplate.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikFilesetTemplate](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikFilesetTemplate)
 

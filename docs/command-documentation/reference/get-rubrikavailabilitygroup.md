@@ -1,32 +1,31 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAvailabilityGroup
 schema: 2.0.0
 ---
 
 # Get-RubrikAvailabilityGroup
 
 ## SYNOPSIS
-
 Retrieves details on one or more Avaialbility Group known to a Rubrik cluster
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikAvailabilityGroup [[-id] <String>] [[-GroupName] <String>] [[-SLA] <String>]
  [[-PrimaryClusterID] <String>] [[-SLAID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikAvailabilityGroup cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of Availability Groups. To narrow down the results, use the group name or SLA limit your search to a smaller group of objects. Alternatively, supply the Rubrik database ID to return only one specific database.
+The Get-RubrikAvailabilityGroup cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of Availability Groups.
+To narrow down the results, use the group name or SLA limit your search to a smaller group of objects.
+Alternatively, supply the Rubrik database ID to return only one specific database.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikAvailabilityGroup -GroupName 'am1-sql16ag-1ag'
 ```
 
@@ -35,6 +34,7 @@ This will return details on the Availability Group
 ## PARAMETERS
 
 ### -id
+{{ Fill id Description }}
 
 ```yaml
 Type: String
@@ -49,7 +49,6 @@ Accept wildcard characters: False
 ```
 
 ### -GroupName
-
 Name of the availability group
 
 ```yaml
@@ -65,7 +64,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLA
-
 SLA Domain policy assigned to the database
 
 ```yaml
@@ -81,8 +79,8 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryClusterID
-
-Filter the summary information based on the primarycluster\_id of the primary Rubrik cluster. Use **\_local** as the primary\_cluster\_id of the Rubrik cluster that is hosting the current REST API session.
+Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
+Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
 
 ```yaml
 Type: String
@@ -97,6 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
+{{ Fill SLAID Description }}
 
 ```yaml
 Type: String
@@ -111,7 +110,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -127,7 +125,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -143,18 +140,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Lumnah for community usage Twitter: @lumnah GitHub: clumnah
+Written by Chris Lumnah for community usage
+Twitter: @lumnah
+GitHub: clumnah
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAvailabilityGroup](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAvailabilityGroup)
 

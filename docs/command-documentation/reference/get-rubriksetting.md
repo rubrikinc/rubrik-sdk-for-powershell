@@ -1,31 +1,29 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/rubrikinc/PowerShell-Module'
+online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
 # Get-RubrikSetting
 
 ## SYNOPSIS
-
 Connects to Rubrik and retrieves the current Rubrik cluster settings
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikSetting [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikSetting cmdlet will retrieve the cluster settings actively running on the system. This does require authentication.
+The Get-RubrikSetting cmdlet will retrieve the cluster settings actively running on the system.
+This does require authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikSetting
 ```
 
@@ -34,7 +32,6 @@ This will return the running cluster settings on the currently connected Rubrik 
 ## PARAMETERS
 
 ### -id
-
 ID of the Rubrik cluster or me for self
 
 ```yaml
@@ -50,7 +47,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -66,7 +62,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -82,15 +77,13 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
 Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
 
 ## RELATED LINKS

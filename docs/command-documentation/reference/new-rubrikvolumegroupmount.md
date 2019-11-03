@@ -1,40 +1,37 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikVolumeGroupMount
 schema: 2.0.0
 ---
 
 # New-RubrikVolumeGroupMount
 
 ## SYNOPSIS
-
 Create a new live mount of a protected volume group
 
 ## SYNTAX
 
-```text
+```
 New-RubrikVolumeGroupMount -TargetHost <String> -VolumeGroupSnapshot <Object> [-ExcludeDrives <Array>]
  [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The New-RubrikVolumeGroupMount cmdlet is used to create a new volume group mount on the TargetHost of the selected Snapshot. The Snapshot object contains the snapID and all drives that are included in the snapshot.
+The New-RubrikVolumeGroupMount cmdlet is used to create a new volume group mount on the TargetHost of the selected Snapshot.
+The Snapshot object contains the snapID and all drives that are included in the snapshot.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikVolumeGroupMount -TargetHost 'Restore-Server1' -VolumeGroupSnapshot $snap -ExcludeDrives -$DrivestoExclude
 ```
 
 ## PARAMETERS
 
 ### -TargetHost
-
-Target host to attach the Live Mount disk\(s\)
+Target host to attach the Live Mount disk(s)
 
 ```yaml
 Type: String
@@ -49,7 +46,6 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeGroupSnapshot
-
 Rubrik VolumeGroup Snapshot Array
 
 ```yaml
@@ -65,7 +61,6 @@ Accept wildcard characters: False
 ```
 
 ### -ExcludeDrives
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -81,6 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -Server
+{{ Fill Server Description }}
 
 ```yaml
 Type: String
@@ -95,7 +91,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -111,8 +106,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -127,7 +122,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -143,18 +137,17 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Pierre Flammer for community usage Twitter: @PierreFlammer
+Written by Pierre Flammer for community usage
+Twitter: @PierreFlammer
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikVolumeGroupMount](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikVolumeGroupMount)
 

@@ -1,49 +1,43 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikMount.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikMount
 schema: 2.0.0
 ---
 
 # Remove-RubrikMount
 
 ## SYNOPSIS
-
 Connects to Rubrik and removes one or more live mounts
 
 ## SYNTAX
 
-```text
+```
 Remove-RubrikMount [-id] <String> [-Force] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Remove-RubrikMount cmdlet is used to request the deletion of one or more instant mounts
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Remove-RubrikMount -id '11111111-2222-3333-4444-555555555555'
 ```
 
 This will remove mount id "11111111-2222-3333-4444-555555555555".
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikMount | Remove-RubrikMount
 ```
 
 This will remove all mounted virtual machines.
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id | Remove-RubrikMount
 ```
 
@@ -52,7 +46,6 @@ This will remove any mounts found using the virtual machine named "Server1" as a
 ## PARAMETERS
 
 ### -id
-
 The Rubrik ID value of the mount
 
 ```yaml
@@ -68,7 +61,6 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-
 Force unmount to deal with situations where host has been moved.
 
 ```yaml
@@ -84,7 +76,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -100,7 +91,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -116,8 +106,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -132,7 +122,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -148,18 +137,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikMount.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikMount.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikMount](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikMount)
 

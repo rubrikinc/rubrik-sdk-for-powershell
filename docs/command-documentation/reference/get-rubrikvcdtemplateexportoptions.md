@@ -1,41 +1,38 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVCDTemplateExportOptions
 schema: 2.0.0
 ---
 
 # Get-RubrikVCDTemplateExportOptions
 
 ## SYNOPSIS
-
 Retrieves export options for a vCD Template known to a Rubrik cluster
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikVCDTemplateExportOptions [-id] <String> [[-catalogid] <String>] [[-name] <String>]
  [[-orgvdcid] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Get-RubrikVCDTemplateExportOptions cmdlet retrieves export options for a vCD Template known to a Rubrik cluster
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 $SnapshotID = (Get-RubrikVApp -Name 'vAppTemplate01' | Get-RubrikSnapshot -Latest).id
 ```
 
-Get-RubrikVCDTemplateExportOptions -id $SnapshotID -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -Name 'vAppTemplate01-export' This will return export options details on the specific snapshot.
+Get-RubrikVCDTemplateExportOptions -id $SnapshotID -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -Name 'vAppTemplate01-export'
+This will return export options details on the specific snapshot.
 
 ## PARAMETERS
 
 ### -id
-
 Snapshot ID of the vCD Template to retrieve options for
 
 ```yaml
@@ -51,8 +48,8 @@ Accept wildcard characters: False
 ```
 
 ### -catalogid
-
-ID of target catalog. Defaults to the existing catalog.
+ID of target catalog.
+Defaults to the existing catalog.
 
 ```yaml
 Type: String
@@ -67,8 +64,8 @@ Accept wildcard characters: False
 ```
 
 ### -name
-
-Name of the newly exported vCD Template. Defaults to \[TemplateName\]-Export
+Name of the newly exported vCD Template.
+Defaults to \[TemplateName\]-Export
 
 ```yaml
 Type: String
@@ -83,8 +80,8 @@ Accept wildcard characters: False
 ```
 
 ### -orgvdcid
-
-Org vDC ID to export the vCD Template to. This should be an Org vDC in the same vCD Org where the target catalog exists.
+Org vDC ID to export the vCD Template to.
+This should be an Org vDC in the same vCD Org where the target catalog exists.
 
 ```yaml
 Type: String
@@ -99,7 +96,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -115,7 +111,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -131,18 +126,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Matt Elliott for community usage Twitter: @NetworkBrouhaha GitHub: shamsway
+Written by Matt Elliott for community usage
+Twitter: @NetworkBrouhaha
+GitHub: shamsway
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVCDTemplateExportOptions](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVCDTemplateExportOptions)
 

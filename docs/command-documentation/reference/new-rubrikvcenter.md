@@ -1,32 +1,30 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/rubrikinc/PowerShell-Module'
+online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
 # New-RubrikVCenter
 
 ## SYNOPSIS
-
 Connects to Rubrik and creates new vCenter connection
 
 ## SYNTAX
 
-```text
+```
 New-RubrikVCenter [-Hostname] <String> [[-Server] <String>] [[-id] <String>] [[-api] <String>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The New-RubrikVCenter cmdlet will creates new vCenter connection on the system. This does require authentication.
+The New-RubrikVCenter cmdlet will  creates new vCenter connection on the system.
+This does require authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikVCenter -hostname "test-vcenter.domain.com"
 ```
 
@@ -35,8 +33,7 @@ This will creates new vCenter connection to "test-vcenter.domain.com" on the cur
 ## PARAMETERS
 
 ### -Hostname
-
-Hostname \(FQDN\) of your vCenter Server
+Hostname (FQDN) of your vCenter Server
 
 ```yaml
 Type: String
@@ -51,7 +48,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -67,7 +63,6 @@ Accept wildcard characters: False
 ```
 
 ### -id
-
 ID of the Rubrik cluster or me for self
 
 ```yaml
@@ -83,7 +78,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -99,15 +93,13 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
 Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
 
 ## RELATED LINKS

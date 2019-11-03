@@ -1,6 +1,4 @@
-# Table of contents
-
-* [Introduction](README.md)
+# Rubrik SDK for PowerShell
 
 ## User Documentation
 
@@ -13,10 +11,13 @@
 * [Requirements](user-documentation/requirements.md)
 * [Support](user-documentation/support.md)
 
+----
+
 ## Command Documentation
 
 * [Workflow](command-documentation/workflow/readme.md)
     * [Flow Audit](command-documentation/workflow/flow_audit.md)
+
 * [Reference](command-documentation/reference/readme.md)
     * [Connect-Rubrik](command-documentation/reference/Connect-Rubrik.md)
     * [Disconnect-Rubrik](command-documentation/reference/Disconnect-Rubrik.md)
@@ -29,31 +30,43 @@
     * [Get-RubrikAPIVersion](command-documentation/reference/Get-RubrikAPIVersion.md)
     * [Get-RubrikAvailabilityGroup](command-documentation/reference/Get-RubrikAvailabilityGroup.md)
     * [Get-RubrikBootStrap](command-documentation/reference/Get-RubrikBootStrap.md)
+    * [Get-RubrikClusterInfo](command-documentation/reference/Get-RubrikClusterInfo.md)
+    * [Get-RubrikClusterNetworkInterface](command-documentation/reference/Get-RubrikClusterNetworkInterface.md)
+    * [Get-RubrikClusterStorage](command-documentation/reference/Get-RubrikClusterStorage.md)
     * [Get-RubrikDatabase](command-documentation/reference/Get-RubrikDatabase.md)
     * [Get-RubrikDatabaseFiles](command-documentation/reference/Get-RubrikDatabaseFiles.md)
     * [Get-RubrikDatabaseMount](command-documentation/reference/Get-RubrikDatabaseMount.md)
     * [Get-RubrikDatabaseRecoverableRange](command-documentation/reference/Get-RubrikDatabaseRecoverableRange.md)
+    * [Get-RubrikDNSSetting](command-documentation/reference/Get-RubrikDNSSetting.md)
+    * [Get-RubrikEmailSetting](command-documentation/reference/Get-RubrikEmailSetting.md)
     * [Get-RubrikEvent](command-documentation/reference/Get-RubrikEvent.md)
     * [Get-RubrikFileset](command-documentation/reference/Get-RubrikFileset.md)
     * [Get-RubrikFilesetTemplate](command-documentation/reference/Get-RubrikFilesetTemplate.md)
     * [Get-RubrikHost](command-documentation/reference/Get-RubrikHost.md)
     * [Get-RubrikHyperVVM](command-documentation/reference/Get-RubrikHyperVVM.md)
     * [Get-RubrikLDAP](command-documentation/reference/Get-RubrikLDAP.md)
+    * [Get-RubrikLoginBanner](command-documentation/reference/Get-RubrikLoginBanner.md)
     * [Get-RubrikLogShipping](command-documentation/reference/Get-RubrikLogShipping.md)
     * [Get-RubrikManagedVolume](command-documentation/reference/Get-RubrikManagedVolume.md)
     * [Get-RubrikManagedVolumeExport](command-documentation/reference/Get-RubrikManagedVolumeExport.md)
     * [Get-RubrikMount](command-documentation/reference/Get-RubrikMount.md)
     * [Get-RubrikNASShare](command-documentation/reference/Get-RubrikNASShare.md)
+    * [Get-RubrikNetworkThrottle](command-documentation/reference/Get-RubrikNetworkThrottle.md)
+    * [Get-RubrikNode](command-documentation/reference/Get-RubrikNode.md)
+    * [Get-RubrikNotificationSetting](command-documentation/reference/Get-RubrikNotificationSetting.md)
+    * [Get-RubrikNTPServer](command-documentation/reference/Get-RubrikNTPServer.md)
     * [Get-RubrikNutanixVM](command-documentation/reference/Get-RubrikNutanixVM.md)
     * [Get-RubrikObject](command-documentation/reference/Get-RubrikObject.md)
     * [Get-RubrikOracleDB](command-documentation/reference/Get-RubrikOracleDB.md)
     * [Get-RubrikOrganization](command-documentation/reference/Get-RubrikOrganization.md)
+    * [Get-RubrikProxySetting](command-documentation/reference/Get-RubrikProxySetting.md)
     * [Get-RubrikReport](command-documentation/reference/Get-RubrikReport.md)
     * [Get-RubrikReportData](command-documentation/reference/Get-RubrikReportData.md)
     * [Get-RubrikRequest](command-documentation/reference/Get-RubrikRequest.md)
     * [Get-RubrikSetting](command-documentation/reference/Get-RubrikSetting.md)
     * [Get-RubrikSLA](command-documentation/reference/Get-RubrikSLA.md)
     * [Get-RubrikSnapshot](command-documentation/reference/Get-RubrikSnapshot.md)
+    * [Get-RubrikSNMPSetting](command-documentation/reference/Get-RubrikSNMPSetting.md)
     * [Get-RubrikSoftwareVersion](command-documentation/reference/Get-RubrikSoftwareVersion.md)
     * [Get-RubrikSQLInstance](command-documentation/reference/Get-RubrikSQLInstance.md)
     * [Get-RubrikSupportTunnel](command-documentation/reference/Get-RubrikSupportTunnel.md)
@@ -89,6 +102,7 @@
     * [New-RubrikManagedVolumeExport](command-documentation/reference/New-RubrikManagedVolumeExport.md)
     * [New-RubrikMount](command-documentation/reference/New-RubrikMount.md)
     * [New-RubrikNASShare](command-documentation/reference/New-RubrikNASShare.md)
+    * [New-RubrikOrganization](command-documentation/reference/New-RubrikOrganization.md)
     * [New-RubrikReport](command-documentation/reference/New-RubrikReport.md)
     * [New-RubrikSLA](command-documentation/reference/New-RubrikSLA.md)
     * [New-RubrikSnapshot](command-documentation/reference/New-RubrikSnapshot.md)
@@ -113,6 +127,7 @@
     * [Remove-RubrikManagedVolumeExport](command-documentation/reference/Remove-RubrikManagedVolumeExport.md)
     * [Remove-RubrikMount](command-documentation/reference/Remove-RubrikMount.md)
     * [Remove-RubrikNASShare](command-documentation/reference/Remove-RubrikNASShare.md)
+    * [Remove-RubrikOrganization](command-documentation/reference/Remove-RubrikOrganization.md)
     * [Remove-RubrikReport](command-documentation/reference/Remove-RubrikReport.md)
     * [Remove-RubrikSLA](command-documentation/reference/Remove-RubrikSLA.md)
     * [Remove-RubrikUnmanagedObject](command-documentation/reference/Remove-RubrikUnmanagedObject.md)
@@ -150,3 +165,4 @@
     * [Update-RubrikVCD](command-documentation/reference/Update-RubrikVCD.md)
     * [Update-RubrikVCenter](command-documentation/reference/Update-RubrikVCenter.md)
     * [Update-RubrikVMwareVM](command-documentation/reference/Update-RubrikVMwareVM.md)
+

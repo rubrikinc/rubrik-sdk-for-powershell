@@ -1,19 +1,18 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikLogShipping
 schema: 2.0.0
 ---
 
 # New-RubrikLogShipping
 
 ## SYNOPSIS
-
 Create a log shipping configuration within Rubrik
 
 ## SYNTAX
 
-```text
+```
 New-RubrikLogShipping [-id] <String> [[-state] <String>] [-DisconnectStandbyUsers]
  [-targetDatabaseName] <String> [[-targetDataFilePath] <String>] [[-targetLogFilePath] <String>]
  [-targetInstanceId] <String> [[-TargetFilePaths] <PSObject[]>] [[-MaxDataStreams] <Int32>]
@@ -21,23 +20,21 @@ New-RubrikLogShipping [-id] <String> [[-state] <String>] [-DisconnectStandbyUser
 ```
 
 ## DESCRIPTION
-
 Create a log shipping configuration within Rubrik
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 $RubrikDatabase = Get-RubrikDatabase -Name 'AthenaAM1-SQL16-1-2016' -Hostname am1-sql16-1
 ```
 
-$RubrikSQLInstance = Get-RubrikSQLInstance -Hostname am1-chrilumn-w1 -instance MSSQLSERVER New-RubrikLogShipping -id $RubrikDatabase.id -state 'STANDBY' -targetDatabaseName 'AthenaAM1-SQL16-1-2016' -targetDataFilePath 'c:\sqldata' -targetLogFilePath 'c:\sqldata' -targetInstanceId $RubrikSQLInstance.id -Verbose
+$RubrikSQLInstance = Get-RubrikSQLInstance -Hostname am1-chrilumn-w1 -instance MSSQLSERVER
+New-RubrikLogShipping -id $RubrikDatabase.id -state 'STANDBY' -targetDatabaseName 'AthenaAM1-SQL16-1-2016' -targetDataFilePath 'c:\sqldata' -targetLogFilePath 'c:\sqldata' -targetInstanceId $RubrikSQLInstance.id -Verbose
 
 ## PARAMETERS
 
 ### -id
-
 Rubrik identifier of database to be exported
 
 ```yaml
@@ -53,6 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -state
+{{ Fill state Description }}
 
 ```yaml
 Type: String
@@ -67,6 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisconnectStandbyUsers
+{{ Fill DisconnectStandbyUsers Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -81,6 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -targetDatabaseName
+{{ Fill targetDatabaseName Description }}
 
 ```yaml
 Type: String
@@ -95,6 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -targetDataFilePath
+{{ Fill targetDataFilePath Description }}
 
 ```yaml
 Type: String
@@ -109,6 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -targetLogFilePath
+{{ Fill targetLogFilePath Description }}
 
 ```yaml
 Type: String
@@ -123,6 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -targetInstanceId
+{{ Fill targetInstanceId Description }}
 
 ```yaml
 Type: String
@@ -137,7 +140,6 @@ Accept wildcard characters: False
 ```
 
 ### -TargetFilePaths
-
 Advanced Mode - Array of hash tables for file reloaction.
 
 ```yaml
@@ -153,7 +155,6 @@ Accept wildcard characters: False
 ```
 
 ### -MaxDataStreams
-
 Number of parallel streams to copy data
 
 ```yaml
@@ -169,7 +170,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -185,7 +185,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -201,18 +200,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Lumnah Twitter: lumnah GitHub: clumnah
+Written by Chris Lumnah
+Twitter: lumnah
+GitHub: clumnah
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikLogShipping](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikLogShipping)
 

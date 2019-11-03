@@ -1,21 +1,19 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikFilesetTemplate
 schema: 2.0.0
 ---
 
 # New-RubrikFilesetTemplate
 
 ## SYNOPSIS
-
 Creates a new fileset template.
 
 ## SYNTAX
 
 ### OSType
-
-```text
+```
 New-RubrikFilesetTemplate [-Name <String>] [-AllowBackupNetworkMounts]
  [-AllowBackupHiddenFoldersInNetworkMounts] [-UseWindowsVSS] [-Includes <String[]>] [-Excludes <String[]>]
  [-Exceptions <String[]>] [-OperatingSystemType <String>] [-PreBackupScript <String>]
@@ -24,8 +22,7 @@ New-RubrikFilesetTemplate [-Name <String>] [-AllowBackupNetworkMounts]
 ```
 
 ### ShareType
-
-```text
+```
 New-RubrikFilesetTemplate [-Name <String>] [-AllowBackupNetworkMounts]
  [-AllowBackupHiddenFoldersInNetworkMounts] [-UseWindowsVSS] [-Includes <String[]>] [-Excludes <String[]>]
  [-Exceptions <String[]>] [-ShareType <String>] [-PreBackupScript <String>] [-PostBackupScript <String>]
@@ -34,26 +31,26 @@ New-RubrikFilesetTemplate [-Name <String>] [-AllowBackupNetworkMounts]
 ```
 
 ## DESCRIPTION
-
-Create a new fileset template for Linux hosts, Windows hosts, and NAS shares. This must be done before creating a new fileset, as filesets are defined by the templates. Some caveats that are defined by the Rubrik GUI but not applied here:
-
-* If creating a Windows Fileset Template, you should declare UseWindowsVSS equal to true
-* If you define a pre or post backup script, you need to define error handling
-* If you define a pre or post backup script, you should definte the backup script timeout value to 14400
+Create a new fileset template for Linux hosts, Windows hosts, and NAS shares.
+This must be
+done before creating a new fileset, as filesets are defined by the templates.
+Some caveats that
+are defined by the Rubrik GUI but not applied here:
+ - If creating a Windows Fileset Template, you should declare UseWindowsVSS equal to true
+ - If you define a pre or post backup script, you need to define error handling
+ - If you define a pre or post backup script, you should definte the backup script timeout value to 14400
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikFilesetTemplate -Name 'FOO' -UseWindowsVSS -OperatingSystemType 'Windows' -Includes 'C:\*.mp3','C:\*.csv'
 ```
 
-Create a Windows Fileset Template to backup .mp3 and .csv on the C:.
+Create a Windows Fileset Template to backup .mp3 and .csv on the C:\.
 
 ### EXAMPLE 2
-
-```text
+```
 New-RubrikFilesetTemplate -Name 'BAR' -ShareType 'SMB' -Includes '*' -Excludes '*.pdf'
 ```
 
@@ -62,7 +59,6 @@ Create a new NAS FilesetTemplate named BAR to backup a NAS SMB share, backing up
 ## PARAMETERS
 
 ### -Name
-
 Name of fileset template
 
 ```yaml
@@ -78,7 +74,6 @@ Accept wildcard characters: False
 ```
 
 ### -AllowBackupNetworkMounts
-
 Boolean - Allow Backup Network Mounts
 
 ```yaml
@@ -94,7 +89,6 @@ Accept wildcard characters: False
 ```
 
 ### -AllowBackupHiddenFoldersInNetworkMounts
-
 Boolean - Allow Backup Hidden Folders in Network Mounts
 
 ```yaml
@@ -110,7 +104,6 @@ Accept wildcard characters: False
 ```
 
 ### -UseWindowsVSS
-
 Enable Windows VSS
 
 ```yaml
@@ -126,7 +119,6 @@ Accept wildcard characters: False
 ```
 
 ### -Includes
-
 Include naming patterns
 
 ```yaml
@@ -142,7 +134,6 @@ Accept wildcard characters: False
 ```
 
 ### -Excludes
-
 Exclude naming patterns
 
 ```yaml
@@ -158,7 +149,6 @@ Accept wildcard characters: False
 ```
 
 ### -Exceptions
-
 Exceptions for exclude naming patterns
 
 ```yaml
@@ -174,7 +164,6 @@ Accept wildcard characters: False
 ```
 
 ### -OperatingSystemType
-
 Operating System Type
 
 ```yaml
@@ -190,7 +179,6 @@ Accept wildcard characters: False
 ```
 
 ### -ShareType
-
 Share Type
 
 ```yaml
@@ -206,7 +194,6 @@ Accept wildcard characters: False
 ```
 
 ### -PreBackupScript
-
 Path to pre-backup script
 
 ```yaml
@@ -222,7 +209,6 @@ Accept wildcard characters: False
 ```
 
 ### -PostBackupScript
-
 Path to post-backup script
 
 ```yaml
@@ -238,7 +224,6 @@ Accept wildcard characters: False
 ```
 
 ### -BackupScriptTimeout
-
 Backup script timeout
 
 ```yaml
@@ -254,7 +239,6 @@ Accept wildcard characters: False
 ```
 
 ### -BackupScriptErrorHandling
-
 Error handling for backup script
 
 ```yaml
@@ -270,7 +254,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -286,7 +269,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -302,8 +284,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -318,7 +300,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -334,18 +315,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikFilesetTemplate](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikFilesetTemplate)
 

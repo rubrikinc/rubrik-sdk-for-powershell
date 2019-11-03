@@ -1,90 +1,80 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/rubrikinc/PowerShell-Module'
+online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
 # Get-RubrikVApp
 
 ## SYNOPSIS
-
 Connects to Rubrik and retrieves the current Rubrik vCD vApp settings
 
 ## SYNTAX
 
-### Query \(Default\)
-
-```text
+### Query (Default)
+```
 Get-RubrikVApp [[-Name] <String>] [-Relic] [-DetailedObject] [-SLA <String>] [-SLAAssignment <String>]
  [-PrimaryClusterID <String>] [-SLAID <String>] [-SourceObjectId <String>] [-SourceObjectName <String>]
  [-vcdClusterId <String>] [-vcdClusterName <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ### ID
-
-```text
+```
 Get-RubrikVApp [-id] <String> [-SourceObjectId <String>] [-SourceObjectName <String>] [-vcdClusterId <String>]
  [-vcdClusterName <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikVApp cmdlet retrieves all the vCD vApp settings actively running on the system. This requires authentication with your Rubrik cluster.
+The Get-RubrikVApp cmdlet retrieves all the vCD vApp settings actively running on the system.
+This requires authentication with your Rubrik cluster.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikVApp
 ```
 
 This returns details on all vCD vApps that are currently or formerly protected by Rubrik.
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikVApp -Name 'vApp01'
 ```
 
 This returns details on all vCD vApps named "vApp01".
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikVApp -Name 'Server1' -SLA 'Gold'
 ```
 
 This returns details on all vCD vApps named "Server1" that are protected by the Gold SLA Domain.
 
 ### EXAMPLE 4
-
-```text
+```
 Get-RubrikVApp -Relic
 ```
 
 This returns all removed vCD vApps that were formerly protected by Rubrik.
 
 ### EXAMPLE 5
-
-```text
+```
 Get-RubrikVApp -Relic:false
 ```
 
 This returns all vCD vApps that are currently protected by Rubrik.
 
 ### EXAMPLE 6
-
-```text
+```
 Get-RubrikVApp -SourceObjectId 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567'
 ```
 
-This returns details on all vCD vApps with the Source Object ID "VcdVapp:::01234567-8910-1abc-d435-0abc1234d567"
+This returns details on all vCD vApps with the Source Object ID  "VcdVapp:::01234567-8910-1abc-d435-0abc1234d567"
 
 ### EXAMPLE 7
-
-```text
+```
 Get-RubrikVApp -vcdClusterId 'Vcd:::01234567-8910-1abc-d435-0abc1234d567'
 ```
 
@@ -93,7 +83,6 @@ This returns details on all vCD vApps on the vCD Cluster with id "Vcd:::01234567
 ## PARAMETERS
 
 ### -Name
-
 Name of the vCD vApp
 
 ```yaml
@@ -109,7 +98,6 @@ Accept wildcard characters: False
 ```
 
 ### -id
-
 vCD vApp id
 
 ```yaml
@@ -125,8 +113,7 @@ Accept wildcard characters: False
 ```
 
 ### -Relic
-
-Filter results to include only relic \(removed\) vCD vApps
+Filter results to include only relic (removed) vCD vApps
 
 ```yaml
 Type: SwitchParameter
@@ -141,8 +128,8 @@ Accept wildcard characters: False
 ```
 
 ### -DetailedObject
-
-DetailedObject will retrieved the detailed vApp object, the default behavior of the API is to only retrieve a subset of the full vApp object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+DetailedObject will retrieved the detailed vApp object, the default behavior of the API is to only retrieve a subset of the full vApp object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
 
 ```yaml
 Type: SwitchParameter
@@ -157,7 +144,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLA
-
 SLA Domain policy assigned to the vCD vApp
 
 ```yaml
@@ -173,7 +159,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAAssignment
-
 Filter by SLA Domain assignment type
 
 ```yaml
@@ -189,8 +174,8 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryClusterID
-
-Filter the summary information based on the primarycluster\_id of the primary Rubrik cluster. Use **local** as the primary\_cluster\_id of the Rubrik cluster that is hosting the current REST API session.
+Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
+Use **local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
 
 ```yaml
 Type: String
@@ -205,7 +190,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
-
 SLA id value
 
 ```yaml
@@ -221,7 +205,6 @@ Accept wildcard characters: False
 ```
 
 ### -SourceObjectId
-
 ID of Source Object in terms of vCD Hierarchy
 
 ```yaml
@@ -237,7 +220,6 @@ Accept wildcard characters: False
 ```
 
 ### -SourceObjectName
-
 Name of Source Object in terms of vCD Hierarchy
 
 ```yaml
@@ -253,7 +235,6 @@ Accept wildcard characters: False
 ```
 
 ### -vcdClusterId
-
 ID of vCD Cluster
 
 ```yaml
@@ -269,7 +250,6 @@ Accept wildcard characters: False
 ```
 
 ### -vcdClusterName
-
 Name of vCD Cluster
 
 ```yaml
@@ -285,7 +265,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -301,7 +280,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -317,16 +295,16 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Matt Elliott for community usage Twitter: @NetworkBrouhaha GitHub: shamsway
+Written by Matt Elliott for community usage
+Twitter: @NetworkBrouhaha
+GitHub: shamsway
 
 ## RELATED LINKS
 

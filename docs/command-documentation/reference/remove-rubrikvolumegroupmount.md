@@ -1,48 +1,43 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikVolumeGroupMount
 schema: 2.0.0
 ---
 
 # Remove-RubrikVolumeGroupMount
 
 ## SYNOPSIS
-
 Connects to Rubrik and removes one or more volume group mounts
 
 ## SYNTAX
 
-```text
+```
 Remove-RubrikVolumeGroupMount [-id] <String> [-Force] [[-Server] <String>] [[-api] <String>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Remove-RubrikMount cmdlet is used to request the deletion of one or more volume group live mounts
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Remove-RubrikVolumeGroupMount -id '11111111-2222-3333-4444-555555555555'
 ```
 
 This will remove volume mount id "11111111-2222-3333-4444-555555555555".
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikVolumeGroupMount | Remove-RubrikVolumeGroupMount
 ```
 
 This will remove all mounted volume groups.
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikVolumeGroupMount -source_host 'Server1' | Remove-RubrikVolumeGroupMount
 ```
 
@@ -51,7 +46,6 @@ This will remove any volume group mounts found using the host named "Server1" as
 ## PARAMETERS
 
 ### -id
-
 The Rubrik ID value of the mount
 
 ```yaml
@@ -67,7 +61,6 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-
 Force unmount to deal with situations where host has been moved.
 
 ```yaml
@@ -83,7 +76,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -99,7 +91,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -115,8 +106,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -131,7 +122,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -147,18 +137,17 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Pierre Flammer for community usage Twitter: @PierreFlammer
+Written by Pierre Flammer for community usage
+Twitter: @PierreFlammer
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikVolumeGroupMount](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikVolumeGroupMount)
 

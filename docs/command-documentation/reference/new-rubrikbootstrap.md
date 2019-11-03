@@ -1,54 +1,60 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap'
+online version: https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap
 schema: 2.0.0
 ---
 
 # New-RubrikBootStrap
 
-## New-RubrikBootStrap
-
-### SYNOPSIS
-
+## SYNOPSIS
 Send a Rubrik Bootstrap Request
 
-### SYNTAX
+## SYNTAX
 
-```text
+```
 New-RubrikBootStrap [[-id] <String>] [[-Server] <String>] [-adminUserInfo] <Object> [-nodeConfigs] <Object>
  [[-enableSoftwareEncryptionAtRest] <Boolean>] [[-name] <String>] [[-ntpServerConfigs] <Object>]
  [[-dnsNameservers] <String[]>] [[-dnsSearchDomains] <String[]>] [<CommonParameters>]
 ```
 
-### DESCRIPTION
-
+## DESCRIPTION
 This will send a bootstrap request
 
-### EXAMPLES
+## EXAMPLES
 
-#### EXAMPLE 1
-
-```text
+### EXAMPLE 1
+```
 https://gist.github.com/nshores/104f069570740ea645d67a8aeab19759
 ```
 
-New-RubrikBootStrap -Server 169.254.11.25 -name 'rubrik-edge' -dnsNameservers @\('192.168.11.1'\) -dnsSearchDomains @\('corp.us','branch.corp.us'\) -ntpserverconfigs @\(@{server = 'pool.ntp.org'}\) -adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'} -nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+New-RubrikBootStrap -Server 169.254.11.25
+-name 'rubrik-edge' 
+-dnsNameservers @('192.168.11.1')
+-dnsSearchDomains @('corp.us','branch.corp.us')
+-ntpserverconfigs @(@{server = 'pool.ntp.org'})
+-adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
+-nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
 
-#### EXAMPLE 2
-
-```text
+### EXAMPLE 2
+```
 $BootStrapHash = @{
 ```
 
-Server = 169.254.11.25 name = 'rubrik-edge' dnsNameservers = @\('192.168.11.1'\) dnsSearchDomains = @\('corp.us','branch.corp.us'\) ntpserverconfigs = @\(@{server = 'pool.ntp.org'}\) adminUserInfo = @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'} nodeconfigs = @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}} }
+Server = 169.254.11.25
+  name = 'rubrik-edge' 
+  dnsNameservers = @('192.168.11.1')
+  dnsSearchDomains = @('corp.us','branch.corp.us')
+  ntpserverconfigs = @(@{server = 'pool.ntp.org'})
+  adminUserInfo = @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
+  nodeconfigs = @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+}
 
 New-RubrikBootStrap @BootStrapHash
 
-### PARAMETERS
+## PARAMETERS
 
-#### -id
-
+### -id
 ID of the Rubrik cluster or me for self
 
 ```yaml
@@ -63,8 +69,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -Server
-
+### -Server
 Rubrik server IP or FQDN
 
 ```yaml
@@ -79,8 +84,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -adminUserInfo
-
+### -adminUserInfo
 Admin User Info Hashtable
 
 ```yaml
@@ -95,8 +99,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -nodeConfigs
-
+### -nodeConfigs
 Node Configuration Hashtable
 
 ```yaml
@@ -111,8 +114,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -enableSoftwareEncryptionAtRest
-
+### -enableSoftwareEncryptionAtRest
 Software Encryption
 
 ```yaml
@@ -127,8 +129,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -name
-
+### -name
 Cluster/Edge Name
 
 ```yaml
@@ -143,8 +144,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -ntpServerConfigs
-
+### -ntpServerConfigs
 NTP Servers
 
 ```yaml
@@ -159,8 +159,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -dnsNameservers
-
+### -dnsNameservers
 DNS Servers
 
 ```yaml
@@ -175,8 +174,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -dnsSearchDomains
-
+### -dnsSearchDomains
 DNS Search Domains
 
 ```yaml
@@ -191,23 +189,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### CommonParameters
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+## INPUTS
 
-### INPUTS
+## OUTPUTS
 
-### OUTPUTS
+## NOTES
+#DNS Param must be an array even if only passing a single server
+#NTP Must be an array than contains hash table for each server object
+#Nodeconfigs Param must be a hash table object.
 
-### NOTES
-
-## DNS Param must be an array even if only passing a single server
-
-## NTP Must be an array than contains hash table for each server object
-
-## Nodeconfigs Param must be a hash table object.
-
-### RELATED LINKS
+## RELATED LINKS
 
 [https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap](https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap)
 

@@ -1,66 +1,58 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'http://rubrikinc.github.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNutanixVM
 schema: 2.0.0
 ---
 
 # Get-RubrikNutanixVM
 
 ## SYNOPSIS
-
-Retrieves details on one or more Nutanix \(AHV\) virtual machines known to a Rubrik cluster
+Retrieves details on one or more Nutanix (AHV) virtual machines known to a Rubrik cluster
 
 ## SYNTAX
 
 ### Query
-
-```text
+```
 Get-RubrikNutanixVM [[-Name] <String>] [-Relic] [-SLA <String>] [-SLAAssignment <String>]
  [-PrimaryClusterID <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ### ID
-
-```text
+```
 Get-RubrikNutanixVM [-id] <String> [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikNutanixVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of Nutanix \(AHV\) virtual machines
+The Get-RubrikNutanixVM cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of Nutanix (AHV) virtual machines
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikNutanixVM -Name 'Server1'
 ```
 
-This will return details on all Nutanix \(AHV\) virtual machines named "Server1".
+This will return details on all Nutanix (AHV) virtual machines named "Server1".
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikNutanixVM -Name 'Server1' -SLA Gold
 ```
 
-This will return details on all Nutanix \(AHV\) virtual machines named "Server1" that are protected by the Gold SLA Domain.
+This will return details on all Nutanix (AHV) virtual machines named "Server1" that are protected by the Gold SLA Domain.
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikNutanixVM -Relic
 ```
 
-This will return all removed Nutanix \(AHV\) virtual machines that were formerly protected by Rubrik.
+This will return all removed Nutanix (AHV) virtual machines that were formerly protected by Rubrik.
 
 ## PARAMETERS
 
 ### -Name
-
-Name of the Nutanix \(AHV\) virtual machine
+Name of the Nutanix (AHV) virtual machine
 
 ```yaml
 Type: String
@@ -75,8 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -Relic
-
-Filter results to include only relic \(removed\) virtual machines
+Filter results to include only relic (removed) virtual machines
 
 ```yaml
 Type: SwitchParameter
@@ -91,7 +82,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLA
-
 SLA Domain policy assigned to the virtual machine
 
 ```yaml
@@ -107,7 +97,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAAssignment
-
 Filter by SLA Domain assignment type
 
 ```yaml
@@ -123,8 +112,8 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryClusterID
-
-Filter the summary information based on the primarycluster\_id of the primary Rubrik cluster. Use **\_local** as the primary\_cluster\_id of the Rubrik cluster that is hosting the current REST API session.
+Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
+Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
 
 ```yaml
 Type: String
@@ -139,7 +128,6 @@ Accept wildcard characters: False
 ```
 
 ### -id
-
 Virtual machine id
 
 ```yaml
@@ -155,7 +143,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
-
 SLA id value
 
 ```yaml
@@ -171,7 +158,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -187,7 +173,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -203,18 +188,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNutanixVM](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNutanixVM)
 

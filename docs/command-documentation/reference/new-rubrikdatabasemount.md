@@ -1,53 +1,46 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikDatabaseMount.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikDatabaseMount
 schema: 2.0.0
 ---
 
 # New-RubrikDatabaseMount
 
 ## SYNOPSIS
-
 Create a new Live Mount from a protected database
 
 ## SYNTAX
 
-### Recovery\_timestamp
-
-```text
+### Recovery_timestamp
+```
 New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] -MountedDatabaseName <String>
  [-TimestampMs <Int64>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### Recovery\_DateTime
-
-```text
+### Recovery_DateTime
+```
 New-RubrikDatabaseMount -id <String> [-TargetInstanceId <String>] -MountedDatabaseName <String>
  [-RecoveryDateTime <DateTime>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The New-RubrikDatabaseMount cmdlet is used to create a Live Mount \(clone\) of a protected database and run it in an existing database environment.
+The New-RubrikDatabaseMount cmdlet is used to create a Live Mount (clone) of a protected database and run it in an existing database environment.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikDatabaseMount -id $db.id -targetInstanceId $db.instanceId -mountedDatabaseName 'BAR-LM' -recoveryDateTime (Get-date (Get-RubrikDatabase -id $db.id).latestRecoveryPoint)
 ```
 
-Creates a new database mount named BAR on the same instance as the source database, using the most recent recovery time for the database.
+Creates a new database mount named BAR on the same instance as the source database, using the most recent recovery time for the database. 
 
 $db=Get-RubrikDatabase -HostName FOO -Instance MSSQLSERVER -Database BAR
 
 ## PARAMETERS
 
 ### -id
-
 Rubrik id of the database
 
 ```yaml
@@ -63,7 +56,6 @@ Accept wildcard characters: False
 ```
 
 ### -TargetInstanceId
-
 ID of Instance to use for the mount
 
 ```yaml
@@ -79,7 +71,6 @@ Accept wildcard characters: False
 ```
 
 ### -MountedDatabaseName
-
 Name of the mounted database
 
 ```yaml
@@ -95,7 +86,6 @@ Accept wildcard characters: False
 ```
 
 ### -TimestampMs
-
 Recovery Point desired in the form of Epoch with Milliseconds
 
 ```yaml
@@ -111,7 +101,6 @@ Accept wildcard characters: False
 ```
 
 ### -RecoveryDateTime
-
 Recovery Point desired in the form of DateTime value
 
 ```yaml
@@ -127,7 +116,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -143,7 +131,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -159,8 +146,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -175,7 +162,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -191,18 +177,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal for community usage from New-RubrikMount Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal for community usage from New-RubrikMount
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikDatabaseMount.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikDatabaseMount.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikDatabaseMount](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikDatabaseMount)
 

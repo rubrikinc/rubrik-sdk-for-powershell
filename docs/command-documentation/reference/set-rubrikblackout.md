@@ -1,39 +1,34 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikBlacout.html
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikBlacout
 schema: 2.0.0
 ---
 
 # Set-RubrikBlackout
 
 ## SYNOPSIS
-
-Connects to Rubrik and sets blackout \(stops/starts all snaps\)
+Connects to Rubrik and sets blackout (stops/starts all snaps)
 
 ## SYNTAX
 
-```text
+```
 Set-RubrikBlackout [-Set] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Set-RubrikBlackout cmdlet will accept a flag of true/false to set cluster blackout
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Set-RubrikBlackout -Set:[$true/$false]
 ```
 
 ## PARAMETERS
 
 ### -Set
-
 Rubrik blackout value
 
 ```yaml
@@ -49,7 +44,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -65,7 +59,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -81,8 +74,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -97,7 +90,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -113,18 +105,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Pete Milanese for community usage Twitter: @pmilano1 GitHub: pmilano1
+Written by Pete Milanese for community usage
+Twitter: @pmilano1
+GitHub: pmilano1
 
 ## RELATED LINKS
 
-[http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikBlacout.html](http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikBlacout.html)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikBlacout](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikBlacout)
 

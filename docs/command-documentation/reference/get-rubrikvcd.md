@@ -1,56 +1,51 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/rubrikinc/PowerShell-Module'
+online version: https://github.com/rubrikinc/PowerShell-Module
 schema: 2.0.0
 ---
 
 # Get-RubrikVCD
 
 ## SYNOPSIS
-
 Connect to Rubrik and retrieve the current Rubrik vCD settings
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikVCD [[-Name] <String>] [[-Hostname] <String>] [[-Status] <String>] [[-Server] <String>]
  [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikVCD cmdlet retrieves all vCD settings actively running on the system. This requires authentication.
+The Get-RubrikVCD cmdlet retrieves all vCD settings actively running on the system.
+This requires authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikVCD
 ```
 
 This returns the vCD settings on the currently connected Rubrik cluster
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikVCD -Name 'My vCD Cluster'
 ```
 
 This returns the vCD settings on the currently connected Rubrik cluster matching the name 'My vCD Cluster'
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikVCD -Hostname 'vcd.example.com'
 ```
 
 This returns the vCD settings on the currently connected Rubrik cluster matching the hostname 'vcd.example.com'
 
 ### EXAMPLE 4
-
-```text
+```
 Get-RubrikVCD -Status 'Connected'
 ```
 
@@ -59,7 +54,6 @@ This returns the vCD settings on the currently connected Rubrik cluster with the
 ## PARAMETERS
 
 ### -Name
-
 vCD Cluster Name
 
 ```yaml
@@ -75,7 +69,6 @@ Accept wildcard characters: False
 ```
 
 ### -Hostname
-
 vCD Cluster Hostname
 
 ```yaml
@@ -91,7 +84,6 @@ Accept wildcard characters: False
 ```
 
 ### -Status
-
 vCD Cluster Status
 
 ```yaml
@@ -107,7 +99,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -123,7 +114,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -139,16 +129,16 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Matt Elliott for community usage Twitter: @NetworkBrouhaha GitHub: shamsway
+Written by Matt Elliott for community usage
+Twitter: @NetworkBrouhaha
+GitHub: shamsway
 
 ## RELATED LINKS
 
