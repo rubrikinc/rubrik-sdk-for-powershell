@@ -15,7 +15,7 @@ function New-RubrikFileset
       Any other links you'd like here
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikFileset
 
       .EXAMPLE
       New-RubrikFileset -TemplateID '1111-1111-1111-1111' -HostID 'Host::::2222-2222-2222-2222'

@@ -14,7 +14,7 @@ function Get-RubrikNutanixVM
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNutanixVM
 
       .EXAMPLE
       Get-RubrikNutanixVM -Name 'Server1'

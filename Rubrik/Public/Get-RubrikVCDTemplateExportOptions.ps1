@@ -14,7 +14,7 @@ function Get-RubrikVCDTemplateExportOptions
       GitHub: shamsway
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVCDTemplateExportOptions
 
       .EXAMPLE
       $SnapshotID = (Get-RubrikVApp -Name 'vAppTemplate01' | Get-RubrikSnapshot -Latest).id

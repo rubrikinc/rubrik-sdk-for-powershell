@@ -14,7 +14,7 @@ function New-RubrikLogBackup
       GitHub: MikeFal
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikLogBackup
 
       .EXAMPLE
       New-RubrikLogBackup -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 
