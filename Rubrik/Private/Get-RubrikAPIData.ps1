@@ -702,7 +702,7 @@ function Get-RubrikAPIData($endpoint) {
         }
         'Get-RubrikNodeProxyConfig'              = @{
             '1.0' = @{
-                Description = 'Retrieve information on nodes within the Rubrik Cluster'
+                Description = 'Get Rubrik Node Proxy Configuration'
                 URI         = '/api/internal/node_management/proxy_config'
                 Method      = 'Get'
                 Body        = ''
@@ -1921,6 +1921,18 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '202'
+            }
+        }
+        'Remove-RubrikNodeProxyConfig'              = @{
+            '1.0' = @{
+                Description = 'Remove Rubrik Node Proxy Configuration'
+                URI         = '/api/internal/node_management/proxy_config'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
             }
         }
         'Remove-RubrikOrganization'           = @{
