@@ -16,7 +16,7 @@ function Get-RubrikAvailabilityGroup
       GitHub: clumnah
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAvailabilityGroup
 
       .EXAMPLE
       Get-RubrikAvailabilityGroup -GroupName 'am1-sql16ag-1ag'

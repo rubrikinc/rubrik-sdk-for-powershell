@@ -14,7 +14,7 @@ function New-RubrikLogShipping
   GitHub: clumnah
   
   .LINK
-  http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikLogShipping
 
   .EXAMPLE
   $RubrikDatabase = Get-RubrikDatabase -Name 'AthenaAM1-SQL16-1-2016' -Hostname am1-sql16-1

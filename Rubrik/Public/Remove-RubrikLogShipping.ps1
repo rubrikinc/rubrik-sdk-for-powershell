@@ -13,9 +13,8 @@ function Remove-RubrikLogShipping
       Twitter: @lumnah
       GitHub: clumnah
       
-
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikLogShipping
 
       .EXAMPLE
       Get-RubrikLogShipping -PrimaryDatabaseName 'AthenaAM1-SQL16-1-2016' -SecondaryDatabaseName 'AthenaAM1-SQL16-1-2016'  | Remove-RubrikLogShipping

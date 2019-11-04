@@ -18,7 +18,7 @@ function Protect-RubrikDatabase
       GitHub: chriswahl
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Protect-RubrikDatabase.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikDatabase
             
       .EXAMPLE
       Get-RubrikDatabase -Name "DB1" | Protect-RubrikDatabase -SLA 'Gold'

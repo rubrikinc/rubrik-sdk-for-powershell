@@ -14,7 +14,7 @@ function Set-RubrikSLA
       GitHub: pfguglielmi
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikSLA.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikSLA
 
       .EXAMPLE
       Set-RubrikSLA -id e4d121af-5611-496a-bb8d-57ba46443e94 -Name Gold -HourlyFrequency 12 -HourlyRetention 5

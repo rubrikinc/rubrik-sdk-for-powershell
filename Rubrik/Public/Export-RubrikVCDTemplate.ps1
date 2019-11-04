@@ -14,7 +14,7 @@ function Export-RubrikVCDTemplate
       GitHub: shamsway
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Export-RubrikVCDTemplate
 
       .EXAMPLE
       Export-RubrikVCDTemplate -id '01234567-8910-1abc-d435-0abc1234d567' -Name 'Template-Export' -catalogid '01234567-8910-1abc-d435-0abc1234d567' -orgvdcid '01234567-8910-1abc-d435-0abc1234d567'

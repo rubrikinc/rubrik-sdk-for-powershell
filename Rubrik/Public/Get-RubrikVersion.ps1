@@ -14,7 +14,7 @@ function Get-RubrikVersion
       GitHub: chriswahl
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVersion.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVersion
             
       .EXAMPLE
       Get-RubrikVersion
