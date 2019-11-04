@@ -700,19 +700,6 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikNodeProxyConfig'              = @{
-            '1.0' = @{
-                Description = 'Get Rubrik Node Proxy Configuration'
-                URI         = '/api/internal/node_management/proxy_config'
-                Method      = 'Get'
-                Body        = ''
-                Query       = ''
-                Result      = ''
-                Filter      = ''
-                Success     = '200'
-                ObjectTName = 'Rubrik.Node.ProxyConfig'
-            }
-        }
         'Get-RubrikNotificationSetting'           = @{
             '5.0' = @{
                 Description = 'Returns details of the configured notification settings within the Rubrik cluster'
@@ -801,7 +788,7 @@ function Get-RubrikAPIData($endpoint) {
         }
         'Get-RubrikProxySetting'           = @{
             '1.0' = @{
-                Description = 'Returns details of the configured proxy server within the Rubrik cluster'
+                Description = 'Get Rubrik Node Proxy Configuration'
                 URI         = '/api/internal/node_management/proxy_config'
                 Method      = 'Get'
                 Body        = ''
@@ -809,6 +796,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.ProxySetting'
             }
         }
         'Get-RubrikReport'             = @{
@@ -1923,7 +1911,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
-        'Remove-RubrikNodeProxyConfig'              = @{
+        'Remove-RubrikProxySetting'              = @{
             '1.0' = @{
                 Description = 'Remove Rubrik Node Proxy Configuration'
                 URI         = '/api/internal/node_management/proxy_config'
@@ -2211,7 +2199,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Set-RubrikNodeProxyConfig'              = @{
+        'Set-RubrikProxySetting'              = @{
             '1.0' = @{
                 Description = 'Remove Rubrik Node Proxy Configuration'
                 URI         = '/api/internal/node_management/proxy_config'
@@ -2227,7 +2215,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
-                ObjectTName = 'Rubrik.Node.ProxyConfig'
+                ObjectTName = 'Rubrik.ProxySetting'
             }
         }
         'Set-RubrikNutanixVM'                 = @{
