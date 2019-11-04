@@ -13,7 +13,7 @@ function Get-RubrikVMSnapshot
       Twitter: @PierreFlammer
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVMSnapshot
 
       .EXAMPLE
       Get-RubrikVMSnapshot -id 'cc1b363a-a0d4-40b7-9b09-7b8f3a805b27'

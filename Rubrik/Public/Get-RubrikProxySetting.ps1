@@ -1,7 +1,7 @@
 #Requires -Version 3
 function Get-RubrikProxySetting
 {
-  <#  
+  <#
     .SYNOPSIS
     Retrieves a Rubrik Cluster proxy config
         
@@ -9,9 +9,9 @@ function Get-RubrikProxySetting
     The Get-RubrikProxySetting cmdlet will retrieve proxy configuration information for the cluster nodes.
         
     .NOTES
-    Written by Jaap Brasser for community usage
-    Twitter: @jaap_brasser
-    GitHub: jaapbrasser
+    Written by Mike Preston for community usage
+    Twitter: @mwpreston
+    GitHub: mwpreston
         
     .LINK
     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikProxySetting

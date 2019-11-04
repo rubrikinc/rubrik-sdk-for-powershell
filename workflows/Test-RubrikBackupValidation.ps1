@@ -16,7 +16,7 @@
   GitHub: chriswahl
 
   .LINK
-  http://pages.rubrik.com/20170126-Webinar-RESTfulAPIIntro_Reg.html
+  https://pages.rubrik.com/20170126-Webinar-RESTfulAPIIntro_Reg.html
 
   .LINK
   https://www.rubrik.com/automation-to-validate-in-rubrik-backups/

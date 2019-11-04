@@ -14,7 +14,7 @@ function Get-RubrikUserRole
       GitHub: mwpreston
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikUserRole.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikUserRole
 
       .EXAMPLE
       Get-RubrikUserRole -id 'User:::1111-2222-3333'

@@ -14,7 +14,7 @@ function Get-RubrikHost
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikHost.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikHost
 
       .EXAMPLE
       Get-RubrikHost

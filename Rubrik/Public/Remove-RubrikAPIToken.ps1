@@ -14,7 +14,7 @@ function Remove-RubrikAPIToken
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikAPIToken.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikAPIToken
 
       .EXAMPLE
       Remove-RubrikAPIToken -TokenId "11111111-2222-3333-4444-555555555555"

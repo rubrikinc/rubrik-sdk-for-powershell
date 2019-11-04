@@ -14,7 +14,7 @@ function Set-RubrikNutanixVM
             GitHub: MikeFal
 
             .LINK
-            http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+            https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikNutanixVM
 
             .EXAMPLE
             Get-RubrikNutanixVM 'Server1' | Set-RubrikNutanixVM -PauseBackups

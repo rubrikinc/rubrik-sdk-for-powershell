@@ -1,10 +1,13 @@
+# Import Module
+Import-Module .\Rubrik\Rubrik.psd1 -Force
+
 # Create new markdown and XML help files
 Write-Output 'Building new function documentation'
 
-$MarkdownFiles = New-MarkdownHelp -Module Rubrik -OutputFolder "$env:LocalPath\docs\reference\" -Force | Measure-Object | Select-Object -ExpandProperty Count
-Write-Output "Created $MarkdownFiles markdown help files in '$env:LocalPath\docs\reference\'"
+$MarkdownFiles = New-MarkdownHelp -Module Rubrik -OutputFolder "$env:LocalPath\docs\command-documentation\reference\" -Force | Measure-Object | Select-Object -ExpandProperty Count
+Write-Output "Created $MarkdownFiles markdown help files in '$env:LocalPath\docs\command-documentation\reference\'"
 
-$ExternalHelp = New-ExternalHelp -Path "$env:LocalPath\docs\reference\" -OutputPath "$env:LocalPath\Rubrik\en-US\" -Force
+$ExternalHelp = New-ExternalHelp -Path "$env:LocalPath\docs\command-documentation\reference\" -OutputPath "$env:LocalPath\Rubrik\en-US\" -Force
 Write-Output "Created $($ExternalHelp.Name) external help file in '$env:LocalPath\Rubrik\en-US\'"
 
 # Custom Generate Summary.md
@@ -13,7 +16,7 @@ $MarkDown = "# Rubrik SDK for PowerShell`n`n"
 $MarkDown += "## User Documentation`n`n"
 
 # Documentation folder
-Get-ChildItem -LiteralPath "$env:LocalPath\docs\documentation" | ForEach-Object -Process {
+Get-ChildItem -LiteralPath "$env:LocalPath\docs\user-documentation" | ForEach-Object -Process {
     $Reference = switch ($_.BaseName) {
         'Requirements' {'Requirements'}
         'Installation' {'Installation'}
@@ -31,17 +34,17 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\documentation" | ForEach-Object 
     $MarkDown += "`n----`n`n"
 }
 
-$MarkDown += "## User Documentation`n`n"
+$MarkDown += "## Command Documentation`n`n"
 
 # Workflow folder
-Get-ChildItem -LiteralPath "$env:LocalPath\docs\workflow" | ForEach-Object -Begin {
-    $MarkDown += "* [Workflow](workflow/readme.md)`n"
+Get-ChildItem -LiteralPath "$env:LocalPath\docs\command-documentation\workflow" | ForEach-Object -Begin {
+    $MarkDown += "* [Workflow](command-documentation/workflow/readme.md)`n"
 } -Process {
     $Reference = switch ($_.BaseName) {
         'flow_audit' {'Flow Audit'}
         default {$_}
     }
-    $uri = "$($_.Directory.BaseName)/$($_.Name)"
+    $uri = "command-documentation/$($_.Directory.BaseName)/$($_.Name)"
 
     if ($_.basename -ne 'readme') {
         $MarkDown += "    * [$Reference]($uri)`n"
@@ -51,13 +54,13 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\workflow" | ForEach-Object -Begi
 }
 
 # Reference folder
-Get-ChildItem -LiteralPath "$env:LocalPath\docs\reference" | ForEach-Object -Begin {
-    $MarkDown += "* [Reference](workflow/readme.md)`n"
+Get-ChildItem -LiteralPath "$env:LocalPath\docs\command-documentation\reference" | ForEach-Object -Begin {
+    $MarkDown += "* [Reference](command-documentation/reference/readme.md)`n"
 } -Process {
     $Reference = switch ($_.BaseName) {
         default {$_}
     }
-    $uri = "$($_.Directory.BaseName)/$($_.Name)"
+    $uri = "command-documentation/$($_.Directory.BaseName)/$($_.Name)"
     
     if ($_.basename -ne 'readme') {
         $MarkDown += "    * [$Reference]($uri)`n"

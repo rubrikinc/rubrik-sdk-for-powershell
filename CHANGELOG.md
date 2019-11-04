@@ -27,6 +27,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated private function `New-BodyString` to support forced upper and lowercase for selected properties
 * Addresses [Issue 496](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/496)
 
+## 2019-11-02
+
+### Fixed [Documenation referencing _local / **local**]
+
+* Replaced occurances of _local or **local** with local within documenation around the primary_cluster_id.
+* Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
+
+### Changed [Updated documentation links to new GitBook]
+
+* Updated the links to point to rubrik.gitbook.io from rubrikinc.gitbook.io
+
 ## 2019-10-30
 
 ### Added [-DetailedObject parameter in Get-RubrikVolumeGroup]
@@ -72,8 +83,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added various cmdlets and respective unit tests to support retrieving information from the Rubrik cluster. Development mainly driven from the As Built Report module.
 * New cmdlets are `Get-RubrikClusterInfo`, `Get-RubrikClusterNetworkInterface`, `Get-RubrikClusterStorage`, `Get-RubrikDNSSetting`, `Get-RubrikEmailSetting`, `Get-RubrikLoginBanner`, `Get-RubrikNTPServer`, `Get-RubrikNetworkThrottle`, `Get-RubrikNode`, `Get-RubrikNotificationSetting`, `Get-RubrikProxySetting`, and `GetRubrikSnmpSetting`
 * These cmdlets also resolve [Issue 208](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/208)
-
-## 2019-10-22
 
 ### Fixed [Scoped ID variable to local in New-RubrikHost]
 

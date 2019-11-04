@@ -14,7 +14,7 @@ function Get-RubrikClusterNetworkInterface
       GitHub: mwpreston
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikClusterNetworkInterface.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikClusterNetworkInterface
             
       .EXAMPLE
       Get-RubrikClusterNetworkInterface

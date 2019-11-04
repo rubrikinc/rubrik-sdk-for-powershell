@@ -15,7 +15,7 @@ function New-RubrikUser
       GitHub: mwpreston
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/New-RubrikUser.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikUser
 
       .EXAMPLE
       New-RubrikUser -Username 'jdoe' -password (ConvertTo-SecureString -String 'secretpassword123!secret' -asplaintext -force)

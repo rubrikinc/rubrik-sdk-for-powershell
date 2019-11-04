@@ -14,7 +14,7 @@ function Remove-RubrikDatabaseMount
       GitHub: MikeFal
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikDatabaseMount.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikDatabaseMount
 
       .EXAMPLE
       Remove-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'
