@@ -18,6 +18,8 @@ function Remove-RubrikNodeProxyConfig
     
     .EXAMPLE
     Remove-RubrikNodeProxyConfig
+    
+    Removes the Rubrik Node Proxy Configuration for the current node
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -25,7 +27,7 @@ function Remove-RubrikNodeProxyConfig
     # Rubrik server IP or FQDN
     [Parameter(
         ValueFromPipelineByPropertyName = $true)]
-    [Alias('ipAddress')]
+    [Alias('ipAddress','NodeIPAddress')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api
