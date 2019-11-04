@@ -45,4 +45,23 @@ Describe -Name 'Public/Get-RubrikProxySetting' -Tag 'Public', 'Get-RubrikProxySe
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
     }
+    
+    Context -Name 'Function should return correct object type' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{ 
+                'host'     = 'proxy.server.com' 
+                'protocol' = 'https'
+            }
+        }
+        
+        It -Name 'Should have a custom object type defined' -Test {
+            (Get-RubrikProxySetting).psobject.typenames |
+                Should -Contain 'Rubrik.ProxySetting'
+        }
+        
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
+    }
 }
