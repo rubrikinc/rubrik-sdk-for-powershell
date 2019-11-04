@@ -3,10 +3,10 @@ function Set-RubrikProxySetting
 {
   <#  
     .SYNOPSIS
-    Retrieves a Rubrik Node's ProxyConfig
+    Set a Rubrik Proxy Settings
         
     .DESCRIPTION
-    The Set-RubrikProxySetting cmdlet will retrieve proxy configuration information for the node.
+    The Set-RubrikProxySetting cmdlet will set proxy configuration information for the cluster nodes.
         
     .NOTES
     Written by Jaap Brasser for community usage
@@ -17,12 +17,14 @@ function Set-RubrikProxySetting
     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikProxySetting
         
     .EXAMPLE
-    Set-RubrikProxySetting 
-    This will return the proxy information for the node currently connected to
+    Set-RubrikProxySetting -Host build.rubrik.com -Port 8080 -Protocol HTTPS
+    
+    Set the Cluster proxy configuration to the settings listed
       
     .EXAMPLE
-    Get-RubrikNode | Set-RubrikProxySetting 
-    This will return the proxy information for all nodes connected to the current Rubrik Cluster
+    Set-RubrikProxySetting -Host build.rubrik.com -Port 8080 -Protocol HTTPS -UserName jaapbrasser -Password $SecurePW
+    
+    Set the cluster proxy information to the settings specified in the function parameter
   #>
 
   [CmdletBinding()]

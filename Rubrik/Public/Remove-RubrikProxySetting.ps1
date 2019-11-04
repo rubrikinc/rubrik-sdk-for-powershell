@@ -3,10 +3,10 @@ function Remove-RubrikProxySetting
 {
   <#  
     .SYNOPSIS
-    Removes Proxy Configuration from a Rubrik node 
+    Removes Proxy Configuration from a Rubrik Cluster nodes 
 
     .DESCRIPTION
-    Removes Proxy Configuration for either the current node or the specified node
+    Removes Proxy Configuration for either the cluster nodes
 
     .NOTES
     Written by Jaap Brasser for community usage
