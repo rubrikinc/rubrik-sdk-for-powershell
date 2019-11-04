@@ -4,7 +4,7 @@
         <View>
             <Name>Default</Name>
             <ViewSelectedBy>
-                <TypeName>Rubrik.Node.ProxyConfig</TypeName>
+                <TypeName>Rubrik.ProxySetting</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>
