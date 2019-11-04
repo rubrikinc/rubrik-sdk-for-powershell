@@ -35,9 +35,14 @@ Describe -Name 'Public/Get-RubrikProxySetting' -Tag 'Public', 'Get-RubrikProxySe
             @( Get-RubrikProxySetting).host |
                 Should -BeExactly 'proxy.server.com'
         }
+        
+        It -Name 'NodeIPAddress property is properly populated' -Test {
+            @( Get-RubrikProxySetting -IPAddress 10.10.10.10).nodeipaddress |
+                Should -BeExactly '10.10.10.10'
+        }
 
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
     }
 }
