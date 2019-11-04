@@ -45,6 +45,29 @@ Describe -Name 'Public/Set-RubrikProxySetting' -Tag 'Public', 'Set-RubrikProxySe
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
     }
     
+    Context -Name 'Validate that protocol is case insensitive' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith { }
+        
+        It -Name 'Verify Lowercase changed to upper case' -Test {
+            $Output = & {
+                Set-RubrikProxySetting -proxyhostname 'proxy.server.com' -protocol socks5 -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLikeExactly '*protocol*SOCKS5*'
+        }
+        
+        It -Name 'Verify mixed case is changed to upper case' -Test {
+            $Output = & {
+                Set-RubrikProxySetting -proxyhostname 'proxy.server.com' -protocol HtTpS -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLikeExactly '*protocol*HTTPS*'
+        }
+        
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
+    }
+    
     Context -Name 'Function should return correct object type' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
