@@ -2,34 +2,38 @@
 function Get-RubrikProxySetting
 {
   <#  
-      .SYNOPSIS
-      Connects to Rubrik and retrieves the proxy server settings.
-            
-      .DESCRIPTION
-      The Get-RubrikProxySetting cmdlet will retrieve the proxy server settings configured within a Rubrik Cluster
-            
-      .NOTES
-      Written by Mike Preston for community usage
-      Twitter: @mwpreston
-      GitHub: mwpreston
-            
-      .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikProxySetting.html
-            
-      .EXAMPLE
-      Get-RubrikProxySetting
-      This will return the details of the Proxy Server configured within the Rubrik cluster
+    .SYNOPSIS
+    Retrieves a Rubrik Node's ProxyConfig
+        
+    .DESCRIPTION
+    The Get-RubrikProxySetting cmdlet will retrieve proxy configuration information for the node.
+        
+    .NOTES
+    Written by Jaap Brasser for community usage
+    Twitter: @jaap_brasser
+    GitHub: jaapbrasser
+        
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikProxySetting
+        
+    .EXAMPLE
+    Get-RubrikProxySetting 
+    This will return the proxy information for the node currently connected to
       
+    .EXAMPLE
+    Get-RubrikNode | Get-RubrikProxySetting 
+    This will return the proxy information for all nodes connected to the current Rubrik Cluster
   #>
 
   [CmdletBinding()]
   Param(
     # Rubrik server IP or FQDN
+    [Parameter(
+        ValueFromPipelineByPropertyName = $true)]
+    [Alias('ipAddress')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
-    [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
-    
   )
 
   Begin {
@@ -60,8 +64,16 @@ function Get-RubrikProxySetting
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
+    $result = $result | Select-Object -Property *,@{
+        name = 'NodeIPAddress'
+        expression = {
+            $server
+        }
+    }
+    
+    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+    
     return $result
 
   } # End of process

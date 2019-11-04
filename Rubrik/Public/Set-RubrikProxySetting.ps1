@@ -1,12 +1,12 @@
 #Requires -Version 3
-function Set-RubrikNodeProxyConfig
+function Set-RubrikProxySetting
 {
   <#  
     .SYNOPSIS
     Retrieves a Rubrik Node's ProxyConfig
         
     .DESCRIPTION
-    The Set-RubrikNodeProxyConfig cmdlet will retrieve proxy configuration information for the node.
+    The Set-RubrikProxySetting cmdlet will retrieve proxy configuration information for the node.
         
     .NOTES
     Written by Jaap Brasser for community usage
@@ -14,14 +14,14 @@ function Set-RubrikNodeProxyConfig
     GitHub: jaapbrasser
         
     .LINK
-    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikNodeProxyConfig
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikProxySetting
         
     .EXAMPLE
-    Set-RubrikNodeProxyConfig 
+    Set-RubrikProxySetting 
     This will return the proxy information for the node currently connected to
       
     .EXAMPLE
-    Get-RubrikNode | Set-RubrikNodeProxyConfig 
+    Get-RubrikNode | Set-RubrikProxySetting 
     This will return the proxy information for all nodes connected to the current Rubrik Cluster
   #>
 

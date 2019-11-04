@@ -1,5 +1,5 @@
 #requires -Version 3
-function Remove-RubrikNodeProxyConfig
+function Remove-RubrikProxySetting
 {
   <#  
     .SYNOPSIS
@@ -14,20 +14,20 @@ function Remove-RubrikNodeProxyConfig
     GitHub: jaapbrasser
     
     .LINK
-    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikNodeProxyConfig
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikProxySetting
     
     .EXAMPLE
-    Remove-RubrikNodeProxyConfig
+    Remove-RubrikProxySetting
     
     Removes the Rubrik Node Proxy Configuration for the current node
     
     .EXAMPLE
-    Get-RubrikNodeProxyConfig | Remove-RubrikNodeProxyConfig -Verbose
+    Get-RubrikNodeProxyConfig | Remove-RubrikProxySetting -Verbose
     
     Removes the current Rubrik Node Proxy configuration while displaying Verbose information
     
     .EXAMPLE
-    Get-RubrikNode | Remove-RubrikNodeProxyConfig
+    Get-RubrikNode | Remove-RubrikProxySetting
     
     Removes the Proxy configuration for all Rubrik Nodes retrieved by Get-RubrikNode
   #>
