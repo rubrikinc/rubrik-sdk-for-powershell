@@ -14,7 +14,7 @@ function Get-RubrikFilesetTemplate
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFilesetTemplate.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikFilesetTemplate
 
       .EXAMPLE
       Get-RubrikFilesetTemplate -Name 'Template1'

@@ -14,7 +14,7 @@ function Set-RubrikBlackout
       GitHub: pmilano1
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikBlacout.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikBlacout
 
       .EXAMPLE
       Set-RubrikBlackout -Set:[$true/$false]

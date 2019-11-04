@@ -15,7 +15,7 @@ function Stop-RubrikManagedVolumeSnapshot
       GitHub: MikeFal
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Stop-RubrikManagedVolumeSnapshot
 
       .EXAMPLE
       Stop-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2

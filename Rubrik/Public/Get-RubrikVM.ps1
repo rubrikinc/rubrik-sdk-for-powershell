@@ -14,7 +14,7 @@ function Get-RubrikVM
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikVM.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVM
 
       .EXAMPLE
       Get-RubrikVM -Name 'Server1'

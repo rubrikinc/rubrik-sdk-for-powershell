@@ -14,7 +14,7 @@ function Set-RubrikHyperVVM
             GitHub: MikeFal
 
             .LINK
-            http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+            https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikHyperVVM
 
             .EXAMPLE
             Get-RubrikHyperVVM 'Server1' | Set-RubrikHyperVVM -PauseBackups

@@ -15,7 +15,7 @@ function Get-RubrikSupportTunnel
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikSupportTunnel
 
       .EXAMPLE
       Get-RubrikSupportTunnel
