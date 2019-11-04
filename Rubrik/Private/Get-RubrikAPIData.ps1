@@ -2227,6 +2227,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.Node.ProxyConfig'
             }
         }
         'Set-RubrikNutanixVM'                 = @{
