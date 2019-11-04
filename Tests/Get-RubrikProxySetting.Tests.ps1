@@ -22,7 +22,7 @@ Describe -Name 'Public/Get-RubrikProxySetting' -Tag 'Public', 'Get-RubrikProxySe
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
+            [PSCustomObject]@{ 
                 'host'     = 'proxy.server.com' 
                 'protocol' = 'https'
             }
@@ -32,7 +32,7 @@ Describe -Name 'Public/Get-RubrikProxySetting' -Tag 'Public', 'Get-RubrikProxySe
                 Should -BeExactly 1
         }
         It -Name 'Host is proxy.server.com' -Test {
-            @( Get-RubrikProxySetting).host |
+            ( Get-RubrikProxySetting ).host |
                 Should -BeExactly 'proxy.server.com'
         }
         
