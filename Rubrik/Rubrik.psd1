@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.512'
+ModuleVersion = '4.0.513'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -71,6 +71,7 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
                 'ObjectDefinitions/Rubrik.Host.ps1xml','ObjectDefinitions/Rubrik.HyperVVM.ps1xml',
                 'ObjectDefinitions/Rubrik.LDAP.ps1xml','ObjectDefinitions/Rubrik.LogShipping.ps1xml',
                 'ObjectDefinitions/Rubrik.ManagedVolume.ps1xml','ObjectDefinitions/Rubrik.NASShare.ps1xml',
+                'ObjectDefinitions/Rubrik.ProxySetting.ps1xml',
                 'ObjectDefinitions/Rubrik.NutanixVM.ps1xml','ObjectDefinitions/Rubrik.OracleDatabase.ps1xml',
                 'ObjectDefinitions/Rubrik.Report.ps1xml','ObjectDefinitions/Rubrik.MSSQLInstance.ps1xml',
                 'ObjectDefinitions/Rubrik.UnmanagedObject.ps1xml','ObjectDefinitions/Rubrik.vCenter.ps1xml',
@@ -117,15 +118,15 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Register-RubrikBackupService', 'Remove-RubrikAPIToken', 
                'Remove-RubrikDatabaseMount', 'Remove-RubrikFileset', 
                'Remove-RubrikHost', 'Remove-RubrikLogShipping', 
-               'Remove-RubrikManagedVolume', 'Remove-RubrikManagedVolumeExport', 
-               'Remove-RubrikMount', 'Remove-RubrikNASShare', 'Remove-RubrikOrganization',
+               'Remove-RubrikManagedVolume', 'Remove-RubrikManagedVolumeExport', 'Remove-RubrikMount', 
+               'Remove-RubrikNASShare', 'Remove-RubrikProxySetting', 'Remove-RubrikOrganization',
                'Remove-RubrikReport', 'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
                'Remove-RubrikUser', 'Remove-RubrikVCenter', 'Remove-RubrikVMSnapshot', 
                'Remove-RubrikVolumeGroupMount', 'Reset-RubrikLogShipping', 
                'Restore-RubrikDatabase', 'Restore-RubrikVApp', 'Set-RubrikAvailabilityGroup', 
                'Set-RubrikBlackout', 'Set-RubrikDatabase', 'Set-RubrikHyperVVM', 
                'Set-RubrikLogShipping', 'Set-RubrikManagedVolume', 'Set-RubrikMount', 
-               'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikSetting', 
+               'Set-RubrikNASShare', 'Set-RubrikProxySetting', 'Set-RubrikNutanixVM', 'Set-RubrikSetting', 
                'Set-RubrikSLA', 'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel',
                'Set-RubrikUser', 'Set-RubrikUserRole', 'Set-RubrikVCD', 
                'Set-RubrikVCenter', 'Set-RubrikVM', 'Set-RubrikVolumeFilterDriver', 

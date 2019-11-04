@@ -16,6 +16,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-04
+
+### Added [Set- & Remove-RubrikProxySetting functions]
+
+* Added `Set-RubrikProxySetting` and `Remove-RubrikProxySetting` functions
+* Added `Rubrik.ProxySetting.ps1xml` to provide formatting for Get- & `Set-RubrikProxySetting`
+* Added unit tests for new functions and additional tests for `Get-RubrikProxySetting`
+* Updated `Get-RubrikProxySetting` to support pipelining and formatted output
+* Updated private function `New-BodyString` to support forced upper and lowercase for selected properties
+* Addresses [Issue 496](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/496)
+
 ## 2019-11-02
 
 ### Fixed [Documenation referencing _local / **local**]

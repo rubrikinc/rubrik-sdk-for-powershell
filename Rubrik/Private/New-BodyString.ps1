@@ -57,7 +57,7 @@
             }
             # All other variable types
             elseif ($null -ne (Get-Variable -Name $param.Name).Value) {
-              $arraystring.Add($arrayitem, (Get-Variable -Name $param.Name).Value)
+                $arraystring.Add($arrayitem, (Get-Variable -Name $param.Name).Value)
             }
           }
         }
@@ -79,7 +79,17 @@
           }     
           # All other variable types
           elseif ($null -ne (Get-Variable -Name $param.Name).Value -and (Get-Variable -Name $param.Name).Value.Length -gt 0) {
-            $bodystring.Add($body, (Get-Variable -Name $param.Name).Value)
+            # These variables will be cast to upper or lower, depending on what the API endpoint expects
+            $ToUpperVariable = @('Protocol')
+            $ToLowerVariable = @('')
+            
+            if ($body -in $ToUpperVariable) {
+              $bodystring.Add($body, (Get-Variable -Name $param.Name).Value.ToUpper())
+            } elseif ($body -in $ToLowerVariable) {
+              $bodystring.Add($body, (Get-Variable -Name $param.Name).Value.ToLower())
+            } else {
+              $bodystring.Add($body, (Get-Variable -Name $param.Name).Value)
+            }            
           }
         }
       }

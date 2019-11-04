@@ -1,36 +1,43 @@
-#Requires -Version 3
-function Get-RubrikProxySetting
+#requires -Version 3
+function Remove-RubrikProxySetting
 {
-  <#
+  <#  
     .SYNOPSIS
-    Retrieves a Rubrik Cluster proxy config
-        
+    Removes Proxy Configuration from a Rubrik Cluster nodes 
+
     .DESCRIPTION
-    The Get-RubrikProxySetting cmdlet will retrieve proxy configuration information for the cluster nodes.
-        
+    Removes Proxy Configuration for either the cluster nodes
+
     .NOTES
-    Written by Mike Preston for community usage
-    Twitter: @mwpreston
-    GitHub: mwpreston
-        
+    Written by Jaap Brasser for community usage
+    Twitter: @jaap_brasser
+    GitHub: jaapbrasser
+    
     .LINK
-    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikProxySetting
-        
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikProxySetting
+    
     .EXAMPLE
-    Get-RubrikProxySetting 
-    This will return the proxy information for the node currently connected to
-      
+    Remove-RubrikProxySetting
+    
+    Removes the Rubrik Node Proxy Configuration for the current node
+    
     .EXAMPLE
-    Get-RubrikNode | Get-RubrikProxySetting 
-    This will return the proxy information for all nodes connected to the current Rubrik Cluster
+    Get-RubrikNodeProxyConfig | Remove-RubrikProxySetting -Verbose
+    
+    Removes the current Rubrik Node Proxy configuration while displaying Verbose information
+    
+    .EXAMPLE
+    Get-RubrikNode | Remove-RubrikProxySetting
+    
+    Removes the Proxy configuration for all Rubrik Nodes retrieved by Get-RubrikNode
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik server IP or FQDN
     [Parameter(
         ValueFromPipelineByPropertyName = $true)]
-    [Alias('ipAddress')]
+    [Alias('ipAddress','NodeIPAddress')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api
@@ -40,7 +47,7 @@ function Get-RubrikProxySetting
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-
+    
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
     
@@ -65,15 +72,6 @@ function Get-RubrikProxySetting
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    $result = $result | Select-Object -Property *,@{
-        name = 'NodeIPAddress'
-        expression = {
-            $server
-        }
-    }
-    
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-    
     return $result
 
   } # End of process
