@@ -768,7 +768,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
                 ObjectTName = 'Rubrik.OracleDatabase'
             }
-        }        
+        }
         'Get-RubrikOrganization'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all Rubrik organizations'
@@ -783,6 +783,21 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = @{
                     'name' = 'name'
                 }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikOrgAuthorization'         = @{
+            '1.0' = @{
+                Description = 'Gets the current list of explicit authorizations for the organization role'
+                URI         = '/api/internal/authorization/role/organization'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    principals = 'principals'
+                    organization_id = 'organization_id'
+                }
+                Result      = 'data'
+                Filter      = ''
                 Success     = '200'
             }
         }
