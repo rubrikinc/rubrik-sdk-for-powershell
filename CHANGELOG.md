@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-11-02
 
+### Fixed [Documenation referencing _local / **local**]
+
+* Replaced occurances of _local or **local** with local within documenation around the primary_cluster_id.
+* Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
+
 ### Changed [Updated documentation links to new GitBook]
 
 * Updated the links to point to rubrik.gitbook.io from rubrikinc.gitbook.io
