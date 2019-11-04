@@ -22,7 +22,7 @@ Describe -Name 'Public/Set-RubrikProxySetting' -Tag 'Public', 'Set-RubrikProxySe
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
+            [pscustomobject]@{ 
                 'host'     = 'proxy.server.com' 
                 'protocol' = 'https'
             }
