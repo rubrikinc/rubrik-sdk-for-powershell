@@ -700,6 +700,19 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikNodeProxyConfig'              = @{
+            '1.0' = @{
+                Description = 'Retrieve information on nodes within the Rubrik Cluster'
+                URI         = '/api/internal/node_management/proxy_config'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.Node.ProxyConfig'
+            }
+        }
         'Get-RubrikNotificationSetting'           = @{
             '5.0' = @{
                 Description = 'Returns details of the configured notification settings within the Rubrik cluster'
