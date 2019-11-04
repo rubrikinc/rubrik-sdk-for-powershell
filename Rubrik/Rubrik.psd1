@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.512'
+ModuleVersion = '4.0.513'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -71,6 +71,7 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
                 'ObjectDefinitions/Rubrik.Host.ps1xml','ObjectDefinitions/Rubrik.HyperVVM.ps1xml',
                 'ObjectDefinitions/Rubrik.LDAP.ps1xml','ObjectDefinitions/Rubrik.LogShipping.ps1xml',
                 'ObjectDefinitions/Rubrik.ManagedVolume.ps1xml','ObjectDefinitions/Rubrik.NASShare.ps1xml',
+                'ObjectDefinitions/Rubrik.Node.ProxyConfig.ps1xml',
                 'ObjectDefinitions/Rubrik.NutanixVM.ps1xml','ObjectDefinitions/Rubrik.OracleDatabase.ps1xml',
                 'ObjectDefinitions/Rubrik.Report.ps1xml','ObjectDefinitions/Rubrik.MSSQLInstance.ps1xml',
                 'ObjectDefinitions/Rubrik.UnmanagedObject.ps1xml','ObjectDefinitions/Rubrik.vCenter.ps1xml',
@@ -91,7 +92,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikDNSSetting', 'Get-RubrikEvent', 
                'Get-RubrikFileset', 'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 
                'Get-RubrikHyperVVM', 'Get-RubrikLDAP', 'Get-RubrikLogShipping', 
-               'Get-RubrikManagedVolume', 'Get-RubrikManagedVolumeExport', 'Get-RubrikNode',
+               'Get-RubrikManagedVolume', 'Get-RubrikManagedVolumeExport', 'Get-RubrikNode', 'Get-RubrikNodeProxyConfig',
                'Get-RubrikMount', 'Get-RubrikNASShare', 'Get-RubrikNTPServer', 'Get-RubrikNutanixVM', 
                'Get-RubrikOracleDB', 'Get-RubrikOrganization', 'Get-RubrikReport', 'Get-RubrikNetworkThrottle'
                'Get-RubrikProxySetting', 'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
