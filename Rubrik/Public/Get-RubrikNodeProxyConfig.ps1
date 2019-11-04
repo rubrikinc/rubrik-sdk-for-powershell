@@ -3,10 +3,10 @@ function Get-RubrikNodeProxyConfig
 {
   <#  
     .SYNOPSIS
-    Connects to Rubrik and retrieves node information for a given cluster
+    Retrieves a Rubrik Node's ProxyConfig
         
     .DESCRIPTION
-    The Get-RubrikNodeProxyConfig cmdlet will retrieve information around the node members of a given cluster.
+    The Get-RubrikNodeProxyConfig cmdlet will retrieve proxy configuration information for the node.
         
     .NOTES
     Written by Jaap Brasser for community usage
