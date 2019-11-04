@@ -20,6 +20,16 @@ function Remove-RubrikNodeProxyConfig
     Remove-RubrikNodeProxyConfig
     
     Removes the Rubrik Node Proxy Configuration for the current node
+    
+    .EXAMPLE
+    Get-RubrikNodeProxyConfig | Remove-RubrikNodeProxyConfig -Verbose
+    
+    Removes the current Rubrik Node Proxy configuration while displaying Verbose information
+    
+    .EXAMPLE
+    Get-RubrikNode | Remove-RubrikNodeProxyConfig
+    
+    Removes the Proxy configuration for all Rubrik Nodes retrieved by Get-RubrikNode
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
