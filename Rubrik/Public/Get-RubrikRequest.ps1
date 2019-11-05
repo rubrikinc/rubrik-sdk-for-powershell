@@ -19,6 +19,10 @@ function Get-RubrikRequest {
       .EXAMPLE
       Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
       Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
+
+      .EXAMPLE
+      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
+      Will wait for the specified async request to report a 'SUCCESS' or 'FAILED' status before returning details
   #>
 
   [CmdletBinding()]
