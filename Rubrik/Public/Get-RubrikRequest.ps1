@@ -86,7 +86,6 @@ function Get-RubrikRequest {
         $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
         $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
         $result = Test-FilterObject -filter ($resources.Filter) -result $result
-        $result
         If ($result.progress -gt 0) {
           Write-Verbose "$($result.id) is $($result.status) $($result.progress) complete"
           Write-Progress -Activity "$($result.id) is $($result.status)" -status "Progress $($result.progress)" -percentComplete ($result.progress)
@@ -94,7 +93,7 @@ function Get-RubrikRequest {
         else {
           Write-Progress -Activity "$($result.id)" -status "Job Queued" -percentComplete (0)
         }
-        Start-Sleep -Seconds 1
+        Start-Sleep -Seconds 5
       } while ($result.status -notin $ExitList) 	
     }
     #endregion
