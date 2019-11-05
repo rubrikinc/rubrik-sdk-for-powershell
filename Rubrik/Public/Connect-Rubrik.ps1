@@ -111,7 +111,7 @@ function Connect-Rubrik {
         $PlatformDetails = "{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}"
         
         $UserAgent = 'RubrikPowerShellSDK-{0}--{1}--{2}' -f 
-            '5.0.0.515', #$($MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString()),
+            $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString(),
             $psversiontable.psversion.tostring(),
             $PlatformDetails
             
