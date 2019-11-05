@@ -76,7 +76,7 @@ function Restore-RubrikVApp
     # Power on vApp after restoration.
     [Parameter(ParameterSetName='Full',Mandatory = $true)]
     [Parameter(ParameterSetName='Partial',Mandatory = $true)]
-    [Bool]$PowerOn,
+    [switch]$PowerOn,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Full')]
     [Parameter(ParameterSetName='Partial')]
