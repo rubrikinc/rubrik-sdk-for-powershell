@@ -1,12 +1,12 @@
 #requires -Version 3
-function Get-RubrikVAppExportOptions
+function Get-RubrikVAppExportOption
 {
   <#  
       .SYNOPSIS
       Retrieves export for a vCD vApp known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVAppExportOptions cmdlet retrieves export options for a vCD vApp known to a Rubrik cluster
+      The Get-RubrikVAppExportOption cmdlet retrieves export options for a vCD vApp known to a Rubrik cluster
 
       .NOTES
       Written by Matt Elliott for community usage
@@ -14,11 +14,11 @@ function Get-RubrikVAppExportOptions
       GitHub: shamsway
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppExportOptions
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppExportOption
 
       .EXAMPLE
       $SnapshotID = (Get-RubrikVApp -Name 'vApp01' | Get-RubrikSnapshot -Latest).id
-      Get-RubrikVAppExportOptions -id $SnapshotID -ExportMode 'ExportToNewVapp'
+      Get-RubrikVAppExportOption -id $SnapshotID -ExportMode 'ExportToNewVapp'
       This returns available export options for the specific snapshot.
   #>
 
