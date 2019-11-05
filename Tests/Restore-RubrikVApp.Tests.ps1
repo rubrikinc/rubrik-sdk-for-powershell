@@ -88,7 +88,7 @@ Describe -Name 'Public/Restore-RubrikVApp' -Tag 'Public', 'Restore-RubrikVApp' -
         #endregion
 
         Context -Name 'Test script logic' {
-            Mock -CommandName Get-RubrikVAppRecoverOptions -Verifiable -ModuleName 'Rubrik' -MockWith {
+            Mock -CommandName Get-RubrikVAppRecoverOption -Verifiable -ModuleName 'Rubrik' -MockWith {
                 return $recoveropts
             }
 
@@ -112,7 +112,7 @@ Describe -Name 'Public/Restore-RubrikVApp' -Tag 'Public', 'Restore-RubrikVApp' -
             }
                         
             Assert-VerifiableMock
-            Assert-MockCalled -CommandName Get-RubrikVAppRecoverOptions -ModuleName 'Rubrik' -Exactly 2
+            Assert-MockCalled -CommandName Get-RubrikVAppRecoverOption -ModuleName 'Rubrik' -Exactly 2
             Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
 
         }
