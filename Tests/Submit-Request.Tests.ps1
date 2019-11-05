@@ -129,32 +129,25 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         $resources = @{
             Method = 'Delete'
             Success = 204
-       }
+        }
         
-        It 'Method:Delete - Empty Object should not be empty' -TestCases $EventCases {
-            param($Property)
+        It 'Method:Delete - Empty Object should not be empty' {
             (Submit-Request -Uri 1 -Method Delete) | Should -Not -BeNullOrEmpty
         }
         
-        $resources.Method = 'Post'
-        
-        It 'Method:Post - Empty Object should not be empty' -TestCases $EventCases {
-            param($Property)
+        $resources.Method = 'Post'        
+        It 'Method:Post - Empty Object should not be empty' {
             (Submit-Request -Uri 1 -Method Post) | Should -Not -BeNullOrEmpty
         }
         
-        $resources.Method = 'Patch'
-        
-        It 'Method:Patch - Empty Object should not be empty' -Not -TestCases $EventCases {
-            param($Property)
-            (Submit-Request -Uri 1 -Method Patch) | Should -BeNullOrEmpty
+        $resources.Method = 'Patch'        
+        It 'Method:Patch - Empty Object should not be empty' {
+            (Submit-Request -Uri 1 -Method Patch) | Should -Not -BeNullOrEmpty
         }
         
         $resources.Method = 'Put'
-        
-        It 'Method:Put - Empty Object should not be empty' -Not -TestCases $EventCases {
-            param($Property)
-            (Submit-Request -Uri 1 -Method Put) | Should -BeNullOrEmpty
+        It 'Method:Put - Empty Object should not be empty' {
+            (Submit-Request -Uri 1 -Method Put) | Should -Not -BeNullOrEmpty
         }
     }
 
