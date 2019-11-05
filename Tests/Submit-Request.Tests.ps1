@@ -118,6 +118,38 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Invoke-RubrikWebRequest -Times 2
     }
+    
+    Context -Name 'Test empty result filtering' {
+        Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
+            [pscustomobject]@{
+                StatusCode = 204
+            }
+        }
+        
+        $resources = @{
+            Method = 'Delete'
+            Success = 204
+       }
+        
+        It 'Method:Delete - Empty Object should not be empty' -TestCases $EventCases {
+            param($Property)
+            (Submit-Request -Uri 1 -Method Delete) | Should -Not -BeNullOrEmpty
+        }
+        
+        $resources.Method = 'Post'
+        
+        It 'Method:Delete - Empty Object should not be empty' -TestCases $EventCases {
+            param($Property)
+            (Submit-Request -Uri 1 -Method Post) | Should -Not -BeNullOrEmpty
+        }
+        
+        $resources.Method = 'Patch'
+        
+        It 'Method:Delete - Empty Object should not be empty' -Not -TestCases $EventCases {
+            param($Property)
+            (Submit-Request -Uri 1 -Method Patch) | Should -BeNullOrEmpty
+        }
+    }
 
     Context -Name 'Method:Other-EventObject' {
         Mock -CommandName 'Invoke-RubrikWebRequest' -Verifiable -MockWith {
