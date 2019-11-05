@@ -17,17 +17,26 @@ function New-UserAgentString {
         Will generate a new user agent string containing the module name, version and OS / platform information
     #>
 
-    begin {
-        $Value = (Get-Variable -Name $Parameter).Value
-    }
-
     process {
-        $OldCount = @($Result).count
-
-        $result = $result | Where-Object {$Value -eq $_.$Parameter}
-
-        Write-Verbose ('Excluded results not matching -{0} ''{1}'' {2} object(s) filtered, {3} object(s) remaining' -f $Parameter,$Value,($OldCount-@($Result).count),@($Result).count)
-
-        return $result
+        $OS, $OSVersion = if ($psversiontable.PSVersion.Major -lt 6) {
+            'Win32NT'
+            try {
+                Get-WmiObject -Class Win32_OperatingSystem -ErrorAction Stop | ForEach-Object {
+                    ($_.Name -Split '\|')[0], $_.BuildNumber -join ' '
+                }
+            } catch {}
+        } else {
+            $psversiontable.platform
+            $psversiontable.os
+        }
+        
+        $PlatformDetails = "{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}"
+        
+        $UserAgent = 'RubrikPowerShellSDK-{0}--{1}--{2}' -f 
+            $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString(),
+            $psversiontable.psversion.tostring(),
+            $PlatformDetails
+            
+        return $UserAgent
     }
 }
