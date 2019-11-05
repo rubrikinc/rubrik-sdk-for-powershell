@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-05
+
+### Changed [Submit-Request]
+
+* Modified private function Submit-Request.ps1 to support adding in success/error information for empty POST, PUT and PATCH responses
+* Modified status return code for Remove-RubrikManagedObject
+* Addresses [Issue 442](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/442)
+
 ## 2019-11-04
 
 ### Added [Set- & Remove-RubrikProxySetting functions]
