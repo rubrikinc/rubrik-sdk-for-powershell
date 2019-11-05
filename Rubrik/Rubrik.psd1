@@ -89,7 +89,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikAvailabilityGroup', 'Get-RubrikBootStrap', 'Get-RubrikClusterNetworkInterface'
                'Get-RubrikDatabase', 'Get-RubrikEmailSetting', 'Get-RubrikClusterStorage',
                'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 'Get-RubrikClusterInfo', 
-               'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikDNSSetting', 'Get-RubrikEvent', 
+               'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikDNSSetting', 'Get-RubrikEvent', 'Get-RubrikDatabaseRecoveryPoint', 
                'Get-RubrikFileset', 'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 
                'Get-RubrikHyperVVM', 'Get-RubrikLDAP', 'Get-RubrikLogShipping', 
                'Get-RubrikManagedVolume', 'Get-RubrikManagedVolumeExport', 'Get-RubrikNode',
