@@ -33,7 +33,7 @@ function Submit-Request {
     if ($PSCmdlet.ShouldProcess($id, $resources.Description)) {
         try {
             Write-Verbose -Message 'Submitting the request'
-            if ($resources.method -in ('Delete','Post')) {
+            if ($resources.method -in ('Delete','Post','Put','Patch')) {
                 # Delete operations (and some post) generally have no response body, skip JSON formatting and store the response from Invoke-WebRequest
                 if (Test-PowerShellSix) {
                     # Uses the improved ConvertFrom-Json cmdlet as provided in PowerShell 6.1
