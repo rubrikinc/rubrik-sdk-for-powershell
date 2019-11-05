@@ -1998,7 +1998,7 @@ function Get-RubrikAPIData($endpoint) {
                 Query       = ''
                 Result      = ''
                 Filter      = ''
-                Success     = '200'
+                Success     = '204'
             }
         }
         'Remove-RubrikVCenter'         = @{
