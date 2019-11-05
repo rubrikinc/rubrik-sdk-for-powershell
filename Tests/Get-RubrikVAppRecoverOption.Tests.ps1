@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikVAppRecoverOptions' -Fixture {
+Describe -Name 'Public/Get-RubrikVAppRecoverOption' -Tag 'Public', 'Get-RubrikVAppRecoverOption' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -67,7 +67,7 @@ Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikV
         }
 
         It -Name 'Expected results returned' -Test {
-            $result = Get-RubrikVAppRecoverOptions -id '01234567-8910-1abc-d435-0abc1234d567'
+            $result = Get-RubrikVAppRecoverOption -id '01234567-8910-1abc-d435-0abc1234d567'
             $result.restorableVms[0].name | Should -BeExactly 'vApp01'
             $result.availableVappNetworks[0].name | Should -BeExactly 'network01'
         }
@@ -78,11 +78,11 @@ Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikV
     }
     Context -Name 'Parameter Validation' {
         It -Name 'Parameter ID cannot be null' -Test {
-           { Get-RubrikVAppRecoverOptions -id $null } |
+           { Get-RubrikVAppRecoverOption -id $null } |
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         } 
         It -Name 'Parameter ID cannot be empty' -Test {
-            { Get-RubrikVAppRecoverOptions -id '' } |
+            { Get-RubrikVAppRecoverOption -id '' } |
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         }
     }
