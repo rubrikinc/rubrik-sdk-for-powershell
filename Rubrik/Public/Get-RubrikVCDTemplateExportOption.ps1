@@ -1,12 +1,12 @@
 #requires -Version 3
-function Get-RubrikVCDTemplateExportOptions
+function Get-RubrikVCDTemplateExportOption
 {
   <#  
       .SYNOPSIS
       Retrieves export options for a vCD Template known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVCDTemplateExportOptions cmdlet retrieves export options for a vCD Template known to a Rubrik cluster
+      The Get-RubrikVCDTemplateExportOption cmdlet retrieves export options for a vCD Template known to a Rubrik cluster
 
       .NOTES
       Written by Matt Elliott for community usage
@@ -14,11 +14,11 @@ function Get-RubrikVCDTemplateExportOptions
       GitHub: shamsway
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVCDTemplateExportOptions
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVCDTemplateExportOption
 
       .EXAMPLE
       $SnapshotID = (Get-RubrikVApp -Name 'vAppTemplate01' | Get-RubrikSnapshot -Latest).id
-      Get-RubrikVCDTemplateExportOptions -id $SnapshotID -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -Name 'vAppTemplate01-export'
+      Get-RubrikVCDTemplateExportOption -id $SnapshotID -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -Name 'vAppTemplate01-export'
       This will return export options details on the specific snapshot.
   #>
 
