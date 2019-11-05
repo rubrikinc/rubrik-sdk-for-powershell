@@ -96,9 +96,25 @@ function Connect-Rubrik {
     }
 
     Process {
-
         # Create User Agent string
-        $UserAgent = "Rubrik-Powershell-SDK/$($MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString())"
+        $OS, $OSVersion = if ($psversiontable.PSVersion.Major -lt 6) {
+            'Win32NT'
+            try {
+                Get-WmiObject -Class Win32_OperatingSystem -ErrorAction Stop | ForEach-Object {
+                    ($_.Name -Split '\|')[0], $_.BuildNumber -join ' '
+                }
+            } catch {}
+        } else {
+            $psversiontable.platform
+            $psversiontable.os
+        }
+        $PlatformDetails = "{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}"
+        
+        $UserAgent = 'RubrikPowerShellSDK-{0}--{1}--{2}' -f 
+            '5.0.0.515', #$($MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString()),
+            $psversiontable.psversion.tostring(),
+            $PlatformDetails
+            
         Write-Verbose -Message "Using User Agent $($UserAgent)"
 
         if($Token) {
