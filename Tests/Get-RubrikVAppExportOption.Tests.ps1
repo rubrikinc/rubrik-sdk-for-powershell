@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Get-RubrikVAppExportOptions' -Tag 'Public', 'Get-RubrikVAppExportOptions' -Fixture {
+Describe -Name 'Public/Get-RubrikVAppExportOption' -Tag 'Public', 'Get-RubrikVAppExportOption' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -74,7 +74,7 @@ Describe -Name 'Public/Get-RubrikVAppExportOptions' -Tag 'Public', 'Get-RubrikVA
         }
 
         It -Name 'Expected results returned' -Test {
-            $result = Get-RubrikVAppExportOptions -id '01234567-8910-1abc-d435-0abc1234d567' -ExportMode 'ExportToNewVapp'
+            $result = Get-RubrikVAppExportOption -id '01234567-8910-1abc-d435-0abc1234d567' -ExportMode 'ExportToNewVapp'
             $result.allChildVmsWithDefaultNetworkConnections[0].name | Should -BeExactly 'vApp01'
             $result.targetVappNetworks[0].name | Should -BeExactly 'network01'
         }
@@ -85,11 +85,11 @@ Describe -Name 'Public/Get-RubrikVAppExportOptions' -Tag 'Public', 'Get-RubrikVA
     }
     Context -Name 'Parameter Validation' {
         It -Name 'Parameter ID cannot be null' -Test {
-           { Get-RubrikVAppExportOptions -id $null } |
+           { Get-RubrikVAppExportOption -id $null } |
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         } 
         It -Name 'Parameter ID cannot be empty' -Test {
-            { Get-RubrikVAppExportOptions -id '' } |
+            { Get-RubrikVAppExportOption -id '' } |
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         }
     }
