@@ -22,21 +22,21 @@ function New-UserAgentString {
             'Win32NT'
             try {
                 Get-WmiObject -Class Win32_OperatingSystem -ErrorAction Stop | ForEach-Object {
-                    ($_.Name -Split '\|')[0], $_.BuildNumber -join ' '
+                    ($_.Name -Split '\|')[0], $_.BuildNumber -join ''
                 }
             } catch {}
         } else {
             $psversiontable.platform
-            $psversiontable.os
+            $psversiontable.os.trim()
         }
         
-        $PlatformDetails = "{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}"
+        $PlatformDetails = "'platform'-'$OS'-'platform_version'-'$OSVersion'"
         
         $UserAgent = 'RubrikPowerShellSDK-{0}--{1}--{2}' -f 
             $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString(),
             $psversiontable.psversion.tostring(),
             $PlatformDetails
             
-        return $UserAgent
+        return ($UserAgent -replace '{|}|"')
     }
 }
