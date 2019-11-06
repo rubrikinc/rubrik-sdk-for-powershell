@@ -16,6 +16,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-06
+
+### Changed [Get-RubrikVcd & Get-RubrikVApp Options function names]
+
+* Renamed Get-RubrikVAppExportOptions to `Get-RubrikVAppExportOption` to use singular nouns 
+* Renamed Get-RubrikVAppRecoverOptions to `Get-RubrikVAppRecoverOption` to use singular nouns 
+* Renamed Get-RubrikVcdTemplateExportOptions to `Get-RubrikVcdTemplateExportOption` to use singular nouns 
+* Updated documentation and unit tests where required
+* Addresses [Issue 509](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/509)
+
+### Changed [parameter type from boolean to switch]
+
+* Changed this for the following functions:
+  * `Export-RubrikVAPP`
+  * `New-RubrikBootstrap`
+  * `Restore-RubrikVAPP`
+* Addresses [Issue 326](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/326)
+
 ## 2019-11-05
 
 ### Changed [Submit-Request]
