@@ -1,12 +1,12 @@
 #requires -Version 3
-function Get-RubrikVCDTemplateExportOptions
+function Get-RubrikVAppExportOption
 {
   <#  
       .SYNOPSIS
-      Retrieves export options for a vCD Template known to a Rubrik cluster
+      Retrieves export for a vCD vApp known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVCDTemplateExportOptions cmdlet retrieves export options for a vCD Template known to a Rubrik cluster
+      The Get-RubrikVAppExportOption cmdlet retrieves export options for a vCD vApp known to a Rubrik cluster
 
       .NOTES
       Written by Matt Elliott for community usage
@@ -14,29 +14,34 @@ function Get-RubrikVCDTemplateExportOptions
       GitHub: shamsway
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVCDTemplateExportOptions
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppExportOption
 
       .EXAMPLE
-      $SnapshotID = (Get-RubrikVApp -Name 'vAppTemplate01' | Get-RubrikSnapshot -Latest).id
-      Get-RubrikVCDTemplateExportOptions -id $SnapshotID -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -Name 'vAppTemplate01-export'
-      This will return export options details on the specific snapshot.
+      $SnapshotID = (Get-RubrikVApp -Name 'vApp01' | Get-RubrikSnapshot -Latest).id
+      Get-RubrikVAppExportOption -id $SnapshotID -ExportMode 'ExportToNewVapp'
+      This returns available export options for the specific snapshot.
   #>
 
   [CmdletBinding()]
   Param(
-    # Snapshot ID of the vCD Template to retrieve options for
+    # Snapshot ID of the vApp to retrieve options for
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [Alias('snapshot_id')]
     [String]$id,
-    # ID of target catalog. Defaults to the existing catalog.
-    [Alias('catalog_id')]
-    [String]$catalogid,
-    # Name of the newly exported vCD Template. Defaults to [TemplateName]-Export
-    [String]$name,
-    # Org vDC ID to export the vCD Template to. This should be an Org vDC in the same vCD Org where the target catalog exists.
-    [Alias('org_vdc_id')]
-    [String]$orgvdcid,
+    # Specifies whether export should use the existing vApp or create a new vApp. Valid values are ExportToNewVapp or ExportToTargetVapp
+    [Parameter(Mandatory = $true)]
+    [ValidateSet('ExportToNewVapp','ExportToTargetVapp')]
+    [Alias('export_mode')]
+    [String]$ExportMode,
+    # ID of target vApp
+    [Alias('target_vapp_id')]
+    [Parameter(ParameterSetName='Existing')]
+    [String]$TargetVAppID,
+    # ID of target vApp
+    [Alias('target_org_vdc_id')]
+    [Parameter(ParameterSetName='Existing')]
+    [String]$TargetOrgVDCID,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -44,6 +49,7 @@ function Get-RubrikVCDTemplateExportOptions
   )
 
   Begin {
+
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
     
@@ -63,26 +69,6 @@ function Get-RubrikVCDTemplateExportOptions
   }
 
   Process {
-    #region oneoff
-    
-    # Remove beginning of catalog ID to adjust for API
-    if($catalogid.StartsWith('VcdCatalog:::')) {
-      $catalogid = $catalogid -replace 'VcdCatalog:::',''
-    }
-
-    # Remove beginning of Org VDC ID to adjust for API
-    if($orgvdcid.StartsWith('VcdOrgVdc:::')) {
-      $orgvdcid = $orgvdcid -replace 'VcdOrgVdc:::',''
-    }
-
-    if(!$name) {
-      $snapshot = Get-RubrikVAppSnapshot -id $id
-      $vapp = Get-RubrikVApp -Name $snapshot.vappName -PrimaryClusterID 'local' -DetailedObject
-      $name = $vapp.name + "-Export"
-      Write-Verbose -Message "Using $($name) for export"
-    }
-    #endregion
-
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    

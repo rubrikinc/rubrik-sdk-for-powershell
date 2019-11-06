@@ -81,7 +81,7 @@ function Export-RubrikVCDTemplate
             Write-Verbose -Message "Using $($name) for export"
         }
         if(!$orgvdcid) {
-            $options = Get-RubrikVcdTemplateExportOptions -id $id -catalogid $catalogid -name $name
+            $options = Get-RubrikVcdTemplateExportOption -id $id -catalogid $catalogid -name $name
             $orgvdcid = $options.originalVdcExportOptions.orgVdcId
             Write-Verbose -Message "Using Org VDC $($orgvdc) for export"
         }

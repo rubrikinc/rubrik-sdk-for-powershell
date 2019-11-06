@@ -26,14 +26,14 @@ function Restore-RubrikVApp
 
       .EXAMPLE
       $id = (Get-RubrikVApp -Name "vApp01" -PrimaryClusterID local | Get-RubrikSnapshot -Latest ).id
-      $recoveropts = Get-RubrikVAppRecoverOptions -Id $id
+      $recoveropts = Get-RubrikVAppRecoverOption -Id $id
       $restorableVms = $recoveropts.restorableVms
       $vm = @()
       $vm += $restorableVms[0]
       Restore-RubrikVApp -id $id -Partial $vm -PowerOn:$false
       This retreives the latest snapshot from the given vApp 'vApp01' and performs a partial restore on the first VM in the vApp.
-      This is an advanced use case and the user is responsible for parsing the output from Get-RubrikVAppRecoverOptions.
-      Syntax of the object passed with the -Partial Parameter must match the format of the object returned from (Get-RubrikVAppRecoverOptions).restorableVms
+      This is an advanced use case and the user is responsible for parsing the output from Get-RubrikVAppRecoverOption.
+      Syntax of the object passed with the -Partial Parameter must match the format of the object returned from (Get-RubrikVAppRecoverOption).restorableVms
 #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -76,7 +76,7 @@ function Restore-RubrikVApp
     # Power on vApp after restoration.
     [Parameter(ParameterSetName='Full',Mandatory = $true)]
     [Parameter(ParameterSetName='Partial',Mandatory = $true)]
-    [Bool]$PowerOn,
+    [switch]$PowerOn,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Full')]
     [Parameter(ParameterSetName='Partial')]
@@ -120,7 +120,7 @@ function Restore-RubrikVApp
     }
     else {
         Write-Verbose -Message "Performing Full vApp Recovery"
-        $recoveropts = Get-RubrikVAppRecoverOptions -id $id
+        $recoveropts = Get-RubrikVAppRecoverOption -id $id
         $resources.Body.vmsToRestore = $recoveropts.restorableVms
         $resources.Body.shouldPowerOnVmsAfterRecovery = $PowerOn
 
@@ -150,7 +150,7 @@ function Restore-RubrikVApp
         }
 
         if($NetworkMapping) {
-            # Check RubrikVAppRecoverOptions to verify
+            # Check RubrikVAppRecoverOption to verify
             $found = $false
             Write-Verbose -Message "Validating $($NetworkMapping) network"
             foreach($network in $recoveropts.availableVappNetworks) {

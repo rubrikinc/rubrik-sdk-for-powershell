@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Get-RubrikVcdTemplateExportOptions' -Tag 'Public', 'Get-RubrikVcdTemplateExportOptions' -Fixture {
+Describe -Name 'Public/Get-RubrikVcdTemplateExportOption' -Tag 'Public', 'Get-RubrikVcdTemplateExportOption' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -46,7 +46,7 @@ Describe -Name 'Public/Get-RubrikVcdTemplateExportOptions' -Tag 'Public', 'Get-R
         }
 
         It -Name 'Expected results returned' -Test {
-            $result = Get-RubrikVcdTemplateExportOptions -id '01234567-8910-1abc-d435-0abc1234d567' -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -name 'Template-Export'
+            $result = Get-RubrikVcdTemplateExportOption -id '01234567-8910-1abc-d435-0abc1234d567' -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -name 'Template-Export'
             $result.originalVdcExportOptions.orgVdcId | Should -BeExactly '01234567-8910-1abc-d435-0abc1234d567'
             $result.defaultCatalogExportOptions.orgVdcId | Should -BeExactly '01234567-8910-1abc-d435-0abc1234d567'
         }
@@ -73,7 +73,7 @@ Describe -Name 'Public/Get-RubrikVcdTemplateExportOptions' -Tag 'Public', 'Get-R
         }
 
         It -Name 'Expected results returned' -Test {
-            $result = Get-RubrikVcdTemplateExportOptions -id '01234567-8910-1abc-d435-0abc1234d567' -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -orgvdcid 'VcdOrgVdc:::665f23c6-1fc3-4d49-bb58-5841b0c20818' -name 'Template-Export'
+            $result = Get-RubrikVcdTemplateExportOption -id '01234567-8910-1abc-d435-0abc1234d567' -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -orgvdcid 'VcdOrgVdc:::665f23c6-1fc3-4d49-bb58-5841b0c20818' -name 'Template-Export'
             $result.advancedExportOptions.orgVdcId | Should -BeExactly '01234567-8910-1abc-d435-0abc1234d567'
         }
         
@@ -114,7 +114,7 @@ Describe -Name 'Public/Get-RubrikVcdTemplateExportOptions' -Tag 'Public', 'Get-R
         }
 
         It -Name 'Expected results returned' -Test {
-            $result = Get-RubrikVcdTemplateExportOptions -id '01234567-8910-1abc-d435-0abc1234d567' -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567'
+            $result = Get-RubrikVcdTemplateExportOption -id '01234567-8910-1abc-d435-0abc1234d567' -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567'
             $result.originalVdcExportOptions.orgVdcId | Should -BeExactly '01234567-8910-1abc-d435-0abc1234d567'
             $result.defaultCatalogExportOptions.orgVdcId | Should -BeExactly '01234567-8910-1abc-d435-0abc1234d567'
         }
@@ -127,11 +127,11 @@ Describe -Name 'Public/Get-RubrikVcdTemplateExportOptions' -Tag 'Public', 'Get-R
     }
     Context -Name 'Parameter Validation' {
         It -Name 'Parameter ID cannot be null' -Test {
-           { Get-RubrikVcdTemplateExportOptions -id $null } |
+           { Get-RubrikVcdTemplateExportOption -id $null } |
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         } 
         It -Name 'Parameter ID cannot be empty' -Test {
-            { Get-RubrikVcdTemplateExportOptions -id '' } |
+            { Get-RubrikVcdTemplateExportOption -id '' } |
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         }
     }
