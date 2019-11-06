@@ -30,7 +30,8 @@ function New-UserAgentString {
             $psversiontable.os.trim()
         }
         
-        $PlatformDetails = "'platform'-'$OS'-'platform_version'-'$OSVersion'"
+        $PlatformDetails = "{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}"
+        #$PlatformDetails = [convert]::ToBase64String("{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}".ToCharArray)
         
         $UserAgent = 'RubrikPowerShellSDK-{0}--{1}--{2}' -f 
             $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString(),
