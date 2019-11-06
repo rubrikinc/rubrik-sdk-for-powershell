@@ -24,6 +24,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Modified status return code for Remove-RubrikManagedObject
 * Addresses [Issue 442](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/442)
 
+## 2019-11-06
+
+### Added [New-UserAgentString]
+
+* Changed the output of `$UserAgent` string to provide more detailed information about PowerShell version and platform
+* Added new private function, `New-UserAgentString` and associated unit tests
+* Addresses [Issue 506](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/506)
+
 ## 2019-11-04
 
 ### Added [Set- & Remove-RubrikProxySetting functions]
