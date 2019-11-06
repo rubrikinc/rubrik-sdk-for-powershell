@@ -7,7 +7,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
 
 Describe -Name 'Private/New-UserAgentString' -Tag 'Private', 'New-UserAgentString' -Fixture {
     Context -Name 'Request Succeeds' {
-        It -Name 'Should return not throw errors' -Test {
+        It -Name 'Should not throw errors' -Test {
             { New-UserAgentString } | 
                 Should -Not -Throw
         }
