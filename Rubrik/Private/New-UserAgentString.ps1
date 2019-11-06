@@ -32,8 +32,14 @@ function New-UserAgentString {
         
         $PlatformDetails = [convert]::ToBase64String("{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}".ToCharArray())
         
+        $ModuleVersion = try {
+            $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString()
+        } catch {
+            
+        }
+        
         $UserAgent = 'RubrikPowerShellSDK-{0}--{1}--{2}' -f 
-            $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString(),
+            $ModuleVersion,
             $psversiontable.psversion.tostring(),
             $PlatformDetails
             
