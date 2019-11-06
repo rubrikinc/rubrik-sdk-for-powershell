@@ -18,12 +18,12 @@ Describe -Name 'Private/New-UserAgentString' -Tag 'Private', 'New-UserAgentStrin
         }
         
         It -Name 'Should return the PowerShell SDK Name' -Test {
-            (New-UserAgentString -split '-')[0] |
+            ((New-UserAgentString) -split '-')[0] |
                 Should -BeExactly 'RubrikPowerShellSDK'
         }
         
         It -Name 'Should return correct PowerShell version' -Test {
-            (New-UserAgentString -split '--')[1] |
+            ((New-UserAgentString) -split '--')[1] -replace '-' |
                 Should -BeExactly $psversiontable.psversion.tostring()
         }
     }
