@@ -1048,6 +1048,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikSyslogServer'              = @{
+            '1.0' = @{
+                Description = 'Retrieve the configured syslog servers within the Rubrik Cluster'
+                URI         = '/api/internal/syslog'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'hostname'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikUnmanagedObject'    = @{
             '1.0' = @{
                 Description = 'Get summary of all the objects with unmanaged snapshots'
