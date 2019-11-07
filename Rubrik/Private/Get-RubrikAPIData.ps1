@@ -1999,6 +1999,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '204'
             }
         }
+        'Get-RubrikSecurityClassification'      = @{
+            '1.0' = @{
+                Description = 'Returns a the security classification settings from Rubrik'
+                URI         = '/api/internal/cluster/me/security_classification'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Remove-RubrikSLA'             = @{
             '1.0' = @{
                 Description = 'Delete an SLA Domain from a Rubrik cluster'
