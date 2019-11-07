@@ -537,6 +537,18 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.HyperVVM'
             }
         }
+        'Get-RubrikIPMI'              = @{
+            '1.0' = @{
+                Description = 'Retrieve the configured IPMI settings within the Rubrik Cluster'
+                URI         = '/api/internal/cluster/me/ipmi'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikLDAP'         = @{
             '1.0' = @{
                 Description = 'Retrieves all LDAP settings of the Rubrik cluster'
