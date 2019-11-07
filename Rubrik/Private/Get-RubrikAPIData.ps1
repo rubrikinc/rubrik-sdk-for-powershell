@@ -941,6 +941,20 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.SLADomain'
             }
         }
+        'Get-RubrikSmbDomain'              = @{
+            '1.0' = @{
+                Description = 'Retrieve the configured SMB Domains within the Rubrik Cluster'
+                URI         = '/api/internal/smb/domain'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikSnapshot'           = @{
             '1.0' = @{
                 Description = 'Retrieve information for all snapshots'

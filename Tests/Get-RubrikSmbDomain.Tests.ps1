@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Get-RubrikIPMI' -Tag 'Public', 'Get-RubrikIPMI' -Fixture {
+Describe -Name 'Public/Get-RubrikSmbDomain' -Tag 'Public', 'Get-RubrikSmbDomain' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -22,23 +22,27 @@ Describe -Name 'Public/Get-RubrikIPMI' -Tag 'Public', 'Get-RubrikIPMI' -Fixture 
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'isAvailable'       = 'True'
-                'access'            = @{
-                    'https'         = 'true'
-                    'iKvm'          = 'true'
-                    'ssh'           = 'False'
-                    'virtualMedia'  = 'False'
+                @{ 
+                    'name'                  = 'domain.local'
+                    'serviceAccount'        = 'serviceAccountUserName'
+                    'isStickySmbService'    = 'true'
+                    'status'                = 'Configured'
+                },
+                @{ 
+                    'name'                  = 'anotherdomain.local'
+                    'serviceAccount'        = 'serviceAccountUserName2'
+                    'isStickySmbService'    = 'true'
+                    'status'                = 'Configured'
                 }
-            }
+
         }
         It -Name 'No parameters returns all results' -Test {
-            @( Get-RubrikIPMI).Count |
-                Should -BeExactly 1
+            @( Get-RubrikSmbDomain).Count |
+                Should -BeExactly 2
         }
-        It -Name 'ssh should be false' -Test {
-            @(Get-RubrikIPMI).access.ssh | 
-                Should -BeExactly 'False'
+        It -Name 'Name filter works' -Test {
+            @(Get-RubrikSmbDomain -Name 'domain.local').serviceAccount | 
+                Should -BeExactly 'serviceAccountUserName'
         }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
