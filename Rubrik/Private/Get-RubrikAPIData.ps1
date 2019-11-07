@@ -955,6 +955,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikSmbSecurity'              = @{
+            '1.0' = @{
+                Description = 'Retrieve the configured SMB security configuration within the Rubrik Cluster'
+                URI         = '/api/internal/smb/config'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikSnapshot'           = @{
             '1.0' = @{
                 Description = 'Retrieve information for all snapshots'
