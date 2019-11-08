@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-08
+
+### Changed [Changed the behavior of Test-RubrikSLA]
+
+* The private function `Test-RubrikSLA` had a hard coded local variable
+* Addresses [Issue 497](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/497)
+
 ## 2019-11-06
 
 ### Changed [Get-RubrikVcd & Get-RubrikVApp Options function names]
