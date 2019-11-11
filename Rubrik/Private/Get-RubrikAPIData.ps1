@@ -763,6 +763,25 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikNutanixCluster'                 = @{
+            '1.0' = @{
+                Description = 'Get summary of all Nutanix Clusters'
+                URI         = '/api/internal/nutanix/cluster'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    should_get_status       = 'should_get_status'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'Hostname'  = 'hostname'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.NutanixCluster'
+            }
+        }
         'Get-RubrikNutanixVM'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all Nutanix VMs'
