@@ -1,4 +1,4 @@
-﻿Function Test-RubrikSLA($SLA, $Inherit, $DoNotProtect, $Mandatory, $PrimaryClusterID = 'local') {
+﻿Function Test-RubrikSLA($SLA, $Inherit, $DoNotProtect, $Mandatory, $PrimaryClusterID) {
   <#
     .SYNOPSIS
     Retrieves an ID for a given SLA
@@ -8,19 +8,27 @@
 
     .PARAMETER SLA
     The SLA Domain name to lookup
-    
+
     .PARAMETER Inherit
     Switch to set SLA to 'Inherit'
 
     .PARAMETER DoNotProtect
     Switch to set SLA to 'Unprotected'
-    
+
     .PARAMETER Mandatory
     Switch to ensure SLA information was inputted
-    
+
     .PARAMETER PrimaryClusterId
     The ID of the cluster to search
   #>
+
+  # Determine the state of $PrimaryClusterID
+  Write-Verbose -Message "Primary cluster ID currently set to: $PrimaryClusterID"
+  if (!$PrimaryClusterID) {
+    $PrimaryClusterID = 'local'
+    Write-Verbose -Message "Null value found. Setting primary cluster ID to $PrimaryClusterID"
+  }
+
   Write-Verbose -Message 'Determining the SLA Domain id'
   if ($SLA) {
     $slaid = (Get-RubrikSLA -SLA $SLA -PrimaryClusterID $PrimaryClusterID).id
@@ -39,4 +47,4 @@
     throw 'No SLA information was entered.'
   }
 }
-    
+
