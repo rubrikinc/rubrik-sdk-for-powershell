@@ -495,6 +495,21 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.FilesetTemplate'
             }
         }
+        'Get-RubrikGuestOsCredential'      = @{
+            '1.0' = @{
+                Description = 'Returns the known guest os credentials from Rubrik'
+                URI         = '/api/internal/vmware/guest_credential'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    Username = 'username'
+                    Domain = 'domain'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikHost'               = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all hosts that are registered with a Rubrik cluster'
@@ -889,6 +904,18 @@ function Get-RubrikAPIData($endpoint) {
             '1.0' = @{
                 Description = 'Get details about an async request.'
                 URI         = '/api/v1/{type}/request/{id}'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikSecurityClassification'      = @{
+            '1.0' = @{
+                Description = 'Returns a the security classification settings from Rubrik'
+                URI         = '/api/internal/cluster/me/security_classification'
                 Method      = 'Get'
                 Body        = ''
                 Query       = ''
@@ -1997,18 +2024,6 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '204'
-            }
-        }
-        'Get-RubrikSecurityClassification'      = @{
-            '1.0' = @{
-                Description = 'Returns a the security classification settings from Rubrik'
-                URI         = '/api/internal/cluster/me/security_classification'
-                Method      = 'Get'
-                Body        = ''
-                Query       = ''
-                Result      = ''
-                Filter      = ''
-                Success     = '200'
             }
         }
         'Remove-RubrikSLA'             = @{
