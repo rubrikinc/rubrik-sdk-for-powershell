@@ -85,8 +85,9 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
                'Export-RubrikReport', 'Export-RubrikVM', 'Export-RubrikVApp',
-               'Export-RubrikVCDTemplate', 'Get-RubrikAPIToken', 'Get-RubrikAPIVersion', 
-               'Get-RubrikAvailabilityGroup', 'Get-RubrikBootStrap', 'Get-RubrikClusterNetworkInterface'
+               'Export-RubrikVCDTemplate', 'Get-RubrikAPIToken', 'Get-RubrikAPIVersion',
+               'Get-RubrikAvailabilityGroup', 'Get-RubrikBackupServiceDeployment', 'Get-RubrikBootStrap', 
+               'Get-RubrikClusterNetworkInterface'
                'Get-RubrikDatabase', 'Get-RubrikEmailSetting', 'Get-RubrikClusterStorage',
                'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 'Get-RubrikClusterInfo', 
                'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikDNSSetting', 'Get-RubrikEvent', 'Get-RubrikDatabaseRecoveryPoint', 

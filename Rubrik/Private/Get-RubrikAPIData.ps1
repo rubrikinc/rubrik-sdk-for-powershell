@@ -322,6 +322,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikBackupServiceDeployment'           = @{
+            '1.0' = @{
+                Description = 'Retrieve the global settings for automatic deployment of the Rubrik Backup Service to virtual machines.'
+                URI         = '/api/internal/vmware/agent'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikDatabase'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Microsoft SQL databases.'
