@@ -72,11 +72,11 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
                 'ObjectDefinitions/Rubrik.LDAP.ps1xml','ObjectDefinitions/Rubrik.LogShipping.ps1xml',
                 'ObjectDefinitions/Rubrik.ManagedVolume.ps1xml','ObjectDefinitions/Rubrik.NASShare.ps1xml',
                 'ObjectDefinitions/Rubrik.NutanixVM.ps1xml','ObjectDefinitions/Rubrik.OracleDatabase.ps1xml',
-                'ObjectDefinitions/Rubrik.Report.ps1xml','ObjectDefinitions/Rubrik.MSSQLInstance.ps1xml',
-                'ObjectDefinitions/Rubrik.UnmanagedObject.ps1xml','ObjectDefinitions/Rubrik.vCenter.ps1xml',
-                'ObjectDefinitions/Rubrik.VMwareDatastore.ps1xml','ObjectDefinitions/Rubrik.VMwareHost.ps1xml',
-                'ObjectDefinitions/Rubrik.VolumeGroup.ps1xml','ObjectDefinitions/Rubrik.User.ps1xml',
-                'ObjectDefinitions/Rubrik.SLADomainv1.ps1xml')
+                'ObjectDefinitions/Rubrik.OrgAuthorization.ps1xml','ObjectDefinitions/Rubrik.Report.ps1xml',
+                'ObjectDefinitions/Rubrik.MSSQLInstance.ps1xml','ObjectDefinitions/Rubrik.UnmanagedObject.ps1xml',
+                'ObjectDefinitions/Rubrik.vCenter.ps1xml','ObjectDefinitions/Rubrik.VMwareDatastore.ps1xml',
+                'ObjectDefinitions/Rubrik.VMwareHost.ps1xml','ObjectDefinitions/Rubrik.VolumeGroup.ps1xml',
+                'ObjectDefinitions/Rubrik.User.ps1xml','ObjectDefinitions/Rubrik.SLADomainv1.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
@@ -119,13 +119,13 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Remove-RubrikHost', 'Remove-RubrikLogShipping', 
                'Remove-RubrikManagedVolume', 'Remove-RubrikManagedVolumeExport', 
                'Remove-RubrikMount', 'Remove-RubrikNASShare', 'Remove-RubrikOrganization',
-               'Remove-RubrikReport', 'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
+               'Remove-RubrikOrgAuthorization','Remove-RubrikReport', 'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
                'Remove-RubrikUser', 'Remove-RubrikVCenter', 'Remove-RubrikVMSnapshot', 
                'Remove-RubrikVolumeGroupMount', 'Reset-RubrikLogShipping', 
                'Restore-RubrikDatabase', 'Restore-RubrikVApp', 'Set-RubrikAvailabilityGroup', 
                'Set-RubrikBlackout', 'Set-RubrikDatabase', 'Set-RubrikHyperVVM', 
                'Set-RubrikLogShipping', 'Set-RubrikManagedVolume', 'Set-RubrikMount', 
-               'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikSetting', 
+               'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikOrgAuthorization', 'Set-RubrikSetting', 
                'Set-RubrikSLA', 'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel',
                'Set-RubrikUser', 'Set-RubrikUserRole', 'Set-RubrikVCD', 
                'Set-RubrikVCenter', 'Set-RubrikVM', 'Set-RubrikVolumeFilterDriver', 

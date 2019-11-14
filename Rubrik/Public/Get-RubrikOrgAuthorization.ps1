@@ -18,19 +18,23 @@ function Get-RubrikOrgAuthorization
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikOrgAuthorization
 
       .EXAMPLE
+      Get-RubrikOrgAuthorization
+      Infers the Organization of the current user and returns the list of authorizations for that Organization.
+
+      .EXAMPLE
       Get-RubrikOrgAuthorization -ID Organization:::01234567-8910-1abc-d435-0abc1234d567
-      Returns the list of authorizations for  the Organization with ID Organization:::01234567-8910-1abc-d435-0abc1234d567
+      Returns the list of authorizations for the Organization with ID Organization:::01234567-8910-1abc-d435-0abc1234d567
   #>
 
   [CmdletBinding()]
   Param(
     # Principal ID
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [Alias('principals')]
     [String]$id,
     # Organization ID
     [Alias('organization_id')]
-    [String]$OrgID = $id,
+    [String]$OrgID,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -59,17 +63,22 @@ function Get-RubrikOrgAuthorization
 
   Process {
     #region One-off
-    # If User ID was not specified, get the current user ID
-    if([string]::IsNullOrEmpty($id)) { $id = (Get-RubrikUser -id me).id}
+    # If ID was not specified, get the current user ID. This is used to infer the Org ID to query.
+    if([string]::IsNullOrEmpty($id)) { 
+      $id = (Get-RubrikUser -id me).id
+      Write-Verbose "Using User ID $($id) as principal. This will infer the Organization ID automatically."
+    }  
+    # Unless specified and not using an inferred Org ID, API expects principal (ID) and Org ID to be the same
+    elseif([string]::IsNullOrEmpty($OrgID)) { $OrgID = $id }
     #endregion
     
-    #$uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = New-URIString -server $Server -endpoint ($resources.URI)
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
     return $result
 
