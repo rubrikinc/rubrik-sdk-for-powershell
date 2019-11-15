@@ -92,22 +92,22 @@ function Get-RubrikOrgAuthorization
     },@{
       name = 'manageCluster'
       expression = {
-        (Get-RubrikOrganization -id $_.organizationId).Name
+        $_.privileges.manageCluster
       }
     },@{
       name = 'useSla'
       expression = {
-        (Get-RubrikOrganization -id $_.organizationId).Name
+        $_.privileges.useSla
       }
     },@{
       name = 'manageResource'
       expression = {
-        (Get-RubrikOrganization -id $_.organizationId).Name
+        $_.privileges.manageResource
       }
     },@{
       name = 'manageSla'
       expression = {
-        (Get-RubrikOrganization -id $_.organizationId).Name
+        $_.privileges.manageSla
       }
     }
 
