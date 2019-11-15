@@ -82,8 +82,16 @@ function Get-RubrikOrgAuthorization
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
+    # Add pre-work for custom formatting
+    $result = $result | Select-Object -Property *,@{
+      name = 'orgname'
+      expression = {
+        (Get-RubrikOrganization -id $_.organizationId).Name
+      }
+    }
+
+    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
     return $result
 
   } # End of process
