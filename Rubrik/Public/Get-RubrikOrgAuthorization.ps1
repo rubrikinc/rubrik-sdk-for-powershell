@@ -88,25 +88,29 @@ function Get-RubrikOrgAuthorization
       name = 'orgname'
       expression = {
         (Get-RubrikOrganization -id $_.organizationId).Name
-      },@{
+      }
+    },@{
       name = 'manageCluster'
       expression = {
         (Get-RubrikOrganization -id $_.organizationId).Name
-      },@{
+      }
+    },@{
       name = 'useSla'
       expression = {
         (Get-RubrikOrganization -id $_.organizationId).Name
-      },@{
+      }
+    },@{
       name = 'manageResource'
       expression = {
         (Get-RubrikOrganization -id $_.organizationId).Name
-      },@{
+      }
+    },@{
       name = 'manageSla'
       expression = {
         (Get-RubrikOrganization -id $_.organizationId).Name
       }
     }
-    
+
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
     return $result
 
