@@ -6,34 +6,32 @@
             <ViewSelectedBy>
                 <TypeName>Rubrik.OrgAuthorization</TypeName>
             </ViewSelectedBy>
-            <TableControl>
-                <TableHeaders>
-                    <TableColumnHeader>
-                        <Label>Principal</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Label>Privileges</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Label>Organization ID</Label>
-                    </TableColumnHeader>                  
-                </TableHeaders>
-                <TableRowEntries>
-                    <TableRowEntry>
-                        <TableColumnItems>
-                            <TableColumnItem>
-                                <PropertyName>principal</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>privileges</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>orgName</PropertyName>
+                            </ListItem>
+                            <ListItem>
                                 <PropertyName>organizationId</PropertyName>
-                            </TableColumnItem>                         
-                        </TableColumnItems>
-                    </TableRowEntry>
-                </TableRowEntries>
-            </TableControl>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>manageCluster</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>useSla</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>manageResource</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>manageSla</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
         </View>
     </ViewDefinitions>
 </Configuration>
