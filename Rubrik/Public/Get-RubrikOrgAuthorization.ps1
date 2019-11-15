@@ -24,6 +24,10 @@ function Get-RubrikOrgAuthorization
       .EXAMPLE
       Get-RubrikOrgAuthorization -ID Organization:::01234567-8910-1abc-d435-0abc1234d567
       Returns the list of authorizations for the Organization with ID Organization:::01234567-8910-1abc-d435-0abc1234d567
+
+      .EXAMPLE
+      Get-RubrikOrganization | Get-RubrikOrgAuthorization
+      Returns a list of authorizations for all organizations on the current cluster
   #>
 
   [CmdletBinding()]
