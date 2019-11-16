@@ -89,8 +89,8 @@ function New-RubrikBootStrap
     [System.Object]
     $nodeConfigs,
     # Software Encryption
-    [bool]
-    $enableSoftwareEncryptionAtRest = $false,
+    [switch]
+    $enableSoftwareEncryptionAtRest,
     # Cluster/Edge Name
     [ValidateNotNullOrEmpty()]
     [string]

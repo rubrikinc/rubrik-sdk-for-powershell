@@ -804,7 +804,7 @@ function Get-RubrikAPIData($endpoint) {
         }
         'Get-RubrikProxySetting'           = @{
             '1.0' = @{
-                Description = 'Returns details of the configured proxy server within the Rubrik cluster'
+                Description = 'Get Rubrik Node Proxy Configuration'
                 URI         = '/api/internal/node_management/proxy_config'
                 Method      = 'Get'
                 Body        = ''
@@ -812,6 +812,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.ProxySetting'
             }
         }
         'Get-RubrikReport'             = @{
@@ -1067,7 +1068,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikVAppExportOptions'                = @{
+        'Get-RubrikVAppExportOption'                = @{
             '1.0' = @{
                 Description = 'Retrieves export options for a vCD vApp'
                 URI         = '/api/internal/vcd/vapp/snapshot/{id}/export/options'
@@ -1083,7 +1084,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikVAppRecoverOptions'                = @{
+        'Get-RubrikVAppRecoverOption'                = @{
             '1.0' = @{
                 Description = 'Retrieves instant recovery options for a vCD vApp'
                 URI         = '/api/internal/vcd/vapp/snapshot/{id}/instant_recover/options'
@@ -1095,7 +1096,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikVcdTemplateExportOptions'                = @{
+        'Get-RubrikVcdTemplateExportOption'                = @{
             '1.0' = @{
                 Description = 'Retrieves export options for a vCD Template'
                 URI         = '/api/v1/vcd/vapp/template/snapshot/{id}/export/options'
@@ -1926,6 +1927,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Remove-RubrikProxySetting'              = @{
+            '1.0' = @{
+                Description = 'Remove Rubrik Node Proxy Configuration'
+                URI         = '/api/internal/node_management/proxy_config'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikOrganization'           = @{
             '1.0' = @{
                 Description = 'Remove an organization from a Rubrik cluster'
@@ -2022,7 +2035,7 @@ function Get-RubrikAPIData($endpoint) {
                 Query       = ''
                 Result      = ''
                 Filter      = ''
-                Success     = '200'
+                Success     = '204'
             }
         }
         'Remove-RubrikVCenter'         = @{
@@ -2223,6 +2236,25 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikProxySetting'              = @{
+            '1.0' = @{
+                Description = 'Remove Rubrik Node Proxy Configuration'
+                URI         = '/api/internal/node_management/proxy_config'
+                Method      = 'Patch'
+                Body        = @{
+                    host     = 'host'
+                    port     = 'port'
+                    protocol = 'protocol'
+                    username = 'username'
+                    password = 'password'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.ProxySetting'
+            }
+        }
         'Set-RubrikNutanixVM'                 = @{
             '1.0' = @{
                 Description = 'Update VM with specified properties'
@@ -2231,7 +2263,6 @@ function Get-RubrikAPIData($endpoint) {
                 Body        = @{
                     snapshotConsistencyMandate = 'snapshotConsistencyMandate'
                     isPaused                 = 'isPaused'
-
                 }
                 Query       = ''
                 Result      = ''

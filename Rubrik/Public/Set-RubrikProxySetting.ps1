@@ -1,36 +1,54 @@
 #Requires -Version 3
-function Get-RubrikProxySetting
+function Set-RubrikProxySetting
 {
-  <#
+  <#  
     .SYNOPSIS
-    Retrieves a Rubrik Cluster proxy config
+    Set a Rubrik Proxy Settings
         
     .DESCRIPTION
-    The Get-RubrikProxySetting cmdlet will retrieve proxy configuration information for the cluster nodes.
+    The Set-RubrikProxySetting cmdlet will set proxy configuration information for the cluster nodes.
         
     .NOTES
-    Written by Mike Preston for community usage
-    Twitter: @mwpreston
-    GitHub: mwpreston
+    Written by Jaap Brasser for community usage
+    Twitter: @jaap_brasser
+    GitHub: jaapbrasser
         
     .LINK
-    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikProxySetting
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikProxySetting
         
     .EXAMPLE
-    Get-RubrikProxySetting 
-    This will return the proxy information for the node currently connected to
+    Set-RubrikProxySetting -Host build.rubrik.com -Port 8080 -Protocol HTTPS
+    
+    Set the Cluster proxy configuration to the settings listed
       
     .EXAMPLE
-    Get-RubrikNode | Get-RubrikProxySetting 
-    This will return the proxy information for all nodes connected to the current Rubrik Cluster
+    Set-RubrikProxySetting -Host build.rubrik.com -Port 8080 -Protocol HTTPS -UserName jaapbrasser -Password $SecurePW
+    
+    Set the cluster proxy information to the settings specified in the function parameter
   #>
 
   [CmdletBinding()]
   Param(
+    # The proxy FQDN or ip address
+    [Parameter(
+      Mandatory = $true)]
+    [Alias('host')]
+    [string] $proxyhostname,
+    # The protocal that is used by proxy
+    [Parameter(
+      Mandatory = $true)]
+    [Validateset('HTTP','HTTPS','SOCKS5')]
+    [string] $Protocol,
+    # Optional, port number for Proxy Configuration
+    [int] $port,
+    # Optional parameter, user name for proxy
+    [string] $Username,
+    # Optional parameter, password for proxy
+    [securestring] $password,
     # Rubrik server IP or FQDN
     [Parameter(
         ValueFromPipelineByPropertyName = $true)]
-    [Alias('ipAddress')]
+    [Alias('ipAddress','NodeIPAddress')]
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api
