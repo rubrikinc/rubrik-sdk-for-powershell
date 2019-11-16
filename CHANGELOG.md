@@ -23,6 +23,58 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added Get-RubrikOrgAuthorization, Set-RubrikOrgAuthorization, Remove-RubrikOrgAuthorization and related tests.
 * Addresses [Issue 337](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/337)
 
+## 2019-11-08
+
+### Changed [Changed the behavior of Test-RubrikSLA]
+
+* The private function `Test-RubrikSLA` had a hard coded local variable
+* Addresses [Issue 497](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/497)
+
+## 2019-11-06
+
+### Changed [Get-RubrikVcd & Get-RubrikVApp Options function names]
+
+* Renamed Get-RubrikVAppExportOptions to `Get-RubrikVAppExportOption` to use singular nouns 
+* Renamed Get-RubrikVAppRecoverOptions to `Get-RubrikVAppRecoverOption` to use singular nouns 
+* Renamed Get-RubrikVcdTemplateExportOptions to `Get-RubrikVcdTemplateExportOption` to use singular nouns 
+* Updated documentation and unit tests where required
+* Addresses [Issue 509](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/509)
+
+### Changed [parameter type from boolean to switch]
+
+* Changed this for the following functions:
+  * `Export-RubrikVAPP`
+  * `New-RubrikBootstrap`
+  * `Restore-RubrikVAPP`
+* Addresses [Issue 326](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/326)
+
+## 2019-11-05
+
+### Changed [Submit-Request]
+
+* Modified private function Submit-Request.ps1 to support adding in success/error information for empty POST, PUT and PATCH responses
+* Modified status return code for Remove-RubrikManagedObject
+* Addresses [Issue 442](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/442)
+
+## 2019-11-06
+
+### Added [New-UserAgentString]
+
+* Changed the output of `$UserAgent` string to provide more detailed information about PowerShell version and platform
+* Added new private function, `New-UserAgentString` and associated unit tests
+* Addresses [Issue 506](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/506)
+
+## 2019-11-04
+
+### Added [Set- & Remove-RubrikProxySetting functions]
+
+* Added `Set-RubrikProxySetting` and `Remove-RubrikProxySetting` functions
+* Added `Rubrik.ProxySetting.ps1xml` to provide formatting for Get- & `Set-RubrikProxySetting`
+* Added unit tests for new functions and additional tests for `Get-RubrikProxySetting`
+* Updated `Get-RubrikProxySetting` to support pipelining and formatted output
+* Updated private function `New-BodyString` to support forced upper and lowercase for selected properties
+* Addresses [Issue 496](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/496)
+
 ## 2019-11-02
 
 ### Fixed [Documentation referencing _local / **local**]

@@ -1,47 +1,34 @@
 #requires -Version 3
-function Get-RubrikVAppExportOptions
+function Get-RubrikVAppRecoverOption
 {
   <#  
       .SYNOPSIS
-      Retrieves export for a vCD vApp known to a Rubrik cluster
+      Retrieves instant recovery options a vCD vApp known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVAppExportOptions cmdlet retrieves export options for a vCD vApp known to a Rubrik cluster
+      The Get-RubrikVAppRecoverOption cmdlet is used to retrieve instant recovery options for a vCD vApp known to a Rubrik cluster
 
       .NOTES
       Written by Matt Elliott for community usage
       Twitter: @NetworkBrouhaha
-      GitHub: shamsway
+      Github: shamsway
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppExportOptions
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppRecoverOption
 
       .EXAMPLE
       $SnapshotID = (Get-RubrikVApp -Name 'vApp01' | Get-RubrikSnapshot -Latest).id
-      Get-RubrikVAppExportOptions -id $SnapshotID -ExportMode 'ExportToNewVapp'
-      This returns available export options for the specific snapshot.
+      Get-RubrikVAppRecoverOption -id $SnapshotID
+      This will return recovery options on the specific snapshot.
   #>
 
   [CmdletBinding()]
   Param(
     # Snapshot ID of the vApp to retrieve options for
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [Alias('snapshot_id')]
     [String]$id,
-    # Specifies whether export should use the existing vApp or create a new vApp. Valid values are ExportToNewVapp or ExportToTargetVapp
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('ExportToNewVapp','ExportToTargetVapp')]
-    [Alias('export_mode')]
-    [String]$ExportMode,
-    # ID of target vApp
-    [Alias('target_vapp_id')]
-    [Parameter(ParameterSetName='Existing')]
-    [String]$TargetVAppID,
-    # ID of target vApp
-    [Alias('target_org_vdc_id')]
-    [Parameter(ParameterSetName='Existing')]
-    [String]$TargetOrgVDCID,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version

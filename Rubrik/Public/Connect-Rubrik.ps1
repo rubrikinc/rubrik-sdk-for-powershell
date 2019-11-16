@@ -96,9 +96,9 @@ function Connect-Rubrik {
     }
 
     Process {
-
         # Create User Agent string
-        $UserAgent = "Rubrik-Powershell-SDK/$($MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString())"
+        $UserAgent = New-UserAgentString
+            
         Write-Verbose -Message "Using User Agent $($UserAgent)"
 
         if($Token) {

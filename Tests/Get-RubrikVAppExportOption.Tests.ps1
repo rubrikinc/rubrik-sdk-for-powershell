@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikVAppRecoverOptions' -Fixture {
+Describe -Name 'Public/Get-RubrikVAppExportOption' -Tag 'Public', 'Get-RubrikVAppExportOption' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -22,8 +22,8 @@ Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikV
     Context -Name 'Request Succeeds' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            $recoveroptsjson = '{
-                "restorableVms": [
+            $exportoptsjson = '{
+                "allChildVmsWithDefaultNetworkConnections": [
                   {
                     "name": "vApp01",
                     "vcdMoid": "vm-0609c47f-1c9f-4928-a18a-36815a55885f",
@@ -51,7 +51,8 @@ Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikV
                     ]
                   }
                 ],
-                "availableVappNetworks": [
+                "restorableNetworks": [],
+                "targetVappNetworks": [
                   {
                     "name": "network01",
                     "isDeployed": true
@@ -61,15 +62,21 @@ Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikV
                     "parentNetworkId": "01234567-8910-1abc-d435-0abc1234d567",
                     "isDeployed": true
                   }
+                ],
+                "availableStoragePolicies": [
+                  {
+                    "name": "Default Storage Policy",
+                    "id": "01234567-8910-1abc-d435-0abc1234d567"
+                  }
                 ]
               }'
-            return ConvertFrom-Json -InputObject $recoveroptsjson
+            return ConvertFrom-Json -InputObject $exportoptsjson
         }
 
         It -Name 'Expected results returned' -Test {
-            $result = Get-RubrikVAppRecoverOptions -id '01234567-8910-1abc-d435-0abc1234d567'
-            $result.restorableVms[0].name | Should -BeExactly 'vApp01'
-            $result.availableVappNetworks[0].name | Should -BeExactly 'network01'
+            $result = Get-RubrikVAppExportOption -id '01234567-8910-1abc-d435-0abc1234d567' -ExportMode 'ExportToNewVapp'
+            $result.allChildVmsWithDefaultNetworkConnections[0].name | Should -BeExactly 'vApp01'
+            $result.targetVappNetworks[0].name | Should -BeExactly 'network01'
         }
         
         Assert-VerifiableMock
@@ -78,11 +85,11 @@ Describe -Name 'Public/Get-RubrikVAppRecoverOptions' -Tag 'Public', 'Get-RubrikV
     }
     Context -Name 'Parameter Validation' {
         It -Name 'Parameter ID cannot be null' -Test {
-           { Get-RubrikVAppRecoverOptions -id $null } |
+           { Get-RubrikVAppExportOption -id $null } |
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         } 
         It -Name 'Parameter ID cannot be empty' -Test {
-            { Get-RubrikVAppRecoverOptions -id '' } |
+            { Get-RubrikVAppExportOption -id '' } |
                 Should -Throw "Cannot validate argument on parameter 'id'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         }
     }
