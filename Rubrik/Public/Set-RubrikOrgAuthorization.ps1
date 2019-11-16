@@ -80,9 +80,10 @@ function Set-RubrikOrgAuthorization
     if([string]::IsNullOrEmpty($id)) { 
         $id = (Get-RubrikUser -id me).id
         Write-Verbose "Using User ID $($id) as principal. This will infer the Organization ID automatically."
-    }  
+    } elseif ([string]::IsNullOrEmpty($PSBoundParameters.OrgID)) {
     # Unless specified and not using an inferred Org ID, API expects principal (ID) and Org ID to be the same
-    elseif([string]::IsNullOrEmpty($OrgID)) { $OrgID = $id }
+      $OrgID = $id
+    }
 
     # Throw error on Global Org
     if((Get-RubrikOrganization -id $id).isGlobal) { throw "Operation not supported on Global Organization" }
