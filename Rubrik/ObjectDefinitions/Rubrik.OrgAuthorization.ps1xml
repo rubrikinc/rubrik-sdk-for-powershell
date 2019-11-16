@@ -6,32 +6,46 @@
             <ViewSelectedBy>
                 <TypeName>Rubrik.OrgAuthorization</TypeName>
             </ViewSelectedBy>
-            <ListControl>
-                <ListEntries>
-                    <ListEntry>
-                        <ListItems>
-                            <ListItem>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>orgName</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>organizationId</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label># SLA</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label># Resources</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label># Managed SLA</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
                                 <PropertyName>orgName</PropertyName>
-                            </ListItem>
-                            <ListItem>
+                            </TableColumnItem>
+                            <TableColumnItem>
                                 <PropertyName>organizationId</PropertyName>
-                            </ListItem>
-                            <ListItem>
-                                <PropertyName>manageCluster</PropertyName>
-                            </ListItem>
-                            <ListItem>
-                                <PropertyName>useSla</PropertyName>
-                            </ListItem>
-                            <ListItem>
-                                <PropertyName>manageResource</PropertyName>
-                            </ListItem>
-                            <ListItem>
-                                <PropertyName>manageSla</PropertyName>
-                            </ListItem>
-                        </ListItems>
-                    </ListEntry>
-                </ListEntries>
-            </ListControl>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <ScriptBlock>$_.useSla.count</ScriptBlock>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <ScriptBlock>$_.manageResource.count</ScriptBlock>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <ScriptBlock>$_.manageSla.count</ScriptBlock>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
         </View>
     </ViewDefinitions>
-</Configuration>
+</Configuration> 
