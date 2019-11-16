@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-13
+
+### Added [Organization Authorization cmdlets]
+
+* Added Get-RubrikOrgAuthorization, Set-RubrikOrgAuthorization, Remove-RubrikOrgAuthorization and related tests.
+* Addresses [Issue 337](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/337)
+
 ## 2019-11-08
 
 ### Changed [Changed the behavior of Test-RubrikSLA]
@@ -70,9 +77,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2019-11-02
 
-### Fixed [Documenation referencing _local / **local**]
+### Fixed [Documentation referencing _local / **local**]
 
-* Replaced occurances of _local or **local** with local within documenation around the primary_cluster_id.
+* Replaced occurrences of _local or **local** with local within documentation around the primary_cluster_id.
 * Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
 
 ### Changed [Updated documentation links to new GitBook]
@@ -87,16 +94,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added `-DetailedObject` parameter to `Get-RubrikVolumeGroup`
 * Addresses [Issue 487](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/487)
 
-### Fixed [Documenation referencing _local]
+### Fixed [Documentation referencing _local]
 
-* Replaced occurances of _local with local within documenation around the primary_cluster_id.
+* Replaced occurrences of _local with local within documentation around the primary_cluster_id.
 * Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
 
 ## 2019-10-29
 
 ### Changed [-Limit parameter in Get-RubrikReportData]
 
-* Added checks within Get-RubrikReportData to detect a limit value of -1. If detected, the cmdlet will perform recursion until all paginations has occured.
+* Added checks within Get-RubrikReportData to detect a limit value of -1. If detected, the cmdlet will perform recursion until all paginations has occurred.
 * Addresses [Issue 440](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/440) and [Issue 485](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/485) in getting around the maximum limit defined within the API of 10000.
 
 ### Fixed behavior of -primary_cluster_id
@@ -134,7 +141,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed [ Various cmdlets updated to remove boolean parameters and change to Switch]
 
-* Migrated boolean parameters to switch parameters in order to provide a more consistent approach accross all cmdlets.
+* Migrated boolean parameters to switch parameters in order to provide a more consistent approach across all cmdlets.
 * **Note: This has the possibility of providing breaking changes as the syntax of calling the parameters like '-Parameter $true' will no longer be supported.**
 * For Example: Export-RubrikVM -PowerOn $False will continue to run, however the $False gets assigned to the VM Name.  Get-RubrikOrganization -isGlobal $true will now fail.  Will need to ensure these are addressed in the release notes.
 * Cmdlets affected are `Export-RubrikVM`, `Get-RubrikEvent`, `Get-RubrikOrganization`, `New-RubrikHost`, `New-RubrikMount`, `Set-RubrikMount`, `Set-RubrikNutanixVM`, `Set-RubrikSupportTunnel` and `Set-RubrikVM`
