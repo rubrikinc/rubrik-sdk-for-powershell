@@ -26,7 +26,7 @@ Describe -Name 'Public/Remove-RubrikOrgAuthorization' -Tag 'Public', 'Remove-Rub
                 "name": "SampleOrg",
                 "isGlobal": false,
                 "envoyStatus": false,
-                "id": "Organization:::01234567-8910-1abc-d435-0abc1234d567",
+                "id": "Organization:::01234567-8910-1abc-d435-0abc1234d567"
               }'
             return ConvertFrom-Json $json
         } 
@@ -73,7 +73,7 @@ Describe -Name 'Public/Remove-RubrikOrgAuthorization' -Tag 'Public', 'Remove-Rub
                 "name": "Global",
                 "isGlobal": true,
                 "envoyStatus": false,
-                "id": "Organization:::01234567-8910-1abc-d435-0abc1234d567",
+                "id": "Organization:::01234567-8910-1abc-d435-0abc1234d567"
               }'
             return ConvertFrom-Json $json
         }
