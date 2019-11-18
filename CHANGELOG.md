@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-18
+
+### Fixed [Issue with retrieving FileSet snapshots with Get-RubrikSnapshot]
+
+* Resolved bug in `Get-RubrikSnapshot` that caused no snapshots to be returned if the amount of snapshots was larger than one
+* Addresses [Issue 504](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/504)
+
 ## 2019-11-13
 
 ### Added [Organization Authorization cmdlets]
