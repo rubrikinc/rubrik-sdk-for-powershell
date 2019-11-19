@@ -77,7 +77,7 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
                 'ObjectDefinitions/Rubrik.UnmanagedObject.ps1xml','ObjectDefinitions/Rubrik.vCenter.ps1xml',
                 'ObjectDefinitions/Rubrik.VMwareDatastore.ps1xml','ObjectDefinitions/Rubrik.VMwareHost.ps1xml',
                 'ObjectDefinitions/Rubrik.VolumeGroup.ps1xml','ObjectDefinitions/Rubrik.User.ps1xml',
-                'ObjectDefinitions/Rubrik.SLADomainv1.ps1xml')
+                'ObjectDefinitions/Rubrik.SLADomainv1.ps1xml', 'ObjectDefinitions/Rubrik.Scvmm.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
@@ -97,7 +97,7 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Get-RubrikOracleDB', 'Get-RubrikOrganization', 'Get-RubrikReport', 'Get-RubrikNetworkThrottle'
                'Get-RubrikProxySetting', 'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
                'Get-RubrikSLA', 'Get-RubrikSmbDomain', 'Get-RubrikSnapshot', 'Get-RubrikSecurityClassification',
-               'Get-RubrikSmbSecurity', 'Get-RubrikSNMPSetting', 'Get-RubrikSoftwareVersion', 
+               'Get-RubrikSmbSecurity', 'Get-RubrikSNMPSetting', 'Get-RubrikSoftwareVersion', 'Get-RubrikScvmm',
                'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 'Get-RubrikSyslogServer', 'Get-RubrikVAppExportOption',
                'Get-RubrikObject', 'Get-RubrikUserRole', 'Get-RubrikLoginBanner', 'Get-RubrikNutanixCluster', 
                'Get-RubrikNotificationSetting', 'Get-RubrikVAppRecoverOption', 'Get-RubrikVCDTemplateExportOption', 

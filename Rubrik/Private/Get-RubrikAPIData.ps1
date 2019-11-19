@@ -943,6 +943,25 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikScvmm'      = @{
+            '1.0' = @{
+                Description = 'Returns the known SCVMM servers from Rubrik'
+                URI         = '/api/internal/hyperv/scvmm'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id = 'primary_cluster_id'
+                    sla_assignment      = 'sla_assignment'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.Scvmm'
+            }
+        }
         'Get-RubrikSecurityClassification'      = @{
             '1.0' = @{
                 Description = 'Returns a the security classification settings from Rubrik'
