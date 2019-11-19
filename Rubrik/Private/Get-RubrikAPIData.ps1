@@ -857,6 +857,34 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.ProxySetting'
             }
         }
+        'Get-RubrikReplicationSource'           = @{
+            '1.0' = @{
+                Description = 'Get summaries for all replication sources'
+                URI         = '/api/internal/replication/source'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    sourceClusterName = 'sourceClusterName'
+                }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikReplicationTarget'           = @{
+            '1.0' = @{
+                Description = 'Get summaries for all replication targets'
+                URI         = '/api/internal/replication/target'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    targetClusterName = 'targetClusterName'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikReport'             = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for each report.'
