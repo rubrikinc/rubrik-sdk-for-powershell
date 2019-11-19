@@ -17,7 +17,7 @@ try {
         }
         $version = (Invoke-WebRequest @WebRequestSplat) -split '\n' -match 'ModuleVersion' -replace "\s|'|ModuleVersion|="
         $version = [version][string]$version
-        [String]$newVersion = "$($version.Major).$($version.Minor).$($version.Build).$($manifest.version.revision+1)"
+        [String]$newVersion = "$($version.Major).$($version.Minor).$($version.Build).$($version.revision+1)"
         Write-Output "New Version: $newVersion"
     else {
         $newVersion = $manifest.Version
