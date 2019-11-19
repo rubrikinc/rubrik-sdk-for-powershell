@@ -34,8 +34,14 @@ try {
     Update-ModuleManifest @splat
     (Get-Content -Path $manifestPath) -replace 'PSGet_Rubrik', 'Rubrik' | Set-Content -Path $manifestPath
     (Get-Content -Path $manifestPath) -replace 'NewManifest', 'Rubrik' | Set-Content -Path $manifestPath
-    (Get-Content -Path $manifestPath) -replace 'FunctionsToExport = ', 'FunctionsToExport = @(' | Set-Content -Path $manifestPath -Force
+    (Get-Content -Path $manifestPath) -replace 'FunctionsToExport = ', "FunctionsToExport = @(`r`n" | Set-Content -Path $manifestPath -Force
+    $functionlist | ForEach-Object {
+        (Get-Content -Path $manifestPath) -replace "'$_',\s?'", "'$_',`r`n$(" "*15)'" | Set-Content -Path $manifestPath -Force
+    }
+    # Fix first and last function entry
+    (Get-Content -Path $manifestPath) -replace "'$($functionList[0])'", "$(" "*15)'$($functionList[0])'" | Set-Content -Path $manifestPath -Force
     (Get-Content -Path $manifestPath) -replace "$($functionList[-1])'", "$($functionList[-1])')" | Set-Content -Path $manifestPath -Force
+    
 } catch {
     throw $_
 }
