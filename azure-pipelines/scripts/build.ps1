@@ -34,7 +34,7 @@ try {
             'Tags'       = 'Rubrik','Cloud_Data_Management','CDM','Backup','Recovery','Data_Protection'
             'LicenseUri' = 'https://github.com/rubrikinc/rubrik-sdk-for-powershell/blob/master/LICENSE'
             'ProjectUri' = 'https://github.com/rubrikinc/rubrik-sdk-for-powershell'
-            'IconUri'    = 'http://i.imgurgfgf.com/Zbdd4Ko.jpg'
+            'IconUri'    = 'http://i.imgur.com/Zbdd4Ko.jpg'
         }
     }
 
