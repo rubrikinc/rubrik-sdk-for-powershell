@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-20
+
+### Changed [Made link to quick-start.md relative]
+
+* The link to `quick-start.md` in the readme.md has been updated to a relative link
+
 ## 2019-11-18
 
 ### Fixed [Issue with retrieving FileSet snapshots with Get-RubrikSnapshot]
