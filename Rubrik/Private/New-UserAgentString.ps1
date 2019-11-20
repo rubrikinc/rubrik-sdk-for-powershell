@@ -27,7 +27,12 @@ function New-UserAgentString {
             } catch {}
         } else {
             $psversiontable.platform
-            $psversiontable.os.trim()
+            if($psversiontable.os.Length -gt 64) { 
+                    $psversiontable.os.Substring(0,64) 
+            } else {
+                $psversiontable.os.Trim()
+            }
+            
         }
         
         $PlatformDetails = [convert]::ToBase64String("{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}".ToCharArray())
