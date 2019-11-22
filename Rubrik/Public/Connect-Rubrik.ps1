@@ -35,6 +35,8 @@ function Connect-Rubrik {
       Connect-Rubrik -Server 192.168.1.1 -Token "token key provided by Rubrik"
       Rather than passing a username and secure password, you can now generate an API token key in Rubrik. This key can then be used to authenticate instead of a credential or user name and password. 
       
+      .EXAMPLE
+      Connect-Rubrik -Server 192.168.1.1 -Token "token key provided by Rubrik" -UserAgent
   #>
     [cmdletbinding(SupportsShouldProcess=$true,DefaultParametersetName='UserPassword')]
     Param(
@@ -60,9 +62,9 @@ function Connect-Rubrik {
         [String]$Token,
         #Organization to connect with, assuming the user has multiple organizations
         [Alias('organization_id')]
-        [String]$OrganizationID
-
-
+        [String]$OrganizationID,
+        # Additional information to be added, takes hashtable as input
+        [hashtable] $UserAgent
     )
 
     Begin {
@@ -97,12 +99,14 @@ function Connect-Rubrik {
 
     Process {
         # Create User Agent string
-        $UserAgent = New-UserAgentString
+        $UserAgentString = New-UserAgentString -UserAgentHash $UserAgent
+        $PSBoundParameters.Remove($UserAgent) | Out-Null
+        Remove-Variable -Force -Name UserAgent -ErrorAction SilentlyContinue
             
-        Write-Verbose -Message "Using User Agent $($UserAgent)"
+        Write-Verbose -Message "Using User Agent $($UserAgentString)"
 
         if($Token) {
-            $head = @{'Authorization' = "Bearer $($Token)";'User-Agent' = $UserAgent}
+            $head = @{'Authorization' = "Bearer $($Token)";'User-Agent' = $UserAgentString}
             Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
             $global:rubrikConnection = @{
                 id      = $null
@@ -140,7 +144,7 @@ function Connect-Rubrik {
             $auth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Credential.UserName + ':' + $Credential.GetNetworkCredential().Password))
             $head = @{
                 'Authorization' = "Basic $auth"
-                'User-Agent' = $UserAgent
+                'User-Agent' = $UserAgentString
             }          
             $content = Submit-Request -uri $uri -header $head -method $($resources.Method)
 
@@ -150,7 +154,7 @@ function Connect-Rubrik {
             }
 
             # For API version v1 or greater, use Bearer and token
-            $head = @{'Authorization' = "Bearer $($content.token)";'User-Agent' = $UserAgent}
+            $head = @{'Authorization' = "Bearer $($content.token)";'User-Agent' = $UserAgentString}
 
             Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
             $global:rubrikConnection = @{

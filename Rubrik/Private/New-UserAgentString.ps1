@@ -16,6 +16,9 @@ function New-UserAgentString {
 
         Will generate a new user agent string containing the module name, version and OS / platform information
     #>
+    param(
+        [hashtable] $UserAgentHash
+    )
 
     process {
         $OS, $OSVersion = if ($psversiontable.PSVersion.Major -lt 6) {
@@ -32,7 +35,6 @@ function New-UserAgentString {
             } else {
                 $psversiontable.os.Trim()
             }
-            
         }
         
         $PlatformDetails = "platform--$OS--platform_version--$OSVersion"
@@ -53,7 +55,17 @@ function New-UserAgentString {
             $ModuleVersion,
             $psversiontable.psversion.tostring(),
             $PlatformDetails
+
+        if ($UserAgentHash) {
+            $UserAgentHash.keys | ForEach-Object -Begin {
+                [string]$StringBuilder = ''
+            } -Process {
+                $StringBuilder += "--$_--$($UserAgentHash[$_])"
+            } -End {
+                $UserAgent += $StringBuilder
+            }
+        }
             
-        return ($UserAgent -replace '{|}|"')
+        return $UserAgent
     }
 }
