@@ -35,9 +35,9 @@ function New-UserAgentString {
         } else {
             $psversiontable.platform
             if($psversiontable.os.Length -gt 64) { 
-                [uri]::EscapeDataString($psversiontable.os.Substring(0,64))
+                $psversiontable.os.Substring(0,64) -replace ':','.'
             } else {
-                [uri]::EscapeDataString($psversiontable.os.Trim())
+                $psversiontable.os.Trim() -replace ':','.'
             }
         }
         
