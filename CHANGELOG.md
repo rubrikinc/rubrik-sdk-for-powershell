@@ -16,6 +16,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-22
+
+### Changed [User-Agent string output]
+
+* Changed the output of the user agent string to display platform information with double-dashed separated key-value pairs.
+* Added `UserAgent` parameter to Connect-Rubrik that allows specifying additional user-agent information.
+* Addresses [Issue 517](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/517)
+
+## 2019-11-18
+
+### Fixed [Issue with retrieving FileSet snapshots with Get-RubrikSnapshot]
+
+* Resolved bug in `Get-RubrikSnapshot` that caused no snapshots to be returned if the amount of snapshots was larger than one
+* Addresses [Issue 504](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/504)
+
 ## 2019-11-18
 
 ### Fixed [Issue with retrieving FileSet snapshots with Get-RubrikSnapshot]
