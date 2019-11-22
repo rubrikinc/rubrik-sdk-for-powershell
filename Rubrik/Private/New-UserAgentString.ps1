@@ -35,10 +35,16 @@ function New-UserAgentString {
             
         }
         
-        $PlatformDetails = [convert]::ToBase64String("{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}".ToCharArray())
+        $PlatformDetails = "platform--$OS--platform_version--$OSVersion"
         
         $ModuleVersion = try {
-            $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString()
+            if (-not [string]::IsNullOrWhiteSpace($MyInvocation.MyCommand.ScriptBlock.Module.PrivateData.PSData.Prerelease)) {
+                $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString(),
+                $MyInvocation.MyCommand.ScriptBlock.Module.PrivateData.PSData.Prerelease.ToString() -join '.'
+
+            } else {
+                $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString()
+            }
         } catch {
             
         }
