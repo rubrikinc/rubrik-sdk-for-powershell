@@ -36,7 +36,9 @@ function Connect-Rubrik {
       Rather than passing a username and secure password, you can now generate an API token key in Rubrik. This key can then be used to authenticate instead of a credential or user name and password. 
       
       .EXAMPLE
-      Connect-Rubrik -Server 192.168.1.1 -Token "token key provided by Rubrik" -UserAgent
+      Connect-Rubrik -Server 192.168.1.1 -Username admin -UserAgent @{platform_integration='Poshbot.Rubrik'}
+
+      This will connect to Rubrik with a username of "admin" to the IP address 192.168.1.1, will prompt for password and provide additional information in the user-agent string.
   #>
     [cmdletbinding(SupportsShouldProcess=$true,DefaultParametersetName='UserPassword')]
     Param(
