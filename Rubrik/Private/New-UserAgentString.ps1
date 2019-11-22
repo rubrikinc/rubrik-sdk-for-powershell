@@ -15,7 +15,14 @@ function New-UserAgentString {
         New-UserAgentString
 
         Will generate a new user agent string containing the module name, version and OS / platform information
+
+        New-UserAgentString -UserAgentHash @{platform_integration='Poshbot.Rubrik'}
+
+        Will generate a new user agent string containing the module name, version and OS / platform information with the additional information specified in UserAgentHash
     #>
+    param(
+        [hashtable] $UserAgentHash
+    )
 
     process {
         $OS, $OSVersion = if ($psversiontable.PSVersion.Major -lt 6) {
@@ -28,17 +35,22 @@ function New-UserAgentString {
         } else {
             $psversiontable.platform
             if($psversiontable.os.Length -gt 64) { 
-                    $psversiontable.os.Substring(0,64) 
+                $psversiontable.os.Substring(0,64) -replace ':','.'
             } else {
-                $psversiontable.os.Trim()
+                $psversiontable.os.Trim() -replace ':','.'
             }
-            
         }
         
-        $PlatformDetails = [convert]::ToBase64String("{""platform"": ""$OS"": ""platform_version"": ""$OSVersion""}".ToCharArray())
+        $PlatformDetails = "platform--$OS--platform_version--$OSVersion"
         
         $ModuleVersion = try {
-            $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString()
+            if (-not [string]::IsNullOrWhiteSpace($MyInvocation.MyCommand.ScriptBlock.Module.PrivateData.PSData.Prerelease)) {
+                $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString(),
+                $MyInvocation.MyCommand.ScriptBlock.Module.PrivateData.PSData.Prerelease.ToString() -join '.'
+
+            } else {
+                $MyInvocation.MyCommand.ScriptBlock.Module.Version.ToString()
+            }
         } catch {
             
         }
@@ -47,7 +59,17 @@ function New-UserAgentString {
             $ModuleVersion,
             $psversiontable.psversion.tostring(),
             $PlatformDetails
+
+        if ($UserAgentHash) {
+            $UserAgentHash.keys | ForEach-Object -Begin {
+                [string]$StringBuilder = ''
+            } -Process {
+                $StringBuilder += "--$_--$($UserAgentHash[$_])"
+            } -End {
+                $UserAgent += $StringBuilder
+            }
+        }
             
-        return ($UserAgent -replace '{|}|"')
+        return $UserAgent
     }
 }
