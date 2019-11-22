@@ -195,6 +195,22 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikArchive'         = @{
+            '1.0' = @{
+                Description = 'Retrieves software version of the Rubrik cluster'
+                URI         = '/api/internal/archive/location'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    'ArchiveType'  = 'location_type' 
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'name'          = 'name'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikAvailabilityGroup' = @{
             '1.0' = @{
                 Description = 'Get summary information for Microsoft SQL availability groups'
