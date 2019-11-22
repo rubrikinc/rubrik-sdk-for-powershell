@@ -820,6 +820,20 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.NutanixVM'
             }
         }
+        'Get-RubrikObjectStoreArchive'         = @{
+            '1.0' = @{
+                Description = 'Retrieves a list of object store archives from the Rubrik cluster'
+                URI         = '/api/internal/archive/object_store'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    name = 'definition.Name'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikOracleDB'                = @{
             '1.0' = @{
                 Description = 'Get summary of all the Oracle DBs'

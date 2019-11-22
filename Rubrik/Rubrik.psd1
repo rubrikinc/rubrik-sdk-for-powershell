@@ -86,7 +86,7 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
 FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
                'Export-RubrikReport', 'Export-RubrikVM', 'Export-RubrikVApp',
                'Export-RubrikVCDTemplate', 'Get-RubrikAPIToken', 'Get-RubrikAPIVersion',
-               'Get-RubrikArchive',
+               'Get-RubrikArchive', 'Get-RubrikObjectStoreArchive',
                'Get-RubrikAvailabilityGroup', 'Get-RubrikBackupServiceDeployment', 'Get-RubrikBootStrap', 
                'Get-RubrikClusterNetworkInterface', 'Get-RubrikDatabase', 'Get-RubrikEmailSetting', 'Get-RubrikClusterStorage',
                'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 'Get-RubrikClusterInfo', 

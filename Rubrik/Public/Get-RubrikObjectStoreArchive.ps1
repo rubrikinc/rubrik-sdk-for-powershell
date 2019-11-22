@@ -1,12 +1,12 @@
 #requires -Version 3
-function Get-RubrikArchive
+function Get-RubrikObjectStoreArchive
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves a list of archive targets
+      Connects to Rubrik and retrieves a list of object store archive targets
 
       .DESCRIPTION
-      The Get-RubrikArchive cmdlet is used to pull a list of configured archive targets from the Rubrik cluster.
+      The Get-RubrikObjectStoreArchive cmdlet is used to pull a list of configured object store archive targets from the Rubrik cluster.
 
       .NOTES
       Written by Mike Preston for community usage
@@ -14,15 +14,19 @@ function Get-RubrikArchive
       GitHub: mwpreston
 
       .LINK
-     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikArchive
+     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikObjectStoreArchive
 
       .EXAMPLE
-      Get-RubrikArchive
+      Get-RubrikObjectStoreArchive
       This will return all the archive targets configured on the Rubrik cluster.
 
       .EXAMPLE
-      Get-RubrikArchive -name 'archive01'
-      This will return the archive targets configured on the Rubrik cluster with the name of 'archive01'.
+      Get-RubrikObjectStoreArchive -id '1111-2222-3333'
+      This will return the archive target with an id of '1111-2222-3333' on the Rubrik cluster.
+
+      .EXAMPLE
+      Get-RubrikObjectStoreArchive -Name 'Azure01'
+      This will return the archive target with a name of 'Azure01' on the Rubrik cluster.
   #>
 
   [CmdletBinding()]
@@ -30,9 +34,9 @@ function Get-RubrikArchive
     # Archive Location ID
     [ValidateNotNullOrEmpty()]
     [Parameter(
-        ParameterSetName='ID',
         Position = 0,
         Mandatory = $true,
+        ParameterSetName = 'ID',
         ValueFromPipelineByPropertyName = $true)]
     [String]$Id,
     # Archive Location Name
@@ -42,12 +46,6 @@ function Get-RubrikArchive
         Position = 0,
         ValueFromPipelineByPropertyName = $true)]
     [String]$Name,
-    # Filter by Archive location type (Currently S3 and Azure only)
-    [Parameter(ParameterSetName='Query')]
-    [ValidateNotNullOrEmpty()]
-    [ValidateSet('S3', 'Azure')]
-    [Alias('location_type')]
-    [String]$ArchiveType, 
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
