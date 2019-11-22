@@ -21,15 +21,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed [User-Agent string output]
 
 * Changed the output of the user agent string to display platform information with double-dashed separated key-value pairs.
-* Added `UserAgent` parameter to Connect-Rubrik that allows specifying additional user-agent information.
+* Added `UserAgent` parameter to `Connect-Rubrik` that allows specifying additional user-agent information.
+* Added `UserAgentHash` parameter to private function `New-UserAgentString` that allows specifying additional user-agent information.
 * Addresses [Issue 517](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/517)
 
-## 2019-11-18
+## 2019-11-20
 
-### Fixed [Issue with retrieving FileSet snapshots with Get-RubrikSnapshot]
+### Changed [Made link to quick-start.md relative]
 
-* Resolved bug in `Get-RubrikSnapshot` that caused no snapshots to be returned if the amount of snapshots was larger than one
-* Addresses [Issue 504](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/504)
+* The link to `quick-start.md` in the `readme.md` has been updated to a relative link
 
 ## 2019-11-18
 
