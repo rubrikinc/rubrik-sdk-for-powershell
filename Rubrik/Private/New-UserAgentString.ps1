@@ -15,6 +15,10 @@ function New-UserAgentString {
         New-UserAgentString
 
         Will generate a new user agent string containing the module name, version and OS / platform information
+
+        New-UserAgentString -UserAgentHash @{platform_integration='Poshbot.Rubrik'}
+
+        Will generate a new user agent string containing the module name, version and OS / platform information with the additional information specified in UserAgentHash
     #>
     param(
         [hashtable] $UserAgentHash
