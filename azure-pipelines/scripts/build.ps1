@@ -9,7 +9,7 @@ try {
     [System.Version]$version = $manifest.Version
     Write-Output "Old Version: $version"
 
-    if ($env:TargetBranch -ne 'master') {
+    if ($env:TargetBranch -eq 'master') {
         $WebRequestSplat = @{
             Uri = 'https://raw.githubusercontent.com/rubrikinc/rubrik-sdk-for-powershell/devel/Rubrik/Rubrik.psd1'
             UseBasicParsing = $true
@@ -17,9 +17,9 @@ try {
         }
         $version = (Invoke-WebRequest @WebRequestSplat) -split '\n' -match 'ModuleVersion' -replace "\s|'|ModuleVersion|="
         $version = [version][string]$version
-        [String]$newVersion = "$($version.Major).$($version.Minor).$($manifest.version.revision+1)"
+        [String]$newVersion = "$($version.Major).$($version.Minor).$($version.Build+1)"
         Write-Output "New Version: $newVersion"
-    else {
+    } else {
         $newVersion = $manifest.Version
     }
 
@@ -30,12 +30,37 @@ try {
         'ModuleVersion'     = $newVersion
         'FunctionsToExport' = $functionList
         'Copyright'         = "(c) 2015-$( (Get-Date).Year ) Rubrik, Inc. All rights reserved."
+        'PrivateData'       = @{
+            'Tags'       = 'Rubrik','Cloud_Data_Management','CDM','Backup','Recovery','Data_Protection'
+            'LicenseUri' = 'https://github.com/rubrikinc/rubrik-sdk-for-powershell/blob/master/LICENSE'
+            'ProjectUri' = 'https://github.com/rubrikinc/rubrik-sdk-for-powershell'
+            'IconUri'    = 'http://i.imgur.com/Zbdd4Ko.jpg'
+        }
     }
+
+    if ($env:TargetBranch -eq 'devel') {
+        $WebRequestSplat = @{
+            Uri = 'https://raw.githubusercontent.com/rubrikinc/rubrik-sdk-for-powershell/devel/Rubrik/Rubrik.psd1'
+            UseBasicParsing = $true
+            ErrorAction = 'Stop'
+        }
+        $prerelease = (Invoke-WebRequest @WebRequestSplat) -split '\n' -match 'Prerelease' -replace "\s|'|Prerelease|="
+        $newprerelease = "devel$((($prerelease -replace 'devel') -as [string] -as [int])+1)"
+
+        $Splat.PrivateData.Prerelease = $newprerelease
+    }
+
     Update-ModuleManifest @splat
     (Get-Content -Path $manifestPath) -replace 'PSGet_Rubrik', 'Rubrik' | Set-Content -Path $manifestPath
     (Get-Content -Path $manifestPath) -replace 'NewManifest', 'Rubrik' | Set-Content -Path $manifestPath
-    (Get-Content -Path $manifestPath) -replace 'FunctionsToExport = ', 'FunctionsToExport = @(' | Set-Content -Path $manifestPath -Force
+    (Get-Content -Path $manifestPath) -replace 'FunctionsToExport = ', "FunctionsToExport = @(`r`n" | Set-Content -Path $manifestPath -Force
+    $functionlist | ForEach-Object {
+        (Get-Content -Path $manifestPath) -replace "'$_',\s?'", "'$_',`r`n$(" "*15)'" | Set-Content -Path $manifestPath -Force
+    }
+    # Fix first and last function entry
+    (Get-Content -Path $manifestPath) -replace "'$($functionList[0])'", "$(" "*15)'$($functionList[0])'" | Set-Content -Path $manifestPath -Force
     (Get-Content -Path $manifestPath) -replace "$($functionList[-1])'", "$($functionList[-1])')" | Set-Content -Path $manifestPath -Force
+    
 } catch {
     throw $_
 }

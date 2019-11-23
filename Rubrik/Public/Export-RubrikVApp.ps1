@@ -14,7 +14,7 @@ function Export-RubrikVApp
       GitHub: shamsway
       
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Export-RubrikVApp
 
       .EXAMPLE
       Export-RubrikVApp -id 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567' -snapshotid '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -ExportMode 'ExportToNewVapp' -PowerOn:$true
@@ -99,7 +99,7 @@ function Export-RubrikVApp
     # Power on vApp after restoration.
     [Parameter(ParameterSetName='Full',Mandatory = $true)]
     [Parameter(ParameterSetName='Partial',Mandatory = $true)]
-    [Bool]$PowerOn,
+    [switch]$PowerOn,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Full')]
     [Parameter(ParameterSetName='Partial')]

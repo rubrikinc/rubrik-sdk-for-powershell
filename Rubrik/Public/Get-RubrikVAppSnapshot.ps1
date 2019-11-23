@@ -14,7 +14,7 @@ function Get-RubrikVAppSnapshot
       GitHub: shamsway
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppSnapshot
 
       .EXAMPLE
       Get-RubrikVAppSnapshot -id '01234567-8910-1abc-d435-0abc1234d567'

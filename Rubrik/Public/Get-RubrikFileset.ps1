@@ -16,7 +16,7 @@ function Get-RubrikFileset
       GitHub: chriswahl
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikFileset.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikFileset
 
       .EXAMPLE
       Get-RubrikFileset -Name 'C_Drive' 
@@ -102,7 +102,7 @@ function Get-RubrikFileset
     [Alias('template_id')]
     [ValidateNotNullOrEmpty()]
     [String]$TemplateID,
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Parameter(ParameterSetName='Query')]
     [Parameter(ParameterSetName='Filter')]
     [Alias('primary_cluster_id')]

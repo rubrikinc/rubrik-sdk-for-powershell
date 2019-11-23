@@ -14,7 +14,7 @@ function Remove-RubrikManagedVolumeExport
       GitHub: MikeFal
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikManagedVolumeExport
 
       .EXAMPLE
       Remove-RubrikManagedVolumeExport -id deddca39-b8ca-407c-8f1c-af9866f7ba67

@@ -13,7 +13,7 @@ function Set-RubrikUserRole {
       GitHub: mwpreston
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Set-RubrikUserRole.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikUserRole
 
       .EXAMPLE
       Set-RubrikUserRole -id 'User:::1111-2222-3333' -Admin

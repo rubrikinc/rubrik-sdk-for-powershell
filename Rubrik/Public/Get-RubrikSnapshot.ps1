@@ -16,7 +16,7 @@ function Get-RubrikSnapshot
       GitHub: chriswahl
       
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSnapshot.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikSnapshot
       
       .EXAMPLE
       Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
@@ -113,35 +113,31 @@ function Get-RubrikSnapshot
     } else {
       $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     }    
-
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+    
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     
     #region One-off
-    if ($Date) 
-    {
+    if ($Date) {
       $datesearch = Test-DateDifference -Date $($result.date) -Compare $Date -Range $Range
       # If $datesearch is $null, a matching date was not found. If $ExactMatch is specified in this case, return $null
       if($null -eq $datesearch -and $ExactMatch) {
         $result = $null
-      }
-      else {
+      } else {
         $result = Test-ReturnFilter -Object $datesearch -Location 'date' -result $result
       }
-    } 
-    elseif ($Latest) {
+    } elseif ($Latest) {
       $datesearch = Test-DateDifference -Date $($result.date) -Compare (Get-Date) -Range 999999999
       # If $datesearch is $null, a matching date was not found, so return $null
       if($null -eq $datesearch) {
         $result = $null
-      }
-      else {
+      } else {
         $result = Test-ReturnFilter -Object $datesearch -Location 'date' -result $result
       }
     } 
     #endregion
-    
+
     return $result
 
   } # End of process

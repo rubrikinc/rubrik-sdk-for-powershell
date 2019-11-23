@@ -6,14 +6,14 @@ function Get-RubrikVolumeGroup
       Retrieves details on one or more volume groups known to a Rubrik cluster
 
       .DESCRIPTION
-      The Get-RubrikVolumeGroup cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of volume groups
+      The Get-RubrikVolumeGroup cmdlet is used to pull a detailed data set from a Rubrik cluster on any number of volume groups. By default the 'Includes' property is not populated, unless when querying by ID or by using the -DetailedObject parameter
 
       .NOTES
       Written by Pierre Flammer for community usage
       Twitter: @PierreFlammer
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVolumeGroup
 
       .EXAMPLE
       Get-RubrikVolumeGroup -Name 'Server1'
@@ -26,6 +26,14 @@ function Get-RubrikVolumeGroup
       .EXAMPLE
       Get-RubrikVolumeGroup -Relic
       This will return all removed volume groups that were formerly protected by Rubrik.
+
+      .EXAMPLE
+      Get-RubrikVolumeGroup -DetailedObject
+      This will return full details on all volume groups available on the Rubrik Cluster, this query will take longer as multiple API calls are required. The 'Includes' property will be populated
+
+      .EXAMPLE
+      Get-RubrikVolumeGroup -Id VolumeGroup:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
+      This will return full details on for the specified VolumeGroup ID
   #>
 
   [CmdletBinding()]
@@ -39,7 +47,7 @@ function Get-RubrikVolumeGroup
     [Switch]$Relic,
     # SLA Domain policy assigned to the volume group
     [String]$SLA, 
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
     # Volume group id
@@ -48,6 +56,8 @@ function Get-RubrikVolumeGroup
     # SLA id value
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,    
+    # DetailedObject will retrieved the detailed VolumeGroup object, the default behavior of the API is to only retrieve a subset of the full VolumeGroup object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -71,7 +81,6 @@ function Get-RubrikVolumeGroup
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
   }
 
   Process {
@@ -89,9 +98,27 @@ function Get-RubrikVolumeGroup
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-
-    return $result
-
+    
+    # If the Get-RubrikVolumeGroup function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        $updatedresult = Get-RubrikVolumeGroup -id $result[$i].id
+        Set-ObjectTypeName -TypeName $resources.ObjectTName -result $updatedresult
+      }
+    } elseif ($PSBoundParameters.containskey('id') -and (-not $DetailedObject)) {
+      $result = $result | Select-Object -Property *,@{
+        name = 'includes'
+        expression = {
+          if ($null -ne $_.volumes) {$_.volumes.mountPoints}
+        }
+      }
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    } else {
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    }
   } # End of process
 } # End of function

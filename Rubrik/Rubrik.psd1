@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '4.0.511'
+ModuleVersion = '5.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -71,12 +71,13 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
                 'ObjectDefinitions/Rubrik.Host.ps1xml','ObjectDefinitions/Rubrik.HyperVVM.ps1xml',
                 'ObjectDefinitions/Rubrik.LDAP.ps1xml','ObjectDefinitions/Rubrik.LogShipping.ps1xml',
                 'ObjectDefinitions/Rubrik.ManagedVolume.ps1xml','ObjectDefinitions/Rubrik.NASShare.ps1xml',
+                'ObjectDefinitions/Rubrik.ProxySetting.ps1xml',
                 'ObjectDefinitions/Rubrik.NutanixVM.ps1xml','ObjectDefinitions/Rubrik.OracleDatabase.ps1xml',
-                'ObjectDefinitions/Rubrik.Report.ps1xml','ObjectDefinitions/Rubrik.MSSQLInstance.ps1xml',
-                'ObjectDefinitions/Rubrik.UnmanagedObject.ps1xml','ObjectDefinitions/Rubrik.vCenter.ps1xml',
-                'ObjectDefinitions/Rubrik.VMwareDatastore.ps1xml','ObjectDefinitions/Rubrik.VMwareHost.ps1xml',
-                'ObjectDefinitions/Rubrik.VolumeGroup.ps1xml','ObjectDefinitions/Rubrik.User.ps1xml',
-                'ObjectDefinitions/Rubrik.SLADomainv1.ps1xml')
+                'ObjectDefinitions/Rubrik.OrgAuthorization.ps1xml','ObjectDefinitions/Rubrik.Report.ps1xml',
+                'ObjectDefinitions/Rubrik.MSSQLInstance.ps1xml','ObjectDefinitions/Rubrik.UnmanagedObject.ps1xml',
+                'ObjectDefinitions/Rubrik.vCenter.ps1xml','ObjectDefinitions/Rubrik.VMwareDatastore.ps1xml',
+                'ObjectDefinitions/Rubrik.VMwareHost.ps1xml','ObjectDefinitions/Rubrik.VolumeGroup.ps1xml',
+                'ObjectDefinitions/Rubrik.User.ps1xml','ObjectDefinitions/Rubrik.SLADomainv1.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
@@ -85,19 +86,20 @@ FormatsToProcess = @('ObjectDefinitions/Rubrik.SLADomain.ps1xml','ObjectDefiniti
 FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabase', 
                'Export-RubrikReport', 'Export-RubrikVM', 'Export-RubrikVApp',
                'Export-RubrikVCDTemplate', 'Get-RubrikAPIToken', 'Get-RubrikAPIVersion', 
-               'Get-RubrikAvailabilityGroup', 'Get-RubrikBootStrap', 'Get-RubrikDatabase', 
-               'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 
-               'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikEvent', 
+               'Get-RubrikAvailabilityGroup', 'Get-RubrikBootStrap', 'Get-RubrikClusterNetworkInterface'
+               'Get-RubrikDatabase', 'Get-RubrikEmailSetting', 'Get-RubrikClusterStorage',
+               'Get-RubrikDatabaseFiles', 'Get-RubrikDatabaseMount', 'Get-RubrikClusterInfo', 
+               'Get-RubrikDatabaseRecoverableRange', 'Get-RubrikDNSSetting', 'Get-RubrikEvent', 'Get-RubrikDatabaseRecoveryPoint', 
                'Get-RubrikFileset', 'Get-RubrikFilesetTemplate', 'Get-RubrikHost', 
                'Get-RubrikHyperVVM', 'Get-RubrikLDAP', 'Get-RubrikLogShipping', 
-               'Get-RubrikManagedVolume', 'Get-RubrikManagedVolumeExport', 
-               'Get-RubrikMount', 'Get-RubrikNASShare', 'Get-RubrikNutanixVM', 
-               'Get-RubrikOracleDB', 'Get-RubrikOrganization', 'Get-RubrikReport', 
-               'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
-               'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSoftwareVersion', 
-               'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 'Get-RubrikVAppExportOptions',
-               'Get-RubrikObject', 'Get-RubrikUserRole',
-               'Get-RubrikVAppRecoverOptions', 'Get-RubrikVCDTemplateExportOptions', 'Get-RubrikUnmanagedObject', 
+               'Get-RubrikManagedVolume', 'Get-RubrikManagedVolumeExport', 'Get-RubrikNode',
+               'Get-RubrikMount', 'Get-RubrikNASShare', 'Get-RubrikNTPServer', 'Get-RubrikNutanixVM', 
+               'Get-RubrikOracleDB', 'Get-RubrikOrganization', 'Get-RubrikOrgAuthorization', 'Get-RubrikReport', 'Get-RubrikNetworkThrottle',
+               'Get-RubrikProxySetting', 'Get-RubrikReportData', 'Get-RubrikRequest', 'Get-RubrikSetting', 
+               'Get-RubrikSLA', 'Get-RubrikSnapshot', 'Get-RubrikSNMPSetting', 'Get-RubrikSoftwareVersion', 
+               'Get-RubrikSQLInstance', 'Get-RubrikSupportTunnel', 'Get-RubrikVAppExportOption',
+               'Get-RubrikObject', 'Get-RubrikUserRole', 'Get-RubrikLoginBanner', 'Get-RubrikNotificationSetting',
+               'Get-RubrikVAppRecoverOption', 'Get-RubrikVCDTemplateExportOption', 'Get-RubrikUnmanagedObject', 
                'Get-RubrikUser', 'Get-RubrikVApp', 'Get-RubrikVAppSnapshot', 'Get-RubrikVCD',   
                'Get-RubrikVCenter', 'Get-RubrikVersion', 'Get-RubrikVM', 'Get-RubrikVMSnapshot',  
                'Get-RubrikVMwareDatastore', 'Get-RubrikVMwareHost', 'Get-RubrikVolumeGroup', 
@@ -117,15 +119,15 @@ FunctionsToExport = @('Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatab
                'Remove-RubrikDatabaseMount', 'Remove-RubrikFileset', 
                'Remove-RubrikHost', 'Remove-RubrikLogShipping', 
                'Remove-RubrikManagedVolume', 'Remove-RubrikManagedVolumeExport', 
-               'Remove-RubrikMount', 'Remove-RubrikNASShare', 'Remove-RubrikOrganization',
-               'Remove-RubrikReport', 'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
+               'Remove-RubrikMount', 'Remove-RubrikNASShare', 'Remove-RubrikProxySetting', 'Remove-RubrikOrganization',
+               'Remove-RubrikOrgAuthorization','Remove-RubrikReport', 'Remove-RubrikSLA', 'Remove-RubrikUnmanagedObject', 
                'Remove-RubrikUser', 'Remove-RubrikVCenter', 'Remove-RubrikVMSnapshot', 
                'Remove-RubrikVolumeGroupMount', 'Reset-RubrikLogShipping', 
                'Restore-RubrikDatabase', 'Restore-RubrikVApp', 'Set-RubrikAvailabilityGroup', 
                'Set-RubrikBlackout', 'Set-RubrikDatabase', 'Set-RubrikHyperVVM', 
                'Set-RubrikLogShipping', 'Set-RubrikManagedVolume', 'Set-RubrikMount', 
-               'Set-RubrikNASShare', 'Set-RubrikNutanixVM', 'Set-RubrikSetting', 
-               'Set-RubrikSLA', 'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel',
+               'Set-RubrikNASShare', 'Set-RubrikProxySetting', 'Set-RubrikNutanixVM', 'Set-RubrikOrgAuthorization', 
+               'Set-RubrikSetting', 'Set-RubrikSLA', 'Set-RubrikSQLInstance', 'Set-RubrikSupportTunnel',
                'Set-RubrikUser', 'Set-RubrikUserRole', 'Set-RubrikVCD', 
                'Set-RubrikVCenter', 'Set-RubrikVM', 'Set-RubrikVolumeFilterDriver', 
                'Start-RubrikManagedVolumeSnapshot', 
@@ -172,7 +174,7 @@ PrivateData = @{
         # ReleaseNotes = ''
 
         # Prerelease string of this module
-        # Prerelease = ''
+        Prerelease = 'devel517'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update
         # RequireLicenseAcceptance = $false

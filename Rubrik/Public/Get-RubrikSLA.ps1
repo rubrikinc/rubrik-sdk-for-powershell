@@ -15,7 +15,7 @@ function Get-RubrikSLA
       GitHub: chriswahl
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikSLA.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikSLA
             
       .EXAMPLE
       Get-RubrikSLA
@@ -36,7 +36,7 @@ function Get-RubrikSLA
     [ValidateNotNullOrEmpty()]
     [Alias('SLA')]
     [String]$Name,
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,    
     # SLA Domain id

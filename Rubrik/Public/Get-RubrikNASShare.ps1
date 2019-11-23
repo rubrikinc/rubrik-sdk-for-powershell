@@ -14,7 +14,7 @@ function Get-RubrikNASShare
       GitHub: MikeFal
       
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNASShare
 
       .EXAMPLE
       Get-RubrikNASShare -ShareType 'SMB'
@@ -45,7 +45,7 @@ function Get-RubrikNASShare
     [String]$exportPoint,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Parameter(ParameterSetName='Query')]
     [ValidateNotNullOrEmpty()]
     [Alias('primary_cluster_id')]

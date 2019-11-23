@@ -14,7 +14,7 @@ function Get-RubrikOracleDB
     GitHub: jaapbrasser
     
     .LINK
-    http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikOracleDB.html
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikOracleDB
     
     .EXAMPLE
     Get-RubrikOracleDB -Name 'OracleDB1'
@@ -51,7 +51,7 @@ function Get-RubrikOracleDB
     [Alias('sla_assignment')]
     [ValidateSet('Derived', 'Direct','Unassigned')]
     [String]$SLAAssignment,     
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,        
     # Oracle DB id

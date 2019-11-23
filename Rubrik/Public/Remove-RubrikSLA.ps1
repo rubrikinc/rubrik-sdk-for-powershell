@@ -15,7 +15,7 @@ function Remove-RubrikSLA
       GitHub: chriswahl
             
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Remove-RubrikSLA.html
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikSLA
             
       .EXAMPLE
       Get-RubrikSLA -SLA 'Gold' | Remove-RubrikSLA

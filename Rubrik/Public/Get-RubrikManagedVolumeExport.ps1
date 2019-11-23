@@ -15,7 +15,7 @@ function Get-RubrikManagedVolumeExport
       GitHub: MikeFal
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikManagedVolumeExport
 
       .EXAMPLE
       Get-RubrikManagedVolumeExport
@@ -39,7 +39,7 @@ function Get-RubrikManagedVolumeExport
     #Name of the source managed volume
     [Alias('$source_managed_volume_name')]
     [String]$SourceManagedVolumeName,
-    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use **_local** as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
+    # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,
     # Rubrik server IP or FQDN

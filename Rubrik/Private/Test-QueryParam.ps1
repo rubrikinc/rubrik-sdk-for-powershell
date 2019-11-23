@@ -67,7 +67,7 @@
     return $uri
   }
 
-  Write-Verbose -Message "Build the query parameters for $($querykeys -join ',')"
+  Write-Verbose -Message "Build the query parameters for $(if ($querykeys){$querykeys -join ','}else{'<null>'})"
   $querystring = @()
   # Walk through all of the available query options presented by the endpoint
   # Note: Keys are used to search in case the value changes in the future across different API versions
@@ -90,8 +90,9 @@
   
   if ($parameters.name -contains 'limit') {
     $uri = New-QueryString -query $querystring -uri $uri
-  }
-  else {  
+  } elseif ($resource.method -ne 'Get') {
+    $uri = New-QueryString -query $querystring -uri $uri
+  } else {  
     $uri = New-QueryString -query $querystring -uri $uri -nolimit $true
   }
   Write-Verbose -Message "URI = $uri"

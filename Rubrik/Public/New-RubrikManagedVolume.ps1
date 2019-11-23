@@ -15,7 +15,7 @@ function New-RubrikManagedVolume
       GitHub: MikeFal
 
       .LINK
-      http://rubrikinc.github.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikManagedVolume
 
       .EXAMPLE
       New-RubrikManagedVolume -Name foo -Channels 4 -VolumeSize 1073741824000

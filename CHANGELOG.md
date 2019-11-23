@@ -16,6 +16,129 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2019-11-22
+
+### Changed [User-Agent string output]
+
+* Changed the output of the user agent string to display platform information with double-dashed separated key-value pairs.
+* Added `UserAgent` parameter to `Connect-Rubrik` that allows specifying additional user-agent information.
+* Added `UserAgentHash` parameter to private function `New-UserAgentString` that allows specifying additional user-agent information.
+* Addresses [Issue 517](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/517)
+
+## 2019-11-20
+
+### Changed [Made link to quick-start.md relative]
+
+* The link to `quick-start.md` in the `readme.md` has been updated to a relative link
+
+## 2019-11-18
+
+### Fixed [Issue with retrieving FileSet snapshots with Get-RubrikSnapshot]
+
+* Resolved bug in `Get-RubrikSnapshot` that caused no snapshots to be returned if the amount of snapshots was larger than one
+* Addresses [Issue 504](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/504)
+
+## 2019-11-13
+
+### Added [Organization Authorization cmdlets]
+
+* Added Get-RubrikOrgAuthorization, Set-RubrikOrgAuthorization, Remove-RubrikOrgAuthorization and related tests.
+* Addresses [Issue 337](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/337)
+
+## 2019-11-08
+
+### Changed [Changed the behavior of Test-RubrikSLA]
+
+* The private function `Test-RubrikSLA` had a hard coded local variable
+* Addresses [Issue 497](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/497)
+
+## 2019-11-06
+
+### Changed [Get-RubrikVcd & Get-RubrikVApp Options function names]
+
+* Renamed Get-RubrikVAppExportOptions to `Get-RubrikVAppExportOption` to use singular nouns 
+* Renamed Get-RubrikVAppRecoverOptions to `Get-RubrikVAppRecoverOption` to use singular nouns 
+* Renamed Get-RubrikVcdTemplateExportOptions to `Get-RubrikVcdTemplateExportOption` to use singular nouns 
+* Updated documentation and unit tests where required
+* Addresses [Issue 509](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/509)
+
+### Changed [parameter type from boolean to switch]
+
+* Changed this for the following functions:
+  * `Export-RubrikVAPP`
+  * `New-RubrikBootstrap`
+  * `Restore-RubrikVAPP`
+* Addresses [Issue 326](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/326)
+
+## 2019-11-05
+
+### Changed [Submit-Request]
+
+* Modified private function Submit-Request.ps1 to support adding in success/error information for empty POST, PUT and PATCH responses
+* Modified status return code for Remove-RubrikManagedObject
+* Addresses [Issue 442](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/442)
+
+## 2019-11-06
+
+### Added [New-UserAgentString]
+
+* Changed the output of `$UserAgent` string to provide more detailed information about PowerShell version and platform
+* Added new private function, `New-UserAgentString` and associated unit tests
+* Addresses [Issue 506](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/506)
+
+## 2019-11-04
+
+### Added [Set- & Remove-RubrikProxySetting functions]
+
+* Added `Set-RubrikProxySetting` and `Remove-RubrikProxySetting` functions
+* Added `Rubrik.ProxySetting.ps1xml` to provide formatting for Get- & `Set-RubrikProxySetting`
+* Added unit tests for new functions and additional tests for `Get-RubrikProxySetting`
+* Updated `Get-RubrikProxySetting` to support pipelining and formatted output
+* Updated private function `New-BodyString` to support forced upper and lowercase for selected properties
+* Addresses [Issue 496](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/496)
+
+## 2019-11-02
+
+### Fixed [Documentation referencing _local / **local**]
+
+* Replaced occurrences of _local or **local** with local within documentation around the primary_cluster_id.
+* Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
+
+### Changed [Updated documentation links to new GitBook]
+
+* Updated the links to point to rubrik.gitbook.io from rubrikinc.gitbook.io
+
+## 2019-10-30
+
+### Added [-DetailedObject parameter in Get-RubrikVolumeGroup]
+
+* Changed default display of Get-RubrikVolumeGroup
+* Added `-DetailedObject` parameter to `Get-RubrikVolumeGroup`
+* Addresses [Issue 487](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/487)
+
+### Fixed [Documentation referencing _local]
+
+* Replaced occurrences of _local with local within documentation around the primary_cluster_id.
+* Addresses [Issue 468](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/468)
+
+## 2019-10-29
+
+### Changed [-Limit parameter in Get-RubrikReportData]
+
+* Added checks within Get-RubrikReportData to detect a limit value of -1. If detected, the cmdlet will perform recursion until all paginations has occurred.
+* Addresses [Issue 440](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/440) and [Issue 485](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/485) in getting around the maximum limit defined within the API of 10000.
+
+### Fixed behavior of -primary_cluster_id
+
+* Removed the case-sensitivity issues as listed in [Issue 469](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/469)
+* Updated behavior of New-QueryString, stop adding ?limit to non-Get calls
+
+## 2019-10-28
+
+### Added [Function property to Get-RubrikAPIData]
+
+* Added a new property `Function` to the output of Get-RubrikAPIData, this fixes an issue with verbose output as indicated in [Issue 480](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/480)
+
 ## 2019-10-24
 
 ### Added [Added Availability Group parameters to Get-RubrikDatabase]
@@ -24,6 +147,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added unit tests to validate the new functionality
 
 ## 2019-10-22
+
+### Added [Various GET cmdlets to retrieve cluster information]
+
+* Added various cmdlets and respective unit tests to support retrieving information from the Rubrik cluster. Development mainly driven from the As Built Report module.
+* New cmdlets are `Get-RubrikClusterInfo`, `Get-RubrikClusterNetworkInterface`, `Get-RubrikClusterStorage`, `Get-RubrikDNSSetting`, `Get-RubrikEmailSetting`, `Get-RubrikLoginBanner`, `Get-RubrikNTPServer`, `Get-RubrikNetworkThrottle`, `Get-RubrikNode`, `Get-RubrikNotificationSetting`, `Get-RubrikProxySetting`, and `GetRubrikSnmpSetting`
+* These cmdlets also resolve [Issue 208](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/208)
 
 ### Fixed [Scoped ID variable to local in New-RubrikHost]
 
@@ -34,7 +163,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed [ Various cmdlets updated to remove boolean parameters and change to Switch]
 
-* Migrated boolean parameters to switch parameters in order to provide a more consistent approach accross all cmdlets.
+* Migrated boolean parameters to switch parameters in order to provide a more consistent approach across all cmdlets.
 * **Note: This has the possibility of providing breaking changes as the syntax of calling the parameters like '-Parameter $true' will no longer be supported.**
 * For Example: Export-RubrikVM -PowerOn $False will continue to run, however the $False gets assigned to the VM Name.  Get-RubrikOrganization -isGlobal $true will now fail.  Will need to ensure these are addressed in the release notes.
 * Cmdlets affected are `Export-RubrikVM`, `Get-RubrikEvent`, `Get-RubrikOrganization`, `New-RubrikHost`, `New-RubrikMount`, `Set-RubrikMount`, `Set-RubrikNutanixVM`, `Set-RubrikSupportTunnel` and `Set-RubrikVM`
@@ -43,18 +172,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 2019-10-17
 
 ### Changed [Added Nutanix/Hyper-V support to New-RubrikSnapshot]
+
 * Modified URI list in Get-RubrikAPIData for New-RubrikSnapshot to include support for Nutanix and Hyper-V
 * Addresses [Issue 466](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/466)
 
 ## 2019-10-11
 
 ### Changed [Added documentation to all private functions]
+
 * Added documentation in all private functions including synopsis, description, parameter help and examples where appropriate
 * Addresses [Issue 378](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/378)
 
 ## 2019-10-08
 
 ### Added [cmdlets to add and remove organizations]
+
 * Added Add-RubrikOrganization and Remove-RubrikOrganization to add and remove organizations, and associated unit tests
 * Addresses [Issue 338](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/338)
 

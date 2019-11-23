@@ -214,6 +214,114 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.AvailabilityGroup'
             }
         }
+        'Get-RubrikClusterInfo'         = @{
+            '4.2' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                    BrikCount           = '/api/internal/cluster/me/brik_count'
+                    MemoryCapacityInGb  = '/api/internal/cluster/me/memory_capacity'
+                    CPUCoresCount       = '/api/internal/node/*/cpu_cores_count'
+                    ConnectedToPolaris  = '/api/internal/cluster/me/global_manager'
+                    NodeCount           = '/api/internal/cluster/me/node'
+                    HasTPM              = '/api/internal/cluster/me/has_tpm'
+                    IsEncrypted         = '/api/internal/cluster/me/is_encrypted'
+                    IsHardwareEncrypted = '/api/internal/cluster/me/is_hardware_encrypted'
+                    IsOnCloud           = '/api/internal/cluster/me/is_on_cloud'
+                    IsRegistered        = '/api/internal/cluster/me/is_registered'
+                    IsSingleNode        = '/api/internal/cluster/me/is_single_node'
+                    Platform            = '/api/internal/cluster/me/platforminfo'
+                    GeneralInfo         = '/api/v1/cluster/me'
+                    Status              = '/api/internal/cluster/me/system_status'
+
+                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.0' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                    BrikCount           = '/api/internal/cluster/me/brik_count'
+                    MemoryCapacityInGb  = '/api/internal/cluster/me/memory_capacity'
+                    CPUCoresCount       = '/api/internal/node/*/cpu_cores_count'
+                    ConnectedToPolaris  = '/api/internal/cluster/me/global_manager'
+                    NodeCount           = '/api/internal/cluster/me/node'
+                    HasTPM              = '/api/internal/cluster/me/has_tpm'
+                    OnlyAzureSupport    = '/api/internal/cluster/me/is_azure_cloud_only'
+                    IsEncrypted         = '/api/internal/cluster/me/is_encrypted'
+                    IsHardwareEncrypted = '/api/internal/cluster/me/is_hardware_encrypted'
+                    IsOnCloud           = '/api/internal/cluster/me/is_on_cloud'
+                    IsRegistered        = '/api/internal/cluster/me/is_registered'
+                    IsSingleNode        = '/api/internal/cluster/me/is_single_node'
+                    Platform            = '/api/internal/cluster/me/platforminfo'
+                    GeneralInfo         = '/api/v1/cluster/me'
+                    Status              = '/api/internal/cluster/me/system_status'
+
+                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikClusterNetworkInterface'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the network interfaces configured on nodes within the Rubrik cluster'
+                URI         = '/api/internal/cluster/me/network_interface'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    interface = 'interface'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Node'  = 'node'
+                }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikClusterStorage'         = @{
+            '4.2' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                        StorageOverview         = '/api/internal/stats/system_storage'
+                        DiskCapacityInTb        = '/api/internal/cluster/me/disk_capacity'
+                        FlashCapacityInTb       = '/api/internal/cluster/me/flash_capacity'
+                        CloudStorage            = '/api/internal/stats/cloud_storage'
+                        LocalStorageIngested    = '/api/internal/stats/snapshot_storage/ingested'
+                        DailyGrowth             = '/api/internal/report/summary/average_local_growth_per_day'
+                               }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.0' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                        StorageOverview         = '/api/internal/stats/system_storage'
+                        DiskCapacityInTb        = '/api/internal/cluster/me/disk_capacity'
+                        FlashCapacityInTb       = '/api/internal/cluster/me/flash_capacity'
+                        CloudStorage            = '/api/internal/stats/cloud_storage/physical'
+                        CloudStorageIngested    = '/api/internal/stats/cloud_storage/ingested'
+                        LocalStorageIngested    = '/api/internal/stats/snapshot_storage/ingested'
+                        DailyGrowth             = '/api/internal/report/summary/average_local_growth_per_day'
+                               }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikDatabase'           = @{
             '1.0' = @{
                 Description = 'Returns a list of summary information for Microsoft SQL databases.'
@@ -284,6 +392,33 @@ function Get-RubrikAPIData($endpoint) {
                     before_time = 'before_time'
                     after_time = 'after_time'
                 }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikDNSSetting'         = @{
+            '1.0' = @{
+                Description = 'Retrieves DNS settings of the Rubrik cluster'
+                URI         = @{
+                    DNSServers       = '/api/internal/cluster/me/dns_nameserver'
+                    DNSSearchDomain  = '/api/internal/cluster/me/dns_search_domain'
+                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikEmailSetting'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the configured email settings within the Rubrik cluster'
+                URI         = '/api/internal/smtp_instance'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
@@ -420,6 +555,18 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.LDAP'
             }
         }
+        'Get-RubrikLoginBanner'         = @{
+            '5.0' = @{
+                Description = 'Retrieves the Login Banner text of the Rubrik Cluster'
+                URI         = '/api/internal/cluster/me/login_banner'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''''
+                Success     = '200'
+            }
+        }
         'Get-RubrikUser'         = @{
             '1.0' = @{
                 Description = 'Retrieves settings related to a given user within the Rubrik cluster'
@@ -527,6 +674,56 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.NASShare'
             }
         }
+        'Get-RubrikNetworkThrottle'              = @{
+            '1.0' = @{
+                Description = 'Retrieve information network throttling within the Rubrik Cluster'
+                URI         = '/api/internal/network_throttle'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    'resource_id' = 'resource_id'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikNode'              = @{
+            '1.0' = @{
+                Description = 'Retrieve information on nodes within the Rubrik Cluster'
+                URI         = '/api/internal/cluster/{id}/node'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikNotificationSetting'           = @{
+            '5.0' = @{
+                Description = 'Returns details of the configured notification settings within the Rubrik cluster'
+                URI         = '/api/internal/notification_setting'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikNTPServer'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the configured NTP servers within the Rubrik cluster'
+                URI         = '/api/internal/cluster/me/ntp_server'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikNutanixVM'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all Nutanix VMs'
@@ -571,7 +768,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
                 ObjectTName = 'Rubrik.OracleDatabase'
             }
-        }        
+        }
         'Get-RubrikOrganization'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all Rubrik organizations'
@@ -587,6 +784,35 @@ function Get-RubrikAPIData($endpoint) {
                     'name' = 'name'
                 }
                 Success     = '200'
+            }
+        }
+        'Get-RubrikOrgAuthorization'         = @{
+            '1.0' = @{
+                Description = 'Gets the current list of explicit authorizations for the organization role'
+                URI         = '/api/internal/authorization/role/organization'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    principals = 'principals'
+                    organization_id = 'organization_id'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.OrgAuthorization'
+            }
+        }
+        'Get-RubrikProxySetting'           = @{
+            '1.0' = @{
+                Description = 'Get Rubrik Node Proxy Configuration'
+                URI         = '/api/internal/node_management/proxy_config'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.ProxySetting'
             }
         }
         'Get-RubrikReport'             = @{
@@ -744,6 +970,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikSNMPSetting'           = @{
+            '1.0' = @{
+                Description = 'Returns details of the configured SNMP settings within the Rubrik cluster'
+                URI         = '/api/internal/cluster/me/snmp_configuration'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikSoftwareVersion'    = @{
             '1.0' = @{
                 Description = 'Retrieves software version of the Rubrik cluster'
@@ -830,7 +1068,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikVAppExportOptions'                = @{
+        'Get-RubrikVAppExportOption'                = @{
             '1.0' = @{
                 Description = 'Retrieves export options for a vCD vApp'
                 URI         = '/api/internal/vcd/vapp/snapshot/{id}/export/options'
@@ -846,7 +1084,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikVAppRecoverOptions'                = @{
+        'Get-RubrikVAppRecoverOption'                = @{
             '1.0' = @{
                 Description = 'Retrieves instant recovery options for a vCD vApp'
                 URI         = '/api/internal/vcd/vapp/snapshot/{id}/instant_recover/options'
@@ -858,7 +1096,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikVcdTemplateExportOptions'                = @{
+        'Get-RubrikVcdTemplateExportOption'                = @{
             '1.0' = @{
                 Description = 'Retrieves export options for a vCD Template'
                 URI         = '/api/v1/vcd/vapp/template/snapshot/{id}/export/options'
@@ -1689,6 +1927,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Remove-RubrikProxySetting'              = @{
+            '1.0' = @{
+                Description = 'Remove Rubrik Node Proxy Configuration'
+                URI         = '/api/internal/node_management/proxy_config'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikOrganization'           = @{
             '1.0' = @{
                 Description = 'Remove an organization from a Rubrik cluster'
@@ -1699,6 +1949,27 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '204'
+            }
+        }
+        'Remove-RubrikOrgAuthorization'         = @{
+            '1.0' = @{
+                Description = 'Revokes an organization authorization for principal(s)'
+                URI         = '/api/internal/authorization/role/organization'
+                Method      = 'Delete'
+                Body        = @{
+                    principals = [System.Collections.ArrayList]@()
+                    organizationId = 'organization_id'
+                    privileges = @{
+                        manageCluster = [System.Collections.ArrayList]@()
+                        manageResource = [System.Collections.ArrayList]@()
+                        useSla = [System.Collections.ArrayList]@()
+                        manageSla = [System.Collections.ArrayList]@()
+                    }
+                }
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
             }
         }
         'Remove-RubrikReport'          = @{
@@ -1764,7 +2035,7 @@ function Get-RubrikAPIData($endpoint) {
                 Query       = ''
                 Result      = ''
                 Filter      = ''
-                Success     = '200'
+                Success     = '204'
             }
         }
         'Remove-RubrikVCenter'         = @{
@@ -1965,6 +2236,25 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Set-RubrikProxySetting'              = @{
+            '1.0' = @{
+                Description = 'Remove Rubrik Node Proxy Configuration'
+                URI         = '/api/internal/node_management/proxy_config'
+                Method      = 'Patch'
+                Body        = @{
+                    host     = 'host'
+                    port     = 'port'
+                    protocol = 'protocol'
+                    username = 'username'
+                    password = 'password'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.ProxySetting'
+            }
+        }
         'Set-RubrikNutanixVM'                 = @{
             '1.0' = @{
                 Description = 'Update VM with specified properties'
@@ -1973,10 +2263,30 @@ function Get-RubrikAPIData($endpoint) {
                 Body        = @{
                     snapshotConsistencyMandate = 'snapshotConsistencyMandate'
                     isPaused                 = 'isPaused'
-
                 }
                 Query       = ''
                 Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikOrgAuthorization'         = @{
+            '1.0' = @{
+                Description = 'Grants an organization authorization for principal(s)'
+                URI         = '/api/internal/authorization/role/organization'
+                Method      = 'Post'
+                Body        = @{
+                    principals = [System.Collections.ArrayList]@()
+                    organizationId = 'organization_id'
+                    privileges = @{
+                        manageCluster = [System.Collections.ArrayList]@()
+                        manageResource = [System.Collections.ArrayList]@()
+                        useSla = [System.Collections.ArrayList]@()
+                        manageSla = [System.Collections.ArrayList]@()
+                    }
+                }
+                Query       = ''
+                Result      = 'data'
                 Filter      = ''
                 Success     = '200'
             }
@@ -2538,5 +2848,7 @@ function Get-RubrikAPIData($endpoint) {
     }
 
     Write-Verbose -Message "Selected $key API Data for $endpoint"
+    # Add the function name to resolve issue #480
+    $api.$endpoint.$key.Add('Function',$endpoint) 
     return $api.$endpoint.$key
 } # End of function
