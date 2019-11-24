@@ -178,7 +178,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed `Get-RubrikSQLInstance` `PrimaryClusterID` had a bug
 * Fixed bug `Restore-RubrikDatabase` in example, added additional example
 * Fixed `Submit-Request` now populating the $WebResult variable in order to show HTTP Status Codes/Descriptions as well as proper status messages for PowerShell versions prior to 6.
-* Fixed `Set-RubrikSLA` the $FirstFullBackupDay variable to be an integer when the value is retrieved from the pipeline with Get-RubrikSLA
+* Fixed `Set-RubrikSLA` the $FirstFullBackupDay variable to be an integer when the value is retrieved from the pipeline with `Get-RubrikSLA`
 * Fixed `Get-RubrikEvent`, multiple limit flags were added to the GET query
 * Fixed `Get-RubrikSnapshot` no endpoint is available for FileSet snapshots, working has been created
 * Fixed `Get-RubrikSnapshot` incorrect endpoint was used for Oracle database in combination Get-RubrikSnapshot
