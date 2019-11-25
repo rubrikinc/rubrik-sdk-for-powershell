@@ -45,7 +45,7 @@ function Get-RubrikArchive
     # Filter by Archive location type (Currently S3 and Azure only)
     [Parameter(ParameterSetName='Query')]
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('S3', 'Azure','Nfs', 'Google','Qstar')]
+    [ValidateSet('S3', 'Azure','Nfs', 'Google','Qstar','Glacier')]
     [Alias('location_type')]
     [String]$ArchiveType, 
     # DetailedObject will retrieved the detailed archive object, the default behavior of the API is to only retrieve a subset of the archive object. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
@@ -96,6 +96,7 @@ function Get-RubrikArchive
         switch ($result[$i].locationType) {
           "Azure" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
           "S3" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
+          "Glacier" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
           "Google" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
           "Nfs" { Get-RubrikNfsArchive -Name $result[$i].name}
           "Qstar" { Get-RubrikQstarArchive -Name $result[$i].name }
