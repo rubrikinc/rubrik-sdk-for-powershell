@@ -209,6 +209,7 @@ function Get-RubrikAPIData($endpoint) {
                     'name'          = 'name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.Archive'
             }
         }
         'Get-RubrikAvailabilityGroup' = @{
@@ -755,6 +756,7 @@ function Get-RubrikAPIData($endpoint) {
                     name = 'definition.Name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.ArchiveDetailed'
             }
         }
         'Get-RubrikNode'              = @{
@@ -846,6 +848,7 @@ function Get-RubrikAPIData($endpoint) {
                     name = 'definition.Name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.ArchiveDetailed'
             }
         }
         'Get-RubrikOracleDB'                = @{
@@ -929,6 +932,7 @@ function Get-RubrikAPIData($endpoint) {
                     name = 'definition.Name'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.ArchiveDetailed'
             }
         }
         'Get-RubrikReplicationSource'           = @{

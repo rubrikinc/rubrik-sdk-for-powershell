@@ -93,7 +93,9 @@
                    'ObjectDefinitions/Rubrik.VolumeGroup.ps1xml', 
                    'ObjectDefinitions/Rubrik.User.ps1xml', 
                    'ObjectDefinitions/Rubrik.SLADomainv1.ps1xml',
-                   'ObjectDefinitions/Rubrik.Scvmm.ps1xml')
+                   'ObjectDefinitions/Rubrik.Scvmm.ps1xml',
+                   'ObjectDefinitions/Rubrik.Archive.ps1xml',
+                   'ObjectDefinitions/Rubrik.ArchiveDetailed.ps1xml')
     
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     # NestedModules = @()
