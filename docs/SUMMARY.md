@@ -164,4 +164,3 @@
   * [Update-RubrikVCD](command-documentation/reference/update-rubrikvcd.md)
   * [Update-RubrikVCenter](command-documentation/reference/update-rubrikvcenter.md)
   * [Update-RubrikVMwareVM](command-documentation/reference/update-rubrikvmwarevm.md)
-

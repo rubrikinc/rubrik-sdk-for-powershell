@@ -31,7 +31,7 @@ Get-RubrikVersion
 
 Here are some resources to get you started! If you find any challenges from this project are not properly documented or are unclear, please [raise an issue](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/new/choose) and let us know! This is a fun, safe environment - don't worry if you're a GitHub newbie! :heart:
 
-* [Quick Start Guide](https://github.com/rubrikinc/rubrik-sdk-for-powershell/blob/master/docs/quick-start.md)
+* [Quick Start Guide](/docs/quick-start.md)
 * [Rubrik SDK for PowerShell Documentation](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/)
 * [Rubrik API Documentation](https://github.com/rubrikinc/api-documentation)
 
