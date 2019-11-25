@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikManagedVolumeExport
 {
   <#  
@@ -15,7 +15,7 @@ function Get-RubrikManagedVolumeExport
       GitHub: MikeFal
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikManagedVolumeExport
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikmanagedvolumeexport
 
       .EXAMPLE
       Get-RubrikManagedVolumeExport

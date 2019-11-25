@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function New-RubrikHost
 {
   <#  
@@ -14,7 +14,7 @@ function New-RubrikHost
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikHost
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikhost
 
       .EXAMPLE
       New-RubrikHost -Name 'Server1.example.com'

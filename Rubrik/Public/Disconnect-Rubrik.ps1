@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Disconnect-Rubrik
 {
   <#  
@@ -15,7 +15,7 @@ function Disconnect-Rubrik
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Disconnect-Rubrik
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/disconnect-rubrik
 
       .EXAMPLE
       Disconnect-Rubrik -Confirm:$false

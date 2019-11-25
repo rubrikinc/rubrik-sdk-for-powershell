@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function New-RubrikReport
 {
   <#  
@@ -14,7 +14,7 @@ function New-RubrikReport
       GitHub: chriswahl
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikReport
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikreport
 
       .EXAMPLE
       New-RubrikReport -Name 'Report1' -ReportTemplate 'ProtectionTasksDetails'

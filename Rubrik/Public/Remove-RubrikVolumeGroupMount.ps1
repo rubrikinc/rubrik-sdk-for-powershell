@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Remove-RubrikVolumeGroupMount
 {
   <#  
@@ -13,7 +13,7 @@ function Remove-RubrikVolumeGroupMount
       Twitter: @PierreFlammer
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikVolumeGroupMount
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikvolumegroupmount
 
       .EXAMPLE
       Remove-RubrikVolumeGroupMount -id '11111111-2222-3333-4444-555555555555'

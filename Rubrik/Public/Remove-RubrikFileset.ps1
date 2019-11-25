@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Remove-RubrikFileset
 {
   <#  
@@ -14,7 +14,7 @@ function Remove-RubrikFileset
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikFileset
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikfileset
 
       .EXAMPLE
       Get-RubrikFileset -Name 'C_Drive' | Remove-RubrikHost

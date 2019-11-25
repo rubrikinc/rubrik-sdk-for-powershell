@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Update-RubrikHost
 {
   <#  
@@ -14,7 +14,7 @@ function Update-RubrikHost
       GitHub: clumnah
 
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubrikhost
 
       .EXAMPLE
       Get-RubrikHost -Name "am1-sql16fc-1" | Update-RubrikHost

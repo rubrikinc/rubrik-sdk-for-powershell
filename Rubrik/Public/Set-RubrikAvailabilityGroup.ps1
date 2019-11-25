@@ -14,7 +14,7 @@ function Set-RubrikAvailabilityGroup
       GitHub: clumnah
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikAvailabilityGroup
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikavailabilitygroup
 
       .EXAMPLE
       Get-RubrikAvailabilityGroup -GroupName 'am1-sql16ag-1ag' | Set-RubrikAvailabilityGroup -SLA GOLD

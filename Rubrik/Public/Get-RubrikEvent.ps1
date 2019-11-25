@@ -14,7 +14,7 @@ function Get-RubrikEvent
       GitHub: JayAreP     
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikEvent
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikevent
 
       .EXAMPLE
       Get-RubrikEvent -ObjectName "vm-foo" -EventType Backup

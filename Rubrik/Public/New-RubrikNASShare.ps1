@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function New-RubrikNASShare
 {
   <#  
@@ -16,7 +16,7 @@ function New-RubrikNASShare
       GitHub: MikeFal
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikNASShare
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubriknasshare
 
       .EXAMPLE
       New-RubrikNASShare -HostID (Get-RubrikHost 'FOO').id -ShareType NFS -ExportPoint BAR -Credential (Get-Credential)

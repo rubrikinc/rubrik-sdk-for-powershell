@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function New-RubrikManagedVolume
 {
   <#  
@@ -15,7 +15,7 @@ function New-RubrikManagedVolume
       GitHub: MikeFal
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikManagedVolume
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikmanagedvolume
 
       .EXAMPLE
       New-RubrikManagedVolume -Name foo -Channels 4 -VolumeSize 1073741824000

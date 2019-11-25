@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Remove-RubrikUnmanagedObject
 {
   <#  
@@ -15,7 +15,7 @@ function Remove-RubrikUnmanagedObject
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikUnmanagedObject
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikunmanagedobject
 
       .EXAMPLE
       Get-RubrikUnmanagedObject | Remove-RubrikUnmanagedObject

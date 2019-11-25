@@ -14,7 +14,7 @@ function Get-RubrikVCD
       GitHub: shamsway
             
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvcd
             
       .EXAMPLE
       Get-RubrikVCD

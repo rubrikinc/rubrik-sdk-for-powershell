@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Remove-RubrikLogShipping
 {
   <#  
@@ -14,7 +14,7 @@ function Remove-RubrikLogShipping
       GitHub: clumnah
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikLogShipping
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubriklogshipping
 
       .EXAMPLE
       Get-RubrikLogShipping -PrimaryDatabaseName 'AthenaAM1-SQL16-1-2016' -SecondaryDatabaseName 'AthenaAM1-SQL16-1-2016'  | Remove-RubrikLogShipping

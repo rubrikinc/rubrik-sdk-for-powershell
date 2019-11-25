@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Set-RubrikVM
 {
     <#  
@@ -14,7 +14,7 @@ function Set-RubrikVM
             GitHub: chriswahl
 
             .LINK
-            https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikVM
+            https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikvm
 
             .EXAMPLE
             Get-RubrikVM 'Server1' | Set-RubrikVM -PauseBackups

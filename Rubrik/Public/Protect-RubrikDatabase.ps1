@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Protect-RubrikDatabase
 {
   <#
@@ -18,7 +18,7 @@ function Protect-RubrikDatabase
       GitHub: chriswahl
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikDatabase
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikdatabase
             
       .EXAMPLE
       Get-RubrikDatabase -Name "DB1" | Protect-RubrikDatabase -SLA 'Gold'

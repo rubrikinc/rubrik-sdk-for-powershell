@@ -14,7 +14,7 @@ function Get-RubrikClusterStorage
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikClusterStorage
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikclusterstorage
             
       .EXAMPLE
       Get-RubrikClusterStorage

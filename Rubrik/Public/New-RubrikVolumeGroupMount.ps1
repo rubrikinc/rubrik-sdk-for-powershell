@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function New-RubrikVolumeGroupMount
 {
   <#  
@@ -14,7 +14,7 @@ function New-RubrikVolumeGroupMount
       Twitter: @PierreFlammer
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikVolumeGroupMount
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikvolumegroupmount
 
       .EXAMPLE
       New-RubrikVolumeGroupMount -TargetHost 'Restore-Server1' -VolumeGroupSnapshot $snap -ExcludeDrives -$DrivestoExclude

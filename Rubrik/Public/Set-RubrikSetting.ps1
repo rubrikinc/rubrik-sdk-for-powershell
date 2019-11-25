@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Set-RubrikSetting
 {
   <#  
@@ -12,7 +12,7 @@ function Set-RubrikSetting
       Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
             
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksetting
             
       .EXAMPLE
       Set-RubrikSetting -ClusterName "test-rubrik-cluster" -Timezone "America/Los Angeles" -ClusterLocation "LA Office"

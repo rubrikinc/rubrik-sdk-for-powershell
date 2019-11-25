@@ -14,7 +14,7 @@ function Get-RubrikNode
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNode
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriknode
             
       .EXAMPLE
       Get-RubrikNode 

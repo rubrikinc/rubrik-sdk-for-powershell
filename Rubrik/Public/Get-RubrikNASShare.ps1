@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikNASShare
 {
   <#  
@@ -14,7 +14,7 @@ function Get-RubrikNASShare
       GitHub: MikeFal
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNASShare
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriknasshare
 
       .EXAMPLE
       Get-RubrikNASShare -ShareType 'SMB'

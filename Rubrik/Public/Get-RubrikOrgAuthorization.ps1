@@ -15,7 +15,7 @@ function Get-RubrikOrgAuthorization
       GitHub: shamsway
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikOrgAuthorization
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikorgauthorization
 
       .EXAMPLE
       Get-RubrikOrgAuthorization

@@ -14,7 +14,7 @@ function Restore-RubrikVApp
       GitHub: shamsway
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Restore-RubrikVApp
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/restore-rubrikvapp
 
       .EXAMPLE
       Restore-RubrikVApp -id '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -PowerOn:$true

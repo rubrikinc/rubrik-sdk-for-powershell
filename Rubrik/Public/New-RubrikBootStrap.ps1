@@ -14,7 +14,7 @@ function New-RubrikBootStrap
       #Nodeconfigs Param must be a hash table object.
             
       .LINK
-      https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikbootstrap
             
       .EXAMPLE
       https://gist.github.com/nshores/104f069570740ea645d67a8aeab19759

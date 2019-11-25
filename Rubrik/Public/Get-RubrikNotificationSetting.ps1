@@ -14,7 +14,7 @@ function Get-RubrikNotificationSetting
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNotificationSetting
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriknotificationsetting
             
       .EXAMPLE
       Get-RubrikNotificationSetting

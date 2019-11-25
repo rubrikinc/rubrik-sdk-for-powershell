@@ -14,7 +14,7 @@ function Remove-RubrikProxySetting
     GitHub: jaapbrasser
     
     .LINK
-    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikProxySetting
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikproxysetting
     
     .EXAMPLE
     Remove-RubrikProxySetting

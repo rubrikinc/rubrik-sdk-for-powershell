@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Remove-RubrikAPIToken
 {
   <#
@@ -14,7 +14,7 @@ function Remove-RubrikAPIToken
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikAPIToken
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikapitoken
 
       .EXAMPLE
       Remove-RubrikAPIToken -TokenId "11111111-2222-3333-4444-555555555555"

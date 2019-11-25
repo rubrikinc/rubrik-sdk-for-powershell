@@ -14,7 +14,7 @@ function Get-RubrikVMwareDatastore
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVMwareDatastore
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvmwaredatastore
             
       .EXAMPLE
       Get-RubrikVMwareDatastore

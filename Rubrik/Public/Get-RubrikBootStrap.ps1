@@ -9,7 +9,7 @@ function Get-RubrikBootStrap
       This function is created to pull the status of a cluster bootstrap request.
       
       .LINK
-      https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikbootstrap
             
       .EXAMPLE
       Get-RubrikBootStrap -server 169.254.11.25 -requestid 1

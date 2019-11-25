@@ -13,7 +13,7 @@ function New-RubrikVMDKMount
       Twitter: @PierreFlammer
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikVMDKMount
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikvmdkmount
 
       .PARAMETER
       ATTENTION: Names have to match the names configured in Rubrik!!!

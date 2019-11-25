@@ -14,7 +14,7 @@ function Update-RubrikVCD
       GitHub: shamsway
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Update-RubrikVCD
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubrikvcd
       
       .EXAMPLE
       Get-RubrikVCD -Name 'vcd.domain.local' | Update-RubrikVCD

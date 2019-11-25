@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Get-RubrikAPIVersion
 {
   <#  
@@ -14,7 +14,7 @@ function Get-RubrikAPIVersion
       GitHub: chriswahl
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAPIVersion
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikapiversion
             
       .EXAMPLE
       Get-RubrikAPIVersion -Server 192.168.1.100

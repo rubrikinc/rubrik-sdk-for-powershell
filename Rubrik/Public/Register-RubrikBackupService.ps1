@@ -14,7 +14,7 @@ function Register-RubrikBackupService
       GitHub: pfguglielmi
 
       .LINK
-      https://github.com/rubrikinc/rubrik-sdk-for-powershell
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/register-rubrikbackupservice
 
       .EXAMPLE
       Get-RubrikVM -Name "demo-win01" | Register-RubrikBackupService -Verbose
