@@ -138,6 +138,7 @@
                    'Get-RubrikMount',
                    'Get-RubrikNASShare',
                    'Get-RubrikNetworkThrottle', 
+                   'Get-RubrikNfsArchive',
                    'Get-RubrikNode',
                    'Get-RubrikNotificationSetting', 
                    'Get-RubrikNTPServer',

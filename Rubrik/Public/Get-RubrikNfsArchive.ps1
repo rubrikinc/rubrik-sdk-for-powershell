@@ -1,12 +1,12 @@
 #requires -Version 3
-function Get-RubrikObjectStoreArchive
+function Get-RubrikNfsArchive
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves a list of object store archive targets
+      Connects to Rubrik and retrieves a list of NFS archive targets
 
       .DESCRIPTION
-      The Get-RubrikObjectStoreArchive cmdlet is used to pull a list of configured object store archive targets from the Rubrik cluster.
+      The Get-RubrikNfsArchive cmdlet is used to pull a list of configured NFS archive targets from the Rubrik cluster.
 
       .NOTES
       Written by Mike Preston for community usage
@@ -14,24 +14,24 @@ function Get-RubrikObjectStoreArchive
       GitHub: mwpreston
 
       .LINK
-     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikObjectStoreArchive
+     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNfsArchive
 
       .EXAMPLE
-      Get-RubrikObjectStoreArchive
-      This will return all the object store archive targets configured on the Rubrik cluster.
+      Get-RubrikNfsArchive
+      This will return all the NFS archive targets configured on the Rubrik cluster.
 
       .EXAMPLE
-      Get-RubrikObjectStoreArchive -id '1111-2222-3333'
-      This will return the object store archive target with an id of '1111-2222-3333' on the Rubrik cluster.
+      Get-RubrikNfsArchive -id '1111-2222-3333'
+      This will return the archive target with an id of '1111-2222-3333' on the Rubrik cluster.
 
       .EXAMPLE
-      Get-RubrikObjectStoreArchive -Name 'Azure01'
-      This will return the object store archive target with a name of 'Azure01' on the Rubrik cluster.
+      Get-RubrikNfsArchive -Name 'NFS01'
+      This will return the archive target with a name of 'NFS01' on the Rubrik cluster.
   #>
 
   [CmdletBinding()]
   Param(
-    # Object Store Archive ID
+    # NFS Archive ID
     [ValidateNotNullOrEmpty()]
     [Parameter(
         Position = 0,
@@ -39,7 +39,7 @@ function Get-RubrikObjectStoreArchive
         ParameterSetName = 'ID',
         ValueFromPipelineByPropertyName = $true)]
     [String]$Id,
-    # Object Store Archive Name
+    # NFS Archive Name
     [ValidateNotNullOrEmpty()]
     [Parameter(
         ParameterSetName='Query',

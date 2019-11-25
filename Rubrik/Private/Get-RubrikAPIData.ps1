@@ -743,6 +743,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikNFSArchive'         = @{
+            '1.0' = @{
+                Description = 'Retrieves a list of NFS archives from the Rubrik cluster'
+                URI         = '/api/internal/archive/nfs'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    name = 'definition.Name'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikNode'              = @{
             '1.0' = @{
                 Description = 'Retrieve information on nodes within the Rubrik Cluster'
