@@ -97,7 +97,7 @@ function Get-RubrikArchive
           "Azure" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
           "S3" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
           "Google" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
-          "Nfs" { Get-RubrikNfsArchive -Name $result[$i].name }
+          "Nfs" { Get-RubrikNfsArchive -Name $result[$i].name}
           "Qstar" { Get-RubrikQstarArchive -Name $result[$i].name }
         }
       }
