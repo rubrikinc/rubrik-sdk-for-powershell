@@ -917,6 +917,20 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.ProxySetting'
             }
         }
+        'Get-RubrikQstarArchive'         = @{
+            '1.0' = @{
+                Description = 'Retrieves a list of Qstar archives from the Rubrik cluster'
+                URI         = '/api/internal/archive/qstar'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    name = 'definition.Name'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikReplicationSource'           = @{
             '1.0' = @{
                 Description = 'Get summaries for all replication sources'

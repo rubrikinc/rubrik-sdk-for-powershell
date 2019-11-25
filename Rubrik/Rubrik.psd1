@@ -149,6 +149,7 @@
                    'Get-RubrikOracleDB',
                    'Get-RubrikOrganization', 
                    'Get-RubrikOrgAuthorization',
+                   'Get-RubrikQstarArchive',
                    'Get-RubrikProxySetting',
                    'Get-RubrikReplicationSource',
                    'Get-RubrikReplicationTarget', 

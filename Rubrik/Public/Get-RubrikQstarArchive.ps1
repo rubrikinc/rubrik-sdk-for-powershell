@@ -1,12 +1,12 @@
 #requires -Version 3
-function Get-RubrikArchive
+function Get-RubrikQstarArchive
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and retrieves a list of archive targets
+      Connects to Rubrik and retrieves a list of QStar archive targets
 
       .DESCRIPTION
-      The Get-RubrikArchive cmdlet is used to pull a list of configured archive targets from the Rubrik cluster.
+      The Get-RubrikQstarArchive cmdlet is used to pull a list of configured QStar archive targets from the Rubrik cluster.
 
       .NOTES
       Written by Mike Preston for community usage
@@ -14,44 +14,38 @@ function Get-RubrikArchive
       GitHub: mwpreston
 
       .LINK
-     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikArchive
+     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikQstarArchive
 
       .EXAMPLE
-      Get-RubrikArchive
-      This will return all the archive targets configured on the Rubrik cluster.
+      Get-RubrikQstarArchive
+      This will return all the QStar archive targets configured on the Rubrik cluster.
 
       .EXAMPLE
-      Get-RubrikArchive -name 'archive01'
-      This will return the archive targets configured on the Rubrik cluster with the name of 'archive01'.
+      Get-RubrikQstarArchive -id '1111-2222-3333'
+      This will return the archive target with an id of '1111-2222-3333' on the Rubrik cluster.
+
+      .EXAMPLE
+      Get-RubrikQstarArchive -Name 'QStar01'
+      This will return the archive target with a name of 'QStar01' on the Rubrik cluster.
   #>
 
   [CmdletBinding()]
   Param(
-    # Archive Location ID
+    # QStar Archive ID
     [ValidateNotNullOrEmpty()]
     [Parameter(
-        ParameterSetName='ID',
         Position = 0,
         Mandatory = $true,
+        ParameterSetName = 'ID',
         ValueFromPipelineByPropertyName = $true)]
     [String]$Id,
-    # Archive Location Name
+    # QStar Archive Name
     [ValidateNotNullOrEmpty()]
     [Parameter(
         ParameterSetName='Query',
         Position = 0,
         ValueFromPipelineByPropertyName = $true)]
     [String]$Name,
-    # Filter by Archive location type (Currently S3 and Azure only)
-    [Parameter(ParameterSetName='Query')]
-    [ValidateNotNullOrEmpty()]
-    [ValidateSet('S3', 'Azure','Nfs', 'Google','Qstar')]
-    [Alias('location_type')]
-    [String]$ArchiveType, 
-    # DetailedObject will retrieved the detailed archive object, the default behavior of the API is to only retrieve a subset of the archive object. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
-    [Parameter(ParameterSetName='Query')]
-    
-    [Switch]$DetailedObject, 
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -87,24 +81,7 @@ function Get-RubrikArchive
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-    # If the Get-RubrikArchive function has been called with the -DetailedObject parameter,
-    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
-      for ($i = 0; $i -lt @($result).Count; $i++) {
-        $Percentage = [int]($i/@($result).count*100)
-        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-        
-        switch ($result[$i].locationType) {
-          "Azure" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
-          "S3" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
-          "Google" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
-          "Nfs" { Get-RubrikNfsArchive -Name $result[$i].name }
-          "Qstar" { Get-RubrikQstarArchive -Name $result[$i].name }
-        }
-      }
-    } else {
-      return $result
-    }
-    
+    return $result
 
   } # End of process
 } # End of function
