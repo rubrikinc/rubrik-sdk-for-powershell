@@ -7,7 +7,7 @@ pr: none
 
 jobs:
 - job: Verify_Skip_CI_Not_Present
-  displayname: 'Verify is [skip ci] is not specified'
+  displayName: 'Verify is [skip ci] is not specified'
   pool:
     vmImage: 'ubuntu-latest'
   steps:
@@ -50,7 +50,7 @@ jobs:
     condition: always()
     
 - job: Commit_Changes_From_DevOps_To_GitHub
-  displayname: 'Commit Changes From DevOps To GitHub'
+  displayName: 'Commit Changes From DevOps To GitHub'
   dependsOn: Build_Using_Windows_PowerShell_on_Server_2019
   pool:
     vmImage: 'ubuntu-latest'
