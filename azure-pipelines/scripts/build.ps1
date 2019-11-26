@@ -47,6 +47,7 @@ try {
         $prerelease = (Invoke-WebRequest @WebRequestSplat) -split '\n' -match 'Prerelease' -replace "\s|'|Prerelease|="
         $newprerelease = "devel$((($prerelease -replace 'devel') -as [string] -as [int])+1)"
 
+        Write-Output "New Devel Prerelease Version: $newprerelease"
         $Splat.PrivateData.Prerelease = $newprerelease
     }
 

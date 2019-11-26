@@ -45,7 +45,7 @@ jobs:
   - task: PublishPipelineArtifact@0
     displayName: 'Publish Repository as artifact'
     inputs:
-      artifactName: 'PipelinesScripts'
+      artifactName: 'Devel_Deployment_Merge'
       targetPath: .
     condition: always()
     
