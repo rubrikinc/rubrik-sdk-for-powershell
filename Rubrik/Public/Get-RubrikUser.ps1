@@ -14,7 +14,7 @@ function Get-RubrikUser
       GitHub: mwpreston
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikUser
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikuser
 
       .EXAMPLE
       Get-RubrikUser

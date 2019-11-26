@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikNutanixVM
 {
   <#  
@@ -14,7 +14,7 @@ function Get-RubrikNutanixVM
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNutanixVM
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriknutanixvm
 
       .EXAMPLE
       Get-RubrikNutanixVM -Name 'Server1'

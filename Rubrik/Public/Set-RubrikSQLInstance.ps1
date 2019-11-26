@@ -14,7 +14,7 @@ function Set-RubrikSQLInstance
       GitHub: MikeFal
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikSQLInstance
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksqlinstance
 
       .EXAMPLE
       Set-RubrikSQLInstance

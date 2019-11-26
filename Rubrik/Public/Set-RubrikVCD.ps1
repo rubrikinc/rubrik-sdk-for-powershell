@@ -14,7 +14,7 @@ function Set-RubrikVCD
         GitHub: shamsway
             
         .LINK
-        https://github.com/rubrikinc/PowerShell-Module
+        https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikvcd
             
         .EXAMPLE
         Set-RubrikVCD -ID Vcd:::01234567-8910-1abc-d435-0abc1234d567 -SLA "Bronze"

@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikDatabase
 {
   <#  
@@ -16,7 +16,7 @@ function Get-RubrikDatabase
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabase
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikdatabase
 
       .EXAMPLE
       Get-RubrikDatabase -Name 'DB1' -SLA Gold

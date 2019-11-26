@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikManagedVolume
 {
   <#  
@@ -16,7 +16,7 @@ function Get-RubrikManagedVolume
       GitHub: MikeFal
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikManagedVolume
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikmanagedvolume
 
       .EXAMPLE
       Get-RubrikManagedVolume

@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Move-RubrikMountVMDK
 {
   <#  
@@ -14,7 +14,7 @@ function Move-RubrikMountVMDK
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Move-RubrikMountVMDK
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/move-rubrikmountvmdk
 
       .EXAMPLE
       Move-RubrikMountVMDK -SourceVMID (Get-RubrikVM -Name 'SourceVM').id -TargetVM 'TargetVM'

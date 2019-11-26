@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Remove-RubrikReport
 {
   <#  
@@ -14,7 +14,7 @@ function Remove-RubrikReport
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikReport
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikreport
 
       .EXAMPLE
       Get-RubrikReport | Remove-RubrikReport -Confirm:$true

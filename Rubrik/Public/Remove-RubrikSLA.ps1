@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Remove-RubrikSLA 
 {
   <#  
@@ -15,7 +15,7 @@ function Remove-RubrikSLA
       GitHub: chriswahl
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikSLA
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubriksla
             
       .EXAMPLE
       Get-RubrikSLA -SLA 'Gold' | Remove-RubrikSLA

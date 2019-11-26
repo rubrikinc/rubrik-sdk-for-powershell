@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Protect-RubrikVM
 {
   <#
@@ -18,7 +18,7 @@ function Protect-RubrikVM
       GitHub: chriswahl
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikVM
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvm
             
       .EXAMPLE
       Get-RubrikVM "VM1" | Protect-RubrikVM -SLA 'Gold'

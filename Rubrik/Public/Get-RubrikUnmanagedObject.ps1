@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikUnmanagedObject
 {
   <#  
@@ -15,7 +15,7 @@ function Get-RubrikUnmanagedObject
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikUnmanagedObject
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikunmanagedobject
 
       .EXAMPLE
       Get-RubrikUnmanagedObject -Type 'WindowsFileset'

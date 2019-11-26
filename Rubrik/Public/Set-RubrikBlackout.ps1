@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Set-RubrikBlackout
 {
   <#  
@@ -14,7 +14,7 @@ function Set-RubrikBlackout
       GitHub: pmilano1
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikBlacout
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikblacout
 
       .EXAMPLE
       Set-RubrikBlackout -Set:[$true/$false]

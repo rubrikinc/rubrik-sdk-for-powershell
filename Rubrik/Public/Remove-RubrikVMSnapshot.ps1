@@ -15,7 +15,7 @@ function Remove-RubrikVMSnapshot
       GitHub: shamsway
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikVMSnapshot
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikvmsnapshot
            
       .EXAMPLE
       Remove-RubrikVMSnapshot -id '01234567-8910-1abc-d435-0abc1234d567'

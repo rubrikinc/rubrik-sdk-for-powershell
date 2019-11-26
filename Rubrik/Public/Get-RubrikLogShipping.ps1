@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikLogShipping
 {
   <#  
@@ -15,7 +15,7 @@ function Get-RubrikLogShipping
       Any other links you'd like here
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikLogShipping
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriklogshipping
 
       .EXAMPLE
       Get all log shipping configurations

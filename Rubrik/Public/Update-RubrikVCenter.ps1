@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Update-RubrikVCenter
 {
   <#  
@@ -14,7 +14,7 @@ function Update-RubrikVCenter
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Update-RubrikVCenter
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubrikvcenter
       
       .EXAMPLE
       Get-RubrikVCenter -Name 'vcsa.domain.local' | Update-RubrikVCenter

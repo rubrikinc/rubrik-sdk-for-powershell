@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Set-RubrikHyperVVM
 {
     <#  
@@ -14,7 +14,7 @@ function Set-RubrikHyperVVM
             GitHub: MikeFal
 
             .LINK
-            https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikHyperVVM
+            https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikhypervvm
 
             .EXAMPLE
             Get-RubrikHyperVVM 'Server1' | Set-RubrikHyperVVM -PauseBackups

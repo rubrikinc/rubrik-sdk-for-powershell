@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Protect-RubrikHyperVVM
 {
   <#
@@ -18,7 +18,7 @@ function Protect-RubrikHyperVVM
       GitHub: MikeFal
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikHyperVVM
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikhypervvm
             
       .EXAMPLE
       Get-RubrikHyperVVM "VM1" | Protect-RubrikHyperVVM -SLA 'Gold'
