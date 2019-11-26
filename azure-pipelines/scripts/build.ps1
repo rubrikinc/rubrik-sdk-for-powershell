@@ -77,7 +77,7 @@ if ($env:TargetBranch -eq 'master') {
         Write-Host "Rubrik PowerShell Module version $newVersion published to the PowerShell Gallery." -ForegroundColor Cyan
     } catch {
         # Sad panda; it broke
-        Write-Warning "Publishing update $newVersion to the PowerShell Gallery failed."
+        Write-Warning "Publishing updated $newVersion to the PowerShell Gallery failed."
         throw $_
     }
 } elseif ($env:TargetBranch -eq 'devel') {
