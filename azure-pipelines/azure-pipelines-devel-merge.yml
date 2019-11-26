@@ -2,7 +2,6 @@ trigger:
   branches:
     include:
     - devel
-    - jaap-pipeline
 pr: none
 
 jobs:
@@ -47,7 +46,7 @@ jobs:
     inputs:
       artifactName: 'PipelinesScripts'
       targetPath: .
-    condition: always()
+    condition: failed()
     
 - job: Commit_Changes_From_DevOps_To_GitHub
   displayName: 'Commit Changes From DevOps To GitHub'
@@ -59,5 +58,5 @@ jobs:
     persistCredentials: true
   - task: ShellScript@2
     inputs:
-      scriptPath: hostname
+      scriptPath: ./azure-pipelines/scripts/git-devel-merge.sh
     
