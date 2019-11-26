@@ -25,7 +25,7 @@ try {
 
     # Update the manifest with the new version value and fix the weird string replace bug
     $functionList = ((Get-ChildItem -Path .\Rubrik\Public).BaseName)
-    $formatList = ((Get-ChildItem -Path .\Rubrik\ObjectDefinitions).Name)
+    $formatList = "ObjectDefinitions/$((Get-ChildItem -Path .\Rubrik\ObjectDefinitions).Name)"
     
     $splat = @{
         'Path'              = $manifestPath
@@ -48,7 +48,7 @@ try {
             UseBasicParsing = $true
             ErrorAction = 'Stop'
         }
-        $prerelease = (Invoke-WebRequest @WebRequestSplat) -split '\n' -match 'Prerelease' -replace "\s|'|Prerelease|="
+        $prerelease = (Invoke-WebRequest @WebRequestSplat) -split '\n' -match 'Prerelease\s=' -replace "\s|'|Prerelease|="
         $newprerelease = "devel$((($prerelease -replace 'devel') -as [string] -as [int])+1)"
 
         Write-Output "New Devel Prerelease Version: $newprerelease"
