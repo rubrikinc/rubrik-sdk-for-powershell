@@ -1,5 +1,5 @@
 ﻿# We're going to add 1 to the revision value since a new commit has been merged to Master
-# This means that the major / minor / build values will be consistent across GitHub and the Gallery
+# This means that the major / minor values will be consistent across GitHub and the Gallery
 try {
     # This is where the module manifest lives
     $manifestPath = "$env:LocalPath\Rubrik\Rubrik.psd1"
@@ -38,7 +38,7 @@ try {
         }
     }
 
-    if ($env:TargetBranch -eq 'devel') {
+    if ($env:TargetBranch -eq 'jaap-pipeline') {
         $WebRequestSplat = @{
             Uri = 'https://raw.githubusercontent.com/rubrikinc/rubrik-sdk-for-powershell/devel/Rubrik/Rubrik.psd1'
             UseBasicParsing = $true
@@ -65,12 +65,6 @@ try {
     throw $_
 }
 
-# Import Module
-Import-Module -Name "$env:LocalPath\Rubrik\Rubrik.psd1" -Force
-
-. .\azure-pipelines\scripts\docs.ps1
-Write-Host -Object ''
-
 if ($env:TargetBranch -eq 'master') {
     try {
         # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
@@ -87,5 +81,18 @@ if ($env:TargetBranch -eq 'master') {
         throw $_
     }
 } elseif ($env:TargetBranch -eq 'devel') {
-    # todo, prerelease deployments for devel
+    try {
+        # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
+        $PublishSplat = @{
+            Path        = "$env:LocalPath\Rubrik"
+            NuGetApiKey = $env:GalleryAPIKey
+            ErrorAction = 'Stop'
+        }
+        Publish-Module @PublishSplat
+        Write-Host "Rubrik PowerShell Module version $newVersion (Prelease: $newprerelease) published to the PowerShell Gallery." -ForegroundColor Cyan
+    } catch {
+        # Sad panda; it broke
+        Write-Warning "Publishing updated $newVersion (Prelease: $newprerelease) to the PowerShell Gallery failed."
+        throw $_
+    }
 }
