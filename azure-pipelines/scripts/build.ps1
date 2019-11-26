@@ -30,6 +30,7 @@ try {
     $splat = @{
         'Path'              = $manifestPath
         'ModuleVersion'     = $newVersion
+        'FormatsToProcess'  = $formatList
         'FunctionsToExport' = $functionList
         'Copyright'         = "(c) 2015-$( (Get-Date).Year ) Rubrik, Inc. All rights reserved."
         'PrivateData'       = @{
@@ -40,7 +41,8 @@ try {
         }
     }
 
-    if ($env:TargetBranch -eq 'devel') {
+    #if ($env:TargetBranch -eq 'devel') {
+    if ($true) {
         $WebRequestSplat = @{
             Uri = 'https://raw.githubusercontent.com/rubrikinc/rubrik-sdk-for-powershell/devel/Rubrik/Rubrik.psd1'
             UseBasicParsing = $true
@@ -55,7 +57,7 @@ try {
 
     Update-ModuleManifest @splat
     
-    
+    # Fix errors in Manifest
     (Get-Content -Path $manifestPath) -replace 'PSGet_Rubrik', 'Rubrik' | Set-Content -Path $manifestPath
     (Get-Content -Path $manifestPath) -replace 'NewManifest', 'Rubrik' | Set-Content -Path $manifestPath
     
