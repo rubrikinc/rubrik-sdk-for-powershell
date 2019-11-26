@@ -44,9 +44,9 @@ jobs:
   - task: PublishPipelineArtifact@0
     displayName: 'Publish Repository as artifact'
     inputs:
-      artifactName: 'PipelinesScripts'
+      artifactName: 'Master_Deployment_Merge'
       targetPath: .
-    condition: failed()
+    condition: always()
     
 - job: Commit_Changes_From_DevOps_To_GitHub
   displayName: 'Commit Changes From DevOps To GitHub'
