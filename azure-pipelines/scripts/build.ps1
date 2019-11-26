@@ -49,6 +49,8 @@ try {
             ErrorAction = 'Stop'
         }
         $prerelease = (Invoke-WebRequest @WebRequestSplat) -split '\n' -match 'Prerelease\s=' -replace "\s|'|Prerelease|="
+        (Invoke-WebRequest @WebRequestSplat)
+        $prerelease
         $newprerelease = "devel$((($prerelease -replace 'devel') -as [string] -as [int])+1)"
 
         Write-Output "New Devel Prerelease Version: $newprerelease"
