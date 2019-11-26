@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Get-RubrikVolumeGroupMount
 {
   <#  
@@ -14,7 +14,7 @@ function Get-RubrikVolumeGroupMount
       Twitter: @PierreFlammer
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVolumeGroupMount
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvolumegroupmount
             
       .EXAMPLE
       Get-RubrikVolumeGroupMount

@@ -31,7 +31,7 @@ function Get-RubrikDatabaseRecoveryPoint {
         GitHub: clumnah
 
         .LINK
-        http://rubrikinc.github.io/rubrik-sdk-for-powershell/reference/Get-RubrikDatabaseRecoverypoint.html
+        https://rubrik.gitbook.io/rubrik-sdk-for-powershell
 
         .EXAMPLE
         Get-RubrikDatabaseRecoveryPoint -id "MssqlDatabase:::10dd9979-fdcb-4dc2-b212-20efffd39102" -Latest 

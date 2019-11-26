@@ -17,7 +17,7 @@ function Remove-RubrikOrgAuthorization
       GitHub: shamsway
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikOrgAuthorization
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikorgauthorization
 
       .EXAMPLE
       Remove-RubrikOrgAuthorization -ID 'Organization:::01234567-8910-1abc-d435-0abc1234d567' -UseSLA '12345678-1234-abcd-8910-1234567890ab' 

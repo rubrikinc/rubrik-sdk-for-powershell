@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Protect-RubrikNutanixVM
 {
   <#
@@ -18,7 +18,7 @@ function Protect-RubrikNutanixVM
       GitHub: MikeFal
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikNutanixVM
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubriknutanixvm
             
       .EXAMPLE
       Get-RubrikNutanixVM "VM1" | Protect-RubrikNutanixVM -SLA 'Gold'

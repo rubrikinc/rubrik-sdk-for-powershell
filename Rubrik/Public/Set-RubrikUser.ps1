@@ -15,7 +15,7 @@ function Set-RubrikUser
       GitHub: mwpreston
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikUser
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikuser
 
       .EXAMPLE
       Set-RubrikUser -id '11111' -password (ConvertTo-SecureString -string 'supersecretpassword' -asplaintext -force)

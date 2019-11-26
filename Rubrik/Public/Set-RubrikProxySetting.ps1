@@ -14,7 +14,7 @@ function Set-RubrikProxySetting
     GitHub: jaapbrasser
         
     .LINK
-    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikProxySetting
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikproxysetting
         
     .EXAMPLE
     Set-RubrikProxySetting -Host build.rubrik.com -Port 8080 -Protocol HTTPS

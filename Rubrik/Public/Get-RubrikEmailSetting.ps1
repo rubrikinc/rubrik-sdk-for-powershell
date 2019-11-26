@@ -14,7 +14,7 @@ function Get-RubrikEmailSetting
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikEmailSetting
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikemailsetting
             
       .EXAMPLE
       Get-RubrikEmailSetting

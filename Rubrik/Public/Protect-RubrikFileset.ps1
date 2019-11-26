@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Protect-RubrikFileset
 {
   <#
@@ -18,7 +18,7 @@ function Protect-RubrikFileset
       GitHub: chriswahl
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikFileset
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikfileset
             
       .EXAMPLE
       Get-RubrikFileset 'C_Drive' | Protect-RubrikFileset -SLA 'Gold'

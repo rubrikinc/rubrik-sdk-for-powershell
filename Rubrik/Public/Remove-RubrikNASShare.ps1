@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Remove-RubrikNASShare
 {
   <#  
@@ -15,7 +15,7 @@ function Remove-RubrikNASShare
       Any other links you'd like here
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikNASShare
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubriknasshare
 
       .EXAMPLE
       Get-RubrikNASShare -Name 'FOO' | Remove-RubrikNASShare

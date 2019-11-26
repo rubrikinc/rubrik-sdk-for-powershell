@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Remove-RubrikDatabaseMount
 {
   <#  
@@ -14,7 +14,7 @@ function Remove-RubrikDatabaseMount
       GitHub: MikeFal
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikDatabaseMount
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikdatabasemount
 
       .EXAMPLE
       Remove-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'

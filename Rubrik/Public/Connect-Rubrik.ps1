@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Connect-Rubrik {
     <#  
       .SYNOPSIS
@@ -16,7 +16,7 @@ function Connect-Rubrik {
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Connect-Rubrik
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/connect-rubrik
 
       .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Username admin

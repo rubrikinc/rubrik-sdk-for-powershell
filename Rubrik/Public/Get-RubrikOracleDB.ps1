@@ -14,7 +14,7 @@ function Get-RubrikOracleDB
     GitHub: jaapbrasser
     
     .LINK
-    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikOracleDB
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikoracledb
     
     .EXAMPLE
     Get-RubrikOracleDB -Name 'OracleDB1'

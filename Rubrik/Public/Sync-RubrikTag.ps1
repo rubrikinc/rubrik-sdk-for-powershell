@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Sync-RubrikTag
 {
   <#  
@@ -14,7 +14,7 @@ function Sync-RubrikTag
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Sync-RubrikTag
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/sync-rubriktag
 
       .EXAMPLE
       Sync-RubrikTag -vCenter 'vcenter1.demo' -Category 'Rubrik'

@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikOrganization
 {
   <#  
@@ -15,7 +15,7 @@ function Get-RubrikOrganization
       GitHub: MikeFal
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikOrganization
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikorganization
 
       .EXAMPLE
       Get-RubrikOrganization

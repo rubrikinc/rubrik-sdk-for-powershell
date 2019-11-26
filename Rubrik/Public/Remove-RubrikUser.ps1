@@ -14,7 +14,7 @@ function Remove-RubrikUser
       GitHub: mwpreston
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikUser
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikuser
 
       .EXAMPLE
       Remove-RubrikUser -id "11111111-2222-3333-4444-555555555555"

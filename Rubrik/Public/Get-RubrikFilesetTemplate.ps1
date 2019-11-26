@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikFilesetTemplate
 {
   <#  
@@ -14,7 +14,7 @@ function Get-RubrikFilesetTemplate
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikFilesetTemplate
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikfilesettemplate
 
       .EXAMPLE
       Get-RubrikFilesetTemplate -Name 'Template1'

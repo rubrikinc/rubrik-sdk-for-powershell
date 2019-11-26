@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Set-RubrikSupportTunnel
 {
   <#  
@@ -15,7 +15,7 @@ function Set-RubrikSupportTunnel
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikSupportTunnel
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksupporttunnel
 
       .EXAMPLE
       Set-RubrikSupportTunnel -EnableTunnel:$false
