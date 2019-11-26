@@ -2,6 +2,7 @@ trigger:
   branches:
     include:
     - devel
+    - jaap-pipeline
 pr: none
 
 jobs:
@@ -13,8 +14,8 @@ jobs:
   - checkout: self
     persistCredentials: true
   - task: ShellScript@2
-  inputs:
-    scriptPath: ./azure-pipelines/scripts/git-check-skipci.sh
+    inputs:
+      scriptPath: ./azure-pipelines/scripts/git-check-skipci.sh
     
 - job: Build_Using_Windows_PowerShell_on_Server_2019
   displayName: 'Build Using Windows PowerShell on Server 2019'
@@ -57,6 +58,6 @@ jobs:
   - checkout: self
     persistCredentials: true
   - task: ShellScript@2
-  inputs:
-    scriptPath: ./azure-pipelines/scripts/git-devel-merge.sh
+    inputs:
+      scriptPath: ./azure-pipelines/scripts/git-devel-merge.sh
     
