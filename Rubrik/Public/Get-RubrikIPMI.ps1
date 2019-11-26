@@ -14,7 +14,7 @@ function Get-RubrikIPMI
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikIPMI
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikipmi
             
       .EXAMPLE
       Get-RubrikIPMI 

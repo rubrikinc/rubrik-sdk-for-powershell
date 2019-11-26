@@ -14,7 +14,7 @@ function Get-RubrikSecurityClassification
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikSecurityClassification
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriksecurityclassification
             
       .EXAMPLE
       Get-RubrikSecurityClassification

@@ -14,7 +14,7 @@ function Get-RubrikObjectStoreArchive
       GitHub: mwpreston
 
       .LINK
-     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikObjectStoreArchive
+     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikobjectstorearchive
 
       .EXAMPLE
       Get-RubrikObjectStoreArchive

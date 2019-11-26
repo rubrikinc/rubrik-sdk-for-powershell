@@ -14,7 +14,7 @@ function Get-RubrikArchive
       GitHub: mwpreston
 
       .LINK
-     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikArchive
+     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikarchive
 
       .EXAMPLE
       Get-RubrikArchive

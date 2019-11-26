@@ -14,7 +14,7 @@ function Get-RubrikBackupServiceDeployment
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikBackupServiceDeployment
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikbackupservicedeployment
             
       .EXAMPLE
       Get-RubrikBackupServiceDeployment

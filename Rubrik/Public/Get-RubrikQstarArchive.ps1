@@ -14,7 +14,7 @@ function Get-RubrikQstarArchive
       GitHub: mwpreston
 
       .LINK
-     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikQstarArchive
+     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikqstararchive
 
       .EXAMPLE
       Get-RubrikQstarArchive

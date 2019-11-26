@@ -14,7 +14,7 @@ function Get-RubrikReplicationTarget
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikReplicationTarget
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikreplicationtarget
             
       .EXAMPLE
       Get-RubrikReplicationTarget

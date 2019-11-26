@@ -14,7 +14,7 @@ function Get-RubrikNutanixCluster
       GitHub: mwpreston
 
       .LINK
-      https://github.com/rubrikinc/PowerShell-Module
+     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriknutanixcluster
             
       .EXAMPLE
       Get-RubrikNutanixCluster

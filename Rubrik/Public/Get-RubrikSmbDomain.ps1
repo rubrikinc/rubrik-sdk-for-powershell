@@ -14,7 +14,7 @@ function Get-RubrikSmbDomain
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikSmbDomain
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriksmbdomain
             
       .EXAMPLE
       Get-RubrikSmbDomain 

@@ -14,7 +14,7 @@ function Get-RubrikGuestOSCredential
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikGuestOSCredential
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikguestoscredential
             
       .EXAMPLE
       Get-RubrikGuestOSCredential 
