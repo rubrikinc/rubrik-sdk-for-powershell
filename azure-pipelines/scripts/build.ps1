@@ -25,6 +25,8 @@ try {
 
     # Update the manifest with the new version value and fix the weird string replace bug
     $functionList = ((Get-ChildItem -Path .\Rubrik\Public).BaseName)
+    $formatList = ((Get-ChildItem -Path .\Rubrik\ObjectDefinitions).Name)
+    
     $splat = @{
         'Path'              = $manifestPath
         'ModuleVersion'     = $newVersion
@@ -38,7 +40,7 @@ try {
         }
     }
 
-    if ($env:TargetBranch -eq 'jaap-pipeline') {
+    if ($env:TargetBranch -eq 'devel') {
         $WebRequestSplat = @{
             Uri = 'https://raw.githubusercontent.com/rubrikinc/rubrik-sdk-for-powershell/devel/Rubrik/Rubrik.psd1'
             UseBasicParsing = $true
@@ -52,8 +54,17 @@ try {
     }
 
     Update-ModuleManifest @splat
+    
+    
     (Get-Content -Path $manifestPath) -replace 'PSGet_Rubrik', 'Rubrik' | Set-Content -Path $manifestPath
     (Get-Content -Path $manifestPath) -replace 'NewManifest', 'Rubrik' | Set-Content -Path $manifestPath
+    
+    # Fix FormatsToProcess
+    (Get-Content -Path $manifestPath) -replace 'FormatsToProcess = ', "FormatsToProcess = @(`r`n" | Set-Content -Path $manifestPath -Force
+    (Get-Content -Path $manifestPath) -replace "'$($formatList[0])'", "$(" "*15)'$($formatList[0])'" | Set-Content -Path $manifestPath -Force
+    (Get-Content -Path $manifestPath) -replace "$($formatList[-1])'", "$($formatList[-1])')" | Set-Content -Path $manifestPath -Force
+    
+    # Fix FunctionsToExport
     (Get-Content -Path $manifestPath) -replace 'FunctionsToExport = ', "FunctionsToExport = @(`r`n" | Set-Content -Path $manifestPath -Force
     $functionlist | ForEach-Object {
         (Get-Content -Path $manifestPath) -replace "'$_',\s?'", "'$_',`r`n$(" "*15)'" | Set-Content -Path $manifestPath -Force
