@@ -22,31 +22,39 @@ Describe -Name 'Public/Get-RubrikQStarArchive' -Tag 'Public', 'Get-RubrikQStarAr
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'id'                = '3333-2222-3333'
-                'definition'        = @{
-                    'name'              = 'QStar01'
-                    'objectStoreType'   = 'QStar'
-                    'bucket'            = 'QStar01'
-                } 
-            },
-            @{ 
-                'id'                = '1111-2222-3333'
-                'definition'        = @{
-                    'name'              = 'QStar02'
-                    'objectStoreType'   = 'QStar'
-                    'bucket'            = 'QStar02'
-                } 
-            },
-            @{ 
-                'id'                = '2222-2222-3333'
-                'definition'        = @{
-                    'name'              = 'QStar03'
-                    'objectStoreType'   = 'QStar'
-                    'bucket'            = 'QStar03'
-                } 
-            }
+            $response = '{  
+                "hasMore":false,
+                "data":[  
+                    {
+                        "id": "3333-2222-3333",
+                        "definition": {
+                            "name": "Qstar01",
+                            "bucket": "Qstar01",
+                            "objectStoreType": "Qstar"
+                        }
+                    },
+                    {
+                        "id": "1111-2222-3333",
+                        "definition": {
+                            "name": "Qstar02",
+                            "bucket": "Qstar02",
+                            "objectStoreType": "Qstar"
+                        }
+                    },
+                    {
+                        "id": "2222-2222-3333",
+                        "definition": {
+                            "name": "Qstar03",
+                            "bucket": "Qstar03",
+                            "objectStoreType": "Qstar"
+                        }
+                    }
+                ],
+                "total":3
+            }'
+            return ConvertFrom-Json $response
         }
+    
         It -Name 'No parameters returns all results' -Test {
             ( Get-RubrikQStarArchive  | Measure-Object ).Count |
                 Should -BeExactly 3

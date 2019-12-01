@@ -20,33 +20,42 @@ Describe -Name 'Public/Get-RubrikNfsArchive' -Tag 'Public', 'Get-RubrikNfsArchiv
     #endregion
 
     Context -Name 'Returned Results' {
-        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { } 
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'id'                = '3333-2222-3333'
-                'definition'        = @{
-                    'name'              = 'NFS01'
-                    'objectStoreType'   = 'Nfs'
-                    'bucket'            = 'NFS01'
-                } 
-            },
-            @{ 
-                'id'                = '1111-2222-3333'
-                'definition'        = @{
-                    'name'              = 'NFS02'
-                    'objectStoreType'   = 'Nfs'
-                    'bucket'            = 'NFS02'
-                } 
-            },
-            @{ 
-                'id'                = '2222-2222-3333'
-                'definition'        = @{
-                    'name'              = 'NFS03'
-                    'objectStoreType'   = 'Nfs'
-                    'bucket'            = 'NFS03'
-                } 
-            }
-        }
+        $response = '{  
+            "hasMore":false,
+            "data":[  
+                {
+                    "id": "3333-2222-3333",
+                    "definition": {
+                        "name": "NFS01",
+                        "bucket": "NFS01",
+                        "objectStoreType": "Nfs"
+                    }
+                },
+                {
+                    "id": "1111-2222-3333",
+                    "definition": {
+                        "name": "NFS02",
+                        "bucket": "NFS02",
+                        "objectStoreType": "Nfs"
+                    }
+                },
+                {
+                    "id": "2222-2222-3333",
+                    "definition": {
+                        "name": "NFS03",
+                        "bucket": "NFS03",
+                        "objectStoreType": "Nfs"
+                    }
+                }
+            ],
+            "total":3
+        }'
+        return ConvertFrom-Json $response
+    }
+
+        
         It -Name 'No parameters returns all results' -Test {
             ( Get-RubrikNfsArchive  | Measure-Object ).Count |
                 Should -BeExactly 3

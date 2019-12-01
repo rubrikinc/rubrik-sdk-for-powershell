@@ -22,36 +22,37 @@ Describe -Name 'Public/Get-RubrikObjectStoreArchive' -Tag 'Public', 'Get-RubrikO
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'id'                = '3333-2222-3333'
-                'definition'        = @{
-                    'name'              = 'Azure01'
-                    'objectStoreType'   = 'Azure'
-                    'accessKey'         = 'supersecretaccesskey'
-                    'bucket'            = 'azurebucket'
-                    'isComputeEnabled'  = 'true'
-                } 
-            },
-            @{ 
-                'id'                = '1111-2222-3333'
-                'definition'        = @{
-                    'name'              = 'S301'
-                    'objectStoreType'   = 'S3'
-                    'accessKey'         = 'supersecretaccesskey'
-                    'bucket'            = 'awsbucket'
-                    'isComputeEnabled'  = 'true'
-                } 
-            },
-            @{ 
-                'id'                = '2222-2222-3333'
-                'definition'        = @{
-                    'name'              = 'S302'
-                    'objectStoreType'   = 'S3'
-                    'accessKey'         = 'supersecretaccesskey'
-                    'bucket'            = 'awsbucket2'
-                    'isComputeEnabled'  = 'true'
-                } 
-            }
+            $response = '{  
+                "hasMore":false,
+                "data":[  
+                    {
+                        "id": "3333-2222-3333",
+                        "definition": {
+                            "name": "Azure01",
+                            "bucket": "azurebucket",
+                            "objectStoreType": "Azure"
+                        }
+                    },
+                    {
+                        "id": "1111-2222-3333",
+                        "definition": {
+                            "name": "S301",
+                            "bucket": "awsbucket",
+                            "objectStoreType": "S3"
+                        }
+                    },
+                    {
+                        "id": "2222-2222-3333",
+                        "definition": {
+                            "name": "S302",
+                            "bucket": "awsbucket2",
+                            "objectStoreType": "S3"
+                        }
+                    }
+                ],
+                "total":3
+            }'
+            return ConvertFrom-Json $response
         }
         It -Name 'No parameters returns all results' -Test {
             ( Get-RubrikObjectStoreArchive  | Measure-Object ).Count |
