@@ -207,6 +207,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = @{
                     'name'          = 'name'
+                    'id'            = 'id'
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.Archive'

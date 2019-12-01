@@ -49,8 +49,6 @@ function Get-RubrikArchive
     [Alias('location_type')]
     [String]$ArchiveType, 
     # DetailedObject will retrieved the detailed archive object, the default behavior of the API is to only retrieve a subset of the archive object. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
-    [Parameter(ParameterSetName='Query')]
-    
     [Switch]$DetailedObject, 
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -80,7 +78,7 @@ function Get-RubrikArchive
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    $uri = New-URIString -server $Server -endpoint ($resources.URI) 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
@@ -88,7 +86,7 @@ function Get-RubrikArchive
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
     # If the Get-RubrikArchive function has been called with the -DetailedObject parameter,
-    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+    if ($DetailedObject) {
       for ($i = 0; $i -lt @($result).Count; $i++) {
         $Percentage = [int]($i/@($result).count*100)
         Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
