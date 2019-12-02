@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added `Get-RubrikArchive`, `Get-RubrikBackupServiceDeployment`, `Get-RubrikGuestOsCredential`, `Get-RubrikIPMI`, `Get-RubrikNfsArchive`, `Get-RubrikNutanixCluster`, `Get-RubrikObjectStoreArchive`, `Get-RubrikQstarArchive`, `Get-RubrikReplicationSource`, `Get-RubrikReplicationTarget`, `Get-RubrikScvmm`, `Get-RubrikSecurityClassification`, `Get-RubrikSmbDomain`, `Get-RubrikSmbSecurity`, and `Get-RubrikSyslogServer` cmdlets to retrieve data from a Rubrik cluster for use in the As Built Report module.
+
 ### Changed
 
 ### Fixed

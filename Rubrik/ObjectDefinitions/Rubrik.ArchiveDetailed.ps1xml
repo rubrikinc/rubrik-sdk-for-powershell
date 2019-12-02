@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.ArchiveDetailed</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Bucket</Label>
+                    </TableColumnHeader>
+                     <TableColumnHeader>
+                        <Label>Archive Location</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Custom Details</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>                    
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <scriptblock>$_.definition.name</scriptblock>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <scriptblock>$_.definition.bucket</scriptblock>
+                            </TableColumnItem> 
+                            <TableColumnItem>
+                               <PropertyName>locationType</PropertyName>
+                            </TableColumnItem>                           
+                            <TableColumnItem>
+                               <PropertyName>definition</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>                            
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>
