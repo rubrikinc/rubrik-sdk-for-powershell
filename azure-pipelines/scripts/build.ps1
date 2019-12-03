@@ -56,7 +56,8 @@ try {
         Write-Output "New Devel Prerelease Version: $newprerelease"
         $Splat.PrivateData.Prerelease = $newprerelease
     }
-
+    
+    cat $splat.path
     Update-ModuleManifest @splat
     
     # Fix errors in Manifest
