@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* ValidateSet on Set-RubrikNutanixVM was incorrect. Changed this to the desired values as outlined in [Issue 533](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/533)
+
 ### Fixed
 
 * Documentation links in comment-based help updated to lower case
