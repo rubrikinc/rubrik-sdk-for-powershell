@@ -25,7 +25,7 @@ function Set-RubrikNutanixVM
             This will unpause backups on any virtual machine named "Server1"
 
             .EXAMPLE
-            Get-RubrikNutanixVM -SLA Platinum | Set-RubrikNutanixVM -SnapConsistency 'CRASH_CONSISTENT' -MaxNestedSnapshots 2 -UseArrayIntegration 
+            Get-RubrikNutanixVM -SLA Platinum | Set-RubrikNutanixVM -SnapConsistency 'CrashConsistent' -MaxNestedSnapshots 2 -UseArrayIntegration 
             This will find all virtual machines in the Platinum SLA Domain and set their snapshot consistency to crash consistent (no application quiescence)
             while also limiting the number of active hypervisor snapshots to 2 and enable storage array (SAN) snapshots for ingest
     #>
