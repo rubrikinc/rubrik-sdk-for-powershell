@@ -17,15 +17,15 @@ function Export-RubrikVApp
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/export-rubrikvapp
 
       .EXAMPLE
-      Export-RubrikVApp -id 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567' -snapshotid '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -ExportMode 'ExportToNewVapp' -PowerOn:$true
+      Export-RubrikVApp -id 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567' -snapshotid '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -ExportMode 'ExportToNewVapp' -PowerOn
       This exports the vApp snapshot with an id of 7acdf6cd-2c9f-4661-bd29-b67d86ace70b to a new vApp in the same Org VDC
 
      .EXAMPLE
-      Export-RubrikVApp -id 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567' -snapshotid '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -ExportMode 'ExportToNewVapp' -NoMapping -PowerOn:$true
+      Export-RubrikVApp -id 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567' -snapshotid '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -ExportMode 'ExportToNewVapp' -NoMapping -PowerOn
       This exports the vApp snapshot with an id of 7acdf6cd-2c9f-4661-bd29-b67d86ace70b to a new vApp in the same Org VDC and remove existing network mappings from VM NICs
 
       .EXAMPLE
-      Export-RubrikVApp -id 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567' -snapshotid '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -ExportMode 'ExportToNewVapp' -TargetOrgVDCID 'VcdOrgVdc:::01234567-8910-1abc-d435-0abc1234d567' -PowerOn:$true
+      Export-RubrikVApp -id 'VcdVapp:::01234567-8910-1abc-d435-0abc1234d567' -snapshotid '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -ExportMode 'ExportToNewVapp' -TargetOrgVDCID 'VcdOrgVdc:::01234567-8910-1abc-d435-0abc1234d567' -PowerOn
       This exports the vApp snapshot with an id of 7acdf6cd-2c9f-4661-bd29-b67d86ace70b to a new vApp in an alternate Org VDC
 
       .EXAMPLE
@@ -35,7 +35,7 @@ function Export-RubrikVApp
       $restorableVms[0].PSObject.Properties.Remove('vcenterVm')
       $vm = @()
       $vm += $restorableVms[0]
-      Export-RubrikVApp -id $vapp.id -snapshotid $snapshot.id -Partial $vm -ExportMode ExportToTargetVapp -PowerOn:$false
+      Export-RubrikVApp -id $vapp.id -snapshotid $snapshot.id -Partial $vm -ExportMode ExportToTargetVapp
 
       This retreives the latest snapshot from the given vApp 'vApp01' and perform a partial export on the first VM in the vApp.
       The VM is exported into the existing parent vApp. Set the ExportMode parameter to 'ExportToNewVapp' parameter to create a new vApp for the partial export.
@@ -97,8 +97,8 @@ function Export-RubrikVApp
     [ValidateNotNullOrEmpty()]
     [String]$NetworkMapping,
     # Power on vApp after restoration.
-    [Parameter(ParameterSetName='Full',Mandatory = $true)]
-    [Parameter(ParameterSetName='Partial',Mandatory = $true)]
+    [Parameter(ParameterSetName='Full')]
+    [Parameter(ParameterSetName='Partial')]
     [switch]$PowerOn,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Full')]
@@ -133,7 +133,11 @@ function Export-RubrikVApp
   Process {
     #region oneoff
     $resources.Body.exportMode = $ExportMode
-    $resources.Body.shouldPowerOnVmsAfterRecovery = $PowerOn
+    if($PowerOn.IsPresent) {
+        $resources.Body.shouldPowerOnVmsAfterRecovery = $true
+    } else {
+        $resources.Body.shouldPowerOnVmsAfterRecovery = $false
+    }
 
     if($Partial) {
         Write-Verbose -Message "Performing Partial vApp Recovery"
@@ -221,12 +225,14 @@ function Export-RubrikVApp
         $vapp = Get-RubrikVapp -id $id
         
         # Collect networks to restore
-        $networks = [System.Collections.ArrayList]@()
-        foreach($vm in $vapp.vms) {
-            foreach($network in $vm.networkConnections) {
-                if($false -eq $networks.Contains($network.vappNetworkName)) {
-                    $networks.Add($network.vappNetworkName) | Out-Null
-                    Write-Verbose -Message "Flagged network $($network.vappNetworkName) for restore"
+        if(-Not $NoMapping -and -Not $RemoveNetworkDevices) {
+            $networks = [System.Collections.ArrayList]@()
+            foreach($vm in $vapp.vms) {
+                foreach($network in $vm.networkConnections) {
+                    if($false -eq $networks.Contains($network.vappNetworkName)) {
+                        $networks.Add($network.vappNetworkName) | Out-Null
+                        Write-Verbose -Message "Flagged network $($network.vappNetworkName) for restore"
+                    }
                 }
             }
         }
@@ -250,16 +256,18 @@ function Export-RubrikVApp
         $resources.Body.newVappParams.orgVdcId = $orgvdc
         $resources.Body.vmsToExport = [System.Collections.ArrayList]@()
         foreach($vm in $vapp.vms) {         
-            $resources.Body.vmsToExport.Add($vm)
+            $resources.Body.vmsToExport.Add($vm) | Out-Null
             Write-Verbose -Message "Added $($vm.name) to request"
         }
 
         # Build networksToRestore based on networks collected from vApp
-        $resources.Body.networksToRestore = [System.Collections.ArrayList]@()
-        foreach($availablenet in $recoveropts.availableVappNetworks) {
-            if($networks.Contains($availablenet.name)) {
-                $resources.Body.networksToRestore.Add($availablenet) | Out-Null
-                Write-Verbose -Message "Found network $($availablenet.name) information for restore"
+        if(-Not $NoMapping -and -Not $RemoveNetworkDevices) {
+            $resources.Body.networksToRestore = [System.Collections.ArrayList]@()
+            foreach($availablenet in $recoveropts.availableVappNetworks) {
+                if($networks.Contains($availablenet.name)) {
+                    $resources.Body.networksToRestore.Add($availablenet) | Out-Null
+                    Write-Verbose -Message "Found network $($availablenet.name) information for restore"
+                }
             }
         }
 
@@ -281,6 +289,7 @@ function Export-RubrikVApp
         }
 
         if($NoMapping) {
+            $resources.Body.networksToRestore = @()
             foreach($vm in $resources.Body.vmsToExport) {
                 foreach($network in $vm.networkConnections) {
                     Write-Verbose -Message "Unmapping $($network.vappNetworkName) from $($vm.Name)"
@@ -290,6 +299,7 @@ function Export-RubrikVApp
         }
 
         if($RemoveNetworkDevices) {
+            $resources.Body.networksToRestore = @()
             foreach($vm in $resources.Body.vmsToExport) {
                 $vm.networkConnections = @()
             }

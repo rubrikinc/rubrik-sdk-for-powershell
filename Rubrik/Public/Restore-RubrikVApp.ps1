@@ -17,11 +17,11 @@ function Restore-RubrikVApp
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/restore-rubrikvapp
 
       .EXAMPLE
-      Restore-RubrikVApp -id '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -PowerOn:$true
+      Restore-RubrikVApp -id '7acdf6cd-2c9f-4661-bd29-b67d86ace70b' -PowerOn
       This restores the vApp snapshot with an id of 7acdf6cd-2c9f-4661-bd29-b67d86ace70b
       
       .EXAMPLE
-      (Get-RubrikVApp 'vApp01' -PrimaryClusterID local | Get-RubrikSnapshot -Latest).id | Restore-RubrikVApp -PowerOn:$true
+      (Get-RubrikVApp 'vApp01' -PrimaryClusterID local | Get-RubrikSnapshot -Latest).id | Restore-RubrikVApp -PowerOn
       This retreives the latest snapshot from the given vApp 'vApp01' and restores it
 
       .EXAMPLE
@@ -30,7 +30,7 @@ function Restore-RubrikVApp
       $restorableVms = $recoveropts.restorableVms
       $vm = @()
       $vm += $restorableVms[0]
-      Restore-RubrikVApp -id $id -Partial $vm -PowerOn:$false
+      Restore-RubrikVApp -id $id -Partial $vm
       This retreives the latest snapshot from the given vApp 'vApp01' and performs a partial restore on the first VM in the vApp.
       This is an advanced use case and the user is responsible for parsing the output from Get-RubrikVAppRecoverOption.
       Syntax of the object passed with the -Partial Parameter must match the format of the object returned from (Get-RubrikVAppRecoverOption).restorableVms
@@ -74,8 +74,8 @@ function Restore-RubrikVApp
     [ValidateNotNullOrEmpty()]
     [String]$NetworkMapping,
     # Power on vApp after restoration.
-    [Parameter(ParameterSetName='Full',Mandatory = $true)]
-    [Parameter(ParameterSetName='Partial',Mandatory = $true)]
+    [Parameter(ParameterSetName='Full')]
+    [Parameter(ParameterSetName='Partial')]
     [switch]$PowerOn,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Full')]
@@ -109,20 +109,23 @@ function Restore-RubrikVApp
 
   Process {
     #region oneoff
+    if($PowerOn.IsPresent) {
+        $resources.Body.shouldPowerOnVmsAfterRecovery = $true
+    } else {
+        $resources.Body.shouldPowerOnVmsAfterRecovery = $false
+    }
+
     if($Partial) {
         Write-Verbose -Message "Performing Partial vApp Recovery"
         $resources.Body.vmsToRestore = @()
         $resources.Body.vmsToRestore += $Partial
-        $resources.Body.shouldPowerOnVmsAfterRecovery = $PowerOn
 
         $body = ConvertTo-Json -InputObject $resources.Body -Depth 4
         Write-Verbose -Message "REST Body $($body)"
-    }
-    else {
+    } else {
         Write-Verbose -Message "Performing Full vApp Recovery"
         $recoveropts = Get-RubrikVAppRecoverOption -id $id
         $resources.Body.vmsToRestore = $recoveropts.restorableVms
-        $resources.Body.shouldPowerOnVmsAfterRecovery = $PowerOn
 
         if($DisableNetwork) {
             foreach($vm in $resources.Body.vmsToRestore) {
