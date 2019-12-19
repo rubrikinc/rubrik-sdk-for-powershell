@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2019-12-19
 
 ### Changed
-* Get-RubrikSnapshot has been changed to convert the current date/time to UTC. This addresses Issue [535](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/535)
+* Get-RubrikSnapshot has been changed to convert the current date/time to UTC when using the -Latest parameter. This addresses Issue [535](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/535)
 * Restore-RubrikVApp and Export-RubrikVApp has been updated to properly deal with -PowerOn being changed to a switch-type parameter. This addresses issue [536](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/536)
 * Export-RubrikVApp has been changed so that it does not request vCD to restore vApp networks if the NICs are removed or unmapped. This addresses issue [537](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/537)
 
