@@ -107,7 +107,10 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
             }
             (-join $Output) | Should -Not -BeLike '*filter_only_on_latest='
         }
-        
+        It -Name 'Verify Status ValidateSet' -Test {
+            { Get-RubrikEvent -Status 'NonExistant' } | 
+                Should -Throw "Cannot validate argument on parameter 'Status'."
+        }        
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 8
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 8
