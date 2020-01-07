@@ -48,7 +48,7 @@ function Get-RubrikEvent
     [parameter()]
     [string]$EventSeriesId,
     # Filter by Status. Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling’.
-    [ValidateSet('Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling', IgnoreCase = $false)]
+    [ValidateSet('Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling', 'Queued', IgnoreCase = $false)]
     [parameter()]
     [string]$Status,
     # Filter by Event Type.
