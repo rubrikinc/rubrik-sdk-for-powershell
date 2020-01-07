@@ -121,15 +121,16 @@ function Get-RubrikScvmm
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
     # if detailed object is passed, loop through to get more information
-    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id')) -and ($null -ne $result))  {
         for ($i = 0; $i -lt @($result).Count; $i++) {
           $Percentage = [int]($i/@($result).count*100)
           Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
           Get-RubrikScvmm -id $result[$i].id
         }
-      } else {
+    } else {
         return $result
-      }
+    }
 
   } # End of process
 } # End of function
