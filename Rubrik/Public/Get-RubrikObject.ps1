@@ -55,13 +55,13 @@ function Get-RubrikObject
     [ValidateSet("VMwareVM","NutanixVM","HyperVVM","MSSQLDB","OracleDB","Fileset","VolumeGroup","ManagedVolume","SLADomain","PhysicalHost",
                  "NasShare","FilesetTemplate","AvailabilityGroup","DatabaseMount","Event","LDAPObject","LogShipping","ManagedVolumeExport",
                  "VMwareVMLiveMount","RubrikOrganization","Report","RubrikCluster","SQLInstance","vCenterServer","VMwareDatastore","VMwareHost",
-                 "APIToken")]
+                 "VMwareDatacenter", "VMwareCluster","APIToken")]
     [String[]]$IncludeObjectType, 
     # Filter Objects to exclude
     [ValidateSet("VMwareVM","NutanixVM","HyperVVM","MSSQLDB","OracleDB","Fileset","VolumeGroup","ManagedVolume","SLADomain","PhysicalHost",
                  "NasShare","FilesetTemplate","AvailabilityGroup","DatabaseMount","Event","LDAPObject","LogShipping","ManagedVolumeExport",
                  "VMwareVMLiveMount","RubrikOrganization","Report","RubrikCluster","SQLInstance","vCenterServer","VMwareDatastore","VMwareHost",
-                 "APIToken")]
+                 "VMwareDatacenter", "VMwareCluster","APIToken")]
     [String[]]$ExcludeObjectType, 
     # Filter Object Classes to include
     [ValidateSet("VirtualMachines","Databases","FilesAndVolumes","AllProtectedObjects","InternalRubrikObjects")]
@@ -115,6 +115,8 @@ function Get-RubrikObject
         "SQLInstance"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSQLInstance"; FriendlyName = "SQL Instances"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "Databases" }
         "vCenterServer"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikvCenter"; FriendlyName = "vCenter Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
         "VMwareDatastore"     = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareDatastore"; FriendlyName = "VMware Datastores"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
+        "VMwareDatacenter"    = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareDatacenter"; FriendlyName = "VMware Datacenters"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
+        "VMwareCluster"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareCluster"; FriendlyName = "VMware Clusters"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
         "VMwareHost"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareHost"; FriendlyName = "VMware Hosts"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
         "APIToken"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikAPIToken"; FriendlyName = "API Tokens"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Tag"; ObjectClass = "InternalRubrikObjects" }
     }
