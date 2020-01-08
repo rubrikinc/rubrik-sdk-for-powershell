@@ -1396,6 +1396,21 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
                 ObjectTName = 'Rubrik.VMwareCluster'
             }
+            '5.1' = @{
+                Description = 'Retrieves all VMware Cluster objects known to the Rubrik cluster'
+                URI         = '/api/v1/vmware/compute_cluster'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.VMwareCluster'
+            }
         }
         'Get-RubrikVMwareDatacenter'         = @{
             '1.0' = @{
