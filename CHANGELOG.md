@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added `Get-RubrikArchive`, `Get-RubrikBackupServiceDeployment`, `Get-RubrikGuestOsCredential`, `Get-RubrikIPMI`, `Get-RubrikNfsArchive`, `Get-RubrikNutanixCluster`, `Get-RubrikObjectStoreArchive`, `Get-RubrikQstarArchive`, `Get-RubrikReplicationSource`, `Get-RubrikReplicationTarget`, `Get-RubrikScvmm`, `Get-RubrikSecurityClassification`, `Get-RubrikSmbDomain`, `Get-RubrikSmbSecurity`, and `Get-RubrikSyslogServer` cmdlets to retrieve data from a Rubrik cluster for use in the As Built Report module.
 * Added QUEUED as a value in the status ValidateSet within Get-RubrikEvent and updated Unit Tests.  Addresses [Issue 539](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/539)
+* Added Get-RubrikVMwareDatacenter and Get-RubrikVMwareCluster along with associated Unit Tests. Addresses [Issue 463](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/463)
 
 ### Changed
 

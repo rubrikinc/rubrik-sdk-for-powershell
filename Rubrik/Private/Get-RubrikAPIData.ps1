@@ -1380,6 +1380,55 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.vCenter'
             }
         }
+        'Get-RubrikVMwareCluster'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all VMware Cluster objects known to the Rubrik cluster'
+                URI         = '/api/internal/vmware/compute_cluster'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.VMwareCluster'
+            }
+            '5.1' = @{
+                Description = 'Retrieves all VMware Cluster objects known to the Rubrik cluster'
+                URI         = '/api/v1/vmware/compute_cluster'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.VMwareCluster'
+            }
+        }
+        'Get-RubrikVMwareDatacenter'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all VMware Datacenter objects known to the Rubrik cluster'
+                URI         = '/api/internal/vmware/data_center'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.VMwareDatacenter'
+            }
+        }
         'Get-RubrikVMwareDatastore'         = @{
             '1.0' = @{
                 Description = 'Retrieves all datastores known to the Rubrik cluster'
@@ -1711,6 +1760,9 @@ function Get-RubrikAPIData($endpoint) {
                     subnet = 'subnet'
                     volumeSize =  'volumeSize'
                     applicationTag = 'applicationTag'
+                    exportConfig = @{
+                        hostPatterns = 'hostPatterns'
+                    }
                 }
                 Query       = ''
                 Result      = ''
