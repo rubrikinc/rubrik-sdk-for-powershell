@@ -2,7 +2,6 @@ function Get-RubrikAPIData($endpoint) {
     <#
         .SYNOPSIS
         Helper function to retrieve API data from Rubrik
-
         .DESCRIPTION
         Function which defines the structure of each cmdlet's API request and response based on the software version the connected Rubrik cluster.
     #>
@@ -195,6 +194,24 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikArchive'         = @{
+            '1.0' = @{
+                Description = 'Retrieves software version of the Rubrik cluster'
+                URI         = '/api/internal/archive/location'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    'ArchiveType'  = 'location_type' 
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'name'          = 'name'
+                    'id'            = 'id'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.Archive'
+            }
+        }
         'Get-RubrikAvailabilityGroup' = @{
             '1.0' = @{
                 Description = 'Get summary information for Microsoft SQL availability groups'
@@ -314,6 +331,18 @@ function Get-RubrikAPIData($endpoint) {
                         LocalStorageIngested    = '/api/internal/stats/snapshot_storage/ingested'
                         DailyGrowth             = '/api/internal/report/summary/average_local_growth_per_day'
                                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikBackupServiceDeployment'           = @{
+            '1.0' = @{
+                Description = 'Retrieve the global settings for automatic deployment of the Rubrik Backup Service to virtual machines.'
+                URI         = '/api/internal/vmware/agent'
                 Method      = 'Get'
                 Body        = ''
                 Query       = ''
@@ -495,6 +524,21 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.FilesetTemplate'
             }
         }
+        'Get-RubrikGuestOsCredential'      = @{
+            '1.0' = @{
+                Description = 'Returns the known guest os credentials from Rubrik'
+                URI         = '/api/internal/vmware/guest_credential'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    Username = 'username'
+                    Domain = 'domain'
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikHost'               = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all hosts that are registered with a Rubrik cluster'
@@ -513,18 +557,6 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.Host'
-            }
-        }
-        'Get-RubrikHostVolumes'               = @{
-            '1.0' = @{
-                Description = 'Retrieve summary information for all Volume Groups that belong to a Windows host'
-                URI         = '/api/internal/host/{id}/volume'
-                Method      = 'Get'
-                Body        = ''
-                Query       = ''
-                Result      = 'data'
-                Filter      = ''
-                Success     = '200'
             }
         }
         'Get-RubrikHyperVVM'                 = @{
@@ -547,6 +579,18 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.HyperVVM'
+            }
+        }
+        'Get-RubrikIPMI'              = @{
+            '1.0' = @{
+                Description = 'Retrieve the configured IPMI settings within the Rubrik Cluster'
+                URI         = '/api/internal/cluster/me/ipmi'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
             }
         }
         'Get-RubrikLDAP'         = @{
@@ -700,6 +744,21 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikNFSArchive'         = @{
+            '1.0' = @{
+                Description = 'Retrieves a list of NFS archives from the Rubrik cluster'
+                URI         = '/api/internal/archive/nfs'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    name = 'definition.Name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.ArchiveDetailed'
+            }
+        }
         'Get-RubrikNode'              = @{
             '1.0' = @{
                 Description = 'Retrieve information on nodes within the Rubrik Cluster'
@@ -736,6 +795,25 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikNutanixCluster'                 = @{
+            '1.0' = @{
+                Description = 'Get summary of all Nutanix Clusters'
+                URI         = '/api/internal/nutanix/cluster'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    should_get_status       = 'should_get_status'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'Hostname'  = 'hostname'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.NutanixCluster'
+            }
+        }
         'Get-RubrikNutanixVM'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all Nutanix VMs'
@@ -756,6 +834,21 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.NutanixVM'
+            }
+        }
+        'Get-RubrikObjectStoreArchive'         = @{
+            '1.0' = @{
+                Description = 'Retrieves a list of object store archives from the Rubrik cluster'
+                URI         = '/api/internal/archive/object_store'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    name = 'definition.Name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.ArchiveDetailed'
             }
         }
         'Get-RubrikOracleDB'                = @{
@@ -825,6 +918,49 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
                 ObjectTName = 'Rubrik.ProxySetting'
+            }
+        }
+        'Get-RubrikQstarArchive'         = @{
+            '1.0' = @{
+                Description = 'Retrieves a list of Qstar archives from the Rubrik cluster'
+                URI         = '/api/internal/archive/qstar'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    name = 'definition.Name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.ArchiveDetailed'
+            }
+        }
+        'Get-RubrikReplicationSource'           = @{
+            '1.0' = @{
+                Description = 'Get summaries for all replication sources'
+                URI         = '/api/internal/replication/source'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    sourceClusterName = 'sourceClusterName'
+                }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikReplicationTarget'           = @{
+            '1.0' = @{
+                Description = 'Get summaries for all replication targets'
+                URI         = '/api/internal/replication/target'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    targetClusterName = 'targetClusterName'
+                }
+                Success     = '200'
             }
         }
         'Get-RubrikReport'             = @{
@@ -913,6 +1049,37 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
+        'Get-RubrikScvmm'      = @{
+            '1.0' = @{
+                Description = 'Returns the known SCVMM servers from Rubrik'
+                URI         = '/api/internal/hyperv/scvmm'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id = 'primary_cluster_id'
+                    sla_assignment      = 'sla_assignment'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.Scvmm'
+            }
+        }
+        'Get-RubrikSecurityClassification'      = @{
+            '1.0' = @{
+                Description = 'Returns a the security classification settings from Rubrik'
+                URI         = '/api/internal/cluster/me/security_classification'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikSetting'         = @{
             '1.0' = @{
                 Description = 'Retrieves all settings of the Rubrik cluster'
@@ -955,6 +1122,32 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.SLADomain'
+            }
+        }
+        'Get-RubrikSmbDomain'              = @{
+            '1.0' = @{
+                Description = 'Retrieve the configured SMB Domains within the Rubrik Cluster'
+                URI         = '/api/internal/smb/domain'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+            }
+        }
+        'Get-RubrikSmbSecurity'              = @{
+            '1.0' = @{
+                Description = 'Retrieve the configured SMB security configuration within the Rubrik Cluster'
+                URI         = '/api/internal/smb/config'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
             }
         }
         'Get-RubrikSnapshot'           = @{
@@ -1035,6 +1228,20 @@ function Get-RubrikAPIData($endpoint) {
                 Query       = ''
                 Result      = ''
                 Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikSyslogServer'              = @{
+            '1.0' = @{
+                Description = 'Retrieve the configured syslog servers within the Rubrik Cluster'
+                URI         = '/api/internal/syslog'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'hostname'
+                }
                 Success     = '200'
             }
         }
@@ -1172,6 +1379,55 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.vCenter'
             }
         }
+        'Get-RubrikVMwareCluster'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all VMware Cluster objects known to the Rubrik cluster'
+                URI         = '/api/internal/vmware/compute_cluster'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.VMwareCluster'
+            }
+            '5.1' = @{
+                Description = 'Retrieves all VMware Cluster objects known to the Rubrik cluster'
+                URI         = '/api/v1/vmware/compute_cluster'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.VMwareCluster'
+            }
+        }
+        'Get-RubrikVMwareDatacenter'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all VMware Datacenter objects known to the Rubrik cluster'
+                URI         = '/api/internal/vmware/data_center'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'Name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.VMwareDatacenter'
+            }
+        }
         'Get-RubrikVMwareDatastore'         = @{
             '1.0' = @{
                 Description = 'Retrieves all datastores known to the Rubrik cluster'
@@ -1288,6 +1544,18 @@ function Get-RubrikAPIData($endpoint) {
                 Query           = @{
                     id          = 'id'
                 }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikHostVolumes'               = @{
+            '1.0' = @{
+                Description = 'Retrieve summary information for all Volume Groups that belong to a Windows host'
+                URI         = '/api/internal/host/{id}/volume'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
@@ -1503,6 +1771,9 @@ function Get-RubrikAPIData($endpoint) {
                     subnet = 'subnet'
                     volumeSize =  'volumeSize'
                     applicationTag = 'applicationTag'
+                    exportConfig = @{
+                        hostPatterns = 'hostPatterns'
+                    }
                 }
                 Query       = ''
                 Result      = ''
