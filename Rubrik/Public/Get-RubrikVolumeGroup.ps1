@@ -43,7 +43,6 @@ function Get-RubrikVolumeGroup
     [Alias('VolumeGroup')]
     [String]$name,
     # Hostname - Not supported via API today, so filtering the result at the end with Where-Object.
-    [Alias('Server')]
     [String]$hostname,
     # Filter results to include only relic (removed) volume groups
     [Alias('is_relic')]    
