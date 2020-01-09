@@ -1,4 +1,4 @@
-#requires -Version 3
+﻿#requires -Version 3
 function Get-RubrikVolumeGroup
 {
   <#  
@@ -13,14 +13,14 @@ function Get-RubrikVolumeGroup
       Twitter: @PierreFlammer
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvolumegroup
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVolumeGroup
 
       .EXAMPLE
-      Get-RubrikVolumeGroup -Name 'Server1'
+      Get-RubrikVolumeGroup -Hostname 'Server1'
       This will return details on all volume groups from host "Server1".
 
       .EXAMPLE
-      Get-RubrikVolumeGroup -Name 'Server1' -SLA Gold
+      Get-RubrikVolumeGroup -Hostname 'Server1' -SLA Gold
       This will return details on all volume groups of "Server1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
@@ -42,6 +42,9 @@ function Get-RubrikVolumeGroup
     [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('VolumeGroup')]
     [String]$name,
+    # Hostname - Not supported via API today, so filtering the result at the end with Where-Object.
+    [Alias('Server')]
+    [String]$hostname,
     # Filter results to include only relic (removed) volume groups
     [Alias('is_relic')]    
     [Switch]$Relic,
@@ -98,6 +101,11 @@ function Get-RubrikVolumeGroup
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
+
+    #filter for hostname if paramter is used - not supported via Rubrik API today
+    if ($PSBoundParameters.ContainsKey('hostname')) {
+       $result = $result | Where-Object {($_.Hostname -eq $hostname)}
+    }
     
     # If the Get-RubrikVolumeGroup function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
