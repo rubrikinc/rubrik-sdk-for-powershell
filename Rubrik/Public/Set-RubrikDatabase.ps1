@@ -58,9 +58,65 @@ function Set-RubrikDatabase
    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik's database id value
-    [Parameter(ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()] 
+    [Parameter(ParameterSetName='Global',Mandatory=$true)]
+    [parameter(ParameterSetName='SLAbyId',Mandatory=$true)]
+    [parameter(ParameterSetName='SLAbyName',Mandatory=$true)]
+    [Parameter(ParameterSetName='PreScript',Mandatory=$true)]
+    [Parameter(ParameterSetName='PreScriptDisable',Mandatory=$true)]
+    [Parameter(ParameterSetName='PostScriptDisable',Mandatory=$true)]
+    [Parameter(ParameterSetName='PostScript',Mandatory=$true)]
     [String]$id,
+    
+    #SLA Domain ID for the database
+    [parameter(ParameterSetName='SLAbyId',Mandatory=$true)]
+    [Parameter(ParameterSetName='PreScript')]
+    [Parameter(ParameterSetName='PreScriptDisable')]
+    [Parameter(ParameterSetName='PostScriptDisable')]
+    [Parameter(ParameterSetName='PostScript')]
+    [Parameter(ParameterSetName='Global')]
+    [Alias('ConfiguredSlaDomainId')]
+    [string]$SLAID,
+    # The SLA Domain name in Rubrik
+    [parameter(ParameterSetName='SLAbyName',Mandatory=$true)]
+    [Parameter(ParameterSetName='PreScript')]
+    [Parameter(ParameterSetName='PreScriptDisable')]
+    [Parameter(ParameterSetName='PostScriptDisable')]
+    [Parameter(ParameterSetName='PostScript')]
+    [Parameter(ParameterSetName='Global')]
+    [String]$SLA,
+    
+    #Pre-backup script parameters
+    [Parameter(ParameterSetName='PreScript',Mandatory=$true)]
+    [string]$PreScriptPath,
+    [Parameter(ParameterSetName='PreScript',Mandatory=$true)]
+    [ValidateSet('abort','continue')]
+    [string]$PreScriptErrorAction,
+    [Parameter(ParameterSetName='PreScript',Mandatory=$true)]
+    [int]$PreTimeoutMs,
+    
+    [Parameter(ParameterSetName='PreScriptDisable',Mandatory=$true)]
+    [Parameter(ParameterSetName='Global')]
+    [parameter(ParameterSetName='SLAbyId')]
+    [parameter(ParameterSetName='SLAbyName')]
+    [switch]$DisablePreBackupScript,
+    
+    #Post-backup script parameters
+    [Parameter(ParameterSetName='PostScript',Mandatory=$true)]
+    [string]$PostScriptPath,
+    [Parameter(ParameterSetName='PostScript',Mandatory=$true)]
+    [ValidateSet('abort','continue')]
+    [string]$PostScriptErrorAction,
+    [Parameter(ParameterSetName='PostScript',Mandatory=$true)]
+    [int]$PostTimeoutMs,
+    
+    [Parameter(ParameterSetName='PostScriptDisable',Mandatory=$true)]
+    [Parameter(ParameterSetName='Global')]
+    [parameter(ParameterSetName='SLAbyId')]
+    [parameter(ParameterSetName='SLAbyName')]
+    [switch]$DisablePostBackupScript,
+    
     #Number of seconds between log backups if db is in FULL or BULK_LOGGED
     #NOTE: Default of -1 is used to get around ints defaulting as 0
     [int]$LogBackupFrequencyInSeconds = -1,
@@ -69,35 +125,9 @@ function Set-RubrikDatabase
     [int]$LogRetentionHours = -1,
     #Boolean declaration for copy only backups on the database.
     [Switch]$CopyOnly,
-    #Pre-backup script parameters
-    [Parameter(ParameterSetName = 'preBackupScript')]
-    [string]$PreScriptPath,
-    [Parameter(ParameterSetName = 'preBackupScript')]
-    [ValidateSet('abort','continue')]
-    [string]$PreScriptErrorAction,
-    [Parameter(ParameterSetName = 'preBackupScript')]
-    [int]$PreTimeoutMs,
-    [Parameter(ParameterSetName = 'preBackupScript')]
-    [switch]$DisablePreBackupScript,
-    #Post-backup script parameters
-    [Parameter(ParameterSetName = 'postBackupScript')]
-    [string]$PostScriptPath,
-    [Parameter(ParameterSetName = 'postBackupScript')]
-    [ValidateSet('abort','continue')]
-    [string]$PostScriptErrorAction,
-    [Parameter(ParameterSetName = 'postBackupScript')]
-    [int]$PostTimeoutMs,
-    [Parameter(ParameterSetName = 'postBackupScript')]
-    [switch]$DisablePostBackupScript,
     #Number of max data streams Rubrik will use to back up the database
     #NOTE: Default of -1 is used to get around ints defaulting as 0
     [int]$MaxDataStreams = -1,
-    #SLA Domain ID for the database
-    [Alias('ConfiguredSlaDomainId')]
-    [string]$SLAID,
-    # The SLA Domain name in Rubrik
-    [Parameter(ParameterSetName = 'SLA_Explicit')]
-    [String]$SLA,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
