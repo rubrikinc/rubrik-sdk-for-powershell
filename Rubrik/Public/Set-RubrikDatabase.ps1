@@ -55,7 +55,7 @@ function Set-RubrikDatabase
       Remove a script from running after a Rubrik Backup
   #>
 
-   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="Global")]
   Param(
     # Rubrik's database id value
     [Parameter(ValueFromPipelineByPropertyName = $true)]
@@ -100,6 +100,8 @@ function Set-RubrikDatabase
     [Parameter(ParameterSetName='Global')]
     [parameter(ParameterSetName='SLAbyId')]
     [parameter(ParameterSetName='SLAbyName')]
+    [parameter(ParameterSetName='PostScriptDisable')]
+    [parameter(ParameterSetName='PostScript')]
     [switch]$DisablePreBackupScript,
     
     #Post-backup script parameters
@@ -115,6 +117,8 @@ function Set-RubrikDatabase
     [Parameter(ParameterSetName='Global')]
     [parameter(ParameterSetName='SLAbyId')]
     [parameter(ParameterSetName='SLAbyName')]
+    [parameter(ParameterSetName='PreScript')]
+    [Parameter(ParameterSetName='PreScriptDisable')]
     [switch]$DisablePostBackupScript,
     
     #Number of seconds between log backups if db is in FULL or BULK_LOGGED
