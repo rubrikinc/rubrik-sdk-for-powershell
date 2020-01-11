@@ -53,6 +53,13 @@ function Set-RubrikDatabase
       Set-RubrikDatabase -id $RubrikDatabase.id -DisablePostBackupScript 
       
       Remove a script from running after a Rubrik Backup
+
+      .EXAMPLE
+
+      $RubrikDatabase = Get-RubrikDatabase -Hostname am1-sql16-1 -Instance MSSQLSERVER -Name "AthenaAM1-SQL16-1-2016"
+      Set-RubrikDatabase -id $RubrikDatabase.id -MaxDataStreams 3 
+      
+      Modifies the Max Data Streams allowed for a specified database
   #>
 
    [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="Global")]
