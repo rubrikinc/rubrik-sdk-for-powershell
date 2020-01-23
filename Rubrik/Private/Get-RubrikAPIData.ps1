@@ -2095,6 +2095,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.VolumeGroup'
             }
         }
         'Update-RubrikHost'             = @{
