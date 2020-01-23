@@ -1514,6 +1514,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = @{
                     'Name' = 'name'
                     'SLA'  = 'effectiveSlaDomainName'
+                    'hostname' = 'HostName'
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.VolumeGroup'
