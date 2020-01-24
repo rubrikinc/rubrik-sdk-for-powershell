@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.VCDvApp</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>VCD Cluster</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>SLA Domain</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Relic</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Id</Label>
+                    </TableColumnHeader>                    
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>name</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>vcdClusterName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>effectiveSlaDomainName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                 <PropertyName>isRelic</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>                            
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>
