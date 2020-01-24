@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * ValidateSet on Set-RubrikNutanixVM was incorrect. Changed this to the desired values as outlined in [Issue 533](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/533)
 * Added null check to results when passing -DetailedObject to Get-RubrikSCVMM. Addresses [Issue 531](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/531)
+* Modified New-RubrikSLA in order to support creation of SLAs when used with the pipeline from Get-RubrikSLA as per [Issue 484](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/484)
 * Modified ParameterSets on Set-RubrikDatabase to align with logic outlined in [Issue 438](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/438)
 * Added more object support to `Get-RubrikObject` as per defined in [Issue 545](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/545) and [Issue 462](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/462)
 
