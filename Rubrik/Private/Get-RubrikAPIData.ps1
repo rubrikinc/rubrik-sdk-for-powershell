@@ -1286,6 +1286,7 @@ function Get-RubrikAPIData($endpoint) {
                     'vcdClusterName'   = 'vcdClusterName'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VCDvApp'
             }
         }
         'Get-RubrikVAppExportOption'                = @{
@@ -1361,6 +1362,7 @@ function Get-RubrikAPIData($endpoint) {
                     'Hostname' = 'hostname'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VCDServer'
             }
         }
        'Get-RubrikVCenter'         = @{

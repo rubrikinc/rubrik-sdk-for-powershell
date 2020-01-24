@@ -45,6 +45,16 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
                 'id'   = 'HyperV:22222'
             }
         }
+        Mock -CommandName Get-RubrikvApp -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{
+                'name'  = 'vApp01'
+                'id'    = 'vApp:11111'
+            },
+            @{
+                'name' = 'vApp02'
+                'id'   = 'vApp:22222'
+            }
+        }
         Mock -CommandName Get-RubrikNutanixVM -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'name'  = 'demonutanix'
@@ -84,6 +94,7 @@ Describe -Name 'Public/Get-RubrikObject' -Tag 'Public', 'Get-RubrikObject' -Fixt
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
         Assert-MockCalled -CommandName Get-RubrikVM -ModuleName 'Rubrik' -Exactly 3
         Assert-MockCalled -CommandName Get-RubrikHyperVVM -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Get-RubrikvApp -ModuleName 'Rubrik' -Exactly 1
         Assert-MockCalled -CommandName Get-RubrikNutanixVM -ModuleName 'Rubrik' -Exactly 1
         Assert-MockCalled -CommandName Get-RubrikDatabase -ModuleName 'Rubrik' -Exactly 2
     }
