@@ -21,19 +21,19 @@ function Protect-RubrikVolumeGroup
             
       .EXAMPLE
       Protect-RubrikVolumeGroup -id VolumeGroup:::2038fecb-745b-4d2d-8a71-cf2fc0d0be80 -SLA 'Gold'
-      This will assign the Gold SLA Domain to any virtual machine named "VM1"
+      This will assign the Gold SLA Domain to any the specified Volume Group
 
       .EXAMPLE
       Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold'
-      This will assign the Gold SLA Domain to any virtual machine named "VM1"
+      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname
 
       .EXAMPLE
       Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeDrives C,E
-      This will assign the Gold SLA Domain to any virtual machine named "VM1"
+      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, excluding the C and E drives
 
       .EXAMPLE
       Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeIDs 824fd711-ad69-4b56-bb83-613b0125f178
-      This will assign the Gold SLA Domain to any virtual machine named "VM1"
+      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, excluding the disks with the specified IDs
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="None")]
