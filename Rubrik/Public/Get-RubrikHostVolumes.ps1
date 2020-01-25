@@ -66,7 +66,7 @@ function Get-RubrikHostVolumes
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
-                   # only return volumes that are currently present on the system
+    # only return volumes that are currently present on the system
     return $result | where-object {($_.isCurrentlyPresentOnSystem -eq "True")}
 
   } # End of process
