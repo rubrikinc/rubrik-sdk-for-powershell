@@ -26,6 +26,11 @@ function New-RubrikFileset
       New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id
 
       Creates a new fileset for the BAR NAS, using the FOO template.
+
+      .EXAMPLE
+      New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id -DirectArchive
+
+      Creates a new fileset for the BAR NAS, using the FOO template. Enables the NAS Direct Archive functionality on the share.
   #>
 
   [CmdletBinding()]
