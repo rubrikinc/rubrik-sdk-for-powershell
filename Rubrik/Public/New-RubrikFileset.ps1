@@ -36,7 +36,10 @@ function New-RubrikFileset
     # HostID - Used for Windows or Linux Filesets
     [String]$HostID,
     # ShareID - used for NAS shares
-    [String]$ShareID,   
+    [String]$ShareID, 
+    # DirectArchive - used to specify if data should be directly sent to archive (bypassing Rubrik Cluster)
+    [Alias('isPassThrough')]
+    [Switch]$DirectArchive , 
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -65,13 +68,27 @@ function New-RubrikFileset
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
-
+    if ($DirectArchive) {
+      $uri = New-URIString -server $server -endpoint ('/api/internal/fileset/bulk')
+      $body = @{
+        templateId = $TemplateId
+        shareId = $ShareId
+        isPassthrough = $true
+      }
+      $body = ConvertTo-Json @($body)
+      Write-Verbose "Body is: $body"
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    }
+    else {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    }
     return $result
 
   } # End of process
