@@ -31,12 +31,16 @@ function New-RubrikFileset
   [CmdletBinding()]
   Param(
     #Fileset Template ID to use for the new fileset
-    [Parameter(Mandatory=$true)]
+    [Parameter(ParameterSetName='Host',Mandatory=$true)]
+    [Parameter(ParameterSetName='NAS',Mandatory=$true)]
     [String]$TemplateID,
     # HostID - Used for Windows or Linux Filesets
+    [Parameter(ParameterSetName='Host',Mandatory=$true)]
     [String]$HostID,
     # ShareID - used for NAS shares
+    [Parameter(ParameterSetName='NAS',Mandatory=$true)]
     [String]$ShareID, 
+    [Parameter(ParameterSetName='NAS')]
     # DirectArchive - used to specify if data should be directly sent to archive (bypassing Rubrik Cluster)
     [Alias('isPassThrough')]
     [Switch]$DirectArchive , 
