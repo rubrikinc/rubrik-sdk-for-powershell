@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 * Documentation links in comment-based help updated to lower case
+* Null filter on Get-RubrikSCVMM when using -DetailedObject as per [Issue 556](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/556)
 
 ## [5.0.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.0) - 2019-11-24
 
