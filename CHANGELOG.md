@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Modified New-RubrikSLA in order to support creation of SLAs when used with the pipeline from Get-RubrikSLA as per [Issue 484](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/484)
 * Modified ParameterSets on Set-RubrikDatabase to align with logic outlined in [Issue 438](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/438)
 * Added more object support to `Get-RubrikObject` as per defined in [Issue 545](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/545) and [Issue 462](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/462)
+* Modified Invoke-RubrikRestCall to support the forcing of the body to be a single item array as per defined in [Issue 554](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/554)
 
 ### Fixed
 
