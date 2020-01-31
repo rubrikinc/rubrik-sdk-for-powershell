@@ -134,7 +134,7 @@
                    'Get-RubrikFilesetTemplate',
                    'Get-RubrikGuestOSCredential',
                    'Get-RubrikHost',
-                   'Get-RubrikHostVolumes',
+                   'Get-RubrikHostVolume',
                    'Get-RubrikHyperVVM', 
                    'Get-RubrikIPMI',
                    'Get-RubrikLDAP',

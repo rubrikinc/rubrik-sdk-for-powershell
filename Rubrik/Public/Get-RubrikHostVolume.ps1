@@ -1,5 +1,5 @@
 ﻿#Requires -Version 3
-function Get-RubrikHostVolumes
+function Get-RubrikHostVolume
 {
   <#  
       .SYNOPSIS
@@ -14,13 +14,13 @@ function Get-RubrikHostVolumes
       GitHub: Pierre-PvF
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikHostVolumes
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikHostVolume
             
       .EXAMPLE
-      Get-RubrikHostVolumes -id Host:::a9d9a5ac-ed22-4723-b329-74db48c93e03
+      Get-RubrikHostVolume -id Host:::a9d9a5ac-ed22-4723-b329-74db48c93e03
 
       .EXAMPLE
-      Get-RubrikHost -name 2016.flammi.home | Get-RubrikHostVolumes
+      Get-RubrikHost -name 2016.flammi.home | Get-RubrikHostVolume
   #>
 
   [CmdletBinding()]

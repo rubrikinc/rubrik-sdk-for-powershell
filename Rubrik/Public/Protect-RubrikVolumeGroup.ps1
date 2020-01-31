@@ -21,19 +21,19 @@ function Protect-RubrikVolumeGroup
             
       .EXAMPLE
       Protect-RubrikVolumeGroup -id VolumeGroup:::2038fecb-745b-4d2d-8a71-cf2fc0d0be80 -SLA 'Gold'
-      This will assign the Gold SLA Domain to any the specified Volume Group
+      This will assign the Gold SLA Domain to any virtual machine named "VM1"
 
       .EXAMPLE
       Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold'
-      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname
+      This will assign the Gold SLA Domain to any virtual machine named "VM1"
 
       .EXAMPLE
-      Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeDrives C,E
-      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, excluding the C and E drives
+      Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeDrive C,E
+      This will assign the Gold SLA Domain to any virtual machine named "VM1"
 
       .EXAMPLE
       Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeIDs 824fd711-ad69-4b56-bb83-613b0125f178
-      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, excluding the disks with the specified IDs
+      This will assign the Gold SLA Domain to any virtual machine named "VM1"
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="None")]
@@ -52,7 +52,7 @@ function Protect-RubrikVolumeGroup
     [Alias('configuredSlaDomainId')]
     [String]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$true),    
     # Specifiy MountPoints to be excluded
-    [Array]$ExcludeDrives,
+    [Array]$ExcludeDrive,
     # Specifiy IDs to be excluded (alternative to MountPoints)
     [Array]$ExcludeIDs,
     # Rubrik server IP or FQDN
@@ -97,15 +97,15 @@ function Protect-RubrikVolumeGroup
     #get hostid of volumegroup
     $volumegroup = Get-RubrikVolumeGroup -id $id 
     #get all volumes of the host, so we can exclude drives or IDs
-    $volumes = Get-RubrikHostVolumes -id $volumegroup.hostid
+    $volumes = Get-RubrikHostVolume -id $volumegroup.hostid
 
     #remove all excluded mount points
     foreach ($volume in $volumes) {
-        foreach ($mp in $ExcludeDrives) {
+        foreach ($mp in $ExcludeDrive) {
             if ($mp -like $volume.mountPoints.Replace(":\","")) {
+                $volumes = $volumes | Where-Object { $_.id –ne $volume.id }
+                #$body.volumeIdsIncludedInSnapshots = $body.volumeIdsIncludedInSnapshots -  $volume.id
                 Write-Verbose -Message "Not protecting Volume with MountPoint: $volume.mountPoints" -Verbose
-            } else {
-                $body.volumeIdsIncludedInSnapshots +=  $volume.id
             }
         }
     }
@@ -114,12 +114,17 @@ function Protect-RubrikVolumeGroup
     foreach ($volume in $volumes) {
         foreach ($eID in $ExcludeID) {
             if ($eID -eq $volume.id ) {
+                $volumes = $volumes | Where-Object { $_.id –ne $volume.id }
+                #$body.volumeIdsIncludedInSnapshots -=  $volume.id
                 Write-Verbose -Message "Not protecting Volume with ID $volume.id" -Verbose
-            } else {
-                $body.volumeIdsIncludedInSnapshots +=  $volume.id
             }
         }
     }
+
+    foreach ($volume in $volumes) {
+        $body.volumeIdsIncludedInSnapshots +=  $volume.id
+    }
+
 
     $body = ConvertTo-Json $body
     #### Generating $body ####

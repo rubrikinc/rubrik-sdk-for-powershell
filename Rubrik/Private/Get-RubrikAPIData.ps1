@@ -1553,7 +1553,7 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '200'
             }
         }
-        'Get-RubrikHostVolumes'               = @{
+        'Get-RubrikHostVolume'               = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for all Volume Groups that belong to a Windows host'
                 URI         = '/api/internal/host/{id}/volume'
