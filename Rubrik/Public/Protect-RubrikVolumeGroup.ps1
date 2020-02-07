@@ -21,19 +21,19 @@ function Protect-RubrikVolumeGroup
             
       .EXAMPLE
       Protect-RubrikVolumeGroup -id VolumeGroup:::2038fecb-745b-4d2d-8a71-cf2fc0d0be80 -SLA 'Gold'
-      This will assign the Gold SLA Domain to the specified Volume Group
+      This will assign the Gold SLA Domain to the specified Volume Group, including all volumes presently on the system
 
       .EXAMPLE
       Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold'
-      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname
+      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, including all volumes presently on the system
 
       .EXAMPLE
       Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeDrive C,E
-      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, excluding the C and E drives
+      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, including all volumes presently on the system except for  the C and E drives
 
       .EXAMPLE
       Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeIDs 824fd711-ad69-4b56-bb83-613b0125f178
-      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, excluding the disks with the specified IDs
+      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, including all volumes presently on the system excpt for the disks with the specified IDs
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="None")]
@@ -93,7 +93,7 @@ function Protect-RubrikVolumeGroup
         $resources.Body.configuredSlaDomainId = $SLAID
         volumeIdsIncludedInSnapshots = @() 
     }
-
+   
     #get hostid of volumegroup
     $volumegroup = Get-RubrikVolumeGroup -id $id 
     #get all volumes of the host, so we can exclude drives or IDs
