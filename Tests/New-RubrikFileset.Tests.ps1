@@ -51,6 +51,10 @@ Describe -Name 'Public/New-RubrikFileset' -Tag 'Public', 'New-RubrikFileset' -Fi
         It -Name 'HostId missing' -Test {
             { New-RubrikFileset -TemplateID 'Foo' -HostId  } |
                 Should -Throw "Missing an argument for parameter 'HostId'."
-        }          
+        } 
+        It -Name 'Test ParameterSets' -Test {
+            { New-RubrikFileset -TemplateId 'Foo' -HostId 'bar1' -shareId 'bar2' } | 
+                Should -Throw "Parameter set cannot be resolved using the specified named parameters."
+        }         
     }
 }

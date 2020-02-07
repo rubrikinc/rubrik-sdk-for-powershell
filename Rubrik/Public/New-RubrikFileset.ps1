@@ -26,17 +26,29 @@ function New-RubrikFileset
       New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id
 
       Creates a new fileset for the BAR NAS, using the FOO template.
+
+      .EXAMPLE
+      New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id -DirectArchive
+
+      Creates a new fileset for the BAR NAS, using the FOO template. Enables the NAS Direct Archive functionality on the share.
   #>
 
   [CmdletBinding()]
   Param(
     #Fileset Template ID to use for the new fileset
-    [Parameter(Mandatory=$true)]
+    [Parameter(ParameterSetName='Host',Mandatory=$true)]
+    [Parameter(ParameterSetName='NAS',Mandatory=$true)]
     [String]$TemplateID,
     # HostID - Used for Windows or Linux Filesets
+    [Parameter(ParameterSetName='Host',Mandatory=$true)]
     [String]$HostID,
     # ShareID - used for NAS shares
-    [String]$ShareID,   
+    [Parameter(ParameterSetName='NAS',Mandatory=$true)]
+    [String]$ShareID, 
+    [Parameter(ParameterSetName='NAS')]
+    # DirectArchive - used to specify if data should be directly sent to archive (bypassing Rubrik Cluster)
+    [Alias('isPassThrough')]
+    [Switch]$DirectArchive , 
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -65,13 +77,27 @@ function New-RubrikFileset
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
-
+    if ($DirectArchive) {
+      $uri = New-URIString -server $server -endpoint ('/api/internal/fileset/bulk')
+      $body = @{
+        templateId = $TemplateId
+        shareId = $ShareId
+        isPassthrough = $true
+      }
+      $body = ConvertTo-Json @($body)
+      Write-Verbose "Body is: $body"
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    }
+    else {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    }
     return $result
 
   } # End of process

@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added QUEUED as a value in the status ValidateSet within Get-RubrikEvent and updated Unit Tests.  Addresses [Issue 539](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/539)
 * Added Get-RubrikVMwareDatacenter and Get-RubrikVMwareCluster along with associated Unit Tests. Addresses [Issue 463](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/463)
 * Added Object TypeNames for VCD Servers and vCD vApps as specified in [Issue 462](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/462)
+* Added DirectArchive switch parameter and associated code to New-RubrikFileSet allowing the isPassthrough attribute to be set to enable NAS Direct Archive. Addresses [Issue 358](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/358)  Updated Unit tests for cmdlets to reflect new parametersets.
 
 ### Changed
 
@@ -41,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 * Documentation links in comment-based help updated to lower case
+* Null filter on Get-RubrikSCVMM when using -DetailedObject as per [Issue 556](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/556)
 
 ## [5.0.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.0) - 2019-11-24
 

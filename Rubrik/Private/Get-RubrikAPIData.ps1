@@ -1686,7 +1686,7 @@ function Get-RubrikAPIData($endpoint) {
                     templateId = 'templateId'
                 }
                 Query       = ''
-                Result      = ''
+                Result      = 'data'
                 Filter      = ''
                 Success     = '202'
             }
