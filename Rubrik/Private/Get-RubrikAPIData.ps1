@@ -1516,6 +1516,7 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = @{
                     'Name' = 'name'
                     'SLA'  = 'effectiveSlaDomainName'
+                    'hostname' = 'HostName'
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.VolumeGroup'
@@ -1547,6 +1548,18 @@ function Get-RubrikAPIData($endpoint) {
                 Query           = @{
                     id          = 'id'
                 }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Get-RubrikHostVolume'               = @{
+            '1.0' = @{
+                Description = 'Retrieve summary information for all Volume Groups that belong to a Windows host'
+                URI         = '/api/internal/host/{id}/volume'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
@@ -2069,6 +2082,22 @@ function Get-RubrikAPIData($endpoint) {
                 Filter      = ''
                 Success     = '200'
                 ObjectTName = 'Rubrik.VMwareVM'
+            }
+        }
+        'Protect-RubrikVolumeGroup'             = @{
+            '1.0' = @{
+                Description = 'Update a Volume Group with the specified SLA Domain.'
+                URI         = '/api/internal/volume_group/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    configuredSlaDomainId = 'configuredSlaDomainId'
+                    volumeIdsIncludedInSnapshots = @{}
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.VolumeGroup'
             }
         }
         'Update-RubrikHost'             = @{
