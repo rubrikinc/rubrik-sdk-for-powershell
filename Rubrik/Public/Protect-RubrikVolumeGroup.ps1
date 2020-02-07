@@ -128,7 +128,7 @@ function Protect-RubrikVolumeGroup
 
     $body = ConvertTo-Json $body
     #### Generating $body ####
-    
+    Write-Verbose "Body is $body"
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
