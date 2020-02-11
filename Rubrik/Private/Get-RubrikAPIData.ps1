@@ -1732,6 +1732,25 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '201'
             }
         }
+        'New-RubrikHyperVVMMount'               = @{
+            '1.0' = @{
+                Description = 'Create a live mount request for a HyperV VM with given configuration'
+                URI         = '/api/internal/hyperv/vm/snapshot/{id}/mount'
+                Method      = 'Post'
+                Body        = @{
+                    hostId               = 'hostId'
+                    vmName               = 'vmName'
+                    dataStoreName        = 'dataStoreName'
+                    disableNetwork       = 'disableNetwork'
+                    removeNetworkDevices = 'removeNetworkDevices'
+                    powerOn              = 'powerOn'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'New-RubrikLDAP'         = @{
             '1.0' = @{
                 Description = 'Creates new LDAP server connection on the Rubrik cluster'

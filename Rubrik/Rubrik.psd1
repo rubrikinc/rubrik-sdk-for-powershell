@@ -202,6 +202,7 @@
                    'New-RubrikFileset', 
                    'New-RubrikFilesetTemplate',
                    'New-RubrikHost',
+                   'New-RubrikHyperVVMMount',
                    'New-RubrikLDAP', 
                    'New-RubrikLogBackup',
                    'New-RubrikLogShipping', 
