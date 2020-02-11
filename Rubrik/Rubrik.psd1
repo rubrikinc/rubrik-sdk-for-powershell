@@ -137,6 +137,7 @@
                    'Get-RubrikHost',
                    'Get-RubrikHostVolume',
                    'Get-RubrikHyperVHost',
+                   'Get-RubrikHyperVMount',
                    'Get-RubrikHyperVVM', 
                    'Get-RubrikIPMI',
                    'Get-RubrikLDAP',

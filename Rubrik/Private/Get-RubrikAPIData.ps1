@@ -577,6 +577,25 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.HyperVHost'
             }
         }
+        'Get-RubrikHyperVMount'              = @{
+            '1.0' = @{
+                Description = 'Retrieve information for all HyperV live mounts'
+                URI         = '/api/internal/hyperv/vm/snapshot/mount'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    vm_id  = 'vm_id'
+                    offset = 'offset'
+                    limit  = 'limit'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    id = 'id'
+                    vmId = 'vmId'    
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikHyperVVM'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all HyperV VMs'
