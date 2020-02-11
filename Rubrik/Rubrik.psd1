@@ -234,6 +234,7 @@
                    'Remove-RubrikDatabaseMount', 
                    'Remove-RubrikFileset',
                    'Remove-RubrikHost', 
+                   'Remove-RubrikHyperVMount',
                    'Remove-RubrikLogShipping',
                    'Remove-RubrikManagedVolume', 
                    'Remove-RubrikManagedVolumeExport',

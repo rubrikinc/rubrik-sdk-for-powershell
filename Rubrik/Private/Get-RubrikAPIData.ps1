@@ -2235,6 +2235,20 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '204'
             }
         }
+        'Remove-RubrikHyperVMount'           = @{
+            '1.0' = @{
+                Description = 'Create a request to delete a HyperV live mount'
+                URI         = '/api/internal/hyperv/vm/snapshot/mount/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    force = 'force'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Remove-RubrikManagedVolume'            = @{
             '1.0' = @{
                 Description = 'Delete a managed volume'
