@@ -31,7 +31,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added Object TypeNames for VCD Servers and vCD vApps as specified in [Issue 462](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/462)
 * Added DirectArchive switch parameter and associated code to New-RubrikFileSet allowing the isPassthrough attribute to be set to enable NAS Direct Archive. Addresses [Issue 358](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/358)  Updated Unit tests for cmdlets to reflect new parametersets.
 * Added Get-RubrikHostVolume and Protect-RubrikHostVolumeGroup.  This addresses cmdlets requested within [Issue 512](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/512).
-* Added support to Get-RubrikRequest for VolumeGroup, Nutanix VMs, EC2 instances, Oracle Databases and VCD vApps as outlined in [Issue 563 ](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/563)
+* Added New-RubrikHyperVVMMount, Get-RubrikHyperVMount and Remove-RubrikHyperVMount addressing [Issue 450](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/450)
+* Added support to Get-RubrikRequest for VolumeGroup, Nutanix VMs, EC2 instances, Oracle Databases and VCD vApps as outlined in [Issue 563](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/563)
 
 
 ### Changed
