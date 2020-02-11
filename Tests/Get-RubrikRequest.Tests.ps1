@@ -46,7 +46,7 @@ Describe -Name 'Public/Get-RubrikRequest' -Tag 'Public', 'Get-RubrikRequest' -Fi
         }      
         It -Name 'Type Validate Set' -Test {
             { Get-RubrikRequest -id '1111' -Type 'nonexistant' } |
-                Should -Throw "Cannot validate argument on parameter 'Type'. The argument `"nonexistant`" does not belong to the set `"fileset,mssql,vmware/vm,hyperv/vm,managed_volume`" specified by the ValidateSet attribute."
+                Should -Throw "Cannot validate argument on parameter 'Type'."
         }
     }
 }
