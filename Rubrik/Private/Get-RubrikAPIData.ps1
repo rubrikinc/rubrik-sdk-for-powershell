@@ -560,6 +560,23 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.Host'
             }
         }
+        'Get-RubrikHyperVHost'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all HyperV hosts known to the Rubrik cluster'
+                URI         = '/api/internal/hyperv/host'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.HyperVHost'
+            }
+        }
         'Get-RubrikHyperVVM'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all HyperV VMs'
