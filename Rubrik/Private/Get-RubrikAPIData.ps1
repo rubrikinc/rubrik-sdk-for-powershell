@@ -560,6 +560,42 @@ function Get-RubrikAPIData($endpoint) {
                 ObjectTName = 'Rubrik.Host'
             }
         }
+        'Get-RubrikHyperVHost'         = @{
+            '1.0' = @{
+                Description = 'Retrieves all HyperV hosts known to the Rubrik cluster'
+                URI         = '/api/internal/hyperv/host'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      =  @{
+                    'name' = 'name'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.HyperVHost'
+            }
+        }
+        'Get-RubrikHyperVMount'              = @{
+            '1.0' = @{
+                Description = 'Retrieve information for all HyperV live mounts'
+                URI         = '/api/internal/hyperv/vm/snapshot/mount'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    vm_id  = 'vm_id'
+                    offset = 'offset'
+                    limit  = 'limit'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    id = 'id'
+                    vmId = 'vmId'    
+                }
+                Success     = '200'
+            }
+        }
         'Get-RubrikHyperVVM'                 = @{
             '1.0' = @{
                 Description = 'Get summary of all HyperV VMs'
@@ -1732,6 +1768,25 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '201'
             }
         }
+        'New-RubrikHyperVVMMount'               = @{
+            '1.0' = @{
+                Description = 'Create a live mount request for a HyperV VM with given configuration'
+                URI         = '/api/internal/hyperv/vm/snapshot/{id}/mount'
+                Method      = 'Post'
+                Body        = @{
+                    hostId               = 'hostId'
+                    vmName               = 'vmName'
+                    dataStoreName        = 'dataStoreName'
+                    disableNetwork       = 'disableNetwork'
+                    removeNetworkDevices = 'removeNetworkDevices'
+                    powerOn              = 'powerOn'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'New-RubrikLDAP'         = @{
             '1.0' = @{
                 Description = 'Creates new LDAP server connection on the Rubrik cluster'
@@ -2178,6 +2233,20 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '204'
+            }
+        }
+        'Remove-RubrikHyperVMount'           = @{
+            '1.0' = @{
+                Description = 'Create a request to delete a HyperV live mount'
+                URI         = '/api/internal/hyperv/vm/snapshot/mount/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    force = 'force'
+                }
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
             }
         }
         'Remove-RubrikManagedVolume'            = @{
