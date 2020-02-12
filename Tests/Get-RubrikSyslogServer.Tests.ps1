@@ -22,6 +22,10 @@ Describe -Name 'Public/Get-RubrikSyslogServer' -Tag 'Public', 'Get-RubrikSyslogS
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
                 @{ 
                     'hostname'  = 'syslog1.domain.local'
                     'protocol'  = 'UDP'
@@ -34,6 +38,7 @@ Describe -Name 'Public/Get-RubrikSyslogServer' -Tag 'Public', 'Get-RubrikSyslogS
                     'port'      = '514'
                     'id'        = '1'                   
                 }
+            }
 
         }
         It -Name 'No parameters returns all results' -Test {

@@ -22,33 +22,38 @@ Describe -Name 'Public/Get-RubrikVolumeGroupMount' -Tag 'Public', 'Get-RubrikVol
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'mount01'
-                'id'                     = '11111'
-                'sourceVolumeGroupId'    = 'VolumeGroup:::11111'
-                'sourceHostId'           = 'host:::11111'
-                'sourceHostName'         = 'host01'
-            },
-            @{ 
-                'name'                   = 'mount01'
-                'id'                     = '22222'
-                'sourceVolumeGroupId'    = 'VolumeGroup:::11111'
-                'sourceHostId'           = 'host:::11111'
-                'sourceHostName'         = 'host01'
-            },
-            @{ 
-                'name'                   = 'mount02'
-                'id'                     = '33333'
-                'sourceVolumeGroupId'    = 'VolumeGroup:::22222'
-                'sourceHostId'           = 'host:::22222'
-                'sourceHostName'         = 'host02'
-            },
-            @{ 
-                'name'                   = 'mount03'
-                'id'                     = '44444'
-                'sourceVolumeGroupId'    = 'VolumeGroup:::33333'
-                'sourceHostId'           = 'host:::33333'
-                'sourceHostName'         = 'host03'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
+                @{ 
+                    'name'                   = 'mount01'
+                    'id'                     = '11111'
+                    'sourceVolumeGroupId'    = 'VolumeGroup:::11111'
+                    'sourceHostId'           = 'host:::11111'
+                    'sourceHostName'         = 'host01'
+                },
+                @{ 
+                    'name'                   = 'mount01'
+                    'id'                     = '22222'
+                    'sourceVolumeGroupId'    = 'VolumeGroup:::11111'
+                    'sourceHostId'           = 'host:::11111'
+                    'sourceHostName'         = 'host01'
+                },
+                @{ 
+                    'name'                   = 'mount02'
+                    'id'                     = '33333'
+                    'sourceVolumeGroupId'    = 'VolumeGroup:::22222'
+                    'sourceHostId'           = 'host:::22222'
+                    'sourceHostName'         = 'host02'
+                },
+                @{ 
+                    'name'                   = 'mount03'
+                    'id'                     = '44444'
+                    'sourceVolumeGroupId'    = 'VolumeGroup:::33333'
+                    'sourceHostId'           = 'host:::33333'
+                    'sourceHostName'         = 'host03'
+                }
             }
         }
         It -Name 'Requesting all should return count of 4' -Test {

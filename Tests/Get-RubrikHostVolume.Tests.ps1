@@ -22,26 +22,31 @@ Describe -Name 'Public/Get-RubrikHostVolume' -Tag 'Public', 'Get-RubrikHostVolum
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'size'                   = '31558552'
-                'mountPoints'            = 'C:\'
-                'fileSystemType'         = 'NTFS'
-                'id'                     = '1111-2222-3333'
-                'isCurrentlyPresentOnSystem' = 'true'
-            },
-            @{ 
-                'size'                   = '1233131558552'
-                'mountPoints'            = 'D:\'
-                'fileSystemType'         = 'NTFS'
-                'id'                     = '2222-3333-4444'
-                'isCurrentlyPresentOnSystem' = 'true'
-            },
-            @{ 
-                'size'                   = '14534531558552'
-                'mountPoints'            = 'E:\'
-                'fileSystemType'         = 'NTFS'
-                'id'                     = '4444-5555-666'
-                'isCurrentlyPresentOnSystem' = 'true'
+            @{
+                'total'     = '1'
+                'hasMore'   = 'false'
+                'data' =  
+                @{ 
+                    'size'                   = '31558552'
+                    'mountPoints'            = 'C:\'
+                    'fileSystemType'         = 'NTFS'
+                    'id'                     = '1111-2222-3333'
+                    'isCurrentlyPresentOnSystem' = 'true'
+                },
+                @{ 
+                    'size'                   = '1233131558552'
+                    'mountPoints'            = 'D:\'
+                    'fileSystemType'         = 'NTFS'
+                    'id'                     = '2222-3333-4444'
+                    'isCurrentlyPresentOnSystem' = 'true'
+                },
+                @{ 
+                    'size'                   = '14534531558552'
+                    'mountPoints'            = 'E:\'
+                    'fileSystemType'         = 'NTFS'
+                    'id'                     = '4444-5555-666'
+                    'isCurrentlyPresentOnSystem' = 'true'
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

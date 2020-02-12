@@ -22,21 +22,25 @@ Describe -Name 'Public/Get-RubrikAvailabilityGroup' -Tag 'Public', 'Get-RubrikAv
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'AG1'
-                'id'                     = '11111:22222:33333'
-                'copyOnly'               = 'true'
-                'configuredSLADomainId'  = '111111'
-                'configuredSLADomainName'= 'Gold'
-                'logRetentionHours'      = '1'   
-            },
-            @{ 
-                'name'                   = 'AG2'
-                'id'                     = '11111:22222:44444'
-                'copyOnly'               = 'true'
-                'configuredSLADomainId'  = '111111'
-                'configuredSLADomainName'= 'Gold'
-                'logRetentionHours'      = '1'   
+            @{
+                'total' = '2'
+                'hasMore' = 'false'
+                'data' = @{ 
+                    'name'                   = 'AG1'
+                    'id'                     = '11111:22222:33333'
+                    'copyOnly'               = 'true'
+                    'configuredSLADomainId'  = '111111'
+                    'configuredSLADomainName'= 'Gold'
+                    'logRetentionHours'      = '1'   
+                },
+                @{ 
+                    'name'                   = 'AG2'
+                    'id'                     = '11111:22222:44444'
+                    'copyOnly'               = 'true'
+                    'configuredSLADomainId'  = '111111'
+                    'configuredSLADomainName'= 'Gold'
+                    'logRetentionHours'      = '1'   
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

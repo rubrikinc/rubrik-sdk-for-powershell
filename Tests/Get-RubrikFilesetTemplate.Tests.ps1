@@ -22,21 +22,26 @@ Describe -Name 'Public/Get-RubrikFilesetTemplate' -Tag 'Public', 'Get-RubrikFile
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'C-Drive'
-                'id'                     = 'FilesetTemplate:::111111-2222-3333-4444-555555555555'
-                'includes'               = 'C:'
-                'useWindowsVss'          = 'True'
-                'excludes'               = ''
-                'primaryClusterId'       = 'cluster_id1'   
-            },
-            @{ 
-                'name'                   = 'D-Drive'
-                'id'                     = 'FilesetTemplate:::111111-2222-3333-4444-6666666666666'
-                'includes'               = 'D:'
-                'useWindowsVss'          = 'True'
-                'excludes'               = ''
-                'primaryClusterId'       = 'cluster_id2'   
+            @{
+                'total'     = '1'
+                'hasMore'   = 'false'
+                'data' =  
+                @{ 
+                    'name'                   = 'C-Drive'
+                    'id'                     = 'FilesetTemplate:::111111-2222-3333-4444-555555555555'
+                    'includes'               = 'C:'
+                    'useWindowsVss'          = 'True'
+                    'excludes'               = ''
+                    'primaryClusterId'       = 'cluster_id1'   
+                },
+                @{ 
+                    'name'                   = 'D-Drive'
+                    'id'                     = 'FilesetTemplate:::111111-2222-3333-4444-6666666666666'
+                    'includes'               = 'D:'
+                    'useWindowsVss'          = 'True'
+                    'excludes'               = ''
+                    'primaryClusterId'       = 'cluster_id2'   
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

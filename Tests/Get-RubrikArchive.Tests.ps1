@@ -22,7 +22,10 @@ Describe -Name 'Public/Get-RubrikArchive' -Tag 'Public', 'Get-RubrikArchive' -Fi
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
+        @{
+            'total' = '3'
+            'hasmore' = 'false'
+            'data' = @{ 
                 'id'                = '3333-2222-3333'
                 'name'              = 'S302'
                 'rawName'           = 'S302'
@@ -31,8 +34,8 @@ Describe -Name 'Public/Get-RubrikArchive' -Tag 'Public', 'Get-RubrikArchive' -Fi
                 'ownershipStats'    = 'OwnerActive'
                 'currentState'      = 'TemporarilyDisconnected'
                 'locationType'      = 'S3'   
-            },
-            @{ 
+                },
+                @{ 
                 'id'                = '2222-2222-3333'
                 'name'              = 'S301'
                 'rawName'           = 'S301'
@@ -41,8 +44,8 @@ Describe -Name 'Public/Get-RubrikArchive' -Tag 'Public', 'Get-RubrikArchive' -Fi
                 'ownershipStats'    = 'OwnerActive'
                 'currentState'      = 'Connected'
                 'locationType'      = 'S3'   
-            },
-            @{ 
+                },
+                @{ 
                 'id'                = '1111-2222-3333'
                 'name'              = 'Azure01'
                 'rawName'           = 'Azure01'
@@ -51,6 +54,7 @@ Describe -Name 'Public/Get-RubrikArchive' -Tag 'Public', 'Get-RubrikArchive' -Fi
                 'ownershipStats'    = 'OwnerActive'
                 'currentState'      = 'Connected'
                 'locationType'      = 'Azure'   
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

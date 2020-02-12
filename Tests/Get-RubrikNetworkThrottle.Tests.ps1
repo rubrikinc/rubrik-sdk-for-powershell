@@ -22,17 +22,22 @@ Describe -Name 'Public/Get-RubrikNetworkThrottle' -Tag 'Public', 'Get-RubrikNetw
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'resourceId'           = 'ArchivalEgress'
-                'isEnabled'            = 'True'
-                'defaultThrottleLimit' = '9223372036854'
-                'scheduledThrottles'   = ''
-            },
-            @{ 
-                'resourceId'           = 'ReplicationEgress'
-                'isEnabled'            = 'False'
-                'defaultThrottleLimit' = '9223372036854'
-                'scheduledThrottles'   = ''
+            @{
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
+                @{ 
+                    'resourceId'           = 'ArchivalEgress'
+                    'isEnabled'            = 'True'
+                    'defaultThrottleLimit' = '9223372036854'
+                    'scheduledThrottles'   = ''
+                },
+                @{ 
+                    'resourceId'           = 'ReplicationEgress'
+                    'isEnabled'            = 'False'
+                    'defaultThrottleLimit' = '9223372036854'
+                    'scheduledThrottles'   = ''
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

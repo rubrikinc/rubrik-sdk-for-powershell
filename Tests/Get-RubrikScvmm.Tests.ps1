@@ -22,32 +22,37 @@ Describe -Name 'Public/Get-RubrikScvmm' -Tag 'Public', 'Get-RubrikScvmm' -Fixtur
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                      = 'scvmm.domain.local'
-                'primaryClusterId'          = '1111-2222-3333'
-                'shouldDeployAgent'         = 'True'
-                'runAsAccount'              = 'administrator@domain.local'
-                'configuredSLADomainName'   = 'INHERIT'
-                'id'                        = 'HypervScvmm:::1111-2222-3333'
-                'status'                    = 'Connected'
-            },
-            @{ 
-                'name'                      = 'scvmm02.domain.local'
-                'primaryClusterId'          = '1111-2222-3333'
-                'shouldDeployAgent'         = 'True'
-                'runAsAccount'              = 'administrator@domain.local'
-                'configuredSLADomainName'   = 'GOLD'
-                'id'                        = 'HypervScvmm:::2222-2222-3333'
-                'status'                    = 'Connected'
-            },
-            @{ 
-                'name'                      = 'scvmm03.domain.local'
-                'primaryClusterId'          = '2222-2222-3333'
-                'shouldDeployAgent'         = 'True'
-                'runAsAccount'              = 'administrator@domain.local'
-                'configuredSLADomainName'   = 'INHERIT'
-                'id'                        = 'HypervScvmm:::3333-2222-3333'
-                'status'                    = 'Connected'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
+                @{ 
+                    'name'                      = 'scvmm.domain.local'
+                    'primaryClusterId'          = '1111-2222-3333'
+                    'shouldDeployAgent'         = 'True'
+                    'runAsAccount'              = 'administrator@domain.local'
+                    'configuredSLADomainName'   = 'INHERIT'
+                    'id'                        = 'HypervScvmm:::1111-2222-3333'
+                    'status'                    = 'Connected'
+                },
+                @{ 
+                    'name'                      = 'scvmm02.domain.local'
+                    'primaryClusterId'          = '1111-2222-3333'
+                    'shouldDeployAgent'         = 'True'
+                    'runAsAccount'              = 'administrator@domain.local'
+                    'configuredSLADomainName'   = 'GOLD'
+                    'id'                        = 'HypervScvmm:::2222-2222-3333'
+                    'status'                    = 'Connected'
+                },
+                @{ 
+                    'name'                      = 'scvmm03.domain.local'
+                    'primaryClusterId'          = '2222-2222-3333'
+                    'shouldDeployAgent'         = 'True'
+                    'runAsAccount'              = 'administrator@domain.local'
+                    'configuredSLADomainName'   = 'INHERIT'
+                    'id'                        = 'HypervScvmm:::3333-2222-3333'
+                    'status'                    = 'Connected'
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

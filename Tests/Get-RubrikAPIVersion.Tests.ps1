@@ -20,7 +20,9 @@ Describe -Name 'Public/Get-RubrikAPIVersion' -Tag 'Public', 'Get-RubrikAPIVersio
     #endregion
 
     Context -Name 'Results Filtering' {
-        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith { return 1}
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{ 'apiversion' = '1'}
+        }
         It -Name 'Should return 1' -Test {
             ( Get-RubrikAPIVersion -Server 'server') |
                 Should -BeExactly 1

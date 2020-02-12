@@ -24,25 +24,30 @@ Describe -Name 'Public/Get-RubrikManagedVolumeExport' -Tag 'Public', 'Get-Rubrik
 
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'id'                        = '11111-22222-33333'
-                'isActive'                  = 'True'
-                'primaryClusterId'          = 'local'
-                'sourceManagedVolumeName'   = 'OracleMV1'
-                'sourceManagedVolumeID'     = 'ManagedVolume:::11111'
-            },
-            @{
-                'id'                        = '22222-22222-33333'
-                'isActive'                  = 'True'
-                'primaryClusterId'          = 'local'
-                'sourceManagedVolumeName'   = 'OracleMV2'
-                'sourceManagedVolumeID'     = 'ManagedVolume:::11111'
-            },
-            @{
-                'id'                        = '33333-22222-33333'
-                'isActive'                  = 'True'
-                'primaryClusterId'          = 'local'
-                'sourceManagedVolumeName'   = 'SQLMV'
-                'sourceManagedVolumeID'     = 'ManagedVolume:::22222'
+                'total'     = '1'
+                'hasMore'   = 'false'
+                'data' =  
+                @{
+                    'id'                        = '11111-22222-33333'
+                    'isActive'                  = 'True'
+                    'primaryClusterId'          = 'local'
+                    'sourceManagedVolumeName'   = 'OracleMV1'
+                    'sourceManagedVolumeID'     = 'ManagedVolume:::11111'
+                },
+                @{
+                    'id'                        = '22222-22222-33333'
+                    'isActive'                  = 'True'
+                    'primaryClusterId'          = 'local'
+                    'sourceManagedVolumeName'   = 'OracleMV2'
+                    'sourceManagedVolumeID'     = 'ManagedVolume:::11111'
+                },
+                @{
+                    'id'                        = '33333-22222-33333'
+                    'isActive'                  = 'True'
+                    'primaryClusterId'          = 'local'
+                    'sourceManagedVolumeName'   = 'SQLMV'
+                    'sourceManagedVolumeID'     = 'ManagedVolume:::22222'
+                }
             }
         }
         

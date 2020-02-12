@@ -22,17 +22,22 @@ Describe -Name 'Public/Get-RubrikReport' -Tag 'Public', 'Get-RubrikReport' -Fixt
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'TestReport1'
-                'updateStatus'           = 'Ready'
-                'reportType'             = 'Custom'
-                'id'                     = 'CustomReport:::11111'
-            },
-            @{ 
-                'name'                   = 'TestReport2'
-                'updateStatus'           = 'Ready'
-                'reportType'             = 'Canned'
-                'id'                     = 'CustomReport:::22222'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
+                @{ 
+                    'name'                   = 'TestReport1'
+                    'updateStatus'           = 'Ready'
+                    'reportType'             = 'Custom'
+                    'id'                     = 'CustomReport:::11111'
+                },
+                @{ 
+                    'name'                   = 'TestReport2'
+                    'updateStatus'           = 'Ready'
+                    'reportType'             = 'Canned'
+                    'id'                     = 'CustomReport:::22222'
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

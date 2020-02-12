@@ -22,30 +22,35 @@ Describe -Name 'Public/Get-RubrikOrganization' -Tag 'Public', 'Get-RubrikOrganiz
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'id'                     = 'Organization:1'
-                'name'                   = 'org1'
-                'isGlobal'               = 'False'
-            },
-            @{ 
-                'id'                     = 'Organization:2'
-                'name'                   = 'org2'
-                'isGlobal'               = 'False'
-            },
-            @{ 
-                'id'                     = 'Organization:3'
-                'name'                   = 'org3'
-                'isGlobal'               = 'False'
-            },
-            @{ 
-                'id'                     = 'Organization:4'
-                'name'                   = 'org4'
-                'isGlobal'               = 'True'
-            },
-            @{ 
-                'id'                     = 'Organization:5'
-                'name'                   = 'org5'
-                'isGlobal'               = 'False'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
+                @{ 
+                    'id'                     = 'Organization:1'
+                    'name'                   = 'org1'
+                    'isGlobal'               = 'False'
+                },
+                @{ 
+                    'id'                     = 'Organization:2'
+                    'name'                   = 'org2'
+                    'isGlobal'               = 'False'
+                },
+                @{ 
+                    'id'                     = 'Organization:3'
+                    'name'                   = 'org3'
+                    'isGlobal'               = 'False'
+                },
+                @{ 
+                    'id'                     = 'Organization:4'
+                    'name'                   = 'org4'
+                    'isGlobal'               = 'True'
+                },
+                @{ 
+                    'id'                     = 'Organization:5'
+                    'name'                   = 'org5'
+                    'isGlobal'               = 'False'
+                }
             }
         }
         It -Name 'Should Return count of 5' -Test {

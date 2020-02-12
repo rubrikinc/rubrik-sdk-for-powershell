@@ -22,26 +22,31 @@ Describe -Name 'Public/Get-RubrikReplicationTarget' -Tag 'Public', 'Get-RubrikRe
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'id'                        = 'DataLocation:::11111-22222-33333'
-                'replicationSetup'          = 'Private Network'
-                'targetClusterAddress'      = '10.10.10.150'
-                'targetClusterName'         = 'Cluster_1'
-                'targetClusterUuid'         = '11111-22222-33333'
-            },
-            @{ 
-                'id'                        = 'DataLocation:::22222-22222-33333'
-                'replicationSetup'          = 'Private Network'
-                'targetClusterAddress'      = '10.10.15.150'
-                'targetClusterName'         = 'Cluster_2'
-                'targetClusterUuid'         = '22222-22222-33333'
-            },
-            @{ 
-                'id'                        = 'DataLocation:::33333-22222-33333'
-                'replicationSetup'          = 'Private Network'
-                'targetClusterAddress'      = '10.10.30.150'
-                'targetClusterName'         = 'Cluster_3'
-                'targetClusterUuid'         = '33333-22222-33333'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
+                @{ 
+                    'id'                        = 'DataLocation:::11111-22222-33333'
+                    'replicationSetup'          = 'Private Network'
+                    'targetClusterAddress'      = '10.10.10.150'
+                    'targetClusterName'         = 'Cluster_1'
+                    'targetClusterUuid'         = '11111-22222-33333'
+                },
+                @{ 
+                    'id'                        = 'DataLocation:::22222-22222-33333'
+                    'replicationSetup'          = 'Private Network'
+                    'targetClusterAddress'      = '10.10.15.150'
+                    'targetClusterName'         = 'Cluster_2'
+                    'targetClusterUuid'         = '22222-22222-33333'
+                },
+                @{ 
+                    'id'                        = 'DataLocation:::33333-22222-33333'
+                    'replicationSetup'          = 'Private Network'
+                    'targetClusterAddress'      = '10.10.30.150'
+                    'targetClusterName'         = 'Cluster_3'
+                    'targetClusterUuid'         = '33333-22222-33333'
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

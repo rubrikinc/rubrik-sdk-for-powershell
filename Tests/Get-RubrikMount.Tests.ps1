@@ -22,29 +22,34 @@ Describe -Name 'Public/Get-RubrikMount' -Tag 'Public', 'Get-RubrikMount' -Fixtur
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'id'                    = '11-22-33'
-                'vmId'                  = 'VirtualMachine:::111'
-                'isReady'               = 'True'
-                'hostId'                = 'Host:::111'
-            },
-            @{ 
-                'id'                    = '11-22-44'
-                'vmId'                  = 'VirtualMachine:::111'
-                'isReady'               = 'True'
-                'hostId'                = 'Host:::222'
-            },
-            @{ 
-                'id'                    = '11-22-55'
-                'vmId'                  = 'VirtualMachine:::222'
-                'isReady'               = 'True'
-                'hostId'                = 'Host:::111'
-            },
-            @{ 
-                'id'                    = '11-22-66'
-                'vmId'                  = 'VirtualMachine:::333'
-                'isReady'               = 'True'
-                'hostId'                = 'Host:::111'
+            @{
+                'total'     = '1'
+                'hasMore'   = 'false'
+                'data' =  
+                @{ 
+                    'id'                    = '11-22-33'
+                    'vmId'                  = 'VirtualMachine:::111'
+                    'isReady'               = 'True'
+                    'hostId'                = 'Host:::111'
+                },
+                @{ 
+                    'id'                    = '11-22-44'
+                    'vmId'                  = 'VirtualMachine:::111'
+                    'isReady'               = 'True'
+                    'hostId'                = 'Host:::222'
+                },
+                @{ 
+                    'id'                    = '11-22-55'
+                    'vmId'                  = 'VirtualMachine:::222'
+                    'isReady'               = 'True'
+                    'hostId'                = 'Host:::111'
+                },
+                @{ 
+                    'id'                    = '11-22-66'
+                    'vmId'                  = 'VirtualMachine:::333'
+                    'isReady'               = 'True'
+                    'hostId'                = 'Host:::111'
+                }
             }
         }
         It -Name 'Filter should return count of 4' -Test {

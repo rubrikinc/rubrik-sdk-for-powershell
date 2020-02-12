@@ -22,30 +22,35 @@ Describe -Name 'Public/Get-RubrikVMwareHost' -Tag 'Public', 'Get-RubrikVMwareHos
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'esxi01.domain.local'
-                'id'                     = 'VMwareHost:::11111'
-                'datacenterId'           = 'Datacenter:::11111'
-                'primaryClusterId'       = '1'
-            },
-            @{ 
-                'name'                   = 'esxi02.domain.local'
-                'id'                     = 'VMwareHost:::22222'
-                'datacenterId'           = 'Datacenter:::11111'
-                'primaryClusterId'       = '1'
-            },
-            @{ 
-                'name'                   = 'esxi02.domain.local'
-                'id'                     = 'VMwareHost:::33333'
-                'datacenterId'           = 'Datacenter:::22222'
-                'primaryClusterId'       = '2'
-            }
-            ,
-            @{ 
-                'name'                   = 'esxi04.domain.local'
-                'id'                     = 'VMwareHost:::44444'
-                'datacenterId'           = 'Datacenter:::22222'
-                'primaryClusterId'       = '2'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
+                @{ 
+                    'name'                   = 'esxi01.domain.local'
+                    'id'                     = 'VMwareHost:::11111'
+                    'datacenterId'           = 'Datacenter:::11111'
+                    'primaryClusterId'       = '1'
+                },
+                @{ 
+                    'name'                   = 'esxi02.domain.local'
+                    'id'                     = 'VMwareHost:::22222'
+                    'datacenterId'           = 'Datacenter:::11111'
+                    'primaryClusterId'       = '1'
+                },
+                @{ 
+                    'name'                   = 'esxi02.domain.local'
+                    'id'                     = 'VMwareHost:::33333'
+                    'datacenterId'           = 'Datacenter:::22222'
+                    'primaryClusterId'       = '2'
+                }
+                ,
+                @{ 
+                    'name'                   = 'esxi04.domain.local'
+                    'id'                     = 'VMwareHost:::44444'
+                    'datacenterId'           = 'Datacenter:::22222'
+                    'primaryClusterId'       = '2'
+                }
             }
         }
         It -Name 'Should Return count of 2' -Test {

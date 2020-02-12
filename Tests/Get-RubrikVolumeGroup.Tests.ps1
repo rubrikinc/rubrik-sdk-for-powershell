@@ -26,36 +26,41 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'name'                   = 'VG01'
-                'id'                     = 'VolumeGroup:::11111'
-                'hostname'               = 'VG01.domain.local'
-                'effectiveSlaDomainName' = 'Gold'
-                'effectiveSlaDomainId'   = 'SLA1'
-                'hostId'                 = 'host01'
-            },
-            @{ 
-                'name'                   = 'VG02'
-                'id'                     = 'VolumeGroup:::22222'
-                'hostname'               = 'VG02.domain.local'
-                'effectiveSlaDomainName' = 'Gold'
-                'effectiveSlaDomainId'   = 'SLA1'
-                'hostId'                 = 'host02'
-            },
-            @{
-                'name'                   = 'VG03'
-                'id'                     = 'VolumeGroup:::33333'
-                'hostname'               = 'VG03.domain.local'
-                'effectiveSlaDomainName' = 'Silver'
-                'effectiveSlaDomainId'   = 'SLA2'
-                'hostId'                 = 'host03'
-            },
-            @{
-                'name'                   = 'VG04'
-                'id'                     = 'VolumeGroup:::44444'
-                'hostname'               = 'VG04.domain.local'
-                'effectiveSlaDomainName' = 'Gold'
-                'effectiveSlaDomainId'   = 'SLA1'
-                'hostId'                 = 'host04'
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
+                @{
+                    'name'                   = 'VG01'
+                    'id'                     = 'VolumeGroup:::11111'
+                    'hostname'               = 'VG01.domain.local'
+                    'effectiveSlaDomainName' = 'Gold'
+                    'effectiveSlaDomainId'   = 'SLA1'
+                    'hostId'                 = 'host01'
+                },
+                @{ 
+                    'name'                   = 'VG02'
+                    'id'                     = 'VolumeGroup:::22222'
+                    'hostname'               = 'VG02.domain.local'
+                    'effectiveSlaDomainName' = 'Gold'
+                    'effectiveSlaDomainId'   = 'SLA1'
+                    'hostId'                 = 'host02'
+                },
+                @{
+                    'name'                   = 'VG03'
+                    'id'                     = 'VolumeGroup:::33333'
+                    'hostname'               = 'VG03.domain.local'
+                    'effectiveSlaDomainName' = 'Silver'
+                    'effectiveSlaDomainId'   = 'SLA2'
+                    'hostId'                 = 'host03'
+                },
+                @{
+                    'name'                   = 'VG04'
+                    'id'                     = 'VolumeGroup:::44444'
+                    'hostname'               = 'VG04.domain.local'
+                    'effectiveSlaDomainName' = 'Gold'
+                    'effectiveSlaDomainId'   = 'SLA1'
+                    'hostId'                 = 'host04'
+                }
             }
         }
         It -Name 'Requesting all should return count of 4' -Test {
@@ -86,15 +91,20 @@ Describe -Name 'Public/Get-RubrikVolumeGroup' -Tag 'Public', 'Get-RubrikVolumeGr
     Context -Name 'DetailedObject querying' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'VG01'
-                'id'                     = 'VolumeGroup:::11111'
-                'hostname'               = 'VG01.domain.local'
-                'effectiveSlaDomainName' = 'Gold'
-                'effectiveSlaDomainId'   = 'SLA1'
-                'hostId'                 = 'host01'
-                'volumes'                = @{
-                    'mountPoints' = '/etc'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '1'
+                'data'      =
+                @{ 
+                    'name'                   = 'VG01'
+                    'id'                     = 'VolumeGroup:::11111'
+                    'hostname'               = 'VG01.domain.local'
+                    'effectiveSlaDomainName' = 'Gold'
+                    'effectiveSlaDomainId'   = 'SLA1'
+                    'hostId'                 = 'host01'
+                    'volumes'                = @{
+                        'mountPoints' = '/etc'
+                    }
                 }
             }
         }
