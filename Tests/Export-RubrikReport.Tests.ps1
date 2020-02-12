@@ -23,7 +23,10 @@ Describe -Name 'Public/Export-RubrikReport' -Tag 'Public', 'Export-RubrikReport'
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'url' = 'https://192.168.150.121/report_dir/reportid.csv'
+                'data' = @{
+                    'url' = 'https://192.168.150.121/report_dir/reportid.csv'
+                }
+                'hasmore' = 'false'
             }
         }
 
