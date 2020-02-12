@@ -23,9 +23,9 @@ Describe -Name 'Public/Get-RubrikVMwareHost' -Tag 'Public', 'Get-RubrikVMwareHos
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'hasmore'   = 'false'
-                'total'     = '1'
-                'data'      =
+                'hasMore' = 'false'
+                'total' = '4'
+                'data' =
                 @{ 
                     'name'                   = 'esxi01.domain.local'
                     'id'                     = 'VMwareHost:::11111'
@@ -43,8 +43,7 @@ Describe -Name 'Public/Get-RubrikVMwareHost' -Tag 'Public', 'Get-RubrikVMwareHos
                     'id'                     = 'VMwareHost:::33333'
                     'datacenterId'           = 'Datacenter:::22222'
                     'primaryClusterId'       = '2'
-                }
-                ,
+                },
                 @{ 
                     'name'                   = 'esxi04.domain.local'
                     'id'                     = 'VMwareHost:::44444'
