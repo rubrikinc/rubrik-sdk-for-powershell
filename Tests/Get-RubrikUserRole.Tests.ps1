@@ -23,15 +23,10 @@ Describe -Name 'Public/Get-RubrikUserRole' -Tag 'Public', 'Get-RubrikUserRole' -
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'hasmore'   = 'false'
-                'total'     = '1'
-                'data'      =
-                @{
-                    'readOnlyAdmin'     = '@{basic=}'
-                    'admin'             = '@{fullAdmin=}'
-                    'principal'         = 'User:111-222-333'
-                    'endUser'           = '@{restore="VirtualMachine:111}'           
-                }
+                'readOnlyAdmin'     = '@{basic=}'
+                'admin'             = '@{fullAdmin=}'
+                'principal'         = 'User:111-222-333'
+                'endUser'           = '@{restore="VirtualMachine:111}'           
             }
         }
         It -Name 'Returns correct principal' -Test {

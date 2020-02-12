@@ -25,37 +25,32 @@ Describe -Name 'Public/Get-RubrikFileset' -Tag 'Public', 'Get-RubrikFileset' -Fi
             @{ 'id' = 'sla_id' }
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'total'     = '3'
-                'hasMore'   = 'false'
-                'data' =  
-                @{ 
-                    'name'                   = 'Fileset'
-                    'hostname'               = 'Server'
-                    'id'                     = 'Fileset:::111111-2222-3333-4444-555555555555'
-                    'isRelic'                = 'False'
-                    'effectiveSlaDomainName' = 'sla_name'
-                    'effectiveSlaDomainId'   = 'sla_id'
-                    'primaryClusterId'       = 'cluster_id1'   
-                },
-                @{ 
-                    'name'                   = 'Fileset2'
-                    'hostname'               = 'Server2'
-                    'id'                     = 'Fileset:::111111-2222-3333-4444-6666666666666'
-                    'isRelic'                = 'False'
-                    'effectiveSlaDomainName' = 'sla_name2'
-                    'effectiveSlaDomainId'   = 'sla_id2'
-                    'primaryClusterId'       = 'cluster_id2'   
-                },
-                @{ 
-                    'name'                   = 'Fileset20'
-                    'hostname'               = 'Server20'
-                    'id'                     = 'Fileset:::111111-2222-3333-4444-7777777777777'
-                    'isRelic'                = 'False'
-                    'effectiveSlaDomainName' = 'sla_name2'
-                    'effectiveSlaDomainId'   = 'sla_id2'
-                    'primaryClusterId'       = 'cluster_id2'   
-                }
+            @{ 
+                'name'                   = 'Fileset'
+                'hostname'               = 'Server'
+                'id'                     = 'Fileset:::111111-2222-3333-4444-555555555555'
+                'isRelic'                = 'False'
+                'effectiveSlaDomainName' = 'sla_name'
+                'effectiveSlaDomainId'   = 'sla_id'
+                'primaryClusterId'       = 'cluster_id1'   
+            },
+            @{ 
+                'name'                   = 'Fileset2'
+                'hostname'               = 'Server2'
+                'id'                     = 'Fileset:::111111-2222-3333-4444-6666666666666'
+                'isRelic'                = 'False'
+                'effectiveSlaDomainName' = 'sla_name2'
+                'effectiveSlaDomainId'   = 'sla_id2'
+                'primaryClusterId'       = 'cluster_id2'   
+            },
+            @{ 
+                'name'                   = 'Fileset20'
+                'hostname'               = 'Server20'
+                'id'                     = 'Fileset:::111111-2222-3333-4444-7777777777777'
+                'isRelic'                = 'False'
+                'effectiveSlaDomainName' = 'sla_name2'
+                'effectiveSlaDomainId'   = 'sla_id2'
+                'primaryClusterId'       = 'cluster_id2'   
             }
         }
         It -Name 'No parameters returns all results' -Test {

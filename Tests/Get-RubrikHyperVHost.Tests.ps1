@@ -22,25 +22,20 @@ Describe -Name 'Public/Get-RubrikHyperVHost' -Tag 'Public', 'Get-RubrikHyperVHos
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'total'     = '3'
-                'hasMore'   = 'false'
-                'data' =  
-                @{ 
-                    'name'                   = 'hyperv52'
-                    'id'                     = 'HypervServer:::11111'
-                    'primaryClusterId'       = '1'
-                },
-                @{ 
-                    'name'                   = 'hyperv51'
-                    'id'                     = 'HypervServer:::22222'
-                    'primaryClusterId'       = '1'
-                },
-                @{ 
-                    'name'                   = 'hyperv53'
-                    'id'                     = 'HypervServer:::33333'
-                    'primaryClusterId'       = '2'
-                }
+            @{ 
+                'name'                   = 'hyperv52'
+                'id'                     = 'HypervServer:::11111'
+                'primaryClusterId'       = '1'
+            },
+            @{ 
+                'name'                   = 'hyperv51'
+                'id'                     = 'HypervServer:::22222'
+                'primaryClusterId'       = '1'
+            },
+            @{ 
+                'name'                   = 'hyperv53'
+                'id'                     = 'HypervServer:::33333'
+                'primaryClusterId'       = '2'
             }
         }
         It -Name 'Should Return hyperv52' -Test {

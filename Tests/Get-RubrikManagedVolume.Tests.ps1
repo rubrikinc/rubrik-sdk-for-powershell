@@ -26,42 +26,37 @@ Describe -Name 'Public/Get-RubrikManagedVolume' -Tag 'Public', 'Get-RubrikManage
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'total'     = '3'
-                'hasMore'   = 'false'
-                'data' =  
-                @{
-                    'id'                        = 'ManagedVolume:::11111'
-                    'isDeleted'                 = 'False'
-                    'primaryClusterId'          = 'local'
-                    'name'                      = 'OracleMV'
-                    'isRelic'                   = 'False'
-                    'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890cab'
-                    'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890cab'
-                    'effectiveSlaDomainName'    = 'Gold'
-                    'configuredSlaDomainName'   = 'Gold'
-                },
-                @{
-                    'id'                        = 'ManagedVolume:::22222'
-                    'isDeleted'                 = 'False'
-                    'primaryClusterId'          = 'local'
-                    'name'                      = 'SQLMV'
-                    'isRelic'                   = 'False'
-                    'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890abc'
-                    'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890abc'
-                    'effectiveSlaDomainName'    = 'Bronze'
-                    'configuredSlaDomainName'   = 'Bronze'
-                },
-                @{
-                    'id'                        = 'ManagedVolume:::33333'
-                    'isDeleted'                 = 'False'
-                    'primaryClusterId'          = 'local'
-                    'name'                      = 'LinMV'
-                    'isRelic'                   = 'True'
-                    'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890bac'
-                    'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890bac'
-                    'effectiveSlaDomainName'    = 'Silver'
-                    'configuredSlaDomainName'   = 'Silver'
-                }
+                'id'                        = 'ManagedVolume:::11111'
+                'isDeleted'                 = 'False'
+                'primaryClusterId'          = 'local'
+                'name'                      = 'OracleMV'
+                'isRelic'                   = 'False'
+                'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890cab'
+                'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890cab'
+                'effectiveSlaDomainName'    = 'Gold'
+                'configuredSlaDomainName'   = 'Gold'
+            },
+            @{
+                'id'                        = 'ManagedVolume:::22222'
+                'isDeleted'                 = 'False'
+                'primaryClusterId'          = 'local'
+                'name'                      = 'SQLMV'
+                'isRelic'                   = 'False'
+                'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890abc'
+                'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890abc'
+                'effectiveSlaDomainName'    = 'Bronze'
+                'configuredSlaDomainName'   = 'Bronze'
+            },
+            @{
+                'id'                        = 'ManagedVolume:::33333'
+                'isDeleted'                 = 'False'
+                'primaryClusterId'          = 'local'
+                'name'                      = 'LinMV'
+                'isRelic'                   = 'True'
+                'effectiveSlaDomainId'      = '12345678-1234-abcd-8910-1234567890bac'
+                'configuredSlaDomainId'     = '12345678-1234-abcd-8910-1234567890bac'
+                'effectiveSlaDomainName'    = 'Silver'
+                'configuredSlaDomainName'   = 'Silver'
             }
         }
         

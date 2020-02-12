@@ -22,30 +22,26 @@ Describe -Name 'Public/Get-RubrikVMwareDatastore' -Tag 'Public', 'Get-RubrikVMwa
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'hasMore' = 'False'
-                'total' = '4'
-                'data' =
-                @{ 
-                    'name'                   = 'datastore01'
-                    'id'                     = 'Datastore:::11111'
-                    'dataStoreType'          = 'NFS'
-                },
-                @{ 
-                    'name'                   = 'datastore02'
-                    'id'                     = 'Datastore:::22222'
-                    'dataStoreType'          = 'VMFS'
-                },
-                @{ 
-                    'name'                   = 'datastore03'
-                    'id'                     = 'Datastore:::33333'
-                    'dataStoreType'          = 'VMFS'
-                },
-                @{ 
-                    'name'                   = 'VSAN'
-                    'id'                     = 'Datastore:::44444'
-                    'dataStoreType'          = 'vsan'
-                }
+            @{ 
+                'name'                   = 'datastore01'
+                'id'                     = 'Datastore:::11111'
+                'dataStoreType'          = 'NFS'
+            },
+            @{ 
+                'name'                   = 'datastore02'
+                'id'                     = 'Datastore:::22222'
+                'dataStoreType'          = 'VMFS'
+            },
+            @{ 
+                'name'                   = 'datastore03'
+                'id'                     = 'Datastore:::33333'
+                'dataStoreType'          = 'VMFS'
+            }
+            ,
+            @{ 
+                'name'                   = 'VSAN'
+                'id'                     = 'Datastore:::44444'
+                'dataStoreType'          = 'vsan'
             }
         }
         It -Name 'Should Return count of 4' -Test {

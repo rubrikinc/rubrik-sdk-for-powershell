@@ -22,12 +22,12 @@ Describe -Name 'Public/Remove-RubrikOrgAuthorization' -Tag 'Public', 'Remove-Rub
     Context -Name 'Results Validation' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Get-RubrikOrganization -Verifiable -ModuleName 'Rubrik' -MockWith {
-            $json = '{"data": {
+            $json = '{
                 "name": "SampleOrg",
                 "isGlobal": false,
                 "envoyStatus": false,
                 "id": "Organization:::01234567-8910-1abc-d435-0abc1234d567"
-              }}'
+              }'
             return ConvertFrom-Json $json
         } 
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
@@ -69,12 +69,12 @@ Describe -Name 'Public/Remove-RubrikOrgAuthorization' -Tag 'Public', 'Remove-Rub
     Context -Name 'Global Org' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            $json = '{"data": {
+            $json = '{
                 "name": "Global",
                 "isGlobal": true,
                 "envoyStatus": false,
                 "id": "Organization:::01234567-8910-1abc-d435-0abc1234d567"
-              }}'
+              }'
             return ConvertFrom-Json $json
         }
         It -Name 'Should throw an error on Global Org' -Test {

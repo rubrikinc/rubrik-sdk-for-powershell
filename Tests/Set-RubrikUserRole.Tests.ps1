@@ -24,15 +24,10 @@ Describe -Name 'Public/Set-RubrikUserRole' -Tag 'Public', 'Set-RubrikUserRole' -
         Mock -CommandName Update-RubrikUserRole  -ModuleName 'Rubrik' -Mockwith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'hasmore' = 'false'
-                'total' = '1'
-                'data' = 
-                @{
-                    'readOnlyAdmin'     = '@{basic=}'
-                    'admin'             = '@{fullAdmin=}'
-                    'principal'         = 'User:111-222-333'
-                    'endUser'           = '@{restore="VirtualMachine:111}'           
-                }
+                'readOnlyAdmin'     = '@{basic=}'
+                'admin'             = '@{fullAdmin=}'
+                'principal'         = 'User:111-222-333'
+                'endUser'           = '@{restore="VirtualMachine:111}'           
             }
         }
         It -Name 'User is updated' -Test {

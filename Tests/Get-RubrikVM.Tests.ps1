@@ -25,18 +25,13 @@ Describe -Name 'Public/Get-RubrikVM' -Tag 'Public', 'Get-RubrikVM' -Fixture {
             @{ 'id' = 'test-sla_id' }
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'hasmore'   = 'false'
-                'total'     = '1'
-                'data'      =
-                @{ 
-                    'name'                   = 'test-vm1'
-                    'effectiveSlaDomainName' = 'test-valid_sla_name'
-                },
-                @{ # The server-side filter should not return this record, but this record will validate the response filter logic
-                    'name'                   = 'test-vm2'
-                    'effectiveSlaDomainName' = 'test-invalid_sla_name'
-                }
+            @{ 
+                'name'                   = 'test-vm1'
+                'effectiveSlaDomainName' = 'test-valid_sla_name'
+            },
+            @{ # The server-side filter should not return this record, but this record will validate the response filter logic
+                'name'                   = 'test-vm2'
+                'effectiveSlaDomainName' = 'test-invalid_sla_name'
             }
         }
         It -Name 'should overwrite $SLAID' -Test {
@@ -52,14 +47,9 @@ Describe -Name 'Public/Get-RubrikVM' -Tag 'Public', 'Get-RubrikVM' -Fixture {
     Context -Name 'Parameter/SLAID' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'hasmore'   = 'false'
-                'total'     = '1'
-                'data'      =
-                @{ 
-                    'name'                   = 'test-vm1'
-                    'effectiveSlaDomainName' = 'test-valid_sla_name'
-                }
+            @{ 
+                'name'                   = 'test-vm1'
+                'effectiveSlaDomainName' = 'test-valid_sla_name'
             }
         }
         It -Name 'should not overwrite $SLAID' -Test {

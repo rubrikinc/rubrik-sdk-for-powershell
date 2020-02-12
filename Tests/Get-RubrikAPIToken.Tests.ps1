@@ -22,36 +22,30 @@ Describe -Name 'Public/Get-RubrikAPIToken' -Tag 'Public', 'Get-RubrikAPIToken' -
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'data' =          
-                    @{ 
-                        'id'                     = '11111'
-                        'userId'                 = '12345'
-                        'tag'                    = 'roxie'
-                        'organizationId'         = 'org1'
-                    },
-                    @{ 
-                        'id'                     = '22222'
-                        'userId'                 = '56789'
-                        'tag'                    = 'powershell'
-                        'organizationId'         = 'org1'
-                    },
-                    @{ 
-                        'id'                     = '33333'
-                        'userId'                 = '12345'
-                        'tag'                    = 'python'
-                        'organizationId'         = 'org1'
-                    },
-                    @{ 
-                        'id'                     = '44444'
-                        'userId'                 = '12345'
-                        'tag'                    = 'ruby'
-                        'organizationId'         = 'org2'
-                    }
-                    'hasmore' = 'false'
-                    'total'   = '4'
+            @{ 
+                'id'                     = '11111'
+                'userId'                 = '12345'
+                'tag'                    = 'roxie'
+                'organizationId'         = 'org1'
+            },
+            @{ 
+                'id'                     = '22222'
+                'userId'                 = '56789'
+                'tag'                    = 'powershell'
+                'organizationId'         = 'org1'
+            },
+            @{ 
+                'id'                     = '33333'
+                'userId'                 = '12345'
+                'tag'                    = 'python'
+                'organizationId'         = 'org1'
+            },
+            @{ 
+                'id'                     = '44444'
+                'userId'                 = '12345'
+                'tag'                    = 'ruby'
+                'organizationId'         = 'org2'
             }
-
         }
         It -Name 'Should Return count of 4' -Test {
             ( Get-RubrikAPIToken).Count |

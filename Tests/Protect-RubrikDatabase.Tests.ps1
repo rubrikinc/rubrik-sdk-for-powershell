@@ -25,7 +25,7 @@ Describe -Name 'Public/Protect-RubrikDatabase' -Tag 'Public', 'Protect-RubrikDat
             @{ 'slaid' = '12345678-1234-abcd-8910-1234567890ab' }
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            $response = '{"data": {
+            $response = '{
                 "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
                 "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
                 "instanceName": "MSSQLSERVER",
@@ -49,7 +49,7 @@ Describe -Name 'Public/Protect-RubrikDatabase' -Tag 'Public', 'Protect-RubrikDat
                 "isRelic": false,
                 "name": "ExampleDB1",
                 "logBackupFrequencyInSeconds": 300
-            }}'
+            }'
             return ConvertFrom-Json $response
         }
         It -Name 'Verify results match expected values' -Test {

@@ -22,34 +22,29 @@ Describe -Name 'Public/Get-RubrikHyperVMount' -Tag 'Public', 'Get-RubrikHyperVMo
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'total'     = '4'
-                'hasMore'   = 'false'
-                'data' =  
-                @{ 
-                    'id'                    = '11-22-33'
-                    'vmId'                  = 'HypervVirtualMachine:::111'
-                    'isReady'               = 'True'
-                    'hostId'                = 'HypervServer:::111'
-                },
-                @{ 
-                    'id'                    = '11-22-44'
-                    'vmId'                  = 'HypervVirtualMachine:::111'
-                    'isReady'               = 'True'
-                    'hostId'                = 'HypervServer:::222'
-                },
-                @{ 
-                    'id'                    = '11-22-55'
-                    'vmId'                  = 'HypervVirtualMachine:::222'
-                    'isReady'               = 'True'
-                    'hostId'                = 'HypervServer:::111'
-                },
-                @{ 
-                    'id'                    = '11-22-66'
-                    'vmId'                  = 'HypervVirtualMachine:::333'
-                    'isReady'               = 'True'
-                    'hostId'                = 'HypervServer:::111'
-                }
+            @{ 
+                'id'                    = '11-22-33'
+                'vmId'                  = 'HypervVirtualMachine:::111'
+                'isReady'               = 'True'
+                'hostId'                = 'HypervServer:::111'
+            },
+            @{ 
+                'id'                    = '11-22-44'
+                'vmId'                  = 'HypervVirtualMachine:::111'
+                'isReady'               = 'True'
+                'hostId'                = 'HypervServer:::222'
+            },
+            @{ 
+                'id'                    = '11-22-55'
+                'vmId'                  = 'HypervVirtualMachine:::222'
+                'isReady'               = 'True'
+                'hostId'                = 'HypervServer:::111'
+            },
+            @{ 
+                'id'                    = '11-22-66'
+                'vmId'                  = 'HypervVirtualMachine:::333'
+                'isReady'               = 'True'
+                'hostId'                = 'HypervServer:::111'
             }
         }
         It -Name 'Filter should return count of 4' -Test {
