@@ -25,18 +25,13 @@ Describe -Name 'Public/Protect-RubrikFileset' -Tag 'Public', 'Protect-RubrikFile
             @{ 'id' = 'sla_domain_id' }
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'hasmore' = 'false'
-                'total'   = '1'
-                'data'    =
-                @{ 
-                    'name'                   = 'Foo'
-                    'id'                     = 'Fileset::111111-2222-3333-4444-555555555555'
-                    'effectiveSlaDomainId'   = 'sla_domain_id'
-                    'useWindowsVss'          = 'False'
-                    'shareCount'             = '0'
-                    'primaryClusterId'       = 'cluster_id1' 
-                }
+            @{ 
+                'name'                   = 'Foo'
+                'id'                     = 'Fileset::111111-2222-3333-4444-555555555555'
+                'effectiveSlaDomainId'   = 'sla_domain_id'
+                'useWindowsVss'          = 'False'
+                'shareCount'             = '0'
+                'primaryClusterId'       = 'cluster_id1' 
             }
         }
         It -Name 'Fileset assigned to SLA Domain' -Test {

@@ -22,24 +22,19 @@ Describe -Name 'Public/Get-RubrikNutanixCluster' -Tag 'Public', 'Get-RubrikNutan
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'hasmore'   = 'false'
-                'total'     = '2'
-                'data'      =
-                @{ 
-                    'name'                  = 'nutanix_cluster_1'
-                    'primary_cluster_id'    = '11111-22222-33333'
-                    'hostname'              = 'cluster1.domain.local'
-                    'username'              = 'administrator'
-                    'id'                    = 'NutanixCluster:::11111-222222'
-                },
-                @{ 
-                    'name'                  = 'nutanix_cluster_2'
-                    'primary_cluster_id'    = '11111-22222-33333'
-                    'hostname'              = 'cluster2.domain.local'
-                    'username'              = 'administrator'
-                    'id'                    = 'NutanixCluster:::11111-333333'
-                }
+            @{ 
+                'name'                  = 'nutanix_cluster_1'
+                'primary_cluster_id'    = '11111-22222-33333'
+                'hostname'              = 'cluster1.domain.local'
+                'username'              = 'administrator'
+                'id'                    = 'NutanixCluster:::11111-222222'
+            },
+            @{ 
+                'name'                  = 'nutanix_cluster_2'
+                'primary_cluster_id'    = '11111-22222-33333'
+                'hostname'              = 'cluster2.domain.local'
+                'username'              = 'administrator'
+                'id'                    = 'NutanixCluster:::11111-333333'
             }
         }
 

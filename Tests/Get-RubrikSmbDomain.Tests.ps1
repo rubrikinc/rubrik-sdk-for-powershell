@@ -22,10 +22,6 @@ Describe -Name 'Public/Get-RubrikSmbDomain' -Tag 'Public', 'Get-RubrikSmbDomain'
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'hasmore'   = 'false'
-                'total'     = '2'
-                'data'      =
                 @{ 
                     'name'                  = 'domain.local'
                     'serviceAccount'        = 'serviceAccountUserName'
@@ -38,7 +34,6 @@ Describe -Name 'Public/Get-RubrikSmbDomain' -Tag 'Public', 'Get-RubrikSmbDomain'
                     'isStickySmbService'    = 'true'
                     'status'                = 'Configured'
                 }
-            }
 
         }
         It -Name 'No parameters returns all results' -Test {

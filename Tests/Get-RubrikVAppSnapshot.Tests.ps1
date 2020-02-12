@@ -22,7 +22,7 @@ Describe -Name 'Public/Get-RubrikVAppSnapshot' -Tag 'Public', 'Get-RubrikVAppSna
     Context -Name 'Parameters' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            $response = '{"data": {
+            $response = '{
                 "date": "2019-07-19T16:38:22.826Z",
                 "indexState": 1,
                 "slaName": "Silver",
@@ -66,7 +66,7 @@ Describe -Name 'Public/Get-RubrikVAppSnapshot' -Tag 'Public', 'Get-RubrikVAppSna
                   }
                 ],
                 "id": "01234567-8910-1abc-d435-0abc1234d567"
-              }}'
+              }'
             return ConvertFrom-Json $response
         }
 

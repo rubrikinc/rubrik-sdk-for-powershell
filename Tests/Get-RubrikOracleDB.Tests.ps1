@@ -25,18 +25,13 @@ Describe -Name 'Public/Get-RubrikOracleDB' -Tag 'Public', 'Get-RubrikOracleDB' -
             @{ 'id' = 'test-sla_id' }
         }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'hasmore'   = 'false'
-                'total'     = '1'
-                'data'      =
-                @{ 
-                    'name'                   = 'test-oracledb1'
-                    'effectiveSlaDomainName' = 'test-valid_sla_name'
-                },
-                @{ # The server-side filter should not return this record, but this record will validate the response filter logic
-                    'name'                   = 'test-oracledb2'
-                    'effectiveSlaDomainName' = 'test-invalid_sla_name'
-                }
+            @{ 
+                'name'                   = 'test-oracledb1'
+                'effectiveSlaDomainName' = 'test-valid_sla_name'
+            },
+            @{ # The server-side filter should not return this record, but this record will validate the response filter logic
+                'name'                   = 'test-oracledb2'
+                'effectiveSlaDomainName' = 'test-invalid_sla_name'
             }
         }
         It -Name 'should overwrite $SLAID' -Test {
@@ -52,14 +47,9 @@ Describe -Name 'Public/Get-RubrikOracleDB' -Tag 'Public', 'Get-RubrikOracleDB' -
     Context -Name 'Parameter/SLAID' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'hasmore'   = 'false'
-                'total'     = '1'
-                'data'      =
-                @{ 
-                    'name'                   = 'test-oracledb1'
-                    'effectiveSlaDomainName' = 'test-valid_sla_name'
-                }
+            @{ 
+                'name'                   = 'test-oracledb1'
+                'effectiveSlaDomainName' = 'test-valid_sla_name'
             }
         }
         It -Name 'SLAID Query should return OracleDB1 DB' -Test {

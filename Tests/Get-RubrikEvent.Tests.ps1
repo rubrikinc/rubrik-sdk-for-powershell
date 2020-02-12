@@ -22,40 +22,35 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
-                'total'     = '5'
-                'hasMore'   = 'false'
-                'data' =  
-                    @{ 
-                        'name'                   = 'VirtualMachine01'
-                        'id'                     = 'VirtualMachine:::11111'
-                        'eventType'              = 'Replication'
-                        'time'                   = 'Mon Aug 10 07:12:14 UTC 2019'
-                    },
-                    @{ 
-                        'name'                   = 'VirtualMachine02'
-                        'id'                     = 'VirtualMachine:::22222'
-                        'eventType'              = 'Backup'
-                        'time'                   = 'Mon Aug 11 07:12:14 UTC 2019'
-                    },
-                    @{ 
-                        'name'                   = 'VirtualMachine03'
-                        'id'                     = 'VirtualMachine:::33333'
-                        'eventType'              = 'CloudNativeSource'
-                        'time'                   = 'Mon Aug 12 07:12:14 UTC 2019'
-                    },
-                    @{ 
-                        'name'                   = 'VirtualMachine04'
-                        'id'                     = 'VirtualMachine:::44444'
-                        'eventType'              = 'Replication'
-                        'time'                   = 'Mon Aug 13 07:12:14 UTC 2019'
-                    },
-                    @{ 
-                        'name'                   = 'VirtualMachine05'
-                        'id'                     = 'VirtualMachine:::55555'
-                        'eventType'              = 'Replication'
-                        'time'                   = 'Mon Aug 14 07:12:14 UTC 2019'
-                    }
+            @{ 
+                'name'                   = 'VirtualMachine01'
+                'id'                     = 'VirtualMachine:::11111'
+                'eventType'              = 'Replication'
+                'time'                   = 'Mon Aug 10 07:12:14 UTC 2019'
+            },
+            @{ 
+                'name'                   = 'VirtualMachine02'
+                'id'                     = 'VirtualMachine:::22222'
+                'eventType'              = 'Backup'
+                'time'                   = 'Mon Aug 11 07:12:14 UTC 2019'
+            },
+            @{ 
+                'name'                   = 'VirtualMachine03'
+                'id'                     = 'VirtualMachine:::33333'
+                'eventType'              = 'CloudNativeSource'
+                'time'                   = 'Mon Aug 12 07:12:14 UTC 2019'
+            },
+            @{ 
+                'name'                   = 'VirtualMachine04'
+                'id'                     = 'VirtualMachine:::44444'
+                'eventType'              = 'Replication'
+                'time'                   = 'Mon Aug 13 07:12:14 UTC 2019'
+            },
+            @{ 
+                'name'                   = 'VirtualMachine05'
+                'id'                     = 'VirtualMachine:::55555'
+                'eventType'              = 'Replication'
+                'time'                   = 'Mon Aug 14 07:12:14 UTC 2019'
             }
         }
         It -Name 'Should Return count of 5' -Test {

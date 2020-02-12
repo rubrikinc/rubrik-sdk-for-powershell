@@ -17,7 +17,7 @@
   #>
 
   Write-Verbose -Message 'Formatting return value'
-  if ($location) {
+  if ($location -and ($null -ne ($result).$location)) {
     # The $location check assumes that not all endpoints will require findng (and removing) a parent key
     # If one does exist, this extracts the value so that the $result data is consistent across API versions
     return ($result).$location

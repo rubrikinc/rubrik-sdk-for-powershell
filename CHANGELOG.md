@@ -42,14 +42,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Modified New-RubrikSLA in order to support creation of SLAs when used with the pipeline from Get-RubrikSLA as per [Issue 484](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/484)
 * Modified ParameterSets on Set-RubrikDatabase to align with logic outlined in [Issue 438](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/438)
 * Added more object support to `Get-RubrikObject` as per defined in [Issue 545](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/545) and [Issue 462](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/462)
-* Removed check for null on results.location within the Test-ReturnFormat private function as it was returning the default data/hasmore/total stanza and causing incorrect counts of returned objects as outlined in [Issue 562](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/562) Updated Unit tests to respect this change.
-* Fixed issue around Get-RubrikDatabase and parent 'data' encapsulation
 
 ### Fixed
 
 * Documentation links in comment-based help updated to lower case
 * Null filter on Get-RubrikSCVMM when using -DetailedObject as per [Issue 556](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/556)
-* Fixed example for Get-RubrikDatabaseMount as per [Issue 550](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/550)
 
 ## [5.0.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.0) - 2019-11-24
 

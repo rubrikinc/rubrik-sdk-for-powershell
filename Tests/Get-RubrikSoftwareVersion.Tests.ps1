@@ -20,7 +20,7 @@ Describe -Name 'Public/Get-RubrikSoftwareVersion' -Tag 'Public', 'Get-RubrikSoft
     #endregion
 
     Context -Name 'Results Filtering' {
-        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith { @{ 'version' = '5.0.1-p2-1592'}}
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith { return '5.0.1-p2-1592'}
         It -Name 'Should return 1' -Test {
             ( Get-RubrikSoftwareVersion -Server 'server') |
                 Should -BeExactly '5.0.1-p2-1592'
