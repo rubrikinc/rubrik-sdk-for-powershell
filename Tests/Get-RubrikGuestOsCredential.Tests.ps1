@@ -22,24 +22,29 @@ Describe -Name 'Public/Get-RubrikGuestOSCredential' -Tag 'Public', 'Get-RubrikGu
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'username'  = 'user1'
-                'id'        = '11111-22222-33333-44444-55555'
-                'domain'    = 'domain.local'
-            },
-            @{ 
-                'username'  = 'user2'
-                'id'        = '11111-22222-33333-11111-55555'
-                'domain'    = 'domain.local'
-            },
-            @{ 
-                'username'  = 'user3'
-                'id'        = '11111-11111-33333-44444-55555'
-                'domain'    = 'anotherdomain.local'
-            },
-            @{ 
-                'username'  = 'root'
-                'id'        = '11111-22222-11111-44444-55555'
+            @{
+                'total'     = '4'
+                'hasMore'   = 'false'
+                'data' =  
+                @{ 
+                    'username'  = 'user1'
+                    'id'        = '11111-22222-33333-44444-55555'
+                    'domain'    = 'domain.local'
+                },
+                @{ 
+                    'username'  = 'user2'
+                    'id'        = '11111-22222-33333-11111-55555'
+                    'domain'    = 'domain.local'
+                },
+                @{ 
+                    'username'  = 'user3'
+                    'id'        = '11111-11111-33333-44444-55555'
+                    'domain'    = 'anotherdomain.local'
+                },
+                @{ 
+                    'username'  = 'root'
+                    'id'        = '11111-22222-11111-44444-55555'
+                }
             }
         }
         It -Name 'Should Return count of 4' -Test {

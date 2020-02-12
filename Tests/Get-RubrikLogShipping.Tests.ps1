@@ -22,17 +22,22 @@ Describe -Name 'Public/Get-RubrikLogShipping' -Tag 'Public', 'Get-RubrikLogShipp
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'id'                    = '11111'
-                'location'              = 'test-server01'
-                'primaryDatabaseName'   = 'AdventureWorks'
-                'secondaryDatabaseName' = 'AdventureWorks_Replica'
-            },
-            @{ 
-                'id'                    = '22222'
-                'location'              = 'test-server02'
-                'primaryDatabaseName'   = 'AdventureWorks2012'
-                'secondaryDatabaseName' = 'AdventureWorks2012_Replica'
+            @{
+                'total'     = '2'
+                'hasMore'   = 'false'
+                'data' =  
+                @{ 
+                    'id'                    = '11111'
+                    'location'              = 'test-server01'
+                    'primaryDatabaseName'   = 'AdventureWorks'
+                    'secondaryDatabaseName' = 'AdventureWorks_Replica'
+                },
+                @{ 
+                    'id'                    = '22222'
+                    'location'              = 'test-server02'
+                    'primaryDatabaseName'   = 'AdventureWorks2012'
+                    'secondaryDatabaseName' = 'AdventureWorks2012_Replica'
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

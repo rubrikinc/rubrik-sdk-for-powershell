@@ -15,7 +15,7 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
         header  = @{ 'Authorization' = 'Bearer test-authorization' }
         time    = (Get-Date)
         api     = 'v1'
-        version = '4.0.5'
+        version = '1.0'
     }
     #endregion
 
@@ -145,9 +145,7 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
     Context -Name 'Single Result' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            $response = '{  
-                "hasMore":false,
-                "data":[  
+            $response = ' 
                     {
                         "effectiveSlaDomainId": "12345678-1234-abcd-8910-1234567890ab",
                         "primaryClusterId": "12345678-1234-abcd-8910-1234567890ab",
@@ -172,10 +170,7 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
                         "isRelic": false,
                         "name": "ExampleDB1",
                         "logBackupFrequencyInSeconds": 300
-                    }
-                ],
-                "total":1
-            }'
+                    }'
             return ConvertFrom-Json $response
         }
         It -Name 'one result returned' -Test {

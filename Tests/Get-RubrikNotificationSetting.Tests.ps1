@@ -22,19 +22,24 @@ Describe -Name 'Public/Get-RubrikNotificationSetting' -Tag 'Public', 'Get-Rubrik
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'id'                 = '1111-2222'
-                'eventTypes'         = '{Archive,AuthDomain}'
-                'snmpAddresses'      = ''
-                'shouldSendToSyslog' = 'False'
-                'emailAddresses'     = 'testuser@test.com'   
-            },
-            @{ 
-                'id'                 = '1111-3333'
-                'eventTypes'         = '{Archive}'
-                'snmpAddresses'      = ''
-                'shouldSendToSyslog' = 'False'
-                'emailAddresses'     = 'testuser2@test.com'   
+            @{
+                'hasmore'   = 'false'
+                'total'     = '2'
+                'data'      =
+                @{ 
+                    'id'                 = '1111-2222'
+                    'eventTypes'         = '{Archive,AuthDomain}'
+                    'snmpAddresses'      = ''
+                    'shouldSendToSyslog' = 'False'
+                    'emailAddresses'     = 'testuser@test.com'   
+                },
+                @{ 
+                    'id'                 = '1111-3333'
+                    'eventTypes'         = '{Archive}'
+                    'snmpAddresses'      = ''
+                    'shouldSendToSyslog' = 'False'
+                    'emailAddresses'     = 'testuser2@test.com'   
+                }
             }
         }
         It -Name 'No parameters returns all results' -Test {

@@ -22,29 +22,34 @@ Describe -Name 'Public/Get-RubrikUnmanagedObject' -Tag 'Public', 'Get-RubrikUnma
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'id'                    = 'VirtualMachine:11111'
-                'name'                  = 'VM1'
-                'unManagedStatus'       = 'Relic'
-                'objectType'            = 'VirtualMachine'
-            },
-            @{ 
-                'id'                    = 'MSSQLDatabase:11111'
-                'name'                  = 'db1'
-                'unManagedStatus'       = 'Unprotected'
-                'objectType'            = 'MssqlDatabase'
-            },
-            @{ 
-                'id'                    = 'VirtualMachine:22222'
-                'name'                  = 'VM2'
-                'unManagedStatus'       = 'Protected'
-                'objectType'            = 'VirtualMachine'
-            },
-            @{ 
-                'id'                    = 'VirtualMachine:33333'
-                'name'                  = 'VM3'
-                'unManagedStatus'       = 'Relic'
-                'objectType'            = 'VirtualMachine'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '4'
+                'data'      =
+                @{ 
+                    'id'                    = 'VirtualMachine:11111'
+                    'name'                  = 'VM1'
+                    'unManagedStatus'       = 'Relic'
+                    'objectType'            = 'VirtualMachine'
+                },
+                @{ 
+                    'id'                    = 'MSSQLDatabase:11111'
+                    'name'                  = 'db1'
+                    'unManagedStatus'       = 'Unprotected'
+                    'objectType'            = 'MssqlDatabase'
+                },
+                @{ 
+                    'id'                    = 'VirtualMachine:22222'
+                    'name'                  = 'VM2'
+                    'unManagedStatus'       = 'Protected'
+                    'objectType'            = 'VirtualMachine'
+                },
+                @{ 
+                    'id'                    = 'VirtualMachine:33333'
+                    'name'                  = 'VM3'
+                    'unManagedStatus'       = 'Relic'
+                    'objectType'            = 'VirtualMachine'
+                }
             }
         }
         It -Name 'Should return count of 4' -Test {

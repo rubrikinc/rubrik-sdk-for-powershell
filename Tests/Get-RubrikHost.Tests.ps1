@@ -22,30 +22,35 @@ Describe -Name 'Public/Get-RubrikHost' -Tag 'Public', 'Get-RubrikHost' -Fixture 
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'host01'
-                'id'                     = 'Host:::11111'
-                'operatingSystemType'    = 'Windows'
-            },
-            @{ 
-                'name'                   = 'host02'
-                'id'                     = 'Host:::22222'
-                'operatingSystemType'    = 'Windows'
-            },
-            @{ 
-                'name'                   = 'host03'
-                'id'                     = 'Host:::33333'
-                'operatingSystemType'    = 'Linux'
-            },
-            @{ 
-                'name'                   = 'host04'
-                'id'                     = 'Host:::44444'
-                'operating_system_type'  = 'Windows'
-            },
-            @{ 
-                'name'                   = 'host05'
-                'id'                     = 'Host:::55555'
-                'operating_system_type'  = 'Linux'
+            @{
+                'total'     = '5'
+                'hasMore'   = 'false'
+                'data' =  
+                @{ 
+                    'name'                   = 'host01'
+                    'id'                     = 'Host:::11111'
+                    'operatingSystemType'    = 'Windows'
+                },
+                @{ 
+                    'name'                   = 'host02'
+                    'id'                     = 'Host:::22222'
+                    'operatingSystemType'    = 'Windows'
+                },
+                @{ 
+                    'name'                   = 'host03'
+                    'id'                     = 'Host:::33333'
+                    'operatingSystemType'    = 'Linux'
+                },
+                @{ 
+                    'name'                   = 'host04'
+                    'id'                     = 'Host:::44444'
+                    'operating_system_type'  = 'Windows'
+                },
+                @{ 
+                    'name'                   = 'host05'
+                    'id'                     = 'Host:::55555'
+                    'operating_system_type'  = 'Linux'
+                }
             }
         }
         It -Name 'Should Return count of 5' -Test {

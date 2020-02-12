@@ -17,10 +17,12 @@ function New-RubrikDatabaseMount
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikdatabasemount
 
       .EXAMPLE
-      New-RubrikDatabaseMount -id $db.id -targetInstanceId $db.instanceId -mountedDatabaseName 'BAR-LM' -recoveryDateTime (Get-date (Get-RubrikDatabase -id $db.id).latestRecoveryPoint)
+      $db=Get-RubrikDatabase -HostName FOO -Instance MSSQLSERVER -Database BAR -DetailedObject
+
+      New-RubrikDatabaseMount -id $db.id -targetInstanceId $db.instanceId -mountedDatabaseName 'BAR-LM' -recoveryDateTime (Get-date $db.latestRecoveryPoint)
       Creates a new database mount named BAR on the same instance as the source database, using the most recent recovery time for the database. 
       
-      $db=Get-RubrikDatabase -HostName FOO -Instance MSSQLSERVER -Database BAR
+      
 
   #>
 

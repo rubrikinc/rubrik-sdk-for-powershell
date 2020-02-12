@@ -22,23 +22,28 @@ Describe -Name 'Public/Get-RubrikVMwareCluster' -Tag 'Public', 'Get-RubrikVMware
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'Cluster01'
-                'id'                     = 'Cluster:::11111'
-                'dataCenterId'           = 'Datacenter:::11111'
-                'primaryClusterId'       = '1'
-            },
-            @{ 
-                'name'                   = 'Cluster02'
-                'id'                     = 'Cluster:::22222'
-                'DatacenterId'           = 'Datacenter:::11111'
-                'primaryClusterId'       = '1'
-            },
-            @{ 
-                'name'                   = 'Cluster01'
-                'id'                     = 'Cluster:::33333'
-                'DatacenterId'           = 'Datacenter:::22222'
-                'primaryClusterId'       = '2'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '3'
+                'data'      =
+                @{ 
+                    'name'                   = 'Cluster01'
+                    'id'                     = 'Cluster:::11111'
+                    'dataCenterId'           = 'Datacenter:::11111'
+                    'primaryClusterId'       = '1'
+                },
+                @{ 
+                    'name'                   = 'Cluster02'
+                    'id'                     = 'Cluster:::22222'
+                    'DatacenterId'           = 'Datacenter:::11111'
+                    'primaryClusterId'       = '1'
+                },
+                @{ 
+                    'name'                   = 'Cluster01'
+                    'id'                     = 'Cluster:::33333'
+                    'DatacenterId'           = 'Datacenter:::22222'
+                    'primaryClusterId'       = '2'
+                }
             }
         }
         It -Name 'Should Return count of 2' -Test {

@@ -22,23 +22,28 @@ Describe -Name 'Public/Get-RubrikVMwareDatacenter' -Tag 'Public', 'Get-RubrikVMw
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'datacenter01'
-                'id'                     = 'Datacenter:::11111'
-                'vCenterId'              = 'vCenter:::11111'
-                'primaryClusterId'       = '1'
-            },
-            @{ 
-                'name'                   = 'datacenter02'
-                'id'                     = 'Datacenter:::22222'
-                'vCenterId'              = 'vCenter:::11111'
-                'primaryClusterId'       = '1'
-            },
-            @{ 
-                'name'                   = 'datacenter01'
-                'id'                     = 'Datacenter:::33333'
-                'vCenterId'              = 'vCenter:::22222'
-                'primaryClusterId'       = '2'
+            @{
+                'hasmore'   = 'false'
+                'total'     = '3'
+                'data'      =
+                @{ 
+                    'name'                   = 'datacenter01'
+                    'id'                     = 'Datacenter:::11111'
+                    'vCenterId'              = 'vCenter:::11111'
+                    'primaryClusterId'       = '1'
+                },
+                @{ 
+                    'name'                   = 'datacenter02'
+                    'id'                     = 'Datacenter:::22222'
+                    'vCenterId'              = 'vCenter:::11111'
+                    'primaryClusterId'       = '1'
+                },
+                @{ 
+                    'name'                   = 'datacenter01'
+                    'id'                     = 'Datacenter:::33333'
+                    'vCenterId'              = 'vCenter:::22222'
+                    'primaryClusterId'       = '2'
+                }
             }
         }
         It -Name 'Should Return count of 2' -Test {
