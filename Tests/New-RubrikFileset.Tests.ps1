@@ -22,13 +22,18 @@ Describe -Name 'Public/New-RubrikFileset' -Tag 'Public', 'New-RubrikFileset' -Fi
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'name'                   = 'Foo'
-                'id'                     = 'Fileset::111111-2222-3333-4444-555555555555'
-                'shareType'              = 'SMB'
-                'useWindowsVss'          = 'False'
-                'shareCount'             = '0'
-                'primaryClusterId'       = 'cluster_id1'   
+            @{
+                'hasmore' = 'false'
+                'total'   = '1'
+                'data'    =
+                @{ 
+                    'name'                   = 'Foo'
+                    'id'                     = 'Fileset::111111-2222-3333-4444-555555555555'
+                    'shareType'              = 'SMB'
+                    'useWindowsVss'          = 'False'
+                    'shareCount'             = '0'
+                    'primaryClusterId'       = 'cluster_id1'   
+                }
             }
         }
         It -Name 'FilesetTemplate created' -Test {
