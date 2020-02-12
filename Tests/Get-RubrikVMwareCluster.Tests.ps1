@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikVMwareCluster' -Tag 'Public', 'Get-RubrikVMware
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '3'
                 'data'      =
                 @{ 
                     'name'                   = 'Cluster01'

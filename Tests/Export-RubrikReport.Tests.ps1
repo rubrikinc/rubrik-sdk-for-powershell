@@ -27,6 +27,7 @@ Describe -Name 'Public/Export-RubrikReport' -Tag 'Public', 'Export-RubrikReport'
                     'url' = 'https://192.168.150.121/report_dir/reportid.csv'
                 }
                 'hasmore' = 'false'
+                'total' = '1'
             }
         }
 

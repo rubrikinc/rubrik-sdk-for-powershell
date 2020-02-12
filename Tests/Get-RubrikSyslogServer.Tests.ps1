@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikSyslogServer' -Tag 'Public', 'Get-RubrikSyslogS
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '2'
                 'data'      =
                 @{ 
                     'hostname'  = 'syslog1.domain.local'

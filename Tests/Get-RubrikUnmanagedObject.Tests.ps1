@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikUnmanagedObject' -Tag 'Public', 'Get-RubrikUnma
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '4'
                 'data'      =
                 @{ 
                     'id'                    = 'VirtualMachine:11111'

@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikReport' -Tag 'Public', 'Get-RubrikReport' -Fixt
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '2'
                 'data'      =
                 @{ 
                     'name'                   = 'TestReport1'

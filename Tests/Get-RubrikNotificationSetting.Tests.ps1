@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikNotificationSetting' -Tag 'Public', 'Get-Rubrik
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '2'
                 'data'      =
                 @{ 
                     'id'                 = '1111-2222'

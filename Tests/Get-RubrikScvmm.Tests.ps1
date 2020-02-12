@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikScvmm' -Tag 'Public', 'Get-RubrikScvmm' -Fixtur
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '3'
                 'data'      =
                 @{ 
                     'name'                      = 'scvmm.domain.local'

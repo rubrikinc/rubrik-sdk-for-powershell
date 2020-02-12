@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikManagedVolumeExport' -Tag 'Public', 'Get-Rubrik
 
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'total'     = '1'
+                'total'     = '3'
                 'hasMore'   = 'false'
                 'data' =  
                 @{

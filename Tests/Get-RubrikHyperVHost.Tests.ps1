@@ -23,7 +23,7 @@ Describe -Name 'Public/Get-RubrikHyperVHost' -Tag 'Public', 'Get-RubrikHyperVHos
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'total'     = '1'
+                'total'     = '3'
                 'hasMore'   = 'false'
                 'data' =  
                 @{ 

@@ -23,7 +23,7 @@ Describe -Name 'Public/Get-RubrikHost' -Tag 'Public', 'Get-RubrikHost' -Fixture 
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'total'     = '1'
+                'total'     = '5'
                 'hasMore'   = 'false'
                 'data' =  
                 @{ 

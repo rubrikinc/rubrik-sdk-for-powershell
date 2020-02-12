@@ -23,7 +23,7 @@ Describe -Name 'Public/Get-RubrikLogShipping' -Tag 'Public', 'Get-RubrikLogShipp
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'total'     = '1'
+                'total'     = '2'
                 'hasMore'   = 'false'
                 'data' =  
                 @{ 

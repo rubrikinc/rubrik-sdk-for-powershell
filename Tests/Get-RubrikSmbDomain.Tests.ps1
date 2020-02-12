@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikSmbDomain' -Tag 'Public', 'Get-RubrikSmbDomain'
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '2'
                 'data'      =
                 @{ 
                     'name'                  = 'domain.local'

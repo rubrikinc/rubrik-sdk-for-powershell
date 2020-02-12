@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikReplicationTarget' -Tag 'Public', 'Get-RubrikRe
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '3'
                 'data'      =
                 @{ 
                     'id'                        = 'DataLocation:::11111-22222-33333'

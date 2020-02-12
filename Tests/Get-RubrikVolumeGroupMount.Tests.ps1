@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikVolumeGroupMount' -Tag 'Public', 'Get-RubrikVol
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '4'
                 'data'      =
                 @{ 
                     'name'                   = 'mount01'

@@ -23,7 +23,7 @@ Describe -Name 'Public/Get-RubrikGuestOSCredential' -Tag 'Public', 'Get-RubrikGu
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                'total'     = '1'
+                'total'     = '4'
                 'hasMore'   = 'false'
                 'data' =  
                 @{ 

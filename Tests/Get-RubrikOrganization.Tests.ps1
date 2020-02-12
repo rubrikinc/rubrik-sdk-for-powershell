@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikOrganization' -Tag 'Public', 'Get-RubrikOrganiz
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '5'
                 'data'      =
                 @{ 
                     'id'                     = 'Organization:1'

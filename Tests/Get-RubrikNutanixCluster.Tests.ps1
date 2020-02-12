@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikNutanixCluster' -Tag 'Public', 'Get-RubrikNutan
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '2'
                 'data'      =
                 @{ 
                     'name'                  = 'nutanix_cluster_1'

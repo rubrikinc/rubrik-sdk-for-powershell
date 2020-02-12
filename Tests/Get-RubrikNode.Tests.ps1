@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikNode' -Tag 'Public', 'Get-RubrikNode' -Fixture 
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '4'
                 'data'      =
                 @{ 
                     'brikId'    = 'ABC123'

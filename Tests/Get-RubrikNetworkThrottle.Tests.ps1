@@ -24,7 +24,7 @@ Describe -Name 'Public/Get-RubrikNetworkThrottle' -Tag 'Public', 'Get-RubrikNetw
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
                 'hasmore'   = 'false'
-                'total'     = '1'
+                'total'     = '2'
                 'data'      =
                 @{ 
                     'resourceId'           = 'ArchivalEgress'
