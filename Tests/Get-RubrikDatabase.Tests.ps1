@@ -15,7 +15,7 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
         header  = @{ 'Authorization' = 'Bearer test-authorization' }
         time    = (Get-Date)
         api     = 'v1'
-        version = '4.0.5'
+        version = '1.0'
     }
     #endregion
 
