@@ -154,11 +154,16 @@ function New-RubrikBootStrap
   Process {
     #region oneoff
     $id = "me"
-    
+
     # Construct Body based on parameters
     $resources.Body.adminUserInfo = $adminUserInfo
     $resources.Body.dnsNameservers = $dnsNameservers
-    $resources.Body.dnsSearchDomains = $dnsSearchDomains
+    if($dnsSearchDomains.Length -ne 0) {
+      $resources.Body.dnsSearchDomains = $dnsSearchDomains
+    } else {
+      $resources.Body.Remove('dnsSearchDomains')
+    }
+
     if($enableSoftwareEncryptionAtRest) {
       $resources.Body.enableSoftwareEncryptionAtRest = $true
     } else {
