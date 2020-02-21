@@ -44,7 +44,7 @@ function New-RubrikBootStrap
   Param(
     # ID of the Rubrik cluster or me for self
     [ValidateNotNullOrEmpty()]
-    [String] $id = 'me',
+    [String] $id,
     # Rubrik server IP or FQDN
     [ValidateNotNullOrEmpty()]
     [String] $Server,
@@ -153,6 +153,8 @@ function New-RubrikBootStrap
 
   Process {
     #region oneoff
+    $id = "me"
+    
     # Construct Body based on parameters
     $resources.Body.adminUserInfo = $adminUserInfo
     $resources.Body.dnsNameservers = $dnsNameservers
