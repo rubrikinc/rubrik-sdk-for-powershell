@@ -44,7 +44,7 @@ function New-RubrikBootStrap
   Param(
     # ID of the Rubrik cluster or me for self
     [ValidateNotNullOrEmpty()]
-    [String] $id = 'me',
+    [String] $id,
     # Rubrik server IP or FQDN
     [ValidateNotNullOrEmpty()]
     [String] $Server,
@@ -152,10 +152,34 @@ function New-RubrikBootStrap
   }
 
   Process {
+    #region oneoff
+    $id = "me"
+
+    # Construct Body based on parameters
+    $resources.Body.adminUserInfo = $adminUserInfo
+    $resources.Body.dnsNameservers = $dnsNameservers
+    if($dnsSearchDomains.Length -ne 0) {
+      $resources.Body.dnsSearchDomains = $dnsSearchDomains
+    } else {
+      $resources.Body.Remove('dnsSearchDomains')
+    }
+
+    if($enableSoftwareEncryptionAtRest) {
+      $resources.Body.enableSoftwareEncryptionAtRest = $true
+    } else {
+      $resources.Body.enableSoftwareEncryptionAtRest = $false
+    }
+    $resources.Body.name = $name
+    $resources.Body.nodeConfigs = $nodeConfigs
+    $resources.Body.ntpServerConfigs = $ntpServerConfigs
+
+    $body = ConvertTo-Json -InputObject $resources.Body -Depth 4
+    Write-Verbose -Message "Bootstrap REST Request Body `n$($body)"    
+    #endregion
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    #$body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -Header @{"content-type"="application/json"} -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

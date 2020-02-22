@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## [Unreleased] - 2019-02-21
+
+### Fixed
+* Updated New-RubrikBootstrap to address malformed request body and URI. This addresses issue [568](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/568)
+
 ## [Unreleased] - 2019-12-19
 
 ### Changed
