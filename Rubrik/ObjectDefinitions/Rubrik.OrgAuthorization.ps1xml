@@ -37,7 +37,7 @@
                                 <ScriptBlock>$_.useSla.count</ScriptBlock>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <ScriptBlock>$_.manageResource.count</ScriptBlock>
+                                <ScriptBlock>$_.manageResource.count+$_.privileges.manageRestoreSource.count</ScriptBlock>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <ScriptBlock>$_.manageSla.count</ScriptBlock>
