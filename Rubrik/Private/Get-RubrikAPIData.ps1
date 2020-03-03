@@ -927,6 +927,21 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
+            '5.1' = @{
+                Description = 'Get summary of all Rubrik organizations'
+                URI         = '/api/v1/organization'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_global                = 'is_global'
+                    name                     = 'name'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'name' = 'name'
+                }
+                Success     = '200'
+            }
         }
         'Get-RubrikOrgAuthorization'         = @{
             '1.0' = @{
