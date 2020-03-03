@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## [Unreleased] - 2019-03-03
+
+### Fixed
+* Fixed documentation on Get-RubrikLogshipping [572](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/572)
+
 ## [Unreleased] - 2019-02-21
 
 ### Fixed
