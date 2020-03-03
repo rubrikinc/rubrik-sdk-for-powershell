@@ -2342,6 +2342,26 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+            } 
+            '5.1' = @{
+                Description = 'Revokes an organization authorization for principal(s)'
+                URI         = '/api/internal/authorization/role/organization'
+                Method      = 'Delete'
+                Body        = @{
+                    principals = [System.Collections.ArrayList]@()
+                    organizationId = 'organization_id'
+                    privileges = @{
+                        manageCluster = [System.Collections.ArrayList]@()
+                        manageResource = [System.Collections.ArrayList]@()
+                        manageRestoreSource = [System.Collections.ArrayList]@()
+                        useSla = [System.Collections.ArrayList]@()
+                        manageSla = [System.Collections.ArrayList]@()
+                    }
+                }
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
             }
         }
         'Remove-RubrikReport'          = @{
@@ -2653,6 +2673,26 @@ function Get-RubrikAPIData($endpoint) {
                     privileges = @{
                         manageCluster = [System.Collections.ArrayList]@()
                         manageResource = [System.Collections.ArrayList]@()
+                        useSla = [System.Collections.ArrayList]@()
+                        manageSla = [System.Collections.ArrayList]@()
+                    }
+                }
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.1' = @{
+                Description = 'Grants an organization authorization for principal(s)'
+                URI         = '/api/internal/authorization/role/organization'
+                Method      = 'Post'
+                Body        = @{
+                    principals = [System.Collections.ArrayList]@()
+                    organizationId = 'organization_id'
+                    privileges = @{
+                        manageCluster = [System.Collections.ArrayList]@()
+                        manageResource = [System.Collections.ArrayList]@()
+                        manageRestoreSource = [System.Collections.ArrayList]@()
                         useSla = [System.Collections.ArrayList]@()
                         manageSla = [System.Collections.ArrayList]@()
                     }
