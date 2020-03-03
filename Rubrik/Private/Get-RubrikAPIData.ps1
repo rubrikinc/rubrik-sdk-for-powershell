@@ -927,21 +927,6 @@ function Get-RubrikAPIData($endpoint) {
                 }
                 Success     = '200'
             }
-            '5.1' = @{
-                Description = 'Get summary of all Rubrik organizations'
-                URI         = '/api/v1/organization'
-                Method      = 'Get'
-                Body        = ''
-                Query       = @{
-                    is_global                = 'is_global'
-                    name                     = 'name'
-                }
-                Result      = 'data'
-                Filter      = @{
-                    'name' = 'name'
-                }
-                Success     = '200'
-            }
         }
         'Get-RubrikOrgAuthorization'         = @{
             '1.0' = @{
@@ -2668,6 +2653,26 @@ function Get-RubrikAPIData($endpoint) {
                     privileges = @{
                         manageCluster = [System.Collections.ArrayList]@()
                         manageResource = [System.Collections.ArrayList]@()
+                        useSla = [System.Collections.ArrayList]@()
+                        manageSla = [System.Collections.ArrayList]@()
+                    }
+                }
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.1' = @{
+                Description = 'Grants an organization authorization for principal(s)'
+                URI         = '/api/internal/authorization/role/organization'
+                Method      = 'Post'
+                Body        = @{
+                    principals = [System.Collections.ArrayList]@()
+                    organizationId = 'organization_id'
+                    privileges = @{
+                        manageCluster = [System.Collections.ArrayList]@()
+                        manageResource = [System.Collections.ArrayList]@()
+                        manageRestoreSource = [System.Collections.ArrayList]@()
                         useSla = [System.Collections.ArrayList]@()
                         manageSla = [System.Collections.ArrayList]@()
                     }
