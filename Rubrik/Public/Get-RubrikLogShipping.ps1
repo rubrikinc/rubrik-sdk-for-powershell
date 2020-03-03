@@ -18,16 +18,19 @@ function Get-RubrikLogShipping
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriklogshipping
 
       .EXAMPLE
+      Get-RubrikLogShipping
+
       Get all log shipping configurations
-        Get-RubrikLogShipping
-        
-      .EXAMPLE
-      Get all log shipping configurations for a given database
-        Get-RubrkLogShipping -PrimaryDatabase 'AdventureWorks2014' 
 
       .EXAMPLE
+      Get-RubrkLogShipping -PrimaryDatabase 'AdventureWorks2014'
+
+      Get all log shipping configurations for the 'AdventureWorks2014' database
+
+      .EXAMPLE
+      Get-RubrkLogShipping -location am1-chrilumn-w1.rubrikdemo.com\MSSQLSERVER
+
       Get all log shipping configurations for a given location (log shipping secondary server)
-        Get-RubrkLogShipping -location am1-chrilumn-w1.rubrikdemo.com\MSSQLSERVER
   #>
 
   [CmdletBinding()]
