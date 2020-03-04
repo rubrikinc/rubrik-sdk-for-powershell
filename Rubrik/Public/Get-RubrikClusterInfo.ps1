@@ -14,7 +14,7 @@ function Get-RubrikClusterInfo
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikClusterInfo
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikclusterinfo
             
       .EXAMPLE
       Get-RubrikClusterInfo 

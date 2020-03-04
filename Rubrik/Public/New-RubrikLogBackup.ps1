@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function New-RubrikLogBackup
 {
   <#  
@@ -14,7 +14,7 @@ function New-RubrikLogBackup
       GitHub: MikeFal
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikLogBackup
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubriklogbackup
 
       .EXAMPLE
       New-RubrikLogBackup -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 

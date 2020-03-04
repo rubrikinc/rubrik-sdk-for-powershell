@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Remove-RubrikHost
 {
   <#  
@@ -14,7 +14,7 @@ function Remove-RubrikHost
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikHost
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikhost
 
       .EXAMPLE
       Get-RubrikHost -Name 'Server1.example.com' | Remove-RubrikHost

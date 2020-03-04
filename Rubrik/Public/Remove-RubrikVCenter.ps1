@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Remove-RubrikVCenter 
 {
     <#  
@@ -12,7 +12,7 @@ function Remove-RubrikVCenter
         Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
             
         .LINK
-        https://github.com/rubrikinc/PowerShell-Module
+        https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikvcenter
             
         .EXAMPLE
         Remove-RubrikVCenter -id "vCenter:::9e4299f5-dd99-4ec1-adee-cacb311b9507"

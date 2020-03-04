@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikHost
 {
   <#  
@@ -14,7 +14,7 @@ function Get-RubrikHost
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikHost
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikhost
 
       .EXAMPLE
       Get-RubrikHost

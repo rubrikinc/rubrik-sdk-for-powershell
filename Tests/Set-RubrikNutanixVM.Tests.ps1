@@ -64,12 +64,12 @@ Describe -Name 'Public/Set-RubrikNutanixVM' -Tag 'Public', 'Set-RubrikNutanixVM'
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
                 'id'                            = 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333'
-                'snapshotConsistencyMandate'    = 'CRASH_CONSISTENT'
+                'snapshotConsistencyMandate'    = 'CrashConsistent'
             }
         }
         It -Name 'Should set SnapConsistency' -Test {
-            ( Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -SnapConsistency 'CRASH_CONSISTENT').snapshotConsistencyMandate |
-                Should -BeExactly 'CRASH_CONSISTENT'
+            ( Set-RubrikNutanixVM -id 'NutanixVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-ffffffff-0000-1111-2222-333333333333' -SnapConsistency 'CrashConsistent').snapshotConsistencyMandate |
+                Should -BeExactly 'CrashConsistent'
         }
         
         Assert-VerifiableMock

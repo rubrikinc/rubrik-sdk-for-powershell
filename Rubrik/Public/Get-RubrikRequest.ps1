@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Get-RubrikRequest {
   <#  
       .SYNOPSIS
@@ -14,7 +14,7 @@ function Get-RubrikRequest {
       GitHub: chriswahl
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikRequest
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikrequest
             
       .EXAMPLE
       Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
@@ -32,7 +32,7 @@ function Get-RubrikRequest {
     [String]$id,
     # The type of request
     [Parameter(Mandatory = $true)]
-    [ValidateSet('fileset', 'mssql', 'vmware/vm', 'hyperv/vm', 'managed_volume')]
+    [ValidateSet('fileset', 'mssql', 'vmware/vm', 'hyperv/vm', 'managed_volume','volume_group','nutanix/vm','aws/ec2_instance','oracle','vcd/vapp')]
     [String]$Type,    
     # Wait for Request to Complete
     [Switch]$WaitForCompletion,
@@ -69,7 +69,7 @@ function Get-RubrikRequest {
     #region one-off
     $uri = $uri -replace '{type}', $Type
     #Place any internal API request calls into this collection, the replace will fix the URI
-    $internaltypes = @('managed_volume')
+    $internaltypes = @('managed_volume','volume_group','nutanix/vm','aws/ec2_instance','oracle','vcd/vapp')
     if ($internaltypes -contains $Type) {
       $uri = $uri -replace 'v1', 'internal'
     }

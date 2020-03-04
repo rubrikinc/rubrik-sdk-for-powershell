@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Set-RubrikNASShare
 {
   <#  
@@ -16,7 +16,7 @@ function Set-RubrikNASShare
       Any other links you'd like here
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikNASShare
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriknasshare
 
       .EXAMPLE
       Get-RubrikNASShare -name 'FOO' | Set-RubrikNASShare -ExportPoint 'TEMP' 

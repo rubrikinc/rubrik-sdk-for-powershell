@@ -14,7 +14,7 @@ function Set-RubrikManagedVolume
       GitHub: MikeFal
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikManagedVolume
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikmanagedvolume
 
       .EXAMPLE
       Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -SLA 'Gold'

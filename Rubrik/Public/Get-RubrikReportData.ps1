@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikReportData {
   <#  
       .SYNOPSIS
@@ -13,7 +13,7 @@ function Get-RubrikReportData {
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikReportData
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikreportdata
 
       .EXAMPLE
       Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData

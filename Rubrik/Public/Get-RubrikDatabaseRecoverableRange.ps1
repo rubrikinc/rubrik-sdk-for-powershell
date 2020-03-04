@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikDatabaseRecoverableRange
 {
   <#  
@@ -15,7 +15,7 @@ function Get-RubrikDatabaseRecoverableRange
       GitHub: MikeFal
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabaseRecoverableRange
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikdatabaserecoverablerange
 
       .EXAMPLE
       Get-RubrikDatabase -Hostname FOO -Database BAR | Get-RubrikDatabaseRecoverableRange

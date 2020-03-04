@@ -17,7 +17,7 @@ function Invoke-RubrikRESTCall {
       GitHub: mikefal
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Invoke-RubrikRESTCall
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/invoke-rubrikrestcall
 
       .EXAMPLE
       Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET
@@ -26,7 +26,6 @@ function Invoke-RubrikRESTCall {
 
       .EXAMPLE
       Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query @{'name'='msf-sql2016'}
-
       Retrieve the raw output for the VMWare VM msf-sql2016 using a query parameter.
 
       .EXAMPLE
@@ -34,6 +33,12 @@ function Invoke-RubrikRESTCall {
       Invoke-RubrikRESTCall -Endpoint 'vmware/vm/VirtualMachine:::fbcb1f51-9520-4227-a68c-6fe145982f48-vm-649/snapshot' -Method POST -Body $body
 
       Execute an on-demand snapshot for the VMWare VM where the id is part of the endpoint.
+
+      .EXAMPLE
+      $body = New-Object -TypeName PSObject -Property @{'isPassthrough'=$true;'shareId'='HostShare:::11111';'templateId'='FilesetTemplate:::22222'}
+      Invoke-RubrikRESTCall -Endpoint 'fileset_template/bulk' -Method POST -Body $body -BodyAsArray
+
+      Creates a new fileset from the given fileset template and the given host id supporting Direct Archive.  Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.
   #>
 
   [cmdletbinding()]
@@ -54,6 +59,9 @@ function Invoke-RubrikRESTCall {
       [Parameter(Mandatory = $false,HelpMessage = 'REST Content')]
       [ValidateNotNullorEmpty()]
       [psobject]$Body,
+      #Force the body as an array (For endpoints requiring single item arrays)
+      [Parameter(Mandatory = $false, HelpMessage = 'Force Body to be an array')]
+      [Switch]$BodyAsArray,
       # Rubrik server IP or FQDN
       [String]$Server = $global:RubrikConnection.server,
       # API version
@@ -92,10 +100,15 @@ function Invoke-RubrikRESTCall {
 
         #If Method is not a GET call and a REST Body is passed, build the JSON body
         if($Method -ne 'GET' -and $body){
-            [string]$JsonBody = $Body | ConvertTo-Json -Depth 10
+            if ($BodyAsArray) {
+                [string]$JsonBody = ConvertTo-Json -inputobject @($Body) -Depth 10
+            }
+            else {
+                [string]$JsonBody = $Body | ConvertTo-Json -Depth 10
+            }
         }
         Write-Verbose "URI string: $uri"
-
+        Write-Verbose "Body string: $JsonBody"
         $result = Submit-Request -uri $uri -header $Header -method $Method -body $JsonBody
     }
     catch {

@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 
 function Protect-RubrikTag
 {
@@ -16,7 +16,7 @@ function Protect-RubrikTag
       Twitter: @jasonburrell2
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikTag
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubriktag
 
       .EXAMPLE
       Protect-RubrikTag -Tag 'Gold' -Category 'Rubrik' -SLA 'Gold'

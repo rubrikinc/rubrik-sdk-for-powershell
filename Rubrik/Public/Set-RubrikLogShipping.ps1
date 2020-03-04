@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Set-RubrikLogShipping
 {
   <#  
@@ -14,7 +14,7 @@ function Set-RubrikLogShipping
       GitHub: clumnah
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikLogShipping
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriklogshipping
 
       .EXAMPLE
        Get-RubrikLogShipping -PrimaryDatabaseName 'AthenaAM1-SQL16-1-2016' -SecondaryDatabaseName 'AthenaAM1-SQL16-1-2016' | Set-RubrikLogShipping -state STANDBY -DisconnectStandbyUsers

@@ -17,7 +17,7 @@ function Remove-RubrikOrgAuthorization
       GitHub: shamsway
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikOrgAuthorization
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikorgauthorization
 
       .EXAMPLE
       Remove-RubrikOrgAuthorization -ID 'Organization:::01234567-8910-1abc-d435-0abc1234d567' -UseSLA '12345678-1234-abcd-8910-1234567890ab' 
@@ -95,7 +95,14 @@ function Remove-RubrikOrgAuthorization
 
     # Build REST Body
     if($UseSLA.Length -gt 0) { $resources.Body.privileges.useSla.AddRange($UseSLA) }
-    if($ManageResource.Length -gt 0) { $resources.Body.privileges.ManageResource.AddRange($ManageResource) }
+    if($ManageResource.Length -gt 0) { 
+      # Added changed body for 5.1, as ManageResource seems to be no longer used
+      if ([float]$rubrikConnection.version.substring(0,3) -gt [float]'5.0') {
+        $resources.Body.privileges.manageRestoreSource.AddRange($ManageResource)
+      } else {
+        $resources.Body.privileges.ManageResource.AddRange($ManageResource)
+      }
+    }
     if($ManageSLA.Length -gt 0) { $resources.Body.privileges.ManageSLA.AddRange($ManageSLA) }
     $resources.Body.principals.Add($id) | Out-Null
     $resources.Body.organizationId = $OrgID

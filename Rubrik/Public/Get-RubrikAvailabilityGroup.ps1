@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikAvailabilityGroup
 {
   <#  
@@ -16,7 +16,7 @@ function Get-RubrikAvailabilityGroup
       GitHub: clumnah
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAvailabilityGroup
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikavailabilitygroup
 
       .EXAMPLE
       Get-RubrikAvailabilityGroup -GroupName 'am1-sql16ag-1ag'

@@ -1,4 +1,4 @@
-﻿#requires -Version 3
+#requires -Version 3
 function Get-RubrikHyperVVM
 {
   <#  
@@ -14,7 +14,7 @@ function Get-RubrikHyperVVM
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikHyperVVM
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikhypervvm
 
       .EXAMPLE
       Get-RubrikHyperVVM -Name 'Server1'

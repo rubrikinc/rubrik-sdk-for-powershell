@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Sync-RubrikAnnotation
 {
   <#  
@@ -17,7 +17,7 @@ function Sync-RubrikAnnotation
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Sync-RubrikAnnotation
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/sync-rubrikannotation
 
       .EXAMPLE
       Sync-RubrikAnnotation

@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Get-RubrikSnapshot
 {
   <#  
@@ -16,7 +16,7 @@ function Get-RubrikSnapshot
       GitHub: chriswahl
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikSnapshot
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriksnapshot
       
       .EXAMPLE
       Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
@@ -128,7 +128,7 @@ function Get-RubrikSnapshot
         $result = Test-ReturnFilter -Object $datesearch -Location 'date' -result $result
       }
     } elseif ($Latest) {
-      $datesearch = Test-DateDifference -Date $($result.date) -Compare (Get-Date) -Range 999999999
+      $datesearch = Test-DateDifference -Date $($result.date) -Compare (Get-Date).ToUniversalTime() -Range 999999999
       # If $datesearch is $null, a matching date was not found, so return $null
       if($null -eq $datesearch) {
         $result = $null

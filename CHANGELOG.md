@@ -14,13 +14,56 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+
+## [Unreleased] - 2019-03-04
+
+### Fixed 
+* Fix for RubrikOrgAuthorization API endpoint changed in 5.1 [570](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/568)
+
+## [Unreleased] - 2019-03-03
+
+### Fixed
+* Fixed documentation on Get-RubrikLogshipping [572](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/572)
+
+## [Unreleased] - 2019-02-21
+
+### Fixed
+* Updated New-RubrikBootstrap to address malformed request body and URI. This addresses issue [568](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/568)
+
+## [Unreleased] - 2019-12-19
+
+### Changed
+* Get-RubrikSnapshot has been changed to convert the current date/time to UTC when using the -Latest parameter. This addresses Issue [535](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/535)
+* Restore-RubrikVApp and Export-RubrikVApp has been updated to properly deal with -PowerOn being changed to a switch-type parameter. This addresses issue [536](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/536)
+* Export-RubrikVApp has been changed so that it does not request vCD to restore vApp networks if the NICs are removed or unmapped. This addresses issue [537](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/537)
+
 ## [Unreleased] - 2019-12-31
 
 ### Added
 
+* Added `Get-RubrikArchive`, `Get-RubrikBackupServiceDeployment`, `Get-RubrikGuestOsCredential`, `Get-RubrikIPMI`, `Get-RubrikNfsArchive`, `Get-RubrikNutanixCluster`, `Get-RubrikObjectStoreArchive`, `Get-RubrikQstarArchive`, `Get-RubrikReplicationSource`, `Get-RubrikReplicationTarget`, `Get-RubrikScvmm`, `Get-RubrikSecurityClassification`, `Get-RubrikSmbDomain`, `Get-RubrikSmbSecurity`, and `Get-RubrikSyslogServer` cmdlets to retrieve data from a Rubrik cluster for use in the As Built Report module.
+* Added QUEUED as a value in the status ValidateSet within Get-RubrikEvent and updated Unit Tests.  Addresses [Issue 539](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/539)
+* Added Get-RubrikVMwareDatacenter and Get-RubrikVMwareCluster along with associated Unit Tests. Addresses [Issue 463](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/463)
+* Added Object TypeNames for VCD Servers and vCD vApps as specified in [Issue 462](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/462)
+* Added DirectArchive switch parameter and associated code to New-RubrikFileSet allowing the isPassthrough attribute to be set to enable NAS Direct Archive. Addresses [Issue 358](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/358)  Updated Unit tests for cmdlets to reflect new parametersets.
+* Added Get-RubrikHostVolume and Protect-RubrikHostVolumeGroup.  This addresses cmdlets requested within [Issue 512](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/512).
+* Added New-RubrikHyperVVMMount, Get-RubrikHyperVMount and Remove-RubrikHyperVMount addressing [Issue 450](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/450)
+* Added support to Get-RubrikRequest for VolumeGroup, Nutanix VMs, EC2 instances, Oracle Databases and VCD vApps as outlined in [Issue 563](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/563)
+
+
 ### Changed
 
+* ValidateSet on Set-RubrikNutanixVM was incorrect. Changed this to the desired values as outlined in [Issue 533](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/533)
+* Added null check to results when passing -DetailedObject to Get-RubrikSCVMM. Addresses [Issue 531](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/531)
+* Modified New-RubrikSLA in order to support creation of SLAs when used with the pipeline from Get-RubrikSLA as per [Issue 484](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/484)
+* Modified ParameterSets on Set-RubrikDatabase to align with logic outlined in [Issue 438](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/438)
+* Added more object support to `Get-RubrikObject` as per defined in [Issue 545](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/545) and [Issue 462](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/462)
+* Modified Invoke-RubrikRestCall to support the forcing of the body to be a single item array as per defined in [Issue 554](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/554)
+
 ### Fixed
+
+* Documentation links in comment-based help updated to lower case
+* Null filter on Get-RubrikSCVMM when using -DetailedObject as per [Issue 556](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/556)
 
 ## [5.0.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.0) - 2019-11-24
 

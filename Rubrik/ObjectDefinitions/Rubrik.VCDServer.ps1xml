@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.VCDServer</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Hostname</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Username</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>SLA Domain</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>                    
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>name</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>hostname</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>username</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>configuredSlaDomainName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>                            
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>

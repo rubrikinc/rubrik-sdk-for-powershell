@@ -18,7 +18,7 @@ function Protect-RubrikVApp
       GitHub: shamsway
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikVApp
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvapp
             
       .EXAMPLE
       Get-RubrikVApp "vApp1" | Protect-RubrikVApp -SLA 'Gold'

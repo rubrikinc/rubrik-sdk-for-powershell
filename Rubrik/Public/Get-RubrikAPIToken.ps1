@@ -14,7 +14,7 @@ function Get-RubrikAPIToken
       GitHub: mwpreston
 
       .LINK
-     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAPIToken
+     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikapitoken
 
       .EXAMPLE
       Get-RubrikAPIToken

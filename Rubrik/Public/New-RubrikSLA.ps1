@@ -14,7 +14,7 @@ function New-RubrikSLA
       GitHub: chriswahl
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikSLA
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubriksla
 
       .EXAMPLE
       New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7
@@ -60,6 +60,11 @@ function New-RubrikSLA
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days,
       while also keeping one backup per day for 30 days. At the same time, data is replicated to the specified target cluster 
       and will be kept there for 5 days.
+
+      .EXAMPLE
+      Get-RubrikSLA -Name 'SLA1' | New-RubrikSLA -Name 'CopySLA1'
+      
+      This will create a copy of an existing SLA named SLA1 and store it as CopySLA1
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -124,6 +129,9 @@ function New-RubrikSLA
     [ValidateSet('January','February','March','April','May','June','July','August','September','October','November','December')]
     [String]$YearStartMonth='January',
     # Whether to turn advanced SLA configuration on or off. Does not apply to CDM versions prior to 5.0
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('showAdvancedUi')]
     [switch]$AdvancedConfig,
     [ValidateRange(0,23)]
     [int]$BackupStartHour,
@@ -146,6 +154,9 @@ function New-RubrikSLA
     # Whether to enable archival
     [switch]$Archival,
     # Time in days to keep backup data locally on the cluster.
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('localRetentionLimit')]
     [int]$LocalRetention,
     # ID of the archival location
     [ValidateNotNullOrEmpty()]
@@ -162,6 +173,33 @@ function New-RubrikSLA
     [String]$ReplicationTargetId,
     # Time in days to keep data on the replication target.
     [int]$RemoteRetention,
+    # Retrieves frequencies from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [object[]] $Frequencies,
+    # Retrieves the advanced UI configuration parameters from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('advancedUiConfig')]
+    [object[]] $AdvancedFreq,   
+    # Retrieves the allowed backup windows from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('allowedBackupWindows')]
+    [object[]] $BackupWindows,
+    # Retrieves the allowed backup windows for the first full backup from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [alias('firstFullAllowedBackupWindows')]
+    [object[]] $FirstFullBackupWindows,
+    # Retrieves the archical specifications from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [object[]] $ArchivalSpecs,
+    # Retrieves the replication specifications from Get-RubrikSLA via the pipeline
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [object[]] $ReplicationSpecs,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -233,11 +271,264 @@ function New-RubrikSLA
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
     
-    if ((($uri.contains('v2')) -and (-not $AdvancedConfig)) -or (-not ($uri.contains('v2')))) {
-      $HourlyRetention = $HourlyRetention * 24
+
+
+
+
+    # Retrieve snapshot frequencies from pipeline for CDM versions 5 and above when advanced SLA configuration is turned on
+    if (($uri.contains('v2')) -and ($Frequencies) -and ($AdvancedConfig -eq $true)) {
+      $Frequencies[0].psobject.properties.name | ForEach-Object {
+        if ($_ -eq 'Hourly') {
+          if (($Frequencies.$_.frequency) -and (-not $HourlyFrequency)) {
+            $HourlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $HourlyRetention)) {
+            # Convert hourly retention in days when the value retrieved from pipeline is in hours because advanced SLA configuration was previously turned off
+            if ($AdvancedFreq.Count -eq 0) {
+              $HourlyRetention = ($Frequencies.$_.retention) / 24
+            } else {
+              $HourlyRetention = $Frequencies.$_.retention
+            }
+          }
+        } elseif ($_ -eq 'Daily') {
+          if (($Frequencies.$_.frequency) -and (-not $DailyFrequency)) {
+            $DailyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $DailyRetention)) {
+            $DailyRetention = $Frequencies.$_.retention
+          }
+        } elseif ($_ -eq 'Weekly') {
+          if (($Frequencies.$_.frequency) -and (-not $WeeklyFrequency)) {
+            $WeeklyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $WeeklyRetention)) {
+            $WeeklyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.dayOfWeek) -and (-not $PSBoundParameters.ContainsKey('dayOfWeek'))) {
+            $DayOfWeek = $Frequencies.$_.dayOfWeek
+          }
+        } elseif ($_ -eq 'Monthly') {
+          if (($Frequencies.$_.frequency) -and (-not $MonthlyFrequency)) {
+            $MonthlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $MonthlyRetention)) {
+            $MonthlyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.dayOfMonth) -and (-not $PSBoundParameters.ContainsKey('dayOfMonth'))) {
+            $DayofMonth = $Frequencies.$_.dayOfMonth
+          }
+        } elseif ($_ -eq 'Quarterly') {
+          if (($Frequencies.$_.frequency) -and (-not $QuarterlyFrequency)) {
+            $QuarterlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $QuarterlyRetention)) {
+            $QuarterlyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.firstQuarterStartMonth) -and (-not $PSBoundParameters.ContainsKey('firstQuarterStartMonth'))) {
+            $FirstQuarterStartMonth = $Frequencies.$_.firstQuarterStartMonth
+          }
+          if (($Frequencies.$_.dayOfQuarter) -and (-not $PSBoundParameters.ContainsKey('dayOfQuarter'))) {
+            $DayOfQuarter = $Frequencies.$_.dayOfQuarter
+          }
+        } elseif ($_ -eq 'Yearly') {
+          if (($Frequencies.$_.frequency) -and (-not $YearlyFrequency)) {
+            $YearlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $YearlyRetention)) {
+            $YearlyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.yearStartMonth) -and (-not $PSBoundParameters.ContainsKey('yearStartMonth'))) {
+            $YearStartMonth = $Frequencies.$_.yearStartMonth
+          }
+          if (($Frequencies.$_.dayOfYear) -and (-not $PSBoundParameters.ContainsKey('dayOfYear'))) {
+            $DayOfYear = $Frequencies.$_.dayOfYear
+          }
+        }
+      }
+    # Retrieve snapshot frequencies from pipeline for CDM versions 5 and above when advanced SLA configuration is turned off
+    } elseif ($uri.contains('v2') -and ($Frequencies)) {
+      $Frequencies[0].psobject.properties.name | ForEach-Object {
+        if ($_ -eq 'Hourly') {
+          if (($Frequencies.$_.frequency) -and (-not $HourlyFrequency)) {
+            $HourlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $HourlyRetention)) {
+            # Convert hourly retention in hours when the value retrieved from pipeline is in days because advanced SLA configuration was previously turned on
+            if ($AdvancedFreq.Count -eq 0) {
+              $HourlyRetention = $Frequencies.$_.retention
+            } else {
+              $HourlyRetention = ($Frequencies.$_.retention) * 24
+            }
+          # Convert hourly retention in hours when the value set explicitly with the parameter is in days, like in the UI
+          } elseif ($HourlyRetention) {
+            $HourlyRetention = ($HourlyRetention * 24)
+          }
+        } elseif ($_ -eq 'Daily') {
+          if (($Frequencies.$_.frequency) -and (-not $DailyFrequency)) {
+            $DailyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $DailyRetention)) {
+            $DailyRetention = $Frequencies.$_.retention
+          }
+        } elseif ($_ -eq 'Monthly') {
+          if (($Frequencies.$_.frequency) -and (-not $MonthlyFrequency)) {
+            $MonthlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $MonthlyRetention)) {
+            $MonthlyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.dayOfMonth) -and (-not $PSBoundParameters.ContainsKey('dayOfMonth'))) {
+            $DayofMonth = $Frequencies.$_.dayOfMonth
+          }
+        } elseif ($_ -eq 'Yearly') {
+          if (($Frequencies.$_.frequency) -and (-not $YearlyFrequency)) {
+            $YearlyFrequency = $Frequencies.$_.frequency
+          }
+          if (($Frequencies.$_.retention) -and (-not $YearlyRetention)) {
+            $YearlyRetention = $Frequencies.$_.retention
+          }
+          if (($Frequencies.$_.yearStartMonth) -and (-not $PSBoundParameters.ContainsKey('yearStartMonth'))) {
+            $YearStartMonth = $Frequencies.$_.yearStartMonth
+          }
+          if (($Frequencies.$_.dayOfYear) -and (-not $PSBoundParameters.ContainsKey('dayOfYear'))) {
+            $DayOfYear = $Frequencies.$_.dayOfYear
+          }
+        }
+      }
+    # Retrieve snapshot frequencies from pipeline for CDM versions prior to 5.0
+    } elseif ($Frequencies) {
+      $Frequencies | ForEach-Object {
+        if ($_.timeUnit -eq 'Hourly') {
+          if (($_.frequency) -and (-not $HourlyFrequency)) {
+            $HourlyFrequency = $_.frequency
+          }
+          if (($_.retention) -and (-not $HourlyRetention)) {
+            $HourlyRetention = $_.retention
+          # Convert hourly retention in hours when the parameter is explicitly specified because the default unit is days, like in the UI
+          } elseif ($HourlyRetention) {
+            $HourlyRetention = $HourlyRetention * 24
+          }
+        } elseif ($_.timeUnit -eq 'Daily') {
+          if (($_.frequency) -and (-not $DailyFrequency)) {
+            $DailyFrequency = $_.frequency
+          }
+          if (($_.retention) -and (-not $DailyRetention)) {
+            $DailyRetention = $_.retention
+          }
+        } elseif ($_.timeUnit -eq 'Monthly') {
+          if (($_.frequency) -and (-not $MonthlyFrequency)) {
+            $MonthlyFrequency = $_.frequency
+          }
+          if (($_.retention) -and (-not $MonthlyRetention)) {
+            $MonthlyRetention = $_.retention
+          # Convert monthly retention in months when the parameter is explicitly specified because the default unit is in years, like in the UI
+          } elseif ($MonthlyRetention) {
+            $MonthlyRetention = $MonthlyRetention * 12
+          }
+        } elseif ($_.timeUnit -eq 'Yearly') {
+          if (($_.frequency) -and (-not $YearlyFrequency)) {
+            $YearlyFrequency = $_.frequency
+          }
+          if (($_.retention) -and (-not $YearlyRetention)) {
+            $YearlyRetention = $_.retention
+          }
+        }
+      }
+      # Ensure the hourly retention set via the cli parameter is converted to hours if frequencies were retrieved from the pipeline but hourly retention was empty
+      if (($Frequencies.timeUnit -notcontains 'Hourly') -and $HourlyRetention) {
+        $HourlyRetention = $HourlyRetention * 24
+      }
+      # Ensure the monthly retention set via the cli parameter is converted to months if frequencies were retrieved from the pipeline but monthly retention was empty
+      if (($Frequencies.timeUnit -notcontains 'Monthly') -and $MonthlyRetention) {
+        $MonthlyRetention = $MonthlyRetention * 12
+      }
+    } elseif ($HourlyRetention -or $MonthlyRetention) {
+      # Ensure the hourly retention set via the cli parameter is converted to hours for CDM versions prior to 5.0, and 5.x when advanced SLA configuration is disabled
+      if ($HourlyRetention -and $PSBoundParameters.ContainsKey('AdvancedConfig') -and ($AdvancedConfig -eq $false)) {
+        $HourlyRetention = $HourlyRetention * 24
+        }
+      # Ensure the monthly retention set via the cli parameter is converted to months for CDM versions prior to 5.0
+      if ($MonthlyRetention -and (-not ($uri.contains('v2')))) {
+        $MonthlyRetention = $MonthlyRetention * 12
+      }
     }
-    if (-not ($uri.contains('v2'))) {
-      $MonthlyRetention = $MonthlyRetention * 12
+
+    # Retrieve advanced retention unit parameters from pipeline for CDM 5.0
+    if ($AdvancedFreq) {
+      $AdvancedFreq | ForEach-Object {
+        if (($_.timeUnit -eq 'Hourly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('HourlyRetentionType'))) {
+          $HourlyRetentionType = $_.retentionType
+        } elseif (($_.timeUnit -eq 'Daily') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('DailyRetentionType'))) {
+          $DailyRetentionType = $_.retentionType
+        } elseif (($_.timeUnit -eq 'Monthly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('MonthlyRetentionType'))) {
+          $MonthlyRetentionType = $_.retentionType
+        } elseif (($_.timeUnit -eq 'Quarterly') -and ($_.retentionType) -and (-not $PSBoundParameters.ContainsKey('QuarterlyRetentionType'))) {
+          $QuarterlyRetentionType = $_.retentionType
+        }
+      }
+    }
+    
+    # Retrieve the allowed backup window settings from pipeline
+    if ($BackupWindows) {
+      if (($BackupWindows.startTimeAttributes.hour -ge 0) -and (-not $PSBoundParameters.ContainsKey('BackupStartHour'))) {
+        $BackupStartHour = $BackupWindows.startTimeAttributes.hour
+      }
+      if (($BackupWindows.startTimeAttributes.minutes -ge 0) -and (-not $PSBoundParameters.ContainsKey('BackupStartMinute'))) {
+        $BackupStartMinute = $BackupWindows.startTimeAttributes.minutes
+      }
+      if (($BackupWindows.durationInHours) -and (-not $BackupWindowDuration)) {
+        $BackupWindowDuration = $BackupWindows.durationInHours
+      }
+    }
+
+    # Retrieve the allowed backup window settings for the first full from pipeline
+    if ($FirstFullBackupWindows) {
+      if (($FirstFullBackupWindows.startTimeAttributes.hour -ge 0) -and (-not $PSBoundParameters.ContainsKey('FirstFullBackupStartHour'))) {
+        $FirstFullBackupStartHour = $FirstFullBackupWindows.startTimeAttributes.hour
+      }
+      if (($FirstFullBackupWindows.startTimeAttributes.minutes -ge 0) -and (-not $PSBoundParameters.ContainsKey('FirstFullBackupStartMinute'))) {
+        $FirstFullBackupStartMinute = $FirstFullBackupWindows.startTimeAttributes.minutes
+      }
+      if (($FirstFullBackupWindows.startTimeAttributes.dayOfWeek) -and (-not $PSBoundParameters.ContainsKey('FirstFullBackupDay'))) {
+        [int]$FirstFullBackupDay = $FirstFullBackupWindows.startTimeAttributes.dayOfWeek
+      }
+      if (($FirstFullBackupWindows.durationInHours) -and (-not $FirstFullBackupWindowDuration)) {
+        $FirstFullBackupWindowDuration = $FirstFullBackupWindows.durationInHours
+      }
+    }
+
+    # Retrieve the archival specifications from pipeline
+    if ($ArchivalSpecs) {
+      if ($ArchivalSpecs.locationId -and (-not $ArchivalLocationId)) {
+        $ArchivalLocationId = $ArchivalSpecs.locationId
+      }
+      if ($ArchivalSpecs.polarisManagedId -and (-not $PolarisID)) {
+        $PolarisID = $ArchivalSpecs.polarisManagedId
+      }
+      if (-not ($PSBoundParameters.ContainsKey('Archival'))) {
+        $Archival = $true
+      }
+    }
+    # If LocalRetention is set directly, convert its value in seconds
+    if ($LocalRetention -lt 86400) {
+      $LocalRetention = $LocalRetention * 86400
+    }
+
+    # Retrieve the replication specifications from pipeline
+    if ($ReplicationSpecs) {
+      if ($ReplicationSpecs.locationId -and (-not $ReplicationTargetId)) {
+        $ReplicationTargetId = $ReplicationSpecs.locationId
+      }
+      if ($ReplicationSpecs.retentionLimit -and (-not $RemoteRetention)) {
+        $RemoteRetention = $ReplicationSpecs.retentionLimit
+      }
+      if (-not ($PSBoundParameters.ContainsKey('Replication'))) {
+        $Replication = $true
+      }
+    }
+    # If RemoteRetention is set directly, convert its value in seconds
+    if ($RemoteRetention -lt 86400) {
+      $RemoteRetention = $RemoteRetention * 86400
     }
 
     # Populate the body with the allowed backup window settings
@@ -264,16 +555,12 @@ function New-RubrikSLA
         [int]$FirstFullBackupDay = 6
       } elseif ($FirstFullBackupDay -eq 'Saturday') {
         [int]$FirstFullBackupDay = 7
-      }
+      }          
       $body.FirstFullAllowedBackupWindows += @{
           startTimeAttributes = @{hour=$FirstFullBackupStartHour;minutes=$FirstFullBackupStartMinute;dayOfWeek=$FirstFullBackupDay};
           durationInHours = $FirstFullBackupWindowDuration
       }
     }
-
-    # Convert LocalRetention and RemoteRetention values to seconds
-    $LocalRetention = $LocalRetention * 86400
-    $RemoteRetention = $RemoteRetention * 86400
 
     # Populate the body with archival specifications
     if ($uri.contains('v2') -and $Archival) {
@@ -305,9 +592,9 @@ function New-RubrikSLA
       $body.replicationSpecs += @{locationId=$ReplicationTargetId;retentionLimit=$RemoteRetention}
     }
 
-    # Populate the body with frequencies and retentions according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
+    # Populate the body with frequencies according to the version of CDM and to whether the advanced SLA configuration is enabled in 5.x
     if ($HourlyFrequency -and $HourlyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'hourly'=@{frequency=$HourlyFrequency;retention=$HourlyRetention}}
         $body.advancedUiConfig += @{timeUnit='Hourly';retentionType=$HourlyRetentionType}
       } elseif ($uri.contains('v2')) {
@@ -323,7 +610,7 @@ function New-RubrikSLA
     }
     
     if ($DailyFrequency -and $DailyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
         $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionType}
       } elseif ($uri.contains('v2')) {
@@ -339,7 +626,7 @@ function New-RubrikSLA
     }    
 
     if ($WeeklyFrequency -and $WeeklyRetention) { 
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention;dayOfWeek=$DayOfWeek}}
         $body.advancedUiConfig += @{timeUnit='Weekly';retentionType='Weekly'}
       } elseif ($uri.contains('v2')) {
@@ -356,7 +643,7 @@ function New-RubrikSLA
     }    
 
     if ($MonthlyFrequency -and $MonthlyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
         $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionType}
       } elseif ($uri.contains('v2')) {
@@ -372,7 +659,7 @@ function New-RubrikSLA
     }  
 
     if ($QuarterlyFrequency -and $QuarterlyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
         $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionType}
       } elseif ($uri.contains('v2')) {
@@ -384,7 +671,7 @@ function New-RubrikSLA
     }  
 
     if ($YearlyFrequency -and $YearlyRetention) {
-      if (($uri.contains('v2')) -and $AdvancedConfig) {
+      if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
         $body.advancedUiConfig += @{timeUnit='Yearly';retentionType='Yearly'}
       } elseif ($uri.contains('v2')) {
@@ -406,6 +693,11 @@ function New-RubrikSLA
     }    
     
     $body = ConvertTo-Json $body -Depth 10
+    
+    # Remove bearer or basic auth info from verbose information
+    Write-Verbose -Message "Header = $(
+        (ConvertTo-Json -InputObject $header -Compress) -replace '(Bearer\s.*?")|(Basic\s.*?")'
+      )"
     Write-Verbose -Message "Body = $body"
     #endregion
 

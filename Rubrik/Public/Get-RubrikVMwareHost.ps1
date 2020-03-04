@@ -14,7 +14,7 @@ function Get-RubrikVMwareHost
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVMwareHost
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvmwarehost
             
       .EXAMPLE
       Get-RubrikVMwareHost

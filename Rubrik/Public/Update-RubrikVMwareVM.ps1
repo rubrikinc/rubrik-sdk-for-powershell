@@ -14,7 +14,7 @@ function Update-RubrikVMwareVM
       GitHub: pfguglielmi
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Update-RubrikVMwareVM
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubrikvmwarevm
       
       .EXAMPLE
       Get-RubrikVM -Name 'myvm.domain.local' | Update-RubrikVMwareVM

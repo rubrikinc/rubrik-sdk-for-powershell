@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 function Get-RubrikDatabaseMount
 {
   <#  
@@ -15,7 +15,7 @@ function Get-RubrikDatabaseMount
       GitHub: MikeFal
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikDatabaseMount
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikdatabasemount
             
       .EXAMPLE
       Get-RubrikDatabaseMount
