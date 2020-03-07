@@ -6,19 +6,19 @@ function Pause-RubrikSLA
       Updates an existing Rubrik SLA Domain
 
       .DESCRIPTION
-      The Set-RubrikSLA cmdlet will update an existing SLA Domain with specified parameters.
+      The Pause-RubrikSLA cmdlet will update an existing SLA Domain with specified parameters.
 
       .NOTES
-      Written by Pierre-François Guglielmi for community usage
-      Twitter: @pfguglielmi
-      GitHub: pfguglielmi
+      Written by Jaap Brasser for community usage
+      Twitter: @jaap_brasser
+      GitHub: JaapBrasser
 
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/pause-rubriksla
 
       .EXAMPLE
-      Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication:$false
-      This will update the SLA Domain named "Gold" to only disable replication
+      Get-RubrikSLA -Name Gold | Pause-RubrikSLA
+      This will update the SLA Domain named "Gold" to pause backups
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
