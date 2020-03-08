@@ -2499,6 +2499,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomain'
             }
         }
         'Set-RubrikAvailabilityGroup'           = @{
@@ -2910,6 +2911,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomain'
             }
         }
         'Set-RubrikVCD'         = @{
