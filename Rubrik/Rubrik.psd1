@@ -221,6 +221,7 @@
                    'New-RubrikVCenter',
                    'New-RubrikVMDKMount', 
                    'New-RubrikVolumeGroupMount',
+                   'Pause-RubrikSLA',
                    'Protect-RubrikDatabase', 
                    'Protect-RubrikFileset',
                    'Protect-RubrikHyperVVM', 
