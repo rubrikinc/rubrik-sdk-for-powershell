@@ -221,7 +221,7 @@
                    'New-RubrikVCenter',
                    'New-RubrikVMDKMount', 
                    'New-RubrikVolumeGroupMount',
-                   'Pause-RubrikSLA',
+                   'Suspend-RubrikSLA',
                    'Protect-RubrikDatabase', 
                    'Protect-RubrikFileset',
                    'Protect-RubrikHyperVVM', 
@@ -291,7 +291,9 @@
     # VariablesToExport = @()
     
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport = @()
+    AliasesToExport = @(
+                    'Pause-RubrikSLA'
+    )
     
     # DSC resources to export from this module
     # DscResourcesToExport = @()
