@@ -3286,7 +3286,7 @@ function Get-RubrikAPIData {
     }
 
     if ($null -eq $key) {
-        Write-Error -Message "No matching endpoint found for $EndPoint" -ErrorAction Stop
+        Write-Error -Message "No matching endpoint found for $EndPoint" -ErrorAction Stop -TargetObject $api.$endpoint.keys
     } else {
         Write-Verbose -Message "Selected $key API Data for $endpoint"
         # Add the function name to resolve issue #480

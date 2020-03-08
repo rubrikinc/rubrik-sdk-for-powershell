@@ -7,7 +7,7 @@ function Suspend-RubrikSLA
       Pauses an existing Rubrik SLA Domain
 
       .DESCRIPTION
-      The Pause-RubrikSLA cmdlet will pause an existing SLA Domain with specified parameters. An alias has been created for this function, Pause-RubrikSLA to allign better with the Rubrik Terminology
+      The Pause-RubrikSLA cmdlet will pause an existing SLA Domain with specified parameters. An alias has been created for this function, Pause-RubrikSLA to allign better with the Rubrik Terminology. Note that this functionality is only available on Rubrik Cluster running 5.1 or later.
 
       .NOTES
       Written by Jaap Brasser for community usage
@@ -19,25 +19,40 @@ function Suspend-RubrikSLA
 
       .EXAMPLE
       Get-RubrikSLA -Name Gold | Suspend-RubrikSLA
+
       This will update the SLA Domain named "Gold" to pause backups
 
       .EXAMPLE
       Get-RubrikSLA -Name Gold | Pause-RubrikSLA
+
       This will update the SLA Domain named "Gold" to pause backups
+
+      .EXAMPLE
+      Pause-RubrikSLA Gold -Verbose
+
+      This will pause the backups for the Gold SLA while displaying verbose information
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding(
+    SupportsShouldProcess = $true,
+    ConfirmImpact = 'High',
+    DefaultParameterSetName='Query' )]
   [Alias("Pause-RubrikSLA")]
   Param(
     # SLA id value from the Rubrik Cluster
     [Parameter(
+      ParameterSetName='ID',
+      Position = 0,
       ValueFromPipelineByPropertyName = $true,
       Mandatory = $true )]
     [ValidateNotNullOrEmpty()]
     [String]$id,
     # SLA Domain Name
     [Parameter(
-      ValueFromPipelineByPropertyName = $true)]
+      ParameterSetName='Query',
+      Position = 0,
+      ValueFromPipeline=$true,
+      Mandatory = $true )]
     [Alias('SLA')]
     [ValidateNotNullOrEmpty()]
     [String]$Name,
@@ -68,6 +83,9 @@ function Suspend-RubrikSLA
   }
 
   Process {
+    if ('Query' -eq $pscmdlet.parametersetname) {
+      $id = (Get-RubrikSLA -Name $Name -PrimaryClusterID local).id
+    }
     
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
