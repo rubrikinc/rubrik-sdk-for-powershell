@@ -7,7 +7,7 @@ function Resume-RubrikSLA
       Resumes an existing Rubrik SLA Domain
 
       .DESCRIPTION
-      The Resume-RubrikSLA cmdlet will pause an existing SLA Domain with specified parameters. An alias has been created for this function, Resume-RubrikSLA to allign better with the Rubrik Terminology
+      The Resume-RubrikSLA cmdlet will resume an existing SLA Domain with specified parameters.
 
       .NOTES
       Written by Jaap Brasser for community usage
@@ -88,7 +88,7 @@ function Resume-RubrikSLA
     
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    # Custom as paused is always true
+    # Custom as paused is always false when resuming
     $body = '{"isPaused": false}'
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
