@@ -2038,6 +2038,17 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Pause-RubrikSLA'                = @{
+            '5.1' = @{
+                Description = 'Pause a new SLA Domain on a Rubrik cluster'
+                URI         = '/api/v2/sla_domain'
+                Method      = 'Patch'
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '201'
+            }
+        }
         'Protect-RubrikDatabase'       = @{
             '1.0' = @{
                 Description = 'Update a Microsoft SQL database with the specified SLA Domain.'
