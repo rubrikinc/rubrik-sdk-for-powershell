@@ -1,12 +1,13 @@
 #Requires -Version 3
-function Pause-RubrikSLA
+
+function Suspend-RubrikSLA
 {
   <#  
       .SYNOPSIS
-      Updates an existing Rubrik SLA Domain
+      Pauses an existing Rubrik SLA Domain
 
       .DESCRIPTION
-      The Pause-RubrikSLA cmdlet will update an existing SLA Domain with specified parameters.
+      The Pause-RubrikSLA cmdlet will pause an existing SLA Domain with specified parameters. An alias has been created for this function, Pause-RubrikSLA to allign better with the Rubrik Terminology
 
       .NOTES
       Written by Jaap Brasser for community usage
@@ -14,7 +15,11 @@ function Pause-RubrikSLA
       GitHub: JaapBrasser
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/pause-rubriksla
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Suspend-RubrikSLA
+
+      .EXAMPLE
+      Get-RubrikSLA -Name Gold | Suspend-RubrikSLA
+      This will update the SLA Domain named "Gold" to pause backups
 
       .EXAMPLE
       Get-RubrikSLA -Name Gold | Pause-RubrikSLA
@@ -22,6 +27,7 @@ function Pause-RubrikSLA
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [Alias("Pause-RubrikSLA")]
   Param(
     # SLA id value from the Rubrik Cluster
     [Parameter(
@@ -66,7 +72,7 @@ function Pause-RubrikSLA
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     # Custom as paused is always true
-    $body = $body = @{isPaused='true'}
+    $body = '{"isPaused": true}'
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result

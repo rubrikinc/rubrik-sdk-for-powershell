@@ -2038,15 +2038,15 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
-        'Pause-RubrikSLA'                = @{
+        'Suspend-RubrikSLA'                = @{
             '5.1' = @{
                 Description = 'Pause a new SLA Domain on a Rubrik cluster'
-                URI         = '/api/v2/sla_domain'
-                Method      = 'Patch'
+                URI         = '/api/v2/sla_domain/{id}/pause'
+                Method      = 'Post'
                 Query       = ''
                 Result      = ''
                 Filter      = ''
-                Success     = '201'
+                Success     = '200'
             }
         }
         'Protect-RubrikDatabase'       = @{
