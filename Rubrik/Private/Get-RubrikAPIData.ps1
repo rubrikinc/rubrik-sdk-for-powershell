@@ -3286,7 +3286,13 @@ function Get-RubrikAPIData {
     }
 
     if ($null -eq $key) {
-        Write-Error -Message "No matching endpoint found for $EndPoint" -ErrorAction Stop -TargetObject $api.$endpoint.keys
+        $ErrorSplat = @{
+            Message = "No matching endpoint found for $EndPoint that corrosponds to the current cluster version."
+            ErrorAction = 'Stop'
+            TargetObject = $api.$endpoint.keys -join ','
+            Category = 'ObjectNotFound'
+        }
+        Write-Error @ErrorSplat
     } else {
         Write-Verbose -Message "Selected $key API Data for $endpoint"
         # Add the function name to resolve issue #480
