@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## Unreleased
+
+### Changed
+
+* Added `-DetailedObject` parameter to `Get-RubrikLogShipping`
+* Updated unit tests for `Get-RubrikLogShipping` to include test for `-DetailedObject` parameter
+
 ## [5.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.1) - 2020-03-05
 
 ### Added
