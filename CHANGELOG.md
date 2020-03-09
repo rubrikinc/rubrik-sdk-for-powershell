@@ -14,6 +14,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## Unreleased
+
+### Added
+
+* Added `Suspend-RubrikSLA` and `Resume-RubrikSLA`
+
+### Changed
+
+* Error handing in private function `Get-RubrikAPIData`, now displays error when no matching endpoint is found.
+
 ## [5.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.1) - 2020-03-05
 
 ### Added
