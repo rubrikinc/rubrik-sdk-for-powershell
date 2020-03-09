@@ -44,10 +44,15 @@ Describe -Name 'Public/Get-RubrikLogShipping' -Tag 'Public', 'Get-RubrikLogShipp
             ( Get-RubrikLogShipping)[0].Keys.Count |
                 Should -BeExactly 4
         }
+
+        It -Name 'Should return 4 properties' -Test {
+            ( Get-RubrikLogShipping -DetailedObject)[0].Keys.Count |
+                Should -BeExactly 4
+        }
    
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 5
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 5
     }
     Context -Name 'Parameter Validation' {
         It -Name 'ID Missing' -Test {
