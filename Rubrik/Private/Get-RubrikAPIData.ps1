@@ -1950,6 +1950,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '201'
+                ObjectTName = 'Rubrik.SLADomainv1'
             }
             '5.0' = @{
                 Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
@@ -1996,6 +1997,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '201'
+                ObjectTName = 'Rubrik.SLADomain'
             }
         }
         'New-RubrikUser'             = @{
@@ -2821,6 +2823,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomainv1'
             }
             '5.0' = @{
                 Description = 'Update an existing SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
@@ -2867,6 +2870,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomain'
             }
         }
         'Set-RubrikSQLInstance'        = @{

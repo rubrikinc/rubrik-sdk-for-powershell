@@ -16,13 +16,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+* Updated `Get-RubrikAPIData` with formatted objecttypes for `New-RubrikSLA` and `Set-RubrikSLA`
+* Updated `New-RubrikSLA` and `Set-RubrikSLA` functions to add type names and decorate output similar to `Get-RubrikSLA`
+* Error handing in private function `Get-RubrikAPIData`, now displays error when no matching endpoint is found.
+
 ### Added
 
 * Added `Suspend-RubrikSLA` and `Resume-RubrikSLA`
-
-### Changed
-
-* Error handing in private function `Get-RubrikAPIData`, now displays error when no matching endpoint is found.
 
 ## [5.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.1) - 2020-03-05
 
