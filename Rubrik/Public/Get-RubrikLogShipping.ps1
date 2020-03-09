@@ -31,6 +31,11 @@ function Get-RubrikLogShipping
       Get-RubrkLogShipping -location am1-chrilumn-w1.rubrikdemo.com\MSSQLSERVER
 
       Get all log shipping configurations for a given location (log shipping secondary server)
+
+      .EXAMPLE
+      Get-RubrkLogShipping -location am1-chrilumn-w1.rubrikdemo.com\MSSQLSERVER -DetailedObject
+
+      Get all log shipping configurations for a given location (log shipping secondary server) and retrieves detailed information about these objects
   #>
 
   [CmdletBinding()]
