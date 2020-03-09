@@ -24,7 +24,7 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
     $functions = $functions | Where-Object {$ignorelist -notcontains $_}
 
     #CDM versions
-    $versions = @('4.0','4.1','4.2','5.0')
+    $versions = @('4.0','4.1','4.2','5.0','5.1','5.2')
 
     $cases = foreach($function in $functions){
         @{'v'=$versions;'f' = $function}
