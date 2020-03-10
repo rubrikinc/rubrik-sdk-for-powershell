@@ -32,6 +32,10 @@ function Get-RubrikEvent
       Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent -EventType Archive
       This will feed any Archive events against the Rubrik Host object 'SQLFoo.demo.com' via a piped query.
 
+      .EXAMPLE
+      Get-RubrikEvent -EventSeriesId '1111-2222-3333'
+      This will retrieve all of the events belonging to the specified EventSeriesId. *Note - This will call Get-RubrikEventSeries*
+
   #>
 
   [CmdletBinding()]
@@ -126,7 +130,7 @@ function Get-RubrikEvent
     }
     else {
       # Adding property for TypeName support
-      $result = ((Get-RubrikEventSeries -id $EventSeriesId).eventDetailList) | Select *,@{N="eventStatus";E={$_.status}}
+      $result = ((Get-RubrikEventSeries -id $EventSeriesId).eventDetailList) | Select-Object *,@{N="eventStatus";E={$_.status}}
     }
     # Add 'date' property to the output by converting 'time' property to datetime object
     if (($null -ne $result) -and ($null -ne ($result | Select-Object -First 1).time)) {
