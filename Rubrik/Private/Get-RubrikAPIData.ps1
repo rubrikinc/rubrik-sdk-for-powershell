@@ -1,4 +1,8 @@
-function Get-RubrikAPIData($endpoint) {
+function Get-RubrikAPIData {
+    [cmdletbinding(SupportsShouldProcess)]
+    param(
+        $endpoint
+    )
     <#
         .SYNOPSIS
         Helper function to retrieve API data from Rubrik
@@ -1946,6 +1950,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '201'
+                ObjectTName = 'Rubrik.SLADomainv1'
             }
             '5.0' = @{
                 Description = 'Create a new SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
@@ -1992,6 +1997,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '201'
+                ObjectTName = 'Rubrik.SLADomain'
             }
         }
         'New-RubrikUser'             = @{
@@ -2486,6 +2492,18 @@ function Get-RubrikAPIData($endpoint) {
                 Success     = '202'
             }
         }
+        'Resume-RubrikSLA'                = @{
+            '5.1' = @{
+                Description = 'Resume a new SLA Domain on a Rubrik cluster'
+                URI         = '/api/v2/sla_domain/{id}/pause'
+                Method      = 'Post'
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.SLADomain'
+            }
+        }
         'Set-RubrikAvailabilityGroup'           = @{
             '1.0' = @{
                 Description = 'Update a Microsoft SQL availability group.'
@@ -2805,6 +2823,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomainv1'
             }
             '5.0' = @{
                 Description = 'Update an existing SLA Domain on a Rubrik cluster by specifying Domain Rules and policies'
@@ -2851,6 +2870,7 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.SLADomain'
             }
         }
         'Set-RubrikSQLInstance'        = @{
@@ -2884,6 +2904,18 @@ function Get-RubrikAPIData($endpoint) {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+            }
+        }
+        'Suspend-RubrikSLA'                = @{
+            '5.1' = @{
+                Description = 'Pause a new SLA Domain on a Rubrik cluster'
+                URI         = '/api/v2/sla_domain/{id}/pause'
+                Method      = 'Post'
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.SLADomain'
             }
         }
         'Set-RubrikVCD'         = @{
@@ -3259,8 +3291,18 @@ function Get-RubrikAPIData($endpoint) {
         $key = $api.$endpoint.Keys | Sort-Object | Where-Object {[float]$_ -le $ver} | Select-Object -Last 1
     }
 
-    Write-Verbose -Message "Selected $key API Data for $endpoint"
-    # Add the function name to resolve issue #480
-    $api.$endpoint.$key.Add('Function',$endpoint) 
-    return $api.$endpoint.$key
+    if ($null -eq $key) {
+        $ErrorSplat = @{
+            Message = "No matching endpoint found for $EndPoint that corrosponds to the current cluster version."
+            ErrorAction = 'Stop'
+            TargetObject = $api.$endpoint.keys -join ','
+            Category = 'ObjectNotFound'
+        }
+        Write-Error @ErrorSplat
+    } else {
+        Write-Verbose -Message "Selected $key API Data for $endpoint"
+        # Add the function name to resolve issue #480
+        $api.$endpoint.$key.Add('Function',$endpoint) 
+        return $api.$endpoint.$key
+    }
 } # End of function
