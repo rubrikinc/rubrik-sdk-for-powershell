@@ -21,10 +21,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated `Get-RubrikAPIData` with formatted objecttypes for `New-RubrikSLA` and `Set-RubrikSLA`
 * Updated `New-RubrikSLA` and `Set-RubrikSLA` functions to add type names and decorate output similar to `Get-RubrikSLA`
 * Error handing in private function `Get-RubrikAPIData`, now displays error when no matching endpoint is found.
+* Changed `Get-RubrikEvent`, adding parametersets to isolate eventSeriesId. When cmdlet is called with eventSeriesId the `Get-RubrikEventSeries` cmdlet is now called rather than filtering through a giant, unindexed table. Details in [Issue 580](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/580)
 
 ### Added
 
 * Added `Suspend-RubrikSLA` and `Resume-RubrikSLA`
+* Added `Get-RubrikEventSeries` to now parse the event_series API rather than events as per [Issue 580](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/580)
 
 ## [5.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.1) - 2020-03-05
 
@@ -149,9 +151,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed the output of the user agent string to display platform information with double-dashed separated key-value pairs.
 * The link to `quick-start.md` in the `readme.md` has been updated to a relative link
 * The private function `Test-RubrikSLA` had a hard coded local variable
-* Renamed Get-RubrikVAppExportOptions to `Get-RubrikVAppExportOption` to use singular nouns 
-* Renamed Get-RubrikVAppRecoverOptions to `Get-RubrikVAppRecoverOption` to use singular nouns 
-* Renamed Get-RubrikVcdTemplateExportOptions to `Get-RubrikVcdTemplateExportOption` to use singular nouns 
+* Renamed Get-RubrikVAppExportOptions to `Get-RubrikVAppExportOption` to use singular nouns
+* Renamed Get-RubrikVAppRecoverOptions to `Get-RubrikVAppRecoverOption` to use singular nouns
+* Renamed Get-RubrikVcdTemplateExportOptions to `Get-RubrikVcdTemplateExportOption` to use singular nouns
 * Changed [parameter type from boolean to switch] for all functions
 * Modified private function Submit-Request.ps1 to support adding in success/error information for empty POST, PUT and PATCH responses
 * Modified status return code for Remove-RubrikManagedObject
