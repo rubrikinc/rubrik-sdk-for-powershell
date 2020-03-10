@@ -18,8 +18,19 @@ function Get-RubrikEventSeries
 
       .EXAMPLE
       Get-RubrikEventSeries
-      This will query for all of the event series in the Rubrik Cluster
+      This will query for all of the events belonging to event series in the Rubrik Cluster
 
+      .EXAMPLE
+      Get-RubrikEventSeries -id '1111-2222-3333'
+      This will query for all of the events belonging to the specified event series in the Rubrik Cluster
+
+      .EXAMPLE
+      Get-RubrikEventSeries -Status 'Failure'
+      This will query for all of the failed events belonging to event series in the Rubrik Cluster
+
+      .EXAMPLE
+      Get-RubrikEventSeries -EventType 'Backup'
+      This will query for all of the backup events belonging to event series in the Rubrik Cluster
   #>
 
   [CmdletBinding()]
