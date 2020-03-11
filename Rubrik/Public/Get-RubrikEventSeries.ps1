@@ -14,7 +14,7 @@ function Get-RubrikEventSeries
       GitHub: mwpreston
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-rubrikeventseries
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikeventseries
 
       .EXAMPLE
       Get-RubrikEventSeries
