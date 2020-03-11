@@ -72,6 +72,7 @@
                    'ObjectDefinitions/Rubrik.MSSQLDatabaseFiles.ps1xml',
                    'ObjectDefinitions/Rubrik.MSSQLDatabaseMount.ps1xml',
                    'ObjectDefinitions/Rubrik.Event.ps1xml',
+                   'ObjectDefinitions/Rubrik.EventSeries.ps1xml',
                    'ObjectDefinitions/Rubrik.Fileset.ps1xml',
                    'ObjectDefinitions/Rubrik.FilesetTemplate.ps1xml',
                    'ObjectDefinitions/Rubrik.Host.ps1xml',

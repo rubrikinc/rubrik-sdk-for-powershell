@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.EventSeries</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Time</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Status</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Type</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Location</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry> 
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>eventDate</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>status</PropertyName>
+                            </TableColumnItem>                            
+                            <TableColumnItem>
+                                <PropertyName>taskType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>location</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>eventId</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>
