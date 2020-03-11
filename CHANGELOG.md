@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Added `-DetailedObject` parameter to `Get-RubrikLogShipping`
+* Updated unit tests for `Get-RubrikLogShipping` to include test for `-DetailedObject` parameter
 * Updated `Get-RubrikAPIData` with formatted objecttypes for `New-RubrikSLA` and `Set-RubrikSLA`
 * Updated `New-RubrikSLA` and `Set-RubrikSLA` functions to add type names and decorate output similar to `Get-RubrikSLA`
 * Error handing in private function `Get-RubrikAPIData`, now displays error when no matching endpoint is found.
