@@ -500,6 +500,7 @@ function Get-RubrikAPIData {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.EventSeries'
             }
         }
         'Get-RubrikFileset'            = @{
