@@ -485,7 +485,7 @@ function Get-RubrikAPIData {
             }
         }
         'Get-RubrikEventSeries' = @{
-            '1.0' = @{
+            '5.0' = @{
                 Description = 'Retrieve information for event series within Rubrik.'
                 URI         = '/api/internal/event_series'
                 Method      = 'Get'
