@@ -4,6 +4,52 @@
         <View>
             <Name>Default</Name>
             <ViewSelectedBy>
+                <TypeName>Rubrik.EventSeriesById</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Time</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Status</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Task Type</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Location</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Number of Events</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>eventDate</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>status</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>taskType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>location</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>total</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+                <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
                 <TypeName>Rubrik.EventSeries</TypeName>
             </ViewSelectedBy>
             <TableControl>
@@ -21,18 +67,21 @@
                         <Label>Object Location</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>ID</Label>
+                        <Label>Event Id</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Event Series Id</Label>
                     </TableColumnHeader>
                 </TableHeaders>
                 <TableRowEntries>
-                    <TableRowEntry> 
+                    <TableRowEntry>
                         <TableColumnItems>
                             <TableColumnItem>
                                 <PropertyName>eventDate</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                <PropertyName>status</PropertyName>
-                            </TableColumnItem>                            
+                            </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>taskType</PropertyName>
                             </TableColumnItem>
@@ -41,6 +90,9 @@
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>eventId</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>eventSeriesId</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

@@ -18,19 +18,19 @@ function Get-RubrikEventSeries
 
       .EXAMPLE
       Get-RubrikEventSeries
-      This will query for all of the events belonging to event series in the Rubrik Cluster
+      This will return information around the latest event within an event series (within the last 24 hours) from the Rubrik Cluster
 
       .EXAMPLE
       Get-RubrikEventSeries -id '1111-2222-3333'
-      This will query for all of the events belonging to the specified event series in the Rubrik Cluster
+      This will return details for the specified event series, along with its' associated events in the Rubrik Cluster
 
       .EXAMPLE
       Get-RubrikEventSeries -Status 'Failure'
-      This will query for all of the failed events belonging to event series in the Rubrik Cluster
+      This will the latest failed event belonging to each event series (within the last 24 hours) in the Rubrik Cluster
 
       .EXAMPLE
       Get-RubrikEventSeries -EventType 'Backup'
-      This will query for all of the backup events belonging to event series in the Rubrik Cluster
+      This will return the latest backup event belonging to each event series(within the last 24 hours) in the Rubrik Cluster
   #>
 
   [CmdletBinding()]
@@ -92,6 +92,9 @@ function Get-RubrikEventSeries
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    if ($id) {
+      $resources.ObjectTName = 'Rubrik.EventSeriesById'
+    }
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
     return $result
