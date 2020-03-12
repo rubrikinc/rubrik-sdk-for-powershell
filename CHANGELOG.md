@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Changed example documentation for `New-RubrikDatabaseMount`
 * Added `-DetailedObject` parameter to `Get-RubrikLogShipping`
 * Updated unit tests for `Get-RubrikLogShipping` to include test for `-DetailedObject` parameter
 * Updated `Get-RubrikAPIData` with formatted objecttypes for `New-RubrikSLA` and `Set-RubrikSLA`
@@ -151,9 +152,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed the output of the user agent string to display platform information with double-dashed separated key-value pairs.
 * The link to `quick-start.md` in the `readme.md` has been updated to a relative link
 * The private function `Test-RubrikSLA` had a hard coded local variable
-* Renamed Get-RubrikVAppExportOptions to `Get-RubrikVAppExportOption` to use singular nouns 
-* Renamed Get-RubrikVAppRecoverOptions to `Get-RubrikVAppRecoverOption` to use singular nouns 
-* Renamed Get-RubrikVcdTemplateExportOptions to `Get-RubrikVcdTemplateExportOption` to use singular nouns 
+* Renamed Get-RubrikVAppExportOptions to `Get-RubrikVAppExportOption` to use singular nouns
+* Renamed Get-RubrikVAppRecoverOptions to `Get-RubrikVAppRecoverOption` to use singular nouns
+* Renamed Get-RubrikVcdTemplateExportOptions to `Get-RubrikVcdTemplateExportOption` to use singular nouns
 * Changed [parameter type from boolean to switch] for all functions
 * Modified private function Submit-Request.ps1 to support adding in success/error information for empty POST, PUT and PATCH responses
 * Modified status return code for Remove-RubrikManagedObject
