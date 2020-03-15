@@ -15,7 +15,7 @@ Describe -Name 'Public/Get-RubrikEventSeries' -Tag 'Public', 'Get-RubrikEventSer
         header  = @{ 'Authorization' = 'Bearer test-authorization' }
         time    = (Get-Date)
         api     = 'v1'
-        version = '4.0.5'
+        version = '5.1'
     }
     #endregion
 
