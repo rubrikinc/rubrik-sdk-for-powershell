@@ -24,10 +24,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated `Get-RubrikAPIData` with formatted objecttypes for `New-RubrikSLA` and `Set-RubrikSLA`
 * Updated `New-RubrikSLA` and `Set-RubrikSLA` functions to add type names and decorate output similar to `Get-RubrikSLA`
 * Error handing in private function `Get-RubrikAPIData`, now displays error when no matching endpoint is found.
+* Changed `Get-RubrikEvent`, adding parametersets to isolate eventSeriesId. When cmdlet is called with eventSeriesId the `Get-RubrikEventSeries` cmdlet is now called rather than filtering through a giant, unindexed table. Details in [Issue 580](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/580)
 
 ### Added
 
 * Added `Suspend-RubrikSLA` and `Resume-RubrikSLA`
+* Added `Get-RubrikEventSeries` to now parse the event_series API rather than events as per [Issue 580](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/580)
+* Added unit tests to cover `Get-RubrikEventSeries` and changes to `Get-RubrikEvent`
 
 ## [5.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.1) - 2020-03-05
 

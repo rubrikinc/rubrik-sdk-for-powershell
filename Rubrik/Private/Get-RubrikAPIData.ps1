@@ -127,7 +127,7 @@ function Get-RubrikAPIData {
                 Body        = @{
                     exportMode  = 'exportMode'
                     networksToRestore = [System.Collections.ArrayList]@()
-                    vmsToExport = @( 
+                    vmsToExport = @(
                         @{
                             name   		= 'name'
                             vcdMoid     = 'vcdMoid'
@@ -186,7 +186,7 @@ function Get-RubrikAPIData {
                 Success     = '200'
                 ObjectTName = 'Rubrik.APIToken'
             }
-        }       
+        }
         'Get-RubrikAPIVersion'         = @{
             '1.0' = @{
                 Description = 'Retrieves software version of the Rubrik cluster'
@@ -206,7 +206,7 @@ function Get-RubrikAPIData {
                 Method      = 'Get'
                 Body        = ''
                 Query       = @{
-                    'ArchiveType'  = 'location_type' 
+                    'ArchiveType'  = 'location_type'
                 }
                 Result      = 'data'
                 Filter      = @{
@@ -484,6 +484,25 @@ function Get-RubrikAPIData {
                 ObjectTName = 'Rubrik.Event'
             }
         }
+        'Get-RubrikEventSeries' = @{
+            '5.0' = @{
+                Description = 'Retrieve information for event series within Rubrik.'
+                URI         = '/api/internal/event_series'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    status = 'status'
+                    event_type = 'event_type'
+                    object_ids = 'object_ids'
+                    object_name = 'object_name'
+                    object_type = 'object_type'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.EventSeries'
+            }
+        }
         'Get-RubrikFileset'            = @{
             '1.0' = @{
                 Description = 'Retrieve summary information for each fileset. Optionally, filter the retrieved information.'
@@ -595,7 +614,7 @@ function Get-RubrikAPIData {
                 Result      = 'data'
                 Filter      = @{
                     id = 'id'
-                    vmId = 'vmId'    
+                    vmId = 'vmId'
                 }
                 Success     = '200'
             }
@@ -746,7 +765,7 @@ function Get-RubrikAPIData {
                 Result      = 'data'
                 Filter      = @{
                     id = 'id'
-                    vmId = 'vmId'    
+                    vmId = 'vmId'
                 }
                 Success     = '200'
             }
@@ -1944,7 +1963,7 @@ function Get-RubrikAPIData {
                     replicationSpecs = @{
                         locationId     = 'locationId'
                         retentionLimit = 'retentionLimit'
-                    }    
+                    }
                 }
                 Query       = ''
                 Result      = ''
@@ -1991,7 +2010,7 @@ function Get-RubrikAPIData {
                     replicationSpecs = @{
                         locationId     = 'locationId'
                         retentionLimit = 'retentionLimit'
-                    }    
+                    }
                 }
                 Query       = ''
                 Result      = ''
@@ -2187,7 +2206,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '204'
-            } 
+            }
         }
         'Remove-RubrikAPIToken'   = @{
             '5.0' = @{
@@ -2348,7 +2367,7 @@ function Get-RubrikAPIData {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
-            } 
+            }
             '5.1' = @{
                 Description = 'Revokes an organization authorization for principal(s)'
                 URI         = '/api/internal/authorization/role/organization'
@@ -3302,7 +3321,7 @@ function Get-RubrikAPIData {
     } else {
         Write-Verbose -Message "Selected $key API Data for $endpoint"
         # Add the function name to resolve issue #480
-        $api.$endpoint.$key.Add('Function',$endpoint) 
+        $api.$endpoint.$key.Add('Function',$endpoint)
         return $api.$endpoint.$key
     }
 } # End of function
