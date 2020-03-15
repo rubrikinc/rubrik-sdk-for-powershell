@@ -28,7 +28,7 @@
                     <TableRowEntry>
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>eventDate</PropertyName>
+                                <PropertyName>endTime</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                <PropertyName>status</PropertyName>
@@ -47,7 +47,7 @@
                 </TableRowEntries>
             </TableControl>
         </View>
-                <View>
+        <View>
             <Name>Default</Name>
             <ViewSelectedBy>
                 <TypeName>Rubrik.EventSeries</TypeName>
