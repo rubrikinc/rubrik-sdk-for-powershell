@@ -22,8 +22,8 @@ function Remove-RubrikFilesetSnapshot
       This will attempt to remove fileset snapshot (backup) data with the snapshot id `01234567-8910-1abc-d435-0abc1234d567`
 
       .EXAMPLE
-      Remove-RubrikFilesetSnapshot -id '01234567-8910-1abc-d435-0abc1234d567' -location local
-      This will attempt to remove the local copy of the fileset snapshot (backup) data with the snapshot id `01234567-8910-1abc-d435-0abc1234d567`
+      Remove-RubrikFilesetSnapshot -id '01234567-8910-1abc-d435-0abc1234d567' -location local -Confirm:$false
+      This will attempt to remove the local copy of the fileset snapshot (backup) data with the snapshot id `01234567-8910-1abc-d435-0abc1234d567` without user intevention
 
       .EXAMPLE
       Get-RubrikFileset Fileset1 | Get-RubrikSnapshot -Date '03/21/2017' | Remove-RubrikFilesetSnapshot
@@ -66,15 +66,15 @@ function Remove-RubrikFilesetSnapshot
   }
 
   Process {
+    if ($PSCmdlet.ShouldProcess("$id", "Remove snapshot ")) {
+        $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+        $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+        $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+        $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+        $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+        $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
-
-    return $result
-
+        return $result
+    }
   } # End of process
 } # End of function
