@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Updated help for all fileset and fileset template related cmdlets as per [Issue 284](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/284)
 * Changed example documentation for `New-RubrikDatabaseMount`
 * Added `-DetailedObject` parameter to `Get-RubrikLogShipping`
 * Updated unit tests for `Get-RubrikLogShipping` to include test for `-DetailedObject` parameter
