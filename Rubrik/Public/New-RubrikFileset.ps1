@@ -1,35 +1,33 @@
 #requires -Version 3
 function New-RubrikFileset
 {
-  <#  
+  <#
       .SYNOPSIS
-      {required: high level overview}
+      Creates a fileset by assigning a fileset template to a host or NAS share
 
       .DESCRIPTION
-      {required: more detailed description of the function's purpose}
+      New-RubrikFileset takes a Fileset Template, along with a host id or NAS Share and creates a fileset by assigning the template
+      to the host or NAS share. This cmdlet simply assigns the template to the host but does not protect it. This cmdlet is commonly
+      followed up with Protect-RubrikFileset which will assign an SLA domain to the fileset and perform subsequent backups.
 
       .NOTES
-      Written by {required}
-      Twitter: {optional}
-      GitHub: {optional}
-      Any other links you'd like here
+      Written by Mike Preston for community usage
+      Twitter: @mwpreston
+      GitHub: mwpreston
 
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikfileset
 
       .EXAMPLE
       New-RubrikFileset -TemplateID '1111-1111-1111-1111' -HostID 'Host::::2222-2222-2222-2222'
-
       Creates a new fileset on the specified host, using the selected template.
 
       .EXAMPLE
       New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id
-
       Creates a new fileset for the BAR NAS, using the FOO template.
 
       .EXAMPLE
       New-RubrikFileset -TemplateID (Get-RubrikFilesetTemplate -Name 'FOO').id -ShareID (Get-RubrikNASShare -name 'BAR').id -DirectArchive
-
       Creates a new fileset for the BAR NAS, using the FOO template. Enables the NAS Direct Archive functionality on the share.
   #>
 
@@ -44,11 +42,11 @@ function New-RubrikFileset
     [String]$HostID,
     # ShareID - used for NAS shares
     [Parameter(ParameterSetName='NAS',Mandatory=$true)]
-    [String]$ShareID, 
+    [String]$ShareID,
     [Parameter(ParameterSetName='NAS')]
     # DirectArchive - used to specify if data should be directly sent to archive (bypassing Rubrik Cluster)
     [Alias('isPassThrough')]
-    [Switch]$DirectArchive , 
+    [Switch]$DirectArchive ,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -59,20 +57,20 @@ function New-RubrikFileset
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
