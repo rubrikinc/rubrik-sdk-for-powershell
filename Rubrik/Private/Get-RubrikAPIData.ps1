@@ -2236,6 +2236,17 @@ function Get-RubrikAPIData {
                 Success     = '202'
             }
         }
+        'Remove-RubrikDatabaseSnapshots'        = @{
+            '1.0' = @{
+                Description = 'Removes all database snapshots for a MSSQL database'
+                URI         = '/api/v1/mssql/db/{id}/snapshot'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikFileset'         = @{
             '1.0' = @{
                 Description = 'Delete a fileset by specifying the fileset ID'

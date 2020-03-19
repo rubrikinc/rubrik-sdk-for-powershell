@@ -235,6 +235,7 @@
                    'Register-RubrikBackupService',
                    'Remove-RubrikAPIToken',
                    'Remove-RubrikDatabaseMount',
+                   'Remove-RubrikDatabaseSnapshots',
                    'Remove-RubrikFileset',
                    'Remove-RubrikFilesetSnapshot',
                    'Remove-RubrikHost',
