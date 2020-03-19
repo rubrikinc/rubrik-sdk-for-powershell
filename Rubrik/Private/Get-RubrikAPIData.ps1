@@ -2335,6 +2335,19 @@ function Get-RubrikAPIData {
                 Success     = '204'
             }
         }
+        'Remove-RubrikManagedVolumeSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired Managed Volume snapshot available for garbage collection'
+                URI         = '/api/internal/managed_volume/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikMount'           = @{
             '1.0' = @{
                 Description = 'Create a request to delete a live mount'

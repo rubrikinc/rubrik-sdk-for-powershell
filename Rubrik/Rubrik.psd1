@@ -244,6 +244,7 @@
                    'Remove-RubrikLogShipping',
                    'Remove-RubrikManagedVolume',
                    'Remove-RubrikManagedVolumeExport',
+                   'Remove-RubrikManagedVolumeSnapshot',
                    'Remove-RubrikMount',
                    'Remove-RubrikNASShare',
                    'Remove-RubrikOrganization',
