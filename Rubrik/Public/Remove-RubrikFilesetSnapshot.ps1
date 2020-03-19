@@ -1,5 +1,5 @@
 ﻿#requires -Version 3
-function Remove-RubrikVMSnapshot
+function Remove-RubrikFilesetSnapshot
 {
   <#
       .SYNOPSIS
@@ -7,6 +7,7 @@ function Remove-RubrikVMSnapshot
 
       .DESCRIPTION
       The Remove-RubrikFilesetSnapshot cmdlet will request that the Rubrik API delete an an expired fileset snapshot.
+      The snapshot must a snapshot from a fileset that is not assigned to an SLA Domain.
 
       .NOTES
       Written by Mike Preston for community usage
@@ -35,6 +36,7 @@ function Remove-RubrikVMSnapshot
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Snapshot location to delete, either "local" or "all". Defaults to "all"
+    [ValidateSet('all','local')]
     [String]$location = "all",
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
