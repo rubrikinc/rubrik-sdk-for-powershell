@@ -2248,6 +2248,19 @@ function Get-RubrikAPIData {
                 Success     = '204'
             }
         }
+        'Remove-RubrikFilesetSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes a fileset snapshot'
+                URI         = '/api/v1/fileset/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikHost'            = @{
             '1.0' = @{
                 Description = 'Delete host by specifying the host ID'

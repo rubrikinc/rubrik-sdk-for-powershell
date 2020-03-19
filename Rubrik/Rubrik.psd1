@@ -236,6 +236,7 @@
                    'Remove-RubrikAPIToken',
                    'Remove-RubrikDatabaseMount',
                    'Remove-RubrikFileset',
+                   'Remove-RubrikFilesetSnapshot',
                    'Remove-RubrikHost',
                    'Remove-RubrikHyperVMount',
                    'Remove-RubrikLogShipping',
