@@ -2530,6 +2530,19 @@ function Get-RubrikAPIData {
                 Success     = '200'
             }
         }
+        'Remove-RubrikVolumeGroupSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired Volume Group snapshot available for garbage collection'
+                URI         = '/api/internal/volume_group/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
+            }
+        }
         'Restore-RubrikDatabase'       = @{
             '1.0' = @{
                 Description = 'Export MSSQL Database from Rubrik to Destination Instance.'

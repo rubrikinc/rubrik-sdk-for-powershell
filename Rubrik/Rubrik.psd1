@@ -258,6 +258,7 @@
                    'Remove-RubrikVCenter',
                    'Remove-RubrikVMSnapshot',
                    'Remove-RubrikVolumeGroupMount',
+                   'Remove-RubrikVolumeGroupSnapshot',
                    'Reset-RubrikLogShipping',
                    'Resume-RubrikSLA',
                    'Restore-RubrikDatabase',
