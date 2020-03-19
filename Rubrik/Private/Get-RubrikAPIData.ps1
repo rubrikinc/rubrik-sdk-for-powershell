@@ -2374,6 +2374,19 @@ function Get-RubrikAPIData {
                 Success     = '202'
             }
         }
+        'Remove-RubrikNutanixVMSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired Nutanix VM snapshot available for garbage collection'
+                URI         = '/api/internal/nutanix/vm/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikProxySetting'              = @{
             '1.0' = @{
                 Description = 'Remove Rubrik Node Proxy Configuration'

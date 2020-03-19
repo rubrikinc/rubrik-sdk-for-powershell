@@ -247,6 +247,7 @@
                    'Remove-RubrikManagedVolumeSnapshot',
                    'Remove-RubrikMount',
                    'Remove-RubrikNASShare',
+                   'Remove-RubrikNutanixVMSnapshot',
                    'Remove-RubrikOrganization',
                    'Remove-RubrikOrgAuthorization',
                    'Remove-RubrikProxySetting',
