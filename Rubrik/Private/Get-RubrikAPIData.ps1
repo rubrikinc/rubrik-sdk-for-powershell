@@ -2298,6 +2298,19 @@ function Get-RubrikAPIData {
                 Success     = '202'
             }
         }
+        'Remove-RubrikHyperVSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired HyperV VM snapshot available for garbage collection'
+                URI         = '/api/internal/hyperv/vm/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikManagedVolume'            = @{
             '1.0' = @{
                 Description = 'Delete a managed volume'

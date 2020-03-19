@@ -240,6 +240,7 @@
                    'Remove-RubrikFilesetSnapshot',
                    'Remove-RubrikHost',
                    'Remove-RubrikHyperVMount',
+                   'Remove-RubrikHyperVSnapshot',
                    'Remove-RubrikLogShipping',
                    'Remove-RubrikManagedVolume',
                    'Remove-RubrikManagedVolumeExport',
