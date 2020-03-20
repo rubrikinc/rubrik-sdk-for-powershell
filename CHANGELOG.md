@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Modified Link for `Protect-RubrikVolumeGroup` to lowercase
 * Modified `Remove-RubrikVMSnapshot` to support -Confirm before performing action
 * Changed example documentation for `New-RubrikDatabaseMount`
 * Added `-DetailedObject` parameter to `Get-RubrikLogShipping`
