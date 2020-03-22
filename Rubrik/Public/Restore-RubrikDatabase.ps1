@@ -30,7 +30,7 @@ function Restore-RubrikDatabase
       Restore using the pipeline to get the database ID.
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikdatabase
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/restore-rubrikdatabase
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]

@@ -14,7 +14,7 @@ function Remove-RubrikOrganization
       GitHub: shamsway
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikorganization
 
       .EXAMPLE
       Get-RubrikOrganization -Name "MyOrg" | Remove-RubrikOrganization
