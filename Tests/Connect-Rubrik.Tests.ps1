@@ -33,12 +33,12 @@ Describe -Name 'Public/Connect-Rubrik' -Tag 'Public', 'Connect-Rubrik' -Fixture 
             }
         }
         It -Name 'Username / Password combination' -Test {
-            (Connect-Rubrik -Server testcluster -Username jaapbrasser -Password $(ConvertTo-SecureString -String password -AsPlainText)) | Out-String |
+            (Connect-Rubrik -Server testcluster -Username jaapbrasser -Password $(ConvertTo-SecureString -String password -AsPlainText -Force)) | Out-String |
                 Should -BeLikeExactly '*Basic*'
         }
 
         It -Name 'Credential Object' -Test {
-            $SecurePW = ConvertTo-SecureString -String password -AsPlainText
+            $SecurePW = ConvertTo-SecureString -String password -AsPlainText -Force
             $Cred = New-Object System.Management.Automation.PSCredential ('jaapbrasser', $SecurePW)
 
             (Connect-Rubrik -Server testcluster -Credential $Cred) | Out-String |
