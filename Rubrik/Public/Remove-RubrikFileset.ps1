@@ -17,11 +17,13 @@ function Remove-RubrikFileset
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikfileset
 
       .EXAMPLE
-      Get-RubrikFileset -Name 'C_Drive' | Remove-RubrikHost
+      Get-RubrikFileset -Name 'C_Drive' | Remove-RubrikFileset
+
       This will remove any fileset that matches the name "C_Drive"
 
       .EXAMPLE
       Remove-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
+      
       This will specifically remove the fileset id matching "Fileset:::111111-2222-3333-4444-555555555555"
   #>
 
