@@ -19,7 +19,7 @@ function New-RubrikFileset
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikfileset
 
       .EXAMPLE
-      New-RubrikFileset -TemplateID '1111-1111-1111-1111' -HostID 'Host::::2222-2222-2222-2222'
+      New-RubrikFileset -TemplateID 'FilesetTemplate:::1111-1111-1111-1111' -HostID 'Host::::2222-2222-2222-2222'
       Creates a new fileset on the specified host, using the selected template.
 
       .EXAMPLE
