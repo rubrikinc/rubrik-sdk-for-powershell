@@ -14,7 +14,7 @@ function Get-RubrikVMwareCluster
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikVMwareCluster
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvmwarecluster
             
       .EXAMPLE
       Get-RubrikVMwareCluster

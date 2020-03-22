@@ -17,7 +17,7 @@ function Protect-RubrikVolumeGroup
       GitHub: Pierre-PvF
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikVolumeGroup
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvolumegroup
             
       .EXAMPLE
       Protect-RubrikVolumeGroup -id VolumeGroup:::2038fecb-745b-4d2d-8a71-cf2fc0d0be80 -SLA 'Gold'
