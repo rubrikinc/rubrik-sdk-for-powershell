@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Remove-RubrikVMSnapshot' -Tag 'Public', 'Remove-RubrikVMSnapshot' -Fixture {
+Describe -Name 'Public/Remove-RubrikFilesetSnapshot' -Tag 'Public', 'Remove-RubrikFilesetSnapshot' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -28,19 +28,23 @@ Describe -Name 'Public/Remove-RubrikVMSnapshot' -Tag 'Public', 'Remove-RubrikVMS
             }
         }
         It -Name 'Should Return status of Success' -Test {
-            ( Remove-RubrikVMSnapshot -id '01234567-8910-1abc-d435-0abc1234d567' -Confirm:$false).Status |
+            ( Remove-RubrikFilesetSnapshot -id '01234567-8910-1abc-d435-0abc1234d567' -Confirm:$false).Status |
                 Should -BeExactly 'Success'
         }
 
         It -Name 'Should Return HTTP status code 204' -Test {
-            ( Remove-RubrikVMSnapshot -id '01234567-8910-1abc-d435-0abc1234d567' -Confirm:$false).HTTPStatusCode |
+            ( Remove-RubrikFilesetSnapshot -id '01234567-8910-1abc-d435-0abc1234d567' -Confirm:$false).HTTPStatusCode |
                 Should -BeExactly 204
         }
 
         Context -Name 'Parameter Validation' {
             It -Name 'Parameter id cannot be $null or empty' -Test {
-                { Remove-RubrikVMSnapshot -id $null -Confirm:$false} |
+                { Remove-RubrikFilesetSnapshot -id $null -Confirm:$false } |
                     Should -Throw "Cannot bind argument to parameter 'id' because it is an empty string."
+            }
+            It -Name 'Location parameter set validation should fail' -Test {
+                { Remove-RubrikFilesetSnapshot -id '01234567-8910-1abc-d435-0abc1234d567' -location 'nonexistant' } |
+                    Should -Throw "Cannot validate argument"
             }
         }
         Assert-VerifiableMock

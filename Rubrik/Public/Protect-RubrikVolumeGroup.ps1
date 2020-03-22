@@ -4,21 +4,21 @@ function Protect-RubrikVolumeGroup
   <#
       .SYNOPSIS
       Connects to Rubrik and assigns an SLA to a VolumeGroup
-            
+
       .DESCRIPTION
       The Protect-RubrikVolumeGroup cmdlet will assign a SLA Domain to Volumes on a window host.
       The SLA Domain contains all policy-driven values needed to protect workloads.
       You can first use Get-RubrikVolumeGroup to get the one volume group you want to protect, and then pipe the results to Protect-RubrikVolumeGroup.
       You can exclude volumes by specifiying the driveletter or the volumeID.
-            
+
       .NOTES
       Written by Pierre Flammer for community usage
       Twitter: @PierreFlammer
       GitHub: Pierre-PvF
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvolumegroup
-            
+
       .EXAMPLE
       Protect-RubrikVolumeGroup -id VolumeGroup:::2038fecb-745b-4d2d-8a71-cf2fc0d0be80 -SLA 'Gold'
       This will assign the Gold SLA Domain to the specified Volume Group, including all volumes presently on the system
@@ -50,7 +50,7 @@ function Protect-RubrikVolumeGroup
     [Switch]$DoNotProtect,
     # SLA id value
     [Alias('configuredSlaDomainId')]
-    [String]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$true),    
+    [String]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$true),
     # Specifiy MountPoints to be excluded
     [Array]$ExcludeDrive,
     # Specifiy IDs to be excluded (alternative to MountPoints)
@@ -65,20 +65,20 @@ function Protect-RubrikVolumeGroup
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -91,11 +91,11 @@ function Protect-RubrikVolumeGroup
     #add SLA to body
     $body = @{
         $resources.Body.configuredSlaDomainId = $SLAID
-        volumeIdsIncludedInSnapshots = @() 
+        volumeIdsIncludedInSnapshots = @()
     }
-   
+
     #get hostid of volumegroup
-    $volumegroup = Get-RubrikVolumeGroup -id $id 
+    $volumegroup = Get-RubrikVolumeGroup -id $id
     #get all volumes of the host, so we can exclude drives or IDs
     $volumes = Get-RubrikHostVolume -id $volumegroup.hostid
 
@@ -110,7 +110,7 @@ function Protect-RubrikVolumeGroup
         }
     }
 
-    #remove all excluded IDs 
+    #remove all excluded IDs
     foreach ($volume in $volumes) {
         foreach ($eID in $ExcludeID) {
             if ($eID -eq $volume.id ) {
