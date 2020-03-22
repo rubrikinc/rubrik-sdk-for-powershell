@@ -11,5 +11,13 @@ Describe -Name 'ObjectDefinitions' -Tag 'Public', 'ObjectDefinitions' -Fixture {
 
             $Matches.Link | Should -BeExactly $Matches.Link.ToLower()
         }
+
+        It -Name "Help Definition - <o> - Correct Link Formatting" -TestCases $cases { 
+            param($o)
+            $HelpString = Get-Content -Path ".\Rubrik\Public\$o.ps1" -Raw
+            $HelpString -match '(?<p>.*?\.LINK.*?).*?\n(?<Link>.*)'
+
+            $Matches.Link.Trim() | Should -Be "https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/$o"
+        }
     }
 }
