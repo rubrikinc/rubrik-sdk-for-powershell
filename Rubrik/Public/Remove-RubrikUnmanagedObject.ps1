@@ -69,26 +69,27 @@ function Remove-RubrikUnmanagedObject
   }
 
   Process {
+    if ($PSCmdlet.ShouldProcess("$id", "Remove Unmanaged Object and all snapshots")) {
+      # if force is specified and CDM is > 5.0 remove SLA domain from snapshots first
+      if ($Force -and 5 -le [float]$rubrikconnection.version.substring(0,3)) {
+        Write-Verbose -Message "Force parameter specified. Removing SLA Domain from existing snapshots"
+        $snapshots = Invoke-RubrikRestCall -api 'internal' -Endpoint "unmanaged_object/$id/snapshot" -Method "GET" -Query @{"unmanaged_snapshot_type"="OnDemand"}
+        Write-Verbose -Message "Assigning UNPROTECTED SLA Domain to snapshot ids: $($snapshots.data.id)"
+        $snapshotarray = New-Object -TypeName System.Collections.Generic.List[String]
+        $snapshots.data.id | ForEach { $snapshotarray.Add($_)}
+        $body = New-Object -TypeName PSObject -Property @{"slaDomainId"="UNPROTECTED";"snapshotIds"=$snapshotarray}
+        Invoke-RubrikRestCall -Endpoint 'unmanaged_object/snapshot/assign_sla' -Method "POST" -api "internal" -Body $body
+      }
 
-    # if force is specified and CDM is > 5.0 remove SLA domain from snapshots first
-    if ($Force -and 5 -ge [float]$rubrikconnection.version.substring(0,3)) {
-      Write-Verbose -Message "Force parameter specified. Removing SLA Domain from existing snapshots"
-      $snapshots = Invoke-RubrikRestCall -api 'internal' -Endpoint "unmanaged_object/$id/snapshot" -Method "GET"
-      Write-Verbose -Message "Assigning UNPROTECTED SLA Domain to snapshot ids: $($snapshots.data.id)"
-      $snapshotarray = New-Object -TypeName System.Collections.Generic.List[String]
-      $snapshots.data.id | ForEach { $snapshotarray.Add($_)}
-      $body = New-Object -TypeName PSObject -Property @{"slaDomainId"="UNPROTECTED";"snapshotIds"=$snapshotarray}
-      Invoke-RubrikRestCall -Endpoint 'unmanaged_object/snapshot/assign_sla' -Method "POST" -api "internal" -Body $body
-    }
+      $uri = New-URIString -server $Server -endpoint ($resources.URI)
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI)
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
-
-    return $result
+      return $result
+  }
 
 
 
