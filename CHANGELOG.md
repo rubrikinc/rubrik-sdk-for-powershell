@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added new unit tests: `CommentBasedHelp`, `ObjectDefinitions`, `Connect-Rubrik`, `Disconnect-Rubrik`
 * Added `Remove-RubrikFilesetSnapshot`, `RemoveRubrikDatabaseSnapshots`, `Remove-RubrikHyperVSnapshot`, `Remove-RubrikManagedVolumeSnapshot`, `Remove-RubrikNutanixVMSnapshot`, and `Remove-RubrikVolumeGroupSnapshot` along with associated unit tests as outlined in [Issue 309](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/309) *NOTE Remove-RubrikDatabaseSnapshots deletes ALL snapshots for a given database - there is currently no endpoint to support the deletion of a single snapshot*
 * Added `Suspend-RubrikSLA` and `Resume-RubrikSLA`
 * Added `Get-RubrikEventSeries` to now parse the event_series API rather than events as per [Issue 580](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/580)

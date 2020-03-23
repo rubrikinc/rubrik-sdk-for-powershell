@@ -15,7 +15,7 @@ function Suspend-RubrikSLA
       GitHub: JaapBrasser
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Suspend-RubrikSLA
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/suspend-rubriksla
 
       .EXAMPLE
       Get-RubrikSLA -Name Gold | Suspend-RubrikSLA

@@ -15,7 +15,7 @@ function Resume-RubrikSLA
       GitHub: JaapBrasser
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Resume-RubrikSLA
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/resume-rubriksla
 
       .EXAMPLE
       Get-RubrikSLA -Name Gold | Resume-RubrikSLA

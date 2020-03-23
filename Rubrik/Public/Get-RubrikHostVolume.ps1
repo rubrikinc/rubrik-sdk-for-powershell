@@ -14,7 +14,7 @@ function Get-RubrikHostVolume
       GitHub: Pierre-PvF
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikHostVolume
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikhostvolume
             
       .EXAMPLE
       Get-RubrikHostVolume -id Host:::a9d9a5ac-ed22-4723-b329-74db48c93e03

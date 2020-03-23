@@ -13,7 +13,7 @@ function Get-RubrikVolumeGroup
       Twitter: @PierreFlammer
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVolumeGroup
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvolumegroup
 
       .EXAMPLE
       Get-RubrikVolumeGroup -Hostname 'Server1'
