@@ -14,7 +14,7 @@ function New-RubrikHyperVVMMount
       GitHub: mwpreston
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-RubrikHyperVVMMount
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikhypervvmmount
 
       .EXAMPLE
       New-RubrikHyperVVMMount -id '11111111-2222-3333-4444-555555555555'

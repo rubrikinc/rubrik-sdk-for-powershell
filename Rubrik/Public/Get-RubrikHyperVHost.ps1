@@ -14,7 +14,7 @@ function Get-RubrikHyperVHost
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikHyperVHost
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikhypervhost
             
       .EXAMPLE
       Get-RubrikHyperVHost

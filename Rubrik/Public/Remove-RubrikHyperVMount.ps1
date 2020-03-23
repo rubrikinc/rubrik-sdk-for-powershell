@@ -14,7 +14,7 @@ function Remove-RubrikHyperVMount
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikHyperVMount
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikhypervmount
 
       .EXAMPLE
       Remove-RubrikHyperVMount -id '11111111-2222-3333-4444-555555555555'

@@ -14,7 +14,7 @@ function New-RubrikOrganization
       GitHub: shamsway
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikorganization
 
       .EXAMPLE
       New-RubrikOrganization -Name 'NewOrg'

@@ -2236,6 +2236,17 @@ function Get-RubrikAPIData {
                 Success     = '202'
             }
         }
+        'Remove-RubrikDatabaseSnapshots'        = @{
+            '1.0' = @{
+                Description = 'Removes all database snapshots for a MSSQL database'
+                URI         = '/api/v1/mssql/db/{id}/snapshot'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikFileset'         = @{
             '1.0' = @{
                 Description = 'Delete a fileset by specifying the fileset ID'
@@ -2245,6 +2256,19 @@ function Get-RubrikAPIData {
                 Query       = ''
                 Result      = ''
                 Filter      = ''
+                Success     = '204'
+            }
+        }
+        'Remove-RubrikFilesetSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes a fileset snapshot'
+                URI         = '/api/v1/fileset/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
                 Success     = '204'
             }
         }
@@ -2274,6 +2298,19 @@ function Get-RubrikAPIData {
                 Success     = '202'
             }
         }
+        'Remove-RubrikHyperVSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired HyperV VM snapshot available for garbage collection'
+                URI         = '/api/internal/hyperv/vm/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
+            }
+        }
         'Remove-RubrikManagedVolume'            = @{
             '1.0' = @{
                 Description = 'Delete a managed volume'
@@ -2295,6 +2332,19 @@ function Get-RubrikAPIData {
                 Query       = ''
                 Result      = ''
                 Filter      = ''
+                Success     = '204'
+            }
+        }
+        'Remove-RubrikManagedVolumeSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired Managed Volume snapshot available for garbage collection'
+                URI         = '/api/internal/managed_volume/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
                 Success     = '204'
             }
         }
@@ -2322,6 +2372,19 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '202'
+            }
+        }
+        'Remove-RubrikNutanixVMSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired Nutanix VM snapshot available for garbage collection'
+                URI         = '/api/internal/nutanix/vm/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
             }
         }
         'Remove-RubrikProxySetting'              = @{
@@ -2465,6 +2528,19 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+            }
+        }
+        'Remove-RubrikVolumeGroupSnapshot'        = @{
+            '1.0' = @{
+                Description = 'Removes an expired Volume Group snapshot available for garbage collection'
+                URI         = '/api/internal/volume_group/snapshot/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
             }
         }
         'Restore-RubrikDatabase'       = @{
