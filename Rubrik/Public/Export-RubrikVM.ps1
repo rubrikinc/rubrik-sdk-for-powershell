@@ -91,9 +91,9 @@ function Export-RubrikVM
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     if (-not $PowerOn) {
-      $temphash = $body | ConvertFrom-Json -AsHashtable
-      $temphash.Add('powerOn', $false)
-      $body = $temphash | ConvertTo-Json
+      $tempobject = $body | ConvertFrom-Json
+      $tempobject = Add-Member -InputObject $tempobject -MemberType NoteProperty -Name 'powerOn' -Value $false -PassThru
+      $body = $tempobject | ConvertTo-Json
     }
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
