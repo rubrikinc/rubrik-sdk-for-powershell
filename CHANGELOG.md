@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Modified default behavior for `Export-RubrikVM`, when -PowerOn is not specified it will send `"powerOn": false` to the endpoint [Issue 594](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/594)
 * Modified Link for `Protect-RubrikVolumeGroup` to lowercase
 * Modified `Remove-RubrikVMSnapshot` to support -Confirm before performing action
 * Updated help for all fileset and fileset template related cmdlets as per [Issue 284](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/284)
