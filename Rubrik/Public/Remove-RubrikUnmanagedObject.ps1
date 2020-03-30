@@ -28,6 +28,10 @@ function Remove-RubrikUnmanagedObject
       .EXAMPLE
       Get-RubrikUnmanagedObject -Status 'Unprotected' -Name 'Server1' | Remove-RubrikUnmanagedObject
       This will remove any unmanaged objects associated with any workload named "Server1" that is currently unprotected
+
+      .EXAMPLE
+      Get-RubrikUnmanagedObject -Name 'Server1' -Server1 | Remove-RubrikUnmanagedObject -Force
+      This will remove any unmanaged objects associated with any workload named "Server1" that is currently unprotected. If snapshots are currently assigned to a retention SLA they will be automatically unprotected and deleted.
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -74,11 +78,13 @@ function Remove-RubrikUnmanagedObject
       if ($Force -and 5 -le [float]$rubrikconnection.version.substring(0,3)) {
         Write-Verbose -Message "Force parameter specified. Removing SLA Domain from existing snapshots"
         $snapshots = Invoke-RubrikRestCall -api 'internal' -Endpoint "unmanaged_object/$id/snapshot" -Method "GET" -Query @{"unmanaged_snapshot_type"="OnDemand"}
-        Write-Verbose -Message "Assigning UNPROTECTED SLA Domain to snapshot ids: $($snapshots.data.id)"
-        $snapshotarray = New-Object -TypeName System.Collections.Generic.List[String]
-        $snapshots.data.id | ForEach { $snapshotarray.Add($_)}
-        $body = New-Object -TypeName PSObject -Property @{"slaDomainId"="UNPROTECTED";"snapshotIds"=$snapshotarray}
-        Invoke-RubrikRestCall -Endpoint 'unmanaged_object/snapshot/assign_sla' -Method "POST" -api "internal" -Body $body
+        if ( $snapshots.total -ne 0  ) {
+          Write-Verbose -Message "Assigning UNPROTECTED SLA Domain to snapshot ids: $($snapshots.data.id)"
+          $snapshotarray = New-Object -TypeName System.Collections.Generic.List[String]
+          $snapshots.data.id | ForEach-Object { $snapshotarray.Add($_)}
+          $body = New-Object -TypeName PSObject -Property @{"slaDomainId"="UNPROTECTED";"snapshotIds"=$snapshotarray}
+          Invoke-RubrikRestCall -Endpoint 'unmanaged_object/snapshot/assign_sla' -Method "POST" -api "internal" -Body $body
+        }
       }
 
       $uri = New-URIString -server $Server -endpoint ($resources.URI)
