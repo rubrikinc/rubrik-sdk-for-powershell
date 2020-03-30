@@ -56,7 +56,7 @@ function New-RubrikVCenter
     }
     elseif ($Username) {
       $usernameforbody = $Username
-      $passwordforbody = ConvertFrom-SecureString -SecureString $password -AsPlainText
+      $passwordforbody = ConvertFrom-SecureString -SecureString $password -AsPlainText -Force
     }
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
