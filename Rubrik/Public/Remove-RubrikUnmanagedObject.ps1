@@ -95,9 +95,6 @@ function Remove-RubrikUnmanagedObject
       $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
       return $result
-  }
-
-
-
+    }
   } # End of process
 } # End of function
