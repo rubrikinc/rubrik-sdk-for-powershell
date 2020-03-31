@@ -7,6 +7,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
 
 Describe -Name 'Public/Connect-Rubrik' -Tag 'Public', 'Connect-Rubrik' -Fixture {
     #region init
+    $global:rubrikConnections = $null
     $global:rubrikConnection = @{
         id      = 'test-id'
         userId  = 'test-userId'
@@ -51,7 +52,7 @@ Describe -Name 'Public/Connect-Rubrik' -Tag 'Public', 'Connect-Rubrik' -Fixture 
         }
 
         It -Name 'RubrikConnections array should contain 3 entries' -Test {
-            @($RubrikConnections).Count | 
+            @($RubrikConnections).Count |
                 Should -Be 3
         }
 

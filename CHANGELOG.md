@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Added $rubrikConnections = $null to `Connect-Rubrik.Tests.ps1` in order to allow test to be ran within the same PS session of which it ran previously.
+* Added parameters to `New-RubrikvCenter` and `Set-RubrikvCenter` allowing users to send username/password or credential objects to the cmdlets. This allows true scripting of these cmdlets rather than prompting for credentials by default.
 * Added -Force parameter and confirmation prompts to `Remove-RubrikUnmanagedObject`. This allows for the deletion of snapshots protected by retention SLAs as per [Issue 314](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/314)
 * Modified default behavior for `Export-RubrikVM`, when -PowerOn is not specified it will send `"powerOn": false` to the endpoint [Issue 594](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/594)
 * Modified Link for `Protect-RubrikVolumeGroup` to lowercase
@@ -33,6 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added unit tests for `New-RubrikLDAP`, `Get-RubrikvCenter`, `New-RubrikvCenter`, `Remove-RubrikvCenter`, `Set-RubrikvCenter`, `Get-RubrikSetting`, `Set-RubrikSetting`, and `Remove-RubrikHost` as per [Issue 345](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/345)
 * Added new unit tests: `CommentBasedHelp`, `ObjectDefinitions`, `Connect-Rubrik`, `Disconnect-Rubrik`
 * Added `Remove-RubrikFilesetSnapshot`, `RemoveRubrikDatabaseSnapshots`, `Remove-RubrikHyperVSnapshot`, `Remove-RubrikManagedVolumeSnapshot`, `Remove-RubrikNutanixVMSnapshot`, and `Remove-RubrikVolumeGroupSnapshot` along with associated unit tests as outlined in [Issue 309](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/309) *NOTE Remove-RubrikDatabaseSnapshots deletes ALL snapshots for a given database - there is currently no endpoint to support the deletion of a single snapshot*
 * Added `Suspend-RubrikSLA` and `Resume-RubrikSLA`
