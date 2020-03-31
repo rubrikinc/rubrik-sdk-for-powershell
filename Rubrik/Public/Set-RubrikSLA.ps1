@@ -1,7 +1,7 @@
 #Requires -Version 3
 function Set-RubrikSLA
 {
-  <#  
+  <#
       .SYNOPSIS
       Updates an existing Rubrik SLA Domain
 
@@ -20,7 +20,7 @@ function Set-RubrikSLA
       Set-RubrikSLA -id e4d121af-5611-496a-bb8d-57ba46443e94 -Name Gold -HourlyFrequency 12 -HourlyRetention 5
       This will update the SLA Domain named "Gold" to take a snapshot every 12 hours and keep those for 5 days.
       All other existing parameters will be reset.
-      
+
       .EXAMPLE
       Get-RubrikSLA -Name Gold | Set-RubrikSLA -HourlyFrequency 4 -HourlyRetention 3
       This will update the SLA Domain named "Gold" to take a snapshot every 4 hours and keep those hourly snapshots for 3 days,
@@ -186,7 +186,7 @@ function Set-RubrikSLA
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
     [alias('advancedUiConfig')]
-    [object[]] $AdvancedFreq,    
+    [object[]] $AdvancedFreq,
     # Retrieves the allowed backup windows from Get-RubrikSLA via the pipeline
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
@@ -215,20 +215,20 @@ function Set-RubrikSLA
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -465,7 +465,7 @@ function Set-RubrikSLA
         }
       }
     }
-    
+
     # Retrieve the allowed backup window settings from pipeline
     if ($BackupWindows) {
       if (($BackupWindows.startTimeAttributes.hour -ge 0) -and (-not $PSBoundParameters.ContainsKey('BackupStartHour'))) {
@@ -553,7 +553,7 @@ function Set-RubrikSLA
         [int]$FirstFullBackupDay = 6
       } elseif ($FirstFullBackupDay -eq 'Saturday') {
         [int]$FirstFullBackupDay = 7
-      }          
+      }
       $body.FirstFullAllowedBackupWindows += @{
           startTimeAttributes = @{hour=$FirstFullBackupStartHour;minutes=$FirstFullBackupStartMinute;dayOfWeek=$FirstFullBackupDay};
           durationInHours = $FirstFullBackupWindowDuration
@@ -606,14 +606,14 @@ function Set-RubrikSLA
       }
       [bool]$ParamValidation = $true
     }
-    
+
     if ($DailyFrequency -and $DailyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
         $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
-      } else { 
+      } else {
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Daily'
           $resources.Body.frequencies.frequency = $DailyFrequency
@@ -621,9 +621,9 @@ function Set-RubrikSLA
         }
       }
       [bool]$ParamValidation = $true
-    }    
+    }
 
-    if ($WeeklyFrequency -and $WeeklyRetention) { 
+    if ($WeeklyFrequency -and $WeeklyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention;dayOfWeek=$DayOfWeek}}
         $body.advancedUiConfig += @{timeUnit='Weekly';retentionType='Weekly'}
@@ -638,7 +638,7 @@ function Set-RubrikSLA
         }
       }
       [bool]$ParamValidation = $true
-    }    
+    }
 
     if ($MonthlyFrequency -and $MonthlyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
@@ -646,7 +646,7 @@ function Set-RubrikSLA
         $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
-      } else { 
+      } else {
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Monthly'
           $resources.Body.frequencies.frequency = $MonthlyFrequency
@@ -654,7 +654,7 @@ function Set-RubrikSLA
         }
       }
       [bool]$ParamValidation = $true
-    }  
+    }
 
     if ($QuarterlyFrequency -and $QuarterlyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
@@ -662,11 +662,11 @@ function Set-RubrikSLA
         $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
-      } else { 
+      } else {
         Write-Warning -Message 'Quarterly SLA configurations are not supported in this version of Rubrik CDM.'
       }
       [bool]$ParamValidation = $true
-    }  
+    }
 
     if ($YearlyFrequency -and $YearlyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
@@ -674,7 +674,7 @@ function Set-RubrikSLA
         $body.advancedUiConfig += @{timeUnit='Yearly';retentionType='Yearly'}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
-      } else {  
+      } else {
           $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Yearly'
           $resources.Body.frequencies.frequency = $YearlyFrequency
@@ -682,16 +682,16 @@ function Set-RubrikSLA
         }
       }
       [bool]$ParamValidation = $true
-    } 
-    
-    Write-Verbose -Message 'Checking for the $ParamValidation flag' 
-    if ($ParamValidation -ne $true) 
+    }
+
+    Write-Verbose -Message 'Checking for the $ParamValidation flag'
+    if ($ParamValidation -ne $true)
     {
       throw 'You did not specify any frequency and retention values'
-    }    
-    
+    }
+
     $body = ConvertTo-Json $body -Depth 10
-    
+
     # Remove bearer or basic auth info from verbose information
     Write-Verbose -Message "Header = $(
         (ConvertTo-Json -InputObject $header -Compress) -replace '(Bearer\s.*?")|(Basic\s.*?")'
@@ -702,6 +702,7 @@ function Set-RubrikSLA
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    $result = $result | Select-Object -Property *,@{N="FrequencySummary";E={Get-RubrikSLAFrequencySummary -SLADomain $_}}
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
     return $result
