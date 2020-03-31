@@ -125,7 +125,7 @@ Describe -Name 'Public/Export-RubrikVM' -Tag 'Public', 'Export-RubrikVM' -Fixtur
             $Output = & {
                 Export-RubrikVM -id 1 -HostId 3 -DatastoreId 2 -Verbose 4>&1
             }
-            (-join $Output) | Should -Not -BeLike '*PowerOn*'
+            (-join $Output) | Should -BeLike '*PowerOn*false*'
         }
         
         It -Name 'Verify switch param - RecoverTags:$true - Switch Param' -Test {
