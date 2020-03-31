@@ -19,7 +19,7 @@ Describe -Name 'Public/New-RubrikLDAP' -Tag 'Public', 'New-RubrikLDAP' -Fixture 
     }
     #endregion
 
-    Context -Name 'Invoke Backup' {
+    Context -Name 'Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
