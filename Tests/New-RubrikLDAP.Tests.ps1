@@ -32,7 +32,7 @@ Describe -Name 'Public/New-RubrikLDAP' -Tag 'Public', 'New-RubrikLDAP' -Fixture 
         }
 
         It -Name 'Creates new LDAP Connection' -Test {
-            ( New-RubrikLDAP -Name 'test.com' -DynamicDNSName 'test.com' -BindUserName 'asdf' -BindUserPassword (ConvertTo-SecureString -String "password" -AsPlainText)).id |
+            ( New-RubrikLDAP -Name 'test.com' -DynamicDNSName 'test.com' -BindUserName 'asdf' -BindUserPassword (ConvertTo-SecureString -String "password" -AsPlainText -Force)).id |
                 Should -BeExactly '11111-22222-33333'
         }
 
