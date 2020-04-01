@@ -1,7 +1,7 @@
 #requires -Version 3
 function Get-RubrikObject
 {
-  <#  
+  <#
     .SYNOPSIS
     Retrieve summary information for all objects that are registered with a Rubrik cluster.
 
@@ -24,7 +24,7 @@ function Get-RubrikObject
     Get-RubrikObject -IDFilter '1111-2222-3333-*'
     This will return all known objects within the Rubrik cluster matching the given id pattern
 
-    .EXAMPLE 
+    .EXAMPLE
     Get-RubrikObject -NameFilter 'test*' -IncludeObjectClass VirtualMachines
     This will return all known Virtual Machines within the Rubrik cluster matching the given name pattern
 
@@ -45,26 +45,26 @@ function Get-RubrikObject
   Param(
     # Filter by Name
     [Parameter(Mandatory=$true,ParameterSetName='FilterByName')]
-    [ValidateNotNullOrEmpty()] 
+    [ValidateNotNullOrEmpty()]
     [String]$NameFilter,
     #Filter by ID
     [Parameter(Mandatory=$true,ParameterSetName='FilterByID')]
-    [ValidateNotNullOrEmpty()]    
-    [String]$IdFilter, 
+    [ValidateNotNullOrEmpty()]
+    [String]$IdFilter,
     # Filter Objects to include
     [ValidateSet("VMwareVM","NutanixVM","HyperVVM","MSSQLDB","OracleDB","Fileset","VolumeGroup","ManagedVolume","SLADomain","PhysicalHost",
-                 "NasShare","FilesetTemplate","AvailabilityGroup","DatabaseMount","Event","LDAPObject","LogShipping","ManagedVolumeExport",
+                 "NasShare","FilesetTemplate","AvailabilityGroup","DatabaseMount","Event","EventSeries","LDAPObject","LogShipping","ManagedVolumeExport",
                  "VMwareVMLiveMount","RubrikOrganization","Report","RubrikCluster","SQLInstance","vCenterServer","VMwareDatastore","VMwareHost",
-                 "VMwareDatacenter", "VMwareCluster","APIToken","Archive","RubrikCluster","GuestOSCredential","ReplicationSource","ReplicationTarget",
-                 "SCVMMServer","SyslogServer","RubrikUser","VCDvApp","VCDServer")]
-    [String[]]$IncludeObjectType, 
+                 "VMwareDatacenter", "VMwareCluster","APIToken","Archive","RubrikCluster", "RubrikClusterNetwork", "RubrikNode", "GuestOSCredential","ReplicationSource","ReplicationTarget",
+                 "SCVMMServer","SyslogServer","RubrikUser","VCDvApp","VCDServer","HyperVHost","NTPServer","NotificationSetting","NutanixCluster","SMBDomain")]
+    [String[]]$IncludeObjectType,
     # Filter Objects to exclude
     [ValidateSet("VMwareVM","NutanixVM","HyperVVM","MSSQLDB","OracleDB","Fileset","VolumeGroup","ManagedVolume","SLADomain","PhysicalHost",
-                 "NasShare","FilesetTemplate","AvailabilityGroup","DatabaseMount","Event","LDAPObject","LogShipping","ManagedVolumeExport",
+                 "NasShare","FilesetTemplate","AvailabilityGroup","DatabaseMount","Event", "EventSeries", "LDAPObject","LogShipping","ManagedVolumeExport",
                  "VMwareVMLiveMount","RubrikOrganization","Report","RubrikCluster","SQLInstance","vCenterServer","VMwareDatastore","VMwareHost",
-                 "VMwareDatacenter", "VMwareCluster","APIToken","Archive","RubrikCluster","GuestOSCredential","ReplicationSource","ReplicationTarget",
-                 "SCVMMServer","SyslogServer","RubrikUser","VCDvApp","VCDServer")]
-    [String[]]$ExcludeObjectType, 
+                 "VMwareDatacenter", "VMwareCluster","APIToken","Archive","RubrikCluster", "RubrikClusterNetwork", "RubrikNode", "GuestOSCredential","ReplicationSource","ReplicationTarget",
+                 "SCVMMServer","SyslogServer","RubrikUser","VCDvApp","VCDServer","HyperVHost","NTPServer","NotificationSetting","NutanixCluster","SMBDomain")]
+    [String[]]$ExcludeObjectType,
     # Filter Object Classes to include
     [ValidateSet("VirtualMachines","Databases","FilesAndVolumes","AllProtectedObjects","InternalRubrikObjects")]
     [String[]]$IncludeObjectClass,
@@ -81,10 +81,10 @@ function Get-RubrikObject
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-  
+
   }
 
   Process {
@@ -92,45 +92,53 @@ function Get-RubrikObject
     # Hashtable containing information around each object type. Name must match ValidateSet in Include/ExcludeObjectType parameter
     $ObjectTypes =
     @{
-        "VMwareVM"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVM"; FriendlyName = "VMware VMs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("VirtualMachines","AllProtectedObjects") }
-        "NutanixVM"           = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNutanixVM"; FriendlyName = "Nutanix VMs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("VirtualMachines","AllProtectedObjects")  }
-        "HyperVVM"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikHyperVVM"; FriendlyName = "HyperV VMs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("VirtualMachines","AllProtectedObjects") }
-        "MSSQLDB"             = [pscustomobject]@{ associatedCmdlet = "Get-RubrikDatabase"; FriendlyName = "MSSQL DBs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("Databases","AllProtectedObjects") }
-        "OracleDB"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikOracleDB"; FriendlyName = "Oracle DBs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("Databases","AllProtectedObjects")  }
-        "Fileset"             = [pscustomobject]@{ associatedCmdlet = "Get-RubrikFileset"; FriendlyName = "Filesets"; SupportsNameSearch = $true; NameSearchType = "NameFilter"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("FilesAndVolumes","AllProtectedObjects")  }
-        "VolumeGroup"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVolumeGroup"; FriendlyName = "Volume Groups"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("FilesAndVolumes","AllProtectedObjects") }
-        "ManagedVolume"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikManagedVolume"; FriendlyName = "Managed Volumes"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("FilesAndVolumes","AllProtectedObjects") }
-        "SLADomain"           = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSLA"; FriendlyName = "SLA Domains"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "PhysicalHost"        = [pscustomobject]@{ associatedCmdlet = "Get-RubrikHost"; FriendlyName = "Physical Hosts"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "FilesAndVolumes" }
-        "NasShare"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNasShare"; FriendlyName = "NAS Shares"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "ExportPoint"; ObjectClass = @("FilesAndVolumes","AllProtectedObjects") }
-        "FilesetTemplate"     = [pscustomobject]@{ associatedCmdlet = "Get-RubrikFilesetTemplate"; FriendlyName = "Fileset Templates"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "FilesAndVolumes" }
-        "AvailabilityGroup"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikAvailabilityGroup"; FriendlyName = "Availability Groups"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "Databases" }
-        "DatabaseMount"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikDatabaseMount"; FriendlyName = "Database Mounts"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "mountedDatabaseName"; ObjectClass = "Databases" }
-        "Event"               = [pscustomobject]@{ associatedCmdlet = "Get-RubrikEvent"; FriendlyName = "Events"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "objectName"; ObjectClass = "InternalRubrikObjects" }
-        "LDAPObject"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikLDAP"; FriendlyName = "LDAP Objects"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "LogShipping"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikLogShipping"; FriendlyName = "Log Shipping Targets"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "secondaryDatabaseName"; ObjectClass = "Databases" }
-        "ManagedVolumeExport" = [pscustomobject]@{ associatedCmdlet = "Get-RubrikManagedVolumeExport"; FriendlyName = "Managed Volume Exports"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "FilesAndVolumes" }
-        "VMwareVMLiveMount"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikMount"; FriendlyName = "VMware VM Live Mount"; SupportsNameSearch = $false; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "VirtualMachines" }
-        "RubrikOrganization"  = [pscustomobject]@{ associatedCmdlet = "Get-RubrikOrganization"; FriendlyName = "Rubrik Organizations"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "Report"              = [pscustomobject]@{ associatedCmdlet = "Get-RubrikReport"; FriendlyName = "Rubrik Reports"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "RubrikCluster"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSetting"; FriendlyName = "Rubrik Clusters"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "SQLInstance"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSQLInstance"; FriendlyName = "SQL Instances"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "Databases" }
-        "vCenterServer"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikvCenter"; FriendlyName = "vCenter Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "VMwareDatastore"     = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareDatastore"; FriendlyName = "VMware Datastores"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "VMwareDatacenter"    = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareDatacenter"; FriendlyName = "VMware Datacenters"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "VMwareCluster"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareCluster"; FriendlyName = "VMware Clusters"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "VMwareHost"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareHost"; FriendlyName = "VMware Hosts"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "APIToken"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikAPIToken"; FriendlyName = "API Tokens"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Tag"; ObjectClass = "InternalRubrikObjects" }
-        "Archive"             = [pscustomobject]@{ associatedCmdlet = "Get-RubrikArchive"; FriendlyName = "Archive Locations"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "GuestOSCredential"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikGuestOSCredential"; FriendlyName = "Guest Credentials"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Username"; ObjectClass = "InternalRubrikObjects" }
-        "ReplicationSource"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikReplicationSource"; FriendlyName = "Replication Sources"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "sourceClusterName"; ObjectClass = "InternalRubrikObjects" }
-        "ReplicationTarget"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikReplicationTarget"; FriendlyName = "Replication Targets"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "targetClusterName"; ObjectClass = "InternalRubrikObjects" }
-        "SCVMMServer"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSCVMM"; FriendlyName = "SCVMM Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects" }
-        "SyslogServer"        = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSyslogServer"; FriendlyName = "Syslog Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "hostname"; ObjectClass = "InternalRubrikObjects" }
-        "RubrikUser"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikUser"; FriendlyName = "Rubrik Users"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "username"; ObjectClass = "InternalRubrikObjects" }
-        "VCDvApp"             = [pscustomobject]@{ associatedCmdlet = "Get-RubrikvApp"; FriendlyName = "VCD vApps"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("VirtualMachines","AllProtectedObjects") }
-        "VCDServer"           = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVCD"; FriendlyName = "VCD Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "hostname"; ObjectClass = "InternalRubrikObjects" }
-    }
+        "VMwareVM"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVM"; FriendlyName = "VMware VMs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("VirtualMachines","AllProtectedObjects"); IDField = "id" }
+        "NutanixVM"           = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNutanixVM"; FriendlyName = "Nutanix VMs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("VirtualMachines","AllProtectedObjects"); IDField = "id"  }
+        "HyperVVM"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikHyperVVM"; FriendlyName = "HyperV VMs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("VirtualMachines","AllProtectedObjects"); IDField = "id" }
+        "MSSQLDB"             = [pscustomobject]@{ associatedCmdlet = "Get-RubrikDatabase"; FriendlyName = "MSSQL DBs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("Databases","AllProtectedObjects"); IDField = "id" }
+        "OracleDB"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikOracleDB"; FriendlyName = "Oracle DBs"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("Databases","AllProtectedObjects"); IDField = "id"  }
+        "Fileset"             = [pscustomobject]@{ associatedCmdlet = "Get-RubrikFileset"; FriendlyName = "Filesets"; SupportsNameSearch = $true; NameSearchType = "NameFilter"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("FilesAndVolumes","AllProtectedObjects"); IDField = "id"  }
+        "VolumeGroup"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVolumeGroup"; FriendlyName = "Volume Groups"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("FilesAndVolumes","AllProtectedObjects"); IDField = "id" }
+        "ManagedVolume"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikManagedVolume"; FriendlyName = "Managed Volumes"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("FilesAndVolumes","AllProtectedObjects"); IDField = "id" }
+        "SLADomain"           = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSLA"; FriendlyName = "SLA Domains"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "PhysicalHost"        = [pscustomobject]@{ associatedCmdlet = "Get-RubrikHost"; FriendlyName = "Physical Hosts"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "FilesAndVolumes"; IDField = "id" }
+        "NasShare"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNasShare"; FriendlyName = "NAS Shares"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "ExportPoint"; ObjectClass = @("FilesAndVolumes","AllProtectedObjects"); IDField = "id" }
+        "FilesetTemplate"     = [pscustomobject]@{ associatedCmdlet = "Get-RubrikFilesetTemplate"; FriendlyName = "Fileset Templates"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "FilesAndVolumes"; IDField = "id" }
+        "AvailabilityGroup"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikAvailabilityGroup"; FriendlyName = "Availability Groups"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "Databases"; IDField = "id" }
+        "DatabaseMount"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikDatabaseMount"; FriendlyName = "Database Mounts"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "mountedDatabaseName"; ObjectClass = "Databases"; IDField = "id" }
+        "Event"               = [pscustomobject]@{ associatedCmdlet = "Get-RubrikEvent"; FriendlyName = "Events"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "objectName"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "EventSeries"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikEventSeries"; FriendlyName = "Event Series"; SupportsNameSearch = $false; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "ObjectName"; ObjectClass = "InternalRubrikObjects"; IDField = "eventSeriesId"}
+        "LDAPObject"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikLDAP"; FriendlyName = "LDAP Objects"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "LogShipping"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikLogShipping"; FriendlyName = "Log Shipping Targets"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "secondaryDatabaseName"; ObjectClass = "Databases"; IDField = "id" }
+        "ManagedVolumeExport" = [pscustomobject]@{ associatedCmdlet = "Get-RubrikManagedVolumeExport"; FriendlyName = "Managed Volume Exports"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "FilesAndVolumes"; IDField = "id" }
+        "VMwareVMLiveMount"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikMount"; FriendlyName = "VMware VM Live Mount"; SupportsNameSearch = $false; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "VirtualMachines"; IDField = "id" }
+        "RubrikOrganization"  = [pscustomobject]@{ associatedCmdlet = "Get-RubrikOrganization"; FriendlyName = "Rubrik Organizations"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "Report"              = [pscustomobject]@{ associatedCmdlet = "Get-RubrikReport"; FriendlyName = "Rubrik Reports"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "RubrikCluster"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSetting"; FriendlyName = "Rubrik Clusters"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "RubrikNode"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNode"; FriendlyName = "Rubrik Nodes"; SupportsNameSearch = $false; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "NotificationSetting" = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNotificationSetting"; FriendlyName = "Rubrik Notification"; SupportsNameSearch = $false; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "NTPServer"           = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNTPServer"; FriendlyName = "NTP Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $false; NameField = "server"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "RubrikClusterNetwork"= [pscustomobject]@{ associatedCmdlet = "Get-RubrikClusterNetworkInterface"; FriendlyName = "Network Interfaces"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $false; NameField = "interfaceName"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "SQLInstance"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSQLInstance"; FriendlyName = "SQL Instances"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "Databases"; IDField = "id" }
+        "vCenterServer"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikvCenter"; FriendlyName = "vCenter Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "VMwareDatastore"     = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareDatastore"; FriendlyName = "VMware Datastores"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "VMwareDatacenter"    = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareDatacenter"; FriendlyName = "VMware Datacenters"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "VMwareCluster"       = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareCluster"; FriendlyName = "VMware Clusters"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "VMwareHost"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVMwareHost"; FriendlyName = "VMware Hosts"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "HyperVHost"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikHypervHost"; FriendlyName = "HyperV Hosts"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "APIToken"            = [pscustomobject]@{ associatedCmdlet = "Get-RubrikAPIToken"; FriendlyName = "API Tokens"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Tag"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "Archive"             = [pscustomobject]@{ associatedCmdlet = "Get-RubrikArchive"; FriendlyName = "Archive Locations"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "GuestOSCredential"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikGuestOSCredential"; FriendlyName = "Guest Credentials"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Username"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "ReplicationSource"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikReplicationSource"; FriendlyName = "Replication Sources"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "sourceClusterName"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "ReplicationTarget"   = [pscustomobject]@{ associatedCmdlet = "Get-RubrikReplicationTarget"; FriendlyName = "Replication Targets"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "targetClusterName"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "SCVMMServer"         = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSCVMM"; FriendlyName = "SCVMM Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "SyslogServer"        = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSyslogServer"; FriendlyName = "Syslog Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "hostname"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "RubrikUser"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikUser"; FriendlyName = "Rubrik Users"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "username"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "VCDvApp"             = [pscustomobject]@{ associatedCmdlet = "Get-RubrikvApp"; FriendlyName = "VCD vApps"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = @("VirtualMachines","AllProtectedObjects"); IDField = "id" }
+        "VCDServer"           = [pscustomobject]@{ associatedCmdlet = "Get-RubrikVCD"; FriendlyName = "VCD Servers"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "hostname"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "NutanixCluster"      = [pscustomobject]@{ associatedCmdlet = "Get-RubrikNutanixCluster"; FriendlyName = "Nutanix Clusters"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $true; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+        "SMBDomain"          = [pscustomobject]@{ associatedCmdlet = "Get-RubrikSMBDomain"; FriendlyName = "SMB Domains"; SupportsNameSearch = $true; NameSearchType = "WhereObject"; SupportsIDSearch = $false; NameField = "Name"; ObjectClass = "InternalRubrikObjects"; IDField = "id" }
+      }
 
     Write-Verbose -Message "Calculating which objects to parsed based on parameters specified"
     $ObjectsToParse = [System.Collections.ArrayList]@()
@@ -179,7 +187,7 @@ function Get-RubrikObject
     else {
       # Else, no includes are passed - let's assume we want to process all object types
       $ObjectsToParse = [System.Collections.ArrayList]$ObjectTypes.Keys
-      Write-Verbose -Message "No included parameters specified - adding all object types."    
+      Write-Verbose -Message "No included parameters specified - adding all object types."
     }
     # If excludes are passed, remove them from arraylist
     if ($ExcludeObjectClass -or $ExcludeObjectType) {
@@ -188,7 +196,7 @@ function Get-RubrikObject
         $ObjectTypes.GetEnumerator() | Where-Object {$_.Value.ObjectClass -contains "$ObjectClass"} | ForEach-Object {
           [void]$ObjectsToParse.Remove($_.Name)
           Write-Verbose -Message "Removing $($_.Name) due to membership of $($ObjectClass)"
-        } 
+        }
       }
       # Remove and implicitly sent object types
       foreach ($ObjectType in $ExcludeObjectType) {
@@ -211,8 +219,8 @@ function Get-RubrikObject
         if ($ObjectTypes[$ObjectType].NameSearchType -eq 'NameFilter') {
           # Remove * from string
           $NameFilterMod = $NameFilter -replace '\*'
-          $CmdletSplat = @{ 
-            NameFilter = "$NameFilterMod" 
+          $CmdletSplat = @{
+            NameFilter = "$NameFilterMod"
             ErrorAction = "SilentlyContinue"
           }
           $WhereSplat = @{}
@@ -228,7 +236,8 @@ function Get-RubrikObject
         $CmdletSplat = @{
           ErrorAction = "SilentlyContinue"
         }
-        $WhereSplat = @{filterscript = [ScriptBlock]::Create('$_.id -like '+"'$IdFilter'")}
+        #$WhereSplat = @{filterscript = [ScriptBlock]::Create('$_.id -like '+"'$IdFilter'")}
+        $WhereSplat = @{filterscript = [ScriptBlock]::Create('$_.'+"$($ObjectTypes[$ObjectType].IDField) -like '$IdFilter'")}
       }
 
       if ($CmdletSplat.NameFilter) {
@@ -239,10 +248,10 @@ function Get-RubrikObject
         }
       }
       if ($WhereSplat.FilterScript) {
-          $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat | Where-Object @WhereSplat 
+          $ReturnedObjects = & $ObjectTypes[$ObjectType].associatedCmdlet @CmdletSplat | Where-Object @WhereSplat
           $ReturnedObjects | Add-Member -NotePropertyName 'objectTypeMatch' -NotePropertyValue $ObjectType -PassThru
         }
-      
+
     }
     Write-Progress -Activity "Searching Rubrik Objects - Completed" -Completed
 
