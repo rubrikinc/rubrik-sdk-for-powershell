@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Added support to `Get-RubrikObject` for ClusterNetworkInterfaces, Event Series, HyperV Hosts, Nodes, Notification Settings, NTP Servers, Nutanix Clusters and SMB Domains
+* Added support to `Get-RubrikObject` to support searching by id on an attribute which isn't named `id`
 * Fixed how `Disconnect-Rubrik` handles cleaning up `$RubrikConnection(s)` variables
 * Modified `Get-RubrikSLA`, `Set-RubrikSLA` and `New-RubrikSLA` to call private function to add a human readable frequency summary field
 * Added $rubrikConnections = $null to `Connect-Rubrik.Tests.ps1` in order to allow test to be ran within the same PS session of which it ran previously.
