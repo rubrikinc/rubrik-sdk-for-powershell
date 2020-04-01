@@ -90,11 +90,25 @@ Describe -Name 'Public/Get-RubrikSLAFrequencySummary' -Tag 'Public', 'Get-Rubrik
             }'
             $sladomainobj = ConvertFrom-Json $sladomain
             $sladomainobjAdvanced = ConvertFrom-Json $sladomainAdvancedConfig
-            It -Name 'Find proper frequency summary count for non advanced config' -Test {
+
+            It -Name 'Should take non-advanced path in function' -Test {
+              $Output = Get-RubrikSLAFrequencySummary -sladomain $sladomainobj -Verbose 4>&1
+              (-join $Output) | 
+                  Should -BeLike '*No advanced config found*'
+            }
+
+            It -Name 'Find proper frequency summary count for non-advanced config' -Test {
                 (Get-RubrikSLAFrequencySummary -sladomain $sladomainobj).FrequencySummary.Count |
                     Should -BeExactly 4
             }
-            It -Name 'Find proper frequency summary count foradvanced config' -Test {
+
+            It -Name 'Should take advanced path in function' -Test {
+              $Output = Get-RubrikSLAFrequencySummary -sladomain $sladomainobjAdvanced -Verbose 4>&1
+              (-join $Output) | 
+                  Should -BeLike '*Advanced config found, using this*'
+            }
+
+            It -Name 'Find proper frequency summary count for advanced config' -Test {
                 (Get-RubrikSLAFrequencySummary -sladomain $sladomainobjAdvanced).FrequencySummary.Count |
                     Should -BeExactly 4
             }
