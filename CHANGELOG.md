@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added unit test for private function `Get-RubrikSLAFrequencySummary`
 * Added additional unit tests for `Disconnect-Rubrik` as per [Issue 598](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/598)
 * Added private function `Get-RubrikSLAFrequencySummary` to create a human readable summary of an SLAs frequency settings
 * Added unit tests for `New-RubrikLDAP`, `Get-RubrikvCenter`, `New-RubrikvCenter`, `Remove-RubrikvCenter`, `Set-RubrikvCenter`, `Get-RubrikSetting`, `Set-RubrikSetting`, and `Remove-RubrikHost` as per [Issue 345](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/345)
