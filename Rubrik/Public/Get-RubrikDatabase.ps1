@@ -77,8 +77,7 @@ function Get-RubrikDatabase
     [Alias('Database')]
     [Parameter(
       ParameterSetName='Query',
-      Position = 0,
-      Mandatory = $true)]
+      Position = 0)]
     [String]$Name,
     # Filter results to include only relic (removed) databases
     [Alias('is_relic')]
