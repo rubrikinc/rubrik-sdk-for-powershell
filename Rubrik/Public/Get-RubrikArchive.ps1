@@ -39,8 +39,7 @@ function Get-RubrikArchive
     [ValidateNotNullOrEmpty()]
     [Parameter(
         ParameterSetName='Query',
-        Position = 0,
-        ValueFromPipelineByPropertyName = $true)]
+        Position = 0)]
     [String]$Name,
     # Filter by Archive location type (Currently S3 and Azure only)
     [Parameter(ParameterSetName='Query')]
