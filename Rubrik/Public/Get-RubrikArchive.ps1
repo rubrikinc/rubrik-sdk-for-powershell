@@ -1,7 +1,7 @@
 #requires -Version 3
 function Get-RubrikArchive
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves a list of archive targets
 
@@ -25,7 +25,7 @@ function Get-RubrikArchive
       This will return the archive targets configured on the Rubrik cluster with the name of 'archive01'.
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Archive Location ID
     [ValidateNotNullOrEmpty()]
@@ -47,9 +47,9 @@ function Get-RubrikArchive
     [ValidateNotNullOrEmpty()]
     [ValidateSet('S3', 'Azure','Nfs', 'Google','Qstar','Glacier')]
     [Alias('location_type')]
-    [String]$ArchiveType, 
+    [String]$ArchiveType,
     # DetailedObject will retrieved the detailed archive object, the default behavior of the API is to only retrieve a subset of the archive object. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
-    [Switch]$DetailedObject, 
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -60,25 +60,25 @@ function Get-RubrikArchive
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) 
+    $uri = New-URIString -server $Server -endpoint ($resources.URI)
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
@@ -90,7 +90,7 @@ function Get-RubrikArchive
       for ($i = 0; $i -lt @($result).Count; $i++) {
         $Percentage = [int]($i/@($result).count*100)
         Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-        
+
         switch ($result[$i].locationType) {
           "Azure" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
           "S3" { Get-RubrikObjectStoreArchive -Name $result[$i].name }
@@ -103,7 +103,7 @@ function Get-RubrikArchive
     } else {
       return $result
     }
-    
+
 
   } # End of process
 } # End of function
