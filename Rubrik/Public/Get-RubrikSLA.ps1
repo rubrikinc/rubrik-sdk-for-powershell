@@ -26,7 +26,7 @@ function Get-RubrikSLA
       Will return details on the SLA Domain named Gold
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Name of the SLA Domain
     [Parameter(
