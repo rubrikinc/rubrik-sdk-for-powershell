@@ -1,7 +1,7 @@
 #requires -Version 3
 function Get-RubrikFileset
 {
-  <#  
+  <#
       .SYNOPSIS
       Retrieves details on one or more filesets known to a Rubrik cluster
 
@@ -19,7 +19,7 @@ function Get-RubrikFileset
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikfileset
 
       .EXAMPLE
-      Get-RubrikFileset -Name 'C_Drive' 
+      Get-RubrikFileset -Name 'C_Drive'
       This will return details on the fileset named "C_Drive" assigned to any hosts
 
       .EXAMPLE
@@ -49,10 +49,10 @@ function Get-RubrikFileset
       .EXAMPLE
       Get-RubrikFileset -Relic
       This will return all removed filesets that were formerly protected by Rubrik.
-      
+
       .EXAMPLE
       Get-RubrikFileset -DetailedObject
-      This will return the fileset object with all properties, including additional details such as snapshots taken of the Fileset object. Using this switch parameter negatively affects performance 
+      This will return the fileset object with all properties, including additional details such as snapshots taken of the Fileset object. Using this switch parameter negatively affects performance
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'Query')]
@@ -60,8 +60,7 @@ function Get-RubrikFileset
     # Name of the fileset
     [Parameter(
       ParameterSetName='Query',
-      Position = 0,
-      ValueFromPipelineByPropertyName = $true)]
+      Position = 0)]
     [ValidateNotNullOrEmpty()]
     [Alias('Fileset')]
     [String]$Name,
@@ -79,7 +78,7 @@ function Get-RubrikFileset
     [String]$HostNameFilter,
     # Rubrik's fileset id
     [Parameter(ParameterSetName='ID')]
-    [Parameter(ValueFromPipelineByPropertyName = $true)]    
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [String]$id,
     # Filter results to include only relic (removed) filesets
@@ -136,14 +135,14 @@ function Get-RubrikFileset
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
@@ -157,7 +156,7 @@ function Get-RubrikFileset
     if (-not [string]::IsNullOrWhiteSpace($NameFilter)) {
       $Name = $NameFilter
     }
-  
+
   }
 
   Process {
@@ -176,7 +175,7 @@ function Get-RubrikFileset
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-    
+
     # This block of code will filter results if -Name or -Hostname are used, probably should move to a private function
     if ('Query' -eq $PSCmdlet.ParameterSetName) {
       'Name','HostName' | ForEach-Object {
