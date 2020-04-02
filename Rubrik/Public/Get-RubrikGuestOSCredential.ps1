@@ -40,7 +40,6 @@ function Get-RubrikGuestOSCredential
     [String]$Id,
     [Parameter(
       ParameterSetName='Query',
-      Mandatory = $true,
       Position = 0)]
     # Username of the Guest OS Crential to retrieve
     [String]$Username,
