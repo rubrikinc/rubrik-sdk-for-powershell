@@ -1,7 +1,7 @@
 #requires -Version 3
 function Get-RubrikHost
 {
-  <#  
+  <#
       .SYNOPSIS
       Retrieve summary information for all hosts that are registered with a Rubrik cluster.
 
@@ -31,18 +31,21 @@ function Get-RubrikHost
       .EXAMPLE
       Get-RubrikHost -id 'Host:::111111-2222-3333-4444-555555555555'
       This will return details specifically for the host id matching "Host:::111111-2222-3333-4444-555555555555"
-  
+
       .EXAMPLE
       Get-RubrikHost -Name myserver01 -DetailedObject
       This will return the Host object with all properties, including additional details such as information around the Volume Filter Driver if applicable. Using this switch parameter may negatively affect performance
-  
+
       #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Retrieve hosts with a host name matching the provided name. The search type is infix
+    [Parameter(
+      ParameterSetName='Query',
+      Position = 0)]
     [Alias('Hostname')]
-    [String]$Name, 
+    [String]$Name,
     # Filter the summary information based on the operating system type. Accepted values are 'Windows', 'Linux', 'ANY', 'NONE'. Use NONE to only return information for hosts templates that do not have operating system type set. Use ANY to only return information for hosts that have operating system type set.
     [ValidateSet('Windows','Linux','Any','None')]
     [Alias('operating_system_type')]
@@ -51,6 +54,12 @@ function Get-RubrikHost
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,
     # ID of the registered host
+    [Parameter(
+      ParameterSetName='ID',
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$id,
     # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
     [Parameter(ParameterSetName='Query')]
@@ -65,20 +74,20 @@ function Get-RubrikHost
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-    
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -89,9 +98,9 @@ function Get-RubrikHost
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    
+
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-    
+
     # If the Get-RubrikHost function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
       for ($i = 0; $i -lt @($result).count; $i++) {
