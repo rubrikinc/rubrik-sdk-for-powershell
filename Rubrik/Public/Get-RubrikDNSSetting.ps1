@@ -1,23 +1,23 @@
 #Requires -Version 3
 function Get-RubrikDNSSetting
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves DNS Settings assigned to a given cluster
-            
+
       .DESCRIPTION
       The Get-RubrikDNSSetting cmdlet will retrieve information around the node members of a given cluster.
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikdnssetting
-            
+
       .EXAMPLE
-      Get-RubrikDNSSetting 
+      Get-RubrikDNSSetting
       This will return the information around the DNS settings of the currently authenticated cluster
   #>
 
@@ -36,17 +36,17 @@ function Get-RubrikDNSSetting
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -54,10 +54,10 @@ function Get-RubrikDNSSetting
     $result = New-Object -TypeName psobject
     foreach ($key in $resources.URI.Keys ) {
         $uri = New-URIString -server $Server -endpoint $Resources.URI[$key] -id $id
-        $iresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+        $iresult = Submit-Request -uri $uri -header $Header -method $($resources.Method)
         # support for < 5.0
         if ($null -ne $iresult.data ) { $iresult = $iresult.data }
-        
+
         switch ($key) {
             "DNSServers"        {$result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult}
             "DNSSearchDomain"   {$result | Add-Member -NotePropertyName "$key" -NotePropertyValue $iresult}
