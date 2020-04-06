@@ -1,7 +1,7 @@
 ﻿#requires -Version 3
 function Get-RubrikVolumeGroup
 {
-  <#  
+  <#
       .SYNOPSIS
       Retrieves details on one or more volume groups known to a Rubrik cluster
 
@@ -36,28 +36,34 @@ function Get-RubrikVolumeGroup
       This will return full details on for the specified VolumeGroup ID
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Name of the volume group
-    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      ParameterSetName='Query',
+      Position = 0)]
     [Alias('VolumeGroup')]
     [String]$name,
     # Filter results by hostname
     [String]$hostname,
     # Filter results to include only relic (removed) volume groups
-    [Alias('is_relic')]    
+    [Alias('is_relic')]
     [Switch]$Relic,
     # SLA Domain policy assigned to the volume group
-    [String]$SLA, 
+    [String]$SLA,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,        
+    [String]$PrimaryClusterID,
     # Volume group id
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      ParameterSetName='ID',
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # SLA id value
     [Alias('effective_sla_domain_id')]
-    [String]$SLAID,    
+    [String]$SLAID,
     # DetailedObject will retrieved the detailed VolumeGroup object, the default behavior of the API is to only retrieve a subset of the full VolumeGroup object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
     [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
@@ -70,14 +76,14 @@ function Get-RubrikVolumeGroup
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
@@ -96,11 +102,11 @@ function Get-RubrikVolumeGroup
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-   
+
     # If the Get-RubrikVolumeGroup function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
       for ($i = 0; $i -lt @($result).Count; $i++) {

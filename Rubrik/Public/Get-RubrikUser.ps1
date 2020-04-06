@@ -1,7 +1,7 @@
 #requires -Version 3
 function Get-RubrikUser
 {
-  <#  
+  <#
       .SYNOPSIS
       Gets settings of a Rubrik user
 
@@ -27,7 +27,7 @@ function Get-RubrikUser
       .EXAMPLE
       Get-RubrikUser -username 'john.doe'
       This will return settings for the user account with the username of john.doe configured within the Rubrik cluster.
-  
+
       .EXAMPLE
       Get-RubrikUser -authDomainId '1111-222-333'
       This will return settings of all of the user accounts belonging to the specified authoriation domain.
@@ -37,17 +37,23 @@ function Get-RubrikUser
       This will return detailed information about the user with the specified ID.
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Username to filter on
-    [Parameter(ParameterSetName='Query')] 
+    [Parameter(
+      ParameterSetName='Query',
+      Position = 0)]
     [String] $Username,
     # AuthDomainId to filter on
     [Parameter(ParameterSetName='Query')]
-    [Alias('auth_domain_id')] 
+    [Alias('auth_domain_id')]
     [String]$AuthDomainId,
     # User ID
-    [Parameter(ParameterSetName='ID',Mandatory = $true,ValueFromPipelineByPropertyName = $true)] 
+    [Parameter(
+      ParameterSetName='ID',
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
     [String]$Id,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Query')]
@@ -63,20 +69,20 @@ function Get-RubrikUser
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-    
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

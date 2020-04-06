@@ -1,7 +1,7 @@
 #requires -Version 3
 function Get-RubrikUnmanagedObject
 {
-  <#  
+  <#
       .SYNOPSIS
       Retrieves details on one or more unmanaged objects known to a Rubrik cluster
 
@@ -29,6 +29,7 @@ function Get-RubrikUnmanagedObject
   [CmdletBinding()]
   Param(
     # Search object by object name.
+    [Parameter(Position = 0)]
     [Alias('search_value')]
     [String]$Name,
     # Filter by the type of the object. If not specified, will return all objects. Valid attributes are Protected, Relic and Unprotected
@@ -50,20 +51,20 @@ function Get-RubrikUnmanagedObject
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

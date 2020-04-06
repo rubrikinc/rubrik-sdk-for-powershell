@@ -1,21 +1,21 @@
 #Requires -Version 3
 function Get-RubrikScvmm
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves the current Rubrik SCVMM server settings
-            
+
       .DESCRIPTION
       The Get-RubrikScvmm cmdlet will retrieve SCVMM servers and settings currently configured on the cluster.
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikscvmm
-            
+
       .EXAMPLE
       Get-RubrikScvmm
       This will return all of the SCVMM servers and associated settings on the currently connected Rubrik cluster
@@ -37,7 +37,7 @@ function Get-RubrikScvmm
       This will return the SCVMM server settings any server assigned to the Gold SLA Domain on the cluster
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # SCVMM Server ID
     [ValidateNotNullOrEmpty()]
@@ -51,14 +51,13 @@ function Get-RubrikScvmm
     [ValidateNotNullOrEmpty()]
     [Parameter(
         ParameterSetName='Query',
-        Position = 0,
-        ValueFromPipelineByPropertyName = $true)]
+        Position = 0)]
     [String]$Name,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [ValidateNotNullOrEmpty()]
     [Parameter(ParameterSetName='Query')]
     [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID, 
+    [String]$PrimaryClusterID,
     # DetailedObject will retrieved the detailed SCVMM object, the default behavior of the API is to only retrieve a subset of the full SCVMM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
     [Parameter(ParameterSetName='Query')]
     [Switch]$DetailedObject,
@@ -67,7 +66,7 @@ function Get-RubrikScvmm
     [ValidateNotNullOrEmpty()]
     [ValidateSet('Derived', 'Direct','Unassigned')]
     [Alias('sla_assignment')]
-    [String]$SLAAssignment, 
+    [String]$SLAAssignment,
     # SLA Domain policy assigned to the SCVMM Server
     [Parameter(ParameterSetName='Query')]
     [ValidateNotNullOrEmpty()]
@@ -78,7 +77,7 @@ function Get-RubrikScvmm
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,
     # Rubrik server IP or FQDN
-    [String]$Server = $global:RubrikConnection.server, 
+    [String]$Server = $global:RubrikConnection.server,
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
@@ -91,17 +90,17 @@ function Get-RubrikScvmm
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

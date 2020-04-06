@@ -1,25 +1,25 @@
 #Requires -Version 3
 function Get-RubrikReplicationSource
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves summaries of all replication source clusters
-            
+
       .DESCRIPTION
       The Get-RubrikReplicationSource cmdlet will retrieve summaries of all of the clusters configured as a replication source
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikreplicationsource
-            
+
       .EXAMPLE
       Get-RubrikReplicationSource
       This will return the details of all replication sources configured on the Rubrik cluster
-    
+
       .EXAMPLE
       Get-RubrikReplicationSource -Name 'cluster.domain.local'
       This will return the most common details of the replication source named 'cluster.domain.local' configured on the Rubrik cluster
@@ -33,7 +33,7 @@ function Get-RubrikReplicationSource
       This will return the details of the replication source with an id of '11111-22222-33333' configured on the Rubrik cluster
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Replication Source ID
     [ValidateNotNullOrEmpty()]
@@ -42,13 +42,13 @@ function Get-RubrikReplicationSource
         Position = 0,
         Mandatory = $true,
         ValueFromPipelineByPropertyName = $true)]
+    [Alias('sourceClusterUuid')]
     [String]$Id,
     # Replication Source Cluster Name
     [ValidateNotNullOrEmpty()]
     [Parameter(
         ParameterSetName='Query',
-        Position = 0,
-        ValueFromPipelineByPropertyName = $true)]
+        Position = 0)]
     [Alias('Name')]
     [String]$sourceClusterName,
     # DetailedObject will retrieved the detailed replication source object, the default behavior of the API is to only retrieve a subset of the full replication source object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
@@ -59,7 +59,7 @@ function Get-RubrikReplicationSource
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
-    
+
   )
 
   Begin {
@@ -69,17 +69,17 @@ function Get-RubrikReplicationSource
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -91,7 +91,7 @@ function Get-RubrikReplicationSource
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-    
+
     # if detailed object is passed, loop through to get more information
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
         for ($i = 0; $i -lt @($result).Count; $i++) {
@@ -102,6 +102,6 @@ function Get-RubrikReplicationSource
       } else {
         return $result
       }
-    
+
   } # End of process
 } # End of function
