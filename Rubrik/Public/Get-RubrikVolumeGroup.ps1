@@ -36,12 +36,10 @@ function Get-RubrikVolumeGroup
       This will return full details on for the specified VolumeGroup ID
   #>
 
-  [CmdletBinding(DefaultParameterSetName = 'Query')]
+  [CmdletBinding()]
   Param(
     # Name of the volume group
-    [Parameter(
-      ParameterSetName='Query',
-      Position = 0)]
+    [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
     [Alias('VolumeGroup')]
     [String]$name,
     # Filter results by hostname
@@ -55,11 +53,7 @@ function Get-RubrikVolumeGroup
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,
     # Volume group id
-    [Parameter(
-      ParameterSetName='ID',
-      Position = 0,
-      Mandatory = $true,
-      ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # SLA id value
     [Alias('effective_sla_domain_id')]
