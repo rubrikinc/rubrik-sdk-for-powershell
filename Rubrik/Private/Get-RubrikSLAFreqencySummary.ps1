@@ -23,7 +23,6 @@
       param(
           [psobject]$SLADomain
       )
-
     Write-Verbose -Message "Getting SLA Domain frequency summary"
     if ($null -ne $SLADomain.advancedUiConfig -and '' -ne $SLADomain.advancedUiConfig ) {
         $SLAFrequency = @()
@@ -120,7 +119,6 @@
     else {
         Write-Verbose -Message "No advanced config found"
         $SLAFrequency = @()
-
         if ($null -ne $SLADomain.frequencies.hourly.retention) {
             if ($SLADomain.frequencies.hourly.retention -gt 23) {
                 $HourlyRetention = "$($SLADomain.frequencies.hourly.retention/24) Day(s)"
@@ -154,6 +152,5 @@
             $SLAFrequency += [pscustomobject]$yearly
         }
     }
-    Write-Verbose -Message "[Rubrik] [$($brik)] [SLA Domains] Output SLA Domain Frequency Settings"
     return $SLAFrequency
   }

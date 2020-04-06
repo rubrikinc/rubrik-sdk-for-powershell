@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Removed -Body $body from `Get-RubrikClusterStorage` and `Get-RubrikDNSSetting` when it passes variables to Submit-Request as per [Issue 604](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/604)
+* Removed -Body $body from `Get-RubrikClusterInfo` when it passes variables to Submit-Request as per [Issue 604](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/604)
+* Added support to `Get-RubrikObject` for ClusterNetworkInterfaces, Event Series, HyperV Hosts, Nodes, Notification Settings, NTP Servers, Nutanix Clusters and SMB Domains
+* Added support to `Get-RubrikObject` to support searching by id on an attribute which isn't named `id`
 * Fixed how `Disconnect-Rubrik` handles cleaning up `$RubrikConnection(s)` variables
 * Modified `Get-RubrikSLA`, `Set-RubrikSLA` and `New-RubrikSLA` to call private function to add a human readable frequency summary field
 * Added $rubrikConnections = $null to `Connect-Rubrik.Tests.ps1` in order to allow test to be ran within the same PS session of which it ran previously.
@@ -37,6 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added unit test for private function `Get-RubrikSLAFrequencySummary`
 * Added additional unit tests for `Disconnect-Rubrik` as per [Issue 598](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/598)
 * Added private function `Get-RubrikSLAFrequencySummary` to create a human readable summary of an SLAs frequency settings
 * Added unit tests for `New-RubrikLDAP`, `Get-RubrikvCenter`, `New-RubrikvCenter`, `Remove-RubrikvCenter`, `Set-RubrikvCenter`, `Get-RubrikSetting`, `Set-RubrikSetting`, and `Remove-RubrikHost` as per [Issue 345](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/345)

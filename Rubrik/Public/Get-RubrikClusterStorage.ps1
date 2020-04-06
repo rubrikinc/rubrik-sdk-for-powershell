@@ -1,21 +1,21 @@
 #Requires -Version 3
 function Get-RubrikClusterStorage
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves node information for a given cluster
-            
+
       .DESCRIPTION
       The Get-RubrikClusterStorage cmdlet will retrieve various capacity and usage information about cluster storage.
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikclusterstorage
-            
+
       .EXAMPLE
       Get-RubrikClusterStorage
       This will return the storage capacity and usage information about the authenticated cluster.
@@ -36,17 +36,17 @@ function Get-RubrikClusterStorage
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -56,7 +56,7 @@ function Get-RubrikClusterStorage
     $result = @{}
     foreach ($key in $resources.URI.Keys ) {
         $uri = New-URIString -server $Server -endpoint $Resources.URI[$key] -id $id
-        $iresult = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+        $iresult = Submit-Request -uri $uri -header $Header -method $($resources.Method)
         switch ($key) {
             {$_ -in "DiskCapacityInTb","FlashCapacityInTb"} { $result.Add($key, ([Math]::round(($iresult.bytes/$tb),$precision))) }
             "StorageOverview" {
@@ -69,25 +69,25 @@ function Get-RubrikClusterStorage
                 $SnapshotStorageInBy = $iresult.snapshot # For later usage
                 $AvailableStorageInBy = $iresult.available # for later calculations
             }
-            "CloudStorage" {  
-              $result.add("ArchivalUsageInTb", ([Math]::round(($iresult.value/$tb),$precision))) 
+            "CloudStorage" {
+              $result.add("ArchivalUsageInTb", ([Math]::round(($iresult.value/$tb),$precision)))
               $ArchivalUsageInBy = $iresult.value # for later usage
             }
-            "DailyGrowth" { 
-              $result.add("AverageGrowthPerDayInGb", ([Math]::round(($iresult.bytes/$gb),$precision))) 
+            "DailyGrowth" {
+              $result.add("AverageGrowthPerDayInGb", ([Math]::round(($iresult.bytes/$gb),$precision)))
               $DailyGrowthInBy = $iresult.bytes # for later calculations
             }
-            "CloudStorageIngested" { 
+            "CloudStorageIngested" {
               $result.add("TotalArchiveStorageIngestedInTb",([Math]::round(($iresult.value/$tb),$precision)))
               $IngestedArchiveStorageInB = $iresult.value
-            } 
-            "LocalStorageIngested" { 
+            }
+            "LocalStorageIngested" {
               $result.add("TotalLocalStorageIngestedInTb",([Math]::round(($iresult.value/$tb),$precision)))
               $IngestedLocalStorageInBy = $iresult.value
-            } 
+            }
         }
     }
-    
+
     # Calculate data reduction numbers with ingested storage, and estimated runway,add to results
     if ($IngestedArchiveStorageInB -eq 0 -or $null -eq $IngestedArchiveStorageInB) { $ArchivalDataReduction = "Not Available" }
     else { $ArchivalDataReduction = [Math]::round(100 - (($ArchivalUsageInBy/$IngestedArchiveStorageInB) * 100),1) }
@@ -98,7 +98,7 @@ function Get-RubrikClusterStorage
     if ($DailyGrowthInBy -eq 0 -or $null -eq $DailyGrowthInBy) { $EstimatedRunwayInDays = "Not Available"}
     else { $EstimatedRunwayInDays = [Math]::round(($AvailableStorageInBy/$DailyGrowthInBy)) }
     $result.Add("EstimatedRunwayInDays", $EstimatedRunwayInDays)
-    
+
     return $result
 
   } # End of process
