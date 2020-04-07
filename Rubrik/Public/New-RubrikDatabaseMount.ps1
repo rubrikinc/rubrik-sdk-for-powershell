@@ -87,11 +87,10 @@ function New-RubrikDatabaseMount
     $body = @{
       $resources.Body.targetInstanceId = $targetInstanceId
       $resources.Body.mountedDatabaseName = $mountedDatabaseName
-      recoveryPoint = @()
     }
-    $body.recoveryPoint += @{
-          $resources.Body.recoveryPoint.timestampMs = $timestampMs
-          }
+    $body.recoveryPoint = @{
+      $resources.Body.recoveryPoint.timestampMs = $timestampMs
+    }
     $body = ConvertTo-Json $body
     Write-Verbose -Message "Body = $body"
     #endregion
