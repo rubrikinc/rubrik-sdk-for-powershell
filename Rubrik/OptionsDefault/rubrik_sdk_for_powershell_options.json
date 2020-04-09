@@ -1,8 +1,11 @@
 ﻿{
     "DefaultParameterValues":  {
-                  "PrimaryClusterId":  null
+                  "PrimaryClusterId":  "",
+                  "NewProperty": "",
+                  "another": ""
               },
     "ModuleOptions":  {
-                  "ApplyCustomViewDefinitions":  true
+                  "ApplyCustomViewDefinitions":  true,
+                  "secretsetting": "yes"
                 }
 }
