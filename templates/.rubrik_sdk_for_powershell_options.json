@@ -1,0 +1,8 @@
+﻿{
+    "DefaultParameterValues":  {
+                  "PrimaryClusterId":  null
+              },
+    "ModuleOptions":  {
+                  "ApplyCustomViewDefinitions":  true
+                }
+}
