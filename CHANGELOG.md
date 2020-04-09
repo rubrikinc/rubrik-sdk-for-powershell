@@ -51,6 +51,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added `Get-RubrikEventSeries` to now parse the event_series API rather than events as per [Issue 580](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/580)
 * Added unit tests to cover `Get-RubrikEventSeries` and changes to `Get-RubrikEvent`
 
+### Fixed
+
+* Fixed incorrect array in body of `New-RubrikDatabaseMount` and added tests to validate new behavior in `New-RubrikDatabaseMount.Tests`
+
 ## [5.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.1) - 2020-03-05
 
 ### Added
