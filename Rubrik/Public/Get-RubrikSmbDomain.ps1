@@ -1,33 +1,34 @@
 #Requires -Version 3
 function Get-RubrikSmbDomain
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves information around the SMB Domains configured in the currently authenticated cluster
-            
+
       .DESCRIPTION
       The Get-RubrikSmbDomain cmdlet will retrieve information around the configured SMB Domains in the currently authenticated cluster
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriksmbdomain
-            
+
       .EXAMPLE
-      Get-RubrikSmbDomain 
+      Get-RubrikSmbDomain
       This will return the details around the configured SMB Domains within the authenticated Rubrik cluster.
 
       .EXAMPLE
-      Get-RubrikSmbDomain -Name 'domain.local' 
+      Get-RubrikSmbDomain -Name 'domain.local'
       This will return the details related to the domain.local SMB Domain configured within the Rubrik cluster.
   #>
 
   [CmdletBinding()]
   Param(
     # Name of the SMB Domain to retrieve
+    [Parameter(Position = 0)]
     [String]$Name,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -42,17 +43,17 @@ function Get-RubrikSmbDomain
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

@@ -1,13 +1,13 @@
 #requires -Version 3
 function Get-RubrikManagedVolume
 {
-  <#  
+  <#
       .SYNOPSIS
-      Gets data on a Rubrik managed volume 
+      Gets data on a Rubrik managed volume
 
       .DESCRIPTION
-      The Get-RubrikManagedVolume cmdlet is used to retrive information 
-      on one or more managed volumes that are being protected 
+      The Get-RubrikManagedVolume cmdlet is used to retrive information
+      on one or more managed volumes that are being protected
       with Rubrik.
 
       .NOTES
@@ -20,17 +20,17 @@ function Get-RubrikManagedVolume
 
       .EXAMPLE
       Get-RubrikManagedVolume
-      
+
       Retrieves all Rubrik Managed Volumes, active and relics
 
       .EXAMPLE
       Get-RubrikManagedVolume -Relic
-      
+
       Retrieves all Rubrik Managed Volumes that are relics
 
       .EXAMPLE
       Get-RubrikManagedVolume -Relic:$false
-      
+
       Retrieves all Rubrik Managed Volumes that are not relics
 
       .EXAMPLE
@@ -45,7 +45,7 @@ function Get-RubrikManagedVolume
 
       .EXAMPLE
       Get-RubrikManagedVolume -Name 'Bar'
-      
+
       Get the managed volume named 'Bar'.
   #>
 
@@ -63,8 +63,7 @@ function Get-RubrikManagedVolume
     # Name of managed volume
     [Parameter(
       ParameterSetName='Name',
-      Position = 0,
-      ValueFromPipelineByPropertyName = $true
+      Position = 0
     )]
     [ValidateNotNullOrEmpty()]
     [String]$Name,
@@ -100,21 +99,21 @@ function Get-RubrikManagedVolume
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
-    # If the switch parameter was not explicitly specified remove from query params 
+
+    # If the switch parameter was not explicitly specified remove from query params
     if(-not $PSBoundParameters.ContainsKey('Relic')) {
       $Resources.Query.Remove('is_relic')
     }

@@ -1,29 +1,29 @@
 #Requires -Version 3
 function Get-RubrikVMwareDatastore
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves a list of VMware datastores
-            
+
       .DESCRIPTION
       The Get-RubrikVMwareDatastore cmdlet will retrieve VMware datastores known to an authenticated Rubrik cluster.
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvmwaredatastore
-            
+
       .EXAMPLE
       Get-RubrikVMwareDatastore
       This will return a listing of all of the datastores known to a connected Rubrik cluster
-      
+
       .EXAMPLE
       Get-RubrikVMwareDatastore -Name 'vSAN'
       This will return a listing of all of the datastores named 'vSAN' known to a connected Rubrik cluster
-      
+
       .EXAMPLE
       Get-RubrikVMwareDatastore -DatastoreType 'NFS'
       This will return a listing of all of the NFS datastores known to a connected Rubrik cluster
@@ -32,10 +32,12 @@ function Get-RubrikVMwareDatastore
   [CmdletBinding()]
   Param(
     # Datastore Name
+    [Parameter(
+       Position = 0)]
     [String]$Name,
     # Filter Datastore type
     [ValidateSet('VMFS', 'NFS','vSAN')]
-    [String]$DatastoreType,     
+    [String]$DatastoreType,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -50,17 +52,17 @@ function Get-RubrikVMwareDatastore
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

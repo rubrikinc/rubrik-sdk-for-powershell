@@ -1,28 +1,28 @@
 #Requires -Version 3
 function Get-RubrikClusterNetworkInterface
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves the network interface details from member nodes of a Rubrik cluster.
-            
+
       .DESCRIPTION
       The Get-RubrikClusterNetworkInterface cmdlet will retrieve the network interface details from nodes connected to a Rubrik cluster.
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikclusternetworkinterface
-            
+
       .EXAMPLE
       Get-RubrikClusterNetworkInterface
       This will return the details of all network interfaces on all nodes within the Rubrik cluster.
-      
+
       .EXAMPLE
       Get-RubrikClusterNetworkInterface -Interface 'bond0'
-      This will return the details of the 'bond0' interface on all nodes within the Rubrik cluster. 
+      This will return the details of the 'bond0' interface on all nodes within the Rubrik cluster.
 
       .EXAMPLE
       Get-RubrikClusterNetworkInterface -Node 'Node01'
@@ -32,6 +32,10 @@ function Get-RubrikClusterNetworkInterface
   [CmdletBinding()]
   Param(
     # Interface name to query
+    [Parameter(
+      Position = 0,
+      Mandatory = $false,
+      ValueFromPipelineByPropertyName = $true)]
     [String]$interface,
     # Node id to filter results on
     [String]$Node,
@@ -40,7 +44,7 @@ function Get-RubrikClusterNetworkInterface
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
-    
+
   )
 
   Begin {
@@ -50,17 +54,17 @@ function Get-RubrikClusterNetworkInterface
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

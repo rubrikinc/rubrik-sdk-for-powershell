@@ -1,21 +1,21 @@
 #Requires -Version 3
 function Get-RubrikVMwareDatacenter
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves a list of VMware Datacenters registered
-            
+
       .DESCRIPTION
       The Get-RubrikVMwareDatacenter cmdlet will retrieve all of the registered VMware Datacenters within the authenticated Rubrik cluster.
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvmwaredatacenter
-            
+
       .EXAMPLE
       Get-RubrikVMwareDatacenter
       This will return a listing of all of the VMware Datacenter objects known to the connected Rubrik cluster
@@ -28,7 +28,7 @@ function Get-RubrikVMwareDatacenter
       This will return a listing of all of the VMware Datacenter objects named 'datacenter01' registered with the connected Rubrik cluster
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Datacenter Object ID
     [Parameter(
@@ -41,14 +41,13 @@ function Get-RubrikVMwareDatacenter
     # Datacenter Object Name
     [Parameter(
         ParameterSetName='Query',
-        Position = 0,
-        ValueFromPipelineByPropertyName = $true)]
+        Position = 0)]
     [ValidateNotNullOrEmpty()]
     [String]$Name,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Parameter(ParameterSetName='Query')]
     [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,  
+    [String]$PrimaryClusterID,
     # Return more details on object
     [Parameter(ParameterSetName='Query')]
     [Switch]$DetailedObject,
@@ -70,17 +69,17 @@ function Get-RubrikVMwareDatacenter
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
