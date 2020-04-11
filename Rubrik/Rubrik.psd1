@@ -147,6 +147,8 @@
                    'Get-RubrikLogShipping',
                    'Get-RubrikManagedVolume',
                    'Get-RubrikManagedVolumeExport',
+                   'Get-RubrikModuleOption',
+                   'Get-RubrikModuleDefaultParameter',
                    'Get-RubrikMount',
                    'Get-RubrikNASShare',
                    'Get-RubrikNetworkThrottle',
@@ -246,6 +248,7 @@
                    'Remove-RubrikManagedVolumeExport',
                    'Remove-RubrikManagedVolumeSnapshot',
                    'Remove-RubrikMount',
+                   'Remove-RubrikModuleDefaultParameter',
                    'Remove-RubrikNASShare',
                    'Remove-RubrikNutanixVMSnapshot',
                    'Remove-RubrikOrganization',
@@ -269,6 +272,8 @@
                    'Set-RubrikHyperVVM',
                    'Set-RubrikLogShipping',
                    'Set-RubrikManagedVolume',
+                   'Set-RubrikModuleOption',
+                   'Set-RubrikModuleDefaultParameter',
                    'Set-RubrikMount',
                    'Set-RubrikNASShare',
                    'Set-RubrikNutanixVM',
@@ -301,7 +306,8 @@
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
     AliasesToExport = @(
-                    'Pause-RubrikSLA'
+                    'Pause-RubrikSLA',
+                    'New-RubrikModuleDefaultParameter'
     )
 
     # DSC resources to export from this module

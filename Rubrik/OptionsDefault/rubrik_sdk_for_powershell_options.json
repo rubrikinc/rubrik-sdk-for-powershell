@@ -1,11 +1,9 @@
 ﻿{
-    "DefaultParameterValues":  {
-                  "PrimaryClusterId":  "",
-                  "NewProperty": "",
-                  "another": ""
+    "DefaultParameterValue":  {
               },
-    "ModuleOptions":  {
-                  "ApplyCustomViewDefinitions":  true,
-                  "secretsetting": "yes"
+    "ModuleOption":  {
+                  "ApplyCustomViewDefinitions":  "True",
+                  "DefaultWebRequestTimeout": "",
+                  "CredentialPath": ""
                 }
 }

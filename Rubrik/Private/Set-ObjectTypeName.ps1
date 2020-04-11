@@ -15,7 +15,7 @@ function Set-ObjectTypeName($typename, $result) {
     #>
 
     if ($null -ne $result -and $null -ne $typename) {
-        if ( $true -eq $Global:rubrikOptions.ModuleOptions.ApplyCustomViewDefinitions) {
+        if ( "True" -eq $Global:rubrikOptions.ModuleOption.ApplyCustomViewDefinitions) {
             # Using ForEach-Object instead of .ForEach as .ForEach doesn't support single results.
             Write-Verbose -Message "Applying $typename TypeName to results"
             $result | ForEach-Object {

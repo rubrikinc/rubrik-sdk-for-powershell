@@ -1,5 +1,5 @@
 ﻿#requires -Version 3
-function Set-RubrikModuleOption
+function Set-RubrikModuleDefaultParameter
 {
   <#
       .SYNOPSIS
@@ -32,22 +32,27 @@ function Set-RubrikModuleOption
   #>
 
    [CmdletBinding()]
+   [Alias("New-RUbrikModuleDefaultParameter")]
   Param(
     # Option Name
     [Parameter(ValueFromPipelineByPropertyName = $true)]
-    [string]$OptionName,
+    [string]$ParameterName,
     [Parameter()]
-    [string]$OptionValue
+    [string]$ParameterValue
   )
   Process {
-    # if name doesn't exist, exit
-    if ( -not $global:rubrikOptions.ModuleOption.$OptionName) {
-      throw "$OptionName doesn't exist in options file."
+
+    #if property exists update it
+    if ($Global:rubrikOptions.DefaultParameterValue.PSObject.Properties[$ParameterName]) {
+        $global:rubrikOptions.DefaultParameterValue.$ParameterName = $ParameterValue
+    }
+    else {
+        $global:rubrikOptions.DefaultParameterValue | Add-Member -NotePropertyName $ParameterName -NotePropertyValue $ParameterValue
     }
 
-    # update users options file with new value
-    $global:rubrikOptions.ModuleOption.$OptionName = $OptionValue
     $global:rubrikOptions | ConvertTO-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
+    Set-RubrikDefaultParameterValues
+    return $global:rubrikOptions.DefaultParameterValue
 
   } # End of process
 } # End of function
