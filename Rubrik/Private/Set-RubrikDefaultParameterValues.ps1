@@ -16,7 +16,16 @@
             else {
                 $Global:PSDefaultParameterValues.Add("*Rubrik*:$($_.Name)","$($_.Value)")
             }
+        }
+    }
 
+    # Check for default credentials
+    if ( (-not [string]::IsNullOrEmpty($global:rubrikOptions.ModuleOption.CredentialPath)) -and (Test-Path $global:rubrikOptions.ModuleOption.CredentialPath) ) {
+        if ($Global:PSDefaultParameterValues.Contains("Connect-Rubrik:Credential") ) {
+            $Global:PSDefaultParameterValues."Connect-Rubrik:Credential" = (Import-CliXml -Path $global:rubrikOptions.ModuleOption.CredentialPath)
+        }
+        else {
+            $Global:PSDefaultParameterValues.Add("Connect-Rubrik:Credential",(Import-CliXml -Path $global:rubrikOptions.ModuleOption.CredentialPath))
         }
     }
 }

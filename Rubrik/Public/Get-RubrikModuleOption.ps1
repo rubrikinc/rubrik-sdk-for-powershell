@@ -18,8 +18,11 @@ function Get-RubrikModuleOption
 
       .EXAMPLE
       Get-RubrikModuleOption
-
       Retrieves all the customized module options
+
+      .EXAMPLE
+      Get-RubrikModuleOption -OptionName CredentialPath
+      Retrieves the CredentialPath customized module option
   #>
 
    [CmdletBinding()]
@@ -31,7 +34,7 @@ function Get-RubrikModuleOption
   Process {
 
     if ($OptionName) {
-      return  $global:rubrikOptions.ModuleOption | Select $Name
+      return  $global:rubrikOptions.ModuleOption | Select $OptionName
     }
     else {
       return $Global:rubrikOptions.ModuleOption

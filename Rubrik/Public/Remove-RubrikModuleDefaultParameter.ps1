@@ -3,10 +3,10 @@ function Remove-RubrikModuleDefaultParameter
 {
   <#
       .SYNOPSIS
-      Sets an option value within the users option file
+      Removes a defined default value for a parameter
 
       .DESCRIPTION
-      The Set-RubrikModuleOption will set an option value within the users option value and immidiately apply the change.
+      The Remove-RubrikModuleDefaultParameter remove the default value for a specified parameter defined within the users options file.
 
       .NOTES
       Written by Mike Preston for community usage
@@ -14,39 +14,54 @@ function Remove-RubrikModuleDefaultParameter
       GitHub: mwpreston
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikmoduleoption
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikmoduledefaultparameter
 
       .EXAMPLE
-      Set-RubrikModuleOption -Type DefaultParameterValue -OptionName PrimaryClusterId -OptionValue local
-
-      Sets the PrimaryClusterId value to always equate to local when not specified
-
-      .EXAMPLE
-      Set-RubrikModuleOption -Type ModuleOption -OptionName ApplyCustomViewDefinitions -OptionValue $false
-
-      Sets the ApplyCustomViewDefinitions option to false, restricting custom typenames from being shown
+      Remove-RubrikModuleDefaultParameter -ParameterName PrimaryClusterId
+      This will remove the PrimaryClusterId default value from the user home file. Changes take place immediately.
 
       .EXAMPLE
-      Set-RubrikModuleOption -Defaults
-      Removes any custom defined options and resets to default values.
+      Remove-RubrikModuleDefaultParameter -All
+      This will remove all default parameters defined within the users options file.
+      Note: This does not affect the default value for Credential defined with the CredentialPath module option
   #>
 
-   [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'RemoveSingle')]
   Param(
-    # Option Name
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
-    [string]$ParameterName
+    # Parameter Name
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true,
+      Mandatory=$true,
+      Position=0,
+      ParameterSetName='RemoveSingle')]
+    [string]$ParameterName,
+    # Remove all default parameter values
+    [Parameter(
+      Mandatory = $true,
+      ParameterSetName = "RemoveAll")]
+    [switch]$All
   )
   Process {
 
-    #if property exists update it
-    if ($Global:rubrikOptions.DefaultParameterValue.PSObject.Properties[$ParameterName]) {
+    if ($All) {
+      $global:rubrikoptions.DefaultParameterValue.psobject.properties | ForEach {
+        $global:rubrikOptions.DefaultParameterValue.psobject.properties.remove($_.Name)
+        $global:PSDefaultParameterValues.Remove("*Rubrik*:$($_.Name)")
+      }
+    }
+    else {
+      # If property exists, remove from both global options and global psdefaultparametervalues
+      if ($Global:rubrikOptions.DefaultParameterValue.PSObject.Properties[$ParameterName]) {
         $global:rubrikOptions.DefaultParameterValue.PSObject.Properties.Remove("$ParameterName")
         $global:PSDefaultParameterValues.Remove("*Rubrik*:$ParameterName")
+      }
     }
 
+    # sync options back to file
     $global:rubrikOptions | ConvertTO-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
+    #apply all parameter globally.
     Set-RubrikDefaultParameterValues
+
     return $global:rubrikOptions.DefaultParameterValue
 
   } # End of process

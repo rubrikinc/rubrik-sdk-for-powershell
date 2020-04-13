@@ -3,10 +3,10 @@ function Get-RubrikModuleDefaultParameter
 {
   <#
       .SYNOPSIS
-      Retrieves a customized Rubrik module option
+      Retrieves the default parameter values
 
       .DESCRIPTION
-      The Get-RubrikModuleOption will retrieve one or more options within the users home directory
+      The Get-RubrikModuleDefaultParameter will retrieve the default parameter values configured within the users options file.
 
       .NOTES
       Written by Mike Preston for community usage
@@ -14,12 +14,15 @@ function Get-RubrikModuleDefaultParameter
       GitHub: mwpreston
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikmoduleoption
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikmoduledefaultparameter
 
       .EXAMPLE
-      Get-RubrikModuleOption
+      Get-RubrikModuleDefaultParameter
+      Retrieves all the default parameter values
 
-      Retrieves all the customized module options
+      .EXAMPLE
+      Get-RubrikModuleDefaultParameter -ParameterName PrimaryClusterId
+      Retrieves the PrimaryClusterId default parameter value
   #>
 
    [CmdletBinding()]
@@ -36,7 +39,6 @@ function Get-RubrikModuleDefaultParameter
     else {
       return $Global:rubrikOptions.DefaultParameterValue
     }
-
 
   } # End of process
 } # End of function
