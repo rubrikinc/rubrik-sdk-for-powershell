@@ -34,9 +34,5 @@ Describe -Name 'Public/Get-RubrikModuleOption' -Tag 'Public', 'Get-RubrikModuleO
             (Get-RubrikModuleOption).Count |
                 Should -BeExactly 2
         }
-        It -Name "Should return true for ApplyCustomViewDefinitions" -Test {
-            (Get-RubrikModuleOption -OptionName "ApplyCustomViewDefinitions").ApplyCustomViewDefinitions |
-                Should -BeExactly "True"
-        }
     }
 }

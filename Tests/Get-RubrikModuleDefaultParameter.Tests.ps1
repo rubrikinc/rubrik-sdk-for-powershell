@@ -17,26 +17,26 @@ Describe -Name 'Public/Get-RubrikModuleDefaultParameter' -Tag 'Public', 'Get-Rub
         api     = 'v1'
         version = '4.0.5'
     }
-    $global:rubrikOptions = @{
-        DefaultParameterValue = @{
-            PrimaryClusterId = 'local'
-            AnotherParameter = 'Value'
+
+    $GlobalOptionsJson = '{
+        "DefaultParameterValue": {
+          "PrimaryClusterId": "local",
+          "AnotherParameter": "test"
+        },
+        "ModuleOption": {
+          "ApplyCustomViewDefinitions": "True",
+          "DefaultWebRequestTimeout": "",
+          "CredentialPath": ""
         }
-        ModuleOption = @{
-            ApplyCustomViewDefinitions = 'True'
-            CredentialPath = ''
-        }
-    }
+      }'
+    $global:rubrikOptions = $GlobalOptionsJson | ConvertFrom-Json
+
     #endregion
 
     Context -Name 'Results Filtering' {
-        It -Name "Should return count of 2" -Test {
-            (Get-RubrikModuleDefaultParameter).Count |
-                Should -BeExactly 2
-        }
-        It -Name "Should return local for primaryclusterid" -Test {
-            (Get-RubrikModuleDefaultParameter -ParameterName "PrimaryClusterId").primaryclusterid |
-                Should -BeExactly "local"
+        It -Name "Should test for value" -Test {
+            (Get-RubrikModuleDefaultParameter -ParameterName AnotherParameter).AnotherParameter |
+                Should -BeExactly "test"
         }
     }
 }

@@ -17,19 +17,23 @@ Describe -Name 'Private/Set-RubrikDefaultParameterValues.Tests.ps1' -Tag 'Privat
         api     = 'v1'
         version = '4.0.5'
     }
-    $global:rubrikOptions = @{
-        DefaultParameterValue = @{
-            PrimaryClusterId = 'local'
+    $GlobalOptionsJson = '{
+        "DefaultParameterValue": {
+          "PrimaryClusterId": "local"
+        },
+        "ModuleOption": {
+          "ApplyCustomViewDefinitions": "True",
+          "DefaultWebRequestTimeout": "",
+          "CredentialPath": ""
         }
-        ModuleOption = @{
-            ApplyCustomViewDefinitions = 'True'
-            CredentialPath = ''
-        }
-    }
+      }'
+    $global:rubrikOptions = $GlobalOptionsJson | ConvertFrom-Json
+    Set-RubrikDefaultParameterValues
     #endregion
     Context -Name 'Defaults are applied' -Fixture {
+
         It -Name "PrimaryClusterId should exist and be local" -Test {
-            Set-RubrikDefaultParameterValues
+
             $Global:PSDefaultParameterValues."*Rubrik*:PrimaryClusterId" |
                 Should be "local"
         }
