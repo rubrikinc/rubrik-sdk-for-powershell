@@ -69,16 +69,7 @@ function Set-RubrikModuleOption
 
     # if setting all options to default
     if ($Default) {
-      # remove all ModuleOptions from global variable and userfile
-      $global:rubrikoptions.ModuleOption.psobject.properties | ForEach {$global:rubrikOptions.ModuleOption.psobject.properties.remove($_.Name)}
-      $global:rubrikOptions | ConvertTO-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
-      # run sync to recreate them from template
-      $global:rubrikOptions = Sync-RubrikOptionsFile
-
-      # Remove Credential from PSDefaultParameterValues if it exists.
-      if ($Global:PSDefaultParameterValues.Contains("Connect-Rubrik:Credential") ) {
-        $Global:PSDefaultParameterValues.Remove("Connect-Rubrik:Credential")
-      }
+      Set-RubrikModuleOptions -Action "Default" -OptionType "ModuleOption"
     }
     elseif ($Apply) {
       $global:rubrikOptions = Sync-RubrikOptionsFile
