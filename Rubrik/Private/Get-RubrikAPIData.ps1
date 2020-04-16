@@ -1774,6 +1774,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '202'
+                ObjectTName = 'Rubrik.FilesetTemplate'
             }
         }
         'New-RubrikHost'               = @{
