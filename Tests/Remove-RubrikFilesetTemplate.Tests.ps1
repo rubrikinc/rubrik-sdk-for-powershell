@@ -34,7 +34,7 @@ Describe -Name 'Public/Remove-RubrikFilesetTemplate' -Tag 'Public', 'Remove-Rubr
 
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{
-                Status = 'Success'
+                Status = 'Error'
                 HTTPStatusCode = 205
             }
         }
@@ -43,9 +43,14 @@ Describe -Name 'Public/Remove-RubrikFilesetTemplate' -Tag 'Public', 'Remove-Rubr
                 Should -Not -Be 204
         }
 
+        It -Name 'Incorrect status code should not display Success' -Test {
+            ( Remove-RubrikFilesetTemplate -id 'filesetid').Status  |
+                Should -Not -Be 'Success'
+        }
+
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 3
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
     }
     Context -Name 'Parameter Validation' {
         It -Name 'Parameter id cannot be $null' -Test {
