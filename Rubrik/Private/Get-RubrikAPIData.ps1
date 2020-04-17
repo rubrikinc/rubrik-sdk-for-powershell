@@ -1774,6 +1774,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '202'
+                ObjectTName = 'Rubrik.FilesetTemplate'
             }
         }
         'New-RubrikHost'               = @{
@@ -2267,6 +2268,19 @@ function Get-RubrikAPIData {
                 Body        = ''
                 Query       = @{
                     location = 'location'
+                }
+                Result      = ''
+                Success     = '204'
+            }
+        }
+        'Remove-RubrikFilesetTemplate'        = @{
+            '1.0' = @{
+                Description = 'Removes a fileset snapshot'
+                URI         = '/api/v1/fileset_template/{id}'
+                Method      = 'Delete'
+                Body        = ''
+                Query       = @{
+                    preserve_snapshots = 'preserve_snapshots'
                 }
                 Result      = ''
                 Success     = '204'
