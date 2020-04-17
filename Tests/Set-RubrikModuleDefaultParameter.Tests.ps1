@@ -17,16 +17,17 @@ Describe -Name 'Public/Set-RubrikModuleDefaultParameter' -Tag 'Public', 'Set-Rub
         api     = 'v1'
         version = '4.0.5'
     }
-    $global:rubrikOptions = @{
-        DefaultParameterValue = @{
-            PrimaryClusterId = 'local'
-            AnotherParameter = 'Value'
+    $GlobalOptionsJson = '{
+        "DefaultParameterValue": {
+          "PrimaryClusterId": "local",
+          "AnotherParameter": "Value"
+        },
+        "ModuleOption": {
+          "ApplyCustomViewDefinitions": "True",
+          "CredentialPath": "c:\\credentialpath\\creds.xml"
         }
-        ModuleOption = @{
-            ApplyCustomViewDefinitions = 'True'
-            CredentialPath = 'c:\\credentialpath\\creds.xml'
-        }
-    }
+      }'
+      $global:rubrikOptions = $GlobalOptionsJson | ConvertFrom-Json
     #endregion
     Context -Name 'Parameter Validation' {
         It -Name "Should throw ParameterSet Error" -Test {
@@ -35,16 +36,5 @@ Describe -Name 'Public/Set-RubrikModuleDefaultParameter' -Tag 'Public', 'Set-Rub
         }
 
     }
-    Context -Name 'Values are set' {
-        Mock -CommandName Update-RubrikModuleOption -ModuleName 'Rubrik' -MockWith {
-            @{
-                PrimaryClusterId = '11111-22222-33333'
-            }
-        }
-        It -Name "Should set PrimaryClusterId to 11111-22222-33333" -Test {
-            $defparams = Set-RubrikModuleDefaultParameter -ParameterName 'PrimaryClusterId' -ParameterValue '11111-22222-33333'
-            ($defparams | Select PrimaryClusterId)[0].primaryClusterId |
-                Should -BeExactly "11111-22222-33333"
-        }
-    }
+
 }
