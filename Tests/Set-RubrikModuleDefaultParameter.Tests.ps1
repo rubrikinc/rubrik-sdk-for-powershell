@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Set-RubrikModuleOption' -Tag 'Public', 'Set-RubrikModuleOption' -Fixture {
+Describe -Name 'Public/Set-RubrikModuleDefaultParameter' -Tag 'Public', 'Set-RubrikModuleDefaultParameter' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -28,19 +28,23 @@ Describe -Name 'Public/Set-RubrikModuleOption' -Tag 'Public', 'Set-RubrikModuleO
         }
     }
     #endregion
-    Context -Name 'Option Validation' {
-
-        It -Name "Should throw not found error" -Test {
-            {Set-RubrikModuleOption -OptionName 'Test' -OptionValue 'Value' } |
-                Should -Throw "Test doesn't exist in options file"
-        }
-
-    }
     Context -Name 'Parameter Validation' {
         It -Name "Should throw ParameterSet Error" -Test {
-            { Set-RubrikModuleOption -OptionName 'Test' -Sync } |
+            { Set-RubrikModuleDefaultParameter -ParameterName 'Test' -Sync } |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
 
+    }
+    Context -Name 'Values are set' {
+        Mock -CommandName Update-RubrikModuleOption -ModuleName 'Rubrik' -MockWith {
+            @{
+                PrimaryClusterId = '11111-22222-33333'
+            }
+        }
+        It -Name "Should set PrimaryClusterId to 11111-22222-33333" -Test {
+            $defparams = Set-RubrikModuleDefaultParameter -ParameterName 'PrimaryClusterId' -ParameterValue '11111-22222-33333'
+            ($defparams | Select PrimaryClusterId)[0].primaryClusterId |
+                Should -BeExactly "11111-22222-33333"
+        }
     }
 }

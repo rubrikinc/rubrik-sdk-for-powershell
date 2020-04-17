@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Public/Set-RubrikModuleOption' -Tag 'Public', 'Set-RubrikModuleOption' -Fixture {
+Describe -Name 'Public/Remove-RubrikModuleDefaultParameter' -Tag 'Public', 'Remove-RubrikModuleDefaultParameter' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -28,19 +28,13 @@ Describe -Name 'Public/Set-RubrikModuleOption' -Tag 'Public', 'Set-RubrikModuleO
         }
     }
     #endregion
-    Context -Name 'Option Validation' {
-
-        It -Name "Should throw not found error" -Test {
-            {Set-RubrikModuleOption -OptionName 'Test' -OptionValue 'Value' } |
-                Should -Throw "Test doesn't exist in options file"
-        }
-
-    }
     Context -Name 'Parameter Validation' {
+
         It -Name "Should throw ParameterSet Error" -Test {
-            { Set-RubrikModuleOption -OptionName 'Test' -Sync } |
+            { Remove-RubrikModuleDefaultParameter -ParameterName 'Test' -All } |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
-
     }
+
+
 }

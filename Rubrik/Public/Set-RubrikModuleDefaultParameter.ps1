@@ -36,28 +36,17 @@ function Set-RubrikModuleDefaultParameter
     #Parameter Value
     [Parameter(Mandatory=$true,ParameterSetName="NameValue")]
     [string]$ParameterValue,
-    # Apply manual changes to user option file to current PowerShell session
-    [Parameter(Mandatory=$true,ParameterSetName="Apply")]
-    [switch]$Apply
+    # Sync any manual changes within user option file to current PowerShell session
+    [Parameter(Mandatory=$true,ParameterSetName="Sync")]
+    [switch]$Sync
   )
   Process {
 
-    if ($Apply) {
-      $global:rubrikOptions = Sync-RubrikOptionsFile
-      Set-RubrikDefaultParameterValues
+    if ($Sync) {
+      Update-RubrikModuleOption -Action "Sync"
     }
     else {
-      #if property exists update it
-      if ($Global:rubrikOptions.DefaultParameterValue.PSObject.Properties[$ParameterName]) {
-        $global:rubrikOptions.DefaultParameterValue.$ParameterName = $ParameterValue
-      }
-      else {
-        $global:rubrikOptions.DefaultParameterValue | Add-Member -NotePropertyName $ParameterName -NotePropertyValue $ParameterValue
-      }
-      # Write options back to file.
-      $global:rubrikOptions | ConvertTO-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
-      # Set newly defined values globally.
-      Set-RubrikDefaultParameterValues
+      Update-RubrikModuleOption -Action "AddUpdate" -OptionType "DefaultParameterValue" -OptionName $ParameterName -OptionValue $ParameterValue
     }
 
     return $global:rubrikOptions.DefaultParameterValue

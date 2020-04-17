@@ -17,22 +17,28 @@ Describe -Name 'Public/Get-RubrikModuleOption' -Tag 'Public', 'Get-RubrikModuleO
         api     = 'v1'
         version = '4.0.5'
     }
-    $global:rubrikOptions = @{
-        DefaultParameterValue = @{
-            PrimaryClusterId = 'local'
-            AnotherParameter = 'Value'
+    $GlobalOptionsJson = '{
+        "DefaultParameterValue": {
+          "PrimaryClusterId": "local",
+          "AnotherParameter": "test"
+        },
+        "ModuleOption": {
+          "ApplyCustomViewDefinitions": "True",
+          "DefaultWebRequestTimeout": "",
+          "CredentialPath": ""
         }
-        ModuleOption = @{
-            ApplyCustomViewDefinitions = 'True'
-            CredentialPath = 'c:\\credentialpath\\creds.xml'
-        }
-    }
+      }'
+    $global:rubrikOptions = $GlobalOptionsJson | ConvertFrom-Json
     #endregion
 
     Context -Name 'Results Filtering' {
-        It -Name "Should return count of 2" -Test {
-            (Get-RubrikModuleOption).Count |
-                Should -BeExactly 2
+        It -Name "Should return true" -Test {
+            (Get-RubrikModuleOption -OptionName "ApplyCustomViewDefinitions").ApplyCustomViewDefinitions |
+                Should -BeExactly "True"
+        }
+        It -Name "Should contain three properties" -Test {
+             ((Get-RubrikModuleOption).PSObject.Properties | ? MemberType -eq "NoteProperty").count |
+                Should -BeExactly 3
         }
     }
 }

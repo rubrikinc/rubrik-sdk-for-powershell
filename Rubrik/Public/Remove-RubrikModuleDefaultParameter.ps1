@@ -43,24 +43,16 @@ function Remove-RubrikModuleDefaultParameter
   )
   Process {
 
+
+
     if ($All) {
-      $global:rubrikoptions.DefaultParameterValue.psobject.properties | ForEach {
-        $global:rubrikOptions.DefaultParameterValue.psobject.properties.remove($_.Name)
-        $global:PSDefaultParameterValues.Remove("*Rubrik*:$($_.Name)")
+        Update-RubrikModuleOption -OptionType "DefaultParameterValue" -Action "RemoveAll"
       }
-    }
     else {
-      # If property exists, remove from both global options and global psdefaultparametervalues
-      if ($Global:rubrikOptions.DefaultParameterValue.PSObject.Properties[$ParameterName]) {
-        $global:rubrikOptions.DefaultParameterValue.PSObject.Properties.Remove("$ParameterName")
-        $global:PSDefaultParameterValues.Remove("*Rubrik*:$ParameterName")
-      }
+        Update-RubrikModuleOption -OptionType "DefaultParameterValue" -Action "RemoveSingle" -OptionName $ParameterName
     }
 
-    # sync options back to file
-    $global:rubrikOptions | ConvertTO-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
-    #apply all parameter globally.
-    Set-RubrikDefaultParameterValues
+
 
     return $global:rubrikOptions.DefaultParameterValue
 

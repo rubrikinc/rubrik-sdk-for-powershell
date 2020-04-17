@@ -38,5 +38,9 @@ Describe -Name 'Public/Get-RubrikModuleDefaultParameter' -Tag 'Public', 'Get-Rub
             (Get-RubrikModuleDefaultParameter -ParameterName AnotherParameter).AnotherParameter |
                 Should -BeExactly "test"
         }
+        It -Name "Should contain two properties" -Test {
+          ((Get-RubrikModuleDefaultParameter).PSObject.Properties | ? MemberType -eq "NoteProperty").count |
+             Should -BeExactly 2
+     }
     }
 }

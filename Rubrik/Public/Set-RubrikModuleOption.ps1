@@ -34,8 +34,8 @@ function Set-RubrikModuleOption
       This will reset all Rubrik module options to their default values
 
       .EXAMPLE
-      Set-RubrikModuleOption -Apply
-      This will apply any changes made to the user option file manually to the current PowerShell session.
+      Set-RubrikModuleOption -Sync
+      This will sync any changes made to the user option file manually to the current PowerShell session.
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'NameValue')]
@@ -52,6 +52,7 @@ function Set-RubrikModuleOption
       ParameterSetName='NameValue',
       Position=1,
       Mandatory=$true)]
+    [AllowEmptyString()]
     [string]$OptionValue,
     # Reset all Module Options to default values
     [Parameter(
@@ -60,51 +61,28 @@ function Set-RubrikModuleOption
     [switch]$Default,
     # Apply manual changes from JSON file to session
     [Parameter(
-      ParameterSetName="Apply",
+      ParameterSetName="Sync",
       Mandatory=$true
     )]
-    [Switch]$Apply
+    [Switch]$Sync
   )
   Process {
 
     # if setting all options to default
     if ($Default) {
-      Set-RubrikModuleOptions -Action "Default" -OptionType "ModuleOption"
+      Update-RubrikModuleOption -Action "Default" -OptionType "ModuleOption"
     }
-    elseif ($Apply) {
-      $global:rubrikOptions = Sync-RubrikOptionsFile
-      Set-RubrikDefaultParameterValues
+    elseif ($Sync) {
+      Update-RubrikModuleOption -Action "Sync"
     }
     else {
-      # If option exists in global variable...
+      # This means we are adding or updating (no remove on ModuleOptions)
+      # First, make sure the option exists
       if ($Global:rubrikOptions.ModuleOption.PSObject.Properties[$OptionName]) {
-
-        # if using credential path, add the default parameter for connect-rubrik
-        if ($OptionName -eq "CredentialPath") {
-          if (Test-Path $OptionValue) {
-            if ($Global:PSDefaultParameterValues.Contains("Connect-Rubrik:Credential") ) {
-              $Global:PSDefaultParameterValues."Connect-Rubrik:Credential" = (Import-CliXml -Path $OptionValue)
-            }
-            else {
-              $Global:PSDefaultParameterValues.Add("Connect-Rubrik:Credential",(Import-CliXml -Path $OptionValue))
-            }
-          }
-          elseif ("" -eq $OptionValue) {
-            # Remove from DefaultParameterValues
-            if ($Global:PSDefaultParameterValues.Contains("Connect-Rubrik:Credential") ) {
-              $Global:PSDefaultParameterValues.Remove("Connect-Rubrik:Credential")
-            }
-          }
-          else {
-            Throw "$OptionValue cannot be found"
-          }
-        }
-        # for all options - update users options file with new value
-        $global:rubrikOptions.ModuleOption.$OptionName = $OptionValue
-        $global:rubrikOptions | ConvertTO-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
+        Update-RubrikModuleOption -Action "AddUpdate" -OptionName $OptionName -OptionValue $OptionValue -OptionType "ModuleOption"
       }
-      # else option doesn't exist in global variable
       else {
+        # Option doesn't exist
         throw "$OptionName doesn't exist in options file."
       }
     }

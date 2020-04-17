@@ -19,7 +19,8 @@ Describe -Name 'Private/Set-RubrikDefaultParameterValues.Tests.ps1' -Tag 'Privat
     }
     $GlobalOptionsJson = '{
         "DefaultParameterValue": {
-          "PrimaryClusterId": "local"
+          "PrimaryClusterId": "11111-22222-33333-44444-55555",
+          "ParameterNotSet": ""
         },
         "ModuleOption": {
           "ApplyCustomViewDefinitions": "True",
@@ -31,12 +32,14 @@ Describe -Name 'Private/Set-RubrikDefaultParameterValues.Tests.ps1' -Tag 'Privat
     Set-RubrikDefaultParameterValues
     #endregion
     Context -Name 'Defaults are applied' -Fixture {
-
-        It -Name "PrimaryClusterId should exist and be local" -Test {
-
+        It -Name "PrimaryClusterId should exist and be 11111-22222-33333-44444-55555" -Test {
             $Global:PSDefaultParameterValues."*Rubrik*:PrimaryClusterId" |
-                Should be "local"
+                Should be "11111-22222-33333-44444-55555"
         }
+        It -Name "ParameterNotSet should be excluded in PSDefaultParameters" -Test {
+          $Global:PSDefaultParameterValues."*Rubrik*:ParameterNotSet" |
+              Should be $null
+      }
     }
 
 }

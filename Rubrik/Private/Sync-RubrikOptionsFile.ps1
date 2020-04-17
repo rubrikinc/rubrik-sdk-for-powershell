@@ -9,6 +9,7 @@
 
     # Check for existance of options file and copy default if none
     if (-not (Test-Path $Home\rubrik_sdk_for_powershell_options.json)) {
+        Write-Verbose -Message "Options file does not exist, creating $Home\rubrik_sdk_for_powershell_options.json with defaults"
         Copy-Item -Path "$($MyInvocation.MyCommand.Module.ModuleBase)\OptionsDefault\rubrik_sdk_for_powershell_options.json" -Destination $Home\
     }
 
@@ -16,11 +17,11 @@
     $rubrikOptions = Get-Content -Raw -Path $Home\rubrik_sdk_for_powershell_options.json | ConvertFrom-JSON
     # Retrieve default options
     $rubrikDefaults = Get-Content -Raw -Path "$($MyInvocation.MyCommand.Module.ModuleBase)\OptionsDefault\rubrik_sdk_for_powershell_options.json" | ConvertFrom-Json
-
     # Check if any default options exist in DefaultPropertyValues realm which aren't already defined in custom options, if so, add them.
     $rubrikDefaults.DefaultParameterValue.PSObject.Properties | ForEach-Object {
         if (-not $rubrikOptions.DefaultParameterValue.PSObject.Properties["$($_.name)"]) {
             Add-Member -InputObject $rubrikOptions.DefaultParameterValue -NotePropertyName "$($_.Name)" -NotePropertyValue "$($_.Value)"
+
         }
     }
     # Check if any default options exist in ModuleOptions realm which aren't already defined in custom options, if so, add them.
@@ -29,7 +30,6 @@
             Add-Member -InputObject $rubrikOptions.ModuleOption -NotePropertyName "$($_.Name)" -NotePropertyValue "$($_.Value)"
         }
     }
-
     # Export $rubrikOptions back to user file...
     $rubrikOptions | ConvertTO-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
 
