@@ -23,8 +23,8 @@ function Set-RubrikModuleDefaultParameter
       If PrimaryClusterId is already defined to have a default value it will be updated, if not, it will be created.
 
       .EXAMPLE
-      Set-RubrikModuleDefaultParameter -Apply
-      Applies changes to the user options file to the current PowerShell session
+      Set-RubrikModuleDefaultParameter -Sync
+      Syncs changes to the user options file to the current PowerShell session
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'NameValue')]

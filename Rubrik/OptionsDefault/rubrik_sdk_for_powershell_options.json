@@ -3,7 +3,6 @@
               },
     "ModuleOption":  {
                   "ApplyCustomViewDefinitions":  "True",
-                  "DefaultWebRequestTimeout": "",
                   "CredentialPath": ""
                 }
 }
