@@ -67,10 +67,11 @@ function Set-RubrikNASShare
 
     #region one-off
     #Convert credential to valid body values
-    $bodytemp = ConvertFrom-Json $body
+    $bodytemp = @{}
     $bodytemp.Add('username',$Credential.GetNetworkCredential().UserName)
     $bodytemp.Add('password',$Credential.GetNetworkCredential().Password)
-    $bodytemp.Add('domain',$Credential.GetNetworkCredential().Domain)
+    #$bodytemp.Add('domain',$Credential.GetNetworkCredential().Domain)
+    Write-Verbose ($bodytemp|out-string)
     $body = ConvertTo-Json $bodytemp
     #endregion
 
