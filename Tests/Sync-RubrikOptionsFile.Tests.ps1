@@ -23,7 +23,7 @@ Describe -Name 'Public/Sync-RubrikOptionsFile' -Tag 'Public', 'Sync-RubrikOption
 
         $GlobalOptionsJson = '{
             "DefaultParameterValue": {
-              "PrimaryClusterId": "11111-22222-33333-44444-55555",
+              "PrimaryClusterId": "11111-22222-33333-44444-55555"
             },
             "ModuleOption": {
               "ApplyCustomViewDefinitions": "True",
@@ -36,7 +36,7 @@ Describe -Name 'Public/Sync-RubrikOptionsFile' -Tag 'Public', 'Sync-RubrikOption
         Mock -CommandName Copy-Item -Verifiable -MockWith {
             $GlobalOptionsJson = '{
                 "DefaultParameterValue": {
-                  "PrimaryClusterId": "11111-22222-33333-44444-55555",
+                  "PrimaryClusterId": "11111-22222-33333-44444-55555"
                 },
                 "ModuleOption": {
                   "ApplyCustomViewDefinitions": "True",
@@ -49,7 +49,7 @@ Describe -Name 'Public/Sync-RubrikOptionsFile' -Tag 'Public', 'Sync-RubrikOption
         Mock -CommandName Get-Content -Verifiable -MockWith {
             return '{
                 "DefaultParameterValue": {
-                  "PrimaryClusterId": "11111-22222-33333-44444-55555",
+                  "PrimaryClusterId": "11111-22222-33333-44444-55555"
                 },
                 "ModuleOption": {
                   "ApplyCustomViewDefinitions": "True",
