@@ -30,7 +30,7 @@
     Copyright = '(c) 2015-2020 Rubrik, Inc. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'This is a community project that provides a Windows PowerShell module for managing and monitoring Rubrik''s Cloud Data Management platform.'
+    Description = "This is a community project that provides a PowerShell module for managing and monitoring Rubrik's Cloud Data Management platform."
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '4.0'
@@ -240,6 +240,7 @@
                    'Remove-RubrikDatabaseSnapshots',
                    'Remove-RubrikFileset',
                    'Remove-RubrikFilesetSnapshot',
+                   'Remove-RubrikFilesetTemplate',
                    'Remove-RubrikHost',
                    'Remove-RubrikHyperVMount',
                    'Remove-RubrikHyperVSnapshot',
@@ -340,7 +341,7 @@
             # ReleaseNotes = ''
 
             # Prerelease string of this module
-            # Prerelease = 'devel517'
+            Prerelease = 'devel612'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update
             # RequireLicenseAcceptance = $false
