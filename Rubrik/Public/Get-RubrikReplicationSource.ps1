@@ -94,14 +94,10 @@ function Get-RubrikReplicationSource
 
     # if detailed object is passed, loop through to get more information
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
-        for ($i = 0; $i -lt @($result).Count; $i++) {
-          $Percentage = [int]($i/@($result).count*100)
-          Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-          Get-RubrikReplicationSource -id $result[$i].sourceClusterUuid
-        }
-      } else {
-        return $result
-      }
+      Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
+      $result = Get-RubrikDetailedResults -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
+    }
+    return $result
 
   } # End of process
 } # End of function

@@ -101,14 +101,13 @@ function Get-RubrikVolumeGroup
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
+
+
     # If the Get-RubrikVolumeGroup function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
-      for ($i = 0; $i -lt @($result).Count; $i++) {
-        $Percentage = [int]($i/@($result).count*100)
-        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-        $updatedresult = Get-RubrikVolumeGroup -id $result[$i].id
+        Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
+        $updatedresult = Get-RubrikDetailedResults -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
         Set-ObjectTypeName -TypeName $resources.ObjectTName -result $updatedresult
-      }
     } elseif ($PSBoundParameters.containskey('id') -and (-not $DetailedObject)) {
       $result = $result | Select-Object -Property *,@{
         name = 'includes'

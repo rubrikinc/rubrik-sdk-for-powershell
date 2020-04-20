@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Modified `Get-RubrikVM`, `Get-RubrikDatabase`, `Get-RubrikFileset`, `Get-RubrikHost`, `Get-RubrikLogShipping`, `Get-RubrikNutanixCluster`, `Get-RubrikOracleDB`, `Get-RubrikReplicationSource`,`Get-RubrikReplicationTarget`, `Get-RubrikScvmm`, `Get-RubrikvApp`, `Get-RubrikVCD`, `Get-RubrikVMwareCluster`,`Get-RubrikVMwareDatacenter`, and `Get-RubrikVolumeGroup` to call the new `Get-RubrikDetailedResults` function when -DetailedObject is present. `Get-RubrikArchive` was left alone as it uses -DetailedObject differently.
 * `New-RubrikFilesetTemplate` now has type data assigned [Issue 611](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/611)
 * Removed -Body $body from `Get-RubrikClusterInfo` when it passes variables to Submit-Request as per [Issue 604](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/604)
 * Added default parametersets, positional attributes to name parameters, and removed pipeline support from name for the following cmdlets: `Get-RubrikSLA`, `Get-RubrikArchive`, `Get-RubrikClusterNetworkInterface`, `Get-RubrikDatabase`, `Get-RubrikDatabaseMount`, `Get-RubrikFileset`, `Get-RubrikFilesetTemplate`, `Get-RubrikGuestOSCredential`,`Get-RubrikHost`,`Get-RubrikHypervHost`, `Get-RubrikHyperVVM`,`Get-RubrikLogShipping`,`Get-RubrikManagedVolume`,`Get-RubrikNutanixCLuster`,`Get-RubrikNutanixVM`,`Get-RubrikObjectStoreArchive`,`Get-RubrikOracleDB`,`Get-RubrikOrganization`,`Get-RubrikQstarArchive`,`Get-RubrikReplicationSource`,`Get-RubrikReplicationTarget`,`Get-RubrikSQLInstance`, `Get-RubrikScvmm`, `Get-RubrikSmbDomain`, `Get-RubrikUnmanagedObject`, `Get-RubrikUser`, `Get-RubrikvApp`, `Get-RubrikVCD`, `Get-RubrikVMwareCluster`, `Get-RubrikVMwareHost`, `Get-RubrikVMwareDatastore`, and `Get-RubrikVMwareDatacenter`.  This provides a more user friendly experience by allowing users to simply enter `Get-RubrikSLA MySLA` rather than `Get-RubrikSLA -Name MySQL`.  Removing pipeline support from name also ensures that when utilizing pipeline, ID queries are always performed. IE `Get-RubrikSLA MySLA | Get-RubrikSLA ` will first use the basic name filter for the left hand of the pipeline, however the second will pick up the id to perform an id based parameter.
@@ -44,6 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added new private function `Get-RubrikDetailedResults` to replace duplicated -DetailedObject code.
 * Added new function `Remove-RubrikFilesetTemplate` and added assosciated unit test `Remove-RubrikFilesetTemplate.Tests`
 * Added unit test for private function `Get-RubrikSLAFrequencySummary`
 * Added additional unit tests for `Disconnect-Rubrik` as per [Issue 598](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/598)

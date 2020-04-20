@@ -17,11 +17,20 @@
 
         This will take an array of objects ($results) and return more detailed information for each element.
     #>
-    Write-Host "in detailed"
-    for ($i = 0; $i -lt @($result).Count; $i++) {
-        $Percentage = [int]($i/@($result).count*100)
-        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-        #Get-RubrikVM -id $result[$i].id
-      }
+    Write-Verbose -Message "$(@($result).Count) object(s) detected to query"
+    if ($null -ne $result) {
+        $returnResult = for ($i = 0; $i -lt @($result).Count; $i++) {
+            $Percentage = [int]($i/@($result).count*100)
+            Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+            $commandtorun = $cmdlet + " -id " + $result[$i].id
+            Invoke-Expression -Command $commandtorun
+        }
+    }
+    else {
+        Write-Verbose -Message "Passed results were null, returning null in turn"
+        $returnResult = $null
+    }
+
+    return $returnResult
 
 }
