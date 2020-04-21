@@ -7,5 +7,4 @@ The code assumes that you've already deployed at least one Rubrik Brik into your
 3. Rubrik version 2.2 or higher
 4. \(optional\) [`Windows Management Framework 5.0`](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
 
-Note: Although an alpha build of PowerShell exists for Linux and Mac OS environments, the code is currently being written and validated using a Microsoft Windows Server environment.
 
