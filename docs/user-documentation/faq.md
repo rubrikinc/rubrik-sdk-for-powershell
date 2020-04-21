@@ -1,8 +1,8 @@
 # FAQ
 
-This section will contain a list of questions that have been received \(and answered\) by the Project Team.
+This section will contain a list of common questions that have been received (and answered) by the Project Team.
 
-- [How do I Install the devel branch of the Rubrik SDK for PowerShell?](#how-do-i-install-the-devel-branch-of-the-rubrik-sdk-for-powershell)
+- [How do I install the devel branch of the Rubrik SDK for PowerShell?](#how-do-i-install-the-devel-branch-of-the-rubrik-sdk-for-powershell)
 - [Why do I see only a subset of object properties?](#why-do-i-see-only-a-subset-of-object-properties)
 - [Why is the returned data different when I filter objects based on name vs based on their id value?](#why-is-the-returned-data-different-when-i-filter-objects-based-on-name-vs-based-on-their-id-value)
 
