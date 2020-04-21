@@ -222,7 +222,7 @@ Param(
 
 The final step is to update the module manifest and add the new function to the `FunctionsToExport` value. This is done in the `Rubrik\Rubrik.psd1` file.
 
-## Noteable Details
+## Notable Details
 
 The Rubrik SDK for PowerShell follows a few design and syntax guidelines, each highlighted below:
 
@@ -234,6 +234,6 @@ To maintain consistency with the existing module code the usage of Boolean param
 if(-not $PSBoundParameters.ContainsKey('PowerOn')) { $Resources.Body.Remove('powerOn') }
 ```
 
-### Creation of custom view definitions
+### Creation of Custom View Definitions
 
 The Rubrik SDK for PowerShell supports the creation of custom typename files to provide custom view definitions for various objects returned from cmdlets. For example, the `Get-RubrikSLA` cmdlet applies a custom typename file `Rubrik.SLADomain.ps1xml` to its returned results. The `Rubrik.SLADomain.ps1xml` file controls what properties are displayed by default to the PowerShell console. The objects themselves still contain all properties, which can be viewed by piping the results to `Select *` (I.E. `Get-RubrikSLA | Select *`).  Object typename files are created within the `ObjectDefinitions` folder and applied by assigning the `ObjectTName` variable to match that of the `TypeName` definition within `Get-RubrikAPIData`. The TypeName file must also be added to the `FormatsToProcess` exports within `rubrik.psd1`.
