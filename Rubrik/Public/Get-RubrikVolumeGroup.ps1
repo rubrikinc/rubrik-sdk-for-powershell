@@ -101,6 +101,8 @@ function Get-RubrikVolumeGroup
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
+
+
     # If the Get-RubrikVolumeGroup function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
       for ($i = 0; $i -lt @($result).Count; $i++) {

@@ -122,14 +122,11 @@ function Get-RubrikScvmm
     # if detailed object is passed, loop through to get more information
 
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id')) -and ($result.total -ne 0) -and ($null -ne $result))  {
-        for ($i = 0; $i -lt @($result).Count; $i++) {
-          $Percentage = [int]($i/@($result).count*100)
-          Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-          Get-RubrikScvmm -id $result[$i].id
-        }
-    } else {
-        return $result
+      Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
+      $result = Get-RubrikDetailedResult -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
     }
+    return $result
+
 
   } # End of process
 } # End of function
