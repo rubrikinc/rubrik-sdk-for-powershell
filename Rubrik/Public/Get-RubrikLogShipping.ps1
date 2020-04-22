@@ -113,7 +113,7 @@ function Get-RubrikLogShipping
     # If the Get-RubrikLogShipping function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
       Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
-      $result = Get-RubrikDetailedResults -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
+      $result = Get-RubrikDetailedResult -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
     }
     return $result
 

@@ -123,7 +123,7 @@ function Get-RubrikScvmm
 
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id')) -and ($result.total -ne 0) -and ($null -ne $result))  {
       Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
-      $result = Get-RubrikDetailedResults -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
+      $result = Get-RubrikDetailedResult -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
     }
     return $result
 

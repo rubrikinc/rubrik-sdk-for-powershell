@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Private/Get-RubrikDetailedResults' -Tag 'Private', 'Get-RubrikDetailedResults' -Fixture {
+Describe -Name 'Private/Get-RubrikDetailedResult' -Tag 'Private', 'Get-RubrikDetailedResult' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -35,7 +35,7 @@ Describe -Name 'Private/Get-RubrikDetailedResults' -Tag 'Private', 'Get-RubrikDe
             }
             $arrResults = @()
             $arrResults += $results
-            (Get-RubrikDetailedResults -result $arrResults -cmdlet 'Get-RubrikVM').id |
+            (Get-RubrikDetailedResult -result $arrResults -cmdlet 'Get-RubrikVM').id |
                 Should -Be 'vm1'
         }
     }

@@ -94,7 +94,7 @@ function Get-RubrikReplicationTarget
     # if detailed object is passed, loop through to get more information
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
       Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
-      $result = Get-RubrikDetailedResults -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
+      $result = Get-RubrikDetailedResult -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
     }
     return $result
 

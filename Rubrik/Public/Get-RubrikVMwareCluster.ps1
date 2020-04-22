@@ -94,7 +94,7 @@ function Get-RubrikVMwareCluster
 
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
       Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
-      $result = Get-RubrikDetailedResults -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
+      $result = Get-RubrikDetailedResult -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
     }
     return $result
 

@@ -1,4 +1,4 @@
-﻿function Get-RubrikDetailedResults($result, $cmdlet) {
+﻿function Get-RubrikDetailedResult($result, $cmdlet) {
     <#
         .SYNOPSIS
         Function to retrieve more detailed results
@@ -13,7 +13,7 @@
         Cmdlet to utilize in order to get detailed results.
 
         .EXAMPLE
-        Get-RubrikDetailedResults -Results $results
+        Get-RubrikDetailedResult -Results $results
 
         This will take an array of objects ($results) and return more detailed information for each element.
     #>
