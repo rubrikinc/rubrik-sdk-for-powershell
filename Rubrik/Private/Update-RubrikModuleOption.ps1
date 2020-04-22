@@ -25,7 +25,7 @@
         Write-Verbose -Message "Setting global options file to match values in user options file"
         # Sync global variable with user options file and apply (handles both defaultparameters and moduleoptions)
         $global:rubrikOptions = Sync-RubrikOptionsFile
-        Set-RubrikDefaultParameterValues
+        Set-RubrikDefaultParameterValue
         return
     }
 
@@ -101,7 +101,7 @@
                   $global:rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
                   # Set newly defined values globally.
                   Write-Verbose -Message "Syncing desired Default Parameters to global PSDefaultParameters"
-                  Set-RubrikDefaultParameterValues
+                  Set-RubrikDefaultParameterValue
             }
             "RemoveSingle" {
                 if ($global:rubrikOptions.DefaultParameterValue.PSObject.Properties[$OptionName]) {
@@ -115,7 +115,7 @@
                 $global:rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
                 # Set newly defined values globally.
                 Write-Verbose -Message "Syncing desired Default Parameters to global PSDefaultParameters"
-                Set-RubrikDefaultParameterValues
+                Set-RubrikDefaultParameterValue
             }
             "RemoveAll" {
                 $global:rubrikoptions.DefaultParameterValue.psobject.properties | ForEach {
@@ -129,7 +129,7 @@
                 $global:rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
                 # Set newly defined values globally.
                 Write-Verbose -Message "Syncing desired Default Parameters to global PSDefaultParameters"
-                Set-RubrikDefaultParameterValues
+                Set-RubrikDefaultParameterValue
             }
             Default {
                 Throw "Invalid Action specified"

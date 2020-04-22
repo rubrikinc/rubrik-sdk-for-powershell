@@ -5,7 +5,7 @@ foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' |
     . $privateFunctionFilePath
 }
 
-Describe -Name 'Private/Set-RubrikDefaultParameterValues.Tests.ps1' -Tag 'Private', 'Set-RubrikDefaultParameterValues' -Fixture {
+Describe -Name 'Private/Set-RubrikDefaultParameterValue.Tests.ps1' -Tag 'Private', 'Set-RubrikDefaultParameterValue' -Fixture {
     #region init
     $global:rubrikConnection = @{
         id      = 'test-id'
@@ -29,7 +29,7 @@ Describe -Name 'Private/Set-RubrikDefaultParameterValues.Tests.ps1' -Tag 'Privat
         }
       }'
     $global:rubrikOptions = $GlobalOptionsJson | ConvertFrom-Json
-    Set-RubrikDefaultParameterValues
+    Set-RubrikDefaultParameterValue
     #endregion
     Context -Name 'Defaults are applied' -Fixture {
         It -Name "PrimaryClusterId should exist and be 11111-22222-33333-44444-55555" -Test {

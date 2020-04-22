@@ -1,4 +1,4 @@
-﻿function Set-RubrikDefaultParameterValues() {
+﻿function Set-RubrikDefaultParameterValue() {
     <#
       .SYNOPSIS
       Retrieves the default parameter values and applies them globally
