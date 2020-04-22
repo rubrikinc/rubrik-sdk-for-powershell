@@ -68,7 +68,7 @@ function Update-RubrikUserRole($role, $roleUri, $roleMethod) {
       }
     }
   }
-  $body = ConvertTO-Json $body
+  $body = ConvertTo-Json $body
   $uri = New-URIString -server $Server -endpoint "$roleUri"
   $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
   $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
