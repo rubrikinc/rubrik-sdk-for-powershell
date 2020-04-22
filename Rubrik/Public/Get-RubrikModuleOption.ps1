@@ -34,7 +34,7 @@ function Get-RubrikModuleOption
   Process {
 
     if ($OptionName) {
-      return  $global:rubrikOptions.ModuleOption | Select $OptionName
+      return  $global:rubrikOptions.ModuleOption | Select-Object $OptionName
     }
     else {
       return $Global:rubrikOptions.ModuleOption
