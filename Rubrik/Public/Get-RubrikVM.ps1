@@ -123,8 +123,6 @@ function Get-RubrikVM
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-    #Get-RubrikDetailedResult -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
-
 
     # If the Get-RubrikVM function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
