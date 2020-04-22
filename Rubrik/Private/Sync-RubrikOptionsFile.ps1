@@ -28,17 +28,20 @@
     $rubrikDefaults.DefaultParameterValue.PSObject.Properties | ForEach-Object {
         if (-not $rubrikOptions.DefaultParameterValue.PSObject.Properties["$($_.name)"]) {
             Add-Member -InputObject $rubrikOptions.DefaultParameterValue -NotePropertyName "$($_.Name)" -NotePropertyValue "$($_.Value)"
-
+            $changesInOptions = $true
         }
     }
     # Check if any default options exist in ModuleOptions realm which aren't already defined in custom options, if so, add them.
     $rubrikDefaults.ModuleOption.PSObject.Properties | ForEach-Object {
         if (-not $rubrikOptions.ModuleOption.PSObject.Properties["$($_.name)"]) {
             Add-Member -InputObject $rubrikOptions.ModuleOption -NotePropertyName "$($_.Name)" -NotePropertyValue "$($_.Value)"
+            $changesInOptions = $true
         }
     }
-    # Export $rubrikOptions back to user file...
-    $rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
+    # Export $rubrikOptions back to user file, only if changes have been made...
+    if ($changesInOptions) {
+        $rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
+    }
 
     return $rubrikOptions
   }
