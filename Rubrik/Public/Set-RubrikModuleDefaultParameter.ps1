@@ -46,7 +46,13 @@ function Set-RubrikModuleDefaultParameter
       Update-RubrikModuleOption -Action "Sync"
     }
     else {
-      Update-RubrikModuleOption -Action "AddUpdate" -OptionType "DefaultParameterValue" -OptionName $ParameterName -OptionValue $ParameterValue
+      $ModuleOptionSplat = @{
+        Action = "AddUpdate"
+        OptionType = "DefaultParameterValue"
+        OptionName = $ParameterName
+        OptionValue = $ParameterValue
+      }
+      Update-RubrikModuleOption @ModuleOptionSplat
     }
 
     return $global:rubrikOptions.DefaultParameterValue

@@ -79,7 +79,13 @@ function Set-RubrikModuleOption
       # This means we are adding or updating (no remove on ModuleOptions)
       # First, make sure the option exists
       if ($Global:rubrikOptions.ModuleOption.PSObject.Properties[$OptionName]) {
-        Update-RubrikModuleOption -Action "AddUpdate" -OptionName $OptionName -OptionValue $OptionValue -OptionType "ModuleOption"
+        $ModuleOptionSplat = @{
+          Action = "AddUpdate"
+          OptionType = "ModuleOption"
+          OptionName = $ParameterName
+          OptionValue = $ParameterValue
+        }
+        Update-RubrikModuleOption @ModuleOptionSplat
       }
       else {
         # Option doesn't exist
