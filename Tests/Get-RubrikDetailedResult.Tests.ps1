@@ -21,22 +21,40 @@ Describe -Name 'Private/Get-RubrikDetailedResult' -Tag 'Private', 'Get-RubrikDet
 
     Context -Name "Test Returned Data" -Fixture {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-ReturnFormat -Verifiable -ModuleName 'Rubrik' -MockWith {
+            $result
+        }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{
+            [pscustomobject]@{
                 'name'                   = 'test-vm1'
                 'id'                     = 'vm1'
                 'effectiveSlaDomainName' = 'test-valid_sla_name'
             }
         }
-        it -Name "Returns proper data" -Test {
-            $results = @{
-                'name'  = 'test-vm1'
-                'id'    = 'vm1'
-            }
-            $arrResults = @()
-            $arrResults += $results
-            (Get-RubrikDetailedResult -result $arrResults -cmdlet 'Get-RubrikVM').id |
+        It -Name "Returns proper data - Single result" -Test {
+            (Get-RubrikVM -DetailedObject -Name test-vm1).id |
                 Should -Be 'vm1'
         }
+
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            [pscustomobject]@{
+                'name'                   = 'test-vm1'
+                'id'                     = 'vm1'
+                'effectiveSlaDomainName' = 'test-valid_sla_name'
+            }
+            [pscustomobject]@{
+                'name'                   = 'test-vm2'
+                'id'                     = 'vm2'
+                'effectiveSlaDomainName' = 'test-valid_sla_name'
+            }
+        }
+        It -Name "Returns proper data - Multiple results" -Test {
+            (Get-RubrikVM -DetailedObject -Name test-vm2).name |
+                Should -Bein @('test-vm1','test-vm2')
+        }
+
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Test-ReturnFormat -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 4
     }
 }
