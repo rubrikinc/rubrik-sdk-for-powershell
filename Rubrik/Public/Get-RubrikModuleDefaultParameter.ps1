@@ -34,7 +34,7 @@ function Get-RubrikModuleDefaultParameter
   Process {
 
     if ($ParameterName) {
-      return  $global:rubrikOptions.DefaultParameterValue | Select-Object $ParameterName
+      return  $global:rubrikOptions.DefaultParameterValue | Select-Object -Property $ParameterName
     }
     else {
       return $Global:rubrikOptions.DefaultParameterValue
