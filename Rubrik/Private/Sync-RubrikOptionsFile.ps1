@@ -31,7 +31,7 @@
         }
     }
     # Export $rubrikOptions back to user file...
-    $rubrikOptions | ConvertTO-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
+    $rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
 
     return $rubrikOptions
   }
