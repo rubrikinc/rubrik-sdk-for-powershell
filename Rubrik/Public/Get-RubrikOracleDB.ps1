@@ -110,14 +110,10 @@ function Get-RubrikOracleDB
 
     # If the Get-RubrikOracleDB function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
-      for ($i = 0; $i -lt @($result).count; $i++) {
-        $Percentage = [int]($i/@($result).count*100)
-        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-        Get-RubrikOracleDB -id $result[$i].id
-      }
-    } else {
-      return $result
+      Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
+      $result = Get-RubrikDetailedResult -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
     }
+    return $result
 
   } # End of process
 } # End of function
