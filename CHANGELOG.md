@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Modified `Get-RubrikVM`, `Get-RubrikDatabase`, `Get-RubrikFileset`, `Get-RubrikHost`, `Get-RubrikLogShipping`, `Get-RubrikNutanixCluster`, `Get-RubrikOracleDB`, `Get-RubrikReplicationSource`,`Get-RubrikReplicationTarget`, `Get-RubrikScvmm`, `Get-RubrikvApp`, `Get-RubrikVCD`, `Get-RubrikVMwareCluster`, and `Get-RubrikVMwareDatacenter` to call the new `Get-RubrikDetailedResult` function when -DetailedObject is present. `Get-RubrikArchive` was left alone as it uses -DetailedObject differently.
 * Modified various md documentation files to reflect work done since last documentation update as per [Issue 616](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/616)
 * `New-RubrikFilesetTemplate` now has type data assigned [Issue 611](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/611)
 * Removed -Body $body from `Get-RubrikClusterInfo` when it passes variables to Submit-Request as per [Issue 604](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/604)
@@ -45,6 +46,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added new private function `Get-RubrikDetailedResult` to replace duplicated -DetailedObject code.
 * Added new function `Remove-RubrikFilesetTemplate` and added assosciated unit test `Remove-RubrikFilesetTemplate.Tests`
 * Added unit test for private function `Get-RubrikSLAFrequencySummary`
 * Added additional unit tests for `Disconnect-Rubrik` as per [Issue 598](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/598)
