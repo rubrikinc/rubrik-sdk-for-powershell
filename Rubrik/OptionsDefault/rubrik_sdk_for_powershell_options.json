@@ -1,8 +1,7 @@
 ﻿{
-    "DefaultParameterValue":  {
-              },
-    "ModuleOption":  {
-                  "ApplyCustomViewDefinitions":  "True",
-                  "CredentialPath": ""
-                }
+  "DefaultParameterValue":  {},
+  "ModuleOption":  {
+    "ApplyCustomViewDefinitions":  "True",
+    "CredentialPath": ""
+  }
 }

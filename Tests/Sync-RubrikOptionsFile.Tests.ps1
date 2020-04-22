@@ -33,6 +33,10 @@ Describe -Name 'Public/Sync-RubrikOptionsFile' -Tag 'Public', 'Sync-RubrikOption
           }'
           $global:rubrikOptions = $GlobalOptionsJson | ConvertFrom-Json
 
+        Mock -CommandName Get-HomePath -Verifiable -MockWith {
+          'TestDrive:\'
+        }
+
         Mock -CommandName Copy-Item -Verifiable -MockWith {
             $GlobalOptionsJson = '{
                 "DefaultParameterValue": {
@@ -44,7 +48,7 @@ Describe -Name 'Public/Sync-RubrikOptionsFile' -Tag 'Public', 'Sync-RubrikOption
                   "CredentialPath": "c:\\creds\\creds.xml"
                 }
               }'
-              $GlobalOptionsJson | Out-File $Home\rubrik_sdk_for_powershell_options.json
+              $GlobalOptionsJson | Out-File -FilePath "$(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
         }
         Mock -CommandName Get-Content -Verifiable -MockWith {
             return '{
@@ -57,7 +61,7 @@ Describe -Name 'Public/Sync-RubrikOptionsFile' -Tag 'Public', 'Sync-RubrikOption
                   "CredentialPath": "c:\\creds\\creds.xml"
                 }
               }'
-        } -ParameterFilter {$Path -eq "$Home\rubrik_sdk_for_powershell_options.json"}
+        } -ParameterFilter {$Path -eq "$(Get-HomePath)\rubrik_sdk_for_powershell_options.json"}
         Mock -CommandName Get-Content -Verifiable -MockWith {
             return '{
                 "DefaultParameterValue": {
@@ -72,33 +76,30 @@ Describe -Name 'Public/Sync-RubrikOptionsFile' -Tag 'Public', 'Sync-RubrikOption
               }'
         } -ParameterFilter {$Path -like "*OptionsDefault*"}
 
-        # temporarily rename options file in event test is run locally
-        if (Test-Path $Home\rubrik_sdk_for_powershell_options.json) {
-            Move-Item -Path $Home\rubrik_sdk_for_powershell_options.json -Destination $Home\rubrik_sdk_for_powershell_options.json.pester -Force
-        }
-
         It -Name "Should create file" -Test {
             $global:rubrikOptions = Sync-RubrikOptionsFile
-            Test-Path $Home\rubrik_sdk_for_powershell_options.json |
+            Test-Path -Path "$(Get-HomePath)rubrik_sdk_for_powershell_options.json" |
                 Should -BeExactly $true
         }
+
         It -Name "Should add NewDefaultOption" -Test {
             $global:rubrikOptions.ModuleOption.NewDefaultOption |
                 Should -Be "True"
         }
+
         It -Name "CredentialPath value is maintained" -Test {
             $global:rubrikOptions.ModuleOption.CredentialPath |
                 Should -Be "c:\creds\creds.xml"
         }
+
         It -Name "PrimaryClusterId value is maintained" -Test {
             $global:rubrikOptions.DefaultParameterValue.PrimaryClusterId |
                 Should -Be "11111-22222-33333-44444-55555"
         }
 
-        # restore original options file in event tests are run locally
-        Move-Item -Path $Home\rubrik_sdk_for_powershell_options.json.pester -Destination $Home\rubrik_sdk_for_powershell_options.json -Force
-
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Get-Content -Exactly 2
+        Assert-MockCalled -CommandName Copy-Item -Exactly 1
+        Assert-MockCalled -CommandName Get-HomePath -Exactly 8
     }
-
-
 }
