@@ -66,7 +66,8 @@ Describe -Name 'Public/Set-RubrikNASShare' -Tag 'Public', 'Set-RubrikNASShare' -
         It -Name 'Parameter ID cannot be empty' -Test {
             { Set-RubrikNASShare -Id '' } |
                 Should -Throw "Cannot bind argument to parameter 'id' because it is an empty string."
-        } 
+        }
+        
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 5
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 5
