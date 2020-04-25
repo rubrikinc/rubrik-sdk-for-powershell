@@ -39,7 +39,7 @@ function Set-RubrikNASShare
     [Parameter(ParameterSetName='UserPassword',Mandatory=$true, Position = 2)]
     [SecureString]$Password,
     # Domain for the user
-    [Parameter(ParameterSetName='UserPassword',Mandatory=$true, Position = 3)]
+    [Parameter(ParameterSetName='UserPassword',Mandatory=$false, Position = 3)]
     [SecureString]$Domain,
     # Rubrik server IP or FQDN
     [String]$ExportPoint,
@@ -79,28 +79,31 @@ function Set-RubrikNASShare
     $body = @{}
 
     # Block if credential was specified
-    if ($null -eq $Credential) {
+    if ($Credential) {
       $body.username = $Credential.GetNetworkCredential().UserName
       $body.password = $Credential.GetNetworkCredential().Password
-      if ($null -ne $Credential.GetNetworkCredential().Domain) {
+      if ($Credential.GetNetworkCredential().Domain) {
         $body.domain = $Credential.GetNetworkCredential().Domain
       }
     } 
     
     # Block for username/password combination
-    if ($null -ne $UserName) {
+    if ($UserName) {
       $body.username = $UserName
-    } elseif ($null -ne $Password) {
+    }
+    if ($Password) {
       $body.password = (New-Object PSCredential "user",$Password).GetNetworkCredential().Password
-    } elseif ($null -ne $Domain) {
+    }
+    if ($Domain) {
       $body.domain = $Domain
     } 
     
-    if ($null -ne $ExportPoint) {
+    if ($ExportPoint) {
       $body.exportPoint = $ExportPoint
     }
 
     $body = ConvertTo-Json $body
+    Write-Verbose "Body = $($body|out-string)"
     #endregion
 
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
