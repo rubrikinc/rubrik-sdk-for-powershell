@@ -2753,6 +2753,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.NASShare'
             }
         }
         'Set-RubrikProxySetting'              = @{
