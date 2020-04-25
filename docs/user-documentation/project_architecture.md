@@ -9,6 +9,8 @@ This page contains details on the artifacts found within the repository.
 * Rubrik: The parent folder containing the module
   * Private: Private functions that are used internally by the module
   * Public: Published functions that are available to the PowerShell session
+  * ObjectDefinitions: Custom TypeName view definitions applicable to Rubrik objects
+  * OptionsDefault: Template of module options and default parameters
   * Rubrik.psd1: Module manifest
   * Rubrik.psm1: Script module file
 
