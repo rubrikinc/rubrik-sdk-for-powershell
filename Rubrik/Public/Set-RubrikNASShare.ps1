@@ -22,6 +22,11 @@ function Set-RubrikNASShare
       Get-RubrikNASShare -name 'FOO' | Set-RubrikNASShare -ExportPoint 'TEMP' 
 
       Update the NAS Share FOO with the export point of TEMP.
+
+      .EXAMPLE
+      Get-RubrikNASShare -name 'FOO' | Set-RubrikNASShare -Credential (Get-Credential)
+
+      Update the NAS Share FOO with the credentials specified
   #>
 
   [cmdletbinding(SupportsShouldProcess=$true,DefaultParametersetName='Credential')]
