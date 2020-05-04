@@ -31,17 +31,18 @@ function Set-RubrikAvailabilityGroup
     #Availability Group ID
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    
-    #How often we should backup the transaction log  
-    [Parameter(Mandatory = $true)]
+
+    #How often we should backup the transaction log
+    [Parameter(ParameterSetName='LogOptions')]
     [int]$LogBackupFrequencyInSeconds,
     
     #How long should we keep the backup for
-    [Parameter(Mandatory = $true)]
-    [int]$LogRetentionHours,    
+    [Parameter(ParameterSetName='LogOptions')]
+    [int]$LogRetentionHours,
 
     #Boolean declaration for copy only backups on the database.
-    [switch]$CopyOnly,   
+    [Parameter(ParameterSetName='CopyOnly')]
+    [switch]$CopyOnly,
 
     #SLA Domain Name
     [string]$SLA,
@@ -52,6 +53,7 @@ function Set-RubrikAvailabilityGroup
     
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
+    
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
@@ -100,7 +102,6 @@ function Set-RubrikAvailabilityGroup
     
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-#    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)  
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
