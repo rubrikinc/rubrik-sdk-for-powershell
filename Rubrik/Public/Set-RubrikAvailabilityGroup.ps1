@@ -33,11 +33,11 @@ function Set-RubrikAvailabilityGroup
     [String]$id,
 
     #How often we should backup the transaction log
-    [Parameter(ParameterSetName='LogOptions')]
+    [Parameter(ParameterSetName='LogOptions', Mandatory = $true)]
     [int]$LogBackupFrequencyInSeconds,
     
     #How long should we keep the backup for
-    [Parameter(ParameterSetName='LogOptions')]
+    [Parameter(ParameterSetName='LogOptions', Mandatory = $true)]
     [int]$LogRetentionHours,
 
     #Boolean declaration for copy only backups on the database.
@@ -98,6 +98,7 @@ function Set-RubrikAvailabilityGroup
         if((Get-Variable -Name $p).Value -eq -1){$resources.Body.Remove($p)}
     }     
     $body = ConvertTo-Json $body
+    Write-Verbose "Body: $($body | Out-String)"
     #endregion
     
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
