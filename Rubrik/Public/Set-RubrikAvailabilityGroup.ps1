@@ -33,7 +33,8 @@ function Set-RubrikAvailabilityGroup
     [String]$id,
     
     #How often we should backup the transaction log  
-    [int]$LogBackupFrequencyInSeconds =-1,
+    [Parameter(Mandatory = $true)]
+    [int]$LogBackupFrequencyInSeconds,
     
     #How long should we keep the backup for
     [Parameter(Mandatory = $true)]
