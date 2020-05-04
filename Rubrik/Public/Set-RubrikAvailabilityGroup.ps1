@@ -36,7 +36,8 @@ function Set-RubrikAvailabilityGroup
     [int]$LogBackupFrequencyInSeconds =-1,
     
     #How long should we keep the backup for
-    [int]$LogRetentionHours =-1,    
+    [Parameter(Mandatory = $true)]
+    [int]$LogRetentionHours,    
 
     #Boolean declaration for copy only backups on the database.
     [switch]$CopyOnly,   
