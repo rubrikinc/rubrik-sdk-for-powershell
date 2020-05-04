@@ -61,7 +61,7 @@ Describe -Name 'Public/Set-RubrikAvailabilityGroup' -Tag 'Public', 'Set-RubrikAv
 
         It -Name 'Parameter sets should be enforced' -Test {
             { Set-RubrikAvailabilityGroup -SLA 'Gold' -id 'AG:1111' -CopyOnly -LogBackupFrequencyInSeconds 60 -LogRetentionHours 1 } |
-                Should -Throw 'Parameter set cannot be resolved using the specified named parameters. One or more parameters issued cannot be used together or an insufficient number of parameters were provided.'
+                Should -Throw -ErrorId 'AmbiguousParameterSet,Set-RubrikAvailabilityGroup'
         }
 
         It -Name 'Parameter LogRetentionHours is integer' -Test {
