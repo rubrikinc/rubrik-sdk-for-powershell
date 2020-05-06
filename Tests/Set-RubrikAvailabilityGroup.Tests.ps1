@@ -35,13 +35,19 @@ Describe -Name 'Public/Set-RubrikAvailabilityGroup' -Tag 'Public', 'Set-RubrikAv
                 'copyOnly'                      = 'true'
             }
         }
-        It -Name 'Should return AG1' -Test {
-            (Set-RubrikAvailabilityGroup -SLA 'Gold' -id 'AG:1111' -CopyOnly -LogBackupFrequencyInSeconds 60 -LogRetentionHours 1).Name |
+        It -Name 'Should return Name as value "AG1"' -Test {
+            (Set-RubrikAvailabilityGroup -SLA 'Gold' -id 'AG:1111' -CopyOnly).Name |
                 Should -BeExactly 'AG1'
         }
+
+        It -Name 'Should return correct LogRetentionHours value' -Test {
+            (Set-RubrikAvailabilityGroup -SLA 'Gold' -id 'AG:1111' -LogBackupFrequencyInSeconds 60 -LogRetentionHours 1).logRetentionHours |
+                Should -BeExactly '1'
+        }
+        
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Exactly 2
     }
     Context -Name 'Parameter Validation' {
         It -Name 'Parameter id missing' -Test {
@@ -52,6 +58,12 @@ Describe -Name 'Public/Set-RubrikAvailabilityGroup' -Tag 'Public', 'Set-RubrikAv
             { Set-RubrikAvailabilityGroup -id 'AG1' -LogBackupFrequencyInSeconds 'sixty'  } |
                 Should -Throw "Cannot process argument transformation on parameter 'LogBackupFrequencyInSeconds'."
         }
+
+        It -Name 'Parameter sets should be enforced' -Test {
+            { Set-RubrikAvailabilityGroup -SLA 'Gold' -id 'AG:1111' -CopyOnly -LogBackupFrequencyInSeconds 60 -LogRetentionHours 1 } |
+                Should -Throw -ErrorId 'AmbiguousParameterSet,Set-RubrikAvailabilityGroup'
+        }
+
         It -Name 'Parameter LogRetentionHours is integer' -Test {
             { Set-RubrikAvailabilityGroup -id 'AG1' -LogRetentionHours 'one'  } |
                 Should -Throw "Cannot process argument transformation on parameter 'LogRetentionHours'."
