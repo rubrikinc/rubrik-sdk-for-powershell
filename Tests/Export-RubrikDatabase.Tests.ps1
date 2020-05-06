@@ -37,6 +37,12 @@ Describe -Name 'Public/Export-RubrikDatabase' -Tag 'Public', 'Export-RubrikDatab
                     Should -BeExactly 'QUEUED'
             }
         }
+
+        It -Name 'timestampMs should not be in an array' -Test {
+            $output = ( Export-RubrikDatabase -id MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab -targetInstanceId MssqlInstance:::12345678-1234-abcd-8910-1234567890ab -targetDatabaseName 'ExampleDB1-LM' -recoveryDateTime 'July 2, 2019 7:42:06 PM' ).status 4>&1
+            (-join $output) |
+                Should -Not -BeLike '*[*]*'
+        }
         
         Context -Name 'Parameter Validation' {
             It -Name 'Parameter id must be specified' -Test {
@@ -66,7 +72,7 @@ Describe -Name 'Public/Export-RubrikDatabase' -Tag 'Public', 'Export-RubrikDatab
             }        
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
     }
 }
