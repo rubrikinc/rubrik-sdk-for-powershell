@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Changed how `Set-RubrikNASShare` creates the body object [Issue 614](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/614) and added new unit tests for this function
 * Modified `Set-RubrikAvailabilityGroup` and made `-LogRetentionHours` parameters mandatory while removing default value of -1
 * Modified private function `Set-ObjectTypeName.ps1` to support the new `ApplyCustomViewDefinitions`.
 * Modified module script file `rubrik.psm1` to create options file if it doesn't exist, and update any current options file if it does exist. Also loads any default parameter options into $global:PSDefaultParameterValues
