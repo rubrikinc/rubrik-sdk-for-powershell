@@ -1,12 +1,12 @@
 #requires -Version 3
-function Start-RubrikDownload
+function Get-RubrikDownloadLink
 {
   <#  
       .SYNOPSIS
       Download a file from the Rubrik cluster
 
       .DESCRIPTION
-      The Start-RubrikDownload cmdlet is downlaod files from the Rubrik cluster
+      The Get-RubrikDownloadLink cmdlet is downlaod files from the Rubrik cluster
 
       .NOTES
       Written by Jaap Brasser for community usage
@@ -14,29 +14,21 @@ function Start-RubrikDownload
       GitHub: jaapbrasser
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/start-rubrikdownload
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikdownloadlink
 
       .EXAMPLE
       something something download
   #>
 
-  [CmdletBinding(DefaultParameterSetName = 'Uri')]
+  [CmdletBinding()]
   Param(
-    # The URI to download 
-    [Parameter(
-      ParameterSetName= 'uri',
-      Position = 0
-      Mandatory = $true
-    )]
-    [string] $Uri,
-    # Filter all the events by object type. Enter any of the following values
-    [ValidateSet('VmwareVm', 'Mssql', 'LinuxFileset', 'WindowsFileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle', 'AwsAccount', 'Ec2Instance')]
-    [Parameter(
-      ParameterSetName = "Object",
-      Position = 1
-    )]
-    [string]$ObjectType,
-
+    # The name of the report
+    [Parameter(Mandatory = $true)]
+    [String]$Name,
+    # The template this report is based on
+    [Parameter(Mandatory = $true)]    
+    [ValidateSet('ProtectionTasksDetails','ProtectionTasksSummary','SystemCapacity','SlaComplianceSummary')]
+    [String]$ReportTemplate,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
