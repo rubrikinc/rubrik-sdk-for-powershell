@@ -17,7 +17,7 @@ function Start-RubrikDownload
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/start-rubrikdownload
 
       .EXAMPLE
-      something something download
+      Start-RubrikDownload -Uri https://cluster-b.rubrik.us/download_dir/EVep2PMDpJEAWhIQS6Si.zip
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'Uri')]
@@ -25,12 +25,12 @@ function Start-RubrikDownload
     # The URI to download 
     [Parameter(
       ParameterSetName= 'uri',
-      Position = 0
+      Position = 0,
       Mandatory = $true
     )]
     [string] $Uri,
     # Filter all the events by object type. Enter any of the following values
-    [ValidateSet('VmwareVm', 'Mssql', 'LinuxFileset', 'WindowsFileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle', 'AwsAccount', 'Ec2Instance')]
+    [ValidateSet('VmwareVm', 'Mssql', 'Fileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle')]
     [Parameter(
       ParameterSetName = "Object",
       Position = 1
@@ -48,6 +48,19 @@ function Start-RubrikDownload
   }
 
   Process {
+    if ($uri) {
+      if (Test-PowerShellSix) {
+        Invoke-WebRequest -Uri $Uri -SkipCertificateCheck -OutFile (Split-Path -Path $uri -Leaf)
+      } else {
+        Invoke-WebRequest -Uri $Uri -OutFile (Split-Path -Path $uri -Leaf)
+      }
+    }
+
+    $TimeStamp = Get-Date
+    $SnapshotID = (Get-RubrikFileSet -HostName AFS.Rubrik.us -Verbose | Get-RubrikSnapshot -Latest).id
+    $DLLink = Invoke-RubrikRESTCall -Method Post -api internal -Endpoint "fileset/snapshot/$SnapshotID/download_files" -Body ([pscustomobject]@{sourceDirs=@("/")}) -verbose
+    Get-RubrikEvent -object_ids ($DLLink.links -replace '.*?File_(.*?)_.*','$1') -Limit 1 -AfterDate $TimeStamp
+
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
