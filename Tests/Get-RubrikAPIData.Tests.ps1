@@ -66,7 +66,7 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
         It -Name 'Verify property exists' -Test {
             $functions = ( Get-ChildItem -Path './Rubrik/Public' |
                 Where-Object extension -eq '.ps1').Name.Replace('.ps1','')
-            $ignorelist = @('Invoke-RubrikRESTCall','Move-RubrikMountVMDK','Sync-RubrikAnnotation','Sync-RubrikTag','Get-RubrikObject','Get-RubrikDatabaseRecoveryPoint','Get-RubrikModuleDefaultParameter','Set-RubrikModuleDefaultParameter','Get-RubrikModuleOption','Set-RubrikModuleOption','Remove-RubrikModuleDefaultParameter')
+            $ignorelist = @('Invoke-RubrikRESTCall','Move-RubrikMountVMDK','Sync-RubrikAnnotation','Sync-RubrikTag','Get-RubrikModuleDefaultParameter','Set-RubrikModuleDefaultParameter','Get-RubrikModuleOption','Set-RubrikModuleOption','Remove-RubrikModuleDefaultParameter','Get-RubrikDownloadLink','Start-RubrikDownload')
             $functions = $functions | Where-Object {$ignorelist -notcontains $_}
             $functions | ForEach-Object {
                 (Get-RubrikAPIData -Endpoint $_).Function |
