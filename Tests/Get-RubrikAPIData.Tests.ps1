@@ -19,7 +19,7 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
     }
 
     #Function List
-    $ignorelist = @('Invoke-RubrikRESTCall','Move-RubrikMountVMDK','Sync-RubrikAnnotation','Sync-RubrikTag','Get-RubrikModuleDefaultParameter','Set-RubrikModuleDefaultParameter','Get-RubrikModuleOption','Set-RubrikModuleOption','Remove-RubrikModuleDefaultParameter')
+    $ignorelist = @('Invoke-RubrikRESTCall','Move-RubrikMountVMDK','Sync-RubrikAnnotation','Sync-RubrikTag','Get-RubrikModuleDefaultParameter','Set-RubrikModuleDefaultParameter','Get-RubrikModuleOption','Set-RubrikModuleOption','Remove-RubrikModuleDefaultParameter','Get-RubrikDownloadLink','Start-RubrikDownload')
     $functions = ( Get-ChildItem -Path './Rubrik/Public' | Where-Object extension -eq '.ps1').Name.Replace('.ps1','')
     $functions = $functions | Where-Object {$ignorelist -notcontains $_}
 
