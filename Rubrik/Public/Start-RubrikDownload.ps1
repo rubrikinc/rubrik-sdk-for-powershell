@@ -1,23 +1,34 @@
-#requires -Version 3
 function Start-RubrikDownload
 {
   <#  
-      .SYNOPSIS
-      Download a file from the Rubrik cluster
+    .SYNOPSIS
+    Download a file from the Rubrik cluster
 
-      .DESCRIPTION
-      The Start-RubrikDownload cmdlet is downlaod files from the Rubrik cluster
+    .DESCRIPTION
+    The Start-RubrikDownload cmdlet will download files from the Rubrik cluster, it can either take a uri or a snapshot object paired with a sourceDirs path
 
-      .NOTES
-      Written by Jaap Brasser for community usage
-      Twitter: @jaap_brasser
-      GitHub: jaapbrasser
-      
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/start-rubrikdownload
+    .NOTES
+    Written by Jaap Brasser for community usage
+    Twitter: @jaap_brasser
+    GitHub: jaapbrasser
+    
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/start-rubrikdownload
 
-      .EXAMPLE
-      Start-RubrikDownload -Uri https://cluster-b.rubrik.us/download_dir/EVep2PMDpJEAWhIQS6Si.zip
+    .EXAMPLE
+    Start-RubrikDownload -Uri https://cluster-b.rubrik.us/download_dir/EVep2PMDpJEAWhIQS6Si.zip
+
+    Will download the specified file from the Rubrik cluster
+
+    .EXAMPLE
+    Get-RubrikFileSet -HostName jaap.testhost.us | Get-RubrikSnapshot -Latest | Start-RubrikDownload -Verbose
+
+    Will download the complete set of data from the jaap.testhost.us hostname while displaying verbose information
+
+    .EXAMPLE
+    Get-RubrikFileSet -HostName jaap.testhost.us | Get-RubrikSnapshot -Latest | Start-RubrikDownload -sourceDirs '\test'
+
+    Will only download files and folders located in the root folder 'test' of the selected fileset
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'Uri')]
@@ -26,50 +37,63 @@ function Start-RubrikDownload
     [Parameter(
       ParameterSetName= 'uri',
       Position = 0,
-      Mandatory = $true
+      Mandatory
     )]
     [string] $Uri,
-    # Filter all the events by object type. Enter any of the following values
-    [ValidateSet('VmwareVm', 'Mssql', 'Fileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle')]
+    # The SLA Object that should be downloaded
     [Parameter(
-      ParameterSetName = "Object",
+      ParameterSetName = "pipeline",
+      Position = 0,
+      ValueFromPipeline,
+      Mandatory      
+    )]
+    [PSCustomObject] $SLAObject,
+    # The path where the folder where the zip files should be downloaded to
+    [Parameter(
+      ParameterSetName = "pipeline",
       Position = 1
     )]
-    [string]$ObjectType,
-
-    # Rubrik server IP or FQDN
-    [String]$Server = $global:RubrikConnection.server,
-    # API version
-    [String]$api = $global:RubrikConnection.api
+    [Parameter(
+      ParameterSetName = "uri",
+      Position = 1
+    )]
+    [string] $Path,
+    # Which folders and files should be included, defaults to all "/"
+    [Parameter(
+      ParameterSetName = "pipeline",
+      Position = 1
+    )]
+    [Parameter(
+      ParameterSetName = "uri",
+      Position = 1
+    )]
+    [string[]] $sourceDirs = @('/')
   )
 
-  Begin {
-    
-  }
-
   Process {
-    if ($uri) {
-      if (Test-PowerShellSix) {
-        Invoke-WebRequest -Uri $Uri -SkipCertificateCheck -OutFile (Split-Path -Path $uri -Leaf)
-      } else {
-        Invoke-WebRequest -Uri $Uri -OutFile (Split-Path -Path $uri -Leaf)
+    if ($PSCmdlet.ParameterSetName -eq 'pipeline') {
+      $LinkSplat = @{
+        SlaObject = $SLAObject
+        sourceDirs = $sourceDirs
       }
+      $uri = Get-RubrikDownloadLink @LinkSplat
     }
 
-    $TimeStamp = Get-Date
-    $SnapshotID = (Get-RubrikFileSet -HostName AFS.Rubrik.us -Verbose | Get-RubrikSnapshot -Latest).id
-    $DLLink = Invoke-RubrikRESTCall -Method Post -api internal -Endpoint "fileset/snapshot/$SnapshotID/download_files" -Body ([pscustomobject]@{sourceDirs=@("/")}) -verbose
-    Get-RubrikEvent -object_ids ($DLLink.links -replace '.*?File_(.*?)_.*','$1') -Limit 1 -AfterDate $TimeStamp
+    $WebRequestSplat = @{
+      Uri = $Uri
+    }
 
+    if ($Path) {
+      $WebRequestSplat.OutFile = Join-Path $Path (Split-Path -Path $uri -Leaf)
+    } else {
+      $WebRequestSplat.OutFile = Split-Path -Path $uri -Leaf
+    }
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    Write-Verbose -Message "Download file 'abc' from 'uri'"
-
-    return $result
-
+    if (Test-PowerShellSix) {
+      $WebRequestSplat.SkipCertificateCheck = $true
+      Invoke-WebRequest @WebRequestSplat
+    } else {
+      Invoke-WebRequest @WebRequestSplat
+    }
   } # End of process
 } # End of function
