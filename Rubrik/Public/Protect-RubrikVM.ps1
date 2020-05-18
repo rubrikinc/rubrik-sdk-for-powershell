@@ -56,8 +56,9 @@ function Protect-RubrikVM
     [Alias('configuredSlaDomainId')]
     [String]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$true),
     # Determine the retention settings for the already existing snapshots
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
     [ValidateSet('RetainSnapshots', 'KeepForever', 'ExpireImmediately')]
-    [string] $ExistingSnapshotRetention,
+    [string] $ExistingSnapshotRetention = 'RetainSnapshots',
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
