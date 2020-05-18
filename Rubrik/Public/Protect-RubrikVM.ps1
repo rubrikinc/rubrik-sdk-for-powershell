@@ -4,30 +4,37 @@ function Protect-RubrikVM
   <#
       .SYNOPSIS
       Connects to Rubrik and assigns an SLA to a virtual machine
-            
+
       .DESCRIPTION
       The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster.
       The SLA Domain contains all policy-driven values needed to protect workloads.
       Note that this function requires the virtual machine ID value, not the name of the virtual machine, since virtual machine names are not unique across clusters.
       It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machine to protect, and then pipe the results to Protect-RubrikVM.
       You will be asked to confirm each virtual machine you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
-            
+
       .NOTES
       Written by Chris Wahl for community usage
       Twitter: @ChrisWahl
       GitHub: chriswahl
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvm
-            
+
       .EXAMPLE
       Get-RubrikVM "VM1" | Protect-RubrikVM -SLA 'Gold'
+
       This will assign the Gold SLA Domain to any virtual machine named "VM1"
 
       .EXAMPLE
       Get-RubrikVM "VM1" -SLA Silver | Protect-RubrikVM -SLA 'Gold' -Confirm:$False
+
       This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
       without asking for confirmation
+
+      .EXAMPLE
+      Get-RubrikVM "VM1" -SLA Silver | Protect-RubrikVM -SLA 'Gold' -ExistingSnapshotRetention KeepForever
+
+      This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain keeping existing snapshots forever
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="None")]
@@ -47,7 +54,10 @@ function Protect-RubrikVM
     [Switch]$Inherit,
     # SLA id value
     [Alias('configuredSlaDomainId')]
-    [String]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$true),    
+    [String]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$true),
+    # Determine the retention settings for the already existing snapshots
+    [ValidateSet('RetainSnapshots', 'KeepForever', 'ExpireImmediately')]
+    [string] $ExistingSnapshotRetention,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
