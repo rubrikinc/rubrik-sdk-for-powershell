@@ -50,6 +50,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added new parameter to `Protect-RubrikVM` `-ExistingSnapshotRetention` as requested in [Issue 298](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/298)
 * Added public cmdlets `Get-RubrikModuleOption`,`Set-RubrikModuleOption`,`Get-RubrikModuleDefaultParameter`,`Set-RubrikModuleDefaultParameter`, and `Remove-RubrikModuleDefaultParameter`.  Added Private functions `Set-RubrikDefaultParameterValue.ps1`, `Update-RubrikModuleOption.ps1`, and `Sync-RubrikOptionsFile` to support the creation of customized module options and default parameters as per [Issue 518](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/518)
 * Added public cmdlets `Get-RubrikModuleOption`,`Set-RubrikModuleOption`,`Get-RubrikModuleDefaultParameter`,`Set-RubrikModuleDefaultParameter`, and `Remove-RubrikModuleDefaultParameter`.  Added Private functions `Set-RubrikDefaultParameterValues.ps1`, `Update-RubrikModuleOption.ps1`, and `Sync-RubrikOptionsFile` to support the creation of customized module options and default parameters as per [Issue 518](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/518)
 * Added new private function `Get-RubrikDetailedResult` to replace duplicated -DetailedObject code.
