@@ -30,7 +30,7 @@ function Set-RubrikModuleOption
       This will remove the application of sending default credentials to Connect-Rubrik. Note: It will not remove any generated credential files.
 
       .EXAMPLE
-      Set-RubrikModuleOption -Defaults
+      Set-RubrikModuleOption -Default
       This will reset all Rubrik module options to their default values
 
       .EXAMPLE
