@@ -5,7 +5,7 @@ function Start-RubrikDownload
     Download a file from the Rubrik cluster
 
     .DESCRIPTION
-    The Start-RubrikDownload cmdlet will download files from the Rubrik cluster, it can either take a uri or a snapshot object paired with a sourceDirs path
+    The Start-RubrikDownload cmdlet will download files from the Rubrik cluster, it can either take a uri or a snapshot object paired with a sourceDirs path. Returns the fileobjects
 
     .NOTES
     Written by Jaap Brasser for community usage
@@ -48,7 +48,7 @@ function Start-RubrikDownload
       Mandatory      
     )]
     [PSCustomObject] $SLAObject,
-    # The path where the folder where the zip files should be downloaded to
+    # The path where the folder where the zip files should be downloaded to, if no file extension is specified the file will 
     [Parameter(
       ParameterSetName = "pipeline",
       Position = 1
@@ -83,7 +83,9 @@ function Start-RubrikDownload
       Uri = $Uri
     }
 
-    if ($Path) {
+    if ($Path -match '\.') {
+      $WebRequestSplat.OutFile = $Path
+    elseif ($Path) {
       $WebRequestSplat.OutFile = Join-Path $Path (Split-Path -Path $uri -Leaf)
     } else {
       $WebRequestSplat.OutFile = Split-Path -Path $uri -Leaf
@@ -95,5 +97,7 @@ function Start-RubrikDownload
     } else {
       Invoke-WebRequest @WebRequestSplat
     }
+
+    return Get-Item $WebRequestSplat.OutFile
   } # End of process
 } # End of function
