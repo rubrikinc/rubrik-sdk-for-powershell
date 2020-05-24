@@ -35,6 +35,11 @@ Describe -Name 'Public/Update-RubrikModuleOption' -Tag 'Public', 'Update-RubrikM
         Mock -CommandName Sync-RubrikOptionsFile -ModuleName 'Rubrik' -MockWith {
             return $global:rubrikOptions
         }
+
+        Mock -CommandName Get-HomePath -Verifiable -MockWith {
+            'TestDrive:\'
+        }
+
         It -Name "ApplyCustomViewDefinitions should remain true" -Test {
             Update-RubrikModuleOption -Sync
             $global:rubrikOptions.ModuleOption.ApplyCustomViewDefinitions |
@@ -51,6 +56,10 @@ Describe -Name 'Public/Update-RubrikModuleOption' -Tag 'Public', 'Update-RubrikM
         Mock -CommandName Sync-RubrikOptionsFile -ModuleName 'Rubrik' -MockWith {
             return $global:rubrikOptions
         }
+        Mock -CommandName Get-HomePath -Verifiable -MockWith {
+            'TestDrive:\'
+        }
+
         It -Name "PrimaryClusterId should remain 11111" -Test {
             Update-RubrikModuleOption -Sync
             $global:rubrikOptions.DefaultParameterValue.PrimaryClusterId |
