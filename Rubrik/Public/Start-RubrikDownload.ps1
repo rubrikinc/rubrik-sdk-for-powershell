@@ -18,7 +18,17 @@ function Start-RubrikDownload
     .EXAMPLE
     Start-RubrikDownload -Uri https://cluster-b.rubrik.us/download_dir/EVep2PMDpJEAWhIQS6Si.zip
 
-    Will download the specified file from the Rubrik cluster
+    Will download the specified file from the Rubrik cluster to the current folder
+
+    .EXAMPLE
+    Start-RubrikDownload -Uri https://cluster-b.rubrik.us/download_dir/EVep2PMDpJEAWhIQS6Si.zip -Path /Temp
+
+    Will download the specified file from the Rubrik cluster to the 'Temp' folder
+
+    .EXAMPLE
+    Start-RubrikDownload -Uri https://cluster-b.rubrik.us/download_dir/EVep2PMDpJEAWhIQS6Si.zip -Path "/Temp/MyImportedFileSet.zip"
+
+    Will download the specified file from the Rubrik cluster to the 'Temp' folder with the 'MyImportedFileSet.zip' filename
 
     .EXAMPLE
     Get-RubrikFileSet -HostName jaap.testhost.us | Get-RubrikSnapshot -Latest | Start-RubrikDownload -Verbose
