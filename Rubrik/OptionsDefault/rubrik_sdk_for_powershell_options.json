@@ -2,6 +2,7 @@
   "DefaultParameterValue":  {},
   "ModuleOption":  {
     "ApplyCustomViewDefinitions":  "True",
-    "CredentialPath": ""
+    "CredentialPath": "",
+    "DefaultWebRequestTimeOut": 15
   }
 }
