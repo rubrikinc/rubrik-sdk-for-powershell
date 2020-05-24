@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Changed how `Set-RubrikNASShare` creates the body object [Issue 614](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/614) and added new unit tests for this function
 * Modified `Set-RubrikAvailabilityGroup` and made `-LogRetentionHours` parameters mandatory while removing default value of -1
 * Modified private function `Set-ObjectTypeName.ps1` to support the new `ApplyCustomViewDefinitions`.
 * Modified module script file `rubrik.psm1` to create options file if it doesn't exist, and update any current options file if it does exist. Also loads any default parameter options into $global:PSDefaultParameterValues
@@ -49,7 +50,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* Added two new public cmdlets `Get-RubrikDownloadLink` and `Start-RubrikDownload` to manage downloads of snapshots or partial snapshots from the Rubrik Cluster [Issue 624](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/624)
 * Added public cmdlets `Get-RubrikModuleOption`,`Set-RubrikModuleOption`,`Get-RubrikModuleDefaultParameter`,`Set-RubrikModuleDefaultParameter`, and `Remove-RubrikModuleDefaultParameter`.  Added Private functions `Set-RubrikDefaultParameterValue.ps1`, `Update-RubrikModuleOption.ps1`, and `Sync-RubrikOptionsFile` to support the creation of customized module options and default parameters as per [Issue 518](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/518)
 * Added public cmdlets `Get-RubrikModuleOption`,`Set-RubrikModuleOption`,`Get-RubrikModuleDefaultParameter`,`Set-RubrikModuleDefaultParameter`, and `Remove-RubrikModuleDefaultParameter`.  Added Private functions `Set-RubrikDefaultParameterValues.ps1`, `Update-RubrikModuleOption.ps1`, and `Sync-RubrikOptionsFile` to support the creation of customized module options and default parameters as per [Issue 518](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/518)
 * Added new private function `Get-RubrikDetailedResult` to replace duplicated -DetailedObject code.
