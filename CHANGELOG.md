@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Private function `Invoke-RubrikWebRequest` now correctly uses the `DefaultWebRequestTimeOut` default module option. Default is set to 15 seconds, but can be changed [Issue 216](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/216)
 * Changed how `Set-RubrikNASShare` creates the body object [Issue 614](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/614) and added new unit tests for this function
 * Modified `Set-RubrikAvailabilityGroup` and made `-LogRetentionHours` parameters mandatory while removing default value of -1
 * Modified private function `Set-ObjectTypeName.ps1` to support the new `ApplyCustomViewDefinitions`.
@@ -66,6 +67,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* Fixed `Set-RubrikModuleOption`, it could not set module defaults, now it can
 * Fixed incorrect array in body of `Restore-RubrikDatabase` and added tests to validate new behavior in `Restore-RubrikDatabase.Tests`
 * Fixed incorrect array in body of `Export-RubrikDatabase` and added tests to validate new behavior in `Export-RubrikDatabase.Tests`
 * Fixed incorrect array in body of `New-RubrikDatabaseMount` and added tests to validate new behavior in `New-RubrikDatabaseMount.Tests`
