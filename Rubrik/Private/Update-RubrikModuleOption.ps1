@@ -1,23 +1,23 @@
 ﻿function Update-RubrikModuleOption([string]$OptionType,[string]$OptionName,[string]$OptionValue,[string]$Action) {
-    <#
-      .SYNOPSIS
-      Retrieves the default parameter values and applies them globally
+<#
+    .SYNOPSIS
+    Retrieves the default parameter values and applies them globally
 
-      .DESCRIPTION
-      This function will retrieve the default parameter values from the users options file and apply them globally.
+    .DESCRIPTION
+    This function will retrieve the default parameter values from the users options file and apply them globally.
 
-      .PARAMETER OptionType
-      Type of module option to set (ModuleOption or DefaultParameterValue)
+    .PARAMETER OptionType
+    Type of module option to set (ModuleOption or DefaultParameterValue)
 
-      .PARAMETER OptionName
-      Option name to modify
+    .PARAMETER OptionName
+    Option name to modify
 
-      .PARAMETER OptionValue
-      Option Value to modify
+    .PARAMETER OptionValue
+    Option Value to modify
 
-      .PARAMETER Action
-      Action to take (AddUpdate, Remove, Defaults, Sync)
-    #>
+    .PARAMETER Action
+    Action to take (AddUpdate, Remove, Defaults, Sync)
+#>
 
     # Action of Sync is applies to both ModuleOption and DefaultParameterValue.
     # If sync is called, execute and return
@@ -55,24 +55,22 @@
                             # If value is already set, reconfigure it
                             Write-Verbose -Message "Updating PSDefaultParameterValues for Connect-Rubrik:Credential"
                             $Global:PSDefaultParameterValues."Connect-Rubrik:Credential" = (Import-CliXml -Path $OptionValue)
-                        }
-                        else {
+                        } else {
                             # Otherwise add it
                             Write-Verbose -Message "Adding PSDefaultParameterValue for Connect-Rubrik:Credential"
                             $Global:PSDefaultParameterValues.Add("Connect-Rubrik:Credential",(Import-CliXml -Path $OptionValue))
                         }
-                    }
-                    elseif ("" -eq $OptionValue) {
+                    } elseif ("" -eq $OptionValue) {
                         # Remove from DefaultParameterValues
                         Write-Verbose -Message "Removing PSDefaultParameterValue for Connect-Rubrik:Credential"
                         if ($Global:PSDefaultParameterValues.Contains("Connect-Rubrik:Credential") ) {
                             $Global:PSDefaultParameterValues.Remove("Connect-Rubrik:Credential")
                         }
-                    }
-                    else {
+                    } else {
                         Throw "$OptionValue does not appear to be a valid credential path"
                     }
                 }
+
                 # Set value in global variable
                 Write-Verbose -Message "Setting $OptionName to $OptionValue in global options"
                 $global:rubrikOptions.ModuleOption.$OptionName = $OptionValue
@@ -91,17 +89,17 @@
                 if ($Global:rubrikOptions.DefaultParameterValue.PSObject.Properties[$OptionName]) {
                     Write-Verbose -Message "Default Parmater $OptionName exists, updating value to $OptionValue"
                     $global:rubrikOptions.DefaultParameterValue.$OptionName = $OptionValue
-                  }
-                  else {
-                      Write-Verbose -Message "Default Parameter $OptionName not found, creating and setting value to $OptionValue"
-                    $global:rubrikOptions.DefaultParameterValue | Add-Member -NotePropertyName $OptionName -NotePropertyValue $OptionValue
-                  }
-                  # Write options back to file.
-                  Write-Verbose -Message "Syncing global options back to $Home\rubrik_sdk_for_powershell_options.json"
-                  $global:rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
-                  # Set newly defined values globally.
-                  Write-Verbose -Message "Syncing desired Default Parameters to global PSDefaultParameters"
-                  Set-RubrikDefaultParameterValue
+                } else {
+                    Write-Verbose -Message "Default Parameter $OptionName not found, creating and setting value to $OptionValue"
+                $global:rubrikOptions.DefaultParameterValue | Add-Member -NotePropertyName $OptionName -NotePropertyValue $OptionValue
+                }
+
+                # Write options back to file.
+                Write-Verbose -Message "Syncing global options back to $Home\rubrik_sdk_for_powershell_options.json"
+                $global:rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
+                # Set newly defined values globally.
+                Write-Verbose -Message "Syncing desired Default Parameters to global PSDefaultParameters"
+                Set-RubrikDefaultParameterValue
             }
             "RemoveSingle" {
                 if ($global:rubrikOptions.DefaultParameterValue.PSObject.Properties[$OptionName]) {
@@ -110,6 +108,7 @@
                     Write-Verbose -Message "Removing *Rubrik*:$($OptionName) from PSDefaultParameters"
                     $global:PSDefaultParameterValues.Remove("*Rubrik*:$OptionName")
                 }
+
                 # Write options back to file.
                 Write-Verbose -Message "Syncing global options back to $Home\rubrik_sdk_for_powershell_options.json"
                 $global:rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
@@ -124,6 +123,7 @@
                     Write-Verbose -Message "Removing *Rubrik*:$($_.Name) from PSDefaultParameters"
                     $global:PSDefaultParameterValues.Remove("*Rubrik*:$($_.Name)")
                 }
+
                 # Write options back to file.
                 Write-Verbose -Message "Syncing global options back to $Home\rubrik_sdk_for_powershell_options.json"
                 $global:rubrikOptions | ConvertTo-Json | Out-File $Home\rubrik_sdk_for_powershell_options.json
