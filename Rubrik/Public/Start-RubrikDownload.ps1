@@ -85,7 +85,7 @@ function Start-RubrikDownload
 
     if ($Path -match '\.') {
       $WebRequestSplat.OutFile = $Path
-    elseif ($Path) {
+    } elseif ($Path) {
       $WebRequestSplat.OutFile = Join-Path $Path (Split-Path -Path $uri -Leaf)
     } else {
       $WebRequestSplat.OutFile = Split-Path -Path $uri -Leaf
