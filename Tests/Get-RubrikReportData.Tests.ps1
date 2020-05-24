@@ -22,11 +22,12 @@ Describe -Name 'Public/Get-RubrikReportData' -Tag 'Public', 'Get-RubrikReportDat
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}    
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
+            [pscustomobject]@{ 
                 'columns'               = @('TaskStatus','TaskType','ObjectId','ObjectName')
                 'cursor'                = '1111-2222-3333'
                 'reportTemplate'        = 'ProtectionTaskDetails'
-                'datagrid'              = @('OracleDatabase','Backup','11111','OracleHR')  
+                'datagrid'              = @('OracleDatabase','Backup','11111','OracleHR')
+                'hasmore'               = $false
             }
         }
         It -Name 'Returns reportTemplate' -Test {
