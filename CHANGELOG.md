@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Added new property to `Get-RubrikReportData` : `DataGridObject` which returns the datagrid results as PowerShell custom objects [Issue 549](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/549)
 * Changed how `Set-RubrikNASShare` creates the body object [Issue 614](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/614) and added new unit tests for this function
 * Modified `Set-RubrikAvailabilityGroup` and made `-LogRetentionHours` parameters mandatory while removing default value of -1
 * Modified private function `Set-ObjectTypeName.ps1` to support the new `ApplyCustomViewDefinitions`.
