@@ -120,6 +120,23 @@ function Get-RubrikReportData {
     }
     $result.hasMore = 'false'
 
+    $result = $result | Select-Object -Property *,@{
+      name = 'DatagridObject'
+      expression = {
+        $result.datagrid | ForEach-Object {
+          $_ | ForEach-Object -Begin {
+              $Count = 0
+              $HashProps = [ordered]@{}
+          } -Process {
+              $HashProps.$($result.columns[$Count]) = $_
+              $Count++
+          } -End {
+              [pscustomobject]$HashProps
+          }
+        }
+      }
+    }
+
     return $result
 
   } # End of process
