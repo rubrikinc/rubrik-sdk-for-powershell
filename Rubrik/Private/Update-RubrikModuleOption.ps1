@@ -35,7 +35,7 @@
                 Write-Verbose -Message "Reseting all Module Options to default values"
                 # remove all ModuleOptions from global variable and userfile
                 $global:rubrikoptions.ModuleOption.psobject.properties | ForEach-Object {$global:rubrikOptions.ModuleOption.psobject.properties.remove($_.Name)}
-                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath $(Get-HomePath)\rubrik_sdk_for_powershell_options.json
+                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath "$(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
                 # run sync to recreate them from template
                 $global:rubrikOptions = Sync-RubrikOptionsFile
                 # Remove Credential from PSDefaultParameterValues if it exists as CredentialFiles default is null
@@ -76,7 +76,7 @@
                 $global:rubrikOptions.ModuleOption.$OptionName = $OptionValue
                 # overwrite options file with global information
                 Write-Verbose -Message "Exporting global options to $(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
-                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath $(Get-HomePath)\rubrik_sdk_for_powershell_options.json
+                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath "$(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
             }
             Default {
                 Throw "Invalid Action specified"
@@ -96,7 +96,7 @@
 
                 # Write options back to file.
                 Write-Verbose -Message "Syncing global options back to $(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
-                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath $(Get-HomePath)\rubrik_sdk_for_powershell_options.json
+                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath "$(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
                 # Set newly defined values globally.
                 Write-Verbose -Message "Syncing desired Default Parameters to global PSDefaultParameters"
                 Set-RubrikDefaultParameterValue
@@ -111,7 +111,7 @@
 
                 # Write options back to file.
                 Write-Verbose -Message "Syncing global options back to $(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
-                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath $(Get-HomePath)\rubrik_sdk_for_powershell_options.json
+                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath "$(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
                 # Set newly defined values globally.
                 Write-Verbose -Message "Syncing desired Default Parameters to global PSDefaultParameters"
                 Set-RubrikDefaultParameterValue
@@ -126,7 +126,7 @@
 
                 # Write options back to file.
                 Write-Verbose -Message "Syncing global options back to $(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
-                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath $(Get-HomePath)\rubrik_sdk_for_powershell_options.json
+                $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath "$(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
                 # Set newly defined values globally.
                 Write-Verbose -Message "Syncing desired Default Parameters to global PSDefaultParameters"
                 Set-RubrikDefaultParameterValue
