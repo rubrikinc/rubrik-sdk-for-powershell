@@ -66,6 +66,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* Added error handling for cases where Add-Type in `Unblock-SelfSignedCert` fails. `-Debug` switch can be used to determine root cause of failure. [Issue 613](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/613)
 * Fixed incorrect array in body of `Restore-RubrikDatabase` and added tests to validate new behavior in `Restore-RubrikDatabase.Tests`
 * Fixed incorrect array in body of `Export-RubrikDatabase` and added tests to validate new behavior in `Export-RubrikDatabase.Tests`
 * Fixed incorrect array in body of `New-RubrikDatabaseMount` and added tests to validate new behavior in `New-RubrikDatabaseMount.Tests`
