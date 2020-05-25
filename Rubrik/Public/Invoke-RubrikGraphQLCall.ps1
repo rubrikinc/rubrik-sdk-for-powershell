@@ -30,6 +30,12 @@ Invoke-RubrikGraphQLCall -ReturnJSON -Verbose -Body '{"query":"query{\r\n  vmwar
 Returns Jaap's Windows VM on the local Rubrik cluster as a JSON string, while displaying Verbose information
 
 .EXAMPLE
+Invoke-RubrikGraphQLCall -ReturnNode -Body '{"query":"query ( $name: String) {\nvmwareVirtualMachineConnection(name: $name, primaryClusterId: \"local\") {\n  edges {\nnode {\n  name,\n  id,\n  primaryClusterId,\n  configuredSlaDomainId\n}\n  }\n}\r\n}",
+    "variables":{"name":"jbrasser-lin"}}'
+
+Returns Jaap's Linux VM on the local Rubrik cluster as the VM Object, using a variable as input for vmwareVirtualMachineConnection 
+
+.EXAMPLE
 Invoke-RubrikGraphQLCall -ReturnNode -Body '{"query":"query{\r\n  vmwareVirtualMachineConnection{\nedges {\n  node {\nhostId\neffectiveSlaDomain {\nid\nname\n}\nprimaryClusterId\nconfiguredSlaDomainId\nid\nvmwareToolsInstalled\nisRelic\nname\nvcenterId\nfolderPath {\nid\nname\n}\ninfraPath {\nid\nname\n}\nagentStatus {\nagentStatus\ndisconnectReason\n}\nhostName\nclusterName\n  }\n}\r\n  }\r\n}","variables":{}}'
 
 Returns all VMware VMs on the Rubrik Cluster and displays the individual objects by using the -ReturnNode parameter
