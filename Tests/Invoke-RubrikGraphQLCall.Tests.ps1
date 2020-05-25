@@ -79,7 +79,7 @@ Describe -Name 'Public/Invoke-RubrikGraphQLCall' -Tag 'Public', 'Invoke-RubrikGr
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
         Assert-MockCalled -CommandName Invoke-WebRequest -ModuleName 'Rubrik' -Exactly 2
     }
-    Context -Name 'Parameter Validation' { 
+    Context -Name 'Parameter Validation' {
         It -Name 'Body cannot be null or empty' -Test {
             { Invoke-RubrikGraphQLCall -Body $null } |
                 Should -Throw "Cannot validate argument on parameter 'Body'."
@@ -95,6 +95,10 @@ Describe -Name 'Public/Invoke-RubrikGraphQLCall' -Tag 'Public', 'Invoke-RubrikGr
         It -Name 'Cannot specify same param twice' -Test {
             { Invoke-RubrikGraphQLCall -ReturnJSON -ReturnJSON -Body 'query' } |
                 Should -Throw "Cannot bind parameter because parameter 'ReturnJSON' is specified more than once. To provide multiple values to parameters that can accept multiple values, use the array syntax. For example, ""-parameter value1,value2,value3""."
-        }  
+        }
+        It -Name 'Cannot use both ReturnJSON and ReturnNode parameters' -Test {
+            { Invoke-RubrikGraphQLCall -ReturnJSON -ReturnNode -Body 'query'} |
+                Should -Throw
+        }
     }
 }
