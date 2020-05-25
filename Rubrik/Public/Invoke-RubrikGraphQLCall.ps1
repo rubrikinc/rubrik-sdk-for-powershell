@@ -38,10 +38,29 @@ Returns informations on Rubrik Organizations, filtered by name in ascending orde
     [cmdletbinding()]
     Param (
         #Hash table body to pass to API call
-        [Parameter(Mandatory = $false,HelpMessage = 'REST Content')]
+        [Parameter(
+            Mandatory,
+            ParameterSetName='JSON'
+        )]
+        [Parameter(
+            Mandatory,
+            ParameterSetName='Node'
+        )]
+        [Parameter(
+            Mandatory,
+            ParameterSetName='Default'
+        )]
         [ValidateNotNullorEmpty()]
         [string]$Body,
+        [Parameter(
+            Mandatory,
+            ParameterSetName='JSON'
+        )]
         [switch]$ReturnJSON,
+        [Parameter(
+            Mandatory,
+            ParameterSetName='Node'
+        )]
         [switch]$ReturnNode,
         # Rubrik server IP or FQDN
         [String]$Server = $global:RubrikConnection.server,
