@@ -42,7 +42,7 @@ Returns informations on Rubrik Organizations, filtered by name in ascending orde
     
     [cmdletbinding()]
     Param (
-        #Hash table body to pass to API call
+        # GraphQL Body to send to GraphQL endpoint
         [Parameter(
             Mandatory,
             ParameterSetName='JSON'
@@ -57,11 +57,13 @@ Returns informations on Rubrik Organizations, filtered by name in ascending orde
         )]
         [ValidateNotNullorEmpty()]
         [string]$Body,
+        # Return the JSON object instead of converting it to PowerShell custom objects
         [Parameter(
             Mandatory,
             ParameterSetName='JSON'
         )]
         [switch]$ReturnJSON,
+        # Return the objects in the Node(s) property rather than returning the output as a single custom Object
         [Parameter(
             Mandatory,
             ParameterSetName='Node'
