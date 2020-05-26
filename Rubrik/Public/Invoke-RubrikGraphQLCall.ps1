@@ -118,7 +118,7 @@ Returns informations on Rubrik Organizations, filtered by name in ascending orde
                         $result = Invoke-WebRequest -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @WebSplat |
                             Select-Object -ExpandProperty Content
                     } else {
-                        $result = Invoke-WebRequest @WebSplat 
+                        $result = Invoke-WebRequest @WebSplat |
                             Select-Object -ExpandProperty Content
                     }
                 }

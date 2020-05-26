@@ -64,7 +64,7 @@ Describe -Name 'Public/Invoke-RubrikGraphQLCall' -Tag 'Public', 'Invoke-RubrikGr
                 Should -BeExactly 3
         }
 
-        It -Name 'Request with -ReturnJSON should be a string' -Test {
+        It -Name 'Request with -ReturnJSON should return a JSON string' -Test {
             ( Invoke-RubrikGraphQLCall -ReturnJSON -Body 'query') |
                 Should -BeOfType 'String'
         }
