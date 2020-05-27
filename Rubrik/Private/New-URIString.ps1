@@ -17,6 +17,13 @@
     An id value to be planted into the path or optionally at the end of the URI to retrieve a single object
   #>
 
+  # Validation of id param
+  if ($id -match '^@\{') {
+    Write-Error -Message "Please validate ID input, please only input the ID parameter the object: '$id'" -ErrorAction Stop
+  } elseif ($id.Length -gt 100) {
+    Write-Error -Message "Please validate ID input, invalid ID provided: '$id'" -ErrorAction Stop
+  }
+
   Write-Verbose -Message 'Build the URI'
   # If we find {id} in the path, replace it with the $id value  
   if ($endpoint.Contains('{id}')) {
