@@ -15,7 +15,7 @@ if (6 -le $PSVersionTable.PSVersion.Major) {
     $TestResult = Invoke-Pester @PesterSplat
 }
 
-if ($TestResult.FailedCount -gt 0) {
+if (($TestResult.FailedCount -gt 0) -or ($null -eq $TestResult)) {
     exit 1
 } else {
     "We're happy little campers"
