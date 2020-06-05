@@ -1,4 +1,4 @@
-Install-Module -Name Pester -RequiredVersion 4.10.1
+Install-Module -Name Pester -RequiredVersion 4.10.1 -Force
 
 $PesterSplat = @{
     PassThru = $true
