@@ -1,6 +1,6 @@
 #requires -Version 3
 function Get-RubrikReportData {
-  <#  
+  <#
       .SYNOPSIS
       Retrieve table data for a specific Envision report
 
@@ -30,12 +30,16 @@ function Get-RubrikReportData {
       .EXAMPLE
       Get-RubrikReport -Name 'Object Protection Summary' | Get-RubrikReportData -Limit -1
       This will return all of the table data from the "Object Protection Summary" report. Note: Using '-Limit -1' may affect performance for reports containing large amounts of data.
+
+      .EXAMPLE
+      (Get-RubrikReport -Name "System Capacity" | Get-RubrikReportData).DatagridObject | Format-Table
+      This will return a human readable table view of the items within the System Capacity report.
   #>
 
   [CmdletBinding()]
   Param(
     # The ID of the report
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]    
+    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # Search table data by object name
     [Alias('search_value')]
@@ -52,7 +56,7 @@ function Get-RubrikReportData {
     # Filter table data on compliance status
     [Alias('compliance_status')]
     [ValidateSet('InCompliance','NonCompliance')]
-    [String]$ComplianceStatus,  
+    [String]$ComplianceStatus,
     #limit the number of rows returned, defaults to maximum pageSize of 9999. Use a value of '-1' to remove limit restrictions
     [int]$limit,
     #cursor start (if necessary)
@@ -67,20 +71,20 @@ function Get-RubrikReportData {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
     # Set limit to default of 9999 if not set, both limit and psboundparameters are set, this is because New-BodyString builds the query using both variables
     if ($null -eq $PSBoundParameters.limit) {
       $PSBoundParameters.Add('limit',9999) | Out-Null
@@ -92,24 +96,24 @@ function Get-RubrikReportData {
       $limit = 150
       $returnAll = $true
     }
-    
+
   }
 
   Process {
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body 
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
 
     # if limit has been set to -1
     if ($returnAll -and $result.hasMore -eq 'true') {
       # duplicate response to save initial returned data
       $nextresult = $result
       $PSBoundParameters.Add('cursor',$nextresult.cursor)
-      
+
       Write-Verbose -Message "Result limits hit. Retrieving remaining data based on pagination"
-      $result.dataGrid += 
+      $result.dataGrid +=
         do {
           $cursor = $nextresult.cursor
           $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
@@ -119,6 +123,23 @@ function Get-RubrikReportData {
         } while ($nextresult.hasMore -eq 'true')
     }
     $result.hasMore = 'false'
+
+    $result = $result | Select-Object -Property *,@{
+      name = 'DatagridObject'
+      expression = {
+        $result.datagrid | ForEach-Object {
+          $_ | ForEach-Object -Begin {
+              $Count = 0
+              $HashProps = [ordered]@{}
+          } -Process {
+              $HashProps.$($result.columns[$Count]) = $_
+              $Count++
+          } -End {
+              [pscustomobject]$HashProps
+          }
+        }
+      }
+    }
 
     return $result
 
