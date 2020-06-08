@@ -100,5 +100,9 @@ Describe -Name 'Public/Protect-RubrikVM' -Tag 'Public', 'Protect-RubrikVM' -Fixt
             { Protect-RubrikVM -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -DoNotProtect -Inherit} |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
+        It -Name 'Should use correct ExistingSnapshotRetention value' -Test {
+            { Protect-RubrikVM -Id VirtualMachine:::1226ff04-6100-454f-905b-5df817b6981a-vm-1025 -DoNotProtect -ExistingSnapshotRetention ThisShouldFail} |
+                Should -Throw 'The argument "ThisShouldFail" does not belong to the set "RetainSnapshots,KeepForever,ExpireImmediately" specified by the ValidateSet attribute. Supply an argument that is in the set and then try the command again.'
+        }
     }
 }

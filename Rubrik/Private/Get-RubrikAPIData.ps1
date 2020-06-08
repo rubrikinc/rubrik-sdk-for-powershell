@@ -2156,7 +2156,8 @@ function Get-RubrikAPIData {
                 URI         = '/api/v1/vmware/vm/{id}'
                 Method      = 'Patch'
                 Body        = @{
-                    configuredSlaDomainId = 'configuredSlaDomainId'
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
                 }
                 Query       = ''
                 Result      = ''
