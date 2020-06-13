@@ -2156,7 +2156,8 @@ function Get-RubrikAPIData {
                 URI         = '/api/v1/vmware/vm/{id}'
                 Method      = 'Patch'
                 Body        = @{
-                    configuredSlaDomainId = 'configuredSlaDomainId'
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
                 }
                 Query       = ''
                 Result      = ''
@@ -2740,7 +2741,7 @@ function Get-RubrikAPIData {
         }
         'Set-RubrikNASShare'              = @{
             '1.0' = @{
-                Description = 'Power given live-mounted vm on/off'
+                Description = 'Change settings of NAS Shares'
                 URI         = '/api/internal/host/share/{id}'
                 Method      = 'Patch'
                 Body        = @{
@@ -2753,6 +2754,7 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '200'
+                ObjectTName = 'Rubrik.NASShare'
             }
         }
         'Set-RubrikProxySetting'              = @{
