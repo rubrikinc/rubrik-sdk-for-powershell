@@ -2,7 +2,7 @@ Remove-Module -Name 'Rubrik' -ErrorAction 'SilentlyContinue'
 Import-Module -Name './Rubrik/Rubrik.psd1' -Force
 
 Describe -Name 'Public/Start-RubrikDownload' -Tag 'Public', 'Start-RubrikDownload' -Fixture {
-    Context -Name 'Convert different date time objects' -Fixture {
+    Context -Name 'Context validate correct processing of function with different parameter sets' -Fixture {
         Mock -CommandName Invoke-WebRequest -ModuleName 'Rubrik' -MockWith {
             if ($Outfile -match '\.') {
                 mkdir -Path (Split-Path $Outfile) -Force | Out-Null

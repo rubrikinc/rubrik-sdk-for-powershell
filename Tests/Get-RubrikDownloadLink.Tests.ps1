@@ -2,7 +2,7 @@ Remove-Module -Name 'Rubrik' -ErrorAction 'SilentlyContinue'
 Import-Module -Name './Rubrik/Rubrik.psd1' -Force
 
 Describe -Name 'Public/Get-RubrikDownloadLink' -Tag 'Public', 'Get-RubrikDownloadLink' -Fixture {
-    Context -Name 'Convert different date time objects' -Fixture {
+    Context -Name 'Validate correct processing of function' -Fixture {
         Mock -CommandName Submit-Request -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Get-RubrikEvent -ModuleName 'Rubrik' -MockWith {
             [pscustomobject]@{
@@ -18,7 +18,7 @@ Describe -Name 'Public/Get-RubrikDownloadLink' -Tag 'Public', 'Get-RubrikDownloa
         }
 
         It -Name "Should return the correctly formatted download link based on input" -Test {
-            Get-RubrikDownloadLink -SLAObject ([pscustomobject]@{sourceObjectType='test'}) -sourceDirs '\test' |
+            Get-RubrikDownloadLink -Server 'test-server' -SLAObject ([pscustomobject]@{sourceObjectType='test'}) -sourceDirs '\test' |
                 Should -Be 'https://test-server/download_dir/ASDFASDF'
         }
 
