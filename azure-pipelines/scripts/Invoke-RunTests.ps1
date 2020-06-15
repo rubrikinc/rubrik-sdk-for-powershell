@@ -1,4 +1,4 @@
-Install-Module -Name Pester -Force
+Install-Module -Name Pester -RequiredVersion 4.10.1 -Force
 
 $PesterSplat = @{
     PassThru = $true
@@ -15,8 +15,8 @@ if (6 -le $PSVersionTable.PSVersion.Major) {
     $TestResult = Invoke-Pester @PesterSplat
 }
 
-if ($TestResult.FailedCount -gt 0) {
+if (($TestResult.FailedCount -gt 0) -or ($null -eq $TestResult)) {
     exit 1
 } else {
-    "We're happy little campers"
+    "`nWe're happy little campers"
 }

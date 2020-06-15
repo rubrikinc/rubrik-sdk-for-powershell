@@ -1,7 +1,7 @@
 #requires -Version 3
 function New-RubrikReport
 {
-  <#  
+  <#
       .SYNOPSIS
       Create a new report by specifying one of the report templates
 
@@ -27,8 +27,8 @@ function New-RubrikReport
     [Parameter(Mandatory = $true)]
     [String]$Name,
     # The template this report is based on
-    [Parameter(Mandatory = $true)]    
-    [ValidateSet('ProtectionTasksDetails','ProtectionTasksSummary','SystemCapacity','SlaComplianceSummary')]
+    [Parameter(Mandatory = $true)]
+    [ValidateSet('CapacityOverTime', 'ObjectProtectionSummary', 'ObjectTaskSummary', 'ObjectIndexingSummary', 'ProtectionTasksDetails', 'ProtectionTasksSummary', 'RecoveryTasksDetails', 'SlaComplianceSummary', 'SystemCapacity')]
     [String]$ReportTemplate,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
