@@ -3,7 +3,13 @@ Import-Module -Name './Rubrik/Rubrik.psd1' -Force
 
 Describe -Name 'Public/Get-RubrikDownloadLink' -Tag 'Public', 'Get-RubrikDownloadLink' -Fixture {
     Context -Name 'Validate correct processing of function' -Fixture {
-        Mock -CommandName Submit-Request -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Submit-Request -ModuleName 'Rubrik' -MockWith {
+            [pscustomobject]@{
+                EventInfo = 'Download link for testtest "download_dir/ASDFASDF" testtest'
+                Links = 'Thisshouldbefiltered***File_ValidateLink_Thisshouldbefiltered***'
+                Date = (Get-Date).AddHours(-1)
+            }
+        }
         Mock -CommandName Get-RubrikEvent -ModuleName 'Rubrik' -MockWith {
             [pscustomobject]@{
                 EventInfo = 'Download link for testtest "download_dir/ASDFASDF" testtest'
