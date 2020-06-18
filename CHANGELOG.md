@@ -71,6 +71,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* Fixed bugs in `New-RubrikLDAP` and updated documentation and verbose logging [Issue 648](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/648)
 * Azure DevOps issues with Pester v5
 * Added error handling for cases where Add-Type in `Unblock-SelfSignedCert` fails. `-Debug` switch can be used to determine root cause of failure. [Issue 613](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/613)
 * Fixed incorrect array in body of `Restore-RubrikDatabase` and added tests to validate new behavior in `Restore-RubrikDatabase.Tests`
