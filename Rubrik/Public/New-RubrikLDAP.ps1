@@ -61,8 +61,8 @@ function New-RubrikLDAP
     Test-RubrikConnection
 
     # Check to ensure that we have credentials for the LDAP server
-    $BindCredential = Test-RubrikLDAPCredential -BindUserName $BindUserName -BindUserPassword $BindUserPassword -Credential $BindCredential
-    
+    $BindCredential = Test-RubrikLDAPCredential -BindUserName $BindUserName -BindUserPassword $BindUserPassword -BindCredential $BindCredential
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
@@ -88,9 +88,21 @@ function New-RubrikLDAP
     # See this PR for more information: https://github.com/rubrikinc/rubrik-sdk-for-powershell/pull/263
     Write-Verbose 'Passing $BindCredential username and password into the API request'
     $bodyHash = ConvertFrom-Json $body
-    $bodyHash.bindUserName = $BindCredential.UserName
-    $bodyHash.bindUserPassword = $BindCredential.GetNetworkCredential().Password
+    
+    if (-not $bodyHash.bindUserName) {
+      Add-Member -InputObject $bodyhash -MemberType NoteProperty -Name 'bindUserName' -Value $BindCredential.UserName
+    } else {
+      $bodyHash.bindUserName = $BindCredential.UserName
+    }
+
+    if (-not $bodyHash.bindUserPassword) {
+      Add-Member -InputObject $bodyhash -MemberType NoteProperty -Name 'bindUserPassword' -Value $BindCredential.GetNetworkCredential().Password
+    } else {
+      $bodyHash.bindUserPassword = $BindCredential.GetNetworkCredential().Password
+    }
+
     $body = ConvertTo-Json $bodyHash
+    Write-Verbose -Message "Updated Body with credential object = $($body -replace 'bindUserPassword": "(.*?)"','bindUserPassword": "***"')"
     #endregion    
 
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
