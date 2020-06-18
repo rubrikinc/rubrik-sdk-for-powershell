@@ -202,6 +202,7 @@
                    'Get-RubrikVolumeGroup',
                    'Get-RubrikVolumeGroupMount',
                    'Invoke-RubrikRESTCall',
+                   'Invoke-RubrikGraphQLCall',
                    'Move-RubrikMountVMDK',
                    'New-RubrikAPIToken',
                    'New-RubrikBootStrap',
