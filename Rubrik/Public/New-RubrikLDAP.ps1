@@ -16,7 +16,20 @@ function New-RubrikLDAP
             
       .EXAMPLE
       New-RubrikLDAP -Name "Test LDAP Settings" -baseDN "DC=domain,DC=local" -authServers "192.168.1.8"
+
       This will create LDAP settings on the Rubrik cluster defined by Connect-Rubrik function
+
+      .EXAMPLE
+      $credential = Get-Credential
+      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -BaseDN "DC=rubrik,DC=lab" -BindCredential $Credential -Server "ad1.test.lab" -verbose
+
+      This will create LDAP settings using the credentials object provided as a parameter
+
+      .EXAMPLE
+      $SecPw = Read-Host -AsSecureString
+      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -BaseDN "DC=rubrik,DC=lab" -BindUserName jaapjaap -BindUserPassword $SecPw -Server "ad1.test.lab" -verbose
+
+      This will create LDAP settings using the user name and password provided as parameters      
   #>
 
   [cmdletbinding(SupportsShouldProcess=$true,DefaultParametersetName='UserPassword')]
