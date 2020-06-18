@@ -11,7 +11,7 @@
     RootModule = 'Rubrik.psm1'
 
     # Version number of this module.
-    ModuleVersion = '5.0.1'
+    ModuleVersion = '5.0.2'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -343,7 +343,7 @@
             # ReleaseNotes = ''
 
             # Prerelease string of this module
-            Prerelease = 'devel612'
+            Prerelease = 'devel645'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update
             # RequireLicenseAcceptance = $false

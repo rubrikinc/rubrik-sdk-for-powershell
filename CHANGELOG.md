@@ -74,6 +74,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* Fixed bug in New-RubrikLogShipping cmdlets and added additional unit tests [Issue 644](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/644)
 * Fixed `Set-RubrikModuleOption`, it could not set module defaults, now it can
 * Azure DevOps issues with Pester v5
 * Added error handling for cases where Add-Type in `Unblock-SelfSignedCert` fails. `-Debug` switch can be used to determine root cause of failure. [Issue 613](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/613)
