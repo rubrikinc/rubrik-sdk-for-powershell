@@ -17,7 +17,7 @@ https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/refere
 .EXAMPLE
 Invoke-RubrikGraphQLCall -Body '{"query":"{vmwareVcenterTotalCount}"}' -Verbose
 
-Will retrieve the total count of VMware vCenters connected to the Rubrik cluster as a PowerShell object
+Will retrieve the total count of VMware vCenter Servers connected to the Rubrik cluster as a PowerShell object
 
 .EXAMPLE
 Invoke-RubrikGraphQLCall -ReturnJSON -Body '{"query":"query{vms {\nnumProtected\n  numUnprotected\n}}"}'
@@ -27,13 +27,13 @@ Returns the number of protected and unprotected VMware VM objects as a JSON stri
 .EXAMPLE
 Invoke-RubrikGraphQLCall -ReturnJSON -Verbose -Body '{"query":"query{\r\n  vmwareVirtualMachineConnection(name: \"jbrasser-win\", primaryClusterId: \"local\") {\nedges {\n  node {\n name,\n id,\n primaryClusterId,\n configuredSlaDomainId\n  }\n}\r\n  }\r\n}"}'
 
-Returns Jaap's Windows VM on the local Rubrik cluster as a JSON string, while displaying Verbose information
+Returns the 'jbrasser-win' VM on the local Rubrik cluster as a JSON string, while displaying Verbose information
 
 .EXAMPLE
 Invoke-RubrikGraphQLCall -ReturnNode -Body '{"query":"query ( $name: String) {\nvmwareVirtualMachineConnection(name: $name, primaryClusterId: \"local\") {\n  edges {\nnode {\n  name,\n  id,\n  primaryClusterId,\n  configuredSlaDomainId\n}\n  }\n}\r\n}",
     "variables":{"name":"jbrasser-lin"}}'
 
-Returns Jaap's Linux VM on the local Rubrik cluster as the VM Object, using a variable as input for vmwareVirtualMachineConnection 
+Returns the 'jbrasser-lin' VM on the local Rubrik cluster as the VM Object, using a variable as input for vmwareVirtualMachineConnection
 
 .EXAMPLE
 Invoke-RubrikGraphQLCall -ReturnNode -Body '{"query":"query{\r\n  vmwareVirtualMachineConnection{\nedges {\n  node {\nhostId\neffectiveSlaDomain {\nid\nname\n}\nprimaryClusterId\nconfiguredSlaDomainId\nid\nvmwareToolsInstalled\nisRelic\nname\nvcenterId\nfolderPath {\nid\nname\n}\ninfraPath {\nid\nname\n}\nagentStatus {\nagentStatus\ndisconnectReason\n}\nhostName\nclusterName\n  }\n}\r\n  }\r\n}","variables":{}}'
@@ -45,7 +45,7 @@ Invoke-RubrikGraphQLCall -ReturnNode -Body '{"query":"query OrganizationSummary(
 
 Returns informations on Rubrik Organizations, filtered by name in ascending order and only including organizations with 'org' in their name property. Returns the individual organization objects using the -ReturnNode parameter
 #>
-    
+
     [cmdletbinding()]
     Param (
         # GraphQL Body to send to GraphQL endpoint
@@ -94,7 +94,7 @@ Returns informations on Rubrik Organizations, filtered by name in ascending orde
             #construct uri
             [string]$uri = New-URIString -server $Server -endpoint "/api/internal/graphql"
             Write-Verbose -Message "Body = $Body"
-            
+
             if ($ReturnJSON) {
                 $WebSplat = @{
                     Uri = $uri
