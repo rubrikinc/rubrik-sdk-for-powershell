@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Private function `Invoke-RubrikWebRequest` now correctly uses the `DefaultWebRequestTimeOut` default module option. Default is set to 15 seconds, but can be changed [Issue 216](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/216)
+* `Update-RubrikModuleOption` now also uses `Get-HomePath` private function, its unit tests have been updated as well
 * Added new property to `Get-RubrikReportData` : `DataGridObject` which returns the datagrid results as PowerShell custom objects [Issue 549](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/549)
 * `New-URIString` private function now validates `$id` input [Issue 627](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/627)
 * Changed how `Set-RubrikNASShare` creates the body object [Issue 614](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/614) and added new unit tests for this function
@@ -52,6 +54,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added two new public cmdlets `Get-RubrikDownloadLink` and `Start-RubrikDownload` to manage downloads of snapshots or partial snapshots from the Rubrik Cluster [Issue 624](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/624)
+* Added new public cmdlet `Invoke-RubrikGraphQLCall` to provide a way of interacting with the GraphQL endpoint using this module [Issue 637](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/637)
 * Added new parameter to `Protect-RubrikVM` `-ExistingSnapshotRetention` as requested in [Issue 298](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/298)
 * Added additional `ReportTemplate` reports to the validation in `New-RubrikReport` [Issue 628](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/628)
 * Added public cmdlets `Get-RubrikModuleOption`,`Set-RubrikModuleOption`,`Get-RubrikModuleDefaultParameter`,`Set-RubrikModuleDefaultParameter`, and `Remove-RubrikModuleDefaultParameter`.  Added Private functions `Set-RubrikDefaultParameterValue.ps1`, `Update-RubrikModuleOption.ps1`, and `Sync-RubrikOptionsFile` to support the creation of customized module options and default parameters as per [Issue 518](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/518)
@@ -71,6 +75,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 * Fixed bug in New-RubrikLogShipping cmdlets and added additional unit tests [Issue 644](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/644)
+* Fixed `Set-RubrikModuleOption`, it could not set module defaults, now it can
 * Azure DevOps issues with Pester v5
 * Added error handling for cases where Add-Type in `Unblock-SelfSignedCert` fails. `-Debug` switch can be used to determine root cause of failure. [Issue 613](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/613)
 * Fixed incorrect array in body of `Restore-RubrikDatabase` and added tests to validate new behavior in `Restore-RubrikDatabase.Tests`

@@ -32,13 +32,13 @@ Describe -Name 'Public/Set-RubrikModuleOption' -Tag 'Public', 'Set-RubrikModuleO
 
         It -Name "Should throw not found error" -Test {
             {Set-RubrikModuleOption -OptionName 'Test' -OptionValue 'Value' } |
-                Should -Throw "Test doesn't exist in options file"
+                Should -Throw '''OptionName''. The argument "Test" does not belong to the set "ApplyCustomViewDefinitions,CredentialPath,DefaultWebRequestTimeOut" specified by the ValidateSet attribute. Supply an argument that is in the set and then try the command again.'
         }
 
     }
     Context -Name 'Parameter Validation' {
         It -Name "Should throw ParameterSet Error" -Test {
-            { Set-RubrikModuleOption -OptionName 'Test' -Sync } |
+            { Set-RubrikModuleOption -OptionName 'ApplyCustomViewDefinitions' -Sync } |
                 Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
 
