@@ -21,13 +21,13 @@ function New-RubrikLDAP
 
       .EXAMPLE
       $credential = Get-Credential
-      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -BaseDN "DC=rubrik,DC=lab" -BindCredential $Credential -Server "ad1.test.lab" -verbose
+      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -BaseDN "DC=rubrik,DC=lab" -BindCredential $Credential -Verbose
 
       This will create LDAP settings using the credentials object provided as a parameter
 
       .EXAMPLE
       $SecPw = Read-Host -AsSecureString
-      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -BaseDN "DC=rubrik,DC=lab" -BindUserName jaapjaap -BindUserPassword $SecPw -Server "ad1.test.lab" -verbose
+      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -BaseDN "DC=rubrik,DC=lab" -BindUserName jaapjaap -BindUserPassword $SecPw -Verbose
 
       This will create LDAP settings using the user name and password provided as parameters      
   #>
