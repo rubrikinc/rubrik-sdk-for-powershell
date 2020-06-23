@@ -115,7 +115,7 @@ function New-RubrikLDAP
     }
 
     $body = ConvertTo-Json $bodyHash
-    Write-Verbose -Message "Updated Body with credential object = $($body -replace 'bindUserPassword": "(.*?)"','bindUserPassword": "***"')"
+    Write-Verbose -Message "Updated Body with credential object = $($body -replace 'bindUserPassword":\s*"(.*?)"','bindUserPassword": "***"')"
     #endregion    
 
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
