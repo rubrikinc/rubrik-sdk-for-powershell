@@ -15,19 +15,19 @@ function New-RubrikLDAP
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikldap
             
       .EXAMPLE
-      New-RubrikLDAP -Name "Test LDAP Settings" -baseDN "DC=domain,DC=local" -authServers "192.168.1.8"
+      New-RubrikLDAP -Name "Test LDAP Settings" -baseDn "DC=domain,DC=local" -authServers "192.168.1.8"
 
       This will create LDAP settings on the Rubrik cluster defined by Connect-Rubrik function
 
       .EXAMPLE
       $credential = Get-Credential
-      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -BaseDN "DC=rubrik,DC=lab" -BindCredential $Credential -Verbose
+      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -baseDn "DC=rubrik,DC=lab" -BindCredential $Credential -Verbose
 
       This will create LDAP settings using the credentials object provided as a parameter
 
       .EXAMPLE
       $SecPw = Read-Host -AsSecureString
-      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -BaseDN "DC=rubrik,DC=lab" -BindUserName jaapjaap -BindUserPassword $SecPw -Verbose
+      New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -baseDn "DC=rubrik,DC=lab" -BindUserName jaapjaap -BindUserPassword $SecPw -Verbose
 
       This will create LDAP settings using the user name and password provided as parameters      
   #>
@@ -45,7 +45,7 @@ function New-RubrikLDAP
     [Parameter(Mandatory=$True)]
     [string]$DynamicDNSName,
     # The path to the directory where searches for users begin.
-    [string]$BaseDN,
+    [string]$baseDn,
     # An ordered list of authentication servers. Servers on this list have priority over servers discovered using dynamic DNS.
     [array]$AuthServers,
     # Bind username with permissions to connect to the LDAP server
