@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Changed max length of ID allowed to resolve [Issue 656](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/656)
 * Private function `Invoke-RubrikWebRequest` now correctly uses the `DefaultWebRequestTimeOut` default module option. Default is set to 15 seconds, but can be changed [Issue 216](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/216)
 * `Update-RubrikModuleOption` now also uses `Get-HomePath` private function, its unit tests have been updated as well
 * Added new property to `Get-RubrikReportData` : `DataGridObject` which returns the datagrid results as PowerShell custom objects [Issue 549](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/549)
