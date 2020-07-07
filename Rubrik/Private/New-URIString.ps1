@@ -20,7 +20,7 @@
   # Validation of id param
   if ($id -match '^@\{') {
     Write-Error -Message "Please validate ID input, please only input the ID parameter the object: '$id'" -ErrorAction Stop
-  } elseif ($id.Length -gt 100) {
+  } elseif ($id.Length -gt 200) {
     Write-Error -Message "Please validate ID input, invalid ID provided: '$id'" -ErrorAction Stop
   }
 
