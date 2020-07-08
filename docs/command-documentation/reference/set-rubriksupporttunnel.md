@@ -1,49 +1,44 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikSupportTunnel
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksupporttunnel
 schema: 2.0.0
 ---
 
 # Set-RubrikSupportTunnel
 
 ## SYNOPSIS
-
 Sets the configuration of the Support Tunnel
 
 ## SYNTAX
 
-```text
+```
 Set-RubrikSupportTunnel [-EnableTunnel] [[-Timeout] <Int32>] [[-Server] <String>] [[-api] <String>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Set-RubrikSupportTunnel cmdlet is used to update a Rubrik cluster's Support Tunnel configuration This tunnel is used by Rubrik's support team for providing remote assistance and is toggled on or off by the cluster administrator
+The Set-RubrikSupportTunnel cmdlet is used to update a Rubrik cluster's Support Tunnel configuration
+This tunnel is used by Rubrik's support team for providing remote assistance and is toggled on or off by the cluster administrator
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Set-RubrikSupportTunnel -EnableTunnel:$false
 ```
 
 This will disable the Support Tunnel for the Rubrik cluster
 
 ### EXAMPLE 2
-
-```text
+```
 Set-RubrikSupportTunnel -EnableTunnel
 ```
 
-This will enable the Support Tunnel for the Rubrik cluster and set the inactivity timeout to infinite \(no timeout\)
+This will enable the Support Tunnel for the Rubrik cluster and set the inactivity timeout to infinite (no timeout)
 
 ### EXAMPLE 3
-
-```text
+```
 Set-RubrikSupportTunnel -EnableTunnel -Timeout 100
 ```
 
@@ -52,8 +47,8 @@ This will enable the Support Tunnel for the Rubrik cluster and set the inactivit
 ## PARAMETERS
 
 ### -EnableTunnel
-
-Status of the Support Tunnel. Choose to enable or -EnableTunnel:$false to disable.
+Status of the Support Tunnel.
+Choose to enable or -EnableTunnel:$false to disable.
 
 ```yaml
 Type: SwitchParameter
@@ -68,8 +63,8 @@ Accept wildcard characters: False
 ```
 
 ### -Timeout
-
-Tunnel inactivity timeout in seconds. Only valid when setting $EnableTunnel to $true.
+Tunnel inactivity timeout in seconds.
+Only valid when setting $EnableTunnel to $true.
 
 ```yaml
 Type: Int32
@@ -84,7 +79,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -100,7 +94,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -116,18 +109,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikSupportTunnel](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikSupportTunnel)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksupporttunnel](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksupporttunnel)
 

@@ -1,54 +1,60 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikbootstrap
 schema: 2.0.0
 ---
 
 # New-RubrikBootStrap
 
-## New-RubrikBootStrap
-
-### SYNOPSIS
-
+## SYNOPSIS
 Send a Rubrik Bootstrap Request
 
-### SYNTAX
+## SYNTAX
 
-```text
+```
 New-RubrikBootStrap [[-id] <String>] [[-Server] <String>] [-adminUserInfo] <Object> [-nodeConfigs] <Object>
- [[-enableSoftwareEncryptionAtRest] <Boolean>] [[-name] <String>] [[-ntpServerConfigs] <Object>]
+ [-enableSoftwareEncryptionAtRest] [[-name] <String>] [[-ntpServerConfigs] <Object>]
  [[-dnsNameservers] <String[]>] [[-dnsSearchDomains] <String[]>] [<CommonParameters>]
 ```
 
-### DESCRIPTION
-
+## DESCRIPTION
 This will send a bootstrap request
 
-### EXAMPLES
+## EXAMPLES
 
-#### EXAMPLE 1
-
-```text
+### EXAMPLE 1
+```
 https://gist.github.com/nshores/104f069570740ea645d67a8aeab19759
 ```
 
-New-RubrikBootStrap -Server 169.254.11.25 -name 'rubrik-edge' -dnsNameservers @\('192.168.11.1'\) -dnsSearchDomains @\('corp.us','branch.corp.us'\) -ntpserverconfigs @\(@{server = 'pool.ntp.org'}\) -adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'} -nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+New-RubrikBootStrap -Server 169.254.11.25
+-name 'rubrik-edge' 
+-dnsNameservers @('192.168.11.1')
+-dnsSearchDomains @('corp.us','branch.corp.us')
+-ntpserverconfigs @(@{server = 'pool.ntp.org'})
+-adminUserInfo @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
+-nodeconfigs @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
 
-#### EXAMPLE 2
-
-```text
+### EXAMPLE 2
+```
 $BootStrapHash = @{
 ```
 
-Server = 169.254.11.25 name = 'rubrik-edge' dnsNameservers = @\('192.168.11.1'\) dnsSearchDomains = @\('corp.us','branch.corp.us'\) ntpserverconfigs = @\(@{server = 'pool.ntp.org'}\) adminUserInfo = @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'} nodeconfigs = @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}} }
+Server = 169.254.11.25
+  name = 'rubrik-edge' 
+  dnsNameservers = @('192.168.11.1')
+  dnsSearchDomains = @('corp.us','branch.corp.us')
+  ntpserverconfigs = @(@{server = 'pool.ntp.org'})
+  adminUserInfo = @{emailAddress = 'nick@shoresmedia.com'; id ='admin'; password = 'P@SSw0rd!'}
+  nodeconfigs = @{node1 = @{managementIpConfig = @{address = '192.168.11.1'; gateway = '192.168.11.100'; netmask = '255.255.255.0'}}}
+}
 
 New-RubrikBootStrap @BootStrapHash
 
-### PARAMETERS
+## PARAMETERS
 
-#### -id
-
+### -id
 ID of the Rubrik cluster or me for self
 
 ```yaml
@@ -58,13 +64,12 @@ Aliases:
 
 Required: False
 Position: 1
-Default value: Me
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -Server
-
+### -Server
 Rubrik server IP or FQDN
 
 ```yaml
@@ -79,8 +84,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -adminUserInfo
-
+### -adminUserInfo
 Admin User Info Hashtable
 
 ```yaml
@@ -95,8 +99,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -nodeConfigs
-
+### -nodeConfigs
 Node Configuration Hashtable
 
 ```yaml
@@ -111,28 +114,41 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -enableSoftwareEncryptionAtRest
-
+### -enableSoftwareEncryptionAtRest
 Software Encryption
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -name
-
+### -name
 Cluster/Edge Name
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ntpServerConfigs
+NTP Servers
+
+```yaml
+Type: Object
 Parameter Sets: (All)
 Aliases:
 
@@ -143,12 +159,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -ntpServerConfigs
-
-NTP Servers
+### -dnsNameservers
+DNS Servers
 
 ```yaml
-Type: Object
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
@@ -159,9 +174,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -dnsNameservers
-
-DNS Servers
+### -dnsSearchDomains
+DNS Search Domains
 
 ```yaml
 Type: String[]
@@ -175,39 +189,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-#### -dnsSearchDomains
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
-DNS Search Domains
+## INPUTS
 
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
+## OUTPUTS
 
-Required: False
-Position: 9
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
+## NOTES
+#DNS Param must be an array even if only passing a single server
+#NTP Must be an array than contains hash table for each server object
+#Nodeconfigs Param must be a hash table object.
 
-#### CommonParameters
+## RELATED LINKS
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
-
-### INPUTS
-
-### OUTPUTS
-
-### NOTES
-
-## DNS Param must be an array even if only passing a single server
-
-## NTP Must be an array than contains hash table for each server object
-
-## Nodeconfigs Param must be a hash table object.
-
-### RELATED LINKS
-
-[https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap](https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikbootstrap](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikbootstrap)
 

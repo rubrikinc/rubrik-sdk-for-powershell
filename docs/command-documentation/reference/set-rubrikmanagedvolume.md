@@ -1,56 +1,49 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikManagedVolume
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikmanagedvolume
 schema: 2.0.0
 ---
 
 # Set-RubrikManagedVolume
 
 ## SYNOPSIS
-
 Sets Rubrik Managed Volume properties
 
 ## SYNTAX
 
-```text
+```
 Set-RubrikManagedVolume -id <String> [-VolumeSize <Int64>] [-exportConfig <PSObject[]>] [-SLAID <String>]
  [-SLA <String>] [-Name <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Set-RubrikMakangedVolume cmdlet is used to update certain settings for a Rubrik Managed Volume.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -SLA 'Gold'
 ```
 
 Protect the specified managed volume with the 'Gold' SLA domain
 
 ### EXAMPLE 2
-
-```text
+```
 Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -VolumeSize 536870912000
 ```
 
 ### EXAMPLE 3
-
-```text
+```
 Set-RubrikManagedVolume -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 -Name 'NewName'
 ```
 
-Resize the specified managed volume to 536870912000 bytes \(500GB\)
+Resize the specified managed volume to 536870912000 bytes (500GB)
 
 ## PARAMETERS
 
 ### -id
-
 Rubrik's Managed Volume id value
 
 ```yaml
@@ -66,7 +59,6 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeSize
-
 Size of the Managed Volume in Bytes
 
 ```yaml
@@ -82,7 +74,6 @@ Accept wildcard characters: False
 ```
 
 ### -exportConfig
-
 Export config, such as host hints and host name patterns
 
 ```yaml
@@ -98,7 +89,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
-
 SLA Domain ID for the database
 
 ```yaml
@@ -114,7 +104,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLA
-
 The SLA Domain name in Rubrik
 
 ```yaml
@@ -130,7 +119,6 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-
 Managed Volume Name
 
 ```yaml
@@ -146,7 +134,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -162,7 +149,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -178,8 +164,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -194,7 +180,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -210,18 +195,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal for community usage Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal for community usage
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikManagedVolume](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikManagedVolume)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikmanagedvolume](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikmanagedvolume)
 

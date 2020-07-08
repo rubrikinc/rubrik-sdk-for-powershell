@@ -1,32 +1,30 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/rubrikinc/PowerShell-Module'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksetting
 schema: 2.0.0
 ---
 
 # Set-RubrikSetting
 
 ## SYNOPSIS
-
 Connects to Rubrik and sets Rubrik cluster settings
 
 ## SYNTAX
 
-```text
+```
 Set-RubrikSetting [-ClusterName] <String> [-Timezone] <String> [-ClusterLocation] <String> [[-Server] <String>]
  [[-id] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Set-RubrikSetting cmdlet will set the cluster settings on the system. This does require authentication.
+The Set-RubrikSetting cmdlet will set the cluster settings on the system.
+This does require authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Set-RubrikSetting -ClusterName "test-rubrik-cluster" -Timezone "America/Los Angeles" -ClusterLocation "LA Office"
 ```
 
@@ -35,7 +33,6 @@ This will set the designated cluster settings on the Rubrik cluster
 ## PARAMETERS
 
 ### -ClusterName
-
 New name for a Rubrik cluster
 
 ```yaml
@@ -51,7 +48,6 @@ Accept wildcard characters: False
 ```
 
 ### -Timezone
-
 New time zone for a Rubrik cluster
 
 ```yaml
@@ -67,8 +63,8 @@ Accept wildcard characters: False
 ```
 
 ### -ClusterLocation
-
-Address information for mapping the location of the Rubrik cluster. This value is used to provide a location for the Rubrik cluster on the dashboard map
+Address information for mapping the location of the Rubrik cluster.
+This value is used to provide a location for the Rubrik cluster on the dashboard map
 
 ```yaml
 Type: String
@@ -83,7 +79,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -99,7 +94,6 @@ Accept wildcard characters: False
 ```
 
 ### -id
-
 ID of the Rubrik cluster or me for self
 
 ```yaml
@@ -115,7 +109,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -131,8 +124,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -147,7 +140,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -163,18 +155,16 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
 Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksetting](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksetting)
 

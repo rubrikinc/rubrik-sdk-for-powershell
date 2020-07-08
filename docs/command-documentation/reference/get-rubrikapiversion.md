@@ -1,32 +1,29 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAPIVersion
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikapiversion
 schema: 2.0.0
 ---
 
 # Get-RubrikAPIVersion
 
 ## SYNOPSIS
-
 Connects to Rubrik and retrieves the current API version
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikAPIVersion [-Server] <String> [[-id] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikVersion cmdlet will retrieve the API version actively running on the system. This does not require authentication.
+The Get-RubrikVersion cmdlet will retrieve the API version actively running on the system.
+This does not require authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikAPIVersion -Server 192.168.1.100
 ```
 
@@ -35,7 +32,6 @@ This will return the running API version on the Rubrik cluster reachable at the 
 ## PARAMETERS
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -51,7 +47,6 @@ Accept wildcard characters: False
 ```
 
 ### -id
-
 ID of the Rubrik cluster or me for self
 
 ```yaml
@@ -67,7 +62,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -83,18 +77,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAPIVersion](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikAPIVersion)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikapiversion](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikapiversion)
 

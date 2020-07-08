@@ -1,73 +1,75 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikVM
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvm
 schema: 2.0.0
 ---
 
 # Protect-RubrikVM
 
 ## SYNOPSIS
-
 Connects to Rubrik and assigns an SLA to a virtual machine
 
 ## SYNTAX
 
-### None \(Default\)
-
-```text
+### None (Default)
+```
 Protect-RubrikVM -id <String> [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
-### SLA\_Explicit
-
-```text
+### SLA_Explicit
+```
 Protect-RubrikVM -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
-### SLA\_Unprotected
-
-```text
-Protect-RubrikVM -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+### SLA_Unprotected
+```
+Protect-RubrikVM -id <String> [-DoNotProtect] [-SLAID <String>] [-ExistingSnapshotRetention <String>]
+ [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### SLA\_Inherit
-
-```text
+### SLA_Inherit
+```
 Protect-RubrikVM -id <String> [-Inherit] [-SLAID <String>] [-Server <String>] [-api <String>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values needed to protect workloads. Note that this function requires the virtual machine ID value, not the name of the virtual machine, since virtual machine names are not unique across clusters. It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machine to protect, and then pipe the results to Protect-RubrikVM. You will be asked to confirm each virtual machine you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
+The Protect-RubrikVM cmdlet will update a virtual machine's SLA Domain assignment within the Rubrik cluster.
+The SLA Domain contains all policy-driven values needed to protect workloads.
+Note that this function requires the virtual machine ID value, not the name of the virtual machine, since virtual machine names are not unique across clusters.
+It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machine to protect, and then pipe the results to Protect-RubrikVM.
+You will be asked to confirm each virtual machine you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikVM "VM1" | Protect-RubrikVM -SLA 'Gold'
 ```
 
 This will assign the Gold SLA Domain to any virtual machine named "VM1"
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikVM "VM1" -SLA Silver | Protect-RubrikVM -SLA 'Gold' -Confirm:$False
 ```
 
-This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain without asking for confirmation
+This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
+without asking for confirmation
+
+### EXAMPLE 3
+```
+Get-RubrikVM "VM1" -SLA Silver | Protect-RubrikVM -SLA 'Gold' -ExistingSnapshotRetention KeepForever
+```
+
+This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain keeping existing snapshots forever
 
 ## PARAMETERS
 
 ### -id
-
 Virtual machine ID
 
 ```yaml
@@ -83,7 +85,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLA
-
 The SLA Domain in Rubrik
 
 ```yaml
@@ -99,7 +100,6 @@ Accept wildcard characters: False
 ```
 
 ### -DoNotProtect
-
 Removes the SLA Domain assignment
 
 ```yaml
@@ -115,7 +115,6 @@ Accept wildcard characters: False
 ```
 
 ### -Inherit
-
 Inherits the SLA Domain assignment from a parent object
 
 ```yaml
@@ -131,7 +130,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
-
 SLA id value
 
 ```yaml
@@ -146,8 +144,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Server
+### -ExistingSnapshotRetention
+Determine the retention settings for the already existing snapshots
 
+```yaml
+Type: String
+Parameter Sets: SLA_Unprotected
+Aliases:
+
+Required: False
+Position: Named
+Default value: RetainSnapshots
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Server
 Rubrik server IP or FQDN
 
 ```yaml
@@ -163,7 +175,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -179,8 +190,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -195,7 +206,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -211,18 +221,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikVM](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikVM)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvm](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvm)
 

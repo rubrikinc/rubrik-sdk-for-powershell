@@ -1,42 +1,40 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikUser
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikuser
 schema: 2.0.0
 ---
 
 # New-RubrikUser
 
 ## SYNOPSIS
-
 Creates a new user
 
 ## SYNTAX
 
-```text
+```
 New-RubrikUser [-Username] <String> [-Password] <SecureString> [[-FirstName] <String>] [[-LastName] <String>]
  [[-EmailAddress] <String>] [[-ContactNumber] <String>] [[-MfaServerId] <String>] [[-Server] <String>]
  [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The New-RubrikUser cmdlet is used to create a new user within the Rubrik cluster. NOTE: The underlying API endpoints used by this cmdlet are restricted. API token authentication cannot be used with this cmdlet. You must use username/password authentication.
+The New-RubrikUser cmdlet is used to create a new user within the Rubrik cluster.
+NOTE: The underlying API endpoints used by this cmdlet are restricted.
+API token authentication cannot be used with this cmdlet.
+You must use username/password authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikUser -Username 'jdoe' -password (ConvertTo-SecureString -String 'secretpassword123!secret' -asplaintext -force)
 ```
 
 This will create a new user with a username of jdoe and the specified password
 
 ### EXAMPLE 2
-
-```text
+```
 New-RubrikUser -Username 'jdoe' -password (ConvertTo-SecureString -String 'secretpassword123!secret' -asplaintext -force) -FirstName 'John' -LastName 'Doe'
 ```
 
@@ -45,7 +43,6 @@ This will create a new user with a username of jdoe, the specified password, fir
 ## PARAMETERS
 
 ### -Username
-
 Username to assign to the created user
 
 ```yaml
@@ -61,7 +58,6 @@ Accept wildcard characters: False
 ```
 
 ### -Password
-
 Password for newly created user
 
 ```yaml
@@ -77,7 +73,6 @@ Accept wildcard characters: False
 ```
 
 ### -FirstName
-
 Users first name
 
 ```yaml
@@ -93,7 +88,6 @@ Accept wildcard characters: False
 ```
 
 ### -LastName
-
 Users last name
 
 ```yaml
@@ -109,7 +103,6 @@ Accept wildcard characters: False
 ```
 
 ### -EmailAddress
-
 Users email
 
 ```yaml
@@ -125,7 +118,6 @@ Accept wildcard characters: False
 ```
 
 ### -ContactNumber
-
 Users Contact Number
 
 ```yaml
@@ -141,7 +133,6 @@ Accept wildcard characters: False
 ```
 
 ### -MfaServerId
-
 MFA Server ID associated to user
 
 ```yaml
@@ -157,7 +148,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -173,7 +163,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -189,8 +178,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -205,7 +194,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -221,18 +209,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Preston for community usage Twitter: @mwpreston GitHub: mwpreston
+Written by Mike Preston for community usage
+Twitter: @mwpreston
+GitHub: mwpreston
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikUser](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikUser)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikuser](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikuser)
 

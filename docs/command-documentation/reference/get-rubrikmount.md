@@ -1,56 +1,52 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikMount
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikmount
 schema: 2.0.0
 ---
 
 # Get-RubrikMount
 
 ## SYNOPSIS
-
 Connects to Rubrik and retrieves details on mounts for a VM
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikMount [[-id] <String>] [[-VMID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Get-RubrikMount cmdlet will accept a VM id and return details on any mount operations that are active within Rubrik Due to the nature of names not being unique Note that this function requires the VM ID value, not the name of the virtual machine, since virtual machine names are not unique. It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machines you wish to query, and then pipe the results to Get-RubrikMount.
+The Get-RubrikMount cmdlet will accept a VM id and return details on any mount operations that are active within Rubrik
+Due to the nature of names not being unique
+Note that this function requires the VM ID value, not the name of the virtual machine, since virtual machine names are not unique.
+It is suggested that you first use Get-RubrikVM to narrow down the one or more virtual machines you wish to query, and then pipe the results to Get-RubrikMount.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikMount
 ```
 
 This will return details on all mounted virtual machines.
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikMount -id '11111111-2222-3333-4444-555555555555'
 ```
 
 This will return details on mount id "11111111-2222-3333-4444-555555555555".
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id
 ```
 
 This will return details for any mounts found using the id value from a virtual machine named "Server1" as a base reference.
 
 ### EXAMPLE 4
-
-```text
+```
 Get-RubrikMount -VMID 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
 ```
 
@@ -59,7 +55,6 @@ This will return details for any mounts found using the virtual machine id of 'V
 ## PARAMETERS
 
 ### -id
-
 Rubrik's id of the mount
 
 ```yaml
@@ -75,7 +70,6 @@ Accept wildcard characters: False
 ```
 
 ### -VMID
-
 Filters live mounts by VM ID
 
 ```yaml
@@ -91,7 +85,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -107,7 +100,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -123,18 +115,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikMount](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikMount)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikmount](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikmount)
 
