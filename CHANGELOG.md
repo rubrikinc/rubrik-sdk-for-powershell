@@ -14,30 +14,84 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-
-## [Unreleased] - 2019-03-04
-
-### Fixed 
-* Fix for RubrikOrgAuthorization API endpoint changed in 5.1 [570](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/568)
-
-## [Unreleased] - 2019-03-03
-
-### Fixed
-* Fixed documentation on Get-RubrikLogshipping [572](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/572)
-
-## [Unreleased] - 2019-02-21
-
-### Fixed
-* Updated New-RubrikBootstrap to address malformed request body and URI. This addresses issue [568](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/568)
-
-## [Unreleased] - 2019-12-19
+## Unreleased
 
 ### Changed
-* Get-RubrikSnapshot has been changed to convert the current date/time to UTC when using the -Latest parameter. This addresses Issue [535](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/535)
-* Restore-RubrikVApp and Export-RubrikVApp has been updated to properly deal with -PowerOn being changed to a switch-type parameter. This addresses issue [536](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/536)
-* Export-RubrikVApp has been changed so that it does not request vCD to restore vApp networks if the NICs are removed or unmapped. This addresses issue [537](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/537)
 
-## [Unreleased] - 2019-12-31
+### Added
+
+### Fixed
+
+## [5.0.2](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.2) - 2020-07-08
+
+### Changed
+
+* Changed max length of ID allowed to resolve [Issue 656](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/656)
+* Private function `Invoke-RubrikWebRequest` now correctly uses the `DefaultWebRequestTimeOut` default module option. Default is set to 15 seconds, but can be changed [Issue 216](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/216)
+* `Update-RubrikModuleOption` now also uses `Get-HomePath` private function, its unit tests have been updated as well
+* Added new property to `Get-RubrikReportData` : `DataGridObject` which returns the datagrid results as PowerShell custom objects [Issue 549](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/549)
+* `New-URIString` private function now validates `$id` input [Issue 627](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/627)
+* Changed how `Set-RubrikNASShare` creates the body object [Issue 614](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/614) and added new unit tests for this function
+* Modified `Set-RubrikAvailabilityGroup` and made `-LogRetentionHours` parameters mandatory while removing default value of -1
+* Modified private function `Set-ObjectTypeName.ps1` to support the new `ApplyCustomViewDefinitions`.
+* Modified module script file `rubrik.psm1` to create options file if it doesn't exist, and update any current options file if it does exist. Also loads any default parameter options into $global:PSDefaultParameterValues
+* Modified `Get-RubrikVM`, `Get-RubrikDatabase`, `Get-RubrikFileset`, `Get-RubrikHost`, `Get-RubrikLogShipping`, `Get-RubrikNutanixCluster`, `Get-RubrikOracleDB`, `Get-RubrikReplicationSource`,`Get-RubrikReplicationTarget`, `Get-RubrikScvmm`, `Get-RubrikvApp`, `Get-RubrikVCD`, `Get-RubrikVMwareCluster`, and `Get-RubrikVMwareDatacenter` to call the new `Get-RubrikDetailedResult` function when -DetailedObject is present. `Get-RubrikArchive` was left alone as it uses -DetailedObject differently.
+* Modified various md documentation files to reflect work done since last documentation update as per [Issue 616](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/616)
+* `New-RubrikFilesetTemplate` now has type data assigned [Issue 611](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/611)
+* Removed -Body $body from `Get-RubrikClusterInfo` when it passes variables to Submit-Request as per [Issue 604](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/604)
+* Added default parametersets, positional attributes to name parameters, and removed pipeline support from name for the following cmdlets: `Get-RubrikSLA`, `Get-RubrikArchive`, `Get-RubrikClusterNetworkInterface`, `Get-RubrikDatabase`, `Get-RubrikDatabaseMount`, `Get-RubrikFileset`, `Get-RubrikFilesetTemplate`, `Get-RubrikGuestOSCredential`,`Get-RubrikHost`,`Get-RubrikHypervHost`, `Get-RubrikHyperVVM`,`Get-RubrikLogShipping`,`Get-RubrikManagedVolume`,`Get-RubrikNutanixCLuster`,`Get-RubrikNutanixVM`,`Get-RubrikObjectStoreArchive`,`Get-RubrikOracleDB`,`Get-RubrikOrganization`,`Get-RubrikQstarArchive`,`Get-RubrikReplicationSource`,`Get-RubrikReplicationTarget`,`Get-RubrikSQLInstance`, `Get-RubrikScvmm`, `Get-RubrikSmbDomain`, `Get-RubrikUnmanagedObject`, `Get-RubrikUser`, `Get-RubrikvApp`, `Get-RubrikVCD`, `Get-RubrikVMwareCluster`, `Get-RubrikVMwareHost`, `Get-RubrikVMwareDatastore`, and `Get-RubrikVMwareDatacenter`.  This provides a more user friendly experience by allowing users to simply enter `Get-RubrikSLA MySLA` rather than `Get-RubrikSLA -Name MySQL`.  Removing pipeline support from name also ensures that when utilizing pipeline, ID queries are always performed. IE `Get-RubrikSLA MySLA | Get-RubrikSLA ` will first use the basic name filter for the left hand of the pipeline, however the second will pick up the id to perform an id based parameter.
+* Removed -Body $body from `Get-RubrikClusterStorage` and `Get-RubrikDNSSetting` when it passes variables to Submit-Request as per [Issue 604](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/604)
+* Removed -Body $body from `Get-RubrikClusterInfo` when it passes variables to Submit-Request as per [Issue 604](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/604)
+* Added support to `Get-RubrikObject` for ClusterNetworkInterfaces, Event Series, HyperV Hosts, Nodes, Notification Settings, NTP Servers, Nutanix Clusters and SMB Domains
+* Added support to `Get-RubrikObject` to support searching by id on an attribute which isn't named `id`
+* Fixed how `Disconnect-Rubrik` handles cleaning up `$RubrikConnection(s)` variables
+* Modified `Get-RubrikSLA`, `Set-RubrikSLA` and `New-RubrikSLA` to call private function to add a human readable frequency summary field
+* Added $rubrikConnections = $null to `Connect-Rubrik.Tests.ps1` in order to allow test to be ran within the same PS session of which it ran previously.
+* Added parameters to `New-RubrikvCenter` and `Set-RubrikvCenter` allowing users to send username/password or credential objects to the cmdlets. This allows true scripting of these cmdlets rather than prompting for credentials by default.
+* Added -Force parameter and confirmation prompts to `Remove-RubrikUnmanagedObject`. This allows for the deletion of snapshots protected by retention SLAs as per [Issue 314](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/314)
+* Modified default behavior for `Export-RubrikVM`, when -PowerOn is not specified it will send `"powerOn": false` to the endpoint [Issue 594](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/594)
+* Modified Link for `Protect-RubrikVolumeGroup` to lowercase
+* Modified `Remove-RubrikVMSnapshot` to support -Confirm before performing action
+* Updated help for all fileset and fileset template related cmdlets as per [Issue 284](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/284)
+* Changed example documentation for `New-RubrikDatabaseMount`
+* Added `-DetailedObject` parameter to `Get-RubrikLogShipping`
+* Updated unit tests for `Get-RubrikLogShipping` to include test for `-DetailedObject` parameter
+* Updated `Get-RubrikAPIData` with formatted objecttypes for `New-RubrikSLA` and `Set-RubrikSLA`
+* Updated `New-RubrikSLA` and `Set-RubrikSLA` functions to add type names and decorate output similar to `Get-RubrikSLA`
+* Error handing in private function `Get-RubrikAPIData`, now displays error when no matching endpoint is found.
+* Changed `Get-RubrikEvent`, adding parametersets to isolate eventSeriesId. When cmdlet is called with eventSeriesId the `Get-RubrikEventSeries` cmdlet is now called rather than filtering through a giant, unindexed table. Details in [Issue 580](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/580)
+
+### Added
+
+* Added two new public cmdlets `Get-RubrikDownloadLink` and `Start-RubrikDownload` to manage downloads of snapshots or partial snapshots from the Rubrik Cluster [Issue 624](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/624)
+* Added new public cmdlet `Invoke-RubrikGraphQLCall` to provide a way of interacting with the GraphQL endpoint using this module [Issue 637](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/637)
+* Added new parameter to `Protect-RubrikVM` `-ExistingSnapshotRetention` as requested in [Issue 298](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/298)
+* Added additional `ReportTemplate` reports to the validation in `New-RubrikReport` [Issue 628](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/628)
+* Added public cmdlets `Get-RubrikModuleOption`,`Set-RubrikModuleOption`,`Get-RubrikModuleDefaultParameter`,`Set-RubrikModuleDefaultParameter`, and `Remove-RubrikModuleDefaultParameter`.  Added Private functions `Set-RubrikDefaultParameterValue.ps1`, `Update-RubrikModuleOption.ps1`, and `Sync-RubrikOptionsFile` to support the creation of customized module options and default parameters as per [Issue 518](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/518)
+* Added public cmdlets `Get-RubrikModuleOption`,`Set-RubrikModuleOption`,`Get-RubrikModuleDefaultParameter`,`Set-RubrikModuleDefaultParameter`, and `Remove-RubrikModuleDefaultParameter`.  Added Private functions `Set-RubrikDefaultParameterValues.ps1`, `Update-RubrikModuleOption.ps1`, and `Sync-RubrikOptionsFile` to support the creation of customized module options and default parameters as per [Issue 518](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/518)
+* Added new private function `Get-RubrikDetailedResult` to replace duplicated -DetailedObject code.
+* Added new function `Remove-RubrikFilesetTemplate` and added assosciated unit test `Remove-RubrikFilesetTemplate.Tests`
+* Added unit test for private function `Get-RubrikSLAFrequencySummary`
+* Added additional unit tests for `Disconnect-Rubrik` as per [Issue 598](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/598)
+* Added private function `Get-RubrikSLAFrequencySummary` to create a human readable summary of an SLAs frequency settings
+* Added unit tests for `New-RubrikLDAP`, `Get-RubrikvCenter`, `New-RubrikvCenter`, `Remove-RubrikvCenter`, `Set-RubrikvCenter`, `Get-RubrikSetting`, `Set-RubrikSetting`, and `Remove-RubrikHost` as per [Issue 345](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/345)
+* Added new unit tests: `CommentBasedHelp`, `ObjectDefinitions`, `Connect-Rubrik`, `Disconnect-Rubrik`
+* Added `Remove-RubrikFilesetSnapshot`, `RemoveRubrikDatabaseSnapshots`, `Remove-RubrikHyperVSnapshot`, `Remove-RubrikManagedVolumeSnapshot`, `Remove-RubrikNutanixVMSnapshot`, and `Remove-RubrikVolumeGroupSnapshot` along with associated unit tests as outlined in [Issue 309](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/309) *NOTE Remove-RubrikDatabaseSnapshots deletes ALL snapshots for a given database - there is currently no endpoint to support the deletion of a single snapshot*
+* Added `Suspend-RubrikSLA` and `Resume-RubrikSLA`
+* Added `Get-RubrikEventSeries` to now parse the event_series API rather than events as per [Issue 580](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/580)
+* Added unit tests to cover `Get-RubrikEventSeries` and changes to `Get-RubrikEvent`
+
+### Fixed
+
+* Fixed bug in New-RubrikLogShipping cmdlets and added additional unit tests [Issue 644](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/644)
+* Fixed `Set-RubrikModuleOption`, it could not set module defaults, now it can
+* Azure DevOps issues with Pester v5
+* Added error handling for cases where Add-Type in `Unblock-SelfSignedCert` fails. `-Debug` switch can be used to determine root cause of failure. [Issue 613](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/613)
+* Fixed incorrect array in body of `Restore-RubrikDatabase` and added tests to validate new behavior in `Restore-RubrikDatabase.Tests`
+* Fixed incorrect array in body of `Export-RubrikDatabase` and added tests to validate new behavior in `Export-RubrikDatabase.Tests`
+* Fixed incorrect array in body of `New-RubrikDatabaseMount` and added tests to validate new behavior in `New-RubrikDatabaseMount.Tests`
+
+## [5.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.1) - 2020-03-05
 
 ### Added
 
@@ -50,7 +104,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added New-RubrikHyperVVMMount, Get-RubrikHyperVMount and Remove-RubrikHyperVMount addressing [Issue 450](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/450)
 * Added support to Get-RubrikRequest for VolumeGroup, Nutanix VMs, EC2 instances, Oracle Databases and VCD vApps as outlined in [Issue 563](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/563)
 
-
 ### Changed
 
 * ValidateSet on Set-RubrikNutanixVM was incorrect. Changed this to the desired values as outlined in [Issue 533](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/533)
@@ -59,11 +112,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Modified ParameterSets on Set-RubrikDatabase to align with logic outlined in [Issue 438](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/438)
 * Added more object support to `Get-RubrikObject` as per defined in [Issue 545](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/545) and [Issue 462](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/462)
 * Modified Invoke-RubrikRestCall to support the forcing of the body to be a single item array as per defined in [Issue 554](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/554)
+* Get-RubrikSnapshot has been changed to convert the current date/time to UTC when using the -Latest parameter. This addresses Issue [535](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/535)
+* Restore-RubrikVApp and Export-RubrikVApp has been updated to properly deal with -PowerOn being changed to a switch-type parameter. This addresses issue [536](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/536)
+* Export-RubrikVApp has been changed so that it does not request vCD to restore vApp networks if the NICs are removed or unmapped. This addresses issue [537](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/537)
 
 ### Fixed
 
 * Documentation links in comment-based help updated to lower case
 * Null filter on Get-RubrikSCVMM when using -DetailedObject as per [Issue 556](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/556)
+* Fix for RubrikOrgAuthorization API endpoint changed in 5.1 [570](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/568)
+* Fixed documentation on Get-RubrikLogshipping [572](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/572)
+* Updated New-RubrikBootstrap to address malformed request body and URI. This addresses issue [568](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/568)
 
 ## [5.0.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.0) - 2019-11-24
 
@@ -155,9 +214,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed the output of the user agent string to display platform information with double-dashed separated key-value pairs.
 * The link to `quick-start.md` in the `readme.md` has been updated to a relative link
 * The private function `Test-RubrikSLA` had a hard coded local variable
-* Renamed Get-RubrikVAppExportOptions to `Get-RubrikVAppExportOption` to use singular nouns 
-* Renamed Get-RubrikVAppRecoverOptions to `Get-RubrikVAppRecoverOption` to use singular nouns 
-* Renamed Get-RubrikVcdTemplateExportOptions to `Get-RubrikVcdTemplateExportOption` to use singular nouns 
+* Renamed Get-RubrikVAppExportOptions to `Get-RubrikVAppExportOption` to use singular nouns
+* Renamed Get-RubrikVAppRecoverOptions to `Get-RubrikVAppRecoverOption` to use singular nouns
+* Renamed Get-RubrikVcdTemplateExportOptions to `Get-RubrikVcdTemplateExportOption` to use singular nouns
 * Changed [parameter type from boolean to switch] for all functions
 * Modified private function Submit-Request.ps1 to support adding in success/error information for empty POST, PUT and PATCH responses
 * Modified status return code for Remove-RubrikManagedObject

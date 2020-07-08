@@ -107,7 +107,6 @@ function Export-RubrikDatabase
       $resources.Body.targetInstanceId = $TargetInstanceId
       $resources.Body.targetDatabaseName = $TargetDatabaseName
       $resources.Body.finishRecovery = $FinishRecovery.IsPresent
-      recoveryPoint = @()
     }
 
     if($MaxDataStreams){
@@ -125,9 +124,9 @@ function Export-RubrikDatabase
     }
 
     if($RecoveryLSN){
-      $body.recoveryPoint += @{lsnPoint=@{lsn=$RecoveryLSN}}
+      $body.recoveryPoint = @{lsnPoint=@{lsn=$RecoveryLSN}}
     } else {
-      $body.recoveryPoint += @{timestampMs = $TimestampMs}
+      $body.recoveryPoint = @{timestampMs = $TimestampMs}
     }
 
     if($Overwrite){

@@ -35,9 +35,15 @@ Describe -Name 'Public/Restore-RubrikDatabase' -Tag 'Public', 'Restore-RubrikDat
                 Should -BeExactly 'QUEUED'
         }
 
+        It -Name 'timestampMs should not be in an array' -Test {
+            $output = ( Restore-RubrikDatabase -Id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -RecoveryDateTime 'July 2, 2019 11:21:22 PM' -FinishRecovery ).status 4>&1
+            (-join $output) |
+                Should -Not -BeLike '*[*]*'
+        }
+
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
     }
 
     Context -Name 'Parameter Validation' {

@@ -22,11 +22,12 @@ Describe -Name 'Public/Get-RubrikReportData' -Tag 'Public', 'Get-RubrikReportDat
     Context -Name 'Returned Results' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}    
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
+            [pscustomobject]@{ 
                 'columns'               = @('TaskStatus','TaskType','ObjectId','ObjectName')
                 'cursor'                = '1111-2222-3333'
                 'reportTemplate'        = 'ProtectionTaskDetails'
-                'datagrid'              = @('OracleDatabase','Backup','11111','OracleHR')  
+                'datagrid'              = @('OracleDatabase','Backup','11111','OracleHR')
+                'hasmore'               = $false
             }
         }
         It -Name 'Returns reportTemplate' -Test {
@@ -66,5 +67,26 @@ Describe -Name 'Public/Get-RubrikReportData' -Tag 'Public', 'Get-RubrikReportDat
             { Get-RubrikReportData -id '11111' -ComplianceStatus 'NotCorrect'  } |
                 Should -Throw 'The argument "NotCorrect" does not belong to the set "InCompliance,NonCompliance" specified by the ValidateSet attribute. Supply an argument that is in the set and then try the command again.'
         }
+    }
+
+    Context -Name 'DatagridObject Validation' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}    
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            [pscustomobject]@{ 
+                'columns'               = ('ObjectId','ObjectState','ComplianceStatus','MissedLocalSnapshots') -as [array]
+                'cursor'                = '1111-2222-3333'
+                'reportTemplate'        = 'ProtectionTaskDetails'
+                'datagrid'              = 'ManagedVolume:::1111','Active','NonCompliance','42'
+                'hasmore'               = $false
+            }
+        }
+
+        $ReportDataResult = Get-RubrikReportData -id 1111
+
+        it "Datagridobject 'ObjectId' should be correct" {
+            $ReportDataResult.DatagridObject.ObjectId[0] |
+                Should -BeExactly 'ManagedVolume:::1111'
+        }
+
     }
 }

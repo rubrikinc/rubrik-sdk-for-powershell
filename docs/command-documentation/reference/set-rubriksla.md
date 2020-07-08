@@ -1,20 +1,18 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikSLA
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksla
 schema: 2.0.0
 ---
 
 # Set-RubrikSLA
 
 ## SYNOPSIS
-
 Updates an existing Rubrik SLA Domain
 
 ## SYNTAX
 
-```text
+```
 Set-RubrikSLA [-id] <String> [[-Name] <String>] [[-HourlyFrequency] <Int32>] [[-HourlyRetention] <Int32>]
  [[-HourlyRetentionType] <String>] [[-DailyFrequency] <Int32>] [[-DailyRetention] <Int32>]
  [[-DailyRetentionType] <String>] [[-WeeklyFrequency] <Int32>] [[-WeeklyRetention] <Int32>]
@@ -34,94 +32,87 @@ Set-RubrikSLA [-id] <String> [[-Name] <String>] [[-HourlyFrequency] <Int32>] [[-
 ```
 
 ## DESCRIPTION
-
 The Set-RubrikSLA cmdlet will update an existing SLA Domain with specified parameters.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Set-RubrikSLA -id e4d121af-5611-496a-bb8d-57ba46443e94 -Name Gold -HourlyFrequency 12 -HourlyRetention 5
 ```
 
-This will update the SLA Domain named "Gold" to take a snapshot every 12 hours and keep those for 5 days. All other existing parameters will be reset.
+This will update the SLA Domain named "Gold" to take a snapshot every 12 hours and keep those for 5 days.
+All other existing parameters will be reset.
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -HourlyFrequency 4 -HourlyRetention 3
 ```
 
-This will update the SLA Domain named "Gold" to take a snapshot every 4 hours and keep those hourly snapshots for 3 days, while keeping all other existing parameters.
+This will update the SLA Domain named "Gold" to take a snapshot every 4 hours and keep those hourly snapshots for 3 days,
+while keeping all other existing parameters.
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set RubrikSLA -AdvancedConfig -HourlyFrequency 4 -HourlyRetention 3 -WeeklyFrequency 1 -WeeklyRetention 4 -DayOfWeek Friday
 ```
 
-This will update the SLA Domain named "Gold" to take a snapshot every 4 hours and keep those hourly snapshots for 3 days while also keeping one snapshot per week for 4 weeks, created on Fridays. All other existing parameters will remain as they were.
+This will update the SLA Domain named "Gold" to take a snapshot every 4 hours and keep those hourly snapshots for 3 days
+while also keeping one snapshot per week for 4 weeks, created on Fridays.
+All other existing parameters will remain as they were.
 
 ### EXAMPLE 4
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -BackupStartHour 22 -BackupStartMinute 00 -BackupWindowDuration 8
 ```
 
 This will update the SLA Domain named "Gold" to take snapshots between 22:00PM and 6:00AM, while keeping all other existing parameters.
 
 ### EXAMPLE 5
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -FirstFullBackupStartHour 21 -FirstFullBackupStartMinute 30 -FirstFullBackupWindowDuration 57 -FirstFullBackupDay Friday
 ```
 
 This will update the SLA Domain named "Gold" to take the first full snapshot between Friday 21:30PM and Monday 6:30AM, while keeping all other existing parameters.
 
 ### EXAMPLE 6
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -Archival -ArchivalLocationId 64e27685-f1d9-4243-a2d4-78dbf5e8b43d -LocalRetention 30
 ```
 
 This will update the SLA Domain named "Gold" to keep data locally for 30 days before sending it to the specified archival location.
 
 ### EXAMPLE 7
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -InstantArchive
 ```
 
-This will update the SLA Domain named "Gold" to enable Instant Archive, assuming that archival was already configured. Ommitting this parameter will disable Instant Archive.
+This will update the SLA Domain named "Gold" to enable Instant Archive, assuming that archival was already configured.
+Ommitting this parameter will disable Instant Archive.
 
 ### EXAMPLE 8
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication -ReplicationTargetId eeece05e-980f-4d32-953e-d236b65ff6fd -RemoteRetention 7
 ```
 
 This will update the SLA Domain named "Gold" to replicate snapshots to the specified cluster and keep them for 7 days remotely.
 
 ### EXAMPLE 9
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -AdvancedConfig
 ```
 
 This will update the SLA Domain named "Gold" to only enable Advanced Configuration
 
 ### EXAMPLE 10
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -Archival:$false
 ```
 
 This will update the SLA Domain named "Gold" to only disable archival
 
 ### EXAMPLE 11
-
-```text
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication:$false
 ```
 
@@ -130,7 +121,6 @@ This will update the SLA Domain named "Gold" to only disable replication
 ## PARAMETERS
 
 ### -id
-
 SLA id value from the Rubrik Cluster
 
 ```yaml
@@ -146,7 +136,6 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-
 SLA Domain Name
 
 ```yaml
@@ -162,7 +151,6 @@ Accept wildcard characters: False
 ```
 
 ### -HourlyFrequency
-
 Hourly frequency to take snapshots
 
 ```yaml
@@ -178,8 +166,8 @@ Accept wildcard characters: False
 ```
 
 ### -HourlyRetention
-
-Number of days or weeks to retain the hourly snapshots. For CDM versions prior to 5.0 this value must be set in days
+Number of days or weeks to retain the hourly snapshots.
+For CDM versions prior to 5.0 this value must be set in days
 
 ```yaml
 Type: Int32
@@ -194,8 +182,8 @@ Accept wildcard characters: False
 ```
 
 ### -HourlyRetentionType
-
-Retention type to apply to hourly snapshots when advanced configuration is enabled. Does not apply to CDM versions prior to 5.0
+Retention type to apply to hourly snapshots when advanced configuration is enabled.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -210,7 +198,6 @@ Accept wildcard characters: False
 ```
 
 ### -DailyFrequency
-
 Daily frequency to take snapshots
 
 ```yaml
@@ -226,8 +213,8 @@ Accept wildcard characters: False
 ```
 
 ### -DailyRetention
-
-Number of days or weeks to retain the daily snapshots. For CDM versions prior to 5.0 this value must be set in days
+Number of days or weeks to retain the daily snapshots.
+For CDM versions prior to 5.0 this value must be set in days
 
 ```yaml
 Type: Int32
@@ -242,8 +229,8 @@ Accept wildcard characters: False
 ```
 
 ### -DailyRetentionType
-
-Retention type to apply to daily snapshots when advanced configuration is enabled. Does not apply to CDM versions prior to 5.0
+Retention type to apply to daily snapshots when advanced configuration is enabled.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -258,7 +245,6 @@ Accept wildcard characters: False
 ```
 
 ### -WeeklyFrequency
-
 Weekly frequency to take snapshots
 
 ```yaml
@@ -274,7 +260,6 @@ Accept wildcard characters: False
 ```
 
 ### -WeeklyRetention
-
 Number of weeks to retain the weekly snapshots
 
 ```yaml
@@ -290,8 +275,9 @@ Accept wildcard characters: False
 ```
 
 ### -DayOfWeek
-
-Day of week for the weekly snapshots when advanced configuration is enabled. The default is Saturday. Does not apply to CDM versions prior to 5.0
+Day of week for the weekly snapshots when advanced configuration is enabled.
+The default is Saturday.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -306,7 +292,6 @@ Accept wildcard characters: False
 ```
 
 ### -MonthlyFrequency
-
 Monthly frequency to take snapshots
 
 ```yaml
@@ -322,8 +307,8 @@ Accept wildcard characters: False
 ```
 
 ### -MonthlyRetention
-
-Number of months, quarters or years to retain the monthly backups. For CDM versions prior to 5.0, this value must be set in years
+Number of months, quarters or years to retain the monthly backups.
+For CDM versions prior to 5.0, this value must be set in years
 
 ```yaml
 Type: Int32
@@ -338,8 +323,9 @@ Accept wildcard characters: False
 ```
 
 ### -DayOfMonth
-
-Day of month for the monthly snapshots when advanced configuration is enabled. The default is the last day of the month. Does not apply to CDM versions prior to 5.0
+Day of month for the monthly snapshots when advanced configuration is enabled.
+The default is the last day of the month.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -354,8 +340,8 @@ Accept wildcard characters: False
 ```
 
 ### -MonthlyRetentionType
-
-Retention type to apply to monthly snapshots. Does not apply to CDM versions prior to 5.0
+Retention type to apply to monthly snapshots.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -370,8 +356,8 @@ Accept wildcard characters: False
 ```
 
 ### -QuarterlyFrequency
-
-Quarterly frequency to take snapshots. Does not apply to CDM versions prior to 5.0
+Quarterly frequency to take snapshots.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: Int32
@@ -386,8 +372,8 @@ Accept wildcard characters: False
 ```
 
 ### -QuarterlyRetention
-
-Number of quarters or years to retain the monthly snapshots. Does not apply to CDM versions prior to 5.0
+Number of quarters or years to retain the monthly snapshots.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: Int32
@@ -402,8 +388,9 @@ Accept wildcard characters: False
 ```
 
 ### -DayOfQuarter
-
-Day of quarter for the quarterly snapshots when advanced configuration is enabled. The default is the last day of the quarter. Does not apply to CDM versions prior to 5.0
+Day of quarter for the quarterly snapshots when advanced configuration is enabled.
+The default is the last day of the quarter.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -418,8 +405,9 @@ Accept wildcard characters: False
 ```
 
 ### -FirstQuarterStartMonth
-
-Month that starts the first quarter of the year for the quarterly snapshots when advanced configuration is enabled. The default is January. Does not apply to CDM versions prior to 5.0
+Month that starts the first quarter of the year for the quarterly snapshots when advanced configuration is enabled.
+The default is January.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -434,8 +422,9 @@ Accept wildcard characters: False
 ```
 
 ### -QuarterlyRetentionType
-
-Retention type to apply to quarterly snapshots. The default is Quarterly. Does not apply to CDM versions prior to 5.0
+Retention type to apply to quarterly snapshots.
+The default is Quarterly.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -450,7 +439,6 @@ Accept wildcard characters: False
 ```
 
 ### -YearlyFrequency
-
 Yearly frequency to take snapshots
 
 ```yaml
@@ -466,7 +454,6 @@ Accept wildcard characters: False
 ```
 
 ### -YearlyRetention
-
 Number of years to retain the yearly snapshots
 
 ```yaml
@@ -482,8 +469,9 @@ Accept wildcard characters: False
 ```
 
 ### -DayOfYear
-
-Day of year for the yearly snapshots when advanced configuration is enabled. The default is the last day of the year. Does not apply to CDM versions prior to 5.0
+Day of year for the yearly snapshots when advanced configuration is enabled.
+The default is the last day of the year.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -498,8 +486,9 @@ Accept wildcard characters: False
 ```
 
 ### -YearStartMonth
-
-Month that starts the first quarter of the year for the quarterly snapshots when advanced configuration is enabled. The default is January. Does not apply to CDM versions prior to 5.0
+Month that starts the first quarter of the year for the quarterly snapshots when advanced configuration is enabled.
+The default is January.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: String
@@ -514,8 +503,8 @@ Accept wildcard characters: False
 ```
 
 ### -AdvancedConfig
-
-Whether to turn advanced SLA configuration on or off. Does not apply to CDM versions prior to 5.0
+Whether to turn advanced SLA configuration on or off.
+Does not apply to CDM versions prior to 5.0
 
 ```yaml
 Type: SwitchParameter
@@ -530,8 +519,8 @@ Accept wildcard characters: False
 ```
 
 ### -BackupStartHour
-
-Hour from which backups are allowed to run. Uses the 24-hour clock
+Hour from which backups are allowed to run.
+Uses the 24-hour clock
 
 ```yaml
 Type: Int32
@@ -546,7 +535,6 @@ Accept wildcard characters: False
 ```
 
 ### -BackupStartMinute
-
 Minute of hour from which backups are allowed to run
 
 ```yaml
@@ -562,7 +550,6 @@ Accept wildcard characters: False
 ```
 
 ### -BackupWindowDuration
-
 Number of hours during which backups are allowed to run
 
 ```yaml
@@ -578,8 +565,8 @@ Accept wildcard characters: False
 ```
 
 ### -FirstFullBackupStartHour
-
-Hour from which the first full backup is allowed to run. Uses the 24-hour clock
+Hour from which the first full backup is allowed to run.
+Uses the 24-hour clock
 
 ```yaml
 Type: Int32
@@ -594,7 +581,6 @@ Accept wildcard characters: False
 ```
 
 ### -FirstFullBackupStartMinute
-
 Minute of hour from which the first full backup is allowed to run
 
 ```yaml
@@ -610,6 +596,7 @@ Accept wildcard characters: False
 ```
 
 ### -FirstFullBackupDay
+{{ Fill FirstFullBackupDay Description }}
 
 ```yaml
 Type: String
@@ -624,7 +611,6 @@ Accept wildcard characters: False
 ```
 
 ### -FirstFullBackupWindowDuration
-
 Number of hours during which the first full backup is allowed to run
 
 ```yaml
@@ -640,7 +626,6 @@ Accept wildcard characters: False
 ```
 
 ### -Archival
-
 Whether to enable archival
 
 ```yaml
@@ -656,7 +641,6 @@ Accept wildcard characters: False
 ```
 
 ### -LocalRetention
-
 Time in days to keep backup data locally on the cluster.
 
 ```yaml
@@ -672,7 +656,6 @@ Accept wildcard characters: False
 ```
 
 ### -ArchivalLocationId
-
 ID of the archival location
 
 ```yaml
@@ -688,7 +671,6 @@ Accept wildcard characters: False
 ```
 
 ### -PolarisID
-
 Polaris Managed ID
 
 ```yaml
@@ -704,7 +686,6 @@ Accept wildcard characters: False
 ```
 
 ### -InstantArchive
-
 Whether to enable Instant Archive
 
 ```yaml
@@ -720,7 +701,6 @@ Accept wildcard characters: False
 ```
 
 ### -Replication
-
 Whether to enable replication
 
 ```yaml
@@ -736,7 +716,6 @@ Accept wildcard characters: False
 ```
 
 ### -ReplicationTargetId
-
 ID of the replication target
 
 ```yaml
@@ -752,7 +731,6 @@ Accept wildcard characters: False
 ```
 
 ### -RemoteRetention
-
 Time in days to keep data on the replication target.
 
 ```yaml
@@ -768,7 +746,6 @@ Accept wildcard characters: False
 ```
 
 ### -Frequencies
-
 Retrieves frequencies from Get-RubrikSLA via the pipeline
 
 ```yaml
@@ -784,7 +761,6 @@ Accept wildcard characters: False
 ```
 
 ### -AdvancedFreq
-
 Retrieves the advanced UI configuration parameters from Get-RubrikSLA via the pipeline
 
 ```yaml
@@ -800,7 +776,6 @@ Accept wildcard characters: False
 ```
 
 ### -BackupWindows
-
 Retrieves the allowed backup windows from Get-RubrikSLA via the pipeline
 
 ```yaml
@@ -816,7 +791,6 @@ Accept wildcard characters: False
 ```
 
 ### -FirstFullBackupWindows
-
 Retrieves the allowed backup windows for the first full backup from Get-RubrikSLA via the pipeline
 
 ```yaml
@@ -832,7 +806,6 @@ Accept wildcard characters: False
 ```
 
 ### -ArchivalSpecs
-
 Retrieves the archical specifications from Get-RubrikSLA via the pipeline
 
 ```yaml
@@ -848,7 +821,6 @@ Accept wildcard characters: False
 ```
 
 ### -ReplicationSpecs
-
 Retrieves the replication specifications from Get-RubrikSLA via the pipeline
 
 ```yaml
@@ -864,7 +836,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -880,7 +851,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -896,8 +866,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -912,7 +882,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -928,18 +897,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Pierre-Fran §ois Guglielmi for community usage Twitter: @pfguglielmi GitHub: pfguglielmi
+Written by Pierre-Fran §ois Guglielmi for community usage
+Twitter: @pfguglielmi
+GitHub: pfguglielmi
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikSLA](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikSLA)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksla](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriksla)
 

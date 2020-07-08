@@ -1,31 +1,28 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikbootstrap
 schema: 2.0.0
 ---
 
 # Get-RubrikBootStrap
 
 ## SYNOPSIS
-
 Connects to Rubrik cluster and retrieves the bootstrap process progress.
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikBootStrap [[-id] <String>] [-Server] <String> [[-RequestId] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 This function is created to pull the status of a cluster bootstrap request.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikBootStrap -server 169.254.11.25 -requestid 1
 ```
 
@@ -34,7 +31,6 @@ This will return the bootstrap status of the job with the requested ID.
 ## PARAMETERS
 
 ### -id
-
 ID of the Rubrik cluster or me for self
 
 ```yaml
@@ -50,7 +46,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -66,7 +61,6 @@ Accept wildcard characters: False
 ```
 
 ### -RequestId
-
 Bootstrap Request ID
 
 ```yaml
@@ -82,8 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -93,5 +86,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap](https://github.com/nshores/rubrik-sdk-for-powershell/tree/bootstrap)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikbootstrap](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikbootstrap)
 

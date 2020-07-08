@@ -1,21 +1,21 @@
 #Requires -Version 3
 function Get-RubrikVMwareHost
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves a list of ESXi hosts registered
-            
+
       .DESCRIPTION
       The Get-RubrikVMwareHost cmdlet will retrieve all of the registered ESXi hosts within the authenticated Rubrik cluster.
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvmwarehost
-            
+
       .EXAMPLE
       Get-RubrikVMwareHost
       This will return a listing of all of the ESXi hosts known to the connected Rubrik cluster
@@ -31,12 +31,14 @@ function Get-RubrikVMwareHost
   [CmdletBinding()]
   Param(
     # ESXi Host Name
+    [Parameter(
+      Position = 0)]
     [String]$Name,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,  
+    [String]$PrimaryClusterID,
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
@@ -49,17 +51,17 @@ function Get-RubrikVMwareHost
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

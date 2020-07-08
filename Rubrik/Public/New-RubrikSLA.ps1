@@ -1,7 +1,7 @@
 #Requires -Version 3
 function New-RubrikSLA
 {
-  <#  
+  <#
       .SYNOPSIS
       Creates a new Rubrik SLA Domain
 
@@ -31,39 +31,39 @@ function New-RubrikSLA
       New-RubrikSLA -Name 'Test1' -AdvancedConfig -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -WeeklyFrequency 1 -WeeklyRetention 4 -DayOfWeek Friday -YearlyFrequency 1 -YearlyRetention 3 -DayOfYear LastDay -YearStartMonth February
 
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days
-      while also keeping one backup per day for 30 days, one backup per week for 4 weeks and one backup per year for 3 years. 
+      while also keeping one backup per day for 30 days, one backup per week for 4 weeks and one backup per year for 3 years.
       The weekly backups will be created on Fridays and the yearly backups will be created on January 31 because the year is set
       to start in February. The advanced SLA configuration can only be used with CDM version 5.0 and above.
 
       .EXAMPLE
       New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -BackupStartHour 22 -BackupStartMinute 00 -BackupWindowDuration 8
 
-      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days. 
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days.
       Backups are allowed to run between 22:00 and 6:00AM.
 
       .EXAMPLE
       New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -FirstFullBackupStartHour 21 -FirstFullBackupStartMinute 30 -FirstFullBackupWindowDuration 57 -FirstFullBackupDay Friday
 
-      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days. 
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days.
       The first full backup is allowed to be taken between Friday 21:30 and Monday 6:30AM.
-      
+
       .EXAMPLE
       New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Archival -ArchivalLocationId 53aef5df-b628-4b61-aade-6520a2a5ba4d -LocalRetention 14 -InstantArchive
 
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days,
-      while also keeping one backup per day for 30 days. At the same time, data is immediately copied to the specified archival location 
+      while also keeping one backup per day for 30 days. At the same time, data is immediately copied to the specified archival location
       and will be kept there for 14 days.
 
       .EXAMPLE
-      New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Replication -ReplicationTargetId 8b4fe6f6-cc87-4354-a125-b65e23cf8c90 -RemoteRetention 5
-      
+      New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Replication -ReplicationTargetId 8b4fe6f6-cc87-4354-a125-b65e23cf8c90 -RemoteRetention 5
+
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days,
-      while also keeping one backup per day for 30 days. At the same time, data is replicated to the specified target cluster 
+      while also keeping one backup per day for 30 days. At the same time, data is replicated to the specified target cluster
       and will be kept there for 5 days.
 
       .EXAMPLE
       Get-RubrikSLA -Name 'SLA1' | New-RubrikSLA -Name 'CopySLA1'
-      
+
       This will create a copy of an existing SLA named SLA1 and store it as CopySLA1
   #>
 
@@ -181,7 +181,7 @@ function New-RubrikSLA
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
     [alias('advancedUiConfig')]
-    [object[]] $AdvancedFreq,   
+    [object[]] $AdvancedFreq,
     # Retrieves the allowed backup windows from Get-RubrikSLA via the pipeline
     [Parameter(
       ValueFromPipelineByPropertyName = $true)]
@@ -210,20 +210,20 @@ function New-RubrikSLA
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -267,10 +267,10 @@ function New-RubrikSLA
         replicationSpecs = @()
       }
     }
-    
+
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
-    
+
 
 
 
@@ -467,7 +467,7 @@ function New-RubrikSLA
         }
       }
     }
-    
+
     # Retrieve the allowed backup window settings from pipeline
     if ($BackupWindows) {
       if (($BackupWindows.startTimeAttributes.hour -ge 0) -and (-not $PSBoundParameters.ContainsKey('BackupStartHour'))) {
@@ -555,7 +555,7 @@ function New-RubrikSLA
         [int]$FirstFullBackupDay = 6
       } elseif ($FirstFullBackupDay -eq 'Saturday') {
         [int]$FirstFullBackupDay = 7
-      }          
+      }
       $body.FirstFullAllowedBackupWindows += @{
           startTimeAttributes = @{hour=$FirstFullBackupStartHour;minutes=$FirstFullBackupStartMinute;dayOfWeek=$FirstFullBackupDay};
           durationInHours = $FirstFullBackupWindowDuration
@@ -608,14 +608,14 @@ function New-RubrikSLA
       }
       [bool]$ParamValidation = $true
     }
-    
+
     if ($DailyFrequency -and $DailyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
         $body.advancedUiConfig += @{timeUnit='Daily';retentionType=$DailyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'daily'=@{frequency=$DailyFrequency;retention=$DailyRetention}}
-      } else { 
+      } else {
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Daily'
           $resources.Body.frequencies.frequency = $DailyFrequency
@@ -623,9 +623,9 @@ function New-RubrikSLA
         }
       }
       [bool]$ParamValidation = $true
-    }    
+    }
 
-    if ($WeeklyFrequency -and $WeeklyRetention) { 
+    if ($WeeklyFrequency -and $WeeklyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
         $body.frequencies += @{'weekly'=@{frequency=$WeeklyFrequency;retention=$WeeklyRetention;dayOfWeek=$DayOfWeek}}
         $body.advancedUiConfig += @{timeUnit='Weekly';retentionType='Weekly'}
@@ -640,7 +640,7 @@ function New-RubrikSLA
         }
       }
       [bool]$ParamValidation = $true
-    }    
+    }
 
     if ($MonthlyFrequency -and $MonthlyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
@@ -648,7 +648,7 @@ function New-RubrikSLA
         $body.advancedUiConfig += @{timeUnit='Monthly';retentionType=$MonthlyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'monthly'=@{frequency=$MonthlyFrequency;retention=$MonthlyRetention;dayOfMonth=$DayOfMonth}}
-      } else { 
+      } else {
         $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Monthly'
           $resources.Body.frequencies.frequency = $MonthlyFrequency
@@ -656,7 +656,7 @@ function New-RubrikSLA
         }
       }
       [bool]$ParamValidation = $true
-    }  
+    }
 
     if ($QuarterlyFrequency -and $QuarterlyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
@@ -664,11 +664,11 @@ function New-RubrikSLA
         $body.advancedUiConfig += @{timeUnit='Quarterly';retentionType=$QuarterlyRetentionType}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'quarterly'=@{frequency=$QuarterlyFrequency;retention=$QuarterlyRetention;firstQuarterStartMonth=$FirstQuarterStartMonth;dayOfQuarter=$DayOfQuarter}}
-      } else { 
+      } else {
         Write-Warning -Message 'Quarterly SLA configurations are not supported in this version of Rubrik CDM.'
       }
       [bool]$ParamValidation = $true
-    }  
+    }
 
     if ($YearlyFrequency -and $YearlyRetention) {
       if (($uri.contains('v2')) -and ($AdvancedConfig -eq $true)) {
@@ -676,7 +676,7 @@ function New-RubrikSLA
         $body.advancedUiConfig += @{timeUnit='Yearly';retentionType='Yearly'}
       } elseif ($uri.contains('v2')) {
         $body.frequencies += @{'yearly'=@{frequency=$YearlyFrequency;retention=$YearlyRetention;yearStartMonth=$YearStartMonth;dayOfYear=$DayOfYear}}
-      } else {  
+      } else {
           $body.frequencies += @{
           $resources.Body.frequencies.timeUnit = 'Yearly'
           $resources.Body.frequencies.frequency = $YearlyFrequency
@@ -684,16 +684,16 @@ function New-RubrikSLA
         }
       }
       [bool]$ParamValidation = $true
-    } 
-    
-    Write-Verbose -Message 'Checking for the $ParamValidation flag' 
-    if ($ParamValidation -ne $true) 
+    }
+
+    Write-Verbose -Message 'Checking for the $ParamValidation flag'
+    if ($ParamValidation -ne $true)
     {
       throw 'You did not specify any frequency and retention values'
-    }    
-    
+    }
+
     $body = ConvertTo-Json $body -Depth 10
-    
+
     # Remove bearer or basic auth info from verbose information
     Write-Verbose -Message "Header = $(
         (ConvertTo-Json -InputObject $header -Compress) -replace '(Bearer\s.*?")|(Basic\s.*?")'
@@ -704,6 +704,8 @@ function New-RubrikSLA
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    $result = $result | Select-Object -Property *,@{N="FrequencySummary";E={Get-RubrikSLAFrequencySummary -SLADomain $_}}
+    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
     return $result
 

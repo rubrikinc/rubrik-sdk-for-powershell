@@ -1,32 +1,29 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://rubrik.gitbook.io/rubrik-sdk-for-powershell/'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikorganization
 schema: 2.0.0
 ---
 
 # New-RubrikOrganization
 
 ## SYNOPSIS
-
 Adds an organization to a Rubrik cluster.
 
 ## SYNTAX
 
-```text
+```
 New-RubrikOrganization [-Name] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The New-RubrikOrganization cmdlet is used to create a new orgazniation on a Rubrik cluster.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikOrganization -Name 'NewOrg'
 ```
 
@@ -35,7 +32,6 @@ This will create a new organization named "NewOrg"
 ## PARAMETERS
 
 ### -Name
-
 Name of the organization to create
 
 ```yaml
@@ -51,7 +47,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -67,7 +62,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -83,8 +77,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -99,7 +93,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -115,18 +108,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Matt Elliott for community usage Twitter: @NetworkBrouhaha GitHub: shamsway
+Written by Matt Elliott for community usage
+Twitter: @NetworkBrouhaha
+GitHub: shamsway
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikorganization](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikorganization)
 

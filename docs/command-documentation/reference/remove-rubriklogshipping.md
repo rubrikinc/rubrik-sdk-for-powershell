@@ -1,39 +1,36 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikLogShipping
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubriklogshipping
 schema: 2.0.0
 ---
 
 # Remove-RubrikLogShipping
 
 ## SYNOPSIS
-
 Delete a specified log shipping configuration from Rubrik
 
 ## SYNTAX
 
-```text
+```
 Remove-RubrikLogShipping [-id] <String> [-DeleteSecondaryDatabase] [[-Server] <String>] [[-api] <String>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 Based on an id associated to a Rubrik Log Shipping job, we can delete the configuration and also remove the secondary database.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikLogShipping -PrimaryDatabaseName 'AthenaAM1-SQL16-1-2016' -SecondaryDatabaseName 'AthenaAM1-SQL16-1-2016'  | Remove-RubrikLogShipping
 ```
 
 ## PARAMETERS
 
 ### -id
+{{ Fill id Description }}
 
 ```yaml
 Type: String
@@ -48,6 +45,7 @@ Accept wildcard characters: False
 ```
 
 ### -DeleteSecondaryDatabase
+{{ Fill DeleteSecondaryDatabase Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -62,7 +60,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -78,7 +75,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -94,18 +90,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Lumnah Twitter: @lumnah GitHub: clumnah
+Written by Chris Lumnah
+Twitter: @lumnah
+GitHub: clumnah
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikLogShipping](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikLogShipping)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubriklogshipping](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubriklogshipping)
 

@@ -1,32 +1,28 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Sync-RubrikTag
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/sync-rubriktag
 schema: 2.0.0
 ---
 
 # Sync-RubrikTag
 
 ## SYNOPSIS
-
 Connects to Rubrik and creates a vSphere tag for each SLA Domain
 
 ## SYNTAX
 
-```text
+```
 Sync-RubrikTag [-Category] <String> [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Sync-RubrikTag cmdlet will query Rubrik for all of the existing SLA Domains, and then create a tag for each one
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Sync-RubrikTag -vCenter 'vcenter1.demo' -Category 'Rubrik'
 ```
 
@@ -35,7 +31,6 @@ This will validate or create a vSphere Category named Rubrik along with a Tag fo
 ## PARAMETERS
 
 ### -Category
-
 The vSphere Category name for the Rubrik SLA Tags
 
 ```yaml
@@ -51,7 +46,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -67,7 +61,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -83,18 +76,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Sync-RubrikTag](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Sync-RubrikTag)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/sync-rubriktag](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/sync-rubriktag)
 

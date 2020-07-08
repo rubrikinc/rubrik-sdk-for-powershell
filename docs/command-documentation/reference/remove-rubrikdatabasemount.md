@@ -1,49 +1,43 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikDatabaseMount
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikdatabasemount
 schema: 2.0.0
 ---
 
 # Remove-RubrikDatabaseMount
 
 ## SYNOPSIS
-
 Connects to Rubrik and removes one or more database live mounts
 
 ## SYNTAX
 
-```text
+```
 Remove-RubrikDatabaseMount [-id] <String> [-Force] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Remove-RubrikDatabaseMount cmdlet is used to request the deletion of one or more instant database mounts
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Remove-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'
 ```
 
 This will remove mount id "11111111-2222-3333-4444-555555555555".
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikDatabaseMount | Remove-RubrikDatabaseMount
 ```
 
 This will remove all mounted databases.
 
 ### EXAMPLE 3
-
-```text
+```
 Get-RubrikDatabaseMount -source_database_name 'BAR' | Remove-RubrikDatabaseMount
 ```
 
@@ -52,7 +46,6 @@ This will remove any mounts found using the datase name as a base reference.
 ## PARAMETERS
 
 ### -id
-
 The Rubrik ID value of the mount
 
 ```yaml
@@ -68,7 +61,6 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-
 Force unmount to deal with situations where host has been moved.
 
 ```yaml
@@ -84,7 +76,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -100,7 +91,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -116,8 +106,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -132,7 +122,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -148,18 +137,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal for community usage Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal for community usage
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikDatabaseMount](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikDatabaseMount)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikdatabasemount](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikdatabasemount)
 

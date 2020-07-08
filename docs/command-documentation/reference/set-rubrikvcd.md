@@ -1,79 +1,70 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/rubrikinc/PowerShell-Module'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikvcd
 schema: 2.0.0
 ---
 
 # Set-RubrikVCD
 
 ## SYNOPSIS
-
 Connects to Rubrik and modifies an existing vCD connection
 
 ## SYNTAX
 
-### None \(Default\)
-
-```text
+### None (Default)
+```
 Set-RubrikVCD -id <String> [-Hostname <String>] [-UpdateCreds] [-SLAID <String>] [-Server <String>]
  [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### SLA\_Explicit
-
-```text
+### SLA_Explicit
+```
 Set-RubrikVCD -id <String> [-Hostname <String>] [-UpdateCreds] [-SLA <String>] [-SLAID <String>]
  [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### SLA\_Unprotected
-
-```text
+### SLA_Unprotected
+```
 Set-RubrikVCD -id <String> [-Hostname <String>] [-UpdateCreds] [-DoNotProtect] [-SLAID <String>]
  [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### SLA\_Inherit
-
-```text
+### SLA_Inherit
+```
 Set-RubrikVCD -id <String> [-Hostname <String>] [-UpdateCreds] [-Inherit] [-SLAID <String>] [-Server <String>]
  [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Set-RubrikVCD cmdlet modifies an existing vCloud Director connection on the system. This requires authentication.
+The Set-RubrikVCD cmdlet modifies an existing vCloud Director connection on the system.
+This requires authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Set-RubrikVCD -ID Vcd:::01234567-8910-1abc-d435-0abc1234d567 -SLA "Bronze"
 ```
 
 This will update the vCD cluster settings on the Rubrik cluster and assign the 'Bronze' SLA on the vCD cluster with ID "Vcd:::01234567-8910-1abc-d435-0abc1234d567"
 
 ### EXAMPLE 2
-
-```text
+```
 Set-RubrikVCD -ID Vcd:::01234567-8910-1abc-d435-0abc1234d567 -DoNotProtect
 ```
 
 This will update the vCD cluster settings on the Rubrik cluster and clear the SLA assignment on the vCD cluster with ID "Vcd:::01234567-8910-1abc-d435-0abc1234d567"
 
 ### EXAMPLE 3
-
-```text
+```
 Set-RubrikVCD -ID Vcd:::01234567-8910-1abc-d435-0abc1234d567 -Hostname newserver.company.com
 ```
 
 This will update the vCD cluster settings on the Rubrik cluster to assign a new hostname to the vCD cluster with ID "Vcd:::01234567-8910-1abc-d435-0abc1234d567"
 
 ### EXAMPLE 4
-
-```text
+```
 Set-RubrikVCD -ID Vcd:::01234567-8910-1abc-d435-0abc1234d567
 ```
 
@@ -82,7 +73,6 @@ This will update the vCD cluster settings on the Rubrik cluster to update the cr
 ## PARAMETERS
 
 ### -id
-
 vCD Instance ID
 
 ```yaml
@@ -98,8 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -Hostname
-
-vCD Hostname \(FQDN\)
+vCD Hostname (FQDN)
 
 ```yaml
 Type: String
@@ -114,7 +103,6 @@ Accept wildcard characters: False
 ```
 
 ### -UpdateCreds
-
 Updates vCD Credentials
 
 ```yaml
@@ -130,7 +118,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLA
-
 The SLA Domain in Rubrik
 
 ```yaml
@@ -146,7 +133,6 @@ Accept wildcard characters: False
 ```
 
 ### -DoNotProtect
-
 Removes the SLA Domain assignment
 
 ```yaml
@@ -162,7 +148,6 @@ Accept wildcard characters: False
 ```
 
 ### -Inherit
-
 Inherits the SLA Domain assignment from a parent object
 
 ```yaml
@@ -178,7 +163,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
-
 SLA id value
 
 ```yaml
@@ -194,7 +178,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -210,7 +193,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -226,8 +208,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -242,7 +224,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -258,18 +239,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Matt Elliott for community usage Twitter: @NetworkBrouhaha GitHub: shamsway
+Written by Matt Elliott for community usage
+Twitter: @NetworkBrouhaha
+GitHub: shamsway
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikvcd](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikvcd)
 

@@ -1,18 +1,18 @@
 #Requires -Version 3
 function Get-RubrikVApp
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves the current Rubrik vCD vApp settings
-            
+
       .DESCRIPTION
       The Get-RubrikVApp cmdlet retrieves all the vCD vApp settings actively running on the system. This requires authentication with your Rubrik cluster.
-            
+
       .NOTES
       Written by Matt Elliott for community usage
       Twitter: @NetworkBrouhaha
       GitHub: shamsway
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvapp
 
@@ -31,7 +31,7 @@ function Get-RubrikVApp
       .EXAMPLE
       Get-RubrikVApp -Relic
       This returns all removed vCD vApps that were formerly protected by Rubrik.
-      
+
       .EXAMPLE
       Get-RubrikVApp -Relic:false
       This returns all vCD vApps that are currently protected by Rubrik.
@@ -50,8 +50,7 @@ function Get-RubrikVApp
     # Name of the vCD vApp
     [Parameter(
       ParameterSetName='Query',
-      Position = 0,
-      ValueFromPipelineByPropertyName = $true)]
+      Position = 0)]
     [ValidateNotNullOrEmpty()]
     [Alias('VM')]
     [String]$Name,
@@ -65,7 +64,7 @@ function Get-RubrikVApp
     [String]$id,
     # Filter results to include only relic (removed) vCD vApps
     [Parameter(ParameterSetName='Query')]
-    [Alias('is_relic')]    
+    [Alias('is_relic')]
     [Switch]$Relic,
     # DetailedObject will retrieved the detailed vApp object, the default behavior of the API is to only retrieve a subset of the full vApp object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
     [Parameter(ParameterSetName='Query')]
@@ -73,18 +72,18 @@ function Get-RubrikVApp
     # SLA Domain policy assigned to the vCD vApp
     [Parameter(ParameterSetName='Query')]
     [ValidateNotNullOrEmpty()]
-    [String]$SLA, 
+    [String]$SLA,
     # Filter by SLA Domain assignment type
     [Parameter(ParameterSetName='Query')]
     [ValidateNotNullOrEmpty()]
     [ValidateSet('Derived', 'Direct','Unassigned')]
     [Alias('sla_assignment')]
-    [String]$SLAAssignment,     
+    [String]$SLAAssignment,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use local as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Parameter(ParameterSetName='Query')]
     [ValidateNotNullOrEmpty()]
     [Alias('primary_cluster_id')]
-    [String]$PrimaryClusterID,        
+    [String]$PrimaryClusterID,
     # SLA id value
     [Parameter(ParameterSetName='Query')]
     [ValidateNotNullOrEmpty()]
@@ -127,17 +126,17 @@ function Get-RubrikVApp
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -147,11 +146,11 @@ function Get-RubrikVApp
         $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
     }
     #endregion
-    
+
     # If the switch parameter was not explicitly specified remove from query params
     if(-not $PSBoundParameters.ContainsKey('Relic')) {
       $Resources.Query.Remove('is_relic')
-    }    
+    }
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
@@ -163,14 +162,10 @@ function Get-RubrikVApp
 
     # If the Get-RubrikVApp function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
-      for ($i = 0; $i -lt @($result).Count; $i++) {
-        $Percentage = [int]($i/@($result).count*100)
-        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-        Get-RubrikVApp -id $result[$i].id
-      }
-    } else {
-      return $result
+      Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
+      $result = Get-RubrikDetailedResult -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
     }
+    return $result
 
   } # End of process
 } # End of function

@@ -1,39 +1,36 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikLogShipping
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriklogshipping
 schema: 2.0.0
 ---
 
 # Set-RubrikLogShipping
 
 ## SYNOPSIS
-
 Update a specified log shipping configuration
 
 ## SYNTAX
 
-```text
+```
 Set-RubrikLogShipping [-id] <String> [[-state] <String>] [-DisconnectStandbyUsers] [[-Server] <String>]
  [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 Update a specified log shipping configuratio
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikLogShipping -PrimaryDatabaseName 'AthenaAM1-SQL16-1-2016' -SecondaryDatabaseName 'AthenaAM1-SQL16-1-2016' | Set-RubrikLogShipping -state STANDBY -DisconnectStandbyUsers
 ```
 
 ## PARAMETERS
 
 ### -id
+{{ Fill id Description }}
 
 ```yaml
 Type: String
@@ -48,6 +45,7 @@ Accept wildcard characters: False
 ```
 
 ### -state
+{{ Fill state Description }}
 
 ```yaml
 Type: String
@@ -62,6 +60,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisconnectStandbyUsers
+{{ Fill DisconnectStandbyUsers Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -76,7 +75,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -92,7 +90,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -108,18 +105,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Lumnah Twitter: lumnah GitHub: clumnah
+Written by Chris Lumnah
+Twitter: lumnah
+GitHub: clumnah
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikLogShipping](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Set-RubrikLogShipping)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriklogshipping](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubriklogshipping)
 

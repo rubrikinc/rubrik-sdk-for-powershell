@@ -1,41 +1,36 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNASShare
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriknasshare
 schema: 2.0.0
 ---
 
 # Get-RubrikNASShare
 
 ## SYNOPSIS
-
 Get information on NAS shares.
 
 ## SYNTAX
 
-```text
+```
 Get-RubrikNASShare [-ID <String>] [-HostID <String>] [-ShareType <String>] [-HostName <String>]
  [-exportPoint <String>] [-Server <String>] [-PrimaryClusterID <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 Get all information for NAS shares configured within Rubrik.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikNASShare -ShareType 'SMB'
 ```
 
 Get all SMB NAS Shares
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikHost -name 'FOO'  | Get-RubrikNASShare
 ```
 
@@ -44,7 +39,6 @@ Get all NAS Shares attached to host 'FOO'.
 ## PARAMETERS
 
 ### -ID
-
 NAS Share ID
 
 ```yaml
@@ -60,7 +54,6 @@ Accept wildcard characters: False
 ```
 
 ### -HostID
-
 Host ID associated with the share
 
 ```yaml
@@ -76,8 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShareType
-
-Share type \(NFS or SMB\)
+Share type (NFS or SMB)
 
 ```yaml
 Type: String
@@ -92,7 +84,6 @@ Accept wildcard characters: False
 ```
 
 ### -HostName
-
 Host name
 
 ```yaml
@@ -108,7 +99,6 @@ Accept wildcard characters: False
 ```
 
 ### -exportPoint
-
 export point
 
 ```yaml
@@ -124,7 +114,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -140,8 +129,8 @@ Accept wildcard characters: False
 ```
 
 ### -PrimaryClusterID
-
-Filter the summary information based on the primarycluster\_id of the primary Rubrik cluster. Use 'local' as the primary\_cluster\_id of the Rubrik cluster that is hosting the current REST API session.
+Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
+Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
 
 ```yaml
 Type: String
@@ -156,7 +145,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -172,18 +160,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNASShare](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikNASShare)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriknasshare](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriknasshare)
 

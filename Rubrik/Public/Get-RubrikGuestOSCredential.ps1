@@ -1,23 +1,23 @@
 #Requires -Version 3
 function Get-RubrikGuestOSCredential
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves the Guest OS credentials stored within a cluster
-            
+
       .DESCRIPTION
       The Get-RubrikGuestOSCredential cmdlet will retrieve information around the Guest OS Credentials stored within a given cluster.
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
       GitHub: mwpreston
-            
+
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikguestoscredential
-            
+
       .EXAMPLE
-      Get-RubrikGuestOSCredential 
+      Get-RubrikGuestOSCredential
       This will return all of the guest os crendentials stored within the currently authenticated cluster
 
       .EXAMPLE
@@ -29,10 +29,18 @@ function Get-RubrikGuestOSCredential
       This will return all of the guest os crendentials belonging to the domain.local domain stored within the currently authenticated cluster
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # ID of the Guest OS Credential to retrieve
+    [Parameter(
+        ParameterSetName='ID',
+        Position = 0,
+        Mandatory = $true,
+        ValueFromPipelineByPropertyName = $true)]
     [String]$Id,
+    [Parameter(
+      ParameterSetName='Query',
+      Position = 0)]
     # Username of the Guest OS Crential to retrieve
     [String]$Username,
     # Domain to retrieve Guest OS Credentials from
@@ -50,17 +58,17 @@ function Get-RubrikGuestOSCredential
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

@@ -65,7 +65,7 @@ Describe -Name 'Public/Get-RubrikHost' -Tag 'Public', 'Get-RubrikHost' -Fixture 
                 Should -BeExactly 0
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 4
     }
 }

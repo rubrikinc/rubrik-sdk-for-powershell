@@ -30,7 +30,7 @@ function Restore-RubrikDatabase
       Restore using the pipeline to get the database ID.
       
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikdatabase
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/restore-rubrikdatabase
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
@@ -87,12 +87,10 @@ function Restore-RubrikDatabase
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $Id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
 
-
     #region One-off
     Write-Verbose -Message "Build the body"
     $body = @{
       $resources.Body.finishRecovery = $FinishRecovery.IsPresent
-      recoveryPoint = @()
     }
 
     if($MaxDataStreams){
@@ -100,15 +98,14 @@ function Restore-RubrikDatabase
     }
 
     if($RecoveryLSN){
-      $body.recoveryPoint += @{lsnPoint=@{lsn=$RecoveryLSN}}
+      $body.recoveryPoint = @{lsnPoint=@{lsn=$RecoveryLSN}}
     } else {
-      $body.recoveryPoint += @{timestampMs = $TimestampMs}
+      $body.recoveryPoint = @{timestampMs = $TimestampMs}
     }
 
     $body = ConvertTo-Json $body -depth 10
     Write-Verbose -Message "Body = $body"
     #endregion
-
 
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result

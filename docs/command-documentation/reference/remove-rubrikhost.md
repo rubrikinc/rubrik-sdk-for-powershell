@@ -1,41 +1,36 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikHost
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikhost
 schema: 2.0.0
 ---
 
 # Remove-RubrikHost
 
 ## SYNOPSIS
-
 Delete host by specifying the host ID.
 
 ## SYNTAX
 
-```text
+```
 Remove-RubrikHost [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 The Remove-RubrikHost cmdlet is used to remove a host registered with the Rubrik cluster.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikHost -Name 'Server1.example.com' | Remove-RubrikHost
 ```
 
 This will remove a host that matches the name "Server1.example.com"
 
 ### EXAMPLE 2
-
-```text
+```
 Remove-RubrikHost -id 'Host:::111111-2222-3333-4444-555555555555'
 ```
 
@@ -44,7 +39,6 @@ This will specifically remove the host id matching "Host:::111111-2222-3333-4444
 ## PARAMETERS
 
 ### -id
-
 The Rubrik ID value of the host
 
 ```yaml
@@ -60,7 +54,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -76,7 +69,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -92,8 +84,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -108,7 +100,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -124,18 +115,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikHost](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Remove-RubrikHost)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikhost](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikhost)
 

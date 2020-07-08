@@ -1,7 +1,7 @@
 #requires -Version 3
 function Get-RubrikObjectStoreArchive
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves a list of object store archive targets
 
@@ -29,7 +29,7 @@ function Get-RubrikObjectStoreArchive
       This will return the object store archive target with a name of 'Azure01' on the Rubrik cluster.
   #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Object Store Archive ID
     [ValidateNotNullOrEmpty()]
@@ -43,8 +43,7 @@ function Get-RubrikObjectStoreArchive
     [ValidateNotNullOrEmpty()]
     [Parameter(
         ParameterSetName='Query',
-        Position = 0,
-        ValueFromPipelineByPropertyName = $true)]
+        Position = 0)]
     [String]$Name,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -56,20 +55,20 @@ function Get-RubrikObjectStoreArchive
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

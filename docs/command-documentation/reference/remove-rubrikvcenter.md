@@ -1,32 +1,30 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/rubrikinc/PowerShell-Module'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikvcenter
 schema: 2.0.0
 ---
 
 # Remove-RubrikVCenter
 
 ## SYNOPSIS
-
 Removes an existing vCenter connection
 
 ## SYNTAX
 
-```text
+```
 Remove-RubrikVCenter [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Remove-RubrikVCenter cmdlet will remove an existing vCenter connection on the system. This does require authentication.
+The Remove-RubrikVCenter cmdlet will remove an existing vCenter connection on the system.
+This does require authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Remove-RubrikVCenter -id "vCenter:::9e4299f5-dd99-4ec1-adee-cacb311b9507"
 ```
 
@@ -35,7 +33,6 @@ This will remove the vCenter connection with ID "vCenter:::9e4299f5-dd99-4ec1-ad
 ## PARAMETERS
 
 ### -id
-
 ID of the vCenter Server to remove
 
 ```yaml
@@ -51,7 +48,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -67,7 +63,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -83,8 +78,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -99,7 +94,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -115,18 +109,16 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
 Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikvcenter](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikvcenter)
 

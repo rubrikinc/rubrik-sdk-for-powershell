@@ -1,0 +1,8 @@
+﻿{
+  "DefaultParameterValue":  {},
+  "ModuleOption":  {
+    "ApplyCustomViewDefinitions":  "True",
+    "CredentialPath": "",
+    "DefaultWebRequestTimeOut": 15
+  }
+}

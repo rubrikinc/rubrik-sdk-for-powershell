@@ -1,13 +1,13 @@
 #Requires -Version 3
 function Get-RubrikNutanixCluster
 {
-  <#  
+  <#
       .SYNOPSIS
       Connects to Rubrik and retrieves the current Nutanix Clusters
-            
+
       .DESCRIPTION
       The Get-RubrikNutanixCluster cmdlet will retrieve the all the Nutanix Cluster settings actively running on the system.
-            
+
       .NOTES
       Written by Mike Preston for community usage
       Twitter: @mwpreston
@@ -15,7 +15,7 @@ function Get-RubrikNutanixCluster
 
       .LINK
      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriknutanixcluster
-            
+
       .EXAMPLE
       Get-RubrikNutanixCluster
       This will return all the Nutanix Clusters and their associated settings currently known to the Rubrik cluster
@@ -34,14 +34,22 @@ function Get-RubrikNutanixCluster
 
     #>
 
-  [CmdletBinding()]
+  [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
     # Nutanix Cluster Id
+    [Parameter(
+      ParameterSetName='ID',
+      Position = 0,
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [String]$Id,
     # Nutanix Cluster Name
+    [Parameter(
+      ParameterSetName='Query',
+      Position = 0)]
     [ValidateNotNullOrEmpty()]
-    [String]$Name,    
+    [String]$Name,
     # Nutanix Cluster hostname
     [ValidateNotNullOrEmpty()]
     [String]$Hostname,
@@ -68,17 +76,17 @@ function Get-RubrikNutanixCluster
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -93,13 +101,9 @@ function Get-RubrikNutanixCluster
 
     # If the Get-RubrikNutanixCluster function has been called with the -DetailedObject parameter a separate API query will be performed if the initial query was not based on ID
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
-        for ($i = 0; $i -lt @($result).Count; $i++) {
-            $Percentage = [int]($i/@($result).count*100)
-            Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
-            Get-RubrikNutanixCluster -id $result[$i].id
-        }
-        } else {
-        return $result
-        }
+      Write-Verbose -Message "DetailedObject detected, requerying for more detailed results"
+      $result = Get-RubrikDetailedResult -result $result -cmdlet "$($MyInvocation.MyCommand.Name)"
+    }
+    return $result
   } # End of process
 } # End of function

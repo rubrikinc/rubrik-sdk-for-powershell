@@ -1,12 +1,12 @@
 #requires -Version 3
 function Remove-RubrikFileset
 {
-  <#  
+  <#
       .SYNOPSIS
       Delete a fileset by specifying the fileset ID
 
       .DESCRIPTION
-      The Remove-RubrikFileset cmdlet is used to remove a fileset registered with the Rubrik cluster.
+      The Remove-RubrikFileset cmdlet is used to remove a fileset registered with the Rubrik cluster. This does not remove the actual Fileset Template the Fileset was created with.
 
       .NOTES
       Written by Chris Wahl for community usage
@@ -17,11 +17,13 @@ function Remove-RubrikFileset
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubrikfileset
 
       .EXAMPLE
-      Get-RubrikFileset -Name 'C_Drive' | Remove-RubrikHost
+      Get-RubrikFileset -Name 'C_Drive' | Remove-RubrikFileset
+
       This will remove any fileset that matches the name "C_Drive"
 
       .EXAMPLE
       Remove-RubrikFileset -id 'Fileset:::111111-2222-3333-4444-555555555555'
+      
       This will specifically remove the fileset id matching "Fileset:::111111-2222-3333-4444-555555555555"
   #>
 
@@ -40,20 +42,20 @@ function Remove-RubrikFileset
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {

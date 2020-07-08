@@ -88,14 +88,14 @@ function New-RubrikLogShipping
       $resources.Body.state = $state
     }
 
-    if($DisconnectStandbyUsers){
-      $body.Add($resources.Body.shouldDisconnectStandbyUsers,$DisconnectStandbyUsers)
+    if($PSBoundParameters.keys -contains 'DisconnectStandbyUsers'){
+      $body.Add($resources.Body.shouldDisconnectStandbyUsers, [bool]$DisconnectStandbyUsers)
     }
 
     if($MaxDataStreams){
       $body.Add($resources.Body.maxDataStreams,$MaxDataStreams)
     }
-
+    
     if($TargetFilePaths) {
       if($TargetDataFilePath -or $TargetLogFilePath) {Write-Warning 'Use of -TargetFilePaths overrides -TargetDataFilePath and -TargetLogFilePath.'}
       $body.Add('targetFilePaths',$TargetFilePaths)
@@ -109,7 +109,6 @@ function New-RubrikLogShipping
     #endregion
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    #$body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

@@ -16,7 +16,7 @@ function Get-RubrikHyperVMount
       GitHub: mwpreston
             
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikHyperVMount
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikhypervmount
             
       .EXAMPLE
       Get-RubrikHyperVMount

@@ -48,7 +48,7 @@ Describe -Name 'Public/New-RubrikReport' -Tag 'Public', 'New-RubrikReport' -Fixt
         }
         It -Name 'ValidateSet ReportTemplate' -Test {
             { New-RubrikReport -name 'Test' -ReportTemplate 'NotCorrect'  } |
-                Should -Throw 'The argument "NotCorrect" does not belong to the set "ProtectionTasksDetails,ProtectionTasksSummary,SystemCapacity,SlaComplianceSummary" specified by the ValidateSet attribute. Supply an argument that is in the set and then try the command again.'
+                Should -Throw 'The argument "NotCorrect" does not belong to the set "CapacityOverTime,ObjectProtectionSummary,ObjectTaskSummary,ObjectIndexingSummary,ProtectionTasksDetails,ProtectionTasksSummary,RecoveryTasksDetails,SlaComplianceSummary,SystemCapacity" specified by the ValidateSet attribute. Supply an argument that is in the set and then try the command again.'
         }
     }
 }

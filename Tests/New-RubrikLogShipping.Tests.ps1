@@ -58,5 +58,36 @@ Describe -Name 'Public/New-RubrikLogShipping' -Tag 'Public', 'New-RubrikLogShipp
                     Should -Throw "Cannot bind argument to parameter 'targetInstanceId' because it is an empty string."
             }
         }
+
+        Context -Name 'Parameter/DisconnectStandbyUsers' {
+            Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+            Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+                @{ 
+                    'id'                     = 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
+                    'isVmPaused'             = $true
+                }
+            }
+            
+            It -Name 'Verify switch param - DisconnectStandbyUsers - Switch Param' -Test {
+                $Output = & {
+                    New-RubrikLogShipping -Id 'databaseid' -targetInstanceId 'instance' -targetDatabaseName 'db' -Verbose -DisconnectStandbyUsers 4>&1
+                }
+                (-join $Output) | Should -BeLike '*shouldDisconnectStandbyUsers*true*'
+            }
+            
+            It -Name 'Verify switch param - DisconnectStandbyUsers:$false - Switch Param' -Test {
+                $Output = & {
+                    New-RubrikLogShipping -Id 'databaseid' -targetInstanceId 'instance' -targetDatabaseName 'db' -Verbose -DisconnectStandbyUsers:$false 4>&1
+                }
+                (-join $Output) | Should -BeLike '*shouldDisconnectStandbyUsers*false*'
+            }
+            
+            It -Name 'Verify switch param - No DisconnectStandbyUsers - Switch Param' -Test {
+                $Output = & {
+                    New-RubrikLogShipping -Id 'databaseid' -targetInstanceId 'instance' -targetDatabaseName 'db' -Verbose 4>&1
+                }
+                (-join $Output) | Should -Not -BeLike '*shouldDisconnectStandbyUsers*'
+            }
+        }
     }
 }

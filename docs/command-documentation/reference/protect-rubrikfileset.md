@@ -1,59 +1,55 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikFileset
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikfileset
 schema: 2.0.0
 ---
 
 # Protect-RubrikFileset
 
 ## SYNOPSIS
-
 Connects to Rubrik and assigns an SLA to a fileset
 
 ## SYNTAX
 
-### SLA\_Explicit
-
-```text
+### SLA_Explicit
+```
 Protect-RubrikFileset -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### SLA\_Unprotected
-
-```text
+### SLA_Unprotected
+```
 Protect-RubrikFileset -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Protect-RubrikFileset cmdlet will update a fileset's SLA Domain assignment within the Rubrik cluster. The SLA Domain contains all policy-driven values needed to protect data. Note that this function requires the fileset ID value, not the name of the fileset, since fileset names are not unique across clusters. It is suggested that you first use Get-RubrikFileset to narrow down the one or more filesets to protect, and then pipe the results to Protect-RubrikFileset. You will be asked to confirm each fileset you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
+The Protect-RubrikFileset cmdlet will update a fileset's SLA Domain assignment within the Rubrik cluster.
+The SLA Domain contains all policy-driven values needed to protect data.
+Note that this function requires the fileset ID value, not the name of the fileset, since fileset names are not unique across clusters.
+It is suggested that you first use Get-RubrikFileset to narrow down the one or more filesets to protect, and then pipe the results to Protect-RubrikFileset.
+You will be asked to confirm each fileset you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikFileset 'C_Drive' | Protect-RubrikFileset -SLA 'Gold'
 ```
 
-This will assign the Gold SLA Domain to any fileset named "C\_Drive"
+This will assign the Gold SLA Domain to any fileset named "C_Drive"
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Gold' -Confirm:$False
 ```
 
-This will assign the Gold SLA Domain to the fileset named "C\_Drive" residing on the host named "Server1" without asking for confirmation
+This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" without asking for confirmation
 
 ## PARAMETERS
 
 ### -id
-
 Fileset ID
 
 ```yaml
@@ -69,7 +65,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLA
-
 The SLA Domain in Rubrik
 
 ```yaml
@@ -85,7 +80,6 @@ Accept wildcard characters: False
 ```
 
 ### -DoNotProtect
-
 Removes the SLA Domain assignment
 
 ```yaml
@@ -101,7 +95,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
-
 SLA id value
 
 ```yaml
@@ -117,7 +110,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -133,7 +125,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -149,8 +140,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -165,7 +156,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -181,18 +171,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Chris Wahl for community usage Twitter: @ChrisWahl GitHub: chriswahl
+Written by Chris Wahl for community usage
+Twitter: @ChrisWahl
+GitHub: chriswahl
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikFileset](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Protect-RubrikFileset)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikfileset](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikfileset)
 

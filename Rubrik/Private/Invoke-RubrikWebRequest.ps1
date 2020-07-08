@@ -15,9 +15,17 @@ function Invoke-RubrikWebRequest {
     )
     
     if (Test-PowerShellSix) {
-        $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
+        if ($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) {
+            $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
+        } else {
+            $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
+        }
     } else {
-        $result = Invoke-WebRequest -UseBasicParsing @PSBoundParameters
+        if ($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) {
+            $result = Invoke-WebRequest -UseBasicParsing -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
+        } else {
+            $result = Invoke-WebRequest -UseBasicParsing @PSBoundParameters
+        }
     }
     
     Write-Verbose -Message "Received HTTP Status $($result.StatusCode)"

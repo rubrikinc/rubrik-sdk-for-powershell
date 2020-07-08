@@ -22,31 +22,31 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
     Context -Name 'Results Filtering' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
+            @{
                 'name'                   = 'VirtualMachine01'
                 'id'                     = 'VirtualMachine:::11111'
                 'eventType'              = 'Replication'
                 'time'                   = 'Mon Aug 10 07:12:14 UTC 2019'
             },
-            @{ 
+            @{
                 'name'                   = 'VirtualMachine02'
                 'id'                     = 'VirtualMachine:::22222'
                 'eventType'              = 'Backup'
                 'time'                   = 'Mon Aug 11 07:12:14 UTC 2019'
             },
-            @{ 
+            @{
                 'name'                   = 'VirtualMachine03'
                 'id'                     = 'VirtualMachine:::33333'
                 'eventType'              = 'CloudNativeSource'
                 'time'                   = 'Mon Aug 12 07:12:14 UTC 2019'
             },
-            @{ 
+            @{
                 'name'                   = 'VirtualMachine04'
                 'id'                     = 'VirtualMachine:::44444'
                 'eventType'              = 'Replication'
                 'time'                   = 'Mon Aug 13 07:12:14 UTC 2019'
             },
-            @{ 
+            @{
                 'name'                   = 'VirtualMachine05'
                 'id'                     = 'VirtualMachine:::55555'
                 'eventType'              = 'Replication'
@@ -65,42 +65,42 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
             (Get-RubrikEvent)[1].Date |
                 Should -BeOfType DateTime
         }
-        
+
         It -Name 'Verify switch param - ShowOnlyLatest:$true - Switch Param' -Test {
             $Output = & {
                 Get-RubrikEvent -ShowOnlyLatest -Verbose 4>&1
             }
             (-join $Output) | Should -BeLike '*show_only_latest=true*'
         }
-        
+
         It -Name 'Verify switch param - ShowOnlyLatest:$false - Switch Param' -Test {
             $Output = & {
                 Get-RubrikEvent -ShowOnlyLatest:$false -Verbose 4>&1
             }
             (-join $Output) | Should -BeLike '*show_only_latest=false*'
         }
-        
+
         It -Name 'Verify switch param - No ShowOnlyLatest - Switch Param' -Test {
             $Output = & {
                 Get-RubrikEvent -Verbose 4>&1
             }
             (-join $Output) | Should -Not -BeLike '*show_only_latest='
         }
-        
+
         It -Name 'Verify switch param - FilterOnlyOnLatest:$true - Switch Param' -Test {
             $Output = & {
                 Get-RubrikEvent -FilterOnlyOnLatest -Verbose 4>&1
             }
             (-join $Output) | Should -BeLike '*filter_only_on_latest=true*'
         }
-        
+
         It -Name 'Verify switch param - FilterOnlyOnLatest:$false - Switch Param' -Test {
             $Output = & {
                 Get-RubrikEvent -FilterOnlyOnLatest:$false -Verbose 4>&1
             }
             (-join $Output) | Should -BeLike '*filter_only_on_latest=false*'
         }
-        
+
         It -Name 'Verify switch param - No FilterOnlyOnLatest - Switch Param' -Test {
             $Output = & {
                 Get-RubrikEvent -Verbose 4>&1
@@ -108,11 +108,50 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
             (-join $Output) | Should -Not -BeLike '*filter_only_on_latest='
         }
         It -Name 'Verify Status ValidateSet' -Test {
-            { Get-RubrikEvent -Status 'NonExistant' } | 
+            { Get-RubrikEvent -Status 'NonExistant' } |
                 Should -Throw "Cannot validate argument on parameter 'Status'."
-        }        
+        }
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 8
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 8
+    }
+    Context -Name 'EventSeries calling correct cmdlets' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Get-RubrikEventSeries -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{
+                "taskType"= "Replication"
+                "objectId"= "MssqlDatabase:::125af122-5925-4a4f-9d26-7fcf0eae01dc"
+                "objectType"= "Mssql"
+                "objectName"= "AdventureWorks2016"
+                "status"= "Success"
+                "startTime"= "2020-03-10T13:46:30.764Z"
+                "endTime"= "2020-03-10T13:46:30.678Z"
+                "total"= "2"
+                "eventDetailList"=
+                  @{
+                    "id"= "1583847985143-d6920ab4-bf0f-4913-b432-87a704c5c721"
+                    "status"= "Running"
+                    "time"= "Tue Mar 10 13:46:25 UTC 2020"
+                    "objectId"= "125af122-5925-4a4f-9d26-7fcf0eae01dc"
+                    "objectType"= "Mssql"
+                    "objectName"= "AdventureWorks2016"
+                  },
+                  @{
+                    "id"= "1583847990678-26601933-fe16-493d-9c1c-afec7988a59b"
+                    "status"= "Success"
+                    "time"= "Tue Mar 10 13:46:30 UTC 2020"
+                    "objectId"= "125af122-5925-4a4f-9d26-7fcf0eae01dc"
+                    "objectType"= "Mssql"
+                    "objectName"= "AdventureWorks2016"
+                  }
+              }
+        }
+        It -Name 'Should call Get-RubrikEventSeries and return count of 2' -Test {
+            (Get-RubrikEvent -eventSeriesId '11111').Count |
+                Should -BeExactly 2
+        }
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+
     }
 }

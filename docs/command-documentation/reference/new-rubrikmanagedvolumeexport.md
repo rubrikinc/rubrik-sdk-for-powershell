@@ -1,42 +1,38 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikManagedVolumeExport
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikmanagedvolumeexport
 schema: 2.0.0
 ---
 
 # New-RubrikManagedVolumeExport
 
 ## SYNOPSIS
-
 Creates an export of a Managed Volume snapshot
 
 ## SYNTAX
 
-```text
+```
 New-RubrikManagedVolumeExport [-Id] <String> [[-SourceManagedVolumeName] <String>] [[-Server] <String>]
  [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The New-RubrikManagedVolumeExport command will request the creation of a Managed Volume export of the specified Managed Volume snapshot
+The New-RubrikManagedVolumeExport command will request the creation of
+a Managed Volume export of the specified Managed Volume snapshot
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Get-RubrikSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2 | Select-Object -First 1 | New-RubrikManagedVolumeExport
 ```
 
-Create an export \(live mount\) of the most recent snapshot for the specified managed volume.
+Create an export (live mount) of the most recent snapshot for the specified managed volume.
 
 ## PARAMETERS
 
 ### -Id
-
 Rubrik identifier of Managed Volume snapshot to be exported
 
 ```yaml
@@ -52,7 +48,6 @@ Accept wildcard characters: False
 ```
 
 ### -SourceManagedVolumeName
-
 Source Managed Volume Name
 
 ```yaml
@@ -68,7 +63,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -84,7 +78,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -100,8 +93,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -116,7 +109,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -132,18 +124,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikManagedVolumeExport](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/New-RubrikManagedVolumeExport)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikmanagedvolumeexport](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikmanagedvolumeexport)
 

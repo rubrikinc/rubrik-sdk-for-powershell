@@ -1,40 +1,35 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Export-RubrikDatabase
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/export-rubrikdatabase
 schema: 2.0.0
 ---
 
 # Export-RubrikDatabase
 
 ## SYNOPSIS
-
 Connects to Rubrik exports a database to a MSSQL instance
 
 ## SYNTAX
 
-### Recovery\_timestamp
-
-```text
+### Recovery_timestamp
+```
 Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-TimestampMs <Int64>] [-FinishRecovery]
  [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Overwrite] [-Server <String>] [-api <String>]
  [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
-### Recovery\_DateTime
-
-```text
+### Recovery_DateTime
+```
 Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryDateTime <DateTime>] [-FinishRecovery]
  [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Overwrite] [-Server <String>] [-api <String>]
  [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
-### Recovery\_LSN
-
-```text
+### Recovery_LSN
+```
 Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryLSN <String>] [-FinishRecovery]
  [-TargetInstanceId <String>] [-TargetDatabaseName <String>] [-Overwrite] [-Server <String>] [-api <String>]
  [-TargetDataFilePath <String>] [-TargetLogFilePath <String>] [-TargetFilePaths <PSObject[]>] [-WhatIf]
@@ -42,31 +37,33 @@ Export-RubrikDatabase -Id <String> [-MaxDataStreams <Int32>] [-RecoveryLSN <Stri
 ```
 
 ## DESCRIPTION
-
 The Export-RubrikDatabase command will request a database export from a Rubrik Cluster to a MSSQL instance
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Export-RubrikDatabase -id MssqlDatabase:::c5ecf3ef-248d-4bb2-8fe1-4d3c820a0e38 -targetInstanceId MssqlInstance:::0085b247-e718-4177-869f-e3ae1f7bb503 -targetDatabaseName ReportServer -finishRecovery -maxDataStreams 4 -timestampMs 1492661627000
 ```
 
 ### EXAMPLE 2
-
-```text
+```
 Export-RubrikDatabase -id $db.id -recoveryDateTime (Get-Date (Get-RubrikDatabase $db).latestRecoveryPoint) -targetInstanceId $db2.instanceId -targetDatabaseName 'BAR_EXP' -targetFilePaths $targetfiles -maxDataStreams 1
 ```
 
-Restore the $db \(where $db is the output of a Get-RubrikDatabase call\) to the most recent recovery point for that database. New file paths are in the $targetfiles array. Each individual file declaration \(logicalName, exportPath,newFilename\) will be a hashtable, so what gets passed to the cmdlet is an array of hashtables
+Restore the $db (where $db is the output of a Get-RubrikDatabase call) to the most recent recovery point for that database.
+New file paths are 
+in the $targetfiles array.
+Each individual file declaration (logicalName, exportPath,newFilename) will be a hashtable, so what gets passed to the
+cmdlet is an array of hashtables
 
-$targetfiles = @\(\) $targetfiles += @{logicalName='BAR\_1';exportPath='E:\SQLFiles\Data\BAREXP\'} $targetfiles += @{logicalName='BAR\_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
+$targetfiles = @()
+$targetfiles += @{logicalName='BAR_1';exportPath='E:\SQLFiles\Data\BAREXP\'}
+$targetfiles += @{logicalName='BAR_LOG';exportPath='E:\SQLFiles\Log\BAREXP\'}
 
 ## PARAMETERS
 
 ### -Id
-
 Rubrik identifier of database to be exported
 
 ```yaml
@@ -82,7 +79,6 @@ Accept wildcard characters: False
 ```
 
 ### -MaxDataStreams
-
 Number of parallel streams to copy data
 
 ```yaml
@@ -98,7 +94,6 @@ Accept wildcard characters: False
 ```
 
 ### -TimestampMs
-
 Recovery Point desired in the form of Epoch with Milliseconds
 
 ```yaml
@@ -114,7 +109,6 @@ Accept wildcard characters: False
 ```
 
 ### -RecoveryDateTime
-
 Recovery Point desired in the form of DateTime value
 
 ```yaml
@@ -130,8 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -RecoveryLSN
-
-Recovery Point desired in the form of an LSN \(Log Sequence Number\)
+Recovery Point desired in the form of an LSN (Log Sequence Number)
 
 ```yaml
 Type: String
@@ -146,7 +139,6 @@ Accept wildcard characters: False
 ```
 
 ### -FinishRecovery
-
 Take database out of recovery mode after export
 
 ```yaml
@@ -162,7 +154,6 @@ Accept wildcard characters: False
 ```
 
 ### -TargetInstanceId
-
 Rubrik identifier of MSSQL instance to export to
 
 ```yaml
@@ -178,7 +169,6 @@ Accept wildcard characters: False
 ```
 
 ### -TargetDatabaseName
-
 Name to give database upon export
 
 ```yaml
@@ -194,6 +184,7 @@ Accept wildcard characters: False
 ```
 
 ### -Overwrite
+{{ Fill Overwrite Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -208,7 +199,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -224,7 +214,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -240,7 +229,6 @@ Accept wildcard characters: False
 ```
 
 ### -TargetDataFilePath
-
 Simple Mode - Data File Path
 
 ```yaml
@@ -256,7 +244,6 @@ Accept wildcard characters: False
 ```
 
 ### -TargetLogFilePath
-
 Simple Mode - Data File Path
 
 ```yaml
@@ -272,7 +259,6 @@ Accept wildcard characters: False
 ```
 
 ### -TargetFilePaths
-
 Advanced Mode - Array of hash tables for file reloaction.
 
 ```yaml
@@ -288,8 +274,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -304,7 +290,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -320,20 +305,22 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
+Written by Pete Milanese for community usage
+Twitter: @pmilano1
+GitHub: pmilano1
 
-Written by Pete Milanese for community usage Twitter: @pmilano1 GitHub: pmilano1
-
-Modified by Mike Fal Twitter: @Mike\_Fal GitHub: MikeFal
+Modified by Mike Fal
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Export-RubrikDatabase](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Export-RubrikDatabase)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/export-rubrikdatabase](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/export-rubrikdatabase)
 
