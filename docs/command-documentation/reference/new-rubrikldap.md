@@ -1,43 +1,39 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: 'https://github.com/rubrikinc/PowerShell-Module'
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikldap
 schema: 2.0.0
 ---
 
 # New-RubrikLDAP
 
 ## SYNOPSIS
-
 Connects to Rubrik and sets Rubrik cluster settings
 
 ## SYNTAX
 
-### UserPassword \(Default\)
-
-```text
+### UserPassword (Default)
+```
 New-RubrikLDAP -Name <String> -DynamicDNSName <String> [-BaseDN <String>] [-AuthServers <Array>]
  [-BindUserName] <String> [-BindUserPassword] <SecureString> [-Server <String>] [-id <String>] [-api <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Credential
-
-```text
+```
 New-RubrikLDAP -Name <String> -BindCredential <Object> -DynamicDNSName <String> [-BaseDN <String>]
  [-AuthServers <Array>] [-Server <String>] [-id <String>] [-api <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The New-RubrikLDAP cmdlet will set the cluster settings on the system. This does require authentication.
+The New-RubrikLDAP cmdlet will set the cluster settings on the system.
+This does require authentication.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 New-RubrikLDAP -Name "Test LDAP Settings" -baseDN "DC=domain,DC=local" -authServers "192.168.1.8"
 ```
 
@@ -46,7 +42,6 @@ This will create LDAP settings on the Rubrik cluster defined by Connect-Rubrik f
 ## PARAMETERS
 
 ### -Name
-
 Human friendly name
 
 ```yaml
@@ -62,8 +57,8 @@ Accept wildcard characters: False
 ```
 
 ### -BindCredential
-
-Bind credentials with permission to connect to the LDAP server Optionally, use the BindUserName and BindUserPassword parameters
+Bind credentials with permission to connect to the LDAP server
+Optionally, use the BindUserName and BindUserPassword parameters
 
 ```yaml
 Type: Object
@@ -78,7 +73,6 @@ Accept wildcard characters: False
 ```
 
 ### -DynamicDNSName
-
 Dynamic DNS name for locating authentication servers.
 
 ```yaml
@@ -94,7 +88,6 @@ Accept wildcard characters: False
 ```
 
 ### -BaseDN
-
 The path to the directory where searches for users begin.
 
 ```yaml
@@ -110,8 +103,8 @@ Accept wildcard characters: False
 ```
 
 ### -AuthServers
-
-An ordered list of authentication servers. Servers on this list have priority over servers discovered using dynamic DNS.
+An ordered list of authentication servers.
+Servers on this list have priority over servers discovered using dynamic DNS.
 
 ```yaml
 Type: Array
@@ -126,8 +119,8 @@ Accept wildcard characters: False
 ```
 
 ### -BindUserName
-
-Bind username with permissions to connect to the LDAP server Optionally, use the BindCredential parameter
+Bind username with permissions to connect to the LDAP server
+Optionally, use the BindCredential parameter
 
 ```yaml
 Type: String
@@ -142,8 +135,8 @@ Accept wildcard characters: False
 ```
 
 ### -BindUserPassword
-
-Password for the Username provided Optionally, use the Credential parameter
+Password for the Username provided
+Optionally, use the Credential parameter
 
 ```yaml
 Type: SecureString
@@ -158,7 +151,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -174,7 +166,6 @@ Accept wildcard characters: False
 ```
 
 ### -id
-
 ID of the Rubrik cluster or me for self
 
 ```yaml
@@ -190,7 +181,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -206,8 +196,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -222,7 +212,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -238,18 +227,16 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
 Adapted by Adam Shuttleworth from scripts by Chris Wahl for community usage
 
 ## RELATED LINKS
 
-[https://github.com/rubrikinc/PowerShell-Module](https://github.com/rubrikinc/PowerShell-Module)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikldap](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/new-rubrikldap)
 

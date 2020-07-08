@@ -1,48 +1,43 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Stop-RubrikManagedVolumeSnapshot
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/stop-rubrikmanagedvolumesnapshot
 schema: 2.0.0
 ---
 
 # Stop-RubrikManagedVolumeSnapshot
 
 ## SYNOPSIS
-
 Stops Rubrik Managed Volume snopshot
 
 ## SYNTAX
 
-```text
+```
 Stop-RubrikManagedVolumeSnapshot [[-id] <String>] [[-Server] <String>] [[-SLA] <String>] [-Forever]
  [[-SLAID] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Stop-RubrikManagedVolumeSnapshot cmdlet is used to close a Rubrik Managed Volume for read/write actions.
+The Stop-RubrikManagedVolumeSnapshot cmdlet is used to close a Rubrik Managed Volume
+for read/write actions.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Stop-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
 ```
 
 Close the specified managed volume for read/write operations
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikManagedVolume -name 'foo' | Stop-ManagedVolumeSnapshot
 ```
 
 ## PARAMETERS
 
 ### -id
-
 Rubrik's Managed Volume id value
 
 ```yaml
@@ -58,7 +53,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -74,7 +68,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLA
-
 The SLA Domain in Rubrik
 
 ```yaml
@@ -90,7 +83,6 @@ Accept wildcard characters: False
 ```
 
 ### -Forever
-
 The snapshot will be retained indefinitely and available under Unmanaged Objects
 
 ```yaml
@@ -106,7 +98,6 @@ Accept wildcard characters: False
 ```
 
 ### -SLAID
-
 SLA id value
 
 ```yaml
@@ -122,7 +113,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -138,8 +128,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -154,7 +144,6 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -170,18 +159,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal for community usage Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal for community usage
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Stop-RubrikManagedVolumeSnapshot](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Stop-RubrikManagedVolumeSnapshot)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/stop-rubrikmanagedvolumesnapshot](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/stop-rubrikmanagedvolumesnapshot)
 

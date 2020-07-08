@@ -1,40 +1,36 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: >-
-  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Start-RubrikManagedVolumeSnapshot
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/start-rubrikmanagedvolumesnapshot
 schema: 2.0.0
 ---
 
 # Start-RubrikManagedVolumeSnapshot
 
 ## SYNOPSIS
-
 Starts Rubrik Managed Volume snopshot
 
 ## SYNTAX
 
-```text
+```
 Start-RubrikManagedVolumeSnapshot [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
-The Start-RubrikManagedVolumeSnapshot cmdlet is used to open a Rubrik Managed Volume for read/write actions.
+The Start-RubrikManagedVolumeSnapshot cmdlet is used to open a Rubrik Managed Volume
+for read/write actions.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-
-```text
+```
 Start-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
 ```
 
 Open the specified managed volume for read/write operations
 
 ### EXAMPLE 2
-
-```text
+```
 Get-RubrikManagedVolume -name 'foo' | Start-ManagedVolumeSnapshot
 ```
 
@@ -43,7 +39,6 @@ Open the 'foo' managed volume for read/write operations.
 ## PARAMETERS
 
 ### -id
-
 Rubrik's Managed Volume id value
 
 ```yaml
@@ -59,7 +54,6 @@ Accept wildcard characters: False
 ```
 
 ### -Server
-
 Rubrik server IP or FQDN
 
 ```yaml
@@ -75,7 +69,6 @@ Accept wildcard characters: False
 ```
 
 ### -api
-
 API version
 
 ```yaml
@@ -91,18 +84,18 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about\_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-
-Written by Mike Fal for community usage Twitter: @Mike\_Fal GitHub: MikeFal
+Written by Mike Fal for community usage
+Twitter: @Mike_Fal
+GitHub: MikeFal
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Start-RubrikManagedVolumeSnapshot](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Start-RubrikManagedVolumeSnapshot)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/start-rubrikmanagedvolumesnapshot](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/start-rubrikmanagedvolumesnapshot)
 
