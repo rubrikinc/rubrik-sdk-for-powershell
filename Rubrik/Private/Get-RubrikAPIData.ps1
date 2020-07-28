@@ -1322,6 +1322,18 @@ function Get-RubrikAPIData {
                 }
                 Success     = '200'
             }
+            '5.2' = @{
+                Description = 'Retrieve the configured syslog servers within the Rubrik Cluster'
+                URI         = '/api/v1/syslog/export'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'hostname'
+                }
+                Success     = '200'
+            }
         }
         'Get-RubrikUnmanagedObject'    = @{
             '1.0' = @{
