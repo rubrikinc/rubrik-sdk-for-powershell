@@ -343,6 +343,24 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
+            '5.2' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                        StorageOverview         = '/api/internal/stats/system_storage'
+                        DiskCapacityInTb        = '/api/internal/cluster/me/disk_capacity'
+                        FlashCapacityInTb       = '/api/internal/cluster/me/flash_capacity'
+                        CloudStorage            = '/api/internal/stats/cloud_storage/physical'
+                        CloudStorageIngested    = '/api/internal/stats/cloud_storage/ingested'
+                        LocalStorageIngested    = '/api/internal/stats/snapshot_storage/ingested'
+                        DailyGrowth             = '/api/internal/stats/average_storage_growth_per_day'
+                               }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Get-RubrikBackupServiceDeployment'           = @{
             '1.0' = @{
@@ -1295,6 +1313,18 @@ function Get-RubrikAPIData {
             '1.0' = @{
                 Description = 'Retrieve the configured syslog servers within the Rubrik Cluster'
                 URI         = '/api/internal/syslog'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'hostname'
+                }
+                Success     = '200'
+            }
+            '5.2' = @{
+                Description = 'Retrieve the configured syslog servers within the Rubrik Cluster'
+                URI         = '/api/v1/syslog/export'
                 Method      = 'Get'
                 Body        = ''
                 Query       = ''

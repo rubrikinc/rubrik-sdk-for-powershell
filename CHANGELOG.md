@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added 5.2 API calls for `Get-RubrikClusterStorage` as the endpoint to retrieve Average Daily Growth no longer exists in CDM 5.2. Resolves [Issue 664](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/664)
+* Updated API stanza for 5.2 for the `Get-RubrikSyslogServer` cmdlet
+
 ### Fixed
 
 ## [5.0.2](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.2) - 2020-07-08
