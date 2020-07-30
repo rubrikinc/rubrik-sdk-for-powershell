@@ -13,21 +13,24 @@ function Invoke-RubrikWebRequest {
         $Method,
         $Body
     )
-    
     if (Test-PowerShellSix) {
-        if ($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) {
+        if ($null -ne $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
+            Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
             $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
         } else {
+            Write-Verbose -Message "No custom timeout specified or custom timeout is less than 100 seconds, invoking request with default value of 100 seconds"
             $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
         }
     } else {
-        if ($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) {
+        if ($null -ne $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
+            Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
             $result = Invoke-WebRequest -UseBasicParsing -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
         } else {
+            Write-Verbose -Message "No custom timeout specified or custom timeout is less than 100 seconds, invoking request with default value of 100 seconds"
             $result = Invoke-WebRequest -UseBasicParsing @PSBoundParameters
         }
     }
-    
+
     Write-Verbose -Message "Received HTTP Status $($result.StatusCode)"
 
     return $result

@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Changed default value of DefaultWebRequestTimeout module option to 100 seconds to match cmdlets timeout.  Resolves [Issue 667](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/667)  [Issue 663](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/663) and [Issue 666](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/666)
+* Added check to `Invoke-RubrikWebRequest` to check DefaultWebRequestTimeOut.  If the value is not set, or set to something less than 100, `Invoke-WebRequest` will default to 100 seconds, otherwise, if the value is greater than 100 `Invoke-WebRequest` will use the custom timeout
+* Added verbose messages around the timeout values
+
 ### Added
 
 * Added 5.2 API calls for `Get-RubrikClusterStorage` as the endpoint to retrieve Average Daily Growth no longer exists in CDM 5.2. Resolves [Issue 664](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/664)
