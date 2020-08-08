@@ -1851,7 +1851,7 @@ function Get-RubrikAPIData {
                     dynamicDnsName = "dynamicDnsName"
                     bindUserName = "bindUserName"
                     bindUserPassword = "bindUserPassword"
-                    baseDN = "baseDN"
+                    baseDn = "baseDn"
                     authServers = "authServers"
                     advancedOptions = "advancedOptions"
                 }
