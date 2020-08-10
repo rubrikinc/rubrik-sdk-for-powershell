@@ -3334,6 +3334,18 @@ function Get-RubrikAPIData {
                 Success     = '202'
             }
         }
+        'Update-RubrikNutanixCluster'         = @{
+            '1.0' = @{
+                Description = 'Refresh the metadata for the specified Nutanix Cluster'
+                URI         = '/api/internal/nutanix/cluster/{id}/refresh'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Update-RubrikVCD'         = @{
             '1.0' = @{
                 Description = 'Refresh the metadata for the specified vCD Server'
