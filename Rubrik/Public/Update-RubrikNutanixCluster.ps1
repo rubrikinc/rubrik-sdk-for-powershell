@@ -17,7 +17,7 @@ function Update-RubrikNutanixCluster
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubriknutanixcluster
       
       .EXAMPLE
-      Get-RubrikNutanixCluster -Name 'vcsa.domain.local' | Update-RubrikNutanixCluster
+      Get-RubrikNutanixCluster -Name 'nutanix.domain.local' | Update-RubrikNutanixCluster
       This will refresh the vCenter metadata on the currently connected Rubrik cluster
 
       .EXAMPLE
