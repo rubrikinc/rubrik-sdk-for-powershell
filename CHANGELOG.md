@@ -29,6 +29,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* Fixed bugs in `New-RubrikLDAP` and updated documentation and verbose logging [Issue 648](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/648)
+
 ## [5.0.2](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.2) - 2020-07-08
 
 ### Changed
