@@ -1,5 +1,5 @@
 Install-Module -Name Pester -MaximumVersion 4.99.99 -Force
-Remove-Module Pester
+Remove-Module Pester -ErrorAction SilentlyContinue
 Import-Module -Name Pester -MaximumVersion 4.99.99 
 
 $PesterSplat = @{
