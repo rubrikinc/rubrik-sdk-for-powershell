@@ -51,6 +51,13 @@ This will return all removed virtual machines that were formerly protected by Ru
 
 ### EXAMPLE 4
 ```
+Get-RubrikVM -SLAAssignment Unassigned
+```
+
+Retrieves all VMware VMs that are currently not protected by any SLA
+
+### EXAMPLE 5
+```
 Get-RubrikVM -Name myserver01 -DetailedObject
 ```
 

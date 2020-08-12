@@ -14,14 +14,14 @@ Connects to Rubrik and sets Rubrik cluster settings
 
 ### UserPassword (Default)
 ```
-New-RubrikLDAP -Name <String> -DynamicDNSName <String> [-BaseDN <String>] [-AuthServers <Array>]
+New-RubrikLDAP -Name <String> -DynamicDNSName <String> [-baseDn <String>] [-AuthServers <Array>]
  [-BindUserName] <String> [-BindUserPassword] <SecureString> [-Server <String>] [-id <String>] [-api <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Credential
 ```
-New-RubrikLDAP -Name <String> -BindCredential <Object> -DynamicDNSName <String> [-BaseDN <String>]
+New-RubrikLDAP -Name <String> -BindCredential <Object> -DynamicDNSName <String> [-baseDn <String>]
  [-AuthServers <Array>] [-Server <String>] [-id <String>] [-api <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -34,10 +34,28 @@ This does require authentication.
 
 ### EXAMPLE 1
 ```
-New-RubrikLDAP -Name "Test LDAP Settings" -baseDN "DC=domain,DC=local" -authServers "192.168.1.8"
+New-RubrikLDAP -Name "Test LDAP Settings" -baseDn "DC=domain,DC=local" -authServers "192.168.1.8"
 ```
 
 This will create LDAP settings on the Rubrik cluster defined by Connect-Rubrik function
+
+### EXAMPLE 2
+```
+$credential = Get-Credential
+```
+
+New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -baseDn "DC=rubrik,DC=lab" -BindCredential $Credential -Verbose
+
+This will create LDAP settings using the credentials object provided as a parameter
+
+### EXAMPLE 3
+```
+$SecPw = Read-Host -AsSecureString
+```
+
+New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -baseDn "DC=rubrik,DC=lab" -BindUserName jaapjaap -BindUserPassword $SecPw -Verbose
+
+This will create LDAP settings using the user name and password provided as parameters
 
 ## PARAMETERS
 
@@ -87,7 +105,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -BaseDN
+### -baseDn
 The path to the directory where searches for users begin.
 
 ```yaml

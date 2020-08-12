@@ -62,6 +62,13 @@ Invoke-RubrikRESTCall -Endpoint 'fileset_template/bulk' -Method POST -Body $body
 Creates a new fileset from the given fileset template and the given host id supporting Direct Archive. 
 Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.
 
+### EXAMPLE 5
+```
+Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post
+```
+
+Refreshes the information of the Nutanix cluster
+
 ## PARAMETERS
 
 ### -Endpoint

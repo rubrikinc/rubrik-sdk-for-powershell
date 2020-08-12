@@ -208,6 +208,7 @@
     * [Sync-RubrikAnnotation](command-documentation/reference/sync-rubrikannotation.md)
     * [Sync-RubrikTag](command-documentation/reference/sync-rubriktag.md)
     * [Update-RubrikHost](command-documentation/reference/update-rubrikhost.md)
+    * [Update-RubrikNutanixCluster](command-documentation/reference/update-rubriknutanixcluster.md)
     * [Update-RubrikVCD](command-documentation/reference/update-rubrikvcd.md)
     * [Update-RubrikVCenter](command-documentation/reference/update-rubrikvcenter.md)
     * [Update-RubrikVMwareVM](command-documentation/reference/update-rubrikvmwarevm.md)
