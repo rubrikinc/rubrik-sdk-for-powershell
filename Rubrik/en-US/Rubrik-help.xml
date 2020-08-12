@@ -17323,196 +17323,6 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-RubrikVAppExportOptions</command:name>
-      <command:verb>Get</command:verb>
-      <command:noun>RubrikVAppExportOptions</command:noun>
-      <maml:description>
-        <maml:para>Retrieves export for a vCD vApp known to a Rubrik cluster</maml:para>
-      </maml:description>
-    </command:details>
-    <maml:description>
-      <maml:para>The Get-RubrikVAppExportOptions cmdlet retrieves export options for a vCD vApp known to a Rubrik cluster</maml:para>
-    </maml:description>
-    <command:syntax>
-      <command:syntaxItem>
-        <maml:name>Get-RubrikVAppExportOptions</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="snapshot_id">
-          <maml:name>id</maml:name>
-          <maml:Description>
-            <maml:para>Snapshot ID of the vApp to retrieve options for</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="export_mode">
-          <maml:name>ExportMode</maml:name>
-          <maml:Description>
-            <maml:para>Specifies whether export should use the existing vApp or create a new vApp. Valid values are ExportToNewVapp or ExportToTargetVapp</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="target_vapp_id">
-          <maml:name>TargetVAppID</maml:name>
-          <maml:Description>
-            <maml:para>ID of target vApp</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="target_org_vdc_id">
-          <maml:name>TargetOrgVDCID</maml:name>
-          <maml:Description>
-            <maml:para>ID of target vApp</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Server</maml:name>
-          <maml:Description>
-            <maml:para>Rubrik server IP or FQDN</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>api</maml:name>
-          <maml:Description>
-            <maml:para>API version</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-    </command:syntax>
-    <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="snapshot_id">
-        <maml:name>id</maml:name>
-        <maml:Description>
-          <maml:para>Snapshot ID of the vApp to retrieve options for</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="export_mode">
-        <maml:name>ExportMode</maml:name>
-        <maml:Description>
-          <maml:para>Specifies whether export should use the existing vApp or create a new vApp. Valid values are ExportToNewVapp or ExportToTargetVapp</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="target_vapp_id">
-        <maml:name>TargetVAppID</maml:name>
-        <maml:Description>
-          <maml:para>ID of target vApp</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="target_org_vdc_id">
-        <maml:name>TargetOrgVDCID</maml:name>
-        <maml:Description>
-          <maml:para>ID of target vApp</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Server</maml:name>
-        <maml:Description>
-          <maml:para>Rubrik server IP or FQDN</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>api</maml:name>
-        <maml:Description>
-          <maml:para>API version</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
-    <command:inputTypes />
-    <command:returnValues />
-    <maml:alertSet>
-      <maml:alert>
-        <maml:para>Written by Matt Elliott for community usage Twitter: @NetworkBrouhaha GitHub: shamsway</maml:para>
-      </maml:alert>
-    </maml:alertSet>
-    <command:examples>
-      <command:example>
-        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$SnapshotID = (Get-RubrikVApp -Name 'vApp01' | Get-RubrikSnapshot -Latest).id</dev:code>
-        <dev:remarks>
-          <maml:para>Get-RubrikVAppExportOptions -id $SnapshotID -ExportMode 'ExportToNewVapp' This returns available export options for the specific snapshot.</maml:para>
-        </dev:remarks>
-      </command:example>
-    </command:examples>
-    <command:relatedLinks>
-      <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri></maml:uri>
-      </maml:navigationLink>
-      <maml:navigationLink>
-        <maml:linkText>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppExportOptions</maml:linkText>
-        <maml:uri>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppExportOptions</maml:uri>
-      </maml:navigationLink>
-    </command:relatedLinks>
-  </command:command>
-  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
-    <command:details>
       <command:name>Get-RubrikVAppRecoverOption</command:name>
       <command:verb>Get</command:verb>
       <command:noun>RubrikVAppRecoverOption</command:noun>
@@ -17622,124 +17432,6 @@
       <maml:navigationLink>
         <maml:linkText>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvapprecoveroption</maml:linkText>
         <maml:uri>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvapprecoveroption</maml:uri>
-      </maml:navigationLink>
-    </command:relatedLinks>
-  </command:command>
-  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
-    <command:details>
-      <command:name>Get-RubrikVAppRecoverOptions</command:name>
-      <command:verb>Get</command:verb>
-      <command:noun>RubrikVAppRecoverOptions</command:noun>
-      <maml:description>
-        <maml:para>Retrieves instant recovery options a vCD vApp known to a Rubrik cluster</maml:para>
-      </maml:description>
-    </command:details>
-    <maml:description>
-      <maml:para>The Get-RubrikVAppRecoverOptions cmdlet is used to retrieve instant recovery options for a vCD vApp known to a Rubrik cluster</maml:para>
-    </maml:description>
-    <command:syntax>
-      <command:syntaxItem>
-        <maml:name>Get-RubrikVAppRecoverOptions</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="snapshot_id">
-          <maml:name>id</maml:name>
-          <maml:Description>
-            <maml:para>Snapshot ID of the vApp to retrieve options for</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
-          <maml:name>Server</maml:name>
-          <maml:Description>
-            <maml:para>Rubrik server IP or FQDN</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-          <maml:name>api</maml:name>
-          <maml:Description>
-            <maml:para>API version</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-    </command:syntax>
-    <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="snapshot_id">
-        <maml:name>id</maml:name>
-        <maml:Description>
-          <maml:para>Snapshot ID of the vApp to retrieve options for</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
-        <maml:name>Server</maml:name>
-        <maml:Description>
-          <maml:para>Rubrik server IP or FQDN</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>api</maml:name>
-        <maml:Description>
-          <maml:para>API version</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
-    <command:inputTypes />
-    <command:returnValues />
-    <maml:alertSet>
-      <maml:alert>
-        <maml:para>Written by Matt Elliott for community usage Twitter: @NetworkBrouhaha Github: shamsway</maml:para>
-      </maml:alert>
-    </maml:alertSet>
-    <command:examples>
-      <command:example>
-        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$SnapshotID = (Get-RubrikVApp -Name 'vApp01' | Get-RubrikSnapshot -Latest).id</dev:code>
-        <dev:remarks>
-          <maml:para>Get-RubrikVAppRecoverOptions -id $SnapshotID This will return recovery options on the specific snapshot.</maml:para>
-        </dev:remarks>
-      </command:example>
-    </command:examples>
-    <command:relatedLinks>
-      <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri></maml:uri>
-      </maml:navigationLink>
-      <maml:navigationLink>
-        <maml:linkText>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppRecoverOptions</maml:linkText>
-        <maml:uri>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVAppRecoverOptions</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -18333,196 +18025,6 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-RubrikVCDTemplateExportOptions</command:name>
-      <command:verb>Get</command:verb>
-      <command:noun>RubrikVCDTemplateExportOptions</command:noun>
-      <maml:description>
-        <maml:para>Retrieves export options for a vCD Template known to a Rubrik cluster</maml:para>
-      </maml:description>
-    </command:details>
-    <maml:description>
-      <maml:para>The Get-RubrikVCDTemplateExportOptions cmdlet retrieves export options for a vCD Template known to a Rubrik cluster</maml:para>
-    </maml:description>
-    <command:syntax>
-      <command:syntaxItem>
-        <maml:name>Get-RubrikVCDTemplateExportOptions</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="snapshot_id">
-          <maml:name>id</maml:name>
-          <maml:Description>
-            <maml:para>Snapshot ID of the vCD Template to retrieve options for</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="catalog_id">
-          <maml:name>catalogid</maml:name>
-          <maml:Description>
-            <maml:para>ID of target catalog. Defaults to the existing catalog.</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-          <maml:name>name</maml:name>
-          <maml:Description>
-            <maml:para>Name of the newly exported vCD Template. Defaults to [TemplateName]-Export</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="org_vdc_id">
-          <maml:name>orgvdcid</maml:name>
-          <maml:Description>
-            <maml:para>Org vDC ID to export the vCD Template to. This should be an Org vDC in the same vCD Org where the target catalog exists.</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-          <maml:name>Server</maml:name>
-          <maml:Description>
-            <maml:para>Rubrik server IP or FQDN</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-          <maml:name>api</maml:name>
-          <maml:Description>
-            <maml:para>API version</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-    </command:syntax>
-    <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="snapshot_id">
-        <maml:name>id</maml:name>
-        <maml:Description>
-          <maml:para>Snapshot ID of the vCD Template to retrieve options for</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="catalog_id">
-        <maml:name>catalogid</maml:name>
-        <maml:Description>
-          <maml:para>ID of target catalog. Defaults to the existing catalog.</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>name</maml:name>
-        <maml:Description>
-          <maml:para>Name of the newly exported vCD Template. Defaults to [TemplateName]-Export</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="org_vdc_id">
-        <maml:name>orgvdcid</maml:name>
-        <maml:Description>
-          <maml:para>Org vDC ID to export the vCD Template to. This should be an Org vDC in the same vCD Org where the target catalog exists.</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-        <maml:name>Server</maml:name>
-        <maml:Description>
-          <maml:para>Rubrik server IP or FQDN</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-        <maml:name>api</maml:name>
-        <maml:Description>
-          <maml:para>API version</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
-    <command:inputTypes />
-    <command:returnValues />
-    <maml:alertSet>
-      <maml:alert>
-        <maml:para>Written by Matt Elliott for community usage Twitter: @NetworkBrouhaha GitHub: shamsway</maml:para>
-      </maml:alert>
-    </maml:alertSet>
-    <command:examples>
-      <command:example>
-        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$SnapshotID = (Get-RubrikVApp -Name 'vAppTemplate01' | Get-RubrikSnapshot -Latest).id</dev:code>
-        <dev:remarks>
-          <maml:para>Get-RubrikVCDTemplateExportOptions -id $SnapshotID -catalogid 'VcdCatalog:::01234567-8910-1abc-d435-0abc1234d567' -Name 'vAppTemplate01-export' This will return export options details on the specific snapshot.</maml:para>
-        </dev:remarks>
-      </command:example>
-    </command:examples>
-    <command:relatedLinks>
-      <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri></maml:uri>
-      </maml:navigationLink>
-      <maml:navigationLink>
-        <maml:linkText>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVCDTemplateExportOptions</maml:linkText>
-        <maml:uri>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/Get-RubrikVCDTemplateExportOptions</maml:uri>
-      </maml:navigationLink>
-    </command:relatedLinks>
-  </command:command>
-  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
-    <command:details>
       <command:name>Get-RubrikVCenter</command:name>
       <command:verb>Get</command:verb>
       <command:noun>RubrikVCenter</command:noun>
@@ -19088,6 +18590,13 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <dev:code>Get-RubrikVM -SLAAssignment Unassigned</dev:code>
+        <dev:remarks>
+          <maml:para>Retrieves all VMware VMs that are currently not protected by any SLA</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
         <dev:code>Get-RubrikVM -Name myserver01 -DetailedObject</dev:code>
         <dev:remarks>
           <maml:para>This will return the VM object with all properties, including additional details such as snapshots taken of the VM. Using this switch parameter negatively affects performance</maml:para>
@@ -20877,6 +20386,13 @@
         <dev:remarks>
           <maml:para>Invoke-RubrikRESTCall -Endpoint 'fileset_template/bulk' -Method POST -Body $body -BodyAsArray</maml:para>
           <maml:para>Creates a new fileset from the given fileset template and the given host id supporting Direct Archive.  Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+        <dev:code>Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post</dev:code>
+        <dev:remarks>
+          <maml:para>Refreshes the information of the Nutanix cluster</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -23496,7 +23012,7 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>BaseDN</maml:name>
+          <maml:name>baseDn</maml:name>
           <maml:Description>
             <maml:para>The path to the directory where searches for users begin.</maml:para>
           </maml:Description>
@@ -23629,7 +23145,7 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>BaseDN</maml:name>
+          <maml:name>baseDn</maml:name>
           <maml:Description>
             <maml:para>The path to the directory where searches for users begin.</maml:para>
           </maml:Description>
@@ -23750,7 +23266,7 @@
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>BaseDN</maml:name>
+        <maml:name>baseDn</maml:name>
         <maml:Description>
           <maml:para>The path to the directory where searches for users begin.</maml:para>
         </maml:Description>
@@ -23868,9 +23384,25 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>New-RubrikLDAP -Name "Test LDAP Settings" -baseDN "DC=domain,DC=local" -authServers "192.168.1.8"</dev:code>
+        <dev:code>New-RubrikLDAP -Name "Test LDAP Settings" -baseDn "DC=domain,DC=local" -authServers "192.168.1.8"</dev:code>
         <dev:remarks>
           <maml:para>This will create LDAP settings on the Rubrik cluster defined by Connect-Rubrik function</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>$credential = Get-Credential</dev:code>
+        <dev:remarks>
+          <maml:para>New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -baseDn "DC=rubrik,DC=lab" -BindCredential $Credential -Verbose</maml:para>
+          <maml:para>This will create LDAP settings using the credentials object provided as a parameter</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>$SecPw = Read-Host -AsSecureString</dev:code>
+        <dev:remarks>
+          <maml:para>New-RubrikLDAP -Name "rubrik.lab" -DynamicDNSName "ad1.test.lab" -baseDn "DC=rubrik,DC=lab" -BindUserName jaapjaap -BindUserPassword $SecPw -Verbose</maml:para>
+          <maml:para>This will create LDAP settings using the user name and password provided as parameters</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -47594,6 +47126,127 @@
       <maml:navigationLink>
         <maml:linkText>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubrikhost</maml:linkText>
         <maml:uri>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubrikhost</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Update-RubrikNutanixCluster</command:name>
+      <command:verb>Update</command:verb>
+      <command:noun>RubrikNutanixCluster</command:noun>
+      <maml:description>
+        <maml:para>Connects to Rubrik to refresh the metadata for the specified Nutanix cluster</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>The Update-RubrikNutanixCluster cmdlet will refresh all Nutanix metadata known to the connected Rubrik cluster.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Update-RubrikNutanixCluster</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+          <maml:name>id</maml:name>
+          <maml:Description>
+            <maml:para>Nutanix Cluster id value from the Rubrik Cluster</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:Description>
+            <maml:para>Rubrik server IP or FQDN</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>api</maml:name>
+          <maml:Description>
+            <maml:para>API version</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>id</maml:name>
+        <maml:Description>
+          <maml:para>Nutanix Cluster id value from the Rubrik Cluster</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:Description>
+          <maml:para>Rubrik server IP or FQDN</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$global:RubrikConnection.server</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>api</maml:name>
+        <maml:Description>
+          <maml:para>API version</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$global:RubrikConnection.api</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Written by Jaap Brasser for community usage Twitter: @jaap_brasser GitHub: jaapbrasser</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-RubrikNutanixCluster -Name 'nutanix.domain.local' | Update-RubrikNutanixCluster</dev:code>
+        <dev:remarks>
+          <maml:para>This will refresh the Nutanix metadata on the currently connected Rubrik cluster</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-RubrikNutanixCluster | Update-RubrikNutanixCluster</dev:code>
+        <dev:remarks>
+          <maml:para>This will refresh the Nutanix metadata for all connected Nutanix instances on the currently connected Rubrik cluster</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubriknutanixcluster</maml:linkText>
+        <maml:uri>https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubriknutanixcluster</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
