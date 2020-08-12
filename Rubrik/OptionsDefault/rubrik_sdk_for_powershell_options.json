@@ -3,6 +3,6 @@
   "ModuleOption":  {
     "ApplyCustomViewDefinitions":  "True",
     "CredentialPath": "",
-    "DefaultWebRequestTimeOut": 15
+    "DefaultWebRequestTimeOut": 100
   }
 }

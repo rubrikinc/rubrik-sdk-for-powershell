@@ -29,6 +29,11 @@ function Get-RubrikVM
       This will return all removed virtual machines that were formerly protected by Rubrik.
 
       .EXAMPLE
+      Get-RubrikVM -SLAAssignment Unassigned
+
+      Retrieves all VMware VMs that are currently not protected by any SLA
+
+      .EXAMPLE
       Get-RubrikVM -Name myserver01 -DetailedObject
       This will return the VM object with all properties, including additional details such as snapshots taken of the VM. Using this switch parameter negatively affects performance
   #>
