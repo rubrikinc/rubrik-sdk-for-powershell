@@ -1,4 +1,6 @@
-Install-Module -Name Pester -RequiredVersion 4.10.1 -Force
+Install-Module -Name Pester -MaximumVersion 4.99.99 -Force
+Remove-Module Pester -ErrorAction SilentlyContinue
+Import-Module -Name Pester -MaximumVersion 4.99.99 
 
 $PesterSplat = @{
     PassThru = $true

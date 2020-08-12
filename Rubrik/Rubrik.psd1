@@ -297,6 +297,7 @@
                    'Sync-RubrikAnnotation',
                    'Sync-RubrikTag',
                    'Update-RubrikHost',
+                   'Update-RubrikNutanixCluster',
                    'Update-RubrikVCD',
                    'Update-RubrikVCenter',
                    'Update-RubrikVMwareVM')

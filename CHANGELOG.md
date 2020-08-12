@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added `Update-RubrikNutanixCluster` as requested by Teixeirapa, also updated documentation in `Invoke-RubrikRestCall` to provide an example to do an empty post request. Resolves [Issue 669](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/669)
 * Added 5.2 API calls for `Get-RubrikClusterStorage` as the endpoint to retrieve Average Daily Growth no longer exists in CDM 5.2. Resolves [Issue 664](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/664)
 * Updated API stanza for 5.2 for the `Get-RubrikSyslogServer` cmdlet
 
