@@ -1,13 +1,13 @@
 #Requires -Version 3
 function Update-RubrikNutanixCluster
 {
-  <#  
+  <#
       .SYNOPSIS
-      Connects to Rubrik to refresh the metadata for the specified vCenter Server
-            
+      Connects to Rubrik to refresh the metadata for the specified Nutanix cluster
+
       .DESCRIPTION
-      The Update-RubrikNutanixCluster cmdlet will refresh all vCenter metadata known to the connected Rubrik cluster.
-            
+      The Update-RubrikNutanixCluster cmdlet will refresh all Nutanix metadata known to the connected Rubrik cluster.
+
       .NOTES
       Written by Jaap Brasser for community usage
       Twitter: @jaap_brasser
@@ -15,19 +15,19 @@ function Update-RubrikNutanixCluster
 
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/update-rubriknutanixcluster
-      
+
       .EXAMPLE
       Get-RubrikNutanixCluster -Name 'nutanix.domain.local' | Update-RubrikNutanixCluster
-      This will refresh the vCenter metadata on the currently connected Rubrik cluster
+      This will refresh the Nutanix metadata on the currently connected Rubrik cluster
 
       .EXAMPLE
       Get-RubrikNutanixCluster | Update-RubrikNutanixCluster
-      This will refresh the vCenter metadata for all connecter vCenter instances on the currently connected Rubrik cluster
+      This will refresh the Nutanix metadata for all connected Nutanix instances on the currently connected Rubrik cluster
   #>
 
   [CmdletBinding()]
   Param(
-    # vCenter id value from the Rubrik Cluster
+    # Nutanix Cluster id value from the Rubrik Cluster
     [Parameter(
       ValueFromPipelineByPropertyName = $true,
       Mandatory = $true )]
@@ -47,17 +47,17 @@ function Update-RubrikNutanixCluster
 
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
