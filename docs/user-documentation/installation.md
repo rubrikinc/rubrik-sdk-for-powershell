@@ -72,4 +72,3 @@ If you wish to load a specific version, use:
 `Import-Module Rubrik -RequiredVersion #.#.#`
 
 Where "\#.\#.\#" represents the version number.
-
