@@ -30,7 +30,7 @@ Common PowerShell module paths include:
 ## Option 2: Installer Script
 
 1. Download the [`master branch`](https://github.com/rubrikinc/rubrik-sdk-for-powershell) to your workstation.
-2. Open a Powershell console with the _Run as Administrator_ option.
+2. Open a PowerShell console with the _Run as Administrator_ option.
 3. Run `Set-ExecutionPolicy` using the parameter _RemoteSigned_ or _Bypass_.
 4. Run the `Install-Rubrik.ps1` script in the root of this repository and follow the prompts to install, upgrade, or delete your Rubrik Module contents.
 
@@ -38,7 +38,7 @@ Common PowerShell module paths include:
 
 1. Download the [`master branch`](https://github.com/rubrikinc/rubrik-sdk-for-powershell) to your workstation.
 2. Copy the contents of the _Rubrik_ folder onto your workstation into the desired PowerShell Module path.
-3. Open a Powershell console with the _Run as Administrator_ option.
+3. Open a PowerShell console with the _Run as Administrator_ option.
 4. Run `Set-ExecutionPolicy` using the parameter _RemoteSigned_ or _Bypass_.
 
 Once installation is complete, you can validate that the module exists by running `Get-Module -ListAvailable Rubrik`.
