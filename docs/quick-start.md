@@ -6,16 +6,16 @@ Rubrik's API first architecture enables organizations to embrace and integrate R
 
 The code assumes that you have already deployed at least one Rubrik cluster into your environment and have completed the initial configuration process to form a cluster. At a minimum, make sure you have installed the following:
 
-1. [PowerShell](https://aka.ms/getps6) Core or Windows PowerShell
+1. [PowerShell](https://aka.ms/getps6) or Windows PowerShell
 1. [PowerCLI](http://www.vmware.com/go/powercli) version 6.0 or higher
 
-## Note - PowerShell Core
+## Note - PowerShell
 
-*The module has been written with PowerShell Core support in mind. For best performance and compatibility, the most recent release of PowerShell Core is recommended with the Rubrik PowerShell Module.*
+*The module has been written with PowerShell support in mind. For best performance and compatibility, the most recent release of PowerShell is recommended when using the Rubrik SDK for PowerShell.*
 
 # Installation
 
-The Rubrik SDK for PowerShell project contains a folder named [Rubrik](https://github.com/rubrikinc/PowerShell-Module/tree/master/Rubrik). The folder needs to be installed into one of your PowerShell Module Paths using one of the installation options outlined below. To see the full list of available PowerShell Module paths, use `$env:PSModulePath.split(';')` in a PowerShell console.
+The Rubrik SDK for PowerShell project contains a folder named [Rubrik](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/master/Rubrik). The folder needs to be installed into one of your PowerShell Module Paths using one of the installation options outlined below. To see the full list of available PowerShell Module paths, use `$env:PSModulePath.split(';')` in a PowerShell console.
 
 Common PowerShell module paths include:
 
@@ -26,23 +26,23 @@ Common PowerShell module paths include:
 ## Option 1: PowerShell Gallery (Recommended)
 
 1. Ensure you have the [Windows Management Framework 5.0](htps://www.microsoft.com/en-us/download/details.aspx?id=50395) or greater installed.
-1. Open a Powershell console with the Run as Administrator option.
+1. Open a PowerShell console with the Run as Administrator option.
 1. Run `Set-ExecutionPolicy` using the parameter RemoteSigned or Bypass.
 1. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository.
 1. Alternatively `Install-Module -Name Rubrik -Scope AllUsers` can be execute be used if you would like to install the module for all users on the current system.
 
 ## Option 2: Installer Script
 
-1. Download the [master branch](https://github.com/rubrikinc/PowerShell-Module) to your workstation.
-1. Open a Powershell console with the _Run as Administrator_ option.
+1. Download the [master branch](https://github.com/rubrikinc/rubrik-sdk-for-powershell) to your workstation.
+1. Open a PowerShell console with the _Run as Administrator_ option.
 1. Run `Set-ExecutionPolicy` using the parameter _RemoteSigned_ or _Bypass_.
 1. Run the `Install-Rubrik.ps1` script in the root of this repository and follow the prompts to install, upgrade, or delete your Rubrik Module contents.
 
 ## Option 3: Manual Installation
 
-1. Download the [master branch](https://github.com/rubrikinc/PowerShell-Module) to your workstation.
+1. Download the [master branch](https://github.com/rubrikinc/rubrik-sdk-for-powershell) to your workstation.
 1. Copy the contents of the Rubrik folder onto your workstation into the desired PowerShell Module path.
-1. Open a Powershell console with the _Run as Administrator_ option.
+1. Open a PowerShell console with the _Run as Administrator_ option.
 1. Run `Set-ExecutionPolicy` using the argument _RemoteSigned_ or _Bypass_.
 
 ## Options 4: Download Module from PowerShell Gallery for redistribution
@@ -78,10 +78,10 @@ Import-Module Rubrik
 If you wish to load a specific version, use:
 
 ``` PowerShell
-Import-Module Rubrik -RequiredVersion #.#.#.#
+Import-Module Rubrik -RequiredVersion #.#.#
 ```
 
-Where "#.#.#.#" represents the version number.
+Where "#.#.#" represents the version number.
 
 # Authentication
 
