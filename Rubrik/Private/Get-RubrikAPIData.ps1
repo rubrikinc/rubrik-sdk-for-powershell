@@ -1252,6 +1252,29 @@ function Get-RubrikAPIData {
                 }
                 Success     = '200'
             }
+            '5.3' = @{
+                Description = 'Retrieve information for all snapshots'
+                URI         = @{
+                    Fileset = '/api/v1/fileset/{id}/snapshot'
+                    MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
+                    VMware  = '/api/v1/vmware/vm/{id}/snapshot'
+                    HyperV  = '/api/internal/hyperv/vm/{id}/snapshot'
+                    ManagedVolume = '/api/internal/managed_volume/{id}/snapshot'
+                    Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
+                    VolumeGroup = '/api/v1/volume_group/{id}/snapshot'
+                    Oracle = '/api/internal/oracle/db/{id}/snapshot'
+                    VcdVapp = '/api/internal/vcd/vapp/{id}/snapshot'
+                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    'CloudState'       = 'cloudState'
+                    'OnDemandSnapshot' = 'isOnDemandSnapshot'
+                }
+                Success     = '200'
+            }
         }
         'Get-RubrikSNMPSetting'           = @{
             '1.0' = @{
@@ -1610,6 +1633,40 @@ function Get-RubrikAPIData {
                 Success     = '200'
                 ObjectTName = 'Rubrik.VolumeGroup'
             }
+            '5.3' = @{
+                Description = 'Get summary of all Volume Groups'
+                URI         = '/api/v1/volume_group'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    name                    = 'name'
+                    hostname                = 'hostname'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                    'hostname' = 'HostName'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.VolumeGroup'
+            }
+        }
+        'Get-RubrikVgfAutoUpgrade' = @{
+            '5.3' = @{
+                Description = 'Retrieve the global Volume Group settings for backup format migration.'
+                URI         = '/api/internal/config/usersettable_volumeGroup'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Get-RubrikVolumeGroupMount'                 = @{
             '1.0' = @{
@@ -1650,6 +1707,20 @@ function Get-RubrikAPIData {
                 Body        = ''
                 Query       = ''
                 Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Invoke-RubrikVgfUpgrade'             = @{
+            '5.3' = @{
+                Description = 'Update the forceFull property of a Volume Group.'
+                URI         = '/api/v1/volume_group/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    forceFull = 'forceFull'
+                }
+                Query       = ''
+                Result      = ''
                 Filter      = ''
                 Success     = '200'
             }
@@ -3183,6 +3254,21 @@ function Get-RubrikAPIData {
                 Body        = @{
                     hostIds = 'hostIds'
                     install = 'install'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikVgfAutoUpgrade' = @{
+            '5.3' = @{
+                Description = 'Update the global Volume Group settings for backup format migration.'
+                URI         = '/api/internal/config/usersettable_volumeGroup'
+                Method      = 'Patch'
+                Body        = @{
+                      migrateFastVirtualDiskBuild = 'migrateFastVirtualDiskBuild'
+                      maxFullMigrationStoragePercentage = 'maxFullMigrationStoragePercentage'
                 }
                 Query       = ''
                 Result      = ''
