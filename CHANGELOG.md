@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* Created entries for 5.2 endpoints in `Get-RubrikAPIData` private function for `Get-RubrikEvent` & `Get-RubrikEventSeries` which caused these cmdlets to no longer work on Rubrik CDM 5.2 [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
+
 ## [5.0.3](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.3) - 2020-08-12
 
 ### Changed
