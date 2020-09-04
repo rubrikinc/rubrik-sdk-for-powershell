@@ -124,9 +124,38 @@ function Get-RubrikEvent
       $uri = New-URIString -server $Server -endpoint ($resources.URI)
       $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
       $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+      
+      
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-      $result = Test-FilterObject -filter ($resources.Filter) -result $result
+      if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
+        if (Test-PowerShellSix) {
+          $result = Invoke-WebRequest -uri $result.downloadLink -header $Header -method Get -SkipCertificateCheck | ConvertFrom-Csv
+          
+          # Rebuild nested objects into flat object and clean up output from endpoint
+          $result = $result.ForEach{
+            $CurrentObject = $_
+            $_.message = $_.message | ConvertFrom-Json -Depth 10
+            $Hash = [ordered]@{}
+            $_.psobject.properties.name | Where-Object {$_ -ne 'Message'} | ForEach-Object {
+              $Hash.$_ = $CurrentObject.$_
+            }
+            $_.message.psobject.properties.name | Where-Object {$_ -ne 'params'} | ForEach-Object {
+              $Hash.$_ = $CurrentObject.message.$_
+            }
+            $_.message.params.psobject.properties.name | ForEach-Object {
+              $Hash.$($_ -replace '[$\{\}]') = $CurrentObject.message.params.$_
+            }
+            
+            [pscustomobject]$Hash
+          }
+        } else {
+          $result = Invoke-WebRequest -uri $result.downloadLink -header $Header -method Get | ConvertFrom-Csv | ConvertTo-Json -Depth 10
+        }
+      } else {
+        $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+        $result = Test-FilterObject -filter ($resources.Filter) -result $result
+      }
+
     }
     else {
       # Adding property for TypeName support
@@ -143,7 +172,6 @@ function Get-RubrikEvent
       }
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
     return $result
-
 
   } # End of process
 } # End of function
