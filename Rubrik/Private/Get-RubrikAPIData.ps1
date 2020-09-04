@@ -547,7 +547,7 @@ function Get-RubrikAPIData {
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
-                ObjectTName = 'Rubrik.EventSeries'
+                ObjectTName = 'Rubrik.EventSeries.5.2'
             }
         }
         'Get-RubrikFileset'            = @{
