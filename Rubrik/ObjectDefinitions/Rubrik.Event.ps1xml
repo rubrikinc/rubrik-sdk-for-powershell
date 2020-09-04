@@ -66,26 +66,32 @@
                         <Label>Status</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
+                        <Label>Object Type</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
                         <Label>Object Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Message</Label>
+                        <Label>ID</Label>
                     </TableColumnHeader>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry> 
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>Date</PropertyName>   
-                            </TableColumnItem>
+                               <PropertyName>time</PropertyName>
+                            </TableColumnItem>     
                             <TableColumnItem>
-                               <PropertyName>Status</PropertyName>
+                               <PropertyName>eventStatus</PropertyName>
                             </TableColumnItem>                            
                             <TableColumnItem>
-                                <PropertyName>Name</PropertyName>
+                                <PropertyName>objectType</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Message</PropertyName>
+                                <PropertyName>objectName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

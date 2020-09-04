@@ -503,7 +503,7 @@ function Get-RubrikAPIData {
             }
             '5.2' = @{
                 Description = 'Retrieve information for the latest of related events that match the value specified in any of the following categories: type, status, or ID, and limit events by date.'
-                URI         = '/api/v1/event/csv_download_link'
+                URI         = '/api/v1/event/latest'
                 Method      = 'Get'
                 Body        = ''
                 Query       = @{

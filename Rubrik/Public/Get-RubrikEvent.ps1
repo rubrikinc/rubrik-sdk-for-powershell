@@ -136,33 +136,14 @@ function Get-RubrikEvent
           Write-Warning -Message 'This switch ''ShowOnlyLatest'' is no longer available in versions of Rubrik CDM later than 5.2'
         }
 
-        if (Test-PowerShellSix) {
-          $result = Invoke-WebRequest -uri $result.downloadLink -header $Header -method Get -SkipCertificateCheck | ConvertFrom-Csv
-          
-          # Rebuild nested objects into flat object and clean up output from endpoint
-          $result = $result.ForEach{
-            $CurrentObject = $_
-            $_.message = $_.message | ConvertFrom-Json -Depth 10
-            $Hash = [ordered]@{}
-            $_.psobject.properties.name | Where-Object {$_ -ne 'Message'} | ForEach-Object {
-              $Hash.$_ = $CurrentObject.$_
-            }
-            $_.message.psobject.properties.name | Where-Object {$_ -ne 'params'} | ForEach-Object {
-              $Hash.$_ = $CurrentObject.message.$_
-            }
-            $_.message.params.psobject.properties.name | ForEach-Object {
-              $Hash.$($_ -replace '[$\{\}]') = $CurrentObject.message.params.$_
-            }
-            
-            [pscustomobject]$Hash
-          }
-        } else {
-          $result = Invoke-WebRequest -uri $result.downloadLink -header $Header -method Get | ConvertFrom-Csv | ConvertTo-Json -Depth 10
+        $result = $result | ForEach-Object {
+          $_.data.latestEvent
         }
       } else {
         $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
         $result = Test-FilterObject -filter ($resources.Filter) -result $result
       }
+
 
     }
     else {
