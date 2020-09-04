@@ -56,7 +56,7 @@ function Get-RubrikEvent
     [Parameter(ParameterSetName="eventByID")]
     [string]$Status,
     # Filter by Event Type.
-    [ValidateSet('Archive', 'Audit', 'AuthDomain', 'Backup', 'CloudNativeSource', 'Configuration', 'Diagnostic', 'Discovery', 'Instantiate', 'Maintenance', 'NutanixCluster', 'Recovery', 'Replication', 'StorageArray', 'StormResource', 'System', 'Vcd', 'VCenter', IgnoreCase = $false)]
+    [ValidateSet('Archive', 'Audit', 'AuthDomain', 'AwsEvent', 'Backup', 'Classification', 'CloudNativeSource', 'CloudNativeVm', 'Configuration', 'Connection', 'Conversion', 'Diagnostic', 'Discovery', 'Failover', 'Fileset', 'Hardware', 'HostEvent', 'HypervScvmm', 'HypervServer', 'Instantiate', 'LegalHold', 'Maintenance', 'NutanixCluster', 'Recovery', 'Replication', 'Storage', 'StorageArray', 'StormResource', 'Support', 'System', 'TestFailover', 'Upgrade', 'VCenter', 'Vcd', 'VolumeGroup', 'UnknownEventType', IgnoreCase = $false)]
     [Alias('event_type')]
     [Parameter(ParameterSetName="eventByID")]
     [string]$EventType,
@@ -77,6 +77,7 @@ function Get-RubrikEvent
     [Parameter(ParameterSetName="eventByID")]
     [System.DateTime]$AfterDate,
     # Filter all the events by object type. Enter any of the following values: 'VmwareVm', 'Mssql', 'LinuxFileset', 'WindowsFileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle', 'AwsAccount', and 'Ec2Instance'. WindowsHost maps to both WindowsFileset and VolumeGroup, while LinuxHost maps to LinuxFileset and StorageArrayVolumeGroup.
+    [ValidateSet('AggregateAhvVm', 'AggregateAwsAzure', 'AggregateHypervVm', 'AggregateLinuxUnixHosts', 'AggregateNasShares', 'AggregateOracleDb', 'AggregateStorageArrays', 'AggregateVcdVapps', 'AggregateVsphereVm', 'AggregateWindowsHosts', 'AppBlueprint', 'AuthDomain', 'AwsAccount', 'AwsEventType', 'Certificate', 'Cluster', 'DataLocation', 'Ec2Instance', 'Host', 'HypervScvmm', 'HypervServer', 'HypervVm', 'JobInstance', 'Ldap', 'LinuxHost', 'LinuxFileset', 'ManagedVolume', 'Mssql', 'NasHost', 'NutanixCluster', 'NutanixVm', 'OracleDb', 'OracleHost', 'OracleRac', 'PublicCloudMachineInstance', 'SamlSso', 'ShareFileset', 'SlaDomain', 'SmbDomain', 'StorageArray', 'StorageArrayVolumeGroup', 'Storm', 'SupportBundle', 'UnknownObjectType', 'Upgrade', 'UserActionAudit', 'Vcd', 'VcdVapp', 'Vcenter', 'VmwareVm', 'VolumeGroup', 'WindowsHost', 'WindowsFileset', IgnoreCase = $false)]
     [Alias('object_type')]
     [Parameter(ParameterSetName="eventByID")]
     [string]$ObjectType,
@@ -128,6 +129,13 @@ function Get-RubrikEvent
       
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
       if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
+        if ($FilterOnlyOnLatest) {
+          Write-Warning -Message 'This switch ''FilterOnlyOnLatest'' is no longer available in versions of Rubrik CDM later than 5.2'
+        }
+        if ($ShowOnlyLatest) {
+          Write-Warning -Message 'This switch ''ShowOnlyLatest'' is no longer available in versions of Rubrik CDM later than 5.2'
+        }
+
         if (Test-PowerShellSix) {
           $result = Invoke-WebRequest -uri $result.downloadLink -header $Header -method Get -SkipCertificateCheck | ConvertFrom-Csv
           
