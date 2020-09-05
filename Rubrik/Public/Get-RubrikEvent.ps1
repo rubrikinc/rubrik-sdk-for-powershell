@@ -18,7 +18,7 @@ function Get-RubrikEvent
 
       .EXAMPLE
       Get-RubrikEvent -ObjectName "vm-foo" -EventType Backup
-      
+
       This will query for any 'Backup' events on the Rubrik VM object named 'vm-foo'
 
       .EXAMPLE
@@ -98,7 +98,7 @@ function Get-RubrikEvent
     [Alias('filter_only_on_latest')]
     [Parameter(ParameterSetName="eventByID")]
     [Switch]$FilterOnlyOnLatest,
-    # A Switch value that determines whether or not EventSeries events are included in the query
+    # A Switch value that determines whether or not EventSeries events are included in the results
     [Alias('should_include_event_series')]
     [Parameter(ParameterSetName="eventByID")]
     [Switch]$IncludeEventSeries,

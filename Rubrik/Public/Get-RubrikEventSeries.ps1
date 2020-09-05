@@ -26,24 +26,24 @@ function Get-RubrikEventSeries
     # Filter by Event Series ID
     [parameter()]
     [string]$Id,
-    # Filter by Status. Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Cancelingâ€™.
+    # Filter by Status. Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling'. Note: Deprecated in 5.2
     [ValidateSet('Failure', 'Success', 'Queued', 'Active', IgnoreCase = $false)]
     [parameter()]
     [string]$Status,
-    # Filter by Event Type.
+    # Filter by Event Type. Note: Deprecated in 5.2
     [ValidateSet('Archive', 'Backup', 'Instantiate', 'Recovery', 'Replication', IgnoreCase = $false)]
     [Alias('event_type')]
     [parameter()]
     [string]$EventType,
-    # Filter by a comma separated list of object IDs.
+    # Filter by a comma separated list of object IDs. Note: Deprecated in 5.2
     [Alias('object_ids')]
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [array]$objectIds,
-    # Filter all the events according to the provided name using infix search for resources and exact search for usernames.
+    # Filter all the events according to the provided name using infix search for resources and exact search for usernames. Note: Deprecated in 5.2
     [Alias('object_name')]
     [parameter()]
     [string]$ObjectName,
-    # Filter all the events by object type. Enter any of the following values: 'VmwareVm', 'Mssql', 'LinuxFileset', 'WindowsFileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle', 'AwsAccount', and 'Ec2Instance'. WindowsHost maps to both WindowsFileset and VolumeGroup, while LinuxHost maps to LinuxFileset and StorageArrayVolumeGroup.
+    # Filter all the events by object type. Enter any of the following values: 'VmwareVm', 'Mssql', 'LinuxFileset', 'WindowsFileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle', 'AwsAccount', and 'Ec2Instance'. WindowsHost maps to both WindowsFileset and VolumeGroup, while LinuxHost maps to LinuxFileset and StorageArrayVolumeGroup. Note: Deprecated in 5.2
     [Alias('object_type')]
     [parameter()]
     [string]$ObjectType,
@@ -74,8 +74,10 @@ function Get-RubrikEventSeries
   }
 
   Process {
-    if ((($rubrikConnection.version.substring(0,5) -as [version]) -gt [version]5.2) -and (-not $id)) {
+    if ((($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) -and (-not $id)) {
       Write-Warning 'Functionality of this cmdlet has been deprecated by new version of API endpoints. ID is mandatory'
+    } elseif ((($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) -and $Status -or $EventType -or $objectIds -or $ObjectName -or $ObjectType) {
+      Write-Warning 'Functionality of this cmdlet has been deprecated by new version of API endpoints, usage of parameters except -id will not have any effect on operation of cmdlet. Please use Get-RubrikEventSeries instead'
     } elseif ($id -and ($rubrikConnection.version.substring(0,5) -as [version]) -lt [version]5.2) {
       $resources.ObjectTName = 'Rubrik.EventSeriesById'
     }
