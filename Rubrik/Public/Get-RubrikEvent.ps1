@@ -18,22 +18,27 @@ function Get-RubrikEvent
 
       .EXAMPLE
       Get-RubrikEvent -ObjectName "vm-foo" -EventType Backup
+      
       This will query for any 'Backup' events on the Rubrik VM object named 'vm-foo'
 
       .EXAMPLE
       Get-RubrikVM -Name jbrasser-win | Get-RubrikEvent -Limit 10
+
       Queries the Rubrik Cluster for any vms named jbrasser-win and return the last ten events for each VM found
 
       .EXAMPLE
       Get-RubrikEvent -EventType Archive -Limit 100
+
       This will query the latest 100 Archive events on the currently logged in Rubrik cluster
 
       .EXAMPLE
-      Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent -EventType Archive
-      This will feed any Archive events against the Rubrik Host object 'SQLFoo.demo.com' via a piped query.
+      Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent
+
+      This will feed any events against the Rubrik Host object 'SQLFoo.demo.com' via a piped query.
 
       .EXAMPLE
       Get-RubrikEvent -EventSeriesId '1111-2222-3333'
+
       This will retrieve all of the events belonging to the specified EventSeriesId. *Note - This will call Get-RubrikEventSeries*
 
       .EXAMPLE
