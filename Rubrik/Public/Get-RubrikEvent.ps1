@@ -90,11 +90,11 @@ function Get-RubrikEvent
     [Alias('object_type')]
     [Parameter(ParameterSetName="eventByID")]
     [string]$ObjectType,
-    # A switch value that determines whether to show only on the most recent event in the series. When 'true' only the most recent event in the series are shown. When 'false' all events in the series are shown. The default value is 'true'.
+    # A switch value that determines whether to show only on the most recent event in the series. When 'true' only the most recent event in the series are shown. When 'false' all events in the series are shown. The default value is 'true'. Note: Deprecated in 5.2
     [Alias('show_only_latest')]
     [Parameter(ParameterSetName="eventByID")]
     [Switch]$ShowOnlyLatest,
-    # A Switch value that determines whether to filter only on the most recent event in the series. When 'true' only the most recent event in the series are filtered. When 'false' all events in the series are filtered. The default value is 'true'.
+    # A Switch value that determines whether to filter only on the most recent event in the series. When 'true' only the most recent event in the series are filtered. When 'false' all events in the series are filtered. The default value is 'true'. Note: Deprecated in 5.2
     [Alias('filter_only_on_latest')]
     [Parameter(ParameterSetName="eventByID")]
     [Switch]$FilterOnlyOnLatest,
