@@ -20,9 +20,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* New switch added to `Get-RubrikEvent` `-IncludeEventSeries` which determines if EventSeries events are included in the results [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
+
 ### Fixed
 
 * Created entries for 5.2 endpoints in `Get-RubrikAPIData` private function for `Get-RubrikEvent` & `Get-RubrikEventSeries` which caused these cmdlets to no longer work on Rubrik CDM 5.2 [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
+
+### Deprecated
+
+* Functionality in `Get-RubrikEventSeries` is limited to only queries by specific EventSeries id on Rubrik CDM Clusters running versions higher than 5.2. Original functionality is still available for backwards compatibility with older versions of Rubrik CDM [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
 
 ## [5.0.3](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.3) - 2020-08-12
 
