@@ -26,7 +26,7 @@ function Get-RubrikEvent
 
       .EXAMPLE
       Get-RubrikEvent -EventType Archive -Limit 100
-      This qill query the latest 100 Archive events on the currently logged in Rubrik cluster
+      This will query the latest 100 Archive events on the currently logged in Rubrik cluster
 
       .EXAMPLE
       Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent -EventType Archive
@@ -36,6 +36,10 @@ function Get-RubrikEvent
       Get-RubrikEvent -EventSeriesId '1111-2222-3333'
       This will retrieve all of the events belonging to the specified EventSeriesId. *Note - This will call Get-RubrikEventSeries*
 
+      .EXAMPLE
+      Get-RubrikEvent -EventType Archive -Limit 10 -IncludeEventSeries
+
+      This will query the latest 10 Archive events on the currently logged in Rubrik cluster and include the relevant EventSeries.
   #>
 
   [CmdletBinding()]
@@ -89,6 +93,10 @@ function Get-RubrikEvent
     [Alias('filter_only_on_latest')]
     [Parameter(ParameterSetName="eventByID")]
     [Switch]$FilterOnlyOnLatest,
+    # A Switch value that determines whether or not EventSeries events are included in the query
+    [Alias('should_include_event_series')]
+    [Parameter(ParameterSetName="eventByID")]
+    [Switch]$IncludeEventSeries,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -122,22 +130,35 @@ function Get-RubrikEvent
       if(-not $PSBoundParameters.ContainsKey('ShowOnlyLatest')) { $Resources.Query.Remove('show_only_latest') }
       if(-not $PSBoundParameters.ContainsKey('FilterOnlyOnLatest')) { $Resources.Query.Remove('filter_only_on_latest') }
 
+
       $uri = New-URIString -server $Server -endpoint ($resources.URI)
       $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
       $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-      
-      
+
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
       if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
         if ($FilterOnlyOnLatest) {
           Write-Warning -Message 'This switch ''FilterOnlyOnLatest'' is no longer available in versions of Rubrik CDM later than 5.2'
         }
+
         if ($ShowOnlyLatest) {
           Write-Warning -Message 'This switch ''ShowOnlyLatest'' is no longer available in versions of Rubrik CDM later than 5.2'
         }
 
-        $result = $result | ForEach-Object {
-          $_.data.latestEvent
+        # Build Custom Object based on information in latestEvent property
+        $result = $result.data | ForEach-Object {
+          $CurrentObject = $_
+
+          $Hash = [ordered]@{}
+          $_.latestEvent.psobject.properties.name | ForEach-Object {
+            $Hash.$_ = $CurrentObject.latestEvent.$_
+          }
+
+          $_.psobject.properties.name | Where-Object {$_ -ne 'latestEvent'} | ForEach-Object {
+            $Hash.$_ = $CurrentObject.$_
+          }
+
+          [pscustomobject]$Hash
         }
       } else {
         $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
@@ -145,11 +166,11 @@ function Get-RubrikEvent
       }
 
 
-    }
-    else {
+    } else {
       # Adding property for TypeName support
       $result = ((Get-RubrikEventSeries -id $EventSeriesId).eventDetailList) | Select-Object *,@{N="eventStatus";E={$_.status}}
     }
+    
     # Add 'date' property to the output by converting 'time' property to datetime object
     if (($null -ne $result) -and ($null -ne ($result | Select-Object -First 1).time)) {
       $result = $result | ForEach-Object {
