@@ -26,7 +26,7 @@ Describe -Name 'Public/Invoke-RubrikVgfUpgrade' -Tag 'Public', 'Invoke-RubrikVgf
         }
         It -Name 'VGList cannot be empty' -Test {
             { Invoke-RubrikVgfUpgrade -VGList '' } |
-                Should -Throw "Cannot validate argument on parameter 'VGList'. The argument is null, empty, or an element of the argument collection contains a null value. Supply a collection that does not contain any null values and then try the command again."
+                Should -Throw
         }
     }
 }
