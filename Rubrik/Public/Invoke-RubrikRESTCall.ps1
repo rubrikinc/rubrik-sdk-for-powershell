@@ -114,7 +114,14 @@ function Invoke-RubrikRESTCall {
         }
         Write-Verbose "URI string: $uri"
         Write-Verbose "Body string: $JsonBody"
-        $result = Submit-Request -uri $uri -header $Header -method $Method -body $JsonBody
+
+        if ($Method -eq 'Get' -and $Body) {
+            Write-Warning 'Executing a ''Get'' request in combination with a body object, processing request without body'
+            $result = Submit-Request -uri $uri -header $Header -method $Method
+        } else {
+            $result = Submit-Request -uri $uri -header $Header -method $Method -body $JsonBody
+        }
+        
     }
     catch {
         throw $_
