@@ -30,6 +30,11 @@ function Submit-Request {
         $body
     )
 
+    # Block to improve readiability of error messages created for issue #653
+    switch ($resources.Description) {
+        'Delete an SLA Domain from a Rubrik cluster' {$id = "$name $id"}
+    }
+
     if ($PSCmdlet.ShouldProcess($id, $resources.Description)) {
         try {
             Write-Verbose -Message 'Submitting the request'

@@ -28,6 +28,11 @@ function Remove-RubrikSLA
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [String]$id,
+    # Should not be specified, used for better error handling and WhatIf/Confirm messages
+    [Parameter(
+      ValueFromPipelineByPropertyName=$true
+    )]
+    [string] $name,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
