@@ -16,23 +16,33 @@ function Get-RubrikVolumeGroup
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvolumegroup
 
       .EXAMPLE
+      Get-RubrikVolumeGroup -Name 'Quokka volumes'
+
+      This will return details of the volume group named "Quokka Volumes"
+
+      .EXAMPLE
       Get-RubrikVolumeGroup -Hostname 'Server1'
+
       This will return details on all volume groups from host "Server1".
 
       .EXAMPLE
       Get-RubrikVolumeGroup -Hostname 'Server1' -SLA Gold
+
       This will return details on all volume groups of "Server1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
       Get-RubrikVolumeGroup -Relic
+
       This will return all removed volume groups that were formerly protected by Rubrik.
 
       .EXAMPLE
       Get-RubrikVolumeGroup -DetailedObject
+
       This will return full details on all volume groups available on the Rubrik Cluster, this query will take longer as multiple API calls are required. The 'Includes' property will be populated
 
       .EXAMPLE
       Get-RubrikVolumeGroup -Id VolumeGroup:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
+
       This will return full details on for the specified VolumeGroup ID
   #>
 
