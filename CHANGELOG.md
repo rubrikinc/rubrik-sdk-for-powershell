@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Added `Get-RubrikBlackout` cmdlet as requested in [Issue 688](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/688)
+* Added additional example to `New-RubrikVolumeGroupMount` [Issue 660](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/660)
 * Added additional example to `Invoke-RubrikRESTCall` [Issue 655](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/655)
 * Added additional example to `Get-RubrikVolumeGroup` [Issue 647](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/647)
 
