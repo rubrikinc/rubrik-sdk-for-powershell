@@ -19,22 +19,32 @@ function Get-RubrikDatabaseMount
 
       .EXAMPLE
       Get-RubrikDatabaseMount
+
       This will return details on all mounted databases.
 
       .EXAMPLE
+      Get-RubrikDatabaseMount -DetailedObject
+
+      This will return mounted databases with the full detailed objects.
+
+      .EXAMPLE
       Get-RubrikDatabaseMount -id '11111111-2222-3333-4444-555555555555'
+
       This will return details on mount id "11111111-2222-3333-4444-555555555555".
 
       .EXAMPLE
       Get-RubrikDatabaseMount -source_database_id (Get-RubrikDatabase -HostName FOO -Instance MSSQLSERVER -Database BAR).id
+
       This will return details for any mounts found using the id value from a database named BAR on the FOO default instance.
 
       .EXAMPLE
       Get-RubrikDatabaseMount -source_database_name BAR
+
       This returns any mounts where the source database is named BAR.
 
       .EXAMPLE
       Get-RubrikDatabaseMount -mounted_database_name BAR_LM
+
       This returns any mounts with the name BAR_LM
   #>
 
@@ -56,6 +66,8 @@ function Get-RubrikDatabaseMount
     [Alias('mounted_database_name')]
     [Parameter(Position = 0)]
     [String]$MountedDatabaseName,
+    # DetailedObject will retrieved the detailed DatabaseMount object, the default behavior of the API is to only retrieve a subset of the full DatabaseMount object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -91,8 +103,16 @@ function Get-RubrikDatabaseMount
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-    return $result
 
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        Get-RubrikDatabaseMount -id $result[$i].id
+      }
+    } else {
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    }
   } # End of process
 } # End of function
