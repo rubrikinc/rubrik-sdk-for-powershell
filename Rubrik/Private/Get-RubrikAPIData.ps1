@@ -2745,6 +2745,18 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
+            '5.1' = @{
+                Description = 'Whether to start or stop the global blackout window.'
+                URI         = '/api/v1/blackout_window'
+                Method      = 'Patch'
+                Body        = @{
+                    isGlobalBlackoutActive = 'isGlobalBlackoutActive'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Set-RubrikDatabase'           = @{
             '1.0' = @{
