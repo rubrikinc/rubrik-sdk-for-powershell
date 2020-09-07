@@ -21,18 +21,27 @@ function Get-RubrikMount
             
       .EXAMPLE
       Get-RubrikMount
+
       This will return details on all mounted virtual machines.
 
       .EXAMPLE
+      Get-RubrikMount -DetailedObject
+
+      This will retrieve all mounted virtual machines with additional details
+
+      .EXAMPLE
       Get-RubrikMount -id '11111111-2222-3333-4444-555555555555'
+
       This will return details on mount id "11111111-2222-3333-4444-555555555555".
 
       .EXAMPLE
       Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id
+
       This will return details for any mounts found using the id value from a virtual machine named "Server1" as a base reference.
                   
       .EXAMPLE
       Get-RubrikMount -VMID 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
+
       This will return details for any mounts found using the virtual machine id of 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' as a base reference.
   #>
 
@@ -44,6 +53,8 @@ function Get-RubrikMount
     # Filters live mounts by VM ID
     [Alias('vm_id')]
     [String]$VMID,
+    # DetailedObject will retrieved the detailed VM Mount object, the default behavior of the API is to only retrieve a subset of the full VM Mount object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -80,7 +91,17 @@ function Get-RubrikMount
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
-    return $result
-
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        if ($result) {
+          Get-RubrikMount -id $result[$i].id
+        }
+      }
+    } else {
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    }
   } # End of process
 } # End of function
