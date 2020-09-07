@@ -18,9 +18,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Changed Get/Set Rubrik-Blackout to use correctly API version for Rubrik CDM 5.1 and later [Issue 679](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/679)
+
 ### Added
 
+* Added `Get-RubrikBlackout` cmdlet as requested in [Issue 688](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/688)
+
 ### Fixed
+
+* The `DynamicDNS` parameter of `New-RubrikLDAP` is no longer a mandatory parameter [Issue 662](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/662)
+* WhatIf/Verbose messages for `Remove-RubrikSLA` will display SLA name and ID for additional clarification [Issue 653](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/653)
+* Invoke-RubrikRestCall no longer takes Body object for Get Method [Issue 652](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/652)
 
 ## [5.0.3](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.3) - 2020-08-12
 
