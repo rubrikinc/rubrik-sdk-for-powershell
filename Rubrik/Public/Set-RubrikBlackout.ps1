@@ -6,7 +6,7 @@ function Set-RubrikBlackout
       Connects to Rubrik and sets blackout (stops/starts all snaps)
 
       .DESCRIPTION
-      The Set-RubrikBlackout cmdlet will accept a flag of true/false to set cluster blackout
+      The Set-RubrikBlackout cmdlet uses a switch parameter to set cluster blackout
 
       .NOTES
       Written by Pete Milanese for community usage
@@ -17,7 +17,14 @@ function Set-RubrikBlackout
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikblackout
 
       .EXAMPLE
-      Set-RubrikBlackout -Set:[$true/$false]
+      Set-RubrikBlackout -Set
+
+      Sets Rubrik Global Blackout window to be active on current cluster
+
+      .EXAMPLE
+      Set-RubrikBlackout -Set:$false
+
+      Sets Rubrik Global Blackout window to be set to inactive on current cluster
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
