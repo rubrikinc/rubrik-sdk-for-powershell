@@ -236,6 +236,28 @@ function Get-RubrikAPIData {
                 ObjectTName = 'Rubrik.AvailabilityGroup'
             }
         }
+        'Get-RubrikBlackout'           = @{
+            '1.0' = @{
+                Description = 'Whether global blackout window is active.'
+                URI         = '/api/internal/blackout_window'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.1' = @{
+                Description = 'Whether global blackout window is active.'
+                URI         = '/api/v1/blackout_window'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikClusterInfo'         = @{
             '4.2' = @{
                 Description = 'Retrieves advanced settings of the Rubrik cluster'
