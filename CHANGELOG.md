@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 * The `DynamicDNS` parameter of `New-RubrikLDAP` is no longer a mandatory parameter [Issue 662](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/662)
+* Fixed `Test-RubrikSLA` internal function behaviour to no longer enforce `local` cluster ID when not supplied [Issue 659](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/659) 
 * WhatIf/Verbose messages for `Remove-RubrikSLA` will display SLA name and ID for additional clarification [Issue 653](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/653)
 * Invoke-RubrikRestCall no longer takes Body object for Get Method [Issue 652](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/652)
 
