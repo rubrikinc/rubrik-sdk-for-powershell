@@ -35,6 +35,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * WhatIf/Verbose messages for `Remove-RubrikSLA` will display SLA name and ID for additional clarification [Issue 653](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/653)
 * Invoke-RubrikRestCall no longer takes Body object for Get Method [Issue 652](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/652)
 
+### Deprecated
+
+* The `Remove-RubrikOrgAuthorization` & `Set-RubrikOrgAuthorization` cmdlets no longer work in 5.2 because of API changes [Issue 681](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/681)
+
 ## [5.0.3](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.3) - 2020-08-12
 
 ### Changed
