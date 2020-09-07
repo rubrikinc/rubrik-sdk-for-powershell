@@ -808,6 +808,7 @@ function Get-RubrikAPIData {
                     vmId = 'vmId'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareVmMount'
             }
         }
         'Get-RubrikNASShare'              = @{
