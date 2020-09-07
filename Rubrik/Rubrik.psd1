@@ -93,6 +93,7 @@
                    'ObjectDefinitions/Rubrik.VMwareDatacenter.ps1xml',
                    'ObjectDefinitions/Rubrik.VMwareDatastore.ps1xml',
                    'ObjectDefinitions/Rubrik.VMwareHost.ps1xml',
+                   'ObjectDefinitions/Rubrik.VMwareVmMount.ps1xml',
                    'ObjectDefinitions/Rubrik.VolumeGroup.ps1xml',
                    'ObjectDefinitions/Rubrik.User.ps1xml',
                    'ObjectDefinitions/Rubrik.SLADomainv1.ps1xml',
