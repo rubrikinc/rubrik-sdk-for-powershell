@@ -19,11 +19,18 @@ function Get-RubrikSLA
 
       .EXAMPLE
       Get-RubrikSLA
+
       Will return all known SLA Domains
 
       .EXAMPLE
       Get-RubrikSLA -Name 'Gold'
+
       Will return details on the SLA Domain named Gold
+
+      .EXAMPLE
+      Get-RubrikSLA -Name 'Gold' -DetailedObject
+      
+      Will return information the SLA Domain named Gold, including full details on this SLA
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'Query')]
@@ -47,6 +54,8 @@ function Get-RubrikSLA
       ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [String]$id,
+    # DetailedObject will retrieved the detailed SLA object, the default behavior of the API is to only retrieve a subset of the full SLA object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Query')]
     [Parameter(ParameterSetName='ID')]
@@ -85,9 +94,18 @@ function Get-RubrikSLA
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
     $result = $result | Select-Object -Property *,@{N="FrequencySummary";E={Get-RubrikSLAFrequencySummary -SLADomain $_}}
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
-    return $result
-
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        if ($result) {
+          Get-RubrikSLA -id $result[$i].id
+        }
+      }
+    } else {
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    }
   } # End of process
 } # End of function
