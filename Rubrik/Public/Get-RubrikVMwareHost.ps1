@@ -21,6 +21,7 @@ function Get-RubrikVMwareHost
 
       This will return a listing of all of the ESXi hosts known to the connected Rubrik cluster
 
+      .EXAMPLE
       Get-RubrikVMwareHost -PrimarClusterId local
 
       This will return a listing of all of the ESXi hosts whose primary cluster is that of the connected Rubrik cluster.
@@ -29,6 +30,11 @@ function Get-RubrikVMwareHost
       Get-RubrikVMwareHost -Name 'esxi01'
 
       This will return a listing of all of the ESXi hosts named 'esxi01' registered with the connected Rubrik cluster
+
+      .EXAMPLE
+      Get-RubrikVMwareHost -Name 'esxi01' -DetailedObject
+
+      This will return a listing of all of the ESXi hosts named 'esxi01' registered with the connected Rubrik cluster with fully detailed objects
   #>
 
   [CmdletBinding()]
