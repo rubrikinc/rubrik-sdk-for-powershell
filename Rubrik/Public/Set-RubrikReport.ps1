@@ -17,12 +17,12 @@ function Set-RubrikReport
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikreport
 
       .EXAMPLE
-      Get-RubrikReport -Name 'Boring Report' | Set-RubrikReport -NewName 'Quokka Report'
+      Get-RubrikReport -Name 'Boring Report' -DetailedObject | Set-RubrikReport -NewName 'Quokka Report'
 
       This will rename the report named 'Boring Report' to 'Quokka Report'
 
       .EXAMPLE
-      Get-RubrikReport -Name 'Quokka Report' | Set-RubrikReport -NewTableColumns TaskStatus, TaskType, ObjectName, ObjectType, Location, SlaDomain, StartTime, EndTime, Duration, DataTransferred, DataStored, DedupRatioForJob
+      Get-RubrikReport -Name 'Quokka Report' -DetailedObject | Set-RubrikReport -NewTableColumns TaskStatus, TaskType, ObjectName, ObjectType, Location, SlaDomain, StartTime, EndTime, Duration, DataTransferred, DataStored, DedupRatioForJob
 
       This will change the table colums in 'Quokka Report' to the specified values in the -NewTableColums parameter
   #>
