@@ -288,6 +288,7 @@
                    'Set-RubrikNutanixVM',
                    'Set-RubrikOrgAuthorization',
                    'Set-RubrikProxySetting',
+                   'Set-RubrikReport',
                    'Set-RubrikSetting',
                    'Set-RubrikSLA',
                    'Set-RubrikSQLInstance',
