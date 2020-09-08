@@ -3,15 +3,15 @@ function Set-RubrikReport
 {
   <#
       .SYNOPSIS
-      Create a new report by specifying one of the report templates
+      Change report settings by taking an existing report and making the desired changes
 
       .DESCRIPTION
-      The Set-RubrikReport cmdlet is used to create a new Envision report by specifying one of the canned report templates
+      The Set-RubrikReport cmdlet is used to change settings on an existing report by specifying one or more parameters to make these changes. Currently it is supported to change the new and the colums displayed in the table.
 
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
+      Written by Jaap Brasser for community usage
+      Twitter: @jaap_brasser
+      GitHub: jaapbrasser
       
       .LINK
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikreport
@@ -20,6 +20,11 @@ function Set-RubrikReport
       Get-RubrikReport -Name 'Boring Report' | Set-RubrikReport -NewName 'Quokka Report'
 
       This will rename the report named 'Boring Report' to 'Quokka Report'
+
+      .EXAMPLE
+      Get-RubrikReport -Name 'Quokka Report' | Set-RubrikReport -NewTableColumns TaskStatus, TaskType, ObjectName, ObjectType, Location, SlaDomain, StartTime, EndTime, Duration, DataTransferred, DataStored, DedupRatioForJob
+
+      This will change the table colums in 'Quokka Report' to the specified values in the -NewTableColums parameter
   #>
 
   [CmdletBinding()]
@@ -35,31 +40,25 @@ function Set-RubrikReport
       Mandatory = $true,
       ValueFromPipelineByPropertyName = $true )]
     [String]$Name,
-    [alias('chart0')]
     [Parameter(
       Mandatory = $true,
       ValueFromPipelineByPropertyName = $true )]
-    [PSCustomObject] $InputChart0,
-    [alias('chart1')]
+    $chart0,
     [Parameter(
       Mandatory = $true,
       ValueFromPipelineByPropertyName = $true )]
-    [PSCustomObject] $InputChart1,
-    [alias('filters')]
+    $chart1,
     [Parameter(
       Mandatory = $true,
       ValueFromPipelineByPropertyName = $true )]
-    [PSCustomObject] $InputFilters,
-    [alias('table')]
+    $filters,
     [Parameter(
       Mandatory = $true,
       ValueFromPipelineByPropertyName = $true )]
-    [PSCustomObject] $InputTable,
+    $table,
     [string] $NewName,
-    # The template this report is based on
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('CapacityOverTime', 'ObjectProtectionSummary', 'ObjectTaskSummary', 'ObjectIndexingSummary', 'ProtectionTasksDetails', 'ProtectionTasksSummary', 'RecoveryTasksDetails', 'SlaComplianceSummary', 'SystemCapacity')]
-    [String]$ReportTemplate,
+    [ValidateSet('Hour', 'Day', 'Month', 'Quarter', 'Year', 'SlaDomain', 'ReplicationTarget', 'ArchivalTarget', 'TaskStatus', 'TaskType', 'Location', 'ObjectName', 'ObjectType', 'ObjectIndexType', 'ClusterLocation', 'ComplianceStatus', 'Organization', 'RecoveryPoint', 'RecoveryPointType', 'Username', 'FailureReason', 'SnapshotConsistency', 'QueuedTime', 'StartTime', 'EndTime', 'Duration', 'DataTransferred', 'LogicalDataProtected', 'DataStored', 'NumFilesTransferred', 'EffectiveThroughput', 'DedupRatio', 'LogicalDedupRatio', 'DataReductionPercent', 'LogicalDataReductionPercent', 'TaskCount', 'SuccessfulTaskCount', 'CanceledTaskCount', 'FailedTaskCount', 'AverageDuration', 'ObjectCount', 'TotalLocalStorage', 'TotalReplicaStorage', 'TotalArchiveStorage', 'LocalStorageGrowth', 'ArchiveStorageGrowth', 'ReplicaStorageGrowth', 'ProtectedOn', 'InComplianceCount', 'NonComplianceCount', 'ArchivalInComplianceCount', 'ArchivalNonComplianceCount', 'TotalSnapshots', 'MissedLocalSnapshots', 'MissedArchivalSnapshots', 'LocalSnapshots', 'ReplicaSnapshots', 'ArchiveSnapshots', 'LatestLocalSnapshot', 'LocalCdpStatus', 'PercentLocal24HourCdpHealthy', 'LocalCdpLogStorage', 'LocalCdpThroughput', 'LatestLocalSnapshotIndexState', 'LocalIndexedSnapshotsCount', 'LocalUnindexedSnapshotsCount', 'LocalPendingForIndexSnapshotsCount', 'LatestLocalIndexedSnapshotTime', 'CdpReplicationStatus', IgnoreCase = $false)]
+    [string[]]$NewTableColumns,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -83,31 +82,35 @@ function Set-RubrikReport
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-    
-    # Build body object
-    $CurrentBody = [pscustomobject]@{
-      name = $Name
-      filters = $InputFilters
-      chart0 = $InputChart0
-      chart1 = $InputChart1
-      table = $InputTable
-    }
   }
 
   Process {
+    # Build body object
+    $CurrentBody = [pscustomobject]@{
+      name = $Name
+      filters = $filters
+      chart0 = $chart0
+      chart1 = $chart1
+      table = $table
+    }
 
     switch ($true) {
       {$NewName} {$CurrentBody.Name = $NewName}
+      {$NewTableColumns} {$CurrentBody.table.columns = $NewTableColumns}
     }
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = $CurrentBody | ConvertTo-Json -Depth 10
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    Write-Verbose -Message "Body = $body"
+    if ($NewName -or $NewTableColumns) {
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+    } else {
+      Write-Warning ('No new values submitted, no changes made to report: {0} ({1})' -f $Name, $id)
+    }
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
 
     return $result
-
   } # End of process
 } # End of function
