@@ -2656,6 +2656,22 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '204'
             }
+            '5.2' = @{
+                Description = 'Bulk delete all unmanaged snapshots for the objects specified by objectId/objectType pairings.'
+                URI         = '/api/v1/data_source/snapshot/bulk_delete'
+                Method      = 'Post'
+                Body        = @{
+                    objectDefinitions = @(
+                        @{
+                            objectId   = 'objectId'
+                        }
+                    )
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
         }
         'Remove-RubrikVCenter'         = @{
             '1.0' = @{
