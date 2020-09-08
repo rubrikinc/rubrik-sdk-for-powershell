@@ -47,7 +47,7 @@ function Invoke-RubrikRESTCall {
       Refreshes the information of the Nutanix cluster
 
       .EXAMPLE
-      $currentreport = Get-RubrikReport -name BoringReportName | Get-RubrikReport
+      $currentreport = Get-RubrikReport -name BoringReportName -DetailedObject
       $currentreport.name = "Jaap's QuokkaReport"
       $updatedbody = $currentreport|select * -exclude id,updatestatus,reportTemplate,reportType
       Invoke-RubrikRESTCall -Endpoint "report/$($currentreport.id)" -api internal -Method PATCH -Body $updatedbody -Verbose
