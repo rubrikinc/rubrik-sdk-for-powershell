@@ -18,24 +18,48 @@ function Get-RubrikEvent
 
       .EXAMPLE
       Get-RubrikEvent -ObjectName "vm-foo" -EventType Backup
+
       This will query for any 'Backup' events on the Rubrik VM object named 'vm-foo'
 
       .EXAMPLE
       Get-RubrikVM -Name jbrasser-win | Get-RubrikEvent -Limit 10
+
       Queries the Rubrik Cluster for any vms named jbrasser-win and return the last ten events for each VM found
 
       .EXAMPLE
       Get-RubrikEvent -EventType Archive -Limit 100
-      This qill query the latest 100 Archive events on the currently logged in Rubrik cluster
+
+      This will query the latest 100 Archive events on the currently logged in Rubrik cluster
 
       .EXAMPLE
-      Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent -EventType Archive
-      This will feed any Archive events against the Rubrik Host object 'SQLFoo.demo.com' via a piped query.
+      Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent
+
+      This will feed any events against the Rubrik Host object 'SQLFoo.demo.com' via a piped query.
 
       .EXAMPLE
       Get-RubrikEvent -EventSeriesId '1111-2222-3333'
+
       This will retrieve all of the events belonging to the specified EventSeriesId. *Note - This will call Get-RubrikEventSeries*
 
+      .EXAMPLE
+      Get-RubrikEvent -EventType Archive -Limit 10 -IncludeEventSeries
+
+      This will query the latest 10 Archive events on the currently logged in Rubrik cluster and include the relevant EventSeries.
+
+      .EXAMPLE
+      Get-RubrikEvent -Limit 25 -ExcludeObjectType AggregateAhvVm,Mssql -Verbose
+
+      This will retrieve all of the events while excluding events of the AggregateAhvVm & Mssql object types while displaying verbose messages. This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
+
+      .EXAMPLE
+      Get-RubrikEvent -Limit 25 -ExcludeEventType Archive,Replication,Configuration,Backup
+
+      This will retrieve all of the events while excluding events of the Archive,Replication,Configuration,Backup Event types while displaying verbose messages. This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
+
+      .EXAMPLE
+      Get-RubrikEvent -Limit 25 -EventType Archive -ExcludeObjectType AggregateAhvVm,Mssql -Verbose
+
+      This will retrieve all Archive events while excluding events of the AggregateAhvVm & Mssql object types while displaying verbose messages. This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
   #>
 
   [CmdletBinding()]
@@ -56,10 +80,14 @@ function Get-RubrikEvent
     [Parameter(ParameterSetName="eventByID")]
     [string]$Status,
     # Filter by Event Type.
-    [ValidateSet('Archive', 'Audit', 'AuthDomain', 'Backup', 'CloudNativeSource', 'Configuration', 'Diagnostic', 'Discovery', 'Instantiate', 'Maintenance', 'NutanixCluster', 'Recovery', 'Replication', 'StorageArray', 'StormResource', 'System', 'Vcd', 'VCenter', IgnoreCase = $false)]
+    [ValidateSet('Archive', 'Audit', 'AuthDomain', 'AwsEvent', 'Backup', 'Classification', 'CloudNativeSource', 'CloudNativeVm', 'Configuration', 'Connection', 'Conversion', 'Diagnostic', 'Discovery', 'Failover', 'Fileset', 'Hardware', 'HostEvent', 'HypervScvmm', 'HypervServer', 'Instantiate', 'LegalHold', 'Maintenance', 'NutanixCluster', 'Recovery', 'Replication', 'Storage', 'StorageArray', 'StormResource', 'Support', 'System', 'TestFailover', 'Upgrade', 'VCenter', 'Vcd', 'VolumeGroup', 'UnknownEventType', IgnoreCase = $false)]
     [Alias('event_type')]
     [Parameter(ParameterSetName="eventByID")]
     [string]$EventType,
+    # Filter by excluding specific Event Types, multiple entries are allowed. Note that this filtering happens after receiving the results, this means that if a limit of 50 is specified 50 or less results will be returned
+    [ValidateSet('Archive', 'Audit', 'AuthDomain', 'AwsEvent', 'Backup', 'Classification', 'CloudNativeSource', 'CloudNativeVm', 'Configuration', 'Connection', 'Conversion', 'Diagnostic', 'Discovery', 'Failover', 'Fileset', 'Hardware', 'HostEvent', 'HypervScvmm', 'HypervServer', 'Instantiate', 'LegalHold', 'Maintenance', 'NutanixCluster', 'Recovery', 'Replication', 'Storage', 'StorageArray', 'StormResource', 'Support', 'System', 'TestFailover', 'Upgrade', 'VCenter', 'Vcd', 'VolumeGroup', 'UnknownEventType', IgnoreCase = $false)]
+    [Parameter(ParameterSetName="eventByID")]
+    [string[]]$ExcludeEventType,
     # Filter by a comma separated list of object IDs.
     [Alias('object_ids')]
     [Parameter(ValueFromPipelineByPropertyName = $true,ParameterSetName="eventByID")]
@@ -77,17 +105,26 @@ function Get-RubrikEvent
     [Parameter(ParameterSetName="eventByID")]
     [System.DateTime]$AfterDate,
     # Filter all the events by object type. Enter any of the following values: 'VmwareVm', 'Mssql', 'LinuxFileset', 'WindowsFileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle', 'AwsAccount', and 'Ec2Instance'. WindowsHost maps to both WindowsFileset and VolumeGroup, while LinuxHost maps to LinuxFileset and StorageArrayVolumeGroup.
+    [ValidateSet('AggregateAhvVm', 'AggregateAwsAzure', 'AggregateHypervVm', 'AggregateLinuxUnixHosts', 'AggregateNasShares', 'AggregateOracleDb', 'AggregateStorageArrays', 'AggregateVcdVapps', 'AggregateVsphereVm', 'AggregateWindowsHosts', 'AppBlueprint', 'AuthDomain', 'AwsAccount', 'AwsEventType', 'Certificate', 'Cluster', 'DataLocation', 'Ec2Instance', 'Host', 'HypervScvmm', 'HypervServer', 'HypervVm', 'JobInstance', 'Ldap', 'LinuxHost', 'LinuxFileset', 'ManagedVolume', 'Mssql', 'NasHost', 'NutanixCluster', 'NutanixVm', 'OracleDb', 'OracleHost', 'OracleRac', 'PublicCloudMachineInstance', 'SamlSso', 'ShareFileset', 'SlaDomain', 'SmbDomain', 'StorageArray', 'StorageArrayVolumeGroup', 'Storm', 'SupportBundle', 'UnknownObjectType', 'Upgrade', 'UserActionAudit', 'Vcd', 'VcdVapp', 'Vcenter', 'VmwareVm', 'VolumeGroup', 'WindowsHost', 'WindowsFileset', IgnoreCase = $false)]
     [Alias('object_type')]
     [Parameter(ParameterSetName="eventByID")]
     [string]$ObjectType,
-    # A switch value that determines whether to show only on the most recent event in the series. When 'true' only the most recent event in the series are shown. When 'false' all events in the series are shown. The default value is 'true'.
+    # Filter by excluding specific Object Types, multiple entries are allowed. Note that this filtering happens after receiving the results, this means that if a limit of 50 is specified 50 or less results will be returned
+    [ValidateSet('AggregateAhvVm', 'AggregateAwsAzure', 'AggregateHypervVm', 'AggregateLinuxUnixHosts', 'AggregateNasShares', 'AggregateOracleDb', 'AggregateStorageArrays', 'AggregateVcdVapps', 'AggregateVsphereVm', 'AggregateWindowsHosts', 'AppBlueprint', 'AuthDomain', 'AwsAccount', 'AwsEventType', 'Certificate', 'Cluster', 'DataLocation', 'Ec2Instance', 'Host', 'HypervScvmm', 'HypervServer', 'HypervVm', 'JobInstance', 'Ldap', 'LinuxHost', 'LinuxFileset', 'ManagedVolume', 'Mssql', 'NasHost', 'NutanixCluster', 'NutanixVm', 'OracleDb', 'OracleHost', 'OracleRac', 'PublicCloudMachineInstance', 'SamlSso', 'ShareFileset', 'SlaDomain', 'SmbDomain', 'StorageArray', 'StorageArrayVolumeGroup', 'Storm', 'SupportBundle', 'UnknownObjectType', 'Upgrade', 'UserActionAudit', 'Vcd', 'VcdVapp', 'Vcenter', 'VmwareVm', 'VolumeGroup', 'WindowsHost', 'WindowsFileset', IgnoreCase = $false)]
+    [Parameter(ParameterSetName="eventByID")]
+    [string[]]$ExcludeObjectType,
+    # A switch value that determines whether to show only on the most recent event in the series. When 'true' only the most recent event in the series are shown. When 'false' all events in the series are shown. The default value is 'true'. Note: Deprecated in 5.2
     [Alias('show_only_latest')]
     [Parameter(ParameterSetName="eventByID")]
     [Switch]$ShowOnlyLatest,
-    # A Switch value that determines whether to filter only on the most recent event in the series. When 'true' only the most recent event in the series are filtered. When 'false' all events in the series are filtered. The default value is 'true'.
+    # A Switch value that determines whether to filter only on the most recent event in the series. When 'true' only the most recent event in the series are filtered. When 'false' all events in the series are filtered. The default value is 'true'. Note: Deprecated in 5.2
     [Alias('filter_only_on_latest')]
     [Parameter(ParameterSetName="eventByID")]
     [Switch]$FilterOnlyOnLatest,
+    # A Switch value that determines whether or not EventSeries events are included in the results
+    [Alias('should_include_event_series')]
+    [Parameter(ParameterSetName="eventByID")]
+    [Switch]$IncludeEventSeries,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -121,17 +158,60 @@ function Get-RubrikEvent
       if(-not $PSBoundParameters.ContainsKey('ShowOnlyLatest')) { $Resources.Query.Remove('show_only_latest') }
       if(-not $PSBoundParameters.ContainsKey('FilterOnlyOnLatest')) { $Resources.Query.Remove('filter_only_on_latest') }
 
+
       $uri = New-URIString -server $Server -endpoint ($resources.URI)
       $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
       $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-      $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    }
-    else {
+
+
+
+      if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
+        if ($FilterOnlyOnLatest) {
+          Write-Warning -Message 'This switch ''FilterOnlyOnLatest'' is no longer available in versions of Rubrik CDM later than 5.2'
+        }
+
+        if ($ShowOnlyLatest) {
+          Write-Warning -Message 'This switch ''ShowOnlyLatest'' is no longer available in versions of Rubrik CDM later than 5.2'
+        }
+
+        # Build Custom Object based on information in latestEvent property
+        $result = $result.data | ForEach-Object {
+          $CurrentObject = $_
+
+          $Hash = [ordered]@{}
+          $_.latestEvent.psobject.properties.name | ForEach-Object {
+            $Hash.$_ = $CurrentObject.latestEvent.$_
+          }
+
+          $_.psobject.properties.name | Where-Object {$_ -ne 'latestEvent'} | ForEach-Object {
+            $Hash.$_ = $CurrentObject.$_
+          }
+
+          if ($ExcludeEventType -and $ExcludeEventType -notcontains $Hash.eventType) {
+            [pscustomobject]$Hash
+          } elseif ($ExcludeEventType) {
+            # No output
+          } elseif ($ExcludeObjectType -and $ExcludeObjectType -notcontains $Hash.objectType) {
+            [pscustomobject]$Hash
+          } elseif ($ExcludeObjectType) {
+            # No Output
+          } else {
+            [pscustomobject]$Hash
+          }
+        }
+      } else {
+        $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+        $result = Test-FilterObject -filter ($resources.Filter) -result $result
+      }
+
+
+    } else {
       # Adding property for TypeName support
       $result = ((Get-RubrikEventSeries -id $EventSeriesId).eventDetailList) | Select-Object *,@{N="eventStatus";E={$_.status}}
     }
+    
     # Add 'date' property to the output by converting 'time' property to datetime object
     if (($null -ne $result) -and ($null -ne ($result | Select-Object -First 1).time)) {
       $result = $result | ForEach-Object {
@@ -143,7 +223,6 @@ function Get-RubrikEvent
       }
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
     return $result
-
 
   } # End of process
 } # End of function

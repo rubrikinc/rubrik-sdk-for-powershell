@@ -523,6 +523,29 @@ function Get-RubrikAPIData {
                 Success     = '200'
                 ObjectTName = 'Rubrik.Event'
             }
+            '5.2' = @{
+                Description = 'Retrieve information for the latest of related events that match the value specified in any of the following categories: type, status, or ID, and limit events by date.'
+                URI         = '/api/v1/event/latest'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    limit = 'limit'
+                    after_id = 'after_id'
+                    event_series_id = 'event_series_id'
+                    status = 'status'
+                    event_type = 'event_type'
+                    object_ids = 'object_ids'
+                    object_name = 'object_name'
+                    before_date = 'before_date'
+                    after_date = 'after_date'
+                    object_type = 'object_type'
+                    should_include_event_series = 'should_include_event_series'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.Event.5.2'
+            }
         }
         'Get-RubrikEventSeries' = @{
             '5.0' = @{
@@ -530,17 +553,22 @@ function Get-RubrikAPIData {
                 URI         = '/api/internal/event_series'
                 Method      = 'Get'
                 Body        = ''
-                Query       = @{
-                    status = 'status'
-                    event_type = 'event_type'
-                    object_ids = 'object_ids'
-                    object_name = 'object_name'
-                    object_type = 'object_type'
-                }
+                Query       = ''
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
                 ObjectTName = 'Rubrik.EventSeries'
+            }
+            '5.2' = @{
+                Description = 'Retrieve information for event series within Rubrik.'
+                URI         = '/api/v1/event_series/{id}'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.EventSeries.5.2'
             }
         }
         'Get-RubrikFileset'            = @{

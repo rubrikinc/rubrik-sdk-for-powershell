@@ -17,20 +17,8 @@ function Get-RubrikEventSeries
       https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikeventseries
 
       .EXAMPLE
-      Get-RubrikEventSeries
-      This will return information around the latest event within an event series (within the last 24 hours) from the Rubrik Cluster
-
-      .EXAMPLE
       Get-RubrikEventSeries -id '1111-2222-3333'
       This will return details for the specified event series, along with its' associated events in the Rubrik Cluster
-
-      .EXAMPLE
-      Get-RubrikEventSeries -Status 'Failure'
-      This will the latest failed event belonging to each event series (within the last 24 hours) in the Rubrik Cluster
-
-      .EXAMPLE
-      Get-RubrikEventSeries -EventType 'Backup'
-      This will return the latest backup event belonging to each event series(within the last 24 hours) in the Rubrik Cluster
   #>
 
   [CmdletBinding()]
@@ -38,24 +26,24 @@ function Get-RubrikEventSeries
     # Filter by Event Series ID
     [parameter()]
     [string]$Id,
-    # Filter by Status. Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Cancelingâ€™.
+    # Filter by Status. Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling'. Note: Deprecated in 5.2
     [ValidateSet('Failure', 'Success', 'Queued', 'Active', IgnoreCase = $false)]
     [parameter()]
     [string]$Status,
-    # Filter by Event Type.
+    # Filter by Event Type. Note: Deprecated in 5.2
     [ValidateSet('Archive', 'Backup', 'Instantiate', 'Recovery', 'Replication', IgnoreCase = $false)]
     [Alias('event_type')]
     [parameter()]
     [string]$EventType,
-    # Filter by a comma separated list of object IDs.
+    # Filter by a comma separated list of object IDs. Note: Deprecated in 5.2
     [Alias('object_ids')]
     [Parameter(ValueFromPipelineByPropertyName = $true)]
     [array]$objectIds,
-    # Filter all the events according to the provided name using infix search for resources and exact search for usernames.
+    # Filter all the events according to the provided name using infix search for resources and exact search for usernames. Note: Deprecated in 5.2
     [Alias('object_name')]
     [parameter()]
     [string]$ObjectName,
-    # Filter all the events by object type. Enter any of the following values: 'VmwareVm', 'Mssql', 'LinuxFileset', 'WindowsFileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle', 'AwsAccount', and 'Ec2Instance'. WindowsHost maps to both WindowsFileset and VolumeGroup, while LinuxHost maps to LinuxFileset and StorageArrayVolumeGroup.
+    # Filter all the events by object type. Enter any of the following values: 'VmwareVm', 'Mssql', 'LinuxFileset', 'WindowsFileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle', 'AwsAccount', and 'Ec2Instance'. WindowsHost maps to both WindowsFileset and VolumeGroup, while LinuxHost maps to LinuxFileset and StorageArrayVolumeGroup. Note: Deprecated in 5.2
     [Alias('object_type')]
     [parameter()]
     [string]$ObjectType,
@@ -86,15 +74,20 @@ function Get-RubrikEventSeries
   }
 
   Process {
+    if ((($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) -and (-not $id)) {
+      Write-Warning 'Functionality of this cmdlet has been deprecated by new version of API endpoints. ID is mandatory'
+    } elseif ((($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) -and $Status -or $EventType -or $objectIds -or $ObjectName -or $ObjectType) {
+      Write-Warning 'Functionality of this cmdlet has been deprecated by new version of API endpoints, usage of parameters except -id will not have any effect on operation of cmdlet. Please use Get-RubrikEventSeries instead'
+    } elseif ($id -and ($rubrikConnection.version.substring(0,5) -as [version]) -lt [version]5.2) {
+      $resources.ObjectTName = 'Rubrik.EventSeriesById'
+    }
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    if ($id) {
-      $resources.ObjectTName = 'Rubrik.EventSeriesById'
-    }
+
     $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
     return $result
