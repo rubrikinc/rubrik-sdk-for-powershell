@@ -18,14 +18,22 @@ function Get-RubrikNutanixVM
 
       .EXAMPLE
       Get-RubrikNutanixVM -Name 'Server1'
+
       This will return details on all Nutanix (AHV) virtual machines named "Server1".
 
       .EXAMPLE
       Get-RubrikNutanixVM -Name 'Server1' -SLA Gold
+
       This will return details on all Nutanix (AHV) virtual machines named "Server1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
+      Get-RubrikNutanixVM -Name 'Server1' -DetailedObject
+
+      This will return all Nutanix (AHV) virtual machines named "Server1" and returns the Detailed Objects of these VMs
+
+      .EXAMPLE
       Get-RubrikNutanixVM -Relic
+
       This will return all removed Nutanix (AHV) virtual machines that were formerly protected by Rubrik.
   #>
 
@@ -65,6 +73,8 @@ function Get-RubrikNutanixVM
     [Parameter(ParameterSetName='Query')]
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,
+    # DetailedObject will retrieved the detailed Nutanix VM object, the default behavior of the API is to only retrieve a subset of the full Nutanix VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Query')]
     [Parameter(ParameterSetName='ID')]
@@ -110,9 +120,18 @@ function Get-RubrikNutanixVM
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
-    return $result
-
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        if ($result) {
+          Get-RubrikNutanixVM -id $result[$i].id
+        }
+      }
+    } else {
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    }
   } # End of process
 } # End of function

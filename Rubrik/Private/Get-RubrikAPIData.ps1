@@ -236,6 +236,28 @@ function Get-RubrikAPIData {
                 ObjectTName = 'Rubrik.AvailabilityGroup'
             }
         }
+        'Get-RubrikBlackout'           = @{
+            '1.0' = @{
+                Description = 'Whether global blackout window is active.'
+                URI         = '/api/internal/blackout_window'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.1' = @{
+                Description = 'Whether global blackout window is active.'
+                URI         = '/api/v1/blackout_window'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikClusterInfo'         = @{
             '4.2' = @{
                 Description = 'Retrieves advanced settings of the Rubrik cluster'
@@ -814,6 +836,7 @@ function Get-RubrikAPIData {
                     vmId = 'vmId'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareVmMount'
             }
         }
         'Get-RubrikNASShare'              = @{
@@ -2661,6 +2684,22 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '204'
             }
+            '5.2' = @{
+                Description = 'Bulk delete all unmanaged snapshots for the objects specified by objectId/objectType pairings.'
+                URI         = '/api/v1/data_source/snapshot/bulk_delete'
+                Method      = 'Post'
+                Body        = @{
+                    objectDefinitions = @(
+                        @{
+                            objectId   = 'objectId'
+                        }
+                    )
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
         }
         'Remove-RubrikVCenter'         = @{
             '1.0' = @{
@@ -2764,6 +2803,18 @@ function Get-RubrikAPIData {
             '1.0' = @{
                 Description = 'Whether to start or stop the global blackout window.'
                 URI         = '/api/internal/blackout_window'
+                Method      = 'Patch'
+                Body        = @{
+                    isGlobalBlackoutActive = 'isGlobalBlackoutActive'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.1' = @{
+                Description = 'Whether to start or stop the global blackout window.'
+                URI         = '/api/v1/blackout_window'
                 Method      = 'Patch'
                 Body        = @{
                     isGlobalBlackoutActive = 'isGlobalBlackoutActive'

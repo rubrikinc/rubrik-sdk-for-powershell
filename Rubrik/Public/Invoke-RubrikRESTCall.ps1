@@ -26,6 +26,7 @@ function Invoke-RubrikRESTCall {
 
       .EXAMPLE
       Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query @{'name'='msf-sql2016'}
+      
       Retrieve the raw output for the VMWare VM msf-sql2016 using a query parameter.
 
       .EXAMPLE
@@ -44,6 +45,14 @@ function Invoke-RubrikRESTCall {
       Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post
 
       Refreshes the information of the Nutanix cluster
+
+      .EXAMPLE
+      $currentreport = Get-RubrikReport -name BoringReportName -DetailedObject
+      $currentreport.name = "Jaap's QuokkaReport"
+      $updatedbody = $currentreport|select * -exclude id,updatestatus,reportTemplate,reportType
+      Invoke-RubrikRESTCall -Endpoint "report/$($currentreport.id)" -api internal -Method PATCH -Body $updatedbody -Verbose
+
+      Using this example it is possible to rename an existing report to the report name listed in the second row of this example
   #>
 
   [cmdletbinding()]
@@ -114,7 +123,14 @@ function Invoke-RubrikRESTCall {
         }
         Write-Verbose "URI string: $uri"
         Write-Verbose "Body string: $JsonBody"
-        $result = Submit-Request -uri $uri -header $Header -method $Method -body $JsonBody
+
+        if ($Method -eq 'Get' -and $Body) {
+            Write-Warning 'Executing a ''Get'' request in combination with a body object, processing request without body'
+            $result = Submit-Request -uri $uri -header $Header -method $Method
+        } else {
+            $result = Submit-Request -uri $uri -header $Header -method $Method -body $JsonBody
+        }
+        
     }
     catch {
         throw $_

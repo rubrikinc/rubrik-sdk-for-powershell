@@ -18,14 +18,23 @@ function Get-RubrikVMwareHost
 
       .EXAMPLE
       Get-RubrikVMwareHost
+
       This will return a listing of all of the ESXi hosts known to the connected Rubrik cluster
 
+      .EXAMPLE
       Get-RubrikVMwareHost -PrimarClusterId local
+
       This will return a listing of all of the ESXi hosts whose primary cluster is that of the connected Rubrik cluster.
 
       .EXAMPLE
       Get-RubrikVMwareHost -Name 'esxi01'
+
       This will return a listing of all of the ESXi hosts named 'esxi01' registered with the connected Rubrik cluster
+
+      .EXAMPLE
+      Get-RubrikVMwareHost -Name 'esxi01' -DetailedObject
+
+      This will return a listing of all of the ESXi hosts named 'esxi01' registered with the connected Rubrik cluster with fully detailed objects
   #>
 
   [CmdletBinding()]
@@ -34,11 +43,18 @@ function Get-RubrikVMwareHost
     [Parameter(
       Position = 0)]
     [String]$Name,
+    # Datastore id
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
+    [String]$id,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # Filter the summary information based on the primarycluster_id of the primary Rubrik cluster. Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
     [Alias('primary_cluster_id')]
     [String]$PrimaryClusterID,
+    # DetailedObject will retrieved the detailed VMware Host object, the default behavior of the API is to only retrieve a subset of the full VMware Host object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # API version
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
@@ -72,9 +88,18 @@ function Get-RubrikVMwareHost
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
-    return $result
-
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        if ($result) {
+          Get-RubrikVMwareHost -id $result[$i].id
+        }
+      }
+    } else {
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    }
   } # End of process
 } # End of function

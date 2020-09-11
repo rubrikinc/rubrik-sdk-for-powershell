@@ -18,16 +18,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Changed Get/Set Rubrik-Blackout to use correctly API version for Rubrik CDM 5.1 and later [Issue 679](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/679)
+* Changed `Remove-RubrikUnmanagedObject` to use correct REST endpoint for Rubrik CDM 5.2 and later [Issue 671](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/671)
+
 ### Added
 
+* Added `Get-RubrikBlackout` cmdlet as requested in [Issue 688](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/688)
+* Added additional example to `New-RubrikVolumeGroupMount` [Issue 660](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/660)
+* Added additional example to `Invoke-RubrikRESTCall` [Issue 655](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/655)
+* Added new cmdlet `Set-RubrikReport` to allow for changing settings on Rubrik Reports, and added associated unit tests [Issue 654](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/654)
+* Added `DetailedObject` parameter & updated documentation for: `Get-RubrikDatabaseMount`, `Get-RubrikHyperVVM`, `Get-RubrikMount`, `Get-RubrikNutanixVM`, `Get-RubrikReport`, `Get-RubrikSLA`, `Get-RubrikUser`, `Get-RubrikVCenter`, `Get-RubrikVMwareDatastore`, `Get-RubrikVMwareHost` [Issue 651](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/651)
+* Added additional example to `Get-RubrikVolumeGroup` [Issue 647](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/647)
 * New switch added to `Get-RubrikEvent` `-IncludeEventSeries` which determines if EventSeries events are included in the results [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
 
 ### Fixed
 
+* The `DynamicDNS` parameter of `New-RubrikLDAP` is no longer a mandatory parameter [Issue 662](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/662)
+* Fixed `Test-RubrikSLA` internal function behaviour to no longer enforce `local` cluster ID when not supplied [Issue 659](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/659) 
+* WhatIf/Verbose messages for `Remove-RubrikSLA` will display SLA name and ID for additional clarification [Issue 653](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/653)
+* Invoke-RubrikRestCall no longer takes Body object for Get Method [Issue 652](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/652)
 * Created entries for 5.2 endpoints in `Get-RubrikAPIData` private function for `Get-RubrikEvent` & `Get-RubrikEventSeries` which caused these cmdlets to no longer work on Rubrik CDM 5.2 [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
 
 ### Deprecated
 
+* The `Remove-RubrikOrgAuthorization` & `Set-RubrikOrgAuthorization` cmdlets no longer work in 5.2 because of API changes [Issue 681](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/681)
 * Functionality in `Get-RubrikEventSeries` is limited to only queries by specific EventSeries id on Rubrik CDM Clusters running versions higher than 5.2. Original functionality is still available for backwards compatibility with older versions of Rubrik CDM [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
 
 ## [5.0.3](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.3) - 2020-08-12

@@ -1,45 +1,36 @@
 #Requires -Version 3
-function Remove-RubrikSLA 
+function Get-RubrikBlackout
 {
   <#  
       .SYNOPSIS
-      Connects to Rubrik and removes SLA Domains
-            
+      The Get-RubrikBlackout cmdlet will retrieve cluster blackout windows information
+
       .DESCRIPTION
-      The Remove-RubrikSLA cmdlet will request that the Rubrik API delete an SLA Domain.
-      The SLA Domain must have zero protected objects (VMs, filesets, databases, etc.) in order to be successful.
-            
+      The Get-RubrikBlackout cmdlet will retrieve cluster blackout windows information
+
       .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-            
+      Written by Jaap Brasser for community usage
+      Twitter: @jaap_brasser
+      GitHub: jaapbrasser
+
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/remove-rubriksla
-            
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikblackout
+
       .EXAMPLE
-      Get-RubrikSLA -SLA 'Gold' | Remove-RubrikSLA
-      This will attempt to remove the Gold SLA Domain from Rubrik if there are no objects being protected by the policy
+      Get-RubrikBlackout
+
+      This will return whether or not Global Blackout is active on the currently connected cluster
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding()]
   Param(
-    # SLA Domain id
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
-    [ValidateNotNullOrEmpty()]
-    [String]$id,
-    # Should not be specified, used for better error handling and WhatIf/Confirm messages
-    [Parameter(
-      ValueFromPipelineByPropertyName=$true
-    )]
-    [string] $name,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api
   )
 
-  Begin {
+    Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
@@ -63,7 +54,7 @@ function Remove-RubrikSLA
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

@@ -18,7 +18,14 @@ function New-RubrikVolumeGroupMount
 
       .EXAMPLE
       New-RubrikVolumeGroupMount -TargetHost 'Restore-Server1' -VolumeGroupSnapshot $snap -ExcludeDrives -$DrivestoExclude
-     
+
+      This will create a new VolumeGroup Mount on Restore-Server1 with the values specified in $snap & $DrivestoExclude
+
+      .EXAMPLE
+      $snapshot = Get-RubrikVolumeGroup "MyVolumeGroup" | Get-RubrikSnapshot -Latest
+      New-RubrikVolumeGroupMount -TargetHost "MyTargetHostName" -VolumeGroupSnapshot $snapshot -ExcludeDrives @("D","E")
+
+      This will create a new VolumeGroup Mount on MyTargetHostName with the latest snapshot retrieved in the first line, while exlcluding drives D & E
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]

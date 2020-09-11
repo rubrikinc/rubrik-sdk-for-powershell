@@ -18,14 +18,22 @@ function Get-RubrikReport
 
       .EXAMPLE
       Get-RubrikReport
+
       This will return details on all reports
-      
+
+      .EXAMPLE
+      Get-RubrikReport -DetailedObject
+
+      This will return full details on all reports
+
       .EXAMPLE
       Get-RubrikReport -Name 'SLA' -Type Custom
+
       This will return details on all custom reports that contain the string "SLA"
 
       .EXAMPLE
       Get-RubrikReport -id '11111111-2222-3333-4444-555555555555'
+
       This will return details on the report id "11111111-2222-3333-4444-555555555555"
   #>
 
@@ -41,6 +49,8 @@ function Get-RubrikReport
     # The ID of the report.
     [Parameter(ValueFromPipelineByPropertyName = $true)]    
     [String]$id,
+    # DetailedObject will retrieved the detailed Rubrik Report object, the default behavior of the API is to only retrieve a subset of the full Rubrik Report object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -75,9 +85,18 @@ function Get-RubrikReport
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
-    return $result
-
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        if ($result) {
+          Get-RubrikReport -id $result[$i].id
+        }
+      }
+    } else {
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    }
   } # End of process
 } # End of function

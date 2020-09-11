@@ -18,14 +18,22 @@ function Get-RubrikVMwareDatastore
 
       .EXAMPLE
       Get-RubrikVMwareDatastore
+
       This will return a listing of all of the datastores known to a connected Rubrik cluster
 
       .EXAMPLE
       Get-RubrikVMwareDatastore -Name 'vSAN'
+
       This will return a listing of all of the datastores named 'vSAN' known to a connected Rubrik cluster
 
       .EXAMPLE
+      Get-RubrikVMwareDatastore -Name 'vSAN' -DetailedObject
+
+      This will return a listing of all of the datastores named 'vSAN' known to a connected Rubrik cluster with fully detailed objects
+
+      .EXAMPLE
       Get-RubrikVMwareDatastore -DatastoreType 'NFS'
+
       This will return a listing of all of the NFS datastores known to a connected Rubrik cluster
   #>
 
@@ -35,9 +43,16 @@ function Get-RubrikVMwareDatastore
     [Parameter(
        Position = 0)]
     [String]$Name,
+    # Datastore id
+    [Parameter(
+      ValueFromPipelineByPropertyName = $true)]
+    [ValidateNotNullOrEmpty()]
+    [String]$id,
     # Filter Datastore type
     [ValidateSet('VMFS', 'NFS','vSAN')]
     [String]$DatastoreType,
+    # DetailedObject will retrieved the detailed VMware Datastore object, the default behavior of the API is to only retrieve a subset of the full VMware Datastore object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -73,9 +88,18 @@ function Get-RubrikVMwareDatastore
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
-    return $result
-
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        if ($result) {
+          Get-RubrikVMwareDatastore -id $result[$i].id
+        }
+      }
+    } else {
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    }
   } # End of process
 } # End of function
