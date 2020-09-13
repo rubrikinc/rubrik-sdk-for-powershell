@@ -1,6 +1,5 @@
 ﻿#requires -Version 3
-function Get-RubrikVgfUpgradeReport
-{
+function Get-RubrikVgfUpgradeReport {
   <#
       .SYNOPSIS
       Returns projected space consumption of Volume Group format upgrade
@@ -168,7 +167,6 @@ function Get-RubrikVgfUpgradeReport
       $vgfreport = $vgfreport | Where-Object {$_.SetToUpgrade}
     }
 
-    )
     $totalSize = 0
     $resultMap = @(
       $vgfreport | ForEach-Object {
