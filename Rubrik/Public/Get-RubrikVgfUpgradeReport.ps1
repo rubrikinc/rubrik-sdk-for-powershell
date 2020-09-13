@@ -17,34 +17,42 @@ function Get-RubrikVgfUpgradeReport
 
       .EXAMPLE
       Get-RubrikVgfUpgradeReport -VGList VolumeGroup:::e0a04776-ab8e-45d4-8501-8da658221d74, VolumeGroup:::9136a7ef-4ad2-4bb9-bf28-961fb74d4322
+
       This will return projected space consumption on volume groups within the given Volume Group ID list.
 
       .EXAMPLE
       Get-RubrikVgfUpgradeReport
+
       This will return projected space consumption on all volume groups on the Rubrik cluster.
 
       .EXAMPLE
       Get-RubrikVgfUpgradeReport -Hostname 'Server1'
+
       This will return projected space consumption on all volume groups from host "Server1".
 
       .EXAMPLE
       Get-RubrikVgfUpgradeReport -Hostname 'Server1' -SLA Gold
+
       This will return projected space consumption on all volume groups of "Server1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
       Get-RubrikVgfUpgradeReport -Relic
+
       This will return projected space consumption on all removed volume groups that were formerly protected by Rubrik.
 
       .EXAMPLE
       Get-RubrikVgfUpgradeReport -FailedLastSnapshot
+
       This will return projected space consumption on all volume groups that needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format.
 
       .EXAMPLE
       Get-RubrikVgfUpgradeReport -UsedFastVhdx false
+
       This will return projected space consumption on volume groups that did not use fast VHDX format in the latest snapshot.
 
       .EXAMPLE
       Get-RubrikVgfUpgradeReport -Id VolumeGroup:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
+      
       This will return projected space consumption for the specified VolumeGroup ID
   #>
 
@@ -129,7 +137,7 @@ function Get-RubrikVgfUpgradeReport
       if ($VGList -and (!$VGList.Contains($vg.id))) {
         continue
       }
-      $vgf = $vg | Get-RubrikSnapshot -Latest | Select VolumeGroupId, UsedFastVhdx, FileSizeInBytes
+      $vgf = $vg | Get-RubrikSnapshot -Latest | Select-Object VolumeGroupId, UsedFastVhdx, FileSizeInBytes
       # Add the report only if the Volume Group did not use fast VHDX format for its latest snapshot
       if (!$vgf.usedFastVhdx) {
         $vgf | Add-Member NoteProperty VolumeGroupName $vg.name
@@ -142,36 +150,43 @@ function Get-RubrikVgfUpgradeReport
 
     if ($NamePrefix) {
       Write-Verbose "Filtering by Volume Group name prefix: $NamePrefix"
-      $vgfreport = $vgfreport | Where {$_.VolumeGroupName -Like "$NamePrefix*"}
+      $vgfreport = $vgfreport | Where-Object {$_.VolumeGroupName -Like "$NamePrefix*"}
     }
 
     if ($HostnamePrefix) {
       Write-Verbose "Filtering by host name prefix: $HostnamePrefix"
-      $vgfreport = $vgfreport | Where {$_.HostName -Like "$HostnamePrefix*"}
+      $vgfreport = $vgfreport | Where-Object {$_.HostName -Like "$HostnamePrefix*"}
     }
 
     if ($FailedLastSnapshot) {
       Write-Verbose "Filtering by whether a Volume Group needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format"
-      $vgfreport = $vgfreport | Where {$_.FailedLastSnapshot}
+      $vgfreport = $vgfreport | Where-Object {$_.FailedLastSnapshot}
     }
 
     if ($SetToUpgrade) {
       Write-Verbose "Filtering by whether a Volume Group is set to take a full snapshot on the next backup"
-      $vgfreport = $vgfreport | Where {$_.SetToUpgrade}
+      $vgfreport = $vgfreport | Where-Object {$_.SetToUpgrade}
     }
 
-    $resultMap = @()
+    )
     $totalSize = 0
-    foreach ($report in $vgfreport) {
-      $object = New-Object PSObject
-      $object | Add-Member NoteProperty VolumeGroupName $report.volumeGroupName
-      $object | Add-Member NoteProperty VolumeGroupId $report.volumeGroupId
-      $object | Add-Member NoteProperty ProjectedSpaceConsumptionInBytes $report.fileSizeInBytes
-      $resultMap += $object
-      $totalSize += $report.fileSizeInBytes
+    $resultMap = @(
+      $vgfreport | ForEach-Object {
+        $totalSize += $_.fileSizeInBytes
+        [pscustomobject]@{
+          VolumeGroupName = $_.volumeGroupName
+          VolumeGroupId = $_.volumeGroupId
+          ProjectedSpaceConsumptionInBytes = $_.fileSizeInBytes
+        }
+      }
+    )
+
+    # Add summary object
+    $resultMap += [pscustomobject]@{
+      VolumeGroupName="AllVolumeGroups"
+      VolumeGroupId="AllVolumeGroups"
+      ProjectedSpaceConsumptionInBytes=$totalSize
     }
-    $object = New-Object PSObject -Property @{VolumeGroupName="AllVolumeGroups"; VolumeGroupId="AllVolumeGroups"; ProjectedSpaceConsumptionInBytes=$totalSize}
-    $resultMap += $object
 
     return $resultMap
   } # End of process

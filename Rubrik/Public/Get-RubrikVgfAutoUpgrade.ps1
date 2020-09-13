@@ -32,6 +32,7 @@ function Get-RubrikVgfAutoUpgrade
 
       .EXAMPLE
       Get-RubrikVgfAutoUpgrade
+      
       This will return the Volume Group format auto upgrade settings from the connected cluster.
   #>
 

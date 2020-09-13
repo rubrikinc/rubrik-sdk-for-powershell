@@ -18,10 +18,12 @@ function Invoke-RubrikVgfUpgrade
 
       .EXAMPLE
       Invoke-RubrikVgfUpgrade -VGList VolumeGroup:::e0a04776-ab8e-45d4-8501-8da658221d74, VolumeGroup:::9136a7ef-4ad2-4bb9-bf28-961fb74d4322
+
       This will set the forceFull flag of the given volume groups, if they need upgrade
 
       .EXAMPLE
       Get-RubrikVolumeGroup -hostname ad.flammi.home | Invoke-RubrikVgfUpgrade
+      
       This will set the forceFull flag of the Volume Group belonging to the specified hostname, if it needs upgrade
   #>
 
@@ -119,6 +121,6 @@ Do you want to proceed? (y/N) "
     }
     Write-Host ""
     Write-Host "Successfully set the following Volume Groups for upgrade on the next backup:"
-    Write-Host ($vgfReport | Where {$vgIdsToUpgrade.contains($_.ID)} | Select -ExpandProperty Name)
+    Write-Host ($vgfReport | Where-Object {$vgIdsToUpgrade.contains($_.ID)} | Select-Object -ExpandProperty Name)
   } # End of process
 } # End of function

@@ -17,26 +17,32 @@ function Get-RubrikVgfReport
 
       .EXAMPLE
       Get-RubrikVgfReport -Hostname 'Server1'
+
       This will return backup format report on all volume groups from host "Server1".
 
       .EXAMPLE
       Get-RubrikVgfReport -Hostname 'Server1' -SLA Gold
+
       This will return backup format report on all volume groups of "Server1" that are protected by the Gold SLA Domain.
 
       .EXAMPLE
       Get-RubrikVgfReport -Relic
+
       This will return backup format report on all removed volume groups that were formerly protected by Rubrik.
 
       .EXAMPLE
       Get-RubrikVgfReport -FailedLastSnapshot
+
       This will return backup format report on all volume groups that needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format.
 
       .EXAMPLE
       Get-RubrikVgfReport -UsedFastVhdx false
+
       This will return backup format report on volume groups that did not use fast VHDX format in the latest snapshot.
 
       .EXAMPLE
       Get-RubrikVgfReport -Id VolumeGroup:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
+      
       This will return backup format report for the specified VolumeGroup ID
   #>
 
@@ -118,11 +124,11 @@ function Get-RubrikVgfReport
     $vgfreport = @()
 
     foreach ($vg in $result) {
-      $vgsnapshot = Get-RubrikSnapshot -Latest -id $vg.ID | Select VolumeGroupId, usedFastVhdx
+      $vgsnapshot = Get-RubrikSnapshot -Latest -id $vg.ID | Select-ObjectVolumeGroupId, usedFastVhdx
       if (!$vgsnapshot) {
         continue
       }
-      $vgf = $vgsnapshot | select @{N='ID'; E={$_.VolumeGroupId}}, @{N='Migrated'; E={$_.usedFastVhdx}}
+      $vgf = $vgsnapshot | Select-Object@{N='ID'; E={$_.VolumeGroupId}}, @{N='Migrated'; E={$_.usedFastVhdx}}
       $vgf | Add-Member NoteProperty Name $vg.name
       $vgf | Add-Member NoteProperty SLADomain $vg.configuredSlaDomainName
       $vgf | Add-Member NoteProperty HostName $vg.hostname
@@ -134,31 +140,31 @@ function Get-RubrikVgfReport
 
     if ($NamePrefix) {
       Write-Verbose "Filtering by Volume Group name prefix: $NamePrefix"
-      $vgfreport = $vgfreport | Where {$_.Name -Like "$NamePrefix*"}
+      $vgfreport = $vgfreport | Where-Object {$_.Name -Like "$NamePrefix*"}
     }
 
     if ($HostnamePrefix) {
       Write-Verbose "Filtering by host name prefix: $HostnamePrefix"
-      $vgfreport = $vgfreport | Where {$_.HostName -Like "$HostnamePrefix*"}
+      $vgfreport = $vgfreport | Where-Object {$_.HostName -Like "$HostnamePrefix*"}
     }
 
     if ($LatestSnapshotFormat) {
       Write-Verbose "Filtering by latest snapshot format: $LatestSnapshotFormat"
     }
     if ($LatestSnapshotFormat -eq "fastvhdx") {
-      $vgfreport = $vgfreport | Where {$_.Migrated}
+      $vgfreport = $vgfreport | Where-Object {$_.Migrated}
     } elseif ($LatestSnapshotFormat -eq "smb") {
-      $vgfreport = $vgfreport | Where {!$_.Migrated}
+      $vgfreport = $vgfreport | Where-Object {!$_.Migrated}
     }
 
     if ($FailedLastSnapshot) {
       Write-Verbose "Filtering by whether a Volume Group needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format"
-      $vgfreport = $vgfreport | Where {$_.FailedLastSnapshot}
+      $vgfreport = $vgfreport | Where-Object {$_.FailedLastSnapshot}
     }
 
     if ($SetToUpgrade) {
       Write-Verbose "Filtering by whether a Volume Group is set to take a full snapshot on the next backup"
-      $vgfreport = $vgfreport | Where {$_.SetToUpgrade}
+      $vgfreport = $vgfreport | Where-Object {$_.SetToUpgrade}
     }
 
     return $vgfreport

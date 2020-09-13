@@ -21,34 +21,42 @@ function Get-RubrikVgfClusterStorage
 
       .EXAMPLE
       Get-RubrikVgfClusterStorage -VGList VolumeGroup:::e0a04776-ab8e-45d4-8501-8da658221d74, VolumeGroup:::9136a7ef-4ad2-4bb9-bf28-961fb74d4322
+
       This will return projected space consumption on volume groups within the given Volume Group ID list, and cluster free space before and after migration.
 
       .EXAMPLE
       Get-RubrikVgfClusterStorage
+
       This will return projected space consumption of migrating all old-format volume groups on the Rubrik cluster, and cluster free space before and after migration.
 
       .EXAMPLE
       Get-RubrikVgfClusterStorage -Hostname 'Server1'
+
       This will return projected space consumption of migrating all old-format volume groups from host "Server1", and cluster free space before and after migration.
 
       .EXAMPLE
       Get-RubrikVgfClusterStorage -Hostname 'Server1' -SLA Gold
+
       This will return projected space consumption of migrating all old-format volume groups of "Server1" that are protected by the Gold SLA Domain, and cluster free space before and after migration.
 
       .EXAMPLE
       Get-RubrikVgfClusterStorage -Relic
+
       This will return projected space consumption of migrating all old-format, removed volume groups that were formerly protected by Rubrik, and cluster free space before and after migration.
 
       .EXAMPLE
       Get-RubrikVgfClusterStorage -FailedLastSnapshot
+
       This will return projected space consumption of migrating all old-format volume groups that needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format, and cluster free space before and after migration.
 
       .EXAMPLE
       Get-RubrikVgfClusterStorage -UsedFastVhdx false
+
       This will return projected space consumption on volume groups that did not use fast VHDX format in the latest snapshot.
 
       .EXAMPLE
       Get-RubrikVgfClusterStorage -Id VolumeGroup:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
+      
       This will return projected space consumption for the specified VolumeGroup ID, and 0 if this Volume Group uses fast VHDX format (no need for migration).
   #>
 
@@ -140,9 +148,9 @@ function Get-RubrikVgfClusterStorage
       if ($VGList -and (!$VGList.Contains($vg.id))) {
         continue
       }
-      $vgf = $vg | Get-RubrikSnapshot -Latest | Select VolumeGroupId, UsedFastVhdx, FileSizeInBytes
+      $vgf = $vg | Get-RubrikSnapshot -Latest | Select-Object VolumeGroupId, UsedFastVhdx, FileSizeInBytes
       # Add the report only if the Volume Group did not use fast VHDX format for its latest snapshot
-      if (!$vgf.usedFastVhdx) {
+      if (-not $vgf.usedFastVhdx) {
         $vgf | Add-Member NoteProperty VolumeGroupName $vg.name
         $vgf | Add-Member NoteProperty HostName $vg.hostname
         $vgf | Add-Member NoteProperty FailedLastSnapshot $vg.needsMigration
@@ -153,26 +161,33 @@ function Get-RubrikVgfClusterStorage
 
     if ($NamePrefix) {
       Write-Verbose "Filtering by Volume Group name prefix: $NamePrefix"
-      $vgfreport = $vgfreport | Where {$_.VolumeGroupName -Like "$NamePrefix*"}
+      $vgfreport = $vgfreport | Where-Object {$_.VolumeGroupName -Like "$NamePrefix*"}
     }
 
     if ($HostnamePrefix) {
       Write-Verbose "Filtering by host name prefix: $HostnamePrefix"
-      $vgfreport = $vgfreport | Where {$_.HostName -Like "$HostnamePrefix*"}
+      $vgfreport = $vgfreport | Where-Object {$_.HostName -Like "$HostnamePrefix*"}
     }
 
     if ($FailedLastSnapshot) {
       Write-Verbose "Filtering by whether a Volume Group needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format"
-      $vgfreport = $vgfreport | Where {$_.FailedLastSnapshot}
+      $vgfreport = $vgfreport | Where-Object {$_.FailedLastSnapshot}
     }
 
     if ($SetToUpgrade) {
       Write-Verbose "Filtering by whether a Volume Group is set to take a full snapshot on the next backup"
-      $vgfreport = $vgfreport | Where {$_.SetToUpgrade}
+      $vgfreport = $vgfreport | Where-Object {$_.SetToUpgrade}
     }
 
     $vgids = @()
-    $projectedSize = New-Object -TypeName psobject -Property @{ProjectedAdditionalSpaceUsage=0; ClusterAvailableSpaceBeforeMigration=0; ClusterAvailableSpaceAfterMigration=0; ClusterTotalUsableSpace=0; VolumeGroupsToMigrate=0}
+    $projectedSize = [pscustomobject]@{
+      ProjectedAdditionalSpaceUsage=0
+      ClusterAvailableSpaceBeforeMigration=0
+      ClusterAvailableSpaceAfterMigration=0
+      ClusterTotalUsableSpace=0
+      VolumeGroupsToMigrate=0
+    }
+
     foreach ($report in $vgfreport) {
       $projectedSize.ProjectedAdditionalSpaceUsage += $report.fileSizeInBytes
       $vgids += $report.VolumeGroupId
