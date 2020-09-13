@@ -124,7 +124,7 @@ function Get-RubrikVgfReport
     $vgfreport = @()
 
     foreach ($vg in $result) {
-      $vgsnapshot = Get-RubrikSnapshot -Latest -id $vg.ID | Select-ObjectVolumeGroupId, usedFastVhdx
+      $vgsnapshot = Get-RubrikSnapshot -Latest -id $vg.ID | Select-Object VolumeGroupId, usedFastVhdx
       if (!$vgsnapshot) {
         continue
       }
