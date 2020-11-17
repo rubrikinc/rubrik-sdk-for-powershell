@@ -13,8 +13,8 @@ Connects to Rubrik and retrieves the current Rubrik vCenter settings
 ## SYNTAX
 
 ```
-Get-RubrikVCenter [[-Name] <String>] [[-Server] <String>] [[-PrimaryClusterID] <String>] [[-api] <String>]
- [<CommonParameters>]
+Get-RubrikVCenter [[-Name] <String>] [[-Server] <String>] [[-id] <String>] [[-PrimaryClusterID] <String>]
+ [-DetailedObject] [[-api] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,6 +29,13 @@ Get-RubrikVCenter
 ```
 
 This will return the vCenter settings on the currently connected Rubrik cluster
+
+### EXAMPLE 2
+```
+Get-RubrikVCenter -DetailedObject
+```
+
+This will return the detailed vCenter settings from currently connected Rubrik cluster
 
 ## PARAMETERS
 
@@ -62,6 +69,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -id
+vCenter id
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -PrimaryClusterID
 Filter the summary information based on the primarycluster_id of the primary Rubrik cluster.
 Use 'local' as the primary_cluster_id of the Rubrik cluster that is hosting the current REST API session.
@@ -72,8 +94,24 @@ Parameter Sets: (All)
 Aliases: primary_cluster_id
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed Nutanix VM object, the default behavior of the API is to only retrieve a subset of the full Nutanix VM object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -87,7 +125,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

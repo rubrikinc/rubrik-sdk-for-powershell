@@ -26,26 +26,33 @@ By default the 'Includes' property is not populated, unless when querying by ID 
 
 ### EXAMPLE 1
 ```
+Get-RubrikVolumeGroup -Name 'Quokka volumes'
+```
+
+This will return details of the volume group named "Quokka Volumes"
+
+### EXAMPLE 2
+```
 Get-RubrikVolumeGroup -Hostname 'Server1'
 ```
 
 This will return details on all volume groups from host "Server1".
 
-### EXAMPLE 2
+### EXAMPLE 3
 ```
 Get-RubrikVolumeGroup -Hostname 'Server1' -SLA Gold
 ```
 
 This will return details on all volume groups of "Server1" that are protected by the Gold SLA Domain.
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```
 Get-RubrikVolumeGroup -Relic
 ```
 
 This will return all removed volume groups that were formerly protected by Rubrik.
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```
 Get-RubrikVolumeGroup -DetailedObject
 ```
@@ -53,7 +60,7 @@ Get-RubrikVolumeGroup -DetailedObject
 This will return full details on all volume groups available on the Rubrik Cluster, this query will take longer as multiple API calls are required.
 The 'Includes' property will be populated
 
-### EXAMPLE 5
+### EXAMPLE 6
 ```
 Get-RubrikVolumeGroup -Id VolumeGroup:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
 ```

@@ -13,8 +13,8 @@ Connects to Rubrik and retrieves a list of VMware datastores
 ## SYNTAX
 
 ```
-Get-RubrikVMwareDatastore [[-Name] <String>] [-DatastoreType <String>] [-Server <String>] [-api <String>]
- [<CommonParameters>]
+Get-RubrikVMwareDatastore [[-Name] <String>] [-id <String>] [-DatastoreType <String>] [-DetailedObject]
+ [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -38,6 +38,13 @@ This will return a listing of all of the datastores named 'vSAN' known to a conn
 
 ### EXAMPLE 3
 ```
+Get-RubrikVMwareDatastore -Name 'vSAN' -DetailedObject
+```
+
+This will return a listing of all of the datastores named 'vSAN' known to a connected Rubrik cluster with fully detailed objects
+
+### EXAMPLE 4
+```
 Get-RubrikVMwareDatastore -DatastoreType 'NFS'
 ```
 
@@ -60,6 +67,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -id
+Datastore id
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -DatastoreType
 Filter Datastore type
 
@@ -71,6 +93,22 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed VMware Datastore object, the default behavior of the API is to only retrieve a subset of the full VMware Datastore object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

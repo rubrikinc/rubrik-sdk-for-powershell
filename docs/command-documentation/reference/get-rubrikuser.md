@@ -14,13 +14,13 @@ Gets settings of a Rubrik user
 
 ### Query (Default)
 ```
-Get-RubrikUser [[-Username] <String>] [-AuthDomainId <String>] [-Server <String>] [-api <String>]
- [<CommonParameters>]
+Get-RubrikUser [[-Username] <String>] [-AuthDomainId <String>] [-DetailedObject] [-Server <String>]
+ [-api <String>] [<CommonParameters>]
 ```
 
 ### ID
 ```
-Get-RubrikUser [-Id] <String> [-Server <String>] [-api <String>] [<CommonParameters>]
+Get-RubrikUser [-Id] <String> [-DetailedObject] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -51,12 +51,19 @@ This will return settings for the user account with the username of john.doe con
 
 ### EXAMPLE 4
 ```
+Get-RubrikUser -username 'john.doe' -DetailedObject
+```
+
+This will return full details of the settings for the user account with the username of john.doe configured within the Rubrik cluster.
+
+### EXAMPLE 5
+```
 Get-RubrikUser -authDomainId '1111-222-333'
 ```
 
 This will return settings of all of the user accounts belonging to the specified authoriation domain.
 
-### EXAMPLE 5
+### EXAMPLE 6
 ```
 Get-RubrikUser -id '1111-22222-33333-4444-5555'
 ```
@@ -107,6 +114,22 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed User object, the default behavior of the API is to only retrieve a subset of the full User object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

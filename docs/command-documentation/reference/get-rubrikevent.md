@@ -14,9 +14,10 @@ Retrieve information for events that match the value specified in any of the fol
 
 ### eventByID
 ```
-Get-RubrikEvent [-Limit <Int32>] [-AfterId <String>] [-Status <String>] [-EventType <String>] [-id <Array>]
- [-ObjectName <String>] [-BeforeDate <DateTime>] [-AfterDate <DateTime>] [-ObjectType <String>]
- [-ShowOnlyLatest] [-FilterOnlyOnLatest] [-Server <String>] [-api <String>] [<CommonParameters>]
+Get-RubrikEvent [-Limit <Int32>] [-AfterId <String>] [-Status <String>] [-EventType <String>]
+ [-ExcludeEventType <String[]>] [-id <Array>] [-ObjectName <String>] [-BeforeDate <DateTime>]
+ [-AfterDate <DateTime>] [-ObjectType <String>] [-ExcludeObjectType <String[]>] [-ShowOnlyLatest]
+ [-FilterOnlyOnLatest] [-IncludeEventSeries] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ### EventSeries
@@ -50,14 +51,14 @@ Queries the Rubrik Cluster for any vms named jbrasser-win and return the last te
 Get-RubrikEvent -EventType Archive -Limit 100
 ```
 
-This qill query the latest 100 Archive events on the currently logged in Rubrik cluster
+This will query the latest 100 Archive events on the currently logged in Rubrik cluster
 
 ### EXAMPLE 4
 ```
-Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent -EventType Archive
+Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent
 ```
 
-This will feed any Archive events against the Rubrik Host object 'SQLFoo.demo.com' via a piped query.
+This will feed any events against the Rubrik Host object 'SQLFoo.demo.com' via a piped query.
 
 ### EXAMPLE 5
 ```
@@ -66,6 +67,37 @@ Get-RubrikEvent -EventSeriesId '1111-2222-3333'
 
 This will retrieve all of the events belonging to the specified EventSeriesId.
 *Note - This will call Get-RubrikEventSeries*
+
+### EXAMPLE 6
+```
+Get-RubrikEvent -EventType Archive -Limit 10 -IncludeEventSeries
+```
+
+This will query the latest 10 Archive events on the currently logged in Rubrik cluster and include the relevant EventSeries.
+
+### EXAMPLE 7
+```
+Get-RubrikEvent -Limit 25 -ExcludeObjectType AggregateAhvVm,Mssql -Verbose
+```
+
+This will retrieve all of the events while excluding events of the AggregateAhvVm & Mssql object types while displaying verbose messages.
+This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
+
+### EXAMPLE 8
+```
+Get-RubrikEvent -Limit 25 -ExcludeEventType Archive,Replication,Configuration,Backup
+```
+
+This will retrieve all of the events while excluding events of the Archive,Replication,Configuration,Backup Event types while displaying verbose messages.
+This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
+
+### EXAMPLE 9
+```
+Get-RubrikEvent -Limit 25 -EventType Archive -ExcludeObjectType AggregateAhvVm,Mssql -Verbose
+```
+
+This will retrieve all Archive events while excluding events of the AggregateAhvVm & Mssql object types while displaying verbose messages.
+This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
 
 ## PARAMETERS
 
@@ -137,6 +169,22 @@ Filter by Event Type.
 Type: String
 Parameter Sets: eventByID
 Aliases: event_type
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludeEventType
+Filter by excluding specific Event Types, multiple entries are allowed.
+Note that this filtering happens after receiving the results, this means that if a limit of 50 is specified 50 or less results will be returned
+
+```yaml
+Type: String[]
+Parameter Sets: eventByID
+Aliases:
 
 Required: False
 Position: Named
@@ -222,11 +270,28 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ExcludeObjectType
+Filter by excluding specific Object Types, multiple entries are allowed.
+Note that this filtering happens after receiving the results, this means that if a limit of 50 is specified 50 or less results will be returned
+
+```yaml
+Type: String[]
+Parameter Sets: eventByID
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ShowOnlyLatest
 A switch value that determines whether to show only on the most recent event in the series.
 When 'true' only the most recent event in the series are shown.
 When 'false' all events in the series are shown.
 The default value is 'true'.
+Note: Deprecated in 5.2
 
 ```yaml
 Type: SwitchParameter
@@ -245,11 +310,27 @@ A Switch value that determines whether to filter only on the most recent event i
 When 'true' only the most recent event in the series are filtered.
 When 'false' all events in the series are filtered.
 The default value is 'true'.
+Note: Deprecated in 5.2
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: eventByID
 Aliases: filter_only_on_latest
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeEventSeries
+A Switch value that determines whether or not EventSeries events are included in the results
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: eventByID
+Aliases: should_include_event_series
 
 Required: False
 Position: Named
