@@ -24,31 +24,10 @@ The Get-RubrikEventSeries cmdlet is used to pull a event data from a event serie
 
 ### EXAMPLE 1
 ```
-Get-RubrikEventSeries
-```
-
-This will return information around the latest event within an event series (within the last 24 hours) from the Rubrik Cluster
-
-### EXAMPLE 2
-```
 Get-RubrikEventSeries -id '1111-2222-3333'
 ```
 
 This will return details for the specified event series, along with its' associated events in the Rubrik Cluster
-
-### EXAMPLE 3
-```
-Get-RubrikEventSeries -Status 'Failure'
-```
-
-This will the latest failed event belonging to each event series (within the last 24 hours) in the Rubrik Cluster
-
-### EXAMPLE 4
-```
-Get-RubrikEventSeries -EventType 'Backup'
-```
-
-This will return the latest backup event belonging to each event series(within the last 24 hours) in the Rubrik Cluster
 
 ## PARAMETERS
 
@@ -69,7 +48,8 @@ Accept wildcard characters: False
 
 ### -Status
 Filter by Status.
-Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Cancelingâ€™.
+Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling'.
+Note: Deprecated in 5.2
 
 ```yaml
 Type: String
@@ -85,6 +65,7 @@ Accept wildcard characters: False
 
 ### -EventType
 Filter by Event Type.
+Note: Deprecated in 5.2
 
 ```yaml
 Type: String
@@ -100,6 +81,7 @@ Accept wildcard characters: False
 
 ### -objectIds
 Filter by a comma separated list of object IDs.
+Note: Deprecated in 5.2
 
 ```yaml
 Type: Array
@@ -115,6 +97,7 @@ Accept wildcard characters: False
 
 ### -ObjectName
 Filter all the events according to the provided name using infix search for resources and exact search for usernames.
+Note: Deprecated in 5.2
 
 ```yaml
 Type: String
@@ -132,6 +115,7 @@ Accept wildcard characters: False
 Filter all the events by object type.
 Enter any of the following values: 'VmwareVm', 'Mssql', 'LinuxFileset', 'WindowsFileset', 'WindowsHost', 'LinuxHost', 'StorageArrayVolumeGroup', 'VolumeGroup', 'NutanixVm', 'Oracle', 'AwsAccount', and 'Ec2Instance'.
 WindowsHost maps to both WindowsFileset and VolumeGroup, while LinuxHost maps to LinuxFileset and StorageArrayVolumeGroup.
+Note: Deprecated in 5.2
 
 ```yaml
 Type: String

@@ -1,49 +1,66 @@
 ---
 external help file: Rubrik-help.xml
 Module Name: Rubrik
-online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikblackout
+online version: https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/invoke-rubrikvgfupgrade
 schema: 2.0.0
 ---
 
-# Set-RubrikBlackout
+# Invoke-RubrikVgfUpgrade
 
 ## SYNOPSIS
-Connects to Rubrik and sets blackout (stops/starts all snaps)
+Connects to Rubrik and sets the forceFull flag of any number of Volume Groups that needs upgrade
 
 ## SYNTAX
 
 ```
-Set-RubrikBlackout [-Set] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Invoke-RubrikVgfUpgrade [-VGList] <String[]> [-notPrintingDetail] [[-Server] <String>] [[-api] <String>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Set-RubrikBlackout cmdlet uses a switch parameter to set cluster blackout
+The Invoke-RubrikVgfUpgrade cmdlet will update the forceFull flag of a given list of Volume Groups.
+If these Volume Groups are using the SMB backup method, their forceFull flag will be set, and they will be upgraded to use the fast VHDX method in the next backup.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Set-RubrikBlackout -Set
+Invoke-RubrikVgfUpgrade -VGList VolumeGroup:::e0a04776-ab8e-45d4-8501-8da658221d74, VolumeGroup:::9136a7ef-4ad2-4bb9-bf28-961fb74d4322
 ```
 
-Sets Rubrik Global Blackout window to be active on current cluster
+This will set the forceFull flag of the given volume groups, if they need upgrade
 
 ### EXAMPLE 2
 ```
-Set-RubrikBlackout -Set:$false
+Get-RubrikVolumeGroup -hostname ad.flammi.home | Invoke-RubrikVgfUpgrade
 ```
 
-Sets Rubrik Global Blackout window to be set to inactive on current cluster
+This will set the forceFull flag of the Volume Group belonging to the specified hostname, if it needs upgrade
 
 ## PARAMETERS
 
-### -Set
-Rubrik blackout value
+### -VGList
+VolumeGroup ID
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -notPrintingDetail
+Print details during confirmation
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: isGlobalBlackoutActive
+Aliases:
 
 Required: False
 Position: Named
@@ -61,7 +78,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: 2
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -76,7 +93,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 3
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -121,11 +138,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-Written by Pete Milanese for community usage
-Twitter: @pmilano1
-GitHub: pmilano1
+Written by Feng Lu for community usage
+github: fenglu42
 
 ## RELATED LINKS
 
-[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikblackout](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/set-rubrikblackout)
+[https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/invoke-rubrikvgfupgrade](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/invoke-rubrikvgfupgrade)
 

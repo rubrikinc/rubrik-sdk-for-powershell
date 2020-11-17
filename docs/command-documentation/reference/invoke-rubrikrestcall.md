@@ -69,6 +69,17 @@ Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d
 
 Refreshes the information of the Nutanix cluster
 
+### EXAMPLE 6
+```
+$currentreport = Get-RubrikReport -name BoringReportName -DetailedObject
+```
+
+$currentreport.name = "Jaap's QuokkaReport"
+$updatedbody = $currentreport|select * -exclude id,updatestatus,reportTemplate,reportType
+Invoke-RubrikRESTCall -Endpoint "report/$($currentreport.id)" -api internal -Method PATCH -Body $updatedbody -Verbose
+
+Using this example it is possible to rename an existing report to the report name listed in the second row of this example
+
 ## PARAMETERS
 
 ### -Endpoint

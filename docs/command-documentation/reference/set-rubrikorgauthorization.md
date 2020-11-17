@@ -47,6 +47,7 @@ $vms = (Get-RubrikVM -PrimaryClusterId local -Relic:$false | Where-Object { $_.N
 ```
 
 Set-RubrikOrgAuthorization -ID 'Organization:::01234567-8910-1abc-d435-0abc1234d567' -ManageResource $vms
+
 Authorizes the Organization with ID Organization:::01234567-8910-1abc-d435-0abc1234d567 to manage all VMs with names containing the string 'SQL'
 
 ## PARAMETERS
