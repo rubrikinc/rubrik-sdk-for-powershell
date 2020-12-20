@@ -166,6 +166,9 @@ function New-RubrikSLA
     [String]$PolarisID,
     # Whether to enable Instant Archive
     [switch]$InstantArchive,
+    # Whether a retention lock is active on this SLA, Does not apply to CDM versions prior to 5.0
+    [alias('isRetentionLocked')]
+    [switch]$RetentionLock,
     # Whether to enable replication
     [switch]$Replication,
     # ID of the replication target
@@ -237,24 +240,27 @@ function New-RubrikSLA
     if (($uri.contains('v2')) -and $AdvancedConfig) {
       $body = @{
         $resources.Body.name = $Name
-        frequencies = @()
+        frequencies = [string[]]$null
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
         archivalSpecs = @()
         replicationSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
+        isRetentionLocked = $RetentionLock.IsPresent
+
         advancedUiConfig = @()
       }
     # Build the body for CDM versions 5 and above when the advanced SLA configuration is turned off
     } elseif ($uri.contains('v2')) {
       $body = @{
         $resources.Body.name = $Name
-        frequencies = @()
+        frequencies = [string[]]$null
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
         archivalSpecs = @()
         replicationSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
+        isRetentionLocked = $RetentionLock.IsPresent
       }
     # Build the body for CDM versions prior to 5.0
     } else {
@@ -559,6 +565,15 @@ function New-RubrikSLA
       $body.FirstFullAllowedBackupWindows += @{
           startTimeAttributes = @{hour=$FirstFullBackupStartHour;minutes=$FirstFullBackupStartMinute;dayOfWeek=$FirstFullBackupDay};
           durationInHours = $FirstFullBackupWindowDuration
+      }
+    }
+
+    # Populate the body with Retention Lock specifications
+    if ($uri.contains('v2') -and $RetentionLock) {
+      if ($RetentionLock.IsPresent -eq $true) {
+        $body.isRetentionLocked = $true
+      } elseif ($RetentionLock.IsPresent -eq $false) {
+        $body.isRetentionLocked = $false
       }
     }
 
