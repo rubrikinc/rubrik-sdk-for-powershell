@@ -18,6 +18,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Added 3 parameter sets to `Invoke-RubrikRESTCall` : `BodyAsArray`, `BodyAsJson`, `General` fixing [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
+### Added
+
+* Added `BodyAsJson` parameter to `Invoke-RubrikRESTCall` cmdlet as requested in [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
+
+### Fixed
+
+### Deprecated
+
+## [5.2.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.2) - 2020-11-17
+
+### Changed
+
 * Changed Get/Set Rubrik-Blackout to use correctly API version for Rubrik CDM 5.1 and later [Issue 679](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/679)
 * Changed `Remove-RubrikUnmanagedObject` to use correct REST endpoint for Rubrik CDM 5.2 and later [Issue 671](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/671)
 
