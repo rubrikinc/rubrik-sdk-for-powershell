@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Added `BodyAsJson` parameter to `Invoke-RubrikRESTCall` cmdlet as requested in [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
+* Added `RetentionLock` switch parameter to `New-RubrikSLA` & `Set-RubrikSLA` cmdlet as requested in [Issue 712](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/712)
 
 ### Fixed
 
