@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* Fixed bug in `New-RubrikSLA` which could prevent correct SLA creation [Issue 706](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/706)
+
 ### Deprecated
 
 ## [5.2.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.2) - 2020-11-17
