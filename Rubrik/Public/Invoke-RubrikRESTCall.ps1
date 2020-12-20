@@ -42,9 +42,19 @@ function Invoke-RubrikRESTCall {
       Creates a new fileset from the given fileset template and the given host id supporting Direct Archive.  Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.
 
       .EXAMPLE
+      Invoke-RubrikRESTCall -Endpoint 'fileset_template/bulk' -Method POST -Body '{"isPassthrough":true,"shareId":"HostShare:::11111","templateId":"FilesetTemplate:::22222"}' -BodyAsJson
+
+      Creates a new fileset from the given fileset template and the given host id supporting Direct Archive.  Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.
+
+      .EXAMPLE
       Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post
 
       Refreshes the information of the Nutanix cluster
+
+      .EXAMPLE
+      Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post -Verbose -WhatIf
+
+      Displays Verbose information while not executing the query
 
       .EXAMPLE
       $currentreport = Get-RubrikReport -name BoringReportName -DetailedObject
@@ -55,7 +65,10 @@ function Invoke-RubrikRESTCall {
       Using this example it is possible to rename an existing report to the report name listed in the second row of this example
   #>
 
-  [cmdletbinding(DefaultParameterSetName='General')]
+  [cmdletbinding(
+    DefaultParameterSetName='General',
+    SupportsShouldProcess=$true
+  )]
   Param (
       #Rubrik API endpoint, DO NOT USE LEADING '/'
       [Parameter(Mandatory = $true, ParameterSetName='BodyAsArray', HelpMessage = 'REST Endpoint')]
@@ -133,9 +146,13 @@ function Invoke-RubrikRESTCall {
 
         if ($Method -eq 'Get' -and $Body) {
             Write-Warning 'Executing a ''Get'' request in combination with a body object, processing request without body'
-            $result = Submit-Request -uri $uri -header $Header -method $Method
+            if ($PSCmdlet.ShouldProcess($uri, 'Invoke WebRequest')) {
+                $result = Submit-Request -uri $uri -header $Header -method $Method
+            }
         } else {
-            $result = Submit-Request -uri $uri -header $Header -method $Method -body $JsonBody
+            if ($PSCmdlet.ShouldProcess($uri, 'Invoke WebRequest')) {
+                $result = Submit-Request -uri $uri -header $Header -method $Method -body $JsonBody
+            }
         }
         
     }
