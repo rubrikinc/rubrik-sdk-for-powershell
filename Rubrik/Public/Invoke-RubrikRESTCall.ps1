@@ -55,10 +55,12 @@ function Invoke-RubrikRESTCall {
       Using this example it is possible to rename an existing report to the report name listed in the second row of this example
   #>
 
-  [cmdletbinding()]
+  [cmdletbinding(DefaultParameterSetName='General')]
   Param (
       #Rubrik API endpoint, DO NOT USE LEADING '/'
-      [Parameter(Mandatory = $true,HelpMessage = 'REST Endpoint')]
+      [Parameter(Mandatory = $true, ParameterSetName='BodyAsArray', HelpMessage = 'REST Endpoint')]
+      [Parameter(Mandatory = $true, ParameterSetName='BodyAsJson', HelpMessage = 'REST Endpoint')]
+      [Parameter(Mandatory = $true, ParameterSetName='General', HelpMessage = 'REST Endpoint')]
       [ValidateNotNullorEmpty()]
       [System.String]$Endpoint,
       #REST API method
@@ -66,16 +68,19 @@ function Invoke-RubrikRESTCall {
       [ValidateSET('GET','PUT','PATCH','DELETE','POST','HEAD','OPTIONS')]
       [System.String]$Method,
       #Hash table body to pass to API call
-      [Parameter(Mandatory = $false,HelpMessage = 'REST Content')]
+      [Parameter(Mandatory = $false,HelpMessage = 'REST Query')]
       [ValidateNotNullorEmpty()]
       [psobject]$Query,
       #Hash table body to pass to API call
-      [Parameter(Mandatory = $false,HelpMessage = 'REST Content')]
+      [Parameter(Mandatory = $false, HelpMessage = 'REST Body')]
       [ValidateNotNullorEmpty()]
       [psobject]$Body,
       #Force the body as an array (For endpoints requiring single item arrays)
-      [Parameter(Mandatory = $false, HelpMessage = 'Force Body to be an array')]
+      [Parameter(Mandatory = $true, ParameterSetName='BodyAsArray', HelpMessage = 'Force Body to be an array')]
       [Switch]$BodyAsArray,
+      #Allows to input the body as a JSON instead of a hashtable
+      [Parameter(Mandatory = $true, ParameterSetName='BodyAsJson', HelpMessage = 'Force Body to be a JSON string')]
+      [Switch]$BodyAsJson,
       # Rubrik server IP or FQDN
       [String]$Server = $global:RubrikConnection.server,
       # API version
@@ -116,6 +121,8 @@ function Invoke-RubrikRESTCall {
         if($Method -ne 'GET' -and $body){
             if ($BodyAsArray) {
                 [string]$JsonBody = ConvertTo-Json -inputobject @($Body) -Depth 10
+            } elseif ($BodyAsJson) {
+                [string]$JsonBody = $Body
             }
             else {
                 [string]$JsonBody = $Body | ConvertTo-Json -Depth 10
