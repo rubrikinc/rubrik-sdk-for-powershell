@@ -18,22 +18,43 @@ function Get-RubrikRequest {
             
       .EXAMPLE
       Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
+      
       Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
 
       .EXAMPLE
       Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
+
       Will wait for the specified async request to report a 'SUCCESS' or 'FAILED' status before returning details
+
+      .EXAMPLE
+       Get-RubrikVM jbrasser-lin | Get-RubrikSnapshot -Latest | New-RubrikMount -MountName 'SuperCoolVM' | Get-RubrikRequest -WaitForCompletion -Verbose
+
+       Will take the latest Snapshot of jbrasser-lin and create a live mount of this Virtual Machine, Get-RubrikRequest will poll the cluster until the VM is available while displaying Verbose information.
   #>
 
   [CmdletBinding()]
   Param(
     # ID of an asynchronous request
-    [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true,
+      ParameterSetName = 'Entry'
+    )]
     [String]$id,
     # The type of request
-    [Parameter(Mandatory = $true)]
+    [Parameter(
+      Mandatory = $true,
+      ParameterSetName = 'Entry'
+    )]
     [ValidateSet('fileset', 'mssql', 'vmware/vm', 'hyperv/vm', 'managed_volume','volume_group','nutanix/vm','aws/ec2_instance','oracle','vcd/vapp')]
     [String]$Type,    
+    # Request
+    [Parameter(
+      Mandatory = $true,
+      ParameterSetName = 'Pipeline',
+      ValueFromPipeline = $true
+    )]
+    [pscustomobject]$Request,
     # Wait for Request to Complete
     [Switch]$WaitForCompletion,
     # Rubrik server IP or FQDN
@@ -77,6 +98,10 @@ function Get-RubrikRequest {
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
+
+    if ($Request) {
+      $uri = $Request.links.href
+    }
 
     #We added new code that will now wait for the Rubrik Async Request to complete. Once completion has happened, we return back the request object. 
     #region WaitForCompletion
