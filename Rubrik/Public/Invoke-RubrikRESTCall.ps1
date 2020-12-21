@@ -1,68 +1,78 @@
 function Invoke-RubrikRESTCall {
 <#
-      .SYNOPSIS
-      Provides generic interface to make Rubrik REST API calls
+    .SYNOPSIS
+    Provides generic interface to make Rubrik REST API calls
 
-      .DESCRIPTION
-      The Invoke-RubrikRESTCall allows users to make raw API endpoint calls to the Rubrik REST interface. The user
-      will need to manage the format of both the endpoint call(including resource ids) and body, but provides the
-      option to make cmdlet independent API calls for automating Rubrik actions through PowerShell. The Rubrik API
-      reference is found on the Rubrik device at:
-        <Rubrik IP>/docs/v1
-        <Rubrik IP>/docs/v1/playground
+    .DESCRIPTION
+    The Invoke-RubrikRESTCall allows users to make raw API endpoint calls to the Rubrik REST interface. The user
+    will need to manage the format of both the endpoint call(including resource ids) and body, but provides the
+    option to make cmdlet independent API calls for automating Rubrik actions through PowerShell. The Rubrik API
+    reference is found on the Rubrik device at:
+    <Rubrik IP>/docs/v1
+    <Rubrik IP>/docs/v1/playground
 
-      .NOTES
-      Written by Matt Altimar & Mike Fal for community usage
-      Twitter: @Mike_Fal
-      GitHub: mikefal
+    .NOTES
+    Written by Matt Altimar & Mike Fal for community usage
+    Twitter: @Mike_Fal
+    GitHub: mikefal
 
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/invoke-rubrikrestcall
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/invoke-rubrikrestcall
 
-      .EXAMPLE
-      Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET
+    .EXAMPLE
+    Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET
 
-      Retrieve the raw output for all VMWare VMs being managed by the Rubrik device.
+    Retrieve the raw output for all VMWare VMs being managed by the Rubrik device.
 
-      .EXAMPLE
-      Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query @{'name'='msf-sql2016'}
-      
-      Retrieve the raw output for the VMWare VM msf-sql2016 using a query parameter.
+    .EXAMPLE
+    Invoke-RubrikRESTCall -Endpoint 'vmware/vm' -Method GET -Query @{'name'='msf-sql2016'}
+    
+    Retrieve the raw output for the VMWare VM msf-sql2016 using a query parameter.
 
-      .EXAMPLE
-      $body = New-Object -TypeName PSObject -Property @{'slaID'='INHERIT';'ForceFullSnapshot'='FALSE'}
-      Invoke-RubrikRESTCall -Endpoint 'vmware/vm/VirtualMachine:::fbcb1f51-9520-4227-a68c-6fe145982f48-vm-649/snapshot' -Method POST -Body $body
+    .EXAMPLE
+    $body = New-Object -TypeName PSObject -Property @{'slaID'='INHERIT';'ForceFullSnapshot'='FALSE'}
+    Invoke-RubrikRESTCall -Endpoint 'vmware/vm/VirtualMachine:::fbcb1f51-9520-4227-a68c-6fe145982f48-vm-649/snapshot' -Method POST -Body $body
 
-      Execute an on-demand snapshot for the VMWare VM where the id is part of the endpoint.
+    Execute an on-demand snapshot for the VMWare VM where the id is part of the endpoint.
 
-      .EXAMPLE
-      $body = New-Object -TypeName PSObject -Property @{'isPassthrough'=$true;'shareId'='HostShare:::11111';'templateId'='FilesetTemplate:::22222'}
-      Invoke-RubrikRESTCall -Endpoint 'fileset_template/bulk' -Method POST -Body $body -BodyAsArray
+    .EXAMPLE
+    $body = New-Object -TypeName PSObject -Property @{'isPassthrough'=$true;'shareId'='HostShare:::11111';'templateId'='FilesetTemplate:::22222'}
+    Invoke-RubrikRESTCall -Endpoint 'fileset_template/bulk' -Method POST -Body $body -BodyAsArray
 
-      Creates a new fileset from the given fileset template and the given host id supporting Direct Archive.  Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.
+    Creates a new fileset from the given fileset template and the given host id supporting Direct Archive.  Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.
 
-      .EXAMPLE
-      Invoke-RubrikRESTCall -Endpoint 'fileset_template/bulk' -Method POST -Body '{"isPassthrough":true,"shareId":"HostShare:::11111","templateId":"FilesetTemplate:::22222"}' -BodyAsJson
+    .EXAMPLE
+    Invoke-RubrikRESTCall -Endpoint 'fileset_template/bulk' -Method POST -Body '{"isPassthrough":true,"shareId":"HostShare:::11111","templateId":"FilesetTemplate:::22222"}' -BodyAsJson
 
-      Creates a new fileset from the given fileset template and the given host id supporting Direct Archive.  Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.
+    Creates a new fileset from the given fileset template and the given host id supporting Direct Archive.  Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.
 
-      .EXAMPLE
-      Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post
+    .EXAMPLE
+    Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post
 
-      Refreshes the information of the Nutanix cluster
+    Refreshes the information of the Nutanix cluster
 
-      .EXAMPLE
-      Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post -Verbose -WhatIf
+    .EXAMPLE
+    Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post -Verbose -WhatIf
 
-      Displays Verbose information while not executing the query
+    Displays Verbose information while not executing the query
 
-      .EXAMPLE
-      $currentreport = Get-RubrikReport -name BoringReportName -DetailedObject
-      $currentreport.name = "Jaap's QuokkaReport"
-      $updatedbody = $currentreport|select * -exclude id,updatestatus,reportTemplate,reportType
-      Invoke-RubrikRESTCall -Endpoint "report/$($currentreport.id)" -api internal -Method PATCH -Body $updatedbody -Verbose
+    .EXAMPLE
+    $currentreport = Get-RubrikReport -name BoringReportName -DetailedObject
+    $currentreport.name = "Jaap's QuokkaReport"
+    $updatedbody = $currentreport|select * -exclude id,updatestatus,reportTemplate,reportType
+    Invoke-RubrikRESTCall -Endpoint "report/$($currentreport.id)" -api internal -Method PATCH -Body $updatedbody -Verbose
 
-      Using this example it is possible to rename an existing report to the report name listed in the second row of this example
+    Using this example it is possible to rename an existing report to the report name listed in the second row of this example
+
+    .EXAMPLE
+    Invoke-RubrikRESTCall -uri https://rubrikcluster/api/v1/vmware/vm/snapshot/efb7ab36-0c2e-49b5-973f-7920b179cd79
+
+    Gather all information directly from the endpoint without having to specify any header details or authentication. Get is implicitly assumed unless explicitly specified.
+
+    .EXAMPLE
+    Invoke-RubrikRESTCall -uri https://cluster-c.rubrik.us/api/v1/vmware/vm/request/MOUNT_SNAPSHOT_38ced575-3114-433b-b22a-41bb0a9a98e4_4c89ab80-f74e-460e-b119-8eaef6b735b9:::0 -Verbose
+
+    Gather all information directly from the endpoint to gather request data without having to specify any header details or authentication. Get is implicitly assumed unless explicitly specified.
   #>
 
   [cmdletbinding(
@@ -74,15 +84,25 @@ function Invoke-RubrikRESTCall {
       [Parameter(Mandatory = $true, ParameterSetName='BodyAsArray', HelpMessage = 'REST Endpoint')]
       [Parameter(Mandatory = $true, ParameterSetName='BodyAsJson', HelpMessage = 'REST Endpoint')]
       [Parameter(Mandatory = $true, ParameterSetName='General', HelpMessage = 'REST Endpoint')]
+      [Parameter(Mandatory = $false, ParameterSetName='QueryByUri', HelpMessage = 'REST Endpoint')]
       [ValidateNotNullorEmpty()]
-      [System.String]$Endpoint,
+      [String]$Endpoint,
       #REST API method
-      [Parameter(Mandatory = $true,HelpMessage = 'REST Method')]
+      #Rubrik API endpoint, DO NOT USE LEADING '/'
+      [Parameter(Mandatory = $true, ParameterSetName='BodyAsArray', HelpMessage = 'REST Method')]
+      [Parameter(Mandatory = $true, ParameterSetName='BodyAsJson', HelpMessage = 'REST Method')]
+      [Parameter(Mandatory = $true, ParameterSetName='General', HelpMessage = 'REST Method')]
+      [Parameter(Mandatory = $false, ParameterSetName='QueryByUri', HelpMessage = 'REST Method')]
       [ValidateSET('GET','PUT','PATCH','DELETE','POST','HEAD','OPTIONS')]
-      [System.String]$Method,
+      [String]$Method,
       #Hash table body to pass to API call
       [Parameter(Mandatory = $false,HelpMessage = 'REST Query')]
       [ValidateNotNullorEmpty()]
+      [Parameter(
+        Mandatory = $true,
+        ParameterSetName = 'QueryByUri'
+      )]
+      [string]$uri,
       [psobject]$Query,
       #Hash table body to pass to API call
       [Parameter(Mandatory = $false, HelpMessage = 'REST Body')]
@@ -117,7 +137,14 @@ function Invoke-RubrikRESTCall {
         }
 
         #construct uri
-        [string]$uri = New-URIString -server $Server -endpoint "/api/$api/$Endpoint"
+        if ($uri) {
+            # Uri is already specified
+            if (-not $Method) {
+                $Method = 'Get'
+            }
+        } else {
+            [string]$uri = New-URIString -server $Server -endpoint "/api/$api/$Endpoint"
+        }
 
         #If query object, add query parameters to URI
         if($query)
