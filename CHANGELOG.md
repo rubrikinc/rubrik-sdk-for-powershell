@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added `BodyAsJson` parameter to `Invoke-RubrikRESTCall` cmdlet as requested in [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
 * Added `RetentionLock` switch parameter to `New-RubrikSLA` & `Set-RubrikSLA` cmdlet as requested in [Issue 712](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/712)
 * Added `Request` parameter to allow `Get-RubrikRequest` to work directly from the pipeline as request in [Issue 715](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/715)
+* Added `uri` parameter to `Invoke-RubrikRESTCall` cmdlet as requested in [Issue 700](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/700)
 
 ### Fixed
 
