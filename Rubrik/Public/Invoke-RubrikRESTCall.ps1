@@ -95,14 +95,20 @@ function Invoke-RubrikRESTCall {
       [Parameter(Mandatory = $false, ParameterSetName='QueryByUri', HelpMessage = 'REST Method')]
       [ValidateSET('GET','PUT','PATCH','DELETE','POST','HEAD','OPTIONS')]
       [String]$Method,
-      #Hash table body to pass to API call
-      [Parameter(Mandatory = $false,HelpMessage = 'REST Query')]
-      [ValidateNotNullorEmpty()]
+      #uri to query with Get request
       [Parameter(
         Mandatory = $true,
-        ParameterSetName = 'QueryByUri'
+        ParameterSetName = 'QueryByUri',
+        HelpMessage = 'Complete uri including Cluster name / IP'
       )]
+      [ValidateNotNullorEmpty()]
       [string]$uri,
+      #Hash table body to pass to API call
+      [Parameter(
+        Mandatory = $false,
+        ParameterSetName = 'General'
+      )]
+      [ValidateNotNullorEmpty()]
       [psobject]$Query,
       #Hash table body to pass to API call
       [Parameter(Mandatory = $false, HelpMessage = 'REST Body')]
