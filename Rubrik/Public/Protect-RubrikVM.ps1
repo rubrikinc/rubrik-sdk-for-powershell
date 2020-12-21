@@ -92,11 +92,8 @@ function Protect-RubrikVM
       $HashProps = [ordered]@{
         managedIds = @($id)
       }
-      if ($DoNotProtect) {
-        # No Body
-      } elseif ($ExistingSnapshotRetention) {
+      if ($ExistingSnapshotRetention) {
         $HashProps.existingSnapshotRetention = $ExistingSnapshotRetention
-        $HashProps.shouldApplyToExistingSnapshots = $true
       }
 
       $body = [pscustomobject]$HashProps | ConvertTo-Json
