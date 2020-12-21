@@ -1,35 +1,40 @@
 #Requires -Version 3
 function Get-RubrikRequest {
   <#  
-      .SYNOPSIS
-      Connects to Rubrik and retrieves details on an async request
-            
-      .DESCRIPTION
-      The Get-RubrikRequest cmdlet will pull details on a request that was submitted to the distributed task framework.
-      This is helpful for tracking the state (success, failure, running, etc.) of a request.
-            
-      .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-            
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikrequest
-            
-      .EXAMPLE
-      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
-      
-      Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
+    .SYNOPSIS
+    Connects to Rubrik and retrieves details on an async request
 
-      .EXAMPLE
-      Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
+    .DESCRIPTION
+    The Get-RubrikRequest cmdlet will pull details on a request that was submitted to the distributed task framework.
+    This is helpful for tracking the state (success, failure, running, etc.) of a request.
 
-      Will wait for the specified async request to report a 'SUCCESS' or 'FAILED' status before returning details
+    .NOTES
+    Written by Chris Wahl for community usage
+    Twitter: @ChrisWahl
+    GitHub: chriswahl
 
-      .EXAMPLE
-       Get-RubrikVM jbrasser-lin | Get-RubrikSnapshot -Latest | New-RubrikMount -MountName 'SuperCoolVM' | Get-RubrikRequest -WaitForCompletion -Verbose
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikrequest
 
-       Will take the latest Snapshot of jbrasser-lin and create a live mount of this Virtual Machine, Get-RubrikRequest will poll the cluster until the VM is available while displaying Verbose information.
+    .EXAMPLE
+    Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
+
+    Will return details about an async VMware VM request named "MOUNT_SNAPSHOT_123456789:::0"
+
+    .EXAMPLE
+    Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
+
+    Will wait for the specified async request to report a 'SUCCESS' or 'FAILED' status before returning details
+
+    .EXAMPLE
+    Get-RubrikVM jbrasser-lin | Get-RubrikSnapshot -Latest | New-RubrikMount -MountName 'SuperCoolVM' | Get-RubrikRequest -WaitForCompletion -Verbose
+
+    Will take the latest Snapshot of jbrasser-lin and create a live mount of this Virtual Machine, Get-RubrikRequest will poll the cluster until the VM is available while displaying Verbose information.
+
+    .EXAMPLE
+    Update-RubrikVCenter vCenter:::111 | Get-RubrikRequest -WaitForCompletion
+
+    Updates Rubrik vCenter and waits for completion of the request
   #>
 
   [CmdletBinding()]
@@ -46,7 +51,12 @@ function Get-RubrikRequest {
       Mandatory = $true,
       ParameterSetName = 'Entry'
     )]
-    [ValidateSet('fileset', 'mssql', 'vmware/vm', 'hyperv/vm', 'managed_volume','volume_group','nutanix/vm','aws/ec2_instance','oracle','vcd/vapp')]
+    [ValidateSet(
+      'fileset', 'mssql', 'vmware/vm', 'hyperv/vm', 'hyperv/scvmm',
+      'managed_volume', 'volume_group', 'nutanix/vm', 'aws/ec2_instance',
+      'oracle','vcd/vapp', 'vcd/cluster', 'vmware/vcenter', 'cloud_on/azure',
+      'report', 'nutanix/cluster', 'vmware/compute_cluster', 'sla_domain'
+    )]
     [String]$Type,    
     # Request
     [Parameter(
@@ -89,17 +99,27 @@ function Get-RubrikRequest {
 
     #region one-off
     $uri = $uri -replace '{type}', $Type
+
     #Place any internal API request calls into this collection, the replace will fix the URI
-    $internaltypes = @('managed_volume','volume_group','nutanix/vm','aws/ec2_instance','oracle','vcd/vapp')
+    $internaltypes = @(
+      'managed_volume','volume_group','nutanix/vm','aws/ec2_instance','oracle',
+      'vcd/vapp', 'cloud_on/azure', 'hyperv/scvmm', 'vcd/cluster', 'report', 'nutanix/cluster'
+    )
+    $v2types = @('sla_domain')
+
     if ($internaltypes -contains $Type) {
       $uri = $uri -replace 'v1', 'internal'
+    } elseif ($v2types -contains $Type) {
+      $uri = $uri -replace 'v1', 'v2'
     }
+
     #endregion
 
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)    
 
     if ($Request) {
+      Write-Verbose "Using uri supplied by pipeline: $($Request.links.href)"
       $uri = $Request.links.href
     }
 
