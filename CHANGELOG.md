@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Created 3 new parameter sets to `Invoke-RubrikRESTCall` : `BodyAsArray`, `BodyAsJson`, `General` fixing [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
 * Added support for `WhatIf` & `Confirm` to the `Invoke-RubrikRESTCall` cmdlet fixing [Issue 713](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/713)
 * Changed how `PrimaryClusterID` is handled in the `Get-RubrikDatabase` cmdlet  fixing [Issue 691](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/691)
+* Changed how `ConfirmImpact` is handled in the `New-RubrikSnapshot` cmdlet, it will now error when no SLAID is found when query by SLA and won't prompt for Test-SLA unless using `-Confirm`, fixing [Issue 699](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/699)
 
 ### Added
 
