@@ -88,21 +88,25 @@ function New-RubrikSnapshot
       Write-Warning -Message ('Using the ForceFull parameter with a {0} object is not possible, this functionality is only available to Oracle and MSSQL databases. The process will continue to take an incremental snapshot' -f $Id.Split(':')[0])
     }
 
+    $OldConfirmPreference = $ConfirmPreference
+    $ConfirmPreference = 'None'
     if ($PSCmdlet.ShouldProcess($SLA, 'Testing SLA')) {
       $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
     }
+    $ConfirmPreference = $OldConfirmPreference
     #endregion One-off
 
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values) 
+    if ($SLA -and -not $SLAID) {
+      Write-Warning "Could not determine SLAID for '$SLA'"
+    } else {
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values) 
 
-
-
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    
-    return $result
-
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      $result = Test-FilterObject -filter ($resources.Filter) -result $result
+      
+      return $result
+    }
   } # End of process
 } # End of function
