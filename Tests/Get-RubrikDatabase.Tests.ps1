@@ -288,4 +288,20 @@ Describe -Name 'Public/Get-RubrikDatabase' -Tag 'Public', 'Get-RubrikDatabase' -
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 6
         Assert-MockCalled -CommandName Get-RubrikAvailabilityGroup -ModuleName 'Rubrik' -Exactly 4
     }
+
+    Context -Name 'Validate additional parameters' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-RubrikSLA -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        It -Name 'PrimaryClusterID is passed on to Test-RubrikSLA' -Test {
+            $Output = & {
+                Get-RubrikDatabase -SLA WorstSLA -PrimaryClusterID 1337 -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*1337*'
+        }
+
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
+    }
 }
