@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed `Protect-RubrikVM` to use correct REST endpoint & body for Rubrik CDM 5.2 and later [Issue 689](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/689)
 * Created 3 new parameter sets to `Invoke-RubrikRESTCall` : `BodyAsArray`, `BodyAsJson`, `General` fixing [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
 * Added support for `WhatIf` & `Confirm` to the `Invoke-RubrikRESTCall` cmdlet fixing [Issue 713](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/713)
+* Changed how `PrimaryClusterID` is handled in the `Get-RubrikDatabase` cmdlet  fixing [Issue 691](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/691)
 
 ### Added
 
