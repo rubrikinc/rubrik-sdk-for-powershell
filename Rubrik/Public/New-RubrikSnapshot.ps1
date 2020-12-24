@@ -96,7 +96,7 @@ function New-RubrikSnapshot
     $ConfirmPreference = $OldConfirmPreference
     #endregion One-off
 
-    if ($SLA -and -not $SLAID) {
+    if ($SLA -and -not $SLAID -and -not $WhatIfPreference) {
       Write-Warning "Could not determine SLAID for '$SLA'"
     } else {
       $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
