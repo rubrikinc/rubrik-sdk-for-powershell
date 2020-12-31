@@ -26,7 +26,8 @@ function Set-RubrikSQLInstance
   #>
 
   [CmdletBinding( SupportsShouldProcess = $true,
-                  ConfirmImpact = 'High'
+                  ConfirmImpact = 'High',
+                  DefaultParameterSetName = 'NoSLA_Changes'
   )]
   Param(
     # Rubrik's database id value
@@ -34,6 +35,10 @@ function Set-RubrikSQLInstance
       Position = 0,
       Mandatory = $true,
       ValueFromPipelineByPropertyName = $true)]
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
+    [Parameter(ParameterSetName = 'SLA_Inherit')]
+    [Parameter(ParameterSetName = 'NoSLA_Changes')]
     [ValidateNotNullOrEmpty()] 
     [string]$id,
     # Number of seconds between log backups if db s are in FULL or BULK_LOGGED
@@ -46,7 +51,8 @@ function Set-RubrikSQLInstance
     [switch]$CopyOnly,
     # SLA Domain ID for the database
     [Alias('ConfiguredSlaDomainId')]
-    [string]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$true),
+    [Parameter(ParameterSetName = 'SLA_Explicit')]
+    [string]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$false),
     # The SLA Domain name in Rubrik
     [Parameter(ParameterSetName = 'SLA_Explicit')]
     [string]$SLA,
