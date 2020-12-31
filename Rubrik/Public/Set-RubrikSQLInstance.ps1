@@ -18,9 +18,16 @@ function Set-RubrikSQLInstance
 
       .EXAMPLE
       Set-RubrikSQLInstance
+
+      .EXAMPLE
+      Get-RubrikSQLInstance -Hostname RFITZHUGH-SQL | Set-RubrikSQLInstance -Inherit -Verbose -CopyOnly
+
+      Will update the SLA policy for the RFITZHUGH SQL host to inherit and setting copyOnly to true while displaying verbose information in the console
   #>
 
-  [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
+  [CmdletBinding( SupportsShouldProcess = $true,
+                  ConfirmImpact = 'High'
+  )]
   Param(
     # Rubrik's database id value
     [Parameter(
@@ -28,26 +35,32 @@ function Set-RubrikSQLInstance
       Mandatory = $true,
       ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()] 
-    [String]$id,
-    #Number of seconds between log backups if db s are in FULL or BULK_LOGGED
-    #NOTE: Default of -1 is used to get around ints defaulting as 0
+    [string]$id,
+    # Number of seconds between log backups if db s are in FULL or BULK_LOGGED
+    # NOTE: Default of -1 is used to get around ints defaulting as 0
     [int]$LogBackupFrequencyInSeconds = -1,
-    #Number of hours backups will be retained in Rubrik
-    #NOTE: Default of -1 is used to get around ints defaulting as 0
+    # Number of hours backups will be retained in Rubrik
+    # NOTE: Default of -1 is used to get around ints defaulting as 0
     [int]$LogRetentionHours = -1,
-    #Boolean declaration for copy only backups on the instance.
-    [Switch]$CopyOnly,
-    #SLA Domain ID for the database
+    # Boolean declaration for copy only backups on the instance.
+    [switch]$CopyOnly,
+    # SLA Domain ID for the database
     [Alias('ConfiguredSlaDomainId')]
-    [string]$SLAID,
+    [string]$SLAID = (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$true),
     # The SLA Domain name in Rubrik
     [Parameter(ParameterSetName = 'SLA_Explicit')]
-    [String]$SLA,
+    [string]$SLA,
+    # Removes the SLA Domain assignment
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
+    [switch]$DoNotProtect,
+    # Inherits the SLA Domain assignment from a parent object
+    [Parameter(ParameterSetName = 'SLA_Inherit')]
+    [switch]$Inherit,
     # Rubrik server IP or FQDN
-    [String]$Server = $global:RubrikConnection.server,
+    [string]$Server = $global:RubrikConnection.server,
     # API version
     [ValidateNotNullorEmpty()]
-    [String]$api = $global:RubrikConnection.api
+    [string]$api = $global:RubrikConnection.api
   )
 
   Begin {
