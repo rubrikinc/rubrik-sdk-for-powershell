@@ -52,12 +52,23 @@ Describe -Name 'Public/New-RubrikSnapshot' -Tag 'Public', 'New-RubrikSnapshot' -
             It -Name 'Should issue warning' {
                 $warning | Should -BeLike "*Oracle and MSSQL databases*"
             }
-
+            It -Name 'Should throw because of parameter set - SLA & Forever cannot be used at the same time' {
+                { Get-RubrikVM jbrasser-win | New-RubrikSnapshot -SLA TEST -Forever } |
+                    Should -Throw "Parameter set cannot be resolved using the specified named parameters."
+            }
+            It -Name 'Should throw because of parameter set - SLA & SLAID cannot be used at the same time' {
+                { Get-RubrikVM jbrasser-win | New-RubrikSnapshot -SLAID 1 -SLA TEST } |
+                    Should -Throw "Parameter set cannot be resolved using the specified named parameters."
+            }
+            It -Name 'Should throw because of parameter set - SLAID & Forever cannot be used at the same time' {
+                { Get-RubrikVM jbrasser-win | New-RubrikSnapshot -SLAID 1 -Forever } |
+                    Should -Throw "Parameter set cannot be resolved using the specified named parameters."
+            }
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Test-QueryParam -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik'  -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Test-QueryParam -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 }
