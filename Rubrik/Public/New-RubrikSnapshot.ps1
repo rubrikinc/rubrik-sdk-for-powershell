@@ -58,7 +58,7 @@ function New-RubrikSnapshot
       Mandatory = $true
     )]
     [String]$SLA,
-    # The PrimaryClusterId of SLA Domain on Rubrik
+    # The PrimaryClusterId of SLA Domain on Rubrik, defaults to local
     [Parameter(ParameterSetName = 'SLA_Name')]
     [String]$SLAPrimaryClusterId = 'local',
     # The snapshot will be retained indefinitely and available under Unmanaged Objects
