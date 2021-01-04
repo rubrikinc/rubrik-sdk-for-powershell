@@ -35,12 +35,25 @@ function Protect-RubrikFileset
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # The SLA Domain in Rubrik
-    [Parameter(ParameterSetName = 'SLA_Explicit')]
+    [Parameter(
+      ParameterSetName = 'SLA_Name',
+      Mandatory = $true
+    )]
     [String]$SLA,
+    # The PrimaryClusterId of SLA Domain on Rubrik, defaults to local
+    [Parameter(ParameterSetName = 'SLA_Name')]
+    [String]$SLAPrimaryClusterId = 'local',
     # Removes the SLA Domain assignment
-    [Parameter(ParameterSetName = 'SLA_Unprotected')]
+    [Parameter(
+      ParameterSetName = 'SLA_Unprotected',
+      Mandatory = $true
+    )]
     [Switch]$DoNotProtect,
     # SLA id value
+    [Parameter(
+      ParameterSetName = 'SLA_ByID',
+      Mandatory = $true
+    )]
     [Alias('configuredSlaDomainId')]
     [String]$SLAID,
     # Rubrik server IP or FQDN
@@ -72,7 +85,16 @@ function Protect-RubrikFileset
   Process {
 
     #region One-off
-    $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+    If ($SLA -or $DoNotProtect) {
+      $TestSlaSplat = @{
+        SLA = $SLA
+        DoNotProtect = $DoNotProtect
+      }
+      if ($SLAPrimaryClusterId) {
+        $TestSlaSplat.PrimaryClusterID = $SLAPrimaryClusterId
+      }
+      $SLAID = Test-RubrikSLA @TestSlaSplat
+    }
     #endregion One-off
 
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
