@@ -52,16 +52,16 @@ Describe -Name 'Public/New-RubrikSnapshot' -Tag 'Public', 'New-RubrikSnapshot' -
             It -Name 'Should issue warning' {
                 $warning | Should -BeLike "*Oracle and MSSQL databases*"
             }
-            It -Name 'Should throw because of parameter set - SLA & Forever cannot be used at the same time' {
-                { Get-RubrikVM jbrasser-win | New-RubrikSnapshot -SLA TEST -Forever } |
+            It -Name 'Should throw, parameter set - SLA & Forever cannot be used at the same time' {
+                { New-RubrikSnapshot -SLA TEST -Forever } |
                     Should -Throw "Parameter set cannot be resolved using the specified named parameters."
             }
-            It -Name 'Should throw because of parameter set - SLA & SLAID cannot be used at the same time' {
-                { Get-RubrikVM jbrasser-win | New-RubrikSnapshot -SLAID 1 -SLA TEST } |
+            It -Name 'Should throw, parameter set - SLA & SLAID cannot be used at the same time' {
+                { New-RubrikSnapshot -SLAID 1 -SLA TEST } |
                     Should -Throw "Parameter set cannot be resolved using the specified named parameters."
             }
-            It -Name 'Should throw because of parameter set - SLAID & Forever cannot be used at the same time' {
-                { Get-RubrikVM jbrasser-win | New-RubrikSnapshot -SLAID 1 -Forever } |
+            It -Name 'Should throw, parameter set - SLAID & Forever cannot be used at the same time' {
+                { New-RubrikSnapshot -SLAID 1 -Forever } |
                     Should -Throw "Parameter set cannot be resolved using the specified named parameters."
             }
         }
