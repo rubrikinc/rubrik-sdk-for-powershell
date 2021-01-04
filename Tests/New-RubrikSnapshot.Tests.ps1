@@ -66,9 +66,9 @@ Describe -Name 'Public/New-RubrikSnapshot' -Tag 'Public', 'New-RubrikSnapshot' -
             }
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Test-QueryParam -ModuleName 'Rubrik' -Exactly 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Test-QueryParam -ModuleName 'Rubrik' -Exactly 2
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
     }
 }
