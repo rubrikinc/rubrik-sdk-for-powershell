@@ -2,31 +2,38 @@
 function Protect-RubrikFileset
 {
   <#
-      .SYNOPSIS
-      Connects to Rubrik and assigns an SLA to a fileset
+    .SYNOPSIS
+    Connects to Rubrik and assigns an SLA to a fileset
 
-      .DESCRIPTION
-      The Protect-RubrikFileset cmdlet will update a fileset's SLA Domain assignment within the Rubrik cluster.
-      The SLA Domain contains all policy-driven values needed to protect data.
-      Note that this function requires the fileset ID value, not the name of the fileset, since fileset names are not unique across clusters.
-      It is suggested that you first use Get-RubrikFileset to narrow down the one or more filesets to protect, and then pipe the results to Protect-RubrikFileset.
-      You will be asked to confirm each fileset you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
+    .DESCRIPTION
+    The Protect-RubrikFileset cmdlet will update a fileset's SLA Domain assignment within the Rubrik cluster.
+    The SLA Domain contains all policy-driven values needed to protect data.
+    Note that this function requires the fileset ID value, not the name of the fileset, since fileset names are not unique across clusters.
+    It is suggested that you first use Get-RubrikFileset to narrow down the one or more filesets to protect, and then pipe the results to Protect-RubrikFileset.
+    You will be asked to confirm each fileset you wish to protect, or you can use -Confirm:$False to skip confirmation checks.
 
-      .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
+    .NOTES
+    Written by Chris Wahl for community usage
+    Twitter: @ChrisWahl
+    GitHub: chriswahl
 
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikfileset
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikfileset
 
-      .EXAMPLE
-      Get-RubrikFileset 'C_Drive' | Protect-RubrikFileset -SLA 'Gold'
-      This will assign the Gold SLA Domain to any fileset named "C_Drive"
+    .EXAMPLE
+    Get-RubrikFileset 'C_Drive' | Protect-RubrikFileset -SLA 'Gold'
 
-      .EXAMPLE
-      Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Gold' -Confirm:$False
-      This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" without asking for confirmation
+    This will assign the Gold SLA Domain to any fileset named "C_Drive"
+
+    .EXAMPLE
+    Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Gold' -Confirm:$False
+
+    This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" without asking for confirmation
+
+    .EXAMPLE
+    Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Gold' -SLAPrimaryClusterId 57bbd327-477d-40d8-b1d8-5820b37d88e5
+    
+    This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" on the cluster id specified in SLAPrimaryClusterId
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
