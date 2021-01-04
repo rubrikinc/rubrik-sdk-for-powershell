@@ -53,19 +53,28 @@ function New-RubrikSnapshot
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # The SLA Domain in Rubrik
-    [Parameter(ParameterSetName = 'SLA_Name')]
+    [Parameter(
+      ParameterSetName = 'SLA_Name',
+      Mandatory = $true
+    )]
     [String]$SLA,
     # The PrimaryClusterId of SLA Domain on Rubrik
     [Parameter(ParameterSetName = 'SLA_Name')]
-    [String]$SLASLAPrimaryClusterId ,
+    [String]$SLAPrimaryClusterId = 'local',
     # The snapshot will be retained indefinitely and available under Unmanaged Objects
-    [Parameter(ParameterSetName = 'SLA_Forever')]
+    [Parameter(
+      ParameterSetName = 'SLA_Forever',
+      Mandatory = $true
+    )]
     [Switch]$Forever,
     # Whether to force a full snapshot or an incremental. Only valid with MSSQL and Oracle Databases.
     [Alias('forceFullSnapshot')]
     [Switch]$ForceFull,
     # SLA id value
-    [Parameter(ParameterSetName = 'SLA_ByID')]
+    [Parameter(
+      ParameterSetName = 'SLA_ByID',
+      Mandatory = $true
+    )]
     [String]$SLAID,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -102,12 +111,17 @@ function New-RubrikSnapshot
       Write-Warning -Message ('Using the ForceFull parameter with a {0} object is not possible, this functionality is only available to Oracle and MSSQL databases. The process will continue to take an incremental snapshot' -f $Id.Split(':')[0])
     }
 
-    $OldConfirmPreference = $ConfirmPreference
-    $ConfirmPreference = 'None'
-    if ($PSCmdlet.ShouldProcess($SLA, 'Testing SLA')) {
-      $SLAID = Test-RubrikSLA -SLA $SLA -DoNotProtect $Forever
+    # If SLA paramter defined, resolve SLAID
+    If ($SLA -or $Forever) {
+      $TestSlaSplat = @{
+        SLA = $SLA
+        DoNotProtect = $Forever
+      }
+      if ($SLAPrimaryClusterId) {
+        $TestSlaSplat.PrimaryClusterID = $SLAPrimaryClusterId
+      }
+      $SLAID = Test-RubrikSLA @TestSlaSplat
     }
-    $ConfirmPreference = $OldConfirmPreference
     #endregion One-off
 
     if ($SLA -and -not $SLAID -and -not $WhatIfPreference) {
@@ -116,6 +130,7 @@ function New-RubrikSnapshot
       $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
       $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values) 
 
+      Write-Verbose $uri
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
       $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
       $result = Test-FilterObject -filter ($resources.Filter) -result $result
