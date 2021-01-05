@@ -65,6 +65,16 @@ function Get-RubrikEvent
     Get-RubrikDatabase | ForEach-Object {Get-RubrikEvent -Limit 1 -Verbose -id $_.ID}
 
     This will retrieve the last event for each of the SQL databases protected by Rubrik identifying the database by its object_id while displaying Verbose information
+
+    .EXAMPLE
+    Get-RubrikEvent -Limit 1 -Descending:$false
+
+    Will retrieve the oldest event on the Rubrik Cluster
+
+    .EXAMPLE
+    Get-RubrikEvent -Limit 1 -Descending:$false -EventType Backup
+
+    Will retrieve the oldest backup event on the Rubrik Cluster
   #>
 
   [CmdletBinding()]
@@ -118,14 +128,10 @@ function Get-RubrikEvent
     [ValidateSet('AggregateAhvVm', 'AggregateAwsAzure', 'AggregateHypervVm', 'AggregateLinuxUnixHosts', 'AggregateNasShares', 'AggregateOracleDb', 'AggregateStorageArrays', 'AggregateVcdVapps', 'AggregateVsphereVm', 'AggregateWindowsHosts', 'AppBlueprint', 'AuthDomain', 'AwsAccount', 'AwsEventType', 'Certificate', 'Cluster', 'DataLocation', 'Ec2Instance', 'Host', 'HypervScvmm', 'HypervServer', 'HypervVm', 'JobInstance', 'Ldap', 'LinuxHost', 'LinuxFileset', 'ManagedVolume', 'Mssql', 'NasHost', 'NutanixCluster', 'NutanixVm', 'OracleDb', 'OracleHost', 'OracleRac', 'PublicCloudMachineInstance', 'SamlSso', 'ShareFileset', 'SlaDomain', 'SmbDomain', 'StorageArray', 'StorageArrayVolumeGroup', 'Storm', 'SupportBundle', 'UnknownObjectType', 'Upgrade', 'UserActionAudit', 'Vcd', 'VcdVapp', 'Vcenter', 'VmwareVm', 'VolumeGroup', 'WindowsHost', 'WindowsFileset', IgnoreCase = $false)]
     [Parameter(ParameterSetName="eventByID")]
     [string[]]$ExcludeObjectType,
-    # A switch value that determines whether to show only on the most recent event in the series. When 'true' only the most recent event in the series are shown. When 'false' all events in the series are shown. The default value is 'true'. Note: Deprecated in 5.2
-    [Alias('show_only_latest')]
+    # A Switch value that determines whether to display the results in descending or ascending order. Setting this to Descending:$false will return the oldest results instead of the most recent
+    [Alias('order_by_time')]
     [Parameter(ParameterSetName="eventByID")]
-    [Switch]$ShowOnlyLatest,
-    # A Switch value that determines whether to filter only on the most recent event in the series. When 'true' only the most recent event in the series are filtered. When 'false' all events in the series are filtered. The default value is 'true'. Note: Deprecated in 5.2
-    [Alias('filter_only_on_latest')]
-    [Parameter(ParameterSetName="eventByID")]
-    [Switch]$FilterOnlyOnLatest,
+    [Switch]$Descending,
     # A Switch value that determines whether or not EventSeries events are included in the results
     [Alias('should_include_event_series')]
     [Parameter(ParameterSetName="eventByID")]
@@ -160,9 +166,8 @@ function Get-RubrikEvent
 
     if (-not $EventSeriesId) {
       # If the switch parameter was not explicitly specified remove from query params
-      if(-not $PSBoundParameters.ContainsKey('ShowOnlyLatest')) { $Resources.Query.Remove('show_only_latest') }
-      if(-not $PSBoundParameters.ContainsKey('FilterOnlyOnLatest')) { $Resources.Query.Remove('filter_only_on_latest') }
-
+      if(-not $PSBoundParameters.ContainsKey('IncludeEventSeries')) { $Resources.Query.Remove('should_include_event_series') }
+      if(-not $PSBoundParameters.ContainsKey('Descending')) { $Resources.Query.Remove('order_by_time') }
 
       $uri = New-URIString -server $Server -endpoint ($resources.URI)
       $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
@@ -170,17 +175,7 @@ function Get-RubrikEvent
 
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
 
-
-
-      if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
-        if ($FilterOnlyOnLatest) {
-          Write-Warning -Message 'This switch ''FilterOnlyOnLatest'' is no longer available in versions of Rubrik CDM later than 5.2'
-        }
-
-        if ($ShowOnlyLatest) {
-          Write-Warning -Message 'This switch ''ShowOnlyLatest'' is no longer available in versions of Rubrik CDM later than 5.2'
-        }
-
+      if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2 -and ($result.Data)) {
         # Build Custom Object based on information in latestEvent property
         $result = $result.data | ForEach-Object {
           $CurrentObject = $_

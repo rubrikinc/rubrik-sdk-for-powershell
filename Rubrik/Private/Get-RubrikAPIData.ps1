@@ -539,6 +539,7 @@ function Get-RubrikAPIData {
                     before_date = 'before_date'
                     after_date = 'after_date'
                     object_type = 'object_type'
+                    order_by_time = 'order_by_time'
                     should_include_event_series = 'should_include_event_series'
                 }
                 Result      = 'data'
