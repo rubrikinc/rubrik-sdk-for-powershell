@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed how `PrimaryClusterID` is handled in the `Get-RubrikDatabase` cmdlet  fixing [Issue 691](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/691)
 * Changed how `ConfirmImpact` is handled in the `New-RubrikSnapshot` cmdlet, it will now error when no SLAID is found when query by SLA and won't prompt for Test-SLA unless using `-Confirm`, fixing [Issue 699](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/699)
 * Changed, parameter sets, `SLA_Name/SLA_ByID/SLA_Unprotected/SLA_Forever`, added to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
+* Removed 2 deprecated parameters from `Get-RubrikReport`: `-ShowOnlyLatest` & `-FilterOnlyOnLatest` [Issue 696](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/696)
 
 ### Added
 
@@ -35,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added additional parameters: `-DoNotProtect` & `-Inherit` to `Set-RubrikSQLInstance` as requested in [Issue 717](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/717)
 * Added new parameter, `SLAPrimaryClusterId`, to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
 * Added example in documentation for: `Get-RubrikReport` [Issue 692](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/692)
+* Added 3 examples in documentation for: `Get-RubrikReport` [Issue 696](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/696)
 
 ### Fixed
 
