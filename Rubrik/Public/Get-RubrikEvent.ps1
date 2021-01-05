@@ -2,64 +2,69 @@
 function Get-RubrikEvent
 {
   <#
-      .SYNOPSIS
-      Retrieve information for events that match the value specified in any of the following categories: type, status, or ID, and limit events by date.
+    .SYNOPSIS
+    Retrieve information for events that match the value specified in any of the following categories: type, status, or ID, and limit events by date.
 
-      .DESCRIPTION
-      The Get-RubrikEvent cmdlet is used to pull a event data set from a Rubrik cluster. There are a vast number of arguments
-      that can be supplied to narrow down the event query.
+    .DESCRIPTION
+    The Get-RubrikEvent cmdlet is used to pull a event data set from a Rubrik cluster. There are a vast number of arguments
+    that can be supplied to narrow down the event query.
 
-      .NOTES
-      Written by J.R. Phillips for community usage
-      GitHub: JayAreP
+    .NOTES
+    Written by J.R. Phillips for community usage
+    GitHub: JayAreP
 
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikevent
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikevent
 
-      .EXAMPLE
-      Get-RubrikEvent -ObjectName "vm-foo" -EventType Backup
+    .EXAMPLE
+    Get-RubrikEvent -ObjectName "vm-foo" -EventType Backup
 
-      This will query for any 'Backup' events on the Rubrik VM object named 'vm-foo'
+    This will query for any 'Backup' events on the Rubrik VM object named 'vm-foo'
 
-      .EXAMPLE
-      Get-RubrikVM -Name jbrasser-win | Get-RubrikEvent -Limit 10
+    .EXAMPLE
+    Get-RubrikVM -Name jbrasser-win | Get-RubrikEvent -Limit 10
 
-      Queries the Rubrik Cluster for any vms named jbrasser-win and return the last ten events for each VM found
+    Queries the Rubrik Cluster for any vms named jbrasser-win and return the last ten events for each VM found
 
-      .EXAMPLE
-      Get-RubrikEvent -EventType Archive -Limit 100
+    .EXAMPLE
+    Get-RubrikEvent -EventType Archive -Limit 100
 
-      This will query the latest 100 Archive events on the currently logged in Rubrik cluster
+    This will query the latest 100 Archive events on the currently logged in Rubrik cluster
 
-      .EXAMPLE
-      Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent
+    .EXAMPLE
+    Get-RubrikHost -Name SQLFoo.demo.com | Get-RubrikEvent
 
-      This will feed any events against the Rubrik Host object 'SQLFoo.demo.com' via a piped query.
+    This will feed any events against the Rubrik Host object 'SQLFoo.demo.com' via a piped query.
 
-      .EXAMPLE
-      Get-RubrikEvent -EventSeriesId '1111-2222-3333'
+    .EXAMPLE
+    Get-RubrikEvent -EventSeriesId '1111-2222-3333'
 
-      This will retrieve all of the events belonging to the specified EventSeriesId. *Note - This will call Get-RubrikEventSeries*
+    This will retrieve all of the events belonging to the specified EventSeriesId. *Note - This will call Get-RubrikEventSeries*
 
-      .EXAMPLE
-      Get-RubrikEvent -EventType Archive -Limit 10 -IncludeEventSeries
+    .EXAMPLE
+    Get-RubrikEvent -EventType Archive -Limit 10 -IncludeEventSeries
 
-      This will query the latest 10 Archive events on the currently logged in Rubrik cluster and include the relevant EventSeries.
+    This will query the latest 10 Archive events on the currently logged in Rubrik cluster and include the relevant EventSeries.
 
-      .EXAMPLE
-      Get-RubrikEvent -Limit 25 -ExcludeObjectType AggregateAhvVm,Mssql -Verbose
+    .EXAMPLE
+    Get-RubrikEvent -Limit 25 -ExcludeObjectType AggregateAhvVm,Mssql -Verbose
 
-      This will retrieve all of the events while excluding events of the AggregateAhvVm & Mssql object types while displaying verbose messages. This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
+    This will retrieve all of the events while excluding events of the AggregateAhvVm & Mssql object types while displaying verbose messages. This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
 
-      .EXAMPLE
-      Get-RubrikEvent -Limit 25 -ExcludeEventType Archive,Replication,Configuration,Backup
+    .EXAMPLE
+    Get-RubrikEvent -Limit 25 -ExcludeEventType Archive,Replication,Configuration,Backup
 
-      This will retrieve all of the events while excluding events of the Archive,Replication,Configuration,Backup Event types while displaying verbose messages. This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
+    This will retrieve all of the events while excluding events of the Archive,Replication,Configuration,Backup Event types while displaying verbose messages. This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
 
-      .EXAMPLE
-      Get-RubrikEvent -Limit 25 -EventType Archive -ExcludeObjectType AggregateAhvVm,Mssql -Verbose
+    .EXAMPLE
+    Get-RubrikEvent -Limit 25 -EventType Archive -ExcludeObjectType AggregateAhvVm,Mssql -Verbose
 
-      This will retrieve all Archive events while excluding events of the AggregateAhvVm & Mssql object types while displaying verbose messages. This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
+    This will retrieve all Archive events while excluding events of the AggregateAhvVm & Mssql object types while displaying verbose messages. This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
+
+    .EXAMPLE
+    Get-RubrikDatabase | ForEach-Object {Get-RubrikEvent -Limit 1 -Verbose -id $_.ID}
+
+    This will retrieve the last event for each of the SQL databases protected by Rubrik identifying the database by its object_id while displaying Verbose information
   #>
 
   [CmdletBinding()]
@@ -91,7 +96,7 @@ function Get-RubrikEvent
     # Filter by a comma separated list of object IDs.
     [Alias('object_ids')]
     [Parameter(ValueFromPipelineByPropertyName = $true,ParameterSetName="eventByID")]
-    [array]$id,
+    [string[]]$id,
     # Filter all the events according to the provided name using infix search for resources and exact search for usernames.
     [Alias('object_name')]
     [Parameter(ParameterSetName="eventByID")]
