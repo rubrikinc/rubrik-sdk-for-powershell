@@ -532,13 +532,15 @@ function Get-RubrikAPIData {
                     limit = 'limit'
                     after_id = 'after_id'
                     event_series_id = 'event_series_id'
-                    status = 'status'
+                    event_status = 'event_status'
+                    event_series_status = 'event_series_status'
                     event_type = 'event_type'
                     object_ids = 'object_ids'
                     object_name = 'object_name'
                     before_date = 'before_date'
                     after_date = 'after_date'
                     object_type = 'object_type'
+                    order_by_time = 'order_by_time'
                     should_include_event_series = 'should_include_event_series'
                 }
                 Result      = 'data'
@@ -2316,6 +2318,20 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
                 ObjectTName = 'Rubrik.VMwareVM'
+            }
+            '5.2' = @{
+                Description = 'Update a VM with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
             }
         }
         'Protect-RubrikVolumeGroup'             = @{

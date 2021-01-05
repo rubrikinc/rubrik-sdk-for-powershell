@@ -160,7 +160,15 @@ function Get-RubrikDatabase
     #region One-off
     # If SLA paramter defined, resolve SLAID
     If ($SLA) {
-      $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
+      $TestSlaSplat = @{
+        SLA = $SLA
+        Inherit = $Inherit
+        DoNotProtect = $DoNotProtect
+      }
+      if ($PrimaryClusterID) {
+        $TestSlaSplat.PrimaryClusterID = $PrimaryClusterID
+      }
+      $SLAID = Test-RubrikSLA @TestSlaSplat
     }
     #endregion
 

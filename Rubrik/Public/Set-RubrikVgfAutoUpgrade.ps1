@@ -32,22 +32,27 @@ function Set-RubrikVgfAutoUpgrade
 
       .EXAMPLE
       Set-RubrikVgfAutoUpgrade -migrateFastVirtualDiskBuild 'All'
+
       This will set the cluster configuration to automatically upgrade format for all Volume Groups.
 
       .EXAMPLE
       Set-RubrikVgfAutoUpgrade -migrateFastVirtualDiskBuild 'Error-Only'
+
       This will set the cluster configuration to automatically upgrade for Volume Groups that have a failure during the last backup.
 
       .EXAMPLE
       Set-RubrikVgfAutoUpgrade -migrateFastVirtualDiskBuild 'None'
+
       This will set the cluster configuration to not automatically upgrade format for any Volume Groups.
 
       .EXAMPLE
       Set-RubrikVgfAutoUpgrade -maxFullMigrationStoragePercentage 70
+
       This will set the cluster configuration to allow automatic upgrade only when the projected cluster space usage after upgrade does not exceed 70% of total cluster storage.
 
       .EXAMPLE
       Set-RubrikVgfAutoUpgrade -migrateFastVirtualDiskBuild 'Error-Only' -maxFullMigrationStoragePercentage 70
+      
       This will set both configurations on the cluster.
   #>
 

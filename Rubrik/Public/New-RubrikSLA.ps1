@@ -28,6 +28,12 @@ function New-RubrikSLA
       while also keeping one backup per day for 30 days.
 
       .EXAMPLE
+      New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -RetentionLock
+
+      This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days
+      while also keeping one backup per day for 30 days and sets the SLA to Retention Locked.
+
+      .EXAMPLE
       New-RubrikSLA -Name 'Test1' -AdvancedConfig -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -WeeklyFrequency 1 -WeeklyRetention 4 -DayOfWeek Friday -YearlyFrequency 1 -YearlyRetention 3 -DayOfYear LastDay -YearStartMonth February
 
       This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days
@@ -166,6 +172,9 @@ function New-RubrikSLA
     [String]$PolarisID,
     # Whether to enable Instant Archive
     [switch]$InstantArchive,
+    # Whether a retention lock is active on this SLA, Does not apply to CDM versions prior to 5.2
+    [alias('isRetentionLocked')]
+    [switch]$RetentionLock,
     # Whether to enable replication
     [switch]$Replication,
     # ID of the replication target
@@ -237,24 +246,27 @@ function New-RubrikSLA
     if (($uri.contains('v2')) -and $AdvancedConfig) {
       $body = @{
         $resources.Body.name = $Name
-        frequencies = @()
+        frequencies = [string[]]$null
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
         archivalSpecs = @()
         replicationSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
+        isRetentionLocked = $RetentionLock.IsPresent
+
         advancedUiConfig = @()
       }
     # Build the body for CDM versions 5 and above when the advanced SLA configuration is turned off
     } elseif ($uri.contains('v2')) {
       $body = @{
         $resources.Body.name = $Name
-        frequencies = @()
+        frequencies = [string[]]$null
         allowedBackupWindows = @()
         firstFullAllowedBackupWindows = @()
         archivalSpecs = @()
         replicationSpecs = @()
         showAdvancedUi = $AdvancedConfig.IsPresent
+        isRetentionLocked = $RetentionLock.IsPresent
       }
     # Build the body for CDM versions prior to 5.0
     } else {
@@ -270,10 +282,6 @@ function New-RubrikSLA
 
     Write-Verbose -Message 'Setting ParamValidation flag to $false to check if user set any params'
     [bool]$ParamValidation = $false
-
-
-
-
 
     # Retrieve snapshot frequencies from pipeline for CDM versions 5 and above when advanced SLA configuration is turned on
     if (($uri.contains('v2')) -and ($Frequencies) -and ($AdvancedConfig -eq $true)) {
@@ -559,6 +567,15 @@ function New-RubrikSLA
       $body.FirstFullAllowedBackupWindows += @{
           startTimeAttributes = @{hour=$FirstFullBackupStartHour;minutes=$FirstFullBackupStartMinute;dayOfWeek=$FirstFullBackupDay};
           durationInHours = $FirstFullBackupWindowDuration
+      }
+    }
+
+    # Populate the body with Retention Lock specifications
+    if ($uri.contains('v2') -and $RetentionLock) {
+      if ($RetentionLock.IsPresent -eq $true) {
+        $body.isRetentionLocked = $true
+      } elseif ($RetentionLock.IsPresent -eq $false) {
+        $body.isRetentionLocked = $false
       }
     }
 

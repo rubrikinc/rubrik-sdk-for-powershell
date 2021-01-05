@@ -18,6 +18,39 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Changed, parameter sets, `SLA_Name/SLA_ByID/SLA_Unprotected/SLA_Forever`, added to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
+* Added support for `WhatIf` & `Confirm` to the `Invoke-RubrikRESTCall` cmdlet fixing [Issue 713](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/713)
+* Created 3 new parameter sets to `Invoke-RubrikRESTCall` : `BodyAsArray`, `BodyAsJson`, `General` fixing [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
+* Changed how `ConfirmImpact` is handled in the `New-RubrikSnapshot` cmdlet, it will now error when no SLAID is found when query by SLA and won't prompt for Test-SLA unless using `-Confirm`, fixing [Issue 699](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/699)
+* Removed 2 deprecated parameters from `Get-RubrikReport`: `-ShowOnlyLatest` & `-FilterOnlyOnLatest` [Issue 696](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/696)
+* Changed how `PrimaryClusterID` is handled in the `Get-RubrikDatabase` cmdlet  fixing [Issue 691](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/691)
+* Changed `Protect-RubrikVM` to use correct REST endpoint & body for Rubrik CDM 5.2 and later [Issue 689](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/689)
+
+### Added
+
+* Added new parameter, `SLAPrimaryClusterId`, to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
+* Added additional parameters: `-DoNotProtect` & `-Inherit` to `Set-RubrikSQLInstance` as requested in [Issue 717](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/717)
+* Added `Request` parameter to allow `Get-RubrikRequest` to work directly from the pipeline as request in [Issue 715](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/715)
+* Added `BodyAsJson` parameter to `Invoke-RubrikRESTCall` cmdlet as requested in [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
+* Added `RetentionLock` switch parameter to `New-RubrikSLA` & `Set-RubrikSLA` cmdlet as requested in [Issue 712](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/712)
+* Added new parameter, `-EventSeriesStatus`, to `Get-RubrikEvent` to allow for filtering on event_series_status [Issue 705](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/705)
+* Added `uri` parameter to `Invoke-RubrikRESTCall` cmdlet as requested in [Issue 700](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/700)
+* Added 3 examples in documentation for: `Get-RubrikReport` [Issue 696](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/696)
+* Added additional request types to `Get-RubrikRequest`  as requested in [Issue 695](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/695) & [Issue 716](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/716)
+* Added example in documentation for: `Get-RubrikReport` [Issue 692](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/692)
+
+### Fixed
+
+* Fixed bug in `New-RubrikSLA` which could prevent correct SLA creation [Issue 706](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/706)
+* Fixed bug in `Get-RubrikEvent` which caused `-Status` not to filter properly [Issue 705](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/705)
+* Fixed documentation for `Invoke-RubrikGraphQLCall` multiline example changed to single line [Issue 685](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/685)
+
+### Deprecated
+
+## [5.2.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.2) - 2020-11-17
+
+### Changed
+
 * Changed Get/Set Rubrik-Blackout to use correctly API version for Rubrik CDM 5.1 and later [Issue 679](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/679)
 * Changed `Remove-RubrikUnmanagedObject` to use correct REST endpoint for Rubrik CDM 5.2 and later [Issue 671](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/671)
 

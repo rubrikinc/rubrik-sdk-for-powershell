@@ -48,6 +48,10 @@ function Set-RubrikSLA
       This will update the SLA Domain named "Gold" to enable Instant Archive, assuming that archival was already configured. Ommitting this parameter will disable Instant Archive.
 
       .EXAMPLE
+      Get-RubrikSLA -Name Gold | Set-RubrikSLA -RetentionLock
+      This will update the SLA Domain named "Gold" to enable Retention Lock
+
+      .EXAMPLE
       Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication -ReplicationTargetId eeece05e-980f-4d32-953e-d236b65ff6fd -RemoteRetention 7
       This will update the SLA Domain named "Gold" to replicate snapshots to the specified cluster and keep them for 7 days remotely.
 
@@ -171,6 +175,9 @@ function Set-RubrikSLA
     [String]$PolarisID,
     # Whether to enable Instant Archive
     [switch]$InstantArchive,
+    # Whether a retention lock is active on this SLA, Does not apply to CDM versions prior to 5.2
+    [alias('isRetentionLocked')]
+    [switch]$RetentionLock,
     # Whether to enable replication
     [switch]$Replication,
     # ID of the replication target
@@ -492,6 +499,15 @@ function Set-RubrikSLA
       }
       if (($FirstFullBackupWindows.durationInHours) -and (-not $FirstFullBackupWindowDuration)) {
         $FirstFullBackupWindowDuration = $FirstFullBackupWindows.durationInHours
+      }
+    }
+
+    # Populate the body with Retention Lock specifications
+    if ($uri.contains('v2') -and $RetentionLock) {
+      if ($RetentionLock.IsPresent -eq $true) {
+        $body.isRetentionLocked = $true
+      } elseif ($RetentionLock.IsPresent -eq $false) {
+        $body.isRetentionLocked = $false
       }
     }
 

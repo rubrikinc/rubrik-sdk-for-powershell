@@ -35,6 +35,16 @@ function Get-RubrikReport
       Get-RubrikReport -id '11111111-2222-3333-4444-555555555555'
 
       This will return details on the report id "11111111-2222-3333-4444-555555555555"
+
+      .EXAMPLE
+      Get-RubrikReport -Name 'Protection Tasks Details' | Get-RubrikReportData
+      
+      Using the pipeline in combination with Get-RubrikReportData additional information and report data are retrieved
+
+      .EXAMPLE
+      Get-RubrikReport -Name 'Protection Tasks Details' | Get-RubrikReportData | Select-Object -ExpandProperty DatagridObject
+
+      Using the pipeline in combination with Get-RubrikReportData additional information and report data are retrieved. Using Select-Object to dig into the individual Protection Tasks
   #>
 
   [CmdletBinding()]

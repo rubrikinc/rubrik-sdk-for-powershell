@@ -39,9 +39,9 @@ Describe -Name 'Public/Protect-RubrikFileset' -Tag 'Public', 'Protect-RubrikFile
                 Should -BeExactly 'sla_domain_id'
         }  
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
     Context -Name 'Parameter Validation' {   
         It -Name 'ID cannot be null' -Test {
@@ -51,6 +51,18 @@ Describe -Name 'Public/Protect-RubrikFileset' -Tag 'Public', 'Protect-RubrikFile
         It -Name 'Missing SLA' -Test {
             { Protect-RubrikFileset -Id 'filesetID' -SLA  } |
                 Should -Throw "Missing an argument for parameter 'SLA'."
+        }
+        It -Name 'Should throw, parameter set - SLA & Forever cannot be used at the same time' {
+            { Protect-RubrikFileset -SLA TEST -DoNotProtect } |
+                Should -Throw "Parameter set cannot be resolved using the specified named parameters."
+        }
+        It -Name 'Should throw, parameter set - SLA & SLAID cannot be used at the same time' {
+            { Protect-RubrikFileset -SLAID 1 -SLA TEST } |
+                Should -Throw "Parameter set cannot be resolved using the specified named parameters."
+        }
+        It -Name 'Should throw, parameter set - SLAID & Forever cannot be used at the same time' {
+            { Protect-RubrikFileset -SLAID 1 -DoNotProtect } |
+                Should -Throw "Parameter set cannot be resolved using the specified named parameters."
         }
     }
 }

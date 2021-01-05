@@ -24,21 +24,21 @@ Describe -Name 'Public/Invoke-RubrikRestCall' -Tag 'Public', 'Invoke-RubrikRestC
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             @{ 
                 'total' = '3'
-                'data'  =   @{ 
-                                'Name'        = 'VM1'
-                                'ID'          = 'VirtualMachine:11111'
-                                'powerStatus' = 'poweredOn'
-                            },
-                            @{ 
-                                'Name'        = 'VM2'
-                                'ID'          = 'VirtualMachine:22222'
-                                'powerStatus' = 'poweredOn'
-                            },
-                            @{ 
-                                'Name'        = 'VM3'
-                                'ID'          = 'VirtualMachine:33333'
-                                'powerStatus' = 'poweredOff'
-                            }
+                'data'  = @{ 
+                        'Name'        = 'VM1'
+                        'ID'          = 'VirtualMachine:11111'
+                        'powerStatus' = 'poweredOn'
+                    },
+                    @{ 
+                        'Name'        = 'VM2'
+                        'ID'          = 'VirtualMachine:22222'
+                        'powerStatus' = 'poweredOn'
+                    },
+                    @{ 
+                        'Name'        = 'VM3'
+                        'ID'          = 'VirtualMachine:33333'
+                        'powerStatus' = 'poweredOff'
+                    }
             }
         }
 
@@ -56,7 +56,7 @@ Describe -Name 'Public/Invoke-RubrikRestCall' -Tag 'Public', 'Invoke-RubrikRestC
                 Should -Throw "Cannot validate argument on parameter 'Endpoint'. The argument is null or empty. Provide an argument that is not null or empty, and then try the command again."
         }
         It -Name 'ValidateSet - Method' -Test {
-            { Invoke-RubrikRestCall -Endpoint 'vmware/vm' -Method "non-existant" } |
+            { Invoke-RubrikRestCall -Endpoint 'vmware/vm' -Method "non-existent" } |
                 Should -Throw "Cannot validate argument on parameter 'Method'."
         }  
         It -Name 'Query cannot be null or empty' -Test {
@@ -66,6 +66,10 @@ Describe -Name 'Public/Invoke-RubrikRestCall' -Tag 'Public', 'Invoke-RubrikRestC
         It -Name 'Body cannot be null or empty' -Test {
             { Invoke-RubrikRestCall -Endpoint 'vmware/vm' -Method "POST" -Body $null } |
                 Should -Throw "Cannot validate argument on parameter 'Body'."
-        }        
+        }
+        It -Name 'uri cannot be null or empty' -Test {
+            { Invoke-RubrikRestCall -Endpoint 'vmware/vm' -Method "POST" -uri $null } |
+                Should -Throw "Cannot validate argument on parameter 'uri'."
+        }
     }
 }
