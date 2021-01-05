@@ -75,6 +75,11 @@ function Get-RubrikEvent
     Get-RubrikEvent -Limit 1 -Descending:$false -EventType Backup
 
     Will retrieve the oldest backup event on the Rubrik Cluster
+
+    .EXAMPLE
+    Get-RubrikEvent -Status Failure -EventSeriesStatus Success
+
+    Will retrieve the first 50 Events which have event_status failed and event_series_status Success
   #>
 
   [CmdletBinding()]
@@ -90,10 +95,16 @@ function Get-RubrikEvent
     [Alias('event_series_id')]
     [Parameter(ParameterSetName='EventSeries',Mandatory=$true)]
     [string]$EventSeriesId,
-    # Filter by Status. Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling’.
+    # Filter by Event status. Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling'.
     [ValidateSet('Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling', 'Queued', IgnoreCase = $false)]
     [Parameter(ParameterSetName="eventByID")]
+    [Alias('event_status')]
     [string]$Status,
+    # Filter by Status. Enter any of the following values: 'Success', 'Failure', 'Scheduled', 'Active', 'Canceling', 'Canceled', 'SuccessWithWarnings'.
+    [ValidateSet('Success', 'Failure', 'Scheduled', 'Active', 'Canceling', 'Canceled', 'SuccessWithWarnings', IgnoreCase = $false)]
+    [Parameter(ParameterSetName="eventByID")]
+    [Alias('event_series_status')]
+    [string]$EventSeriesStatus,
     # Filter by Event Type.
     [ValidateSet('Archive', 'Audit', 'AuthDomain', 'AwsEvent', 'Backup', 'Classification', 'CloudNativeSource', 'CloudNativeVm', 'Configuration', 'Connection', 'Conversion', 'Diagnostic', 'Discovery', 'Failover', 'Fileset', 'Hardware', 'HostEvent', 'HypervScvmm', 'HypervServer', 'Instantiate', 'LegalHold', 'Maintenance', 'NutanixCluster', 'Recovery', 'Replication', 'Storage', 'StorageArray', 'StormResource', 'Support', 'System', 'TestFailover', 'Upgrade', 'VCenter', 'Vcd', 'VolumeGroup', 'UnknownEventType', IgnoreCase = $false)]
     [Alias('event_type')]
