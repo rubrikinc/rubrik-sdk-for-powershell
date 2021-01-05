@@ -37,10 +37,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added new parameter, `SLAPrimaryClusterId`, to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
 * Added example in documentation for: `Get-RubrikReport` [Issue 692](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/692)
 * Added 3 examples in documentation for: `Get-RubrikReport` [Issue 696](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/696)
+* Added new parameter, `-EventSeriesStatus` , to `Get-RubrikEvent` to allow for filtering on event_series_status [Issue 705](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/705)
 
 ### Fixed
 
 * Fixed bug in `New-RubrikSLA` which could prevent correct SLA creation [Issue 706](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/706)
+* Fixed bug in `Get-RubrikEvent` which caused -Status not to filter properly [Issue 705](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/705)
 * Fixed documentation for `Invoke-RubrikGraphQLCall` multiline example changed to single line [Issue 685](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/685)
 
 ### Deprecated
