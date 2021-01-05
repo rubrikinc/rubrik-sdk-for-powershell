@@ -2,31 +2,42 @@
 function Get-RubrikVAppSnapshot
 {
   <#  
-      .SYNOPSIS
-      Retrieves details on one or more virtual machines known to the Rubrik cluster as a vCD-managed vApp
+    .SYNOPSIS
+    Retrieves details on one or more virtual machines known to the Rubrik cluster as a vCD-managed vApp
 
-      .DESCRIPTION
-      The Get-RubrikVAppSnapshot cmdlet pulls detailed information from a vCD vApp snapshot
+    .DESCRIPTION
+    The Get-RubrikVAppSnapshot cmdlet pulls detailed information from a vCD vApp snapshot
 
-      .NOTES
-      Written by Matt Elliott for community usage
-      Twitter: @NetworkBrouhaha
-      GitHub: shamsway
+    .NOTES
+    Written by Matt Elliott for community usage
+    Twitter: @NetworkBrouhaha
+    GitHub: shamsway
 
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvappsnapshot
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvappsnapshot
 
-      .EXAMPLE
-      Get-RubrikVAppSnapshot -id '01234567-8910-1abc-d435-0abc1234d567'
-      This returns details on the specific snapshot.
+    .EXAMPLE
+    Get-RubrikVAppSnapshot -id '01234567-8910-1abc-d435-0abc1234d567'
+    
+    This returns details on the specific snapshot.
   #>
 
   [CmdletBinding()]
   Param(
-    # ID of the snapshot
-    [Parameter(ValueFromPipelineByPropertyName = $true)]
+    # ID of the vApp
+    [Parameter(
+      ParameterSetName = 'vAppID',
+      Mandatory=$true
+    )]
     [ValidateNotNullOrEmpty()]
     [String]$id,
+    # Name of the vApp
+    [Parameter(
+      ParameterSetName = 'vAppName',
+      Mandatory=$true
+    )]
+    [ValidateNotNullOrEmpty()]
+    [String]$Name,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
