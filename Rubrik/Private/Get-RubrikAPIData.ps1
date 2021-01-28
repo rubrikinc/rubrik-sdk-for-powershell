@@ -768,6 +768,21 @@ function Get-RubrikAPIData {
                 Success     = '200'
                 ObjectTName = 'Rubrik.User'
             }
+            '5.3' = @{
+                Description = 'Retrieves settings related to a given user within the Rubrik cluster'
+                URI         = '/api/v1/principal'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    name = 'name'
+                    auth_domain_id = 'auth_domain_id'
+                    principal_type = 'principal_type'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.User'
+            }
         }
         'Get-RubrikUserRole'         = @{
             '1.0' = @{
