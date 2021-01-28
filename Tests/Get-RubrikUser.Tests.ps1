@@ -54,11 +54,26 @@ Describe -Name 'Public/Get-RubrikUser' -Tag 'Public', 'Get-RubrikUser' -Fixture 
             ( Get-RubrikUser -authDomainId 'local').Count |
                 Should -BeExactly 3
         }
+
+        It -Name 'Verify 5.3 fallback block uri block - Should not trigger before 5.3' -Test {
+            $Output = & {
+                Get-RubrikUser -id User:111113 -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*Detected 5.3 or above with ID parameter, explicitly setting endpoint*'
+        }
+
+        It -Name 'Verify 5.3 fallback block uri block - Should Trigger on 5.3' -Test {
+            $rubrikconnection.version = '5.3.5'
+            $Output = & {
+                Get-RubrikUser -id User:111113 -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*Detected 5.3 or above with ID parameter, explicitly setting endpoint*'
+        }
    
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Get-RubrikLDAP -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 2
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 4
+        Assert-MockCalled -CommandName Get-RubrikLDAP -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 4
     }
     Context -Name 'Parameter Validation' {
         It -Name 'ID Missing' -Test {
