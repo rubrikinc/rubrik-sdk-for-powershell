@@ -113,7 +113,7 @@ function Get-RubrikUser
 
     # if 5.3 or higher and calling with either ID we need to use the older internal endpoint...
     if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.3 -and $PSBoundParameters.containskey('id') ) {
-      Write-Verbose -Message "Detected 5.3 or above with ID parameter, explicitely setting endpoint"
+      Write-Verbose -Message "Detected 5.3 or above with ID parameter, explicitly setting endpoint"
       $uri = New-URIString -server $Server -endpoint "/api/internal/user" -id $id
     } else {
       $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
