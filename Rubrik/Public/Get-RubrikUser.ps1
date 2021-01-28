@@ -53,11 +53,18 @@ function Get-RubrikUser
     [Parameter(
       ParameterSetName='Query',
       Position = 0)]
+    [Alias('name')]
     [String] $Username,
     # AuthDomainId to filter on
     [Parameter(ParameterSetName='Query')]
     [Alias('auth_domain_id')]
     [String]$AuthDomainId,
+    # PrincipalType - For 5.3 and above
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
+    [Parameter(DontShow)]
+    [Alias('principal_type')]
+    [String]$PrincipalType="User",
     # User ID
     [Parameter(
       ParameterSetName='ID',
@@ -103,12 +110,25 @@ function Get-RubrikUser
     if ($AuthDomainId -eq 'local') {
       $AuthDomainId = (Get-RubrikLDAP | Where-Object {$_.domainType -eq 'LOCAL'}).id
     }
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+
+    # if 5.3 or higher and calling with either ID we need to use the older internal endpoint...
+    if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.3 -and $PSBoundParameters.containskey('id') ) {
+      Write-Verbose -Message "Detected 5.3 or above with ID parameter, explicitely setting endpoint"
+      $uri = New-URIString -server $Server -endpoint "/api/internal/user" -id $id
+    } else {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    }
+
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
+
+    # if 5.3 or higher, add username property as api has changed....
+    if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.3 -and ($result) -and (-not $PSBoundParameters.containskey('id')) ) {
+      $result = $result | Select-Object *,@{Name="Username"; Expression={$_.name}}
+    }
 
     if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
       for ($i = 0; $i -lt @($result).Count; $i++) {
