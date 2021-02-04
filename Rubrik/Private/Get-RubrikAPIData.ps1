@@ -3523,7 +3523,12 @@ function Get-RubrikAPIData {
                 Description = 'Verifies the validity of a snapshot'
                 URI         = '/api/v1/backup/verify'
                 Method      = 'Post'
-                Body        = ''
+                Body        = @{
+                    "objectId" = ''
+                    "snapshotIdsOpt" = [System.Collections.ArrayList]@()
+                    "locationIdOpt" = "locationIdOpt"
+                    "shouldVerifyAfterOpt" = 'shouldVerifyAfterOpt'
+                }
                 Query       = ''
                 Result      = ''
                 Filter      = ''

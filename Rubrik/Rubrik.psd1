@@ -305,6 +305,7 @@
                    'Stop-RubrikManagedVolumeSnapshot',
                    'Sync-RubrikAnnotation',
                    'Sync-RubrikTag',
+                   'Test-RubrikSnapshotVerification',
                    'Update-RubrikHost',
                    'Update-RubrikNutanixCluster',
                    'Update-RubrikVCD',
