@@ -3377,8 +3377,8 @@ function Get-RubrikAPIData {
                 URI         = '/api/internal/config/usersettable_volumeGroup'
                 Method      = 'Patch'
                 Body        = @{
-                      migrateFastVirtualDiskBuild = 'migrateFastVirtualDiskBuild'
-                      maxFullMigrationStoragePercentage = 'maxFullMigrationStoragePercentage'
+                    migrateFastVirtualDiskBuild = 'migrateFastVirtualDiskBuild'
+                    maxFullMigrationStoragePercentage = 'maxFullMigrationStoragePercentage'
                 }
                 Query       = ''
                 Result      = ''
@@ -3516,6 +3516,18 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '202'
+            }
+        }
+        'Test-RubrikSnapshotVerification' = @{
+            '5.3' = @{
+                Description = 'Verifies the validity of a snapshot'
+                URI         = '/api/v1/backup/verify'
+                Method      = 'Post'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
             }
         }
         'Update-RubrikVCenter'         = @{
