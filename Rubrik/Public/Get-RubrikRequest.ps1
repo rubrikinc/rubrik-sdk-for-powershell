@@ -121,8 +121,13 @@ function Get-RubrikRequest {
     if ($Request) {
       Write-Verbose "Using uri supplied by pipeline: $($Request.links.href)"
       $uri = $Request.links.href
+      
+      # Fix for 5.3
+      if ($uri -match 'backup_verification') {
+        $uri = $uri -replace 'backup_verification/request', 'backup/verify'
+      }
     }
-
+    
     #We added new code that will now wait for the Rubrik Async Request to complete. Once completion has happened, we return back the request object. 
     #region WaitForCompletion
     if ($WaitForCompletion) {
