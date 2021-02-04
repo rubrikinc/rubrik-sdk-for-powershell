@@ -25,27 +25,33 @@ function Test-RubrikSnapshotVerification
     SupportsShouldProcess = $true,
     ConfirmImpact = 'High')]
   Param(
-    # Snapshot id value
+    # Object id value
     [Parameter(
       Position = 0,
       ValueFromPipelineByPropertyName = $true,
       Mandatory = $true )]
+    [Alias('objectId')]
     [ValidateNotNullOrEmpty()]
     [String]$id,
-    # VM Name
-    [Parameter(
-      ParameterSetName='Query',
-      Position = 0,
-      ValueFromPipeline=$true,
-      Mandatory = $true )]
-    [Alias('SLA')]
+    # Snapshot id value(s)
+    [Alias('snapshotIdsOpt')]
     [ValidateNotNullOrEmpty()]
-    [String]$Name,
+    [String[]]$SnapshotID,
+    # Location id value(s)
+    [Alias('locationIdOpt')]
+    [ValidateNotNullOrEmpty()]
+    [String]$LocationID,
+    # The datetime stamp to verify snapshots after
+    [Alias('shouldVerifyAfterOpt')]
+    [ValidateNotNullOrEmpty()]
+    [datetime]$VerifyAfter,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api
   )
+
+  
 
   Begin {
 
@@ -64,22 +70,21 @@ function Test-RubrikSnapshotVerification
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+    
   }
 
   Process {
-    if ($PSCmdlet.ShouldProcess("snapshot id: '$id'", "Validating backup of 'jbrasser-win'")) {
+    if ($VerifyAfter) {
+      $VerifyAfter = ConvertTo-UniversalZuluDateTime -DateTimeValue $VerifyAfter
+    }
 
-
-    
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    # Custom as paused is always true
-    $body = '{"isPaused": true}'
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-    return $result
+    if ($PSCmdlet.ShouldProcess("snapshot id: '$id'", "Validating backup of '$id'")) {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI)
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
     }
   } # End of process
 } # End of function
