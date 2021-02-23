@@ -7,7 +7,7 @@ Rubrik's API first architecture enables organizations to embrace and integrate R
 The code assumes that you have already deployed at least one Rubrik cluster into your environment and have completed the initial configuration process to form a cluster. At a minimum, make sure you have installed the following:
 
 1. [PowerShell](https://aka.ms/getps6) or Windows PowerShell
-1. [PowerCLI](http://www.vmware.com/go/powercli) version 6.0 or higher
+1. [PowerCLI](https://code.vmware.com/tool/vmware-powercli) version 6.0 or higher
 
 ## Note - PowerShell
 
