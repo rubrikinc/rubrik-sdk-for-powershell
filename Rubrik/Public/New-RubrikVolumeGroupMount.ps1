@@ -88,7 +88,6 @@ function New-RubrikVolumeGroupMount
     foreach ($disk in $VolumeGroupSnapshot.includedVolumes)
     {
         if ($ExcludeDrives -contains $disk.mountPoints.Replace(":\","") -Or [bool]($disk.mountPoints -match $ExcludeMountPoints) )
-        #if ($ExcludeDrives -contains $disk.mountPoints) 
         {
             Write-Verbose -Message "Disk/MountPoint $disk.mountPoints is excluded" -Verbose
         } 
