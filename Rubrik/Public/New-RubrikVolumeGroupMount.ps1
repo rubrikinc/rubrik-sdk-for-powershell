@@ -39,6 +39,7 @@ function New-RubrikVolumeGroupMount
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName = 'Create')]
     [Array]$ExcludeDrives,
+    [Array]$ExcludeMountPoints,
     [String]$Server = $global:RubrikConnection.server,
     # API version
     [String]$api = $global:RubrikConnection.api
@@ -82,9 +83,10 @@ function New-RubrikVolumeGroupMount
 
     foreach ($disk in $VolumeGroupSnapshot.includedVolumes)
     {
-        if ($ExcludeDrives -contains $disk.mountPoints.Replace(":\",""))
+        if ($ExcludeDrives -contains $disk.mountPoints.Replace(":\","") -Or [bool]($disk.mountPoints -match $ExcludeMountPoints) )
+        #if ($ExcludeDrives -contains $disk.mountPoints) 
         {
-            Write-Verbose -Message "Skipping Disk $disk.mountPoints" -Verbose
+            Write-Verbose -Message "Disk/MountPoint $disk.mountPoints is excluded" -Verbose
         } 
         else 
         {
