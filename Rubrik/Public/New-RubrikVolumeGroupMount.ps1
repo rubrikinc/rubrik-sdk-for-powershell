@@ -24,6 +24,10 @@ function New-RubrikVolumeGroupMount
       .EXAMPLE
       $snapshot = Get-RubrikVolumeGroup "MyVolumeGroup" | Get-RubrikSnapshot -Latest
       New-RubrikVolumeGroupMount -TargetHost "MyTargetHostName" -VolumeGroupSnapshot $snapshot -ExcludeDrives @("D","E")
+      New-RubrikVolumeGroupMount -TargetHost "MyTargetHostName" -VolumeGroupSnapshot $snapshot -ExcludeMountPoint @("C:\MFAPDB05Log\")
+
+      To exclude all MountPoints with a certain string 
+      New-RubrikVolumeGroupMount -TargetHost "MyTargetHostName" -VolumeGroupSnapshot $snapshot -ExcludeMountPoint @("Log")
 
       This will create a new VolumeGroup Mount on MyTargetHostName with the latest snapshot retrieved in the first line, while exlcluding drives D & E
   #>
@@ -84,6 +88,7 @@ function New-RubrikVolumeGroupMount
     foreach ($disk in $VolumeGroupSnapshot.includedVolumes)
     {
         if ($ExcludeDrives -contains $disk.mountPoints.Replace(":\","") -Or [bool]($disk.mountPoints -match $ExcludeMountPoints) )
+        #if ($ExcludeDrives -contains $disk.mountPoints) 
         {
             Write-Verbose -Message "Disk/MountPoint $disk.mountPoints is excluded" -Verbose
         } 
