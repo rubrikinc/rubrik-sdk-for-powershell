@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added 5.3 endpoint for `Get-RubrikVolumeGroupMount`, resolving issue [Issue 729](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/729)
 * Added support to `Get-RubrikUser` to work around all of the API endpoint changes in CDM 5.3 as per [Issue 723](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/723)
 * Added new parameter, `SLAPrimaryClusterId`, to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
 * Added additional parameters: `-DoNotProtect` & `-Inherit` to `Set-RubrikSQLInstance` as requested in [Issue 717](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/717)
