@@ -13,7 +13,7 @@ function Test-RubrikSnapshotVerification
       GitHub: JaapBrasser
 
       .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/test-rubriksnapshotvalidation
+      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/test-rubriksnapshotverification
 
       .EXAMPLE
       Test-RubrikSnapshotVerification
