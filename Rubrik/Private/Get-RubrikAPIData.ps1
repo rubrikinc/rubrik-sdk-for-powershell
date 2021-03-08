@@ -1752,8 +1752,8 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
-           '5.3' = @{
-               Description = 'Retrieve information for all Volume mounts'
+            '5.3' = @{
+                Description = 'Retrieve information for all Volume mounts'
                 URI         = '/api/v1/volume_group/snapshot/mount'
                 Method      = 'Get'
                 Body        = ''
