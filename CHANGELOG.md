@@ -44,6 +44,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* Fixed bug in `Protect-RubrikTag` which could accidentally apply results to all VMs, [Issue 722](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/722)
 * Fixed bug in `New-RubrikSLA` which could prevent correct SLA creation [Issue 706](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/706)
 * Fixed bug in `Get-RubrikEvent` which caused `-Status` not to filter properly [Issue 705](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/705)
 * Fixed documentation for `Invoke-RubrikGraphQLCall` multiline example changed to single line [Issue 685](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/685)
