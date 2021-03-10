@@ -50,7 +50,9 @@ function New-RubrikSnapshot
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
   Param(
     # Rubrik's id of the object
-    [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
+    [Parameter(
+      Mandatory = $true,
+      ValueFromPipelineByPropertyName = $true)]
     [String]$id,
     # The SLA Domain in Rubrik
     [Parameter(
@@ -73,8 +75,10 @@ function New-RubrikSnapshot
     # SLA id value
     [Parameter(
       ParameterSetName = 'SLA_ByID',
+      ValueFromPipelineByPropertyName = $true,
       Mandatory = $true
     )]
+    [Alias('effectiveSlaDomainId')]
     [String]$SLAID,    
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
@@ -86,20 +90,20 @@ function New-RubrikSnapshot
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-  
+
   }
 
   Process {
@@ -134,7 +138,7 @@ function New-RubrikSnapshot
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
       $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
       $result = Test-FilterObject -filter ($resources.Filter) -result $result
-      
+
       return $result
     }
   } # End of process
