@@ -5,7 +5,7 @@ function Test-RubrikSnapshotVerification
     Tests a snapshot or multiple snapshots for consistency
 
     .DESCRIPTION
-    The Test-RubrikSnapshotVerification
+    The Test-RubrikSnapshotVerification cmdlet can be used to validate the 
 
     .NOTES
     Written by Jaap Brasser for community usage
@@ -16,9 +16,24 @@ function Test-RubrikSnapshotVerification
     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/test-rubriksnapshotverification
 
     .EXAMPLE
-    Test-RubrikSnapshotVerification
+    Test-RubrikSnapshotVerification -id 'VirtualMachine:::111'
 
-    This will initiate the tests
+    This will initiate the test for all snapshots on VM with id 111. A callback uri is returned and an ID in order to track the request
+
+    .EXAMPLE
+    Get-RubrikVM jaapslilvm | Test-RubrikSnapshotVerification
+
+    This will initiate the test for all snapshots on VM 'jaapslilvm', A callback uri is returned and an ID in order to track the request
+
+    .EXAMPLE
+    Start-RubrikDownload -uri (Test-RubrikSnapshotVerification -id 'VirtualMachine:::111' | Get-RubrikRequest -WaitForCompletion).links[1].href
+
+    This will initiate the test for all snapshots on VM with id 111. The cmdlet will then wait for the Snapshot verification to be completed, when this happens the file is stored to the current folder
+
+    .EXAMPLE
+    Invoke-RestMethod -uri (Test-RubrikSnapshotVerification -id 'VirtualMachine:::111' | Get-RubrikRequest -WaitForCompletion).links[1].href | ConvertFrom-Csv
+
+    This will initiate the test for all snapshots on VM with id 111. The cmdlet will then wait for the Snapshot verification to be completed, when this happens the results are converted from csv and displayed in the console
   #>
 
   [CmdletBinding(
