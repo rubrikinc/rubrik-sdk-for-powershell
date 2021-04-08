@@ -1,13 +1,9 @@
 Remove-Module -Name 'Rubrik' -ErrorAction 'SilentlyContinue'
 Import-Module -Name './Rubrik/Rubrik.psd1' -Force
 
-foreach ( $privateFunctionFilePath in ( Get-ChildItem -Path './Rubrik/Private' | Where-Object extension -eq '.ps1').FullName  ) {
-    . $privateFunctionFilePath
-}
-
-Describe -Name 'Public/Get-RubrikSnmpSetting' -Tag 'Public', 'Get-RubrikSnmpSetting' -Fixture {
+Describe -Name 'Public/Get-RubrikDebugInfo' -Tag 'Public', 'Get-RubrikDebugInfo' -Fixture {
     #region init
-    $global:rubrikConnection = @{
+    $rubrikConnection = @{
         id      = 'test-id'
         userId  = 'test-userId'
         token   = 'test-token'
@@ -19,27 +15,19 @@ Describe -Name 'Public/Get-RubrikSnmpSetting' -Tag 'Public', 'Get-RubrikSnmpSett
     }
     #endregion
 
-    Context -Name 'Returned Results' {
-        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith { }
-        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            @{ 
-                'communityString'     = 'SNMPString' 
-                'snmpAgentPort'       = 'https'
-                'isEnabled'           = 'true'
-                'trapRecieverConfigs' = ''
-            }
-        }
-        It -Name 'No parameters returns all results' -Test {
-            @( Get-RubrikSnmpSetting | Measure-Object).Count |
-                Should -BeExactly 1
-        }
-        It -Name 'Port is https' -Test {
-            @( Get-RubrikSnmpSetting).snmpAgentPort |
-                Should -BeExactly 'https'
+    Context -Name 'Validate output of cmdlet' {
+        It -Name 'Should return correct PSVersion' -Test {
+            (Get-RubrikDebugInfo).PSVersion | Should -BeExactly $PSVersionTable.PSVersion
         }
 
-        Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 2
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 2
+        It -Name 'Should return correct HostConsoleVersion' -Test {
+            $WarningPreference = 0
+            (Get-RubrikDebugInfo).HostConsoleName | Should -BeExactly $host.Name
+        }
+
+        It -Name 'Should return correct Culture' -Test {
+            $WarningPreference = 0
+            (Get-RubrikDebugInfo).HostCulture | Should -BeExactly $host.CurrentCulture
+        }
     }
 }
