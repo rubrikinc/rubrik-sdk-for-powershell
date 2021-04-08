@@ -21,9 +21,9 @@ function Test-RubrikSnapshotVerification
     This will initiate the test for all snapshots on VM with id 111. A callback uri is returned and an ID in order to track the request
 
     .EXAMPLE
-    Get-RubrikVM jaapslilvm | Test-RubrikSnapshotVerification
+    Get-RubrikVM jaapsvm | Test-RubrikSnapshotVerification
 
-    This will initiate the test for all snapshots on VM 'jaapslilvm', A callback uri is returned and an ID in order to track the request
+    This will initiate the test for all snapshots on VM 'jaapsvm', A callback uri is returned and an ID in order to track the request
 
     .EXAMPLE
     Start-RubrikDownload -uri (Test-RubrikSnapshotVerification -id 'VirtualMachine:::111' | Get-RubrikRequest -WaitForCompletion).links[1].href
