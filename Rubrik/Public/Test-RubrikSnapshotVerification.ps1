@@ -1,29 +1,29 @@
 function Test-RubrikSnapshotVerification
 {
   <#  
-      .SYNOPSIS
-      Pauses an existing Rubrik SLA Domain
+    .SYNOPSIS
+    Tests a snapshot or multiple snapshots for consistency
 
-      .DESCRIPTION
-      The Pause-RubrikSLA cmdlet will pause an existing SLA Domain with specified parameters. An alias has been created for this function, Pause-RubrikSLA to allign better with the Rubrik Terminology. Note that this functionality is only available on Rubrik Cluster running 5.1 or later.
+    .DESCRIPTION
+    The Test-RubrikSnapshotVerification
 
-      .NOTES
-      Written by Jaap Brasser for community usage
-      Twitter: @jaap_brasser
-      GitHub: JaapBrasser
+    .NOTES
+    Written by Jaap Brasser for community usage
+    Twitter: @jaap_brasser
+    GitHub: JaapBrasser
 
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/test-rubriksnapshotverification
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/test-rubriksnapshotverification
 
-      .EXAMPLE
-      Test-RubrikSnapshotVerification
+    .EXAMPLE
+    Test-RubrikSnapshotVerification
 
-      This will initiate the tests
+    This will initiate the tests
   #>
 
   [CmdletBinding(
-    SupportsShouldProcess = $true,
-    ConfirmImpact = 'High')]
+    SupportsShouldProcess = $true
+  )]
   Param(
     # Object id value
     [Parameter(
