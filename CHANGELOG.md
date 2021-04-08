@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-## [5.3.0]() - 2021-03-11
+## [5.3.0]() - 2021-04-08
 
 ### Changed
 
@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added example in documentation for: `Invoke-RubrikGraphQLCall` [Issue 736](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/736)
 * Added better warning message for `New-RubrikMount`, now displays warning when an object ID is specified instead of snapshot ID, [Issue 732](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/732)
 * Added 5.3 endpoint for `Get-RubrikVolumeGroupMount`, resolving issue [Issue 729](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/729)
 * Added support to `Get-RubrikUser` to work around all of the API endpoint changes in CDM 5.3 as per [Issue 723](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/723)
