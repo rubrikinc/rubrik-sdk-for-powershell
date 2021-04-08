@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added new cmdlet: `Get-RubrikDebugInfo`, that gathers essential information for troubleshooting [Issue 742](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/742)
 * Added example in documentation for: `Invoke-RubrikGraphQLCall` [Issue 736](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/736)
 * Added better warning message for `New-RubrikMount`, now displays warning when an object ID is specified instead of snapshot ID, [Issue 732](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/732)
 * Added 5.3 endpoint for `Get-RubrikVolumeGroupMount`, resolving issue [Issue 729](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/729)
