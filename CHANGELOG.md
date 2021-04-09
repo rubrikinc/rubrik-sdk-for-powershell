@@ -14,13 +14,76 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-## Unreleased
+## [5.3.0]() - 2021-04-09
 
 ### Changed
 
+* Changed the Quick Start Guide to links are pointing to working VMware pages [Issue 726](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/726)
+* Changed, parameter sets, `SLA_Name/SLA_ByID/SLA_Unprotected/SLA_Forever`, added to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
+* Added support for `WhatIf` & `Confirm` to the `Invoke-RubrikRESTCall` cmdlet fixing [Issue 713](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/713)
+* Created 3 new parameter sets to `Invoke-RubrikRESTCall` : `BodyAsArray`, `BodyAsJson`, `General` fixing [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
+* Changed how `ConfirmImpact` is handled in the `New-RubrikSnapshot` cmdlet, it will now error when no SLAID is found when query by SLA and won't prompt for Test-SLA unless using `-Confirm`, fixing [Issue 699](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/699)
+* Removed 2 deprecated parameters from `Get-RubrikReport`: `-ShowOnlyLatest` & `-FilterOnlyOnLatest` [Issue 696](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/696)
+* Changed how `PrimaryClusterID` is handled in the `Get-RubrikDatabase` cmdlet  fixing [Issue 691](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/691)
+* Changed `Protect-RubrikVM` to use correct REST endpoint & body for Rubrik CDM 5.2 and later [Issue 689](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/689)
+
 ### Added
 
+* Added new cmdlet: `Get-RubrikDebugInfo`, that gathers essential information for troubleshooting [Issue 742](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/742)
+* Added new cmdlet: `Test-RubrikSnapshotVerification`, that can test if a snapshot, or series of snapshots are recoverable [Issue 733](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/733)
+* Added example in documentation for: `Invoke-RubrikGraphQLCall` [Issue 736](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/736)
+* Added better warning message for `New-RubrikMount`, now displays warning when an object ID is specified instead of snapshot ID, [Issue 732](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/732)
+* Added 5.3 endpoint for `Get-RubrikVolumeGroupMount`, resolving issue [Issue 729](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/729)
+* Added support to `Get-RubrikUser` to work around all of the API endpoint changes in CDM 5.3 as per [Issue 723](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/723)
+* Added new parameter, `SLAPrimaryClusterId`, to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
+* Added additional parameters: `-DoNotProtect` & `-Inherit` to `Set-RubrikSQLInstance` as requested in [Issue 717](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/717)
+* Added `Request` parameter to allow `Get-RubrikRequest` to work directly from the pipeline as request in [Issue 715](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/715)
+* Added `BodyAsJson` parameter to `Invoke-RubrikRESTCall` cmdlet as requested in [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
+* Added `RetentionLock` switch parameter to `New-RubrikSLA` & `Set-RubrikSLA` cmdlet as requested in [Issue 712](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/712)
+* Added new parameter, `-EventSeriesStatus`, to `Get-RubrikEvent` to allow for filtering on event_series_status [Issue 705](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/705)
+* Added `uri` parameter to `Invoke-RubrikRESTCall` cmdlet as requested in [Issue 700](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/700)
+* Added 3 examples in documentation for: `Get-RubrikReport` [Issue 696](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/696)
+* Added additional request types to `Get-RubrikRequest`  as requested in [Issue 695](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/695) & [Issue 716](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/716)
+* Added example in documentation for: `Get-RubrikReport` [Issue 692](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/692)
+
 ### Fixed
+
+* Fixed bug in `Protect-RubrikTag` which could accidentally apply results to all VMs, [Issue 722](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/722)
+* Fixed bug in `New-RubrikSLA` which could prevent correct SLA creation [Issue 706](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/706)
+* Fixed bug in `Get-RubrikEvent` which caused `-Status` not to filter properly [Issue 705](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/705)
+* Fixed documentation for `Invoke-RubrikGraphQLCall` multiline example changed to single line [Issue 685](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/685)
+
+### Deprecated
+
+## [5.2.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.2) - 2020-11-17
+
+### Changed
+
+* Changed Get/Set Rubrik-Blackout to use correctly API version for Rubrik CDM 5.1 and later [Issue 679](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/679)
+* Changed `Remove-RubrikUnmanagedObject` to use correct REST endpoint for Rubrik CDM 5.2 and later [Issue 671](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/671)
+
+### Added
+
+* Added `Get-RubrikBlackout` cmdlet as requested in [Issue 688](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/688)
+* Added additional example to `New-RubrikVolumeGroupMount` [Issue 660](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/660)
+* Added additional example to `Invoke-RubrikRESTCall` [Issue 655](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/655)
+* Added new cmdlet `Set-RubrikReport` to allow for changing settings on Rubrik Reports, and added associated unit tests [Issue 654](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/654)
+* Added `DetailedObject` parameter & updated documentation for: `Get-RubrikDatabaseMount`, `Get-RubrikHyperVVM`, `Get-RubrikMount`, `Get-RubrikNutanixVM`, `Get-RubrikReport`, `Get-RubrikSLA`, `Get-RubrikUser`, `Get-RubrikVCenter`, `Get-RubrikVMwareDatastore`, `Get-RubrikVMwareHost` [Issue 651](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/651)
+* Added additional example to `Get-RubrikVolumeGroup` [Issue 647](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/647)
+* New switch added to `Get-RubrikEvent` `-IncludeEventSeries` which determines if EventSeries events are included in the results [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
+
+### Fixed
+
+* The `DynamicDNS` parameter of `New-RubrikLDAP` is no longer a mandatory parameter [Issue 662](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/662)
+* Fixed `Test-RubrikSLA` internal function behaviour to no longer enforce `local` cluster ID when not supplied [Issue 659](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/659)
+* WhatIf/Verbose messages for `Remove-RubrikSLA` will display SLA name and ID for additional clarification [Issue 653](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/653)
+* Invoke-RubrikRestCall no longer takes Body object for Get Method [Issue 652](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/652)
+* Created entries for 5.2 endpoints in `Get-RubrikAPIData` private function for `Get-RubrikEvent` & `Get-RubrikEventSeries` which caused these cmdlets to no longer work on Rubrik CDM 5.2 [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
+
+### Deprecated
+
+* The `Remove-RubrikOrgAuthorization` & `Set-RubrikOrgAuthorization` cmdlets no longer work in 5.2 because of API changes [Issue 681](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/681)
+* Functionality in `Get-RubrikEventSeries` is limited to only queries by specific EventSeries id on Rubrik CDM Clusters running versions higher than 5.2. Original functionality is still available for backwards compatibility with older versions of Rubrik CDM [Issue 626](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/626)
 
 ## [5.0.3](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.0.3) - 2020-08-12
 

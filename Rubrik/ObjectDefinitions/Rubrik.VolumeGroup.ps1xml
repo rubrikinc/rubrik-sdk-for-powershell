@@ -47,5 +47,63 @@
                 </TableRowEntries>
             </TableControl>
         </View>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.VolumeGroupv1</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Hostname</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>SLA Domain</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Includes</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ID</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Failed Last Snapshot</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Set to Upgrade</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>name</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>hostname</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>effectiveSlaDomainName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>includes</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>id</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>needsMigration</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>forceFull</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
     </ViewDefinitions>
 </Configuration>

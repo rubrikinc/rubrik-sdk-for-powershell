@@ -1,14 +1,20 @@
 # Import Module
 Import-Module .\Rubrik\Rubrik.psd1 -Force
+# $localpath = 'C:\temp\rubrik-sdk-for-powershell'
 
 # Create new markdown and XML help files
 Write-Output 'Building new function documentation'
 
-$MarkdownFiles = New-MarkdownHelp -Module Rubrik -OutputFolder "$env:LocalPath\docs\command-documentation\reference\" -Force | Measure-Object | Select-Object -ExpandProperty Count
-Write-Output "Created $MarkdownFiles markdown help files in '$env:LocalPath\docs\command-documentation\reference\'"
+$MarkdownFiles = New-MarkdownHelp -Module Rubrik -OutputFolder "$env:localpath\docs\command-documentation\reference\" -Force | Measure-Object | Select-Object -ExpandProperty Count
+Write-Output "Created $MarkdownFiles markdown help files in '$env:localpath\docs\command-documentation\reference\'"
 
-$ExternalHelp = New-ExternalHelp -Path "$env:LocalPath\docs\command-documentation\reference\" -OutputPath "$env:LocalPath\Rubrik\en-US\" -Force
-Write-Output "Created $($ExternalHelp.Name) external help file in '$env:LocalPath\Rubrik\en-US\'"
+Get-ChildItem $env:localpath\docs\command-documentation\reference\ -Exclude .\README.md |
+Where-Object {$_.name -cne $_.name.tolower()} | ForEach-Object {
+    Rename-Item -Path "$env:localpath\docs\command-documentation\reference\$($_.Name)" -NewName $_.Name.ToLower()
+}
+
+$ExternalHelp = New-ExternalHelp -Path "$env:localpath\docs\command-documentation\reference\" -OutputPath "$env:localpath\Rubrik\en-US\" -Force
+Write-Output "Created $($ExternalHelp.Name) external help file in '$env:localpath\Rubrik\en-US\'"
 
 # Custom Generate Summary.md
 Write-Output 'Generate custom markdown SUMMARY.md'
@@ -16,7 +22,7 @@ $MarkDown = "# Rubrik SDK for PowerShell`n`n"
 $MarkDown += "## User Documentation`n`n"
 
 # Documentation folder
-Get-ChildItem -LiteralPath "$env:LocalPath\docs\user-documentation" | ForEach-Object -Process {
+Get-ChildItem -LiteralPath "$env:localpath\docs\user-documentation" | ForEach-Object -Process {
     $Reference = switch ($_.BaseName) {
         'Requirements' {'Requirements'}
         'Installation' {'Installation'}
@@ -37,7 +43,7 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\user-documentation" | ForEach-Ob
 $MarkDown += "## Command Documentation`n`n"
 
 # Workflow folder
-Get-ChildItem -LiteralPath "$env:LocalPath\docs\command-documentation\workflow" | ForEach-Object -Begin {
+Get-ChildItem -LiteralPath "$env:localpath\docs\command-documentation\workflow" | ForEach-Object -Begin {
     $MarkDown += "* [Workflow](command-documentation/workflow/readme.md)`n"
 } -Process {
     $Reference = switch ($_.BaseName) {
@@ -50,15 +56,22 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\command-documentation\workflow" 
         $MarkDown += "    * [$Reference]($uri)`n"
     }
 } -End {
-    $MarkDown += "`n"
+    # $MarkDown += "`n"
 }
 
 # Reference folder
-Get-ChildItem -LiteralPath "$env:LocalPath\docs\command-documentation\reference" | ForEach-Object -Begin {
+Get-ChildItem -LiteralPath "$env:localpath\docs\command-documentation\reference" | ForEach-Object -Begin {
     $MarkDown += "* [Reference](command-documentation/reference/readme.md)`n"
 } -Process {
     $Reference = switch ($_.BaseName) {
-        default {$_}
+        default {
+            try {
+                $CurrentTry = $_
+                ((Get-Content $env:localpath\Rubrik\Public\$_.ps1 -ErrorAction Stop) -match "function $_" -split '\s')[1]
+            } catch {
+                $CurrentTry
+            }
+        }
     }
     $uri = "command-documentation/$($_.Directory.BaseName)/$($_.Name)"
     
@@ -68,7 +81,7 @@ Get-ChildItem -LiteralPath "$env:LocalPath\docs\command-documentation\reference"
 }
 
 # Write Markdown to file
-Set-Content -Value $MarkDown -Path "$env:LocalPath\docs\SUMMARY.md"
+Set-Content -Value $MarkDown -Path "$env:localpath\docs\SUMMARY.md"
 
 # End message
 Write-Output 'Completed GitBook documentation generation'

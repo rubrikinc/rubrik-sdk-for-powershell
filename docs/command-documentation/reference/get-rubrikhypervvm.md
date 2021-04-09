@@ -15,12 +15,13 @@ Retrieves details on one or more Hyper-V virtual machines known to a Rubrik clus
 ### Query (Default)
 ```
 Get-RubrikHyperVVM [[-Name] <String>] [-Relic] [-SLA <String>] [-SLAAssignment <String>]
- [-PrimaryClusterID <String>] [-SLAID <String>] [-Server <String>] [-api <String>] [<CommonParameters>]
+ [-PrimaryClusterID <String>] [-SLAID <String>] [-DetailedObject] [-Server <String>] [-api <String>]
+ [<CommonParameters>]
 ```
 
 ### ID
 ```
-Get-RubrikHyperVVM [-id] <String> [-Server <String>] [-api <String>] [<CommonParameters>]
+Get-RubrikHyperVVM [-id] <String> [-DetailedObject] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,6 +44,13 @@ Get-RubrikHyperVVM -Name 'Server1' -SLA Gold
 This will return details on all Hyper-V virtual machines named "Server1" that are protected by the Gold SLA Domain.
 
 ### EXAMPLE 3
+```
+Get-RubrikHyperVVM -Name 'Server1' -DetailedObject
+```
+
+This will return all Hyper-V virtual machines named "Server1" and returns the Detailed Objects of these VMs
+
+### EXAMPLE 4
 ```
 Get-RubrikHyperVVM -Relic
 ```
@@ -153,6 +161,22 @@ Aliases: effective_sla_domain_id
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed Hyper-V VM object, the default behavior of the API is to only retrieve a subset of the full Hyper-V VM object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

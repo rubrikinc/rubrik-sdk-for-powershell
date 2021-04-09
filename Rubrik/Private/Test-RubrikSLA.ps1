@@ -22,16 +22,16 @@
     The ID of the cluster to search
   #>
 
-  # Determine the state of $PrimaryClusterID
-  Write-Verbose -Message "Primary cluster ID currently set to: $PrimaryClusterID"
-  if (!$PrimaryClusterID) {
-    $PrimaryClusterID = 'local'
-    Write-Verbose -Message "Null value found. Setting primary cluster ID to $PrimaryClusterID"
-  }
-
   Write-Verbose -Message 'Determining the SLA Domain id'
   if ($SLA) {
-    $slaid = (Get-RubrikSLA -SLA $SLA -PrimaryClusterID $PrimaryClusterID).id
+    $slaid = & {
+      $local:PSDefaultParameterValues = @{Disabled=$true}
+      if (-not [string]::IsNullOrWhiteSpace($PrimaryClusterID)) {
+        (Get-RubrikSLA -SLA $SLA -PrimaryClusterID $PrimaryClusterID).id
+      } else {
+        (Get-RubrikSLA -SLA $SLA).id
+      }
+    }
     if ($slaid -eq $null) {
       throw "No SLA Domains were found that match $SLA for $PrimaryClusterID"
     }

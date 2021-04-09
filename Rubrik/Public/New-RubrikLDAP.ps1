@@ -42,7 +42,6 @@ function New-RubrikLDAP
     [Parameter(ParameterSetName='Credential',Mandatory=$true)]
     [System.Management.Automation.CredentialAttribute()]$BindCredential,
     # Dynamic DNS name for locating authentication servers.
-    [Parameter(Mandatory=$True)]
     [string]$DynamicDNSName,
     # The path to the directory where searches for users begin.
     [string]$baseDn,

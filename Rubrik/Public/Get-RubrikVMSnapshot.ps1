@@ -17,6 +17,7 @@ function Get-RubrikVMSnapshot
 
       .EXAMPLE
       Get-RubrikVMSnapshot -id 'cc1b363a-a0d4-40b7-9b09-7b8f3a805b27'
+      
       This will return details on the specific snapshot.
   #>
 

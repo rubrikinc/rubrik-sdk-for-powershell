@@ -15,7 +15,7 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
         header  = @{ 'Authorization' = 'Bearer test-authorization' }
         time    = (Get-Date)
         api     = 'v1'
-        version = '4.0.5'
+        version = '5.3.0'
     }
     #endregion
 
@@ -66,51 +66,49 @@ Describe -Name 'Public/Get-RubrikEvent' -Tag 'Public', 'Get-RubrikEvent' -Fixtur
                 Should -BeOfType DateTime
         }
 
-        It -Name 'Verify switch param - ShowOnlyLatest:$true - Switch Param' -Test {
+        It -Name 'Verify switch param - IncludeEventSeries:$true - Switch Param' -Test {
             $Output = & {
-                Get-RubrikEvent -ShowOnlyLatest -Verbose 4>&1
+                Get-RubrikEvent -Limit 1 -IncludeEventSeries -EventType Backup -Verbose 4>&1
             }
-            (-join $Output) | Should -BeLike '*show_only_latest=true*'
+            (-join $Output) | Should -BeLike '*should_include_event_series=true*'
         }
-
-        It -Name 'Verify switch param - ShowOnlyLatest:$false - Switch Param' -Test {
+        It -Name 'Verify switch param - IncludeEventSeries:$false - Switch Param' -Test {
             $Output = & {
-                Get-RubrikEvent -ShowOnlyLatest:$false -Verbose 4>&1
+                Get-RubrikEvent -IncludeEventSeries:$false -Verbose 4>&1
             }
-            (-join $Output) | Should -BeLike '*show_only_latest=false*'
+            (-join $Output) | Should -BeLike '*should_include_event_series=false*'
         }
-
-        It -Name 'Verify switch param - No ShowOnlyLatest - Switch Param' -Test {
+        It -Name 'Verify switch param - No IncludeEventSeries - Switch Param' -Test {
             $Output = & {
                 Get-RubrikEvent -Verbose 4>&1
             }
-            (-join $Output) | Should -Not -BeLike '*show_only_latest='
+            (-join $Output) | Should -Not -BeLike '*should_include_event_series='
         }
 
-        It -Name 'Verify switch param - FilterOnlyOnLatest:$true - Switch Param' -Test {
-            $Output = & {
-                Get-RubrikEvent -FilterOnlyOnLatest -Verbose 4>&1
-            }
-            (-join $Output) | Should -BeLike '*filter_only_on_latest=true*'
-        }
-
-        It -Name 'Verify switch param - FilterOnlyOnLatest:$false - Switch Param' -Test {
-            $Output = & {
-                Get-RubrikEvent -FilterOnlyOnLatest:$false -Verbose 4>&1
-            }
-            (-join $Output) | Should -BeLike '*filter_only_on_latest=false*'
-        }
-
-        It -Name 'Verify switch param - No FilterOnlyOnLatest - Switch Param' -Test {
-            $Output = & {
-                Get-RubrikEvent -Verbose 4>&1
-            }
-            (-join $Output) | Should -Not -BeLike '*filter_only_on_latest='
-        }
         It -Name 'Verify Status ValidateSet' -Test {
             { Get-RubrikEvent -Status 'NonExistant' } |
                 Should -Throw "Cannot validate argument on parameter 'Status'."
         }
+
+        It -Name 'Verify switch param - Descending:$true - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikEvent -Descending -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*order_by_time=desc*'
+        }
+        It -Name 'Verify switch param - Descending:$false - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikEvent -Descending:$false -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*order_by_time=asc*'
+        }
+        It -Name 'Verify switch param - No Descending - Switch Param' -Test {
+            $Output = & {
+                Get-RubrikEvent -Verbose 4>&1
+            }
+            (-join $Output) | Should -Not -BeLike '*order_by_time='
+        }
+
         Assert-VerifiableMock
         Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 8
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 8

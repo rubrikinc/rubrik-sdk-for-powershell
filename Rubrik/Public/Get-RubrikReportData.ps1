@@ -17,22 +17,27 @@ function Get-RubrikReportData {
 
       .EXAMPLE
       Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData
+      
       This will return table data from the "SLA Compliance Summary" report
 
       .EXAMPLE
       Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance'
+      
       This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance"
 
       .EXAMPLE
       Get-RubrikReport -Name 'SLA Compliance Summary' | Get-RubrikReportData -ComplianceStatus 'NonCompliance' -Limit 10
+      
       This will return table data from the "SLA Compliance Summary" report when the compliance status is "NonCompliance", only returns the first 10 results.
 
       .EXAMPLE
       Get-RubrikReport -Name 'Object Protection Summary' | Get-RubrikReportData -Limit -1
+      
       This will return all of the table data from the "Object Protection Summary" report. Note: Using '-Limit -1' may affect performance for reports containing large amounts of data.
 
       .EXAMPLE
       (Get-RubrikReport -Name "System Capacity" | Get-RubrikReportData).DatagridObject | Format-Table
+
       This will return a human readable table view of the items within the System Capacity report.
   #>
 

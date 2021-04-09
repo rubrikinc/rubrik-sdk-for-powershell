@@ -24,7 +24,7 @@ Set-RubrikSLA [-id] <String> [[-Name] <String>] [[-HourlyFrequency] <Int32>] [[-
  [[-BackupWindowDuration] <Int32>] [[-FirstFullBackupStartHour] <Int32>]
  [[-FirstFullBackupStartMinute] <Int32>] [[-FirstFullBackupDay] <String>]
  [[-FirstFullBackupWindowDuration] <Int32>] [-Archival] [[-LocalRetention] <Int32>]
- [[-ArchivalLocationId] <String>] [[-PolarisID] <String>] [-InstantArchive] [-Replication]
+ [[-ArchivalLocationId] <String>] [[-PolarisID] <String>] [-InstantArchive] [-RetentionLock] [-Replication]
  [[-ReplicationTargetId] <String>] [[-RemoteRetention] <Int32>] [[-Frequencies] <Object[]>]
  [[-AdvancedFreq] <Object[]>] [[-BackupWindows] <Object[]>] [[-FirstFullBackupWindows] <Object[]>]
  [[-ArchivalSpecs] <Object[]>] [[-ReplicationSpecs] <Object[]>] [[-Server] <String>] [[-api] <String>]
@@ -92,26 +92,33 @@ Ommitting this parameter will disable Instant Archive.
 
 ### EXAMPLE 8
 ```
+Get-RubrikSLA -Name Gold | Set-RubrikSLA -RetentionLock
+```
+
+This will update the SLA Domain named "Gold" to enable Retention Lock
+
+### EXAMPLE 9
+```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication -ReplicationTargetId eeece05e-980f-4d32-953e-d236b65ff6fd -RemoteRetention 7
 ```
 
 This will update the SLA Domain named "Gold" to replicate snapshots to the specified cluster and keep them for 7 days remotely.
 
-### EXAMPLE 9
+### EXAMPLE 10
 ```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -AdvancedConfig
 ```
 
 This will update the SLA Domain named "Gold" to only enable Advanced Configuration
 
-### EXAMPLE 10
+### EXAMPLE 11
 ```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -Archival:$false
 ```
 
 This will update the SLA Domain named "Gold" to only disable archival
 
-### EXAMPLE 11
+### EXAMPLE 12
 ```
 Get-RubrikSLA -Name Gold | Set-RubrikSLA -Replication:$false
 ```
@@ -692,6 +699,21 @@ Whether to enable Instant Archive
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RetentionLock
+Whether a retention lock is active on this SLA, Does not apply to CDM versions prior to 5.2
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: isRetentionLocked
 
 Required: False
 Position: Named

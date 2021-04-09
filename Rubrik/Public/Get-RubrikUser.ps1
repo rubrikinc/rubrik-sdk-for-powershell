@@ -18,22 +18,32 @@ function Get-RubrikUser
 
       .EXAMPLE
       Get-RubrikUser
+
       This will return settings of all of the user accounts (local and LDAP) configured within the Rubrik cluster.
 
       .EXAMPLE
       Get-RubrikUser -authDomainId 'local'
+
       This will return settings of all of the user accounts belonging to the local authoriation domain.
 
       .EXAMPLE
       Get-RubrikUser -username 'john.doe'
+
       This will return settings for the user account with the username of john.doe configured within the Rubrik cluster.
 
       .EXAMPLE
+      Get-RubrikUser -username 'john.doe' -DetailedObject
+
+      This will return full details of the settings for the user account with the username of john.doe configured within the Rubrik cluster.
+
+      .EXAMPLE
       Get-RubrikUser -authDomainId '1111-222-333'
+
       This will return settings of all of the user accounts belonging to the specified authoriation domain.
 
       .EXAMPLE
       Get-RubrikUser -id '1111-22222-33333-4444-5555'
+
       This will return detailed information about the user with the specified ID.
   #>
 
@@ -43,11 +53,18 @@ function Get-RubrikUser
     [Parameter(
       ParameterSetName='Query',
       Position = 0)]
+    [Alias('name')]
     [String] $Username,
     # AuthDomainId to filter on
     [Parameter(ParameterSetName='Query')]
     [Alias('auth_domain_id')]
     [String]$AuthDomainId,
+    # PrincipalType - For 5.3 and above
+    [Parameter(ParameterSetName='Query')]
+    [Parameter(ParameterSetName='ID')]
+    [Parameter(DontShow)]
+    [Alias('principal_type')]
+    [String]$PrincipalType="User",
     # User ID
     [Parameter(
       ParameterSetName='ID',
@@ -55,6 +72,8 @@ function Get-RubrikUser
       Mandatory = $true,
       ValueFromPipelineByPropertyName = $true)]
     [String]$Id,
+    # DetailedObject will retrieved the detailed User object, the default behavior of the API is to only retrieve a subset of the full User object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [Parameter(ParameterSetName='Query')]
     [Parameter(ParameterSetName='ID')]
@@ -91,15 +110,37 @@ function Get-RubrikUser
     if ($AuthDomainId -eq 'local') {
       $AuthDomainId = (Get-RubrikLDAP | Where-Object {$_.domainType -eq 'LOCAL'}).id
     }
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+
+    # if 5.3 or higher and calling with either ID we need to use the older internal endpoint...
+    if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.3 -and $PSBoundParameters.containskey('id') ) {
+      Write-Verbose -Message "Detected 5.3 or above with ID parameter, explicitly setting endpoint"
+      $uri = New-URIString -server $Server -endpoint "/api/internal/user" -id $id
+    } else {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+    }
+
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
 
+    # if 5.3 or higher, add username property as api has changed....
+    if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.3 -and ($result) -and (-not $PSBoundParameters.containskey('id')) ) {
+      $result = $result | Select-Object *,@{Name="Username"; Expression={$_.name}}
+    }
 
-    return $result
+    if (($DetailedObject) -and (-not $PSBoundParameters.containskey('id'))) {
+      for ($i = 0; $i -lt @($result).Count; $i++) {
+        $Percentage = [int]($i/@($result).count*100)
+        Write-Progress -Activity "DetailedObject queries in Progress, $($i+1) out of $(@($result).count)" -Status "$Percentage% Complete:" -PercentComplete $Percentage
+        if ($result) {
+          Get-RubrikUser -id $result[$i].id
+        }
+      }
+    } else {
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+      return $result
+    }
   } # End of process
 } # End of function

@@ -14,14 +14,14 @@ Connects to Rubrik and sets Rubrik cluster settings
 
 ### UserPassword (Default)
 ```
-New-RubrikLDAP -Name <String> -DynamicDNSName <String> [-baseDn <String>] [-AuthServers <Array>]
+New-RubrikLDAP -Name <String> [-DynamicDNSName <String>] [-baseDn <String>] [-AuthServers <Array>]
  [-BindUserName] <String> [-BindUserPassword] <SecureString> [-Server <String>] [-id <String>] [-api <String>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Credential
 ```
-New-RubrikLDAP -Name <String> -BindCredential <Object> -DynamicDNSName <String> [-baseDn <String>]
+New-RubrikLDAP -Name <String> -BindCredential <Object> [-DynamicDNSName <String>] [-baseDn <String>]
  [-AuthServers <Array>] [-Server <String>] [-id <String>] [-api <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -98,7 +98,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

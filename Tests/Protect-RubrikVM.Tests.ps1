@@ -59,6 +59,29 @@ Describe -Name 'Public/Protect-RubrikVM' -Tag 'Public', 'Protect-RubrikVM' -Fixt
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
     }
 
+    Context -Name 'Parameter/DoNotProtect/5.2' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-RubrikSLA -Verifiable -ModuleName 'Rubrik' -MockWith {
+            'UNPROTECTED'
+        }
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{ 
+                'id'                   = 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
+                'effectiveSlaDomainId' = 'UNPROTECTED'
+            }
+        }
+        It -Name 'Should use the 5.2 endpoint' -Test {
+            $rubrikconnection.version = '5.2.0'
+            $Output = & {
+                Protect-RubrikVM -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' -DoNotProtect -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*v2/sla_domain/UNPROTECTED/assign*'
+        }
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+    }
+
     Context -Name 'Parameter/Inherit' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
         Mock -CommandName Test-RubrikSLA -Verifiable -ModuleName 'Rubrik' -MockWith {

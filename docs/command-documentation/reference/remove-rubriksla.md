@@ -13,7 +13,7 @@ Connects to Rubrik and removes SLA Domains
 ## SYNTAX
 
 ```
-Remove-RubrikSLA [-id] <String> [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
+Remove-RubrikSLA [-id] <String> [[-name] <String>] [[-Server] <String>] [[-api] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -47,6 +47,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -name
+Should not be specified, used for better error handling and WhatIf/Confirm messages
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Server
 Rubrik server IP or FQDN
 
@@ -56,7 +71,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 3
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -71,7 +86,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

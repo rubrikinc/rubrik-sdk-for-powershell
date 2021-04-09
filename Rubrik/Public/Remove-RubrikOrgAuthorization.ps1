@@ -21,10 +21,12 @@ function Remove-RubrikOrgAuthorization
 
       .EXAMPLE
       Remove-RubrikOrgAuthorization -ID 'Organization:::01234567-8910-1abc-d435-0abc1234d567' -UseSLA '12345678-1234-abcd-8910-1234567890ab' 
+
       Removes authorization from the Organization with ID Organization:::01234567-8910-1abc-d435-0abc1234d567 to use the SLA Domain with ID 12345678-1234-abcd-8910-1234567890ab
 
       .EXAMPLE
-      Remove-RubrikOrgAuthorization -ID 'Organization:::01234567-8910-1abc-d435-0abc1234d567' -ManageResource 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345' 
+      Remove-RubrikOrgAuthorization -ID 'Organization:::01234567-8910-1abc-d435-0abc1234d567' -ManageResource 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
+
       Remove authorization from the Organization with ID Organization:::01234567-8910-1abc-d435-0abc1234d567 to manage the VM with ID VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345
 
       .EXAMPLE
@@ -75,50 +77,53 @@ function Remove-RubrikOrgAuthorization
   }
 
   Process {
-    #region One-off
-    # If User ID was not specified, get the current user ID
-    if([string]::IsNullOrEmpty($id)) { 
-        $id = (Get-RubrikUser -id me).id
-        Write-Verbose "Using User ID $($id) as principal. This will infer the Organization ID automatically."
-    } elseif ([string]::IsNullOrEmpty($PSBoundParameters.OrgID)) {
-    # Unless specified and not using an inferred Org ID, API expects principal (ID) and Org ID to be the same
-      $OrgID = $id
-    }
-
-    # Throw error on Global Org
-    if((Get-RubrikOrganization -id $id).isGlobal) { Throw "Operation not supported on Global Organization" }
-
-    # Throw error if UseSLA, ManageResource and ManageSLA are all empty
-    if([string]::IsNullOrEmpty($UseSLA) -and [string]::IsNullOrEmpty($ManageResource) -and [string]::IsNullOrEmpty($ManageSLA)) {
-        throw "At least one of the parameters -UseSLA, -ManageResource, or -ManageSLA must be supplied"
-    }
-
-    # Build REST Body
-    if($UseSLA.Length -gt 0) { $resources.Body.privileges.useSla.AddRange($UseSLA) }
-    if($ManageResource.Length -gt 0) { 
-      # Added changed body for 5.1, as ManageResource seems to be no longer used
-      if ([float]$rubrikConnection.version.substring(0,3) -gt [float]'5.0') {
-        $resources.Body.privileges.manageRestoreSource.AddRange($ManageResource)
-      } else {
-        $resources.Body.privileges.ManageResource.AddRange($ManageResource)
+    if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
+      Write-Warning 'This cmdlet is no longer functional in Rubrik CDM 5.2'
+    } else {
+      #region One-off
+      # If User ID was not specified, get the current user ID
+      if([string]::IsNullOrEmpty($id)) { 
+          $id = (Get-RubrikUser -id me).id
+          Write-Verbose "Using User ID $($id) as principal. This will infer the Organization ID automatically."
+      } elseif ([string]::IsNullOrEmpty($PSBoundParameters.OrgID)) {
+      # Unless specified and not using an inferred Org ID, API expects principal (ID) and Org ID to be the same
+        $OrgID = $id
       }
+
+      # Throw error on Global Org
+      if((Get-RubrikOrganization -id $id).isGlobal) { Throw "Operation not supported on Global Organization" }
+
+      # Throw error if UseSLA, ManageResource and ManageSLA are all empty
+      if([string]::IsNullOrEmpty($UseSLA) -and [string]::IsNullOrEmpty($ManageResource) -and [string]::IsNullOrEmpty($ManageSLA)) {
+          throw "At least one of the parameters -UseSLA, -ManageResource, or -ManageSLA must be supplied"
+      }
+
+      # Build REST Body
+      if($UseSLA.Length -gt 0) { $resources.Body.privileges.useSla.AddRange($UseSLA) }
+      if($ManageResource.Length -gt 0) { 
+        # Added changed body for 5.1, as ManageResource seems to be no longer used
+        if ([float]$rubrikConnection.version.substring(0,3) -gt [float]'5.0') {
+          $resources.Body.privileges.manageRestoreSource.AddRange($ManageResource)
+        } else {
+          $resources.Body.privileges.ManageResource.AddRange($ManageResource)
+        }
+      }
+      if($ManageSLA.Length -gt 0) { $resources.Body.privileges.ManageSLA.AddRange($ManageSLA) }
+      $resources.Body.principals.Add($id) | Out-Null
+      $resources.Body.organizationId = $OrgID
+      $body = ConvertTo-Json -InputObject $resources.Body
+      Write-Verbose -Message "Body = $body"    
+      #endregion
+      
+      $uri = New-URIString -server $Server -endpoint ($resources.URI)
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      #$body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      $result = Test-FilterObject -filter ($resources.Filter) -result $result
+      $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
+
+      return $result
     }
-    if($ManageSLA.Length -gt 0) { $resources.Body.privileges.ManageSLA.AddRange($ManageSLA) }
-    $resources.Body.principals.Add($id) | Out-Null
-    $resources.Body.organizationId = $OrgID
-    $body = ConvertTo-Json -InputObject $resources.Body
-    Write-Verbose -Message "Body = $body"    
-    #endregion
-    
-    $uri = New-URIString -server $Server -endpoint ($resources.URI)
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    #$body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-    $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-    $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    $result = Set-ObjectTypeName -TypeName $resources.ObjectTName -result $result
-
-    return $result
-
   } # End of process
 } # End of function

@@ -50,6 +50,54 @@
         <View>
             <Name>Default</Name>
             <ViewSelectedBy>
+                <TypeName>Rubrik.EventSeries.5.2</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Time</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Status</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Task Type</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Location</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Number of Events</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>endTime</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>status</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>taskType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>location</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <ScriptBlock>
+                                    @($_.eventDetailList).count
+                                </ScriptBlock>    
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
                 <TypeName>Rubrik.EventSeries</TypeName>
             </ViewSelectedBy>
             <TableControl>

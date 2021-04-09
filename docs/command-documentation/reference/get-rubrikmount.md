@@ -13,7 +13,8 @@ Connects to Rubrik and retrieves details on mounts for a VM
 ## SYNTAX
 
 ```
-Get-RubrikMount [[-id] <String>] [[-VMID] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikMount [[-id] <String>] [[-VMID] <String>] [-DetailedObject] [[-Server] <String>] [[-api] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,19 +34,26 @@ This will return details on all mounted virtual machines.
 
 ### EXAMPLE 2
 ```
+Get-RubrikMount -DetailedObject
+```
+
+This will retrieve all mounted virtual machines with additional details
+
+### EXAMPLE 3
+```
 Get-RubrikMount -id '11111111-2222-3333-4444-555555555555'
 ```
 
 This will return details on mount id "11111111-2222-3333-4444-555555555555".
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```
 Get-RubrikMount -VMID (Get-RubrikVM -VM 'Server1').id
 ```
 
 This will return details for any mounts found using the id value from a virtual machine named "Server1" as a base reference.
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```
 Get-RubrikMount -VMID 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
 ```
@@ -80,6 +88,22 @@ Aliases: vm_id
 Required: False
 Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed VM Mount object, the default behavior of the API is to only retrieve a subset of the full VM Mount object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

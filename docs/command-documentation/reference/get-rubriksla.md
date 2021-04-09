@@ -14,13 +14,13 @@ Connects to Rubrik and retrieves details on SLA Domain(s)
 
 ### Query (Default)
 ```
-Get-RubrikSLA [[-Name] <String>] [-PrimaryClusterID <String>] [-Server <String>] [-api <String>]
- [<CommonParameters>]
+Get-RubrikSLA [[-Name] <String>] [-PrimaryClusterID <String>] [-DetailedObject] [-Server <String>]
+ [-api <String>] [<CommonParameters>]
 ```
 
 ### ID
 ```
-Get-RubrikSLA [-PrimaryClusterID <String>] [-id] <String> [-Server <String>] [-api <String>]
+Get-RubrikSLA [-PrimaryClusterID <String>] [-id] <String> [-DetailedObject] [-Server <String>] [-api <String>]
  [<CommonParameters>]
 ```
 
@@ -43,6 +43,13 @@ Get-RubrikSLA -Name 'Gold'
 ```
 
 Will return details on the SLA Domain named Gold
+
+### EXAMPLE 3
+```
+Get-RubrikSLA -Name 'Gold' -DetailedObject
+```
+
+Will return information the SLA Domain named Gold, including full details on this SLA
 
 ## PARAMETERS
 
@@ -89,6 +96,22 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -DetailedObject
+DetailedObject will retrieved the detailed SLA object, the default behavior of the API is to only retrieve a subset of the full SLA object unless we query directly by ID.
+Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

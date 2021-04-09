@@ -14,7 +14,7 @@ Create a new live mount of a protected volume group
 
 ```
 New-RubrikVolumeGroupMount -TargetHost <String> -VolumeGroupSnapshot <Object> [-ExcludeDrives <Array>]
- [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-ExcludeMountPoints <Array>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,6 +27,22 @@ The Snapshot object contains the snapID and all drives that are included in the 
 ```
 New-RubrikVolumeGroupMount -TargetHost 'Restore-Server1' -VolumeGroupSnapshot $snap -ExcludeDrives -$DrivestoExclude
 ```
+
+This will create a new VolumeGroup Mount on Restore-Server1 with the values specified in $snap & $DrivestoExclude
+
+### EXAMPLE 2
+```
+$snapshot = Get-RubrikVolumeGroup "MyVolumeGroup" | Get-RubrikSnapshot -Latest
+```
+
+New-RubrikVolumeGroupMount -TargetHost "MyTargetHostName" -VolumeGroupSnapshot $snapshot -ExcludeDrives @("D","E")
+This will create a new VolumeGroup Mount on MyTargetHostName with the latest snapshot retrieved in the first line, while exlcluding drives D & E
+
+New-RubrikVolumeGroupMount -TargetHost "MyTargetHostName" -VolumeGroupSnapshot $snapshot -ExcludeMountPoint @("C:\MFAPDB05Log\")
+This will create a new VolumeGroup Mount on MyTargetHostName with the latest snapshot retrieved in the first line, while exlcluding the volume mounted on C:\MFAPDB05Log\
+
+New-RubrikVolumeGroupMount -TargetHost "MyTargetHostName" -VolumeGroupSnapshot $snapshot -ExcludeMountPoint @("Log")
+To exclude all MountPoints with a certain string
 
 ## PARAMETERS
 
@@ -62,6 +78,21 @@ Accept wildcard characters: False
 
 ### -ExcludeDrives
 Rubrik server IP or FQDN
+
+```yaml
+Type: Array
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludeMountPoints
+{{ Fill ExcludeMountPoints Description }}
 
 ```yaml
 Type: Array

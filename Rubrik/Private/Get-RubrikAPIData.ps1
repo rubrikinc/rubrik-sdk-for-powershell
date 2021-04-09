@@ -236,6 +236,28 @@ function Get-RubrikAPIData {
                 ObjectTName = 'Rubrik.AvailabilityGroup'
             }
         }
+        'Get-RubrikBlackout'           = @{
+            '1.0' = @{
+                Description = 'Whether global blackout window is active.'
+                URI         = '/api/internal/blackout_window'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.1' = @{
+                Description = 'Whether global blackout window is active.'
+                URI         = '/api/v1/blackout_window'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikClusterInfo'         = @{
             '4.2' = @{
                 Description = 'Retrieves advanced settings of the Rubrik cluster'
@@ -501,6 +523,31 @@ function Get-RubrikAPIData {
                 Success     = '200'
                 ObjectTName = 'Rubrik.Event'
             }
+            '5.2' = @{
+                Description = 'Retrieve information for the latest of related events that match the value specified in any of the following categories: type, status, or ID, and limit events by date.'
+                URI         = '/api/v1/event/latest'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    limit = 'limit'
+                    after_id = 'after_id'
+                    event_series_id = 'event_series_id'
+                    event_status = 'event_status'
+                    event_series_status = 'event_series_status'
+                    event_type = 'event_type'
+                    object_ids = 'object_ids'
+                    object_name = 'object_name'
+                    before_date = 'before_date'
+                    after_date = 'after_date'
+                    object_type = 'object_type'
+                    order_by_time = 'order_by_time'
+                    should_include_event_series = 'should_include_event_series'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.Event.5.2'
+            }
         }
         'Get-RubrikEventSeries' = @{
             '5.0' = @{
@@ -508,17 +555,22 @@ function Get-RubrikAPIData {
                 URI         = '/api/internal/event_series'
                 Method      = 'Get'
                 Body        = ''
-                Query       = @{
-                    status = 'status'
-                    event_type = 'event_type'
-                    object_ids = 'object_ids'
-                    object_name = 'object_name'
-                    object_type = 'object_type'
-                }
+                Query       = ''
                 Result      = 'data'
                 Filter      = ''
                 Success     = '200'
                 ObjectTName = 'Rubrik.EventSeries'
+            }
+            '5.2' = @{
+                Description = 'Retrieve information for event series within Rubrik.'
+                URI         = '/api/v1/event_series/{id}'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.EventSeries.5.2'
             }
         }
         'Get-RubrikFileset'            = @{
@@ -716,6 +768,21 @@ function Get-RubrikAPIData {
                 Success     = '200'
                 ObjectTName = 'Rubrik.User'
             }
+            '5.3' = @{
+                Description = 'Retrieves settings related to a given user within the Rubrik cluster'
+                URI         = '/api/v1/principal'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    name = 'name'
+                    auth_domain_id = 'auth_domain_id'
+                    principal_type = 'principal_type'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.User'
+            }
         }
         'Get-RubrikUserRole'         = @{
             '1.0' = @{
@@ -786,6 +853,7 @@ function Get-RubrikAPIData {
                     vmId = 'vmId'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.VMwareVmMount'
             }
         }
         'Get-RubrikNASShare'              = @{
@@ -1252,6 +1320,29 @@ function Get-RubrikAPIData {
                 }
                 Success     = '200'
             }
+            '5.3' = @{
+                Description = 'Retrieve information for all snapshots'
+                URI         = @{
+                    Fileset = '/api/v1/fileset/{id}/snapshot'
+                    MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
+                    VMware  = '/api/v1/vmware/vm/{id}/snapshot'
+                    HyperV  = '/api/internal/hyperv/vm/{id}/snapshot'
+                    ManagedVolume = '/api/internal/managed_volume/{id}/snapshot'
+                    Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
+                    VolumeGroup = '/api/v1/volume_group/{id}/snapshot'
+                    Oracle = '/api/internal/oracle/db/{id}/snapshot'
+                    VcdVapp = '/api/internal/vcd/vapp/{id}/snapshot'
+                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = @{
+                    'CloudState'       = 'cloudState'
+                    'OnDemandSnapshot' = 'isOnDemandSnapshot'
+                }
+                Success     = '200'
+            }
         }
         'Get-RubrikSNMPSetting'           = @{
             '1.0' = @{
@@ -1610,11 +1701,60 @@ function Get-RubrikAPIData {
                 Success     = '200'
                 ObjectTName = 'Rubrik.VolumeGroup'
             }
+            '5.3' = @{
+                Description = 'Get summary of all Volume Groups'
+                URI         = '/api/v1/volume_group'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    name                    = 'name'
+                    hostname                = 'hostname'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                    'hostname' = 'HostName'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.VolumeGroup'
+            }
+        }
+        'Get-RubrikVgfAutoUpgrade' = @{
+            '5.3' = @{
+                Description = 'Retrieve the global Volume Group settings for backup format migration.'
+                URI         = '/api/internal/config/usersettable_volumeGroup'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Get-RubrikVolumeGroupMount'                 = @{
             '1.0' = @{
                 Description = 'Retrieve information for all Volume mounts'
                 URI         = '/api/internal/volume_group/snapshot/mount'
+                Method      = 'Get'
+                Body        = ''
+                Query           = @{
+                    id          = 'source_volume_group_id'
+                    source_host = 'source_host_name'
+                    offset      = 'offset'
+                    limit       = 'limit'
+                }
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.3' = @{
+                Description = 'Retrieve information for all Volume mounts'
+                URI         = '/api/v1/volume_group/snapshot/mount'
                 Method      = 'Get'
                 Body        = ''
                 Query           = @{
@@ -1650,6 +1790,20 @@ function Get-RubrikAPIData {
                 Body        = ''
                 Query       = ''
                 Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Invoke-RubrikVgfUpgrade'             = @{
+            '5.3' = @{
+                Description = 'Update the forceFull property of a Volume Group.'
+                URI         = '/api/v1/volume_group/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    forceFull = 'forceFull'
+                }
+                Query       = ''
+                Result      = ''
                 Filter      = ''
                 Success     = '200'
             }
@@ -2195,6 +2349,20 @@ function Get-RubrikAPIData {
                 Success     = '200'
                 ObjectTName = 'Rubrik.VMwareVM'
             }
+            '5.2' = @{
+                Description = 'Update a VM with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Protect-RubrikVolumeGroup'             = @{
             '1.0' = @{
@@ -2562,6 +2730,22 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '204'
             }
+            '5.2' = @{
+                Description = 'Bulk delete all unmanaged snapshots for the objects specified by objectId/objectType pairings.'
+                URI         = '/api/v1/data_source/snapshot/bulk_delete'
+                Method      = 'Post'
+                Body        = @{
+                    objectDefinitions = @(
+                        @{
+                            objectId   = 'objectId'
+                        }
+                    )
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '204'
+            }
         }
         'Remove-RubrikVCenter'         = @{
             '1.0' = @{
@@ -2665,6 +2849,18 @@ function Get-RubrikAPIData {
             '1.0' = @{
                 Description = 'Whether to start or stop the global blackout window.'
                 URI         = '/api/internal/blackout_window'
+                Method      = 'Patch'
+                Body        = @{
+                    isGlobalBlackoutActive = 'isGlobalBlackoutActive'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.1' = @{
+                Description = 'Whether to start or stop the global blackout window.'
+                URI         = '/api/v1/blackout_window'
                 Method      = 'Patch'
                 Body        = @{
                     isGlobalBlackoutActive = 'isGlobalBlackoutActive'
@@ -3190,6 +3386,21 @@ function Get-RubrikAPIData {
                 Success     = '200'
             }
         }
+        'Set-RubrikVgfAutoUpgrade' = @{
+            '5.3' = @{
+                Description = 'Update the global Volume Group settings for backup format migration.'
+                URI         = '/api/internal/config/usersettable_volumeGroup'
+                Method      = 'Patch'
+                Body        = @{
+                    migrateFastVirtualDiskBuild = 'migrateFastVirtualDiskBuild'
+                    maxFullMigrationStoragePercentage = 'maxFullMigrationStoragePercentage'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Start-RubrikManagedVolumeSnapshot' = @{
             '1.0' = @{
                 Description = 'Open a Rubrik Managed Volume for read/write'
@@ -3320,6 +3531,23 @@ function Get-RubrikAPIData {
                 Result      = ''
                 Filter      = ''
                 Success     = '202'
+            }
+        }
+        'Test-RubrikSnapshotVerification' = @{
+            '5.3' = @{
+                Description = 'Verifies the validity of a snapshot'
+                URI         = '/api/v1/backup/verify'
+                Method      = 'Post'
+                Body        = @{
+                    "objectId" = ''
+                    "snapshotIdsOpt" = [System.Collections.ArrayList]@()
+                    "locationIdOpt" = "locationIdOpt"
+                    "shouldVerifyAfterOpt" = 'shouldVerifyAfterOpt'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
             }
         }
         'Update-RubrikVCenter'         = @{
