@@ -1,11 +1,11 @@
 function Test-RubrikSnapshotVerification
 {
-  <#  
+  <#
     .SYNOPSIS
     Tests a snapshot or multiple snapshots for consistency
 
     .DESCRIPTION
-    The Test-RubrikSnapshotVerification cmdlet can be used to validate the 
+    The Test-RubrikSnapshotVerification cmdlet can be used to validate the fingerprint of a snapshot(s) for consistency and reliablity.
 
     .NOTES
     Written by Jaap Brasser for community usage
@@ -66,26 +66,26 @@ function Test-RubrikSnapshotVerification
     [String]$api = $global:RubrikConnection.api
   )
 
-  
+
 
   Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
-    
+
     # Check to ensure that a session to the Rubrik cluster exists and load the needed header data for authentication
     Test-RubrikConnection
-    
+
     # API data references the name of the function
     # For convenience, that name is saved here to $function
     $function = $MyInvocation.MyCommand.Name
-        
+
     # Retrieve all of the URI, method, body, query, result, filter, and success details for the API endpoint
     Write-Verbose -Message "Gather API Data for $function"
     $resources = Get-RubrikAPIData -endpoint $function
     Write-Verbose -Message "Load API data for $($resources.Function)"
     Write-Verbose -Message "Description: $($resources.Description)"
-    
+
   }
 
   Process {
