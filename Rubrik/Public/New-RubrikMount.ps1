@@ -83,6 +83,10 @@ function New-RubrikMount
     if(-not $PSBoundParameters.ContainsKey('DisableNetwork')) { $Resources.Body.Remove('disableNetwork') }
     if(-not $PSBoundParameters.ContainsKey('RemoveNetworkDevices')) { $Resources.Body.Remove('removeNetworkDevices') }
     if(-not $PSBoundParameters.ContainsKey('PowerOn')) { $Resources.Body.Remove('powerOn') }
+
+    if ($id -match ':') {
+      Write-Warning -Message ('"{0}" specified as ID, the ID should be a snapshot ID not an object ID' -f $Id)
+    }
     
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri

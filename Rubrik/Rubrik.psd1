@@ -130,6 +130,7 @@
                    'Get-RubrikDatabaseMount',
                    'Get-RubrikDatabaseRecoverableRange',
                    'Get-RubrikDatabaseRecoveryPoint',
+                   'Get-RubrikDebugInfo',
                    'Get-RubrikDNSSetting',
                    'Get-RubrikDownloadLink',
                    'Get-RubrikEmailSetting',
@@ -305,6 +306,7 @@
                    'Stop-RubrikManagedVolumeSnapshot',
                    'Sync-RubrikAnnotation',
                    'Sync-RubrikTag',
+                   'Test-RubrikSnapshotVerification',
                    'Update-RubrikHost',
                    'Update-RubrikNutanixCluster',
                    'Update-RubrikVCD',
@@ -353,7 +355,7 @@
             # ReleaseNotes = ''
 
             # Prerelease string of this module
-            Prerelease = 'RC1'
+            # Prerelease = 'RC1'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update
             # RequireLicenseAcceptance = $false

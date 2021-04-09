@@ -18,7 +18,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-* Change the Quick Start Guide to links are pointing to working VMware pages [Issue 726](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/726)
+### Added
+
+### Fixed
+
+## [5.3.0]() - 2021-04-08
+
+### Changed
+
+* Changed the Quick Start Guide to links are pointing to working VMware pages [Issue 726](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/726)
 * Changed, parameter sets, `SLA_Name/SLA_ByID/SLA_Unprotected/SLA_Forever`, added to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
 * Added support for `WhatIf` & `Confirm` to the `Invoke-RubrikRESTCall` cmdlet fixing [Issue 713](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/713)
 * Created 3 new parameter sets to `Invoke-RubrikRESTCall` : `BodyAsArray`, `BodyAsJson`, `General` fixing [Issue 711](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/711)
@@ -29,6 +37,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added new cmdlet: `Get-RubrikDebugInfo`, that gathers essential information for troubleshooting [Issue 742](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/742)
+* Added new cmdlet: `Test-RubrikSnapshotVerification`, that can test if a snapshot, or series of snapshots are recoverable [Issue 733](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/733)
+* Added example in documentation for: `Invoke-RubrikGraphQLCall` [Issue 736](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/736)
+* Added better warning message for `New-RubrikMount`, now displays warning when an object ID is specified instead of snapshot ID, [Issue 732](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/732)
 * Added 5.3 endpoint for `Get-RubrikVolumeGroupMount`, resolving issue [Issue 729](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/729)
 * Added support to `Get-RubrikUser` to work around all of the API endpoint changes in CDM 5.3 as per [Issue 723](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/723)
 * Added new parameter, `SLAPrimaryClusterId`, to `Protect-RubrikFileset` & `New-RubrikSnapshot`, fixing [Issue 720](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/720)
@@ -44,6 +56,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* Fixed bug in `Protect-RubrikTag` which could accidentally apply results to all VMs, [Issue 722](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/722)
 * Fixed bug in `New-RubrikSLA` which could prevent correct SLA creation [Issue 706](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/706)
 * Fixed bug in `Get-RubrikEvent` which caused `-Status` not to filter properly [Issue 705](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/705)
 * Fixed documentation for `Invoke-RubrikGraphQLCall` multiline example changed to single line [Issue 685](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/685)

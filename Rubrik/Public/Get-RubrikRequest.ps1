@@ -55,7 +55,8 @@ function Get-RubrikRequest {
       'fileset', 'mssql', 'vmware/vm', 'hyperv/vm', 'hyperv/scvmm',
       'managed_volume', 'volume_group', 'nutanix/vm', 'aws/ec2_instance',
       'oracle','vcd/vapp', 'vcd/cluster', 'vmware/vcenter', 'cloud_on/azure',
-      'report', 'nutanix/cluster', 'vmware/compute_cluster', 'sla_domain'
+      'report', 'nutanix/cluster', 'vmware/compute_cluster', 'sla_domain',
+      'backup/verify'
     )]
     [String]$Type,    
     # Request
@@ -111,6 +112,8 @@ function Get-RubrikRequest {
       $uri = $uri -replace 'v1', 'internal'
     } elseif ($v2types -contains $Type) {
       $uri = $uri -replace 'v1', 'v2'
+    } elseif ($Type -eq 'backup/verify') {
+      $uri = $uri -replace 'request/'
     }
 
     #endregion
@@ -121,8 +124,13 @@ function Get-RubrikRequest {
     if ($Request) {
       Write-Verbose "Using uri supplied by pipeline: $($Request.links.href)"
       $uri = $Request.links.href
+      
+      # Fix for 5.3
+      if ($uri -match 'backup_verification') {
+        $uri = $uri -replace 'backup_verification/request', 'backup/verify'
+      }
     }
-
+    
     #We added new code that will now wait for the Rubrik Async Request to complete. Once completion has happened, we return back the request object. 
     #region WaitForCompletion
     if ($WaitForCompletion) {
@@ -138,7 +146,9 @@ function Get-RubrikRequest {
         else {
           Write-Progress -Activity "$($result.id)" -status "Job Queued" -percentComplete (0)
         }
-        Start-Sleep -Seconds 5
+        if ($result.status -notin $ExitList) {
+          Start-Sleep -Seconds 5
+        }
       } while ($result.status -notin $ExitList) 	
     }
     #endregion

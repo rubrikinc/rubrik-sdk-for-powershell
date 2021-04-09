@@ -89,7 +89,7 @@ function Protect-RubrikTag
     Write-Verbose -Message "Gathering a list of VMs associated with Category $Category and Tag $Tag"
     try
     {
-      $vmlist = Get-VM -Tag (Get-Tag -Name $Tag -Category $Category) | Get-View
+      $vmlist = Get-VM -Tag (Get-Tag -Name $Tag -Category $Category -ErrorAction Stop) | Get-View
       # This will pull out the vCenter UUID assigned to the parent vCenter Server by Rubrik
       # Reset switches to prevent Get-RubrikVM from picking them up (must be a better way?)
       $DoNotProtect = $false
