@@ -26,7 +26,7 @@
     CompanyName = 'Rubrik'
 
     # Copyright statement for this module
-    Copyright = '(c) 2015-2020 Rubrik, Inc. All rights reserved.'
+    Copyright = '(c) 2015-2021 Rubrik, Inc. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description = "This is a community project that provides a PowerShell module for managing and monitoring Rubrik's Cloud Data Management platform."
