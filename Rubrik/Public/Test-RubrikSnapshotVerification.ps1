@@ -5,7 +5,7 @@ function Test-RubrikSnapshotVerification
     Tests a snapshot or multiple snapshots for consistency
 
     .DESCRIPTION
-    The Test-RubrikSnapshotVerification cmdlet can be used to validate the fingerprint of a snapshot(s) for consistency and reliablity.
+    The Test-RubrikSnapshotVerification cmdlet can be used to validate the fingerprint of a snapshot(s) for consistency and reliablity, returning a csv containing the results
 
     .NOTES
     Written by Jaap Brasser for community usage
