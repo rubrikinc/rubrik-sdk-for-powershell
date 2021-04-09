@@ -12,16 +12,22 @@ Connects to Rubrik and assigns an SLA to a fileset
 
 ## SYNTAX
 
-### SLA_Explicit
+### SLA_Name
 ```
-Protect-RubrikFileset -id <String> [-SLA <String>] [-SLAID <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Protect-RubrikFileset -id <String> -SLA <String> [-SLAPrimaryClusterId <String>] [-Server <String>]
+ [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### SLA_Unprotected
 ```
-Protect-RubrikFileset -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Protect-RubrikFileset -id <String> [-DoNotProtect] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
+```
+
+### SLA_ByID
+```
+Protect-RubrikFileset -id <String> -SLAID <String> [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,6 +53,13 @@ Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Go
 
 This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" without asking for confirmation
 
+### EXAMPLE 3
+```
+Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Gold' -SLAPrimaryClusterId 57bbd327-477d-40d8-b1d8-5820b37d88e5
+```
+
+This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" on the cluster id specified in SLAPrimaryClusterId
+
 ## PARAMETERS
 
 ### -id
@@ -69,12 +82,27 @@ The SLA Domain in Rubrik
 
 ```yaml
 Type: String
-Parameter Sets: SLA_Explicit
+Parameter Sets: SLA_Name
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SLAPrimaryClusterId
+The PrimaryClusterId of SLA Domain on Rubrik, defaults to local
+
+```yaml
+Type: String
+Parameter Sets: SLA_Name
 Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: Local
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -87,7 +115,7 @@ Type: SwitchParameter
 Parameter Sets: SLA_Unprotected
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -99,10 +127,10 @@ SLA id value
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: SLA_ByID
 Aliases: configuredSlaDomainId
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

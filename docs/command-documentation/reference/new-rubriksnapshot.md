@@ -12,16 +12,22 @@ Takes an on-demand Rubrik snapshot of a protected object
 
 ## SYNTAX
 
-### SLA_Explicit
+### SLA_Name
 ```
-New-RubrikSnapshot -id <String> [-SLA <String>] [-ForceFull] [-SLAID <String>] [-Server <String>]
+New-RubrikSnapshot -id <String> -SLA <String> [-SLAPrimaryClusterId <String>] [-ForceFull] [-Server <String>]
  [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### SLA_Forever
 ```
-New-RubrikSnapshot -id <String> [-Forever] [-ForceFull] [-SLAID <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+New-RubrikSnapshot -id <String> [-Forever] [-ForceFull] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
+```
+
+### SLA_ByID
+```
+New-RubrikSnapshot -id <String> [-ForceFull] -SLAID <String> [-Server <String>] [-api <String>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -64,6 +70,13 @@ New-RubrikSnapShot -Id MssqlDatabase:::ee7aead5-6a51-4f0e-9479-1ed1f9e31614 -SLA
 
 This will trigger an on-demand backup by ID, in this example it is the ID of a MSSQL Database
 
+### EXAMPLE 6
+```
+New-RubrikSnapShot -Id MssqlDatabase:::ee7aead5-6a51-4f0e-9479-1ed1f9e31614 -SLA Gold -SLAPrimaryClusterId 57bbd327-477d-40d8-b1d8-5820b37d88e5
+```
+
+This will trigger an on-demand backup by ID, in this example it is the ID of a MSSQL Database, creating a snapshot in the Gold SLA on the cluster id specified in SLAPrimaryClusterId
+
 ## PARAMETERS
 
 ### -id
@@ -86,12 +99,27 @@ The SLA Domain in Rubrik
 
 ```yaml
 Type: String
-Parameter Sets: SLA_Explicit
+Parameter Sets: SLA_Name
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SLAPrimaryClusterId
+The PrimaryClusterId of SLA Domain on Rubrik, defaults to local
+
+```yaml
+Type: String
+Parameter Sets: SLA_Name
 Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: Local
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -104,7 +132,7 @@ Type: SwitchParameter
 Parameter Sets: SLA_Forever
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -132,13 +160,13 @@ SLA id value
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
+Parameter Sets: SLA_ByID
+Aliases: effectiveSlaDomainId
 
-Required: False
+Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

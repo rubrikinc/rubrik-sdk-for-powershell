@@ -14,10 +14,10 @@ Retrieve information for events that match the value specified in any of the fol
 
 ### eventByID
 ```
-Get-RubrikEvent [-Limit <Int32>] [-AfterId <String>] [-Status <String>] [-EventType <String>]
- [-ExcludeEventType <String[]>] [-id <Array>] [-ObjectName <String>] [-BeforeDate <DateTime>]
- [-AfterDate <DateTime>] [-ObjectType <String>] [-ExcludeObjectType <String[]>] [-ShowOnlyLatest]
- [-FilterOnlyOnLatest] [-IncludeEventSeries] [-Server <String>] [-api <String>] [<CommonParameters>]
+Get-RubrikEvent [-Limit <Int32>] [-AfterId <String>] [-Status <String>] [-EventSeriesStatus <String>]
+ [-EventType <String>] [-ExcludeEventType <String[]>] [-id <String[]>] [-ObjectName <String>]
+ [-BeforeDate <DateTime>] [-AfterDate <DateTime>] [-ObjectType <String>] [-ExcludeObjectType <String[]>]
+ [-Descending] [-IncludeEventSeries] [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ### EventSeries
@@ -99,6 +99,34 @@ Get-RubrikEvent -Limit 25 -EventType Archive -ExcludeObjectType AggregateAhvVm,M
 This will retrieve all Archive events while excluding events of the AggregateAhvVm & Mssql object types while displaying verbose messages.
 This will potentially display less than 25 objects, as filtering happens after receiving the objects from the endpoint
 
+### EXAMPLE 10
+```
+Get-RubrikDatabase | ForEach-Object {Get-RubrikEvent -Limit 1 -Verbose -id $_.ID}
+```
+
+This will retrieve the last event for each of the SQL databases protected by Rubrik identifying the database by its object_id while displaying Verbose information
+
+### EXAMPLE 11
+```
+Get-RubrikEvent -Limit 1 -Descending:$false
+```
+
+Will retrieve the oldest event on the Rubrik Cluster
+
+### EXAMPLE 12
+```
+Get-RubrikEvent -Limit 1 -Descending:$false -EventType Backup
+```
+
+Will retrieve the oldest backup event on the Rubrik Cluster
+
+### EXAMPLE 13
+```
+Get-RubrikEvent -Status Failure -EventSeriesStatus Success
+```
+
+Will retrieve the first 50 Events which have event_status failed and event_series_status Success
+
 ## PARAMETERS
 
 ### -Limit
@@ -147,13 +175,29 @@ Accept wildcard characters: False
 ```
 
 ### -Status
-Filter by Status.
-Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Cancelingâ€™.
+Filter by Event status.
+Enter any of the following values: 'Failure', 'Warning', 'Running', 'Success', 'Canceled', 'Canceling'.
 
 ```yaml
 Type: String
 Parameter Sets: eventByID
-Aliases:
+Aliases: event_status
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EventSeriesStatus
+Filter by Status.
+Enter any of the following values: 'Success', 'Failure', 'Scheduled', 'Active', 'Canceling', 'Canceled', 'SuccessWithWarnings'.
+
+```yaml
+Type: String
+Parameter Sets: eventByID
+Aliases: event_series_status
 
 Required: False
 Position: Named
@@ -197,7 +241,7 @@ Accept wildcard characters: False
 Filter by a comma separated list of object IDs.
 
 ```yaml
-Type: Array
+Type: String[]
 Parameter Sets: eventByID
 Aliases: object_ids
 
@@ -286,36 +330,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ShowOnlyLatest
-A switch value that determines whether to show only on the most recent event in the series.
-When 'true' only the most recent event in the series are shown.
-When 'false' all events in the series are shown.
-The default value is 'true'.
-Note: Deprecated in 5.2
+### -Descending
+A Switch value that determines whether to display the results in descending or ascending order.
+Setting this to Descending:$false will return the oldest results instead of the most recent
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: eventByID
-Aliases: show_only_latest
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -FilterOnlyOnLatest
-A Switch value that determines whether to filter only on the most recent event in the series.
-When 'true' only the most recent event in the series are filtered.
-When 'false' all events in the series are filtered.
-The default value is 'true'.
-Note: Deprecated in 5.2
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: eventByID
-Aliases: filter_only_on_latest
+Aliases: order_by_time
 
 Required: False
 Position: Named

@@ -56,8 +56,8 @@ function Get-RubrikDebugInfo
     $HashProps.RubrikInstalledModule = ((Get-Module -Name Rubrik -ListAvailable) | ForEach-Object {if ($_.PrivateData.PSData.Prerelease -ne $null) {'{0}-{1}' -f $_.Version,$_.PrivateData.PSData.Prerelease} else {$_.version}}) -join ', '
 
     # Add configured module options and default parameters
-    $HashProps.RubrikModuleOptions = Get-RubrikModuleOption
-    $HashProps.RubrikModuleDefaultParameters = Get-RubrikModuleDefaultParameter
+    $HashProps.RubrikModuleOptions = (($Opt = Get-RubrikModuleOption).psobject.properties.name.foreach{"$_ = $($Opt.$_)"}) -join '; '
+    $HashProps.RubrikModuleDefaultParameters = (($Par = Get-RubrikModuleDefaultParameter).psobject.properties.name.foreach{"$_ = $($Par.$_)"}) -join '; '
 
     # Output as object
     return [pscustomobject]$HashProps
