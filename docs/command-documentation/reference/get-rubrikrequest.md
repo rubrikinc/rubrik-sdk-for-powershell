@@ -12,8 +12,15 @@ Connects to Rubrik and retrieves details on an async request
 
 ## SYNTAX
 
+### Entry
 ```
-Get-RubrikRequest [-id] <String> [-Type] <String> [-WaitForCompletion] [[-Server] <String>] [[-api] <String>]
+Get-RubrikRequest -id <String> -Type <String> [-WaitForCompletion] [-Server <String>] [-api <String>]
+ [<CommonParameters>]
+```
+
+### Pipeline
+```
+Get-RubrikRequest -Request <PSObject> [-WaitForCompletion] [-Server <String>] [-api <String>]
  [<CommonParameters>]
 ```
 
@@ -37,6 +44,20 @@ Get-RubrikRequest -id 'MOUNT_SNAPSHOT_123456789:::0' -Type 'vmware/vm'
 
 Will wait for the specified async request to report a 'SUCCESS' or 'FAILED' status before returning details
 
+### EXAMPLE 3
+```
+Get-RubrikVM jbrasser-lin | Get-RubrikSnapshot -Latest | New-RubrikMount -MountName 'SuperCoolVM' | Get-RubrikRequest -WaitForCompletion -Verbose
+```
+
+Will take the latest Snapshot of jbrasser-lin and create a live mount of this Virtual Machine, Get-RubrikRequest will poll the cluster until the VM is available while displaying Verbose information.
+
+### EXAMPLE 4
+```
+Update-RubrikVCenter vCenter:::111 | Get-RubrikRequest -WaitForCompletion
+```
+
+Updates Rubrik vCenter and waits for completion of the request
+
 ## PARAMETERS
 
 ### -id
@@ -44,11 +65,11 @@ ID of an asynchronous request
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Entry
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -59,13 +80,28 @@ The type of request
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Entry
 Aliases:
 
 Required: True
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Request
+Request
+
+```yaml
+Type: PSObject
+Parameter Sets: Pipeline
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -93,7 +129,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -108,7 +144,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

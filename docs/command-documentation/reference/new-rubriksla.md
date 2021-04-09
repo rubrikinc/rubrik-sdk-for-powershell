@@ -24,7 +24,7 @@ New-RubrikSLA [-Name] <String> [[-HourlyFrequency] <Int32>] [[-HourlyRetention] 
  [[-BackupWindowDuration] <Int32>] [[-FirstFullBackupStartHour] <Int32>]
  [[-FirstFullBackupStartMinute] <Int32>] [[-FirstFullBackupDay] <String>]
  [[-FirstFullBackupWindowDuration] <Int32>] [-Archival] [[-LocalRetention] <Int32>]
- [[-ArchivalLocationId] <String>] [[-PolarisID] <String>] [-InstantArchive] [-Replication]
+ [[-ArchivalLocationId] <String>] [[-PolarisID] <String>] [-InstantArchive] [-RetentionLock] [-Replication]
  [[-ReplicationTargetId] <String>] [[-RemoteRetention] <Int32>] [[-Frequencies] <Object[]>]
  [[-AdvancedFreq] <Object[]>] [[-BackupWindows] <Object[]>] [[-FirstFullBackupWindows] <Object[]>]
  [[-ArchivalSpecs] <Object[]>] [[-ReplicationSpecs] <Object[]>] [[-Server] <String>] [[-api] <String>]
@@ -54,6 +54,14 @@ while also keeping one backup per day for 30 days.
 
 ### EXAMPLE 3
 ```
+New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -RetentionLock
+```
+
+This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days
+while also keeping one backup per day for 30 days and sets the SLA to Retention Locked.
+
+### EXAMPLE 4
+```
 New-RubrikSLA -Name 'Test1' -AdvancedConfig -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -WeeklyFrequency 1 -WeeklyRetention 4 -DayOfWeek Friday -YearlyFrequency 1 -YearlyRetention 3 -DayOfYear LastDay -YearStartMonth February
 ```
 
@@ -63,7 +71,7 @@ The weekly backups will be created on Fridays and the yearly backups will be cre
 to start in February.
 The advanced SLA configuration can only be used with CDM version 5.0 and above.
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```
 New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -BackupStartHour 22 -BackupStartMinute 00 -BackupWindowDuration 8
 ```
@@ -71,7 +79,7 @@ New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequenc
 This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days.
 Backups are allowed to run between 22:00 and 6:00AM.
 
-### EXAMPLE 5
+### EXAMPLE 6
 ```
 New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -FirstFullBackupStartHour 21 -FirstFullBackupStartMinute 30 -FirstFullBackupWindowDuration 57 -FirstFullBackupDay Friday
 ```
@@ -79,7 +87,7 @@ New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequenc
 This will create an SLA Domain named "Test1" that will take a backup every 4 hours and keep those hourly backups for 7 days.
 The first full backup is allowed to be taken between Friday 21:30 and Monday 6:30AM.
 
-### EXAMPLE 6
+### EXAMPLE 7
 ```
 New-RubrikSLA -Name 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Archival -ArchivalLocationId 53aef5df-b628-4b61-aade-6520a2a5ba4d -LocalRetention 14 -InstantArchive
 ```
@@ -89,7 +97,7 @@ while also keeping one backup per day for 30 days.
 At the same time, data is immediately copied to the specified archival location
 and will be kept there for 14 days.
 
-### EXAMPLE 7
+### EXAMPLE 8
 ```
 New-RubrikSLA -SLA 'Test1' -HourlyFrequency 4 -HourlyRetention 7 -DailyFrequency 1 -DailyRetention 30 -Replication -ReplicationTargetId 8b4fe6f6-cc87-4354-a125-b65e23cf8c90 -RemoteRetention 5
 ```
@@ -99,7 +107,7 @@ while also keeping one backup per day for 30 days.
 At the same time, data is replicated to the specified target cluster
 and will be kept there for 5 days.
 
-### EXAMPLE 8
+### EXAMPLE 9
 ```
 Get-RubrikSLA -Name 'SLA1' | New-RubrikSLA -Name 'CopySLA1'
 ```
@@ -664,6 +672,21 @@ Whether to enable Instant Archive
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RetentionLock
+Whether a retention lock is active on this SLA, Does not apply to CDM versions prior to 5.2
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: isRetentionLocked
 
 Required: False
 Position: Named

@@ -12,8 +12,27 @@ Sets SQL Instance properties
 
 ## SYNTAX
 
+### NoSLA_Changes (Default)
 ```
-Set-RubrikSQLInstance [-id] <String> [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
+Set-RubrikSQLInstance [[-id] <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
+ [-CopyOnly] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### SLA_Inherit
+```
+Set-RubrikSQLInstance [[-id] <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
+ [-CopyOnly] [-Inherit] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### SLA_Unprotected
+```
+Set-RubrikSQLInstance [[-id] <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
+ [-CopyOnly] [-DoNotProtect] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### SLA_Explicit
+```
+Set-RubrikSQLInstance [[-id] <String>] [-LogBackupFrequencyInSeconds <Int32>] [-LogRetentionHours <Int32>]
  [-CopyOnly] [-SLAID <String>] [-SLA <String>] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -28,6 +47,13 @@ The Set-RubrikSQLInstance cmdlet is used to update certain settings for a Rubrik
 Set-RubrikSQLInstance
 ```
 
+### EXAMPLE 2
+```
+Get-RubrikSQLInstance -Hostname RFITZHUGH-SQL | Set-RubrikSQLInstance -Inherit -Verbose -CopyOnly
+```
+
+Will update the SLA policy for the RFITZHUGH SQL host to inherit and setting copyOnly to true while displaying verbose information in the console
+
 ## PARAMETERS
 
 ### -id
@@ -38,10 +64,10 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -97,12 +123,12 @@ SLA Domain ID for the database
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: SLA_Explicit
 Aliases: ConfiguredSlaDomainId
 
 Required: False
 Position: Named
-Default value: None
+Default value: (Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -Mandatory:$false)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -112,12 +138,42 @@ The SLA Domain name in Rubrik
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: SLA_Explicit
 Aliases:
 
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DoNotProtect
+Removes the SLA Domain assignment
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: SLA_Unprotected
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Inherit
+Inherits the SLA Domain assignment from a parent object
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: SLA_Inherit
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

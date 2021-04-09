@@ -12,9 +12,28 @@ Provides generic interface to make Rubrik REST API calls
 
 ## SYNTAX
 
+### General (Default)
 ```
-Invoke-RubrikRESTCall [-Endpoint] <String> [-Method] <String> [[-Query] <PSObject>] [[-Body] <PSObject>]
- [-BodyAsArray] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Invoke-RubrikRESTCall -Endpoint <String> -Method <String> [-Query <PSObject>] [-Body <PSObject>]
+ [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### QueryByUri
+```
+Invoke-RubrikRESTCall [-Endpoint <String>] [-Method <String>] -uri <String> [-Body <PSObject>]
+ [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### BodyAsJson
+```
+Invoke-RubrikRESTCall -Endpoint <String> -Method <String> [-Body <PSObject>] [-BodyAsJson] [-Server <String>]
+ [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### BodyAsArray
+```
+Invoke-RubrikRESTCall -Endpoint <String> -Method <String> [-Body <PSObject>] [-BodyAsArray] [-Server <String>]
+ [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,8 +43,8 @@ will need to manage the format of both the endpoint call(including resource ids)
 option to make cmdlet independent API calls for automating Rubrik actions through PowerShell.
 The Rubrik API
 reference is found on the Rubrik device at:
-  \<Rubrik IP\>/docs/v1
-  \<Rubrik IP\>/docs/v1/playground
+\<Rubrik IP\>/docs/v1
+\<Rubrik IP\>/docs/v1/playground
 
 ## EXAMPLES
 
@@ -64,12 +83,27 @@ Since fileset_template/bulk expects an array, we force the single item array wit
 
 ### EXAMPLE 5
 ```
+Invoke-RubrikRESTCall -Endpoint 'fileset_template/bulk' -Method POST -Body '{"isPassthrough":true,"shareId":"HostShare:::11111","templateId":"FilesetTemplate:::22222"}' -BodyAsJson
+```
+
+Creates a new fileset from the given fileset template and the given host id supporting Direct Archive. 
+Since fileset_template/bulk expects an array, we force the single item array with the BodyAsArray parameter.
+
+### EXAMPLE 6
+```
 Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post
 ```
 
 Refreshes the information of the Nutanix cluster
 
-### EXAMPLE 6
+### EXAMPLE 7
+```
+Invoke-RubrikRESTCall -api internal -Endpoint nutanix/cluster/NutanixCluster:::d34d42c0-5468-4c37-a3cf-4376baf018e4/refresh -Method post -Verbose -WhatIf
+```
+
+Displays Verbose information while not executing the query
+
+### EXAMPLE 8
 ```
 $currentreport = Get-RubrikReport -name BoringReportName -DetailedObject
 ```
@@ -80,6 +114,22 @@ Invoke-RubrikRESTCall -Endpoint "report/$($currentreport.id)" -api internal -Met
 
 Using this example it is possible to rename an existing report to the report name listed in the second row of this example
 
+### EXAMPLE 9
+```
+Invoke-RubrikRESTCall -uri https://rubrikcluster/api/v1/vmware/vm/snapshot/efb7ab36-0c2e-49b5-973f-7920b179cd79
+```
+
+Gather all information directly from the endpoint without having to specify any header details or authentication.
+Get is implicitly assumed unless explicitly specified.
+
+### EXAMPLE 10
+```
+Invoke-RubrikRESTCall -uri https://cluster-c.rubrik.us/api/v1/vmware/vm/request/MOUNT_SNAPSHOT_38ced575-3114-433b-b22a-41bb0a9a98e4_4c89ab80-f74e-460e-b119-8eaef6b735b9:::0 -Verbose
+```
+
+Gather all information directly from the endpoint to gather request data without having to specify any header details or authentication.
+Get is implicitly assumed unless explicitly specified.
+
 ## PARAMETERS
 
 ### -Endpoint
@@ -87,11 +137,23 @@ Rubrik API endpoint, DO NOT USE LEADING '/'
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: General, BodyAsJson, BodyAsArray
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: QueryByUri
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -99,14 +161,42 @@ Accept wildcard characters: False
 
 ### -Method
 REST API method
+Rubrik API endpoint, DO NOT USE LEADING '/'
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: General, BodyAsJson, BodyAsArray
 Aliases:
 
 Required: True
-Position: 2
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: QueryByUri
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -uri
+uri to query with Get request
+
+```yaml
+Type: String
+Parameter Sets: QueryByUri
+Aliases:
+
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -117,11 +207,11 @@ Hash table body to pass to API call
 
 ```yaml
 Type: PSObject
-Parameter Sets: (All)
+Parameter Sets: General
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -136,7 +226,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -147,10 +237,25 @@ Force the body as an array (For endpoints requiring single item arrays)
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: BodyAsArray
 Aliases:
 
-Required: False
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BodyAsJson
+Allows to input the body as a JSON instead of a hashtable
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: BodyAsJson
+Aliases:
+
+Required: True
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -166,7 +271,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -181,8 +286,39 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: $global:RubrikConnection.api
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

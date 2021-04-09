@@ -12,8 +12,14 @@ Retrieves details on one or more virtual machines known to the Rubrik cluster as
 
 ## SYNTAX
 
+### vAppID
 ```
-Get-RubrikVAppSnapshot [[-id] <String>] [[-Server] <String>] [[-api] <String>] [<CommonParameters>]
+Get-RubrikVAppSnapshot -id <String> [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
+### vAppName
+```
+Get-RubrikVAppSnapshot -Name <String> [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,17 +37,32 @@ This returns details on the specific snapshot.
 ## PARAMETERS
 
 ### -id
-ID of the snapshot
+ID of the vApp
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: vAppID
 Aliases:
 
-Required: False
-Position: 1
+Required: True
+Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the vApp
+
+```yaml
+Type: String
+Parameter Sets: vAppName
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -54,7 +75,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: $global:RubrikConnection.server
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -69,7 +90,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: $global:RubrikConnection.api
 Accept pipeline input: False
 Accept wildcard characters: False

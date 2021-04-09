@@ -14,13 +14,14 @@ Gets settings of a Rubrik user
 
 ### Query (Default)
 ```
-Get-RubrikUser [[-Username] <String>] [-AuthDomainId <String>] [-DetailedObject] [-Server <String>]
- [-api <String>] [<CommonParameters>]
+Get-RubrikUser [[-Username] <String>] [-AuthDomainId <String>] [-PrincipalType <String>] [-DetailedObject]
+ [-Server <String>] [-api <String>] [<CommonParameters>]
 ```
 
 ### ID
 ```
-Get-RubrikUser [-Id] <String> [-DetailedObject] [-Server <String>] [-api <String>] [<CommonParameters>]
+Get-RubrikUser [-PrincipalType <String>] [-Id] <String> [-DetailedObject] [-Server <String>] [-api <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -78,7 +79,7 @@ Username to filter on
 ```yaml
 Type: String
 Parameter Sets: Query
-Aliases:
+Aliases: name
 
 Required: False
 Position: 1
@@ -98,6 +99,21 @@ Aliases: auth_domain_id
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PrincipalType
+PrincipalType - For 5.3 and above
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: principal_type
+
+Required: False
+Position: Named
+Default value: User
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
