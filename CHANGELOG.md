@@ -14,15 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-## Unreleased
-
-### Changed
-
-### Added
-
-### Fixed
-
-## [5.3.0]() - 2021-04-08
+## [5.3.0]() - 2021-04-09
 
 ### Changed
 
