@@ -122,9 +122,29 @@ function Get-RubrikSnapshot
 
   Process {
     if ($SnapshotId -and $SnapshotType) {
-      $uri = New-URIString -Server $server -Endpoint "/$SnapshotType" -id $SnapshotId
-    } elseif ($SnapshotId) {
+      $uri = New-URIString -Server $server -Endpoint "/api/v1/$SnapshotType/snapshot" -id $SnapshotId
 
+      $internaltypes = @(
+        'hyperv/vm', 'managed_volume', 'nutanix/vm', 'volume_group', 'oracle/db', 'vcd/vapp'
+      )
+      if ($internaltypes -contains $Type) {
+        $uri = $uri -replace 'v1', 'internal'
+      }
+
+      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+      return $result
+    } elseif ($SnapshotId) {
+      'fileset', 'mssql/db', 'vmware/vm',
+      'hyperv/vm', 'managed_volume', 'nutanix/vm',
+      'volume_group', 'oracle/db', 'vcd/vapp' | ForEach-Object {
+        $uri = New-URIString -Server $server -Endpoint "/api/v1/$_/snapshot" -id $SnapshotId
+        try {
+          $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+        } catch { }
+        if ($result) {
+          return $result
+        }
+      }
     } else {
 
       $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
