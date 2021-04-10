@@ -1,7 +1,7 @@
 #Requires -Version 3
 function Get-RubrikSnapshot
 {
-  <#  
+  <#
       .SYNOPSIS
       Retrieves all of the snapshots (backups) for any given object
       
@@ -72,7 +72,18 @@ function Get-RubrikSnapshot
     [Int]$Range = 1,
     # Return no results if a matching date isn't found. Otherwise, all snapshots are returned if no match is made.
     [Parameter(ParameterSetName='Date')]
-    [Switch]$ExactMatch,    
+    [Switch]$ExactMatch,
+    # 
+    [Parameter(
+      ParameterSetName='SnapshotID',
+      Mandatory=$true
+    )]
+    [string[]]$SnapshotId,
+    # 
+    [Parameter(
+      ParameterSetName='SnapshotID'
+    )]
+    [string]$SnapshotType,
     # Return the latest snapshot
     [Parameter(Mandatory = $true,ParameterSetName='Latest')]
     [Switch]$Latest,
