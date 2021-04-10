@@ -73,15 +73,20 @@ function Get-RubrikSnapshot
     # Return no results if a matching date isn't found. Otherwise, all snapshots are returned if no match is made.
     [Parameter(ParameterSetName='Date')]
     [Switch]$ExactMatch,
-    # 
+    # Query by the snapshot id directly, in case a snapshot id is known and the snapshot's information needs to be retrieved
     [Parameter(
       ParameterSetName='SnapshotID',
       Mandatory=$true
     )]
-    [string[]]$SnapshotId,
-    # 
+    [string]$SnapshotId,
+    # Specifies the snapshot type to query for the supplied 
     [Parameter(
       ParameterSetName='SnapshotID'
+    )]
+    [ValidateSet(
+      'fileset', 'mssql/db', 'vmware/vm',
+      'hyperv/vm', 'managed_volume', 'nutanix/vm',
+      'volume_group', 'oracle/db', 'vcd/vapp'
     )]
     [string]$SnapshotType,
     # Return the latest snapshot
@@ -93,6 +98,7 @@ function Get-RubrikSnapshot
     [ValidateNotNullorEmpty()]
     [String]$api = $global:RubrikConnection.api
   )
+
 
   Begin {
 
@@ -115,41 +121,48 @@ function Get-RubrikSnapshot
   }
 
   Process {
+    if ($SnapshotId -and $SnapshotType) {
+      $uri = New-URIString -Server $server -Endpoint "/$SnapshotType" -id $SnapshotId
+    } elseif ($SnapshotId) {
 
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    
-    # Exclusion for FileSet because limited API endpoint functionality, using expanded properties to gather snapshot details
-    if ($uri -match 'v1/fileset') {
-      $result = (Get-RubrikFileset -Id $Id).snapshots
     } else {
-      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
-      $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-      $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
-    }    
-    
-    $result = Test-FilterObject -filter ($resources.Filter) -result $result
-    
-    #region One-off
-    if ($Date) {
-      $datesearch = Test-DateDifference -Date $($result.date) -Compare $Date -Range $Range
-      # If $datesearch is $null, a matching date was not found. If $ExactMatch is specified in this case, return $null
-      if($null -eq $datesearch -and $ExactMatch) {
-        $result = $null
-      } else {
-        $result = Test-ReturnFilter -Object $datesearch -Location 'date' -result $result
-      }
-    } elseif ($Latest) {
-      $datesearch = Test-DateDifference -Date $($result.date) -Compare (Get-Date).ToUniversalTime() -Range 999999999
-      # If $datesearch is $null, a matching date was not found, so return $null
-      if($null -eq $datesearch) {
-        $result = $null
-      } else {
-        $result = Test-ReturnFilter -Object $datesearch -Location 'date' -result $result
-      }
-    } 
-    #endregion
 
-    return $result
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      
+      # Exclusion for FileSet because limited API endpoint functionality, using expanded properties to gather snapshot details
+      if ($uri -match 'v1/fileset') {
+        $result = (Get-RubrikFileset -Id $Id).snapshots
+      } else {
+        $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+        $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
+        $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
+      }    
+      
+      $result = Test-FilterObject -filter ($resources.Filter) -result $result
+      
+      #region One-off
+      if ($Date) {
+        $datesearch = Test-DateDifference -Date $($result.date) -Compare $Date -Range $Range
+        # If $datesearch is $null, a matching date was not found. If $ExactMatch is specified in this case, return $null
+        if($null -eq $datesearch -and $ExactMatch) {
+          $result = $null
+        } else {
+          $result = Test-ReturnFilter -Object $datesearch -Location 'date' -result $result
+        }
+      } elseif ($Latest) {
+        $datesearch = Test-DateDifference -Date $($result.date) -Compare (Get-Date).ToUniversalTime() -Range 999999999
+        # If $datesearch is $null, a matching date was not found, so return $null
+        if($null -eq $datesearch) {
+          $result = $null
+        } else {
+          $result = Test-ReturnFilter -Object $datesearch -Location 'date' -result $result
+        }
+      } 
+      #endregion
+
+      return $result
+
+    }
 
   } # End of process
 } # End of function
