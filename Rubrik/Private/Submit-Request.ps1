@@ -76,11 +76,19 @@ function Submit-Request {
             switch -Wildcard ($_) {
                 'Route not defined.' {
                     Write-Warning -Message "The endpoint supplied to Rubrik is invalid. Likely this is due to an incompatible version of the API or references pointing to a non-existent endpoint. The URI passed was: $uri" -Verbose
-                    throw $_.Exception 
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_.Exception
+                    } else {
+                        throw $_.Exception
+                    } 
                 }
                 'Invalid ManagedId*' {
                     Write-Warning -Message "The endpoint supplied to Rubrik is invalid. Likely this is due to an incompatible version of the API or references pointing to a non-existent endpoint. The URI passed was: $uri" -Verbose
-                    throw $_.Exception 
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_.Exception
+                    } else {
+                        throw $_.Exception
+                    } 
                 }
                 '{"errorType":*' {
                     # Parses the Rubrik generated JSON warning into something a bit more human readable
@@ -89,17 +97,29 @@ function Submit-Request {
                     if ($rubrikWarning.errorType) {Write-Warning -Message $rubrikWarning.errorType}
                     if ($rubrikWarning.message) {Write-Warning -Message $rubrikWarning.message}
                     if ($rubrikWarning.cause) {Write-Warning -Message $rubrikWarning.cause}
-                    throw $_.Exception
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_.Exception
+                    } else {
+                        throw $_.Exception
+                    }
                 }
                 '{"message":*' {
                     [Array]$rubrikWarning = ConvertFrom-Json $_.ErrorDetails.Message
                     if ($rubrikWarning.errorType) {Write-Warning -Message $rubrikWarning.errorType}
                     if ($rubrikWarning.message) {Write-Warning -Message $rubrikWarning.message}
                     if ($rubrikWarning.cause) {Write-Warning -Message $rubrikWarning.cause}
-                    throw $_.Exception
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_.Exception
+                    } else {
+                        throw $_.Exception
+                    }
                 }
                 default {
-                    throw $_
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_
+                    } else {
+                        throw $_
+                    }
                 }
             }
         }
