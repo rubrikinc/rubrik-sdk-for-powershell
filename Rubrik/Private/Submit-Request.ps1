@@ -14,7 +14,7 @@ function Submit-Request {
         # The endpoint's URI
         [string] $uri,
         # The header containing authentication details
-        [string] $header,
+        $header,
         # The action (method) to perform on the endpoint
         [string] $method = $($resources.Method),
         # Any optional body data being submitted to the endpoint
