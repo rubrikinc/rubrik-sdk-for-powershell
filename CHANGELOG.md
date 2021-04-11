@@ -14,7 +14,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-## [5.3.0]() - 2021-04-09
+## Unreleased
+
+### Changed
+
+* Added new parameter set & two parameters to `Get-RubrikSnapshot`, `-SnapshotId` & `-SnapshotType` to allow for querying by snapshotid [Issue 743](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/743)
+
+### Added
+
+### Fixed
+
+## [5.3.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/releases/tag/5.3) - 2021-04-09
 
 ### Changed
 
