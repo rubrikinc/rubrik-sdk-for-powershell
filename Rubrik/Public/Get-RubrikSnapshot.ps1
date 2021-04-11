@@ -167,6 +167,7 @@ function Get-RubrikSnapshot
           }
         } else {
           # Do nothing, once a result is found finish loop without further querying
+        }
       }
     } else {
 
