@@ -2,53 +2,66 @@
 function Get-RubrikSnapshot
 {
   <#
-      .SYNOPSIS
-      Retrieves all of the snapshots (backups) for any given object
-      
-      .DESCRIPTION
-      The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for any protected object
-      The correct API call will be made based on the object id submitted
-      Multiple objects can be piped into this function so long as they contain the id required for lookup
-      
-      .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
-      
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriksnapshot
-      
-      .EXAMPLE
-      Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
-      This will return all snapshot (backup) data for the virtual machine id of "VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345"
+    .SYNOPSIS
+    Retrieves all of the snapshots (backups) for any given object
+    
+    .DESCRIPTION
+    The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for any protected object
+    The correct API call will be made based on the object id submitted
+    Multiple objects can be piped into this function so long as they contain the id required for lookup
+    
+    .NOTES
+    Written by Chris Wahl for community usage
+    Twitter: @ChrisWahl
+    GitHub: chriswahl
+    
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriksnapshot
+    
+    .EXAMPLE
+    Get-RubrikSnapshot -id 'VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345'
 
-      .EXAMPLE
-      Get-RubrikSnapshot -id 'Fileset:::01234567-8910-1abc-d435-0abc1234d567'
-      This will return all snapshot (backup) data for the fileset with id of "Fileset:::01234567-8910-1abc-d435-0abc1234d567"
+    This will return all snapshot (backup) data for the virtual machine id of "VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345"
 
-      .EXAMPLE
-      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
-      This will return the closest matching snapshot, within 1 day, to March 21st, 2017 for any virtual machine named "Server1"
+    .EXAMPLE
+    Get-RubrikSnapshot -id 'Fileset:::01234567-8910-1abc-d435-0abc1234d567'
 
-      .EXAMPLE
-      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3
-      This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1"
+    This will return all snapshot (backup) data for the fileset with id of "Fileset:::01234567-8910-1abc-d435-0abc1234d567"
 
-      .EXAMPLE
-      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3 -ExactMatch
-      This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1". -ExactMatch specifies that no results are returned if a match is not found, otherwise all snapshots are returned.
+    .EXAMPLE
+    Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/21/2017'
 
-      .EXAMPLE
-      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date (Get-Date)
-      This will return the closest matching snapshot to the current date and time for any virtual machine named "Server1"
+    This will return the closest matching snapshot, within 1 day, to March 21st, 2017 for any virtual machine named "Server1"
 
-      .EXAMPLE
-      Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Latest
-      This will return the latest snapshot for the virtual machine named "Server1"
+    .EXAMPLE
+    Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3
 
-      .EXAMPLE
-      Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
-      This will return the details on any on-demand (user initiated) snapshot to for any database named "DB1"
+    This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1"
+
+    .EXAMPLE
+    Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date '03/21/2017' -Range 3 -ExactMatch
+
+    This will return the closest matching snapshot, within 3 days, to March 21st, 2017 for any virtual machine named "Server1". -ExactMatch specifies that no results are returned if a match is not found, otherwise all snapshots are returned.
+
+    .EXAMPLE
+    Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Date (Get-Date)
+    
+    This will return the closest matching snapshot to the current date and time for any virtual machine named "Server1"
+
+    .EXAMPLE
+    Get-RubrikVM 'Server1' | Get-RubrikSnapshot -Latest
+
+    This will return the latest snapshot for the virtual machine named "Server1"
+
+    .EXAMPLE
+    Get-RubrikSnapshot -SnapshotId 64914f54-fe71-40b2-84ae-933f1a55e1b9 -Verbose
+
+    Will query for specific SnapshotId querying common snapshot endpoints until a result is returned
+
+    .EXAMPLE
+    Get-RubrikSnapshot -SnapshotId 64914f54-fe71-40b2-84ae-933f1a55e1b9 -SnapshotType vmware/vm
+
+    Will query for specific SnapshotId for the vmware/vm/snapshot/{id} endpoint
   #>
 
   [CmdletBinding()]
@@ -134,16 +147,26 @@ function Get-RubrikSnapshot
       $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
       return $result
     } elseif ($SnapshotId) {
+      $Internaltypes = 'hyperv/vm', 'managed_volume', 'nutanix/vm', 'volume_group', 'oracle/db', 'vcd/vapp'
+
+      # Mainloop
       'fileset', 'mssql/db', 'vmware/vm',
       'hyperv/vm', 'managed_volume', 'nutanix/vm',
       'volume_group', 'oracle/db', 'vcd/vapp' | ForEach-Object {
-        $uri = New-URIString -Server $server -Endpoint "/api/v1/$_/snapshot" -id $SnapshotId
-        try {
-          $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
-        } catch { }
-        if ($result) {
-          return $result
-        }
+        if (-not $result) {
+          if ($_ -in $internaltypes) {
+            $uri = New-URIString -Server $server -Endpoint "/api/internal/$_/snapshot" -id $SnapshotId
+          } else {
+            $uri = New-URIString -Server $server -Endpoint "/api/v1/$_/snapshot" -id $SnapshotId
+          }
+          
+          # Submit request & return result if available
+          $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body -DoNotThrow -ErrorAction SilentlyContinue
+          if ($Result) {
+            return $result
+          }
+        } else {
+          # Do nothing, once a result is found finish loop without further querying
       }
     } else {
 
