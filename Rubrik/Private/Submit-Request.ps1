@@ -12,13 +12,13 @@ function Submit-Request {
     [cmdletbinding(supportsshouldprocess=$true)]
     param(
         # The endpoint's URI
-        [string] $uri,
+        $uri,
         # The header containing authentication details
         $header,
         # The action (method) to perform on the endpoint
-        [string] $method = $($resources.Method),
+        $method = $($resources.Method),
         # Any optional body data being submitted to the endpoint
-        [string] $body,
+        $body,
         # Do not throw on an error, Write-Error instead
         [switch] $DoNotThrow
     )
