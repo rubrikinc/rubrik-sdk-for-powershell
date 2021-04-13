@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 * Added new parameter set & two parameters to `Get-RubrikSnapshot`, `-SnapshotId` & `-SnapshotType` to allow for querying by snapshotid [Issue 743](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/743)
+* Updated parameter help for `-Archival` parameter in `New-RubrikSla` cmdlet
 
 ### Added
 
