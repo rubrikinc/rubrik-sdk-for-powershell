@@ -42,7 +42,7 @@ function Submit-Request {
                 # Delete operations (and some post) generally have no response body, skip JSON formatting and store the response from Invoke-WebRequest
                 if (Test-PowerShellSix) {
                     # Uses the improved ConvertFrom-Json cmdlet as provided in PowerShell 6.1
-                    $result = if ($null -ne ($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
+                    $WebResult = if ($null -ne ($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
                         ConvertFrom-Json -InputObject $WebResult
                     }
                 } else {
