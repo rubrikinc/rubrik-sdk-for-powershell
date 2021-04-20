@@ -42,8 +42,8 @@ function Submit-Request {
                 # Delete operations (and some post) generally have no response body, skip JSON formatting and store the response from Invoke-WebRequest
                 if (Test-PowerShellSix) {
                     # Uses the improved ConvertFrom-Json cmdlet as provided in PowerShell 6.1
-                    $WebResult = if ($null -ne ($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
-                        ConvertFrom-Json -InputObject $WebResult
+                    $result = if ($null -ne ($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
+                        ConvertFrom-Json -InputObject $WebResult.Content
                     }
                 } else {
                     # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
