@@ -19,7 +19,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
     }
     #endregion
 
-    $EventObject = [pscustomobject]@{
+    $EventObject = [PSCustomObject]@{
         id            = '2019-07-02:21:4:::1562103677178-d71cf9d8-c460-4411-8e34-c24a5d197824'
         objectId      = 'MssqlDatabase:::427e4ac6-7add-4240-9cde-e102b82a04b1'
         objectType    = 'Mssql'
@@ -31,7 +31,7 @@ Describe -Name 'Private/Submit-Request' -Tag 'Private', 'Submit-Request' -Fixtur
         eventSeriesId = 'ec203598-ea31-4929-ad76-c98744c3d489'
         relatedIds    = 'MssqlDatabase:::427e4ac6-7add-4240-9cde-e102b82a04b1'
         jobInstanceId = 'PULL_REPLICATE_f6fe4db5-7f1a-4d51-a16c-0eef911dc033:::346'
-    }, [pscustomobject]@{
+    }, [PSCustomObject]@{
         id            = '2019-07-02:21:4:::1562103732903-ca725080-210a-4577-b703-74c6ec6b9588'
         objectId      = 'CloudNativeSource:::02ff9580-adf2-464e-aeef-b77321b402fc'
         objectType    = 'AwsAccount'
