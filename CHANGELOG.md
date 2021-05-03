@@ -14,6 +14,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## Unreleased
+
+### Changed
+
+### Added
+
+### Fixed
+
+* Fixed bug in `Submit-Request` which causes several issues [Issue 751](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/751) & [Issue 752](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/752)
+
 ## [5.3.0]() - 2021-04-09
 
 ### Changed
