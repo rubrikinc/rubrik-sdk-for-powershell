@@ -48,7 +48,7 @@ function New-RubrikHyperVVMMount
     [Switch]$DisableNetwork,
     # Whether the network devices should be removed on mount.
     [Switch]$RemoveNetworkDevices,
-    # Whether the VM should be powered on after mount.
+    # Whether the VM should be powered on after mount. Without this parameter the VM defaults to be powered on. To ensure it isn't, specify -PoweredOn:$false
     [Switch]$PowerOn,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
