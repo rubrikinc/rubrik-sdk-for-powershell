@@ -52,7 +52,7 @@ function Get-RubrikDebugInfo
     }
 
     # Add module information
-    $HashProps.RubrikCurrentModuleVersion = (Get-Module -Name Rubrik) | ForEach-Object {'{0}-{1}' -f $_.Version,$_.PrivateData.PSData.Prerelease}
+    $HashProps.RubrikCurrentModuleVersion = (Get-Module -Name Rubrik) | ForEach-Object {if ($_.PrivateData.PSData.Prerelease -ne $null) {'{0}-{1}' -f $_.Version,$_.PrivateData.PSData.Prerelease} else {$_.version}}
     $HashProps.RubrikInstalledModule = ((Get-Module -Name Rubrik -ListAvailable) | ForEach-Object {if ($_.PrivateData.PSData.Prerelease -ne $null) {'{0}-{1}' -f $_.Version,$_.PrivateData.PSData.Prerelease} else {$_.version}}) -join ', '
 
     # Add configured module options and default parameters
