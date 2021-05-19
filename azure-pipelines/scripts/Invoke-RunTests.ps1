@@ -10,7 +10,7 @@ $PesterSplat = @{
 
 if (6 -le $PSVersionTable.PSVersion.Major) {
     Write-Output 'Executing PowerShell Core tests'
-    $PesterSplat.Script = "$env:LocalPath\Tests\Get-RubrikAPIData.Tests.ps1"
+ #   $PesterSplat.Script = "$env:LocalPath\Tests\Get-RubrikAPIData.Tests.ps1"
     $TestResult = Invoke-Pester @PesterSplat
 } else {
     Write-Output 'Executing Windows PowerShell tests'
