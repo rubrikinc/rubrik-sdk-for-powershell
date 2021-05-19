@@ -11,7 +11,7 @@
     RootModule = 'Rubrik.psm1'
 
     # Version number of this module.
-    ModuleVersion = '5.3.1'
+    ModuleVersion = '5.3.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -141,6 +141,10 @@
                    'Get-RubrikGuestOSCredential',
                    'Get-RubrikHost',
                    'Get-RubrikHostVolume',
+                   'Get-RubrikHvmFormatAutoUpgrade',
+                   'Get-RubrikHvmFormatClusterStorage',
+                   'Get-RubrikHvmFormatReport',
+                   'Get-RubrikHvmFormatUpgradeReport',
                    'Get-RubrikHyperVHost',
                    'Get-RubrikHyperVMount',
                    'Get-RubrikHyperVVM',
@@ -210,6 +214,7 @@
                    'Get-RubrikVolumeGroupMount',
                    'Invoke-RubrikRESTCall',
                    'Invoke-RubrikGraphQLCall',
+                   'Invoke-RubrikHvmFormatUpgrade',
                    'Invoke-RubrikVgfUpgrade',
                    'Move-RubrikMountVMDK',
                    'New-RubrikAPIToken',
@@ -279,6 +284,7 @@
                    'Set-RubrikAvailabilityGroup',
                    'Set-RubrikBlackout',
                    'Set-RubrikDatabase',
+                   'Set-RubrikHvmFormatAutoUpgrade',
                    'Set-RubrikHyperVVM',
                    'Set-RubrikLogShipping',
                    'Set-RubrikManagedVolume',
@@ -355,7 +361,7 @@
             # ReleaseNotes = ''
 
             # Prerelease string of this module
-            Prerelease = 'RC2'
+            # Prerelease = 'RC1'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update
             # RequireLicenseAcceptance = $false

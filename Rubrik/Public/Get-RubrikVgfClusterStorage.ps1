@@ -49,6 +49,7 @@ function Get-RubrikVgfClusterStorage
 
       This will return projected space consumption of migrating all old-format volume groups that needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format, and cluster free space before and after migration.
 
+      # UsedFastVhdx not a param
       .EXAMPLE
       Get-RubrikVgfClusterStorage -UsedFastVhdx false
 
@@ -136,7 +137,9 @@ function Get-RubrikVgfClusterStorage
 
     #get Volume Groups
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+    $params = (Get-Command $function).Parameters.Values
+    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters $params -uri $uri
+    Write-Output $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
@@ -198,7 +201,7 @@ function Get-RubrikVgfClusterStorage
 
     #get cluster storage
     $key = "StorageOverview"
-    $uri1 = New-URIString -server $Server -endpoint $Resources1.URI[$key] -id $id
+    $uri1 = New-URIString -server $Server -endpoint $Resources1.URI[$key]
     $result1 = Submit-Request -uri $uri1 -header $Header -method $($resources1.Method) -body $body
 
     $projectedSize.ClusterTotalUsableSpace = $result1.total

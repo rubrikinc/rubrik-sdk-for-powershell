@@ -711,6 +711,18 @@ function Get-RubrikAPIData {
                 ObjectTName = 'Rubrik.HyperVVM'
             }
         }
+        'Get-RubrikHvmFormatAutoUpgrade' = @{
+            '6.0' = @{
+                Description = 'Retrieve the global HyperV settings for backup format migration.'
+                URI         = '/api/internal/config/usersettable_hyperv'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikIPMI'              = @{
             '1.0' = @{
                 Description = 'Retrieve the configured IPMI settings within the Rubrik Cluster'
@@ -1801,6 +1813,20 @@ function Get-RubrikAPIData {
                 Method      = 'Patch'
                 Body        = @{
                     forceFull = 'forceFull'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Invoke-RubrikHvmFormatUpgrade'             = @{
+            '6.0' = @{
+                Description = 'Update the forceFullSpec of a HyperV Virtual Machine.'
+                URI         = '/api/v1/hyperv/vm/{id}/request/force_full_snapshot'
+                Method      = 'Post'
+                Body        = @{
+                    virtualDiskInfos = 'virtualDiskInfos'
                 }
                 Query       = ''
                 Result      = ''
@@ -2908,6 +2934,21 @@ function Get-RubrikAPIData {
                     cloudInstantiationSpec = @{
                         imageRetentionInSeconds = 'imageRetentionInSeconds'
                     }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikHvmFormatAutoUpgrade' = @{
+            '6.0' = @{
+                Description = 'Update the global HyperV settings for backup format migration.'
+                URI         = '/api/internal/config/usersettable_hyperv'
+                Method      = 'Patch'
+                Body        = @{
+                      migrateFastVirtualDiskBuild = 'migrateFastVirtualDiskBuild'
+                      maxFullMigrationStoragePercentage = 'maxFullMigrationStoragePercentage'
                 }
                 Query       = ''
                 Result      = ''
