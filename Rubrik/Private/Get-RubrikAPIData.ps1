@@ -3715,7 +3715,7 @@ function Get-RubrikAPIData {
 
     if ($null -eq $key) {
         $ErrorSplat = @{
-            Message = "No matching endpoint found for $EndPoint that corrosponds to the current cluster version."
+            Message = "No matching endpoint found for $EndPoint that corresponds to the current cluster version."
             ErrorAction = 'Stop'
             TargetObject = $api.$endpoint.keys -join ','
             Category = 'ObjectNotFound'
