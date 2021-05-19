@@ -2,38 +2,38 @@
 function Protect-RubrikVolumeGroup
 {
   <#
-      .SYNOPSIS
-      Connects to Rubrik and assigns an SLA to a VolumeGroup
+    .SYNOPSIS
+    Connects to Rubrik and assigns an SLA to a VolumeGroup
 
-      .DESCRIPTION
-      The Protect-RubrikVolumeGroup cmdlet will assign a SLA Domain to Volumes on a window host.
-      The SLA Domain contains all policy-driven values needed to protect workloads.
-      You can first use Get-RubrikVolumeGroup to get the one volume group you want to protect, and then pipe the results to Protect-RubrikVolumeGroup.
-      You can exclude volumes by specifiying the driveletter or the volumeID.
+    .DESCRIPTION
+    The Protect-RubrikVolumeGroup cmdlet will assign a SLA Domain to Volumes on a window host.
+    The SLA Domain contains all policy-driven values needed to protect workloads.
+    You can first use Get-RubrikVolumeGroup to get the one volume group you want to protect, and then pipe the results to Protect-RubrikVolumeGroup.
+    You can exclude volumes by specifiying the driveletter or the volumeID.
 
-      .NOTES
-      Written by Pierre Flammer for community usage
-      Twitter: @PierreFlammer
-      GitHub: Pierre-PvF
+    .NOTES
+    Written by Pierre Flammer for community usage
+    Twitter: @PierreFlammer
+    GitHub: Pierre-PvF
 
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvolumegroup
+    .LINK
+    https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/protect-rubrikvolumegroup
 
-      .EXAMPLE
-      Protect-RubrikVolumeGroup -id VolumeGroup:::2038fecb-745b-4d2d-8a71-cf2fc0d0be80 -SLA 'Gold'
-      This will assign the Gold SLA Domain to the specified Volume Group, including all volumes presently on the system
+    .EXAMPLE
+    Protect-RubrikVolumeGroup -id VolumeGroup:::2038fecb-745b-4d2d-8a71-cf2fc0d0be80 -SLA 'Gold'
+    This will assign the Gold SLA Domain to the specified Volume Group, including all volumes presently on the system
 
-      .EXAMPLE
-      Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold'
-      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, including all volumes presently on the system
+    .EXAMPLE
+    Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold'
+    This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, including all volumes presently on the system
 
-      .EXAMPLE
-      Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeDrive C,E
-      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, including all volumes presently on the system except for  the C and E drives
+    .EXAMPLE
+    Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeDrive C,E
+    This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, including all volumes presently on the system except for  the C and E drives
 
-      .EXAMPLE
-      Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeIDs 824fd711-ad69-4b56-bb83-613b0125f178
-      This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, including all volumes presently on the system excpt for the disks with the specified IDs
+    .EXAMPLE
+    Get-RubrikVolumeGroup -hostname ad.flammi.home | Protect-RubrikVolumeGroup -SLA 'Gold' -ExcludeIDs 824fd711-ad69-4b56-bb83-613b0125f178
+    This will assign the Gold SLA Domain to the volume group belonging to the specified hostname, including all volumes presently on the system excpt for the disks with the specified IDs
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="None")]

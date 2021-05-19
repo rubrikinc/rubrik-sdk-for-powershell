@@ -18,13 +18,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Added new parameter set & two parameters to `Get-RubrikSnapshot`, `-SnapshotId` & `-SnapshotType` to allow for querying by snapshotid [Issue 743](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/743)
+* Updated parameter help for `-Archival` parameter in `New-RubrikSla` cmdlet
+
 ### Added
 
 ### Fixed
 
+* Updated API endpoints to `v1` for `Get-RubrikHostVolume`, `New-RubrikSnapshot` (VolumeGroup endpoint) & `Protect-RubrikVolumeGroup` cmdlets, fixing [Issue 747](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/747)
 * Fixed bug in `Submit-Request` which causes several issues [Issue 751](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/751) & [Issue 752](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/752)
 
-## [5.3.0]() - 2021-04-09
+## [5.3.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/releases/tag/5.3) - 2021-04-09
 
 ### Changed
 

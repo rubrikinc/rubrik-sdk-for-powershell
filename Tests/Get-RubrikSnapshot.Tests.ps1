@@ -137,21 +137,25 @@ Describe -Name 'Public/Get-RubrikSnapshot' -Tag 'Public', 'Get-RubrikSnapshot' -
     }
 
     Context -Name 'Parameter Validation' {
-        It -Name 'Parameter ID cannot be $null' -Test {
-            { Get-RubrikSnapshot -Id $null } |
-                Should -Throw "Cannot validate argument on parameter 'ID'"
-        }
-        It -Name 'Parameter ID cannot be empty' -Test {
-            { Get-RubrikSnapshot -Id '' } |
-                Should -Throw "Cannot validate argument on parameter 'ID'"
-        }
-        It -Name 'Parameter Date cannot be $null' -Test {
-          { Get-RubrikSnapshot -Date $null } |
-              Should -Throw "Cannot process argument transformation on parameter 'Date'"
+      It -Name 'Parameter ID cannot be $null' -Test {
+        { Get-RubrikSnapshot -Id $null } |
+          Should -Throw "Cannot validate argument on parameter 'ID'"
+      }
+      It -Name 'Parameter ID cannot be empty' -Test {
+        { Get-RubrikSnapshot -Id '' } |
+          Should -Throw "Cannot validate argument on parameter 'ID'"
+      }
+      It -Name 'Parameter Date cannot be $null' -Test {
+        { Get-RubrikSnapshot -Date $null } |
+          Should -Throw "Cannot process argument transformation on parameter 'Date'"
       }
       It -Name 'Parameter Date cannot be empty' -Test {
-          { Get-RubrikSnapshot -Date '' } |
-              Should -Throw "Cannot process argument transformation on parameter 'Date'"
+        { Get-RubrikSnapshot -Date '' } |
+        Should -Throw "Cannot process argument transformation on parameter 'Date'"
+      }
+      It -Name 'Should not work with incorrect snapshottype' -Test {
+        { Get-RubrikSnapshot -SnapshotId 'b42ed6ba-760e-425f-a35d-c7dc5636b55d' -SnapshotType 'vmware/vm2'} |
+        Should -Throw
       }
         It -Name 'Parameters Date and Latest cannot be simultaneously used' -Test {
             { Get-RubrikSnapshot -Id VirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-vm-12345 -Date (Get-Date) -Latest } |

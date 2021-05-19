@@ -7,27 +7,20 @@ function Submit-Request {
         .DESCRIPTION
         This is function is used by nearly every cmdlet in order to form and send the request off to an API endpoint.
         The results are then formated for further use and returned.
-
-        .PARAMETER uri
-        The endpoint's URI
-        
-        .PARAMETER header
-        The header containing authentication details
-        
-        .PARAMETER method
-        The action (method) to perform on the endpoint
-
-        .PARAMETER body
-        Any optional body data being submitted to the endpoint
     #>
-
 
     [cmdletbinding(supportsshouldprocess=$true)]
     param(
+        # The endpoint's URI
         $uri,
+        # The header containing authentication details
         $header,
+        # The action (method) to perform on the endpoint
         $method = $($resources.Method),
-        $body
+        # Any optional body data being submitted to the endpoint
+        $body,
+        # Do not throw on an error, Write-Error instead
+        [switch] $DoNotThrow
     )
 
     # Block to improve readiability of error messages created for issue #653
@@ -86,11 +79,19 @@ function Submit-Request {
             switch -Wildcard ($_) {
                 'Route not defined.' {
                     Write-Warning -Message "The endpoint supplied to Rubrik is invalid. Likely this is due to an incompatible version of the API or references pointing to a non-existent endpoint. The URI passed was: $uri" -Verbose
-                    throw $_.Exception 
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_.Exception
+                    } else {
+                        throw $_.Exception
+                    } 
                 }
                 'Invalid ManagedId*' {
                     Write-Warning -Message "The endpoint supplied to Rubrik is invalid. Likely this is due to an incompatible version of the API or references pointing to a non-existent endpoint. The URI passed was: $uri" -Verbose
-                    throw $_.Exception 
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_.Exception
+                    } else {
+                        throw $_.Exception
+                    } 
                 }
                 '{"errorType":*' {
                     # Parses the Rubrik generated JSON warning into something a bit more human readable
@@ -99,17 +100,29 @@ function Submit-Request {
                     if ($rubrikWarning.errorType) {Write-Warning -Message $rubrikWarning.errorType}
                     if ($rubrikWarning.message) {Write-Warning -Message $rubrikWarning.message}
                     if ($rubrikWarning.cause) {Write-Warning -Message $rubrikWarning.cause}
-                    throw $_.Exception
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_.Exception
+                    } else {
+                        throw $_.Exception
+                    }
                 }
                 '{"message":*' {
                     [Array]$rubrikWarning = ConvertFrom-Json $_.ErrorDetails.Message
                     if ($rubrikWarning.errorType) {Write-Warning -Message $rubrikWarning.errorType}
                     if ($rubrikWarning.message) {Write-Warning -Message $rubrikWarning.message}
                     if ($rubrikWarning.cause) {Write-Warning -Message $rubrikWarning.cause}
-                    throw $_.Exception
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_.Exception
+                    } else {
+                        throw $_.Exception
+                    }
                 }
                 default {
-                    throw $_
+                    if ($DoNotThrow) {
+                        Write-Error -Message $_
+                    } else {
+                        throw $_
+                    }
                 }
             }
         }
