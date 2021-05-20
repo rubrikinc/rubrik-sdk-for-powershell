@@ -39,6 +39,9 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
             'Get-RubrikVgfClusterStorage'
             'Get-RubrikVgfReport'
             'Get-RubrikVgfUpgradeReport'
+            'Get-RubrikHvmFormatClusterStorage'
+            'Get-RubrikHvmFormatReport'
+            'Get-RubrikHvmFormatUpgradeReport'
         )
 
         it -Name "Get-RubrikAPIData - <f> test" -TestCases $cases {
