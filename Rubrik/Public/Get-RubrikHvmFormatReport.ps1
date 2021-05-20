@@ -27,14 +27,8 @@ function Get-RubrikHvmFormatReport
       Get-RubrikHvmFormatReport -Relic
       This will return backup format report on all removed Hyper-V Virtual Machines that were formerly protected by Rubrik.
 
-///
       .EXAMPLE
-      Get-RubrikHvmFormatReport -FailedLastSnapshot
-      This will return backup format report on all Hyper-V Virtual Machines that needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format.
-///
-
-      .EXAMPLE
-      Get-RubrikHvmFormatReport -UsedFastVhdx false
+      Get-RubrikHvmFormatReport -UsedFastVhdx $false
       This will return backup format report on Hyper-V Virtual Machines that did not use fast VHDX format in the latest snapshot.
 
       .EXAMPLE
@@ -76,6 +70,7 @@ function Get-RubrikHvmFormatReport
     # Filter the report based on whether a Hyper-V Virtual Machine is set to take a full snapshot on the next backup.
     [Alias('ForceFull')]
     [Switch]$SetToUpgrade,
+    [Boolean]$UsedFastVhdx,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -151,7 +146,6 @@ function Get-RubrikHvmFormatReport
       }
       $hvmformatreport += @($hvmformat)
     }
-
     if ($NamePrefix) {
       Write-Verbose "Filtering by Hyper-V Virtual Machine name prefix: $NamePrefix"
       $hvmformatreport = $hvmformatreport | Where {$_.VmName -Like "$NamePrefix*"}
@@ -164,11 +158,16 @@ function Get-RubrikHvmFormatReport
 
     if ($LatestSnapshotFormat) {
       Write-Verbose "Filtering by latest snapshot format: $LatestSnapshotFormat"
+      if ($LatestSnapshotFormat -eq "fastvhdx") {
+        $hvmformatreport = $hvmformatreport | Where {$_.Migrated}
+      } elseif ($LatestSnapshotFormat -eq "smb") {
+        $hvmformatreport = $hvmformatreport | Where {!$_.Migrated}
+      }
     }
-    if ($LatestSnapshotFormat -eq "fastvhdx") {
-      $hvmformatreport = $hvmformatreport | Where {$_.Migrated}
-    } elseif ($LatestSnapshotFormat -eq "smb") {
-      $hvmformatreport = $hvmformatreport | Where {!$_.Migrated}
+
+    if ($PSBoundParameters.ContainsKey('UsedFastVhdx')) {
+      Write-Verbose "Filtering by UsedFastVhdx flag: $UsedFastVhdx"
+      $hvmformatreport = $hvmformatreport | Where {$_.Migrated -eq $UsedFastVhdx}
     }
 
     return $hvmformatreport

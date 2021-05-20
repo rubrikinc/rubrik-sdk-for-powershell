@@ -36,6 +36,10 @@ function Get-RubrikHvmFormatClusterStorage
       This will return projected space consumption of migrating all old-format Hyper-V VMs of "Server1" that are protected by the Gold SLA Domain, and cluster free space before and after migration.
 
       .EXAMPLE
+      Get-RubrikHvmFormatClusterStorage -SetToUpgrade
+      This will return projected space consumption of migrating all old-format, removed Hyper-V VMs that have been set for a force full upgrade by specifying the forcefullspec.
+
+      .EXAMPLE
       Get-RubrikHvmFormatClusterStorage -Relic
       This will return projected space consumption of migrating all old-format, removed Hyper-V VMs that were formerly protected by Rubrik, and cluster free space before and after migration.
 
@@ -72,6 +76,9 @@ function Get-RubrikHvmFormatClusterStorage
     # SLA id value
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,
+    # Filter the report based on whether a Volume Group is set to take a full snapshot on the next backup.
+    [Alias('ForceFullSpec')]
+    [Switch]$SetToUpgrade,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -136,6 +143,7 @@ function Get-RubrikHvmFormatClusterStorage
         continue
       }
       $vmsnapshot = Get-RubrikSnapshot -Latest -id $vm.ID
+      $spec = Get-RubrikHvmForceFullSpec -id $vm.ID
       if (!$vmsnapshot) {
         continue
       }
@@ -143,22 +151,21 @@ function Get-RubrikHvmFormatClusterStorage
 
       #VM snapshot summary doesn't contain the VM's ID by default.
       $hvmformat | Add-Member NoteProperty VmId $vm.ID
-
       # Add the report only if the HyperV VM did not use fast VHDX format for its latest snapshot
       if (-not $hvmformat.usedFastVhdx) {
         $hvmformat | Add-Member NoteProperty VmName $vm.name
-        foreach ($host in $hostResult) {
+        $hvmformat | Add-Member NoteProperty SetToUpgrade ($null -ne $spec -and $spec.virtualDiskInfos.Count -gt 0)
+        foreach ($h in $hostResult) {
           $vmHostId = -join ("HypervServer:::", $vm.HostId)
-          if($host.data.id -eq $vmHostId) {
-            $hvmformat | Add-Member NoteProperty HostName $host.data.name
-            $hvmformat | Add-Member NoteProperty HostId $host.data.Id
+          if($h.data.id -eq $vmHostId) {
+            $hvmformat | Add-Member NoteProperty HostName $h.data.name
+            $hvmformat | Add-Member NoteProperty HostId $h.data.Id
             break
           }
         }
         $hvmformatreport += @($hvmformat)
       }
     }
-    Write-Output $hvmformatreport
 
     if ($NamePrefix) {
       Write-Verbose "Filtering by Hyper-V Virtual Machine name prefix: $NamePrefix"
@@ -175,6 +182,11 @@ function Get-RubrikHvmFormatClusterStorage
     if ($hostname) {
       Write-Verbose "Filtering by host name: $hostname"
       $hvmformatreport = $hvmformatreport | Where {$_.HostName -eq $hostname}
+    }
+
+    if ($SetToUpgrade) {
+      Write-Verbose "Filtering by whether a Hyper-v Virtual Machine is set to take a full snapshot on the next backup"
+      $hvmformatreport = $hvmformatreport | Where-Object {$_.SetToUpgrade}
     }
 
     $vmids = @()

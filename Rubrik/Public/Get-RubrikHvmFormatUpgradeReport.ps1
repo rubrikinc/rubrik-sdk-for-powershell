@@ -35,14 +35,8 @@ function Get-RubrikHvmFormatUpgradeReport
       Get-RubrikHvmFormatUpgradeReport -Relic
       This will return projected space consumption on all removed Hyper-V Virtual Machines that were formerly protected by Rubrik.
 
-      //NOT NEEDED ??
       .EXAMPLE
-      Get-RubrikHvmFormatUpgradeReport -FailedLastSnapshot
-      This will return projected space consumption on all Hyper-V Virtual Machines that needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format.
-
-      //NOT IMPLEMENTED ??
-      .EXAMPLE
-      Get-RubrikHvmFormatUpgradeReport -UsedFastVhdx false
+      Get-RubrikHvmFormatUpgradeReport -UsedFastVhdx $false
       This will return projected space consumption on Hyper-V Virtual Machines that did not use fast VHDX format in the latest snapshot.
 
       .EXAMPLE
@@ -78,6 +72,7 @@ function Get-RubrikHvmFormatUpgradeReport
     # SLA id value
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,
+    [Boolean]$UsedFastVhdx,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -166,6 +161,11 @@ function Get-RubrikHvmFormatUpgradeReport
     if ($hostname) {
       Write-Verbose "Filtering by host name: $hostname"
       $hvmformatreport = $hvmformatreport | Where {$_.HostName -eq $hostname}
+    }
+
+    if ($PSBoundParameters.ContainsKey('UsedFastVhdx')) {
+      Write-Verbose "Filtering by UsedFastVhdx flag: $UsedFastVhdx"
+      $hvmformatreport = $hvmformatreport | Where {$_.UsedFastVhdx -eq $UsedFastVhdx}
     }
 
     $resultMap = @()
