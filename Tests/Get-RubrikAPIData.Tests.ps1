@@ -69,7 +69,7 @@ Describe -Name 'Private/Get-RubrikAPIData' -Tag 'Private', 'Get-RubrikAPIData' -
         It -Name 'Verify property exists' -Test {
             $functions = ( Get-ChildItem -Path './Rubrik/Public' |
                 Where-Object extension -eq '.ps1').Name.Replace('.ps1','')
-            $ignorelist = @('Invoke-RubrikRESTCall','Invoke-RubrikGraphQLCall','Move-RubrikMountVMDK','Sync-RubrikAnnotation','Sync-RubrikTag','Get-RubrikObject','Get-RubrikDatabaseRecoveryPoint','Get-RubrikModuleDefaultParameter','Set-RubrikModuleDefaultParameter','Get-RubrikModuleOption','Set-RubrikModuleOption','Remove-RubrikModuleDefaultParameter', 'Get-RubrikDownloadLink','Start-RubrikDownload','Get-RubrikVgfClusterStorage','Get-RubrikVgfReport','Get-RubrikVgfUpgradeReport', 'Get-RubrikDebugInfo')
+            $ignorelist = @('Invoke-RubrikRESTCall','Invoke-RubrikGraphQLCall','Move-RubrikMountVMDK','Sync-RubrikAnnotation','Sync-RubrikTag','Get-RubrikObject','Get-RubrikDatabaseRecoveryPoint','Get-RubrikModuleDefaultParameter','Set-RubrikModuleDefaultParameter','Get-RubrikModuleOption','Set-RubrikModuleOption','Remove-RubrikModuleDefaultParameter', 'Get-RubrikDownloadLink','Start-RubrikDownload','Get-RubrikHvmFormatClusterStorage','Get-RubrikHvmFormatReport','Get-RubrikHvmFormatUpgradeReport','Get-RubrikVgfClusterStorage','Get-RubrikVgfReport','Get-RubrikVgfUpgradeReport', 'Get-RubrikDebugInfo')
             $functions = $functions | Where-Object {$ignorelist -notcontains $_}
             $functions | ForEach-Object {
                 (Get-RubrikAPIData -Endpoint $_).Function |
