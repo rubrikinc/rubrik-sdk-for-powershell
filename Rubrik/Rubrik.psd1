@@ -141,7 +141,6 @@
                    'Get-RubrikGuestOSCredential',
                    'Get-RubrikHost',
                    'Get-RubrikHostVolume',
-                   'Get-RubrikHvmForceFullSpec',
                    'Get-RubrikHvmFormatAutoUpgrade',
                    'Get-RubrikHvmFormatClusterStorage',
                    'Get-RubrikHvmFormatReport',

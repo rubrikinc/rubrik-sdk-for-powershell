@@ -36,13 +36,13 @@ function Get-RubrikHvmFormatClusterStorage
       This will return projected space consumption of migrating all old-format Hyper-V VMs of "Server1" that are protected by the Gold SLA Domain, and cluster free space before and after migration.
 
       .EXAMPLE
-      Get-RubrikHvmFormatClusterStorage -SetToUpgrade
-      This will return projected space consumption of migrating all old-format, removed Hyper-V VMs that have been set for a force full upgrade by specifying the forcefullspec.
-
-      .EXAMPLE
       Get-RubrikHvmFormatClusterStorage -Relic
       This will return projected space consumption of migrating all old-format, removed Hyper-V VMs that were formerly protected by Rubrik, and cluster free space before and after migration.
 
+      .EXAMPLE
+      Get-RubrikHvmFormatClusterStorage -SetToUpgrade
+      This will return projected space consumption of migrating all old-format, removed Hyper-V VMs that have been set for a force full upgrade by specifying the forcefullspec.
+      
       .EXAMPLE
       Get-RubrikHvmFormatClusterStorage -Id HypervVirtualMachine:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
       This will return projected space consumption for the specified HypervVirtualMachine ID, and 0 if this HypervVirtualMachine uses fast VHDX format (no need for migration).
@@ -79,6 +79,7 @@ function Get-RubrikHvmFormatClusterStorage
     # Filter the report based on whether a Volume Group is set to take a full snapshot on the next backup.
     [Alias('ForceFullSpec')]
     [Switch]$SetToUpgrade,
+    [Switch]$DisplayReport,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -143,7 +144,6 @@ function Get-RubrikHvmFormatClusterStorage
         continue
       }
       $vmsnapshot = Get-RubrikSnapshot -Latest -id $vm.ID
-      $spec = Get-RubrikHvmForceFullSpec -id $vm.ID
       if (!$vmsnapshot) {
         continue
       }
@@ -154,7 +154,7 @@ function Get-RubrikHvmFormatClusterStorage
       # Add the report only if the HyperV VM did not use fast VHDX format for its latest snapshot
       if (-not $hvmformat.usedFastVhdx) {
         $hvmformat | Add-Member NoteProperty VmName $vm.name
-        $hvmformat | Add-Member NoteProperty SetToUpgrade ($null -ne $spec -and $spec.virtualDiskInfos.Count -gt 0)
+        $hvmformat | Add-Member NoteProperty SetToUpgrade $vmsnapshot.forcefull
         foreach ($h in $hostResult) {
           $vmHostId = -join ("HypervServer:::", $vm.HostId)
           if($h.data.id -eq $vmHostId) {
@@ -165,6 +165,9 @@ function Get-RubrikHvmFormatClusterStorage
         }
         $hvmformatreport += @($hvmformat)
       }
+    }
+    if($DisplayReport -and $hvmformatreport -ne @()) {
+      Write-Output "Hyper-V Virtual Machines Summary with UsedFastVhfx=false: $hvmformatreport"
     }
 
     if ($NamePrefix) {

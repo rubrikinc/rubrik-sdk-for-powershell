@@ -711,18 +711,6 @@ function Get-RubrikAPIData {
                 ObjectTName = 'Rubrik.HyperVVM'
             }
         }
-        'Get-RubrikHvmForceFullSpec'             = @{
-            '6.0' = @{
-                Description = 'Get the ForceFullSpec of a HyperV Virtual Machine.'
-                URI         = '/api/v1/hyperv/vm/{id}/request/force_full_snapshot'
-                Method      = 'Get'
-                Body        = ''
-                Query       = ''
-                Result      = 'data'
-                Filter      = ''
-                Success     = '200'
-            }
-        }
         'Get-RubrikHvmFormatAutoUpgrade' = @{
             '6.0' = @{
                 Description = 'Retrieve the global HyperV settings for backup format migration.'
