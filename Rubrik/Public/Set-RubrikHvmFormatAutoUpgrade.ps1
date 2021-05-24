@@ -116,7 +116,7 @@ function Set-RubrikHvmFormatAutoUpgrade
       Write-Host ""
       if ($isFlagSet) {
         if ($migrateFastVirtualDiskBuild -eq $false) {
-          Write-Host "Successfully disabled Volume Format Auto-Upgrade."
+          Write-Host "Successfully disabled Hyper-V Format Auto-Upgrade."
         }
         if ($migrateFastVirtualDiskBuild -eq $true) {
           Write-Host "Successfully configured to Auto-Upgrade Hyper-V Virtual Machines on Next Backup."

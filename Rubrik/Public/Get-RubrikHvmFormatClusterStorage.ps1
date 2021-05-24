@@ -42,7 +42,7 @@ function Get-RubrikHvmFormatClusterStorage
       .EXAMPLE
       Get-RubrikHvmFormatClusterStorage -SetToUpgrade
       This will return projected space consumption of migrating all old-format, removed Hyper-V VMs that have been set for a force full upgrade by specifying the forcefullspec.
-      
+
       .EXAMPLE
       Get-RubrikHvmFormatClusterStorage -Id HypervVirtualMachine:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
       This will return projected space consumption for the specified HypervVirtualMachine ID, and 0 if this HypervVirtualMachine uses fast VHDX format (no need for migration).
@@ -76,9 +76,10 @@ function Get-RubrikHvmFormatClusterStorage
     # SLA id value
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,
-    # Filter the report based on whether a Volume Group is set to take a full snapshot on the next backup.
+    # Filter the report based on whether a Hyper-V Virtual Machine is set to take a full snapshot on the next backup.
     [Alias('ForceFullSpec')]
     [Switch]$SetToUpgrade,
+    # Add the Hyper-V Virtual Machines Summary Report for VMs which haven't used the Fast VHDX builder.
     [Switch]$DisplayReport,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
