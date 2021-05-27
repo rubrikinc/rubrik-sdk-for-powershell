@@ -28,8 +28,9 @@ function Get-RubrikHvmFormatReport
       This will return backup format report on all removed Hyper-V Virtual Machines that were formerly protected by Rubrik.
 
       .EXAMPLE
-      Get-RubrikHvmFormatReport -UsedFastVhdx $false
-      This will return backup format report on Hyper-V Virtual Machines that did not use fast VHDX format in the latest snapshot.
+      LatestSnapshotFormat <smb> OR <fastvhdx>
+      Get-RubrikHvmFormatReport -LatestSnapshotFormat fastvhdx
+      This will return backup format report on all removed Hyper-V Virtual Machines that were formerly protected by Rubrik.
 
       .EXAMPLE
       Get-RubrikHvmFormatReport -Id HypervVirtualMachine:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
@@ -64,13 +65,9 @@ function Get-RubrikHvmFormatReport
     [String]$SLAID,
     # Filter the report based on whether the Hyper-V Virtual Machine used fast VHDX format for its latest snapshot.
     [String]$LatestSnapshotFormat,
-    # Filter the report based on whether a Hyper-V Virtual Machine needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format.
-    [Alias('NeedsMigration')]
-    [Switch]$FailedLastSnapshot,
     # Filter the report based on whether a Hyper-V Virtual Machine is set to take a full snapshot on the next backup.
     [Alias('ForceFull')]
     [Switch]$SetToUpgrade,
-    [Boolean]$UsedFastVhdx,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -135,6 +132,7 @@ function Get-RubrikHvmFormatReport
 
       $hvmformat | Add-Member NoteProperty VmName $vm.name
       $hvmformat | Add-Member NoteProperty SLADomain $vm.configuredSlaDomainName
+      $hvmformat | Add-Member NoteProperty SetToUpgrade $vm.forceFull
 
       foreach ($host in $hostResult) {
         $vmHostId = -join ("HypervServer:::", $vm.HostId)
@@ -162,12 +160,16 @@ function Get-RubrikHvmFormatReport
         $hvmformatreport = $hvmformatreport | Where {$_.Migrated}
       } elseif ($LatestSnapshotFormat -eq "smb") {
         $hvmformatreport = $hvmformatreport | Where {!$_.Migrated}
+      } else {
+        Write-Output "LatestSnapshotFormat must be <smb> or <fastvhdx>"
+        $hvmformatreport = @()
       }
+
     }
 
-    if ($PSBoundParameters.ContainsKey('UsedFastVhdx')) {
-      Write-Verbose "Filtering by UsedFastVhdx flag: $UsedFastVhdx"
-      $hvmformatreport = $hvmformatreport | Where {$_.Migrated -eq $UsedFastVhdx}
+    if ($SetToUpgrade) {
+      Write-Verbose "Filtering by whether a Hyper-v Virtual Machine is set to take a full snapshot on the next backup"
+      $hvmformatreport = $hvmformatreport | Where-Object {$_.SetToUpgrade}
     }
 
     return $hvmformatreport

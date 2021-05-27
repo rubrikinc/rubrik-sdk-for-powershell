@@ -108,7 +108,6 @@ Do you want to proceed? (y/N) "
       Write-Host "Setting $($vmIdToNameMap[$id]) for format upgrade on next backup..."
       $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
       $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters @($id) -uri $uri
-      Write-Output $uri
       
       #add empty virtualDiskInfos to body
       $body = New-Object -TypeName PSObject -Property @{'virtualDiskInfos'=@()} | ConvertTo-Json -Depth 10

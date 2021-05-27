@@ -36,10 +36,6 @@ function Get-RubrikHvmFormatUpgradeReport
       This will return projected space consumption on all removed Hyper-V Virtual Machines that were formerly protected by Rubrik.
 
       .EXAMPLE
-      Get-RubrikHvmFormatUpgradeReport -UsedFastVhdx $false
-      This will return projected space consumption on Hyper-V Virtual Machines that did not use fast VHDX format in the latest snapshot.
-
-      .EXAMPLE
       Get-RubrikHvmFormatUpgradeReport -Id HypervVirtualMachine:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
       This will return projected space consumption for the specified HypervVirtualMachine ID
   #>
@@ -72,7 +68,9 @@ function Get-RubrikHvmFormatUpgradeReport
     # SLA id value
     [Alias('effective_sla_domain_id')]
     [String]$SLAID,
-    [Boolean]$UsedFastVhdx,
+    # Filter the report based on whether a Hyper-V Virtual Machine is set to take a full snapshot on the next backup.
+    [Alias('ForceFull')]
+    [Switch]$SetToUpgrade,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -135,6 +133,7 @@ function Get-RubrikHvmFormatUpgradeReport
       # Add the report only if the Hyper-V Virtual Machine did not use fast VHDX format for its latest snapshot
       if (!$hvmFormat.usedFastVhdx) {
         $hvmFormat | Add-Member NoteProperty VmName $vm.name
+        $hvmFormat | Add-Member NoteProperty SetToUpgrade $vm.forceFull
         foreach ($host in $hostResult) {
           $vmHostId = -join ("HypervServer:::", $vm.HostId)
           if($host.data.id -eq $vmHostId) {
@@ -163,9 +162,9 @@ function Get-RubrikHvmFormatUpgradeReport
       $hvmformatreport = $hvmformatreport | Where {$_.HostName -eq $hostname}
     }
 
-    if ($PSBoundParameters.ContainsKey('UsedFastVhdx')) {
-      Write-Verbose "Filtering by UsedFastVhdx flag: $UsedFastVhdx"
-      $hvmformatreport = $hvmformatreport | Where {$_.UsedFastVhdx -eq $UsedFastVhdx}
+    if ($SetToUpgrade) {
+      Write-Verbose "Filtering by whether a Hyper-v Virtual Machine is set to take a full snapshot on the next backup"
+      $hvmformatreport = $hvmformatreport | Where-Object {$_.SetToUpgrade}
     }
 
     $resultMap = @()

@@ -155,7 +155,7 @@ function Get-RubrikHvmFormatClusterStorage
       # Add the report only if the HyperV VM did not use fast VHDX format for its latest snapshot
       if (-not $hvmformat.usedFastVhdx) {
         $hvmformat | Add-Member NoteProperty VmName $vm.name
-        $hvmformat | Add-Member NoteProperty SetToUpgrade $vmsnapshot.forcefull
+        $hvmformat | Add-Member NoteProperty SetToUpgrade $vm.forcefull
         foreach ($h in $hostResult) {
           $vmHostId = -join ("HypervServer:::", $vm.HostId)
           if($h.data.id -eq $vmHostId) {
@@ -168,7 +168,8 @@ function Get-RubrikHvmFormatClusterStorage
       }
     }
     if($DisplayReport -and $hvmformatreport -ne @()) {
-      Write-Output "Hyper-V Virtual Machines Summary with UsedFastVhfx=false: $hvmformatreport"
+      Write-Output "Hyper-V Virtual Machines Summary with UsedFastVhdx=false: "
+      Write-Output $hvmformatreport
     }
 
     if ($NamePrefix) {
