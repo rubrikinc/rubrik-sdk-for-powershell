@@ -19,6 +19,7 @@ function Invoke-RubrikWebRequest {
 
     if (Test-UnicodeInString -String $Body) {
         $PSBoundParameters.Add('ContentType', 'text/plain; charset=utf-8')
+        Write-Verbose -Message ('Subbmitting "{1}" request as "text/plain; charset=utf-8"' -f $Method)
     }
 
     if (Test-PowerShellSix) {
