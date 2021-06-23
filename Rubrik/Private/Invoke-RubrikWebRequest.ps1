@@ -17,6 +17,10 @@ function Invoke-RubrikWebRequest {
     # Write Debug information
     Write-Debug -Message ($PSBoundParameters.GetEnumerator()|Out-String)
 
+    if (Test-UnicodeInString -String $Body) {
+        $PSBoundParameters.Add('ContentType', 'text/plain; charset=utf-8')
+    }
+
     if (Test-PowerShellSix) {
         if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
             Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
