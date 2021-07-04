@@ -10,5 +10,5 @@ function Test-UnicodeInString {
             $String
         )
 
-        [regex]::IsMatch($string, ".*[^\u0000-\u007F].*")
+        [regex]::IsMatch($String, ".*[^\u0000-\u007F].*")
     }
