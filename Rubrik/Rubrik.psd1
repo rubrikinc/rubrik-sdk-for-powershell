@@ -362,7 +362,7 @@
 
             # Prerelease string of this module
 
-            Prerelease = 'RC4'
+            Prerelease = 'RC5'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update
             # RequireLicenseAcceptance = $false
