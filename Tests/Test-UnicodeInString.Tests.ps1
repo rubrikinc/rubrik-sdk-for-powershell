@@ -24,16 +24,28 @@ Describe -Name 'Public/Test-UnicodeInString' -Tag 'Public', 'Test-UnicodeInStrin
             Test-UnicodeInString -String $null |
                 Should -Be $false
         }
-        It -Name 'String param with "AbCdE12345!@#$%" should return $false' -Test {
-            Test-UnicodeInString -String "AbCdE12345!@#$%" |
+        
+        $String = @'
+AbCdE12345!@#$%
+'@        
+        It -Name "String param with '$String' should return `$false" -Test {
+            Test-UnicodeInString -String $String |
                 Should -Be $false
         }
-        It -Name 'String param "おはよう日本" should return $true' -Test {
-            Test-UnicodeInString -String "おはよう日本" |
+
+        $String = @'
+おはよう日本
+'@
+        It -Name "String param with '$String' should return `$true" -Test {
+            Test-UnicodeInString -String $String |
                 Should -Be $true
         }
-        It -Name 'String param "🦏 🦑 🦖 🦓 🦋 🦁" should return $true' -Test {
-            Test-UnicodeInString -String "🦏 🦑 🦖 🦓 🦋 🦁" |
+
+        $String = @'
+🦏 🦑 🦖 🦓 🦋 🦁
+'@
+It -Name "String param with '$String' should return `$true" -Test {
+    Test-UnicodeInString -String $String |
                 Should -Be $true
         }
     }
