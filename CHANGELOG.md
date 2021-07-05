@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added additional debug logging to `Invoke-RubrikWebRequest`, resolving [Issue 721](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/721)
+
 ### Fixed
 
 * Fixed Unicode issues for all cmdlets, resolving [Issue 768](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/768), [Issue 750](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/750), [Issue 749](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/749)
