@@ -41,6 +41,7 @@ function Invoke-RubrikWebRequest {
     }
 
     Write-Verbose -Message "Received HTTP Status $($result.StatusCode)"
+    Write-Debug -Message "Raw Response content:`n $($result.rawcontent)"
 
     return $result
 }
