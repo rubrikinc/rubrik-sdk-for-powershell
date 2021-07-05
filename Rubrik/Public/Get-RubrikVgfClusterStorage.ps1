@@ -49,6 +49,7 @@ function Get-RubrikVgfClusterStorage
 
       This will return projected space consumption of migrating all old-format volume groups that needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format, and cluster free space before and after migration.
 
+      # UsedFastVhdx not a param
       .EXAMPLE
       Get-RubrikVgfClusterStorage -UsedFastVhdx false
 
@@ -198,7 +199,7 @@ function Get-RubrikVgfClusterStorage
 
     #get cluster storage
     $key = "StorageOverview"
-    $uri1 = New-URIString -server $Server -endpoint $Resources1.URI[$key] -id $id
+    $uri1 = New-URIString -server $Server -endpoint $Resources1.URI[$key]
     $result1 = Submit-Request -uri $uri1 -header $Header -method $($resources1.Method) -body $body
 
     $projectedSize.ClusterTotalUsableSpace = $result1.total
