@@ -36,8 +36,8 @@ function Submit-Request {
                 if (Test-PowerShellSix) {
                     # Uses the improved ConvertFrom-Json cmdlet as provided in PowerShell 6.1
                     # In the case of DELETE, there is no content (json body) to parse.
-                    $result = if ($null -ne ($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
-                        if ($null -ne $WebResult.Content) {
+                    $result = if (($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
+                        if ($WebResult.Content) {
                             ConvertFrom-Json -InputObject $WebResult.Content
                         } 
                     }
