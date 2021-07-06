@@ -606,7 +606,7 @@ Accept wildcard characters: False
 ```
 
 ### -Archival
-Whether to enable archival
+Whether to enable archival, does not take any input and should be used in combination with -ArchivalLocationId
 
 ```yaml
 Type: SwitchParameter

@@ -36,14 +36,22 @@ function Submit-Request {
                 if (Test-PowerShellSix) {
                     # Uses the improved ConvertFrom-Json cmdlet as provided in PowerShell 6.1
                     # In the case of DELETE, there is no content (json body) to parse.
-                    $result = if ($null -ne ($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
-                        if ($null -ne $WebResult.Content) {
+                    $result = if (($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
+                        if ($WebResult.Content) {
                             ConvertFrom-Json -InputObject $WebResult.Content
                         } 
                     }
                 } else {
                     # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
-                    $result = ExpandPayload -response ($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)
+                    $WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body
+                    if (Test-UnicodeInString -String $WebResult.Content) {
+                        $WebResult = [pscustomobject]@{
+                            Content = [system.Text.Encoding]::UTF8.GetString($WebResult.RawContentStream.ToArray())
+                            StatusCode = $WebResult.StatusCode
+                            StatusDescription = $WebResult.StatusDescription
+                        }
+                    }
+                    $result = ExpandPayload -response $WebResult
                 }
                 # If $result is null, build a $result object to return to the user. Otherwise, $result will be returned.
                 if ($null -eq $result) {   
@@ -71,7 +79,15 @@ function Submit-Request {
                     $result = ConvertFrom-Json -InputObject (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body).Content
                 } else {
                     # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
-                    $result = ExpandPayload -response (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)
+                    $WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body
+                    if (Test-UnicodeInString -String $WebResult.Content) {
+                        $WebResult = [pscustomobject]@{
+                            Content = [system.Text.Encoding]::UTF8.GetString($WebResult.RawContentStream.ToArray())
+                            StatusCode = $WebResult.StatusCode
+                            StatusDescription = $WebResult.StatusDescription
+                        }
+                    }
+                    $result = ExpandPayload -response $WebResult
                 }
             }
         }

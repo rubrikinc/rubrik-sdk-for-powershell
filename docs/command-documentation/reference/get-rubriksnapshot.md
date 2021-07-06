@@ -30,6 +30,12 @@ Get-RubrikSnapshot -id <String> [-CloudState <Int32>] [-OnDemandSnapshot] [-Serv
  [<CommonParameters>]
 ```
 
+### SnapshotID
+```
+Get-RubrikSnapshot [-CloudState <Int32>] [-OnDemandSnapshot] -SnapshotId <String> [-SnapshotType <String>]
+ [-Server <String>] [-api <String>] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 The Get-RubrikSnapshot cmdlet is used to query the Rubrik cluster for all known snapshots (backups) for any protected object
 The correct API call will be made based on the object id submitted
@@ -89,10 +95,17 @@ This will return the latest snapshot for the virtual machine named "Server1"
 
 ### EXAMPLE 8
 ```
-Get-RubrikDatabase 'DB1' | Get-RubrikSnapshot -OnDemandSnapshot
+Get-RubrikSnapshot -SnapshotId 64914f54-fe71-40b2-84ae-933f1a55e1b9 -Verbose
 ```
 
-This will return the details on any on-demand (user initiated) snapshot to for any database named "DB1"
+Will query for specific SnapshotId querying common snapshot endpoints until a result is returned
+
+### EXAMPLE 9
+```
+Get-RubrikSnapshot -SnapshotId 64914f54-fe71-40b2-84ae-933f1a55e1b9 -SnapshotType vmware/vm
+```
+
+Will query for specific SnapshotId for the vmware/vm/snapshot/{id} endpoint
 
 ## PARAMETERS
 
@@ -101,7 +114,7 @@ Rubrik id of the protected object
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Latest, Date, Query
 Aliases:
 
 Required: True
@@ -184,6 +197,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SnapshotId
+Query by the snapshot id directly, in case a snapshot id is known and the snapshot's information needs to be retrieved
+
+```yaml
+Type: String
+Parameter Sets: SnapshotID
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SnapshotType
+Specifies the snapshot type to query for the supplied
+
+```yaml
+Type: String
+Parameter Sets: SnapshotID
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
