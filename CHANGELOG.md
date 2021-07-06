@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-## Unreleased
+## [5.3.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.3.1) - 2021-07-06
 
 ### Changed
 
