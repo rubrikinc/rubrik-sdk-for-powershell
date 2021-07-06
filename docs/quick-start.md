@@ -346,9 +346,10 @@ Rubrik prides itself upon its API-first architecture, ensuring everything availa
 # Further Reading
 
 * [Rubrik PowerShell SDK GitHub Repository](https://github.com/rubrikinc/rubrik-sdk-for-powershell)
-* [Rubrik PowerShell SDK Official Documentation](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
-* [Rubrik CDM API Documentation (v1)](https://rubrikinc.github.io/api-doc-v1/)
-* [Rubrik CDM API Documentation (v2)](https://rubrikinc.github.io/api-doc-v2/)
-* [Rubrik CDM API Documentation (v3)](https://rubrikinc.github.io/api-doc-v3/)
-* [Rubrik CDM API Documentation (internal)](https://rubrikinc.github.io/api-doc-internal/)
+* [Rubrik PowerShell SDK Official Documentation](https://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+* [Rubrik CDM API Documentation](https://github.com/rubrikinc/api-documentation)
+* [Rubrik CDM API Documentation 5.3 (v1)](https://rubrikinc.github.io/api-doc-v1-5.3/)
+* [Rubrik CDM API Documentation 5.3 (v2)](https://rubrikinc.github.io/api-doc-v2-5.3/)
+* [Rubrik CDM API Documentation 5.3 (v3)](https://rubrikinc.github.io/api-doc-v3-5.3/)
+* [Rubrik CDM API Documentation 5.3 (internal)](https://rubrikinc.github.io/api-doc-internal-5.3/)
 * [Get-Started with the Rubrik PowerShell Module](https://www.rubrik.com/blog/get-started-rubrik-powershell-module/)
