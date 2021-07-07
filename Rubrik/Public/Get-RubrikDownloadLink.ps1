@@ -68,7 +68,7 @@ function Get-RubrikDownloadLink
         }
 
         $result = Get-RubrikEvent -object_ids ($Request.links -replace '.*?File_(.*?)_.*','$1') -Limit 5 |
-          Where-Object {($_.Date -ge $StartTime) -and ($_.eventInfo -match 'Download link for')} |
+          Where-Object {(([DateTime]$_.time).ToUniversalTime() -ge $StartTime) -and ($_.eventInfo -match 'Download link for')} |
           Sort-Object -Property Date | Select-Object -Last 1
       } until ($result)
 
