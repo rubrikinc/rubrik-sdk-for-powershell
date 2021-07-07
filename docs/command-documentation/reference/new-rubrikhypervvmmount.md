@@ -30,23 +30,23 @@ New-RubrikHyperVVMMount -id '11111111-2222-3333-4444-555555555555'
 
 This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555"
 The original virtual machine's name will be used along with a date and index number suffix
-The virtual machine will NOT be powered on upon completion of the mount operation
+The virtual machine will be powered on upon completion of the mount operation
 
 ### EXAMPLE 2
 ```
-New-RubrikHyperVVMMount -id '11111111-2222-3333-4444-555555555555' -MountName 'Mount1' -PowerOn -RemoveNetworkDevices
+New-RubrikHyperVVMMount -id '11111111-2222-3333-4444-555555555555' -MountName 'Mount1' -PowerOn:$false -RemoveNetworkDevices
 ```
 
 This will create a new mount based on snapshot id "11111111-2222-3333-4444-555555555555" and name the mounted virtual machine "Mount1"
-The virtual machine will be powered on upon completion of the mount operation but without any virtual network adapters
+The virtual machine will NOT be powered on upon completion of the mount operation but without any virtual network adapters
 
 ### EXAMPLE 3
 ```
-Get-RubrikHyperVVM 'Server1' | Get-RubrikSnapshot -Date '03/01/2017 01:00' | New-RubrikHyperVVMMount -MountName 'Mount1' -DisableNetwork
+Get-RubrikHyperVVM 'Server1' | Get-RubrikSnapshot -Date '03/01/2017 01:00' | New-RubrikHyperVVMMount -MountName 'Mount1' -DisableNetwork -PowerOn
 ```
 
 This will create a new mount based on the closet snapshot found on March 1st, 2017 @ 01:00 AM and name the mounted virtual machine "Mount1"
-The virtual machine will NOT be powered on upon completion of the mount operation
+The virtual machine will be powered on upon completion of the mount operation
 
 ## PARAMETERS
 
@@ -127,6 +127,8 @@ Accept wildcard characters: False
 
 ### -PowerOn
 Whether the VM should be powered on after mount.
+Without this parameter the VM defaults to be powered on.
+To ensure it isn't, specify -PoweredOn:$false
 
 ```yaml
 Type: SwitchParameter

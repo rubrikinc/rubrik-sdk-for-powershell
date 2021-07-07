@@ -711,6 +711,18 @@ function Get-RubrikAPIData {
                 ObjectTName = 'Rubrik.HyperVVM'
             }
         }
+        'Get-RubrikHvmFormatAutoUpgrade' = @{
+            '6.0' = @{
+                Description = 'Retrieve the global HyperV settings for backup format migration.'
+                URI         = '/api/internal/config/usersettable_hyperv'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikIPMI'              = @{
             '1.0' = @{
                 Description = 'Retrieve the configured IPMI settings within the Rubrik Cluster'
@@ -1793,6 +1805,16 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
+            '5.3' = @{
+                Description = 'Retrieve summary information for all Volume Groups that belong to a Windows host'
+                URI         = '/api/v1/host/{id}/volume'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Invoke-RubrikVgfUpgrade'             = @{
             '5.3' = @{
@@ -1801,6 +1823,20 @@ function Get-RubrikAPIData {
                 Method      = 'Patch'
                 Body        = @{
                     forceFull = 'forceFull'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Invoke-RubrikHvmFormatUpgrade'             = @{
+            '6.0' = @{
+                Description = 'Update the forceFullSpec of a HyperV Virtual Machine.'
+                URI         = '/api/v1/hyperv/vm/{id}/request/force_full_snapshot'
+                Method      = 'Post'
+                Body        = @{
+                    virtualDiskInfos = 'virtualDiskInfos'
                 }
                 Query       = ''
                 Result      = ''
@@ -2247,6 +2283,28 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '202'
             }
+            '5.3' = @{
+                Description = 'Create an on-demand snapshot for the given object ID'
+                URI         = @{
+                    Fileset = '/api/v1/fileset/{id}/snapshot'
+                    MSSQL   = '/api/v1/mssql/db/{id}/snapshot'
+                    VMware  = '/api/v1/vmware/vm/{id}/snapshot'
+                    VolumeGroup = '/api/v1/volume_group/{id}/snapshot'
+                    Oracle = '/api/internal/oracle/db/{id}/snapshot'
+                    VcdVapp = '/api/internal/vcd/vapp/{id}/snapshot'
+                    Nutanix = '/api/internal/nutanix/vm/{id}/snapshot'
+                    HyperV = '/api/internal/hyperv/vm/{id}/snapshot'
+                }
+                Method      = 'Post'
+                Body        = @{
+                    forceFullSnapshot = 'forceFullSnapshot'
+                    slaId             = 'slaId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
         }
         'Protect-RubrikDatabase'       = @{
             '1.0' = @{
@@ -2368,6 +2426,20 @@ function Get-RubrikAPIData {
             '1.0' = @{
                 Description = 'Update a Volume Group with the specified SLA Domain.'
                 URI         = '/api/internal/volume_group/{id}'
+                Method      = 'Patch'
+                Body        = @{
+                    configuredSlaDomainId = 'configuredSlaDomainId'
+                    volumeIdsIncludedInSnapshots = @{}
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+                ObjectTName = 'Rubrik.VolumeGroup'
+            }
+            '5.3' = @{
+                Description = 'Update a Volume Group with the specified SLA Domain.'
+                URI         = '/api/v1/volume_group/{id}'
                 Method      = 'Patch'
                 Body        = @{
                     configuredSlaDomainId = 'configuredSlaDomainId'
@@ -2908,6 +2980,21 @@ function Get-RubrikAPIData {
                     cloudInstantiationSpec = @{
                         imageRetentionInSeconds = 'imageRetentionInSeconds'
                     }
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+        }
+        'Set-RubrikHvmFormatAutoUpgrade' = @{
+            '6.0' = @{
+                Description = 'Update the global HyperV settings for backup format migration.'
+                URI         = '/api/internal/config/usersettable_hyperv'
+                Method      = 'Patch'
+                Body        = @{
+                      migrateFastVirtualDiskBuild = 'migrateFastVirtualDiskBuild'
+                      maxFullMigrationStoragePercentage = 'maxFullMigrationStoragePercentage'
                 }
                 Query       = ''
                 Result      = ''
@@ -3674,7 +3761,7 @@ function Get-RubrikAPIData {
 
     if ($null -eq $key) {
         $ErrorSplat = @{
-            Message = "No matching endpoint found for $EndPoint that corrosponds to the current cluster version."
+            Message = "No matching endpoint found for $EndPoint that corresponds to the current cluster version."
             ErrorAction = 'Stop'
             TargetObject = $api.$endpoint.keys -join ','
             Category = 'ObjectNotFound'

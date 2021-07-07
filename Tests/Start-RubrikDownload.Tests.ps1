@@ -5,9 +5,9 @@ Describe -Name 'Public/Start-RubrikDownload' -Tag 'Public', 'Start-RubrikDownloa
     Context -Name 'Context validate correct processing of function with different parameter sets' -Fixture {
         Mock -CommandName Invoke-WebRequest -ModuleName 'Rubrik' -MockWith {
             if ($Outfile -match '\.') {
-                mkdir -Path (Split-Path $Outfile) -Force | Out-Null
+                New-Item -Path (Split-Path $Outfile) -ItemType Directory -Force | Out-Null
             } else {
-                mkdir -Path $OutFile | Out-Null
+                New-Item -Path $OutFile -ItemType Directory | Out-Null
             }
             New-Item $OutFile -ItemType File | Out-Null
         }
@@ -18,6 +18,7 @@ Describe -Name 'Public/Start-RubrikDownload' -Tag 'Public', 'Start-RubrikDownloa
                 Date = (Get-Date).AddHours(-1)
             }
         }
+        Mock -CommandName New-Item 
 
         It -Name "Should return a file object" -Test {
             Start-RubrikDownload -Uri https://cluster-b.rubrik.us/download_dir/EVep2PMDpJEAWhIQS6Si.zip -Path "TestDrive:/Temp/MyImportedFileSet.zip" |

@@ -14,6 +14,14 @@ function Invoke-RubrikWebRequest {
         $Body
     )
 
+    # Write Debug information
+    Write-Debug -Message ($PSBoundParameters.GetEnumerator()|Out-String)
+
+    if (Test-UnicodeInString -String $Body) {
+        $PSBoundParameters.Add('ContentType', 'text/plain; charset=utf-8')
+        Write-Verbose -Message ('Submitting "{0}" request as "text/plain; charset=utf-8"' -f $Method)
+    }
+
     if (Test-PowerShellSix) {
         if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
             Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
@@ -33,6 +41,7 @@ function Invoke-RubrikWebRequest {
     }
 
     Write-Verbose -Message "Received HTTP Status $($result.StatusCode)"
+    Write-Debug -Message "Raw Response content:`n $($result.rawcontent)"
 
     return $result
 }
