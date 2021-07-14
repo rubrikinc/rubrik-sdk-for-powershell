@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+* `Test-UnicodeInString` issue fixed, issue with slowness for large JSON response thanks @nic080 & @iisresetme, resolves [Issue 774](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/774)
 * `Get-RubrikDownloadLink` issue fixed where incorrect timezone could cause cmdlet to get stuck, thanks @benckendall
 
 ## [5.3.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.3.1) - 2021-07-06
