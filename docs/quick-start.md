@@ -26,10 +26,20 @@ Common PowerShell module paths include:
 
 ## Option 1: PowerShell Gallery (Recommended)
 
+> ### ❗ If you are using Windows PowerShell 5 you might encounter one of the following error messages:
+>
+> `WARNING: Source Location 'https://www.powershellgallery.com/api/v2/package/Rubrik/5.3.1' is not valid.`
+>
+>  `WARNING: Unable to resolve package source 'https://www.powershellgallery.com/api/v2'.`
+>
+> There are two multiple solutions for this problem, the most permanent solution is to install PowerShell 7, which can be installed in as a side-by-side installation to Windows PowerShell. It is available here: [PowerShell 7 Download Link](https://aka.ms/getps6).
+>
+> Alternatively you could ensure that your current PowerShell session is configured with TLS 1.2 by running before following the steps listed below: `[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12`
+
 1. Ensure you have the [Windows Management Framework 5.0](htps://www.microsoft.com/en-us/download/details.aspx?id=50395) or greater installed.
 1. Open a PowerShell console with the Run as Administrator option.
-1. Run `Set-ExecutionPolicy` using the parameter RemoteSigned or Bypass.
-1. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository. If you receive the following error message 'WARNING: Source Location 'https://...' ensure that PowerShell is configured with TLS 1.2 by running: `[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12`
+1. Run `Set-ExecutionPolicy` using the parameter `RemoteSigned` or `Bypass`.
+1. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository. 
 1. Alternatively `Install-Module -Name Rubrik -Scope AllUsers` can be execute be used if you would like to install the module for all users on the current system.
 
 ## Option 2: Installer Script
