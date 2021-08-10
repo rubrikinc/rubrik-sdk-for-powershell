@@ -32,7 +32,7 @@ Common PowerShell module paths include:
 >
 >  `WARNING: Unable to resolve package source 'https://www.powershellgallery.com/api/v2'.`
 >
-> There are two multiple solutions for this problem, the most permanent solution is to install PowerShell 7, which can be installed in as a side-by-side installation to Windows PowerShell. It is available here: [PowerShell 7 Download Link](https://aka.ms/getps6).
+> There are two multiple solutions for this problem, the most permanent solution is to install PowerShell 7, which can be installed in as a side-by-side installation to Windows PowerShell. It is available here: [PowerShell 7 Download Link](https://aka.ms/pscore6).
 >
 > Alternatively you could ensure that your current PowerShell session is configured with TLS 1.2 by running before following the steps listed below: `[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12`
 
