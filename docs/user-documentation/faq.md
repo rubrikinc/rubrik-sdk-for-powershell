@@ -29,11 +29,11 @@ By default, custom view definitions are applied to the output of some results th
 
 ![](../img/get-rubrikslacustom.png)
 
-Rest assured though, all properties are returned and can be viewed by simply piping the cmdlet to Select * (`Get-RubrikSLA | Select *`) or referencing the property directly (`(Get-RubrikSLA).numVms`).
+Rest assured though, all properties are returned and can be viewed by simply piping the cmdlet to Select * ( `Get-RubrikSLA | Select *` ) or referencing the property directly ( `(Get-RubrikSLA).numVms` ).
 
 The application of custom view definitions may also be turned on and off with the configuration of the `ApplyCustomViewDefinitions` module option as well.
 
-```text
+```powershell
 Set-RubrikModuleOption -OptionName "ApplyCustomViewDefinitions" -OptionValue "False"
 ```
 
@@ -41,7 +41,7 @@ Set-RubrikModuleOption -OptionName "ApplyCustomViewDefinitions" -OptionValue "Fa
 
 Many Rubrik API endpoints are designed in such a way that they provide lists of objects as a response when querying a simple object type, and a more detailed response when sending the actual ID of the object. For instance, we are able to get a list of VMs by sending a GET request to the `/vmware/vm` endpoint. We can, if we desire, shorten this list by adding a `name` filter into the query. This process is the same as running `Get-RubrikVM -Name "VMName"`. By sending the id to the endpoint `/vmware/vm/{id}` we essentially ask for a more detailed response, equivalent to running `Get-RubrikVM -ID "12345"`. That said, we are able to use the `-Name` parameter along with the `-DetailedObject` parameter to retrieve the detailed response just as if we had passed the `-Id` parameter.
 
-```text
+```powershell
 Get-RubrikVM -Name "VMName" -DetailedObject
 ```
 
