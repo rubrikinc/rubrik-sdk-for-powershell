@@ -28,11 +28,11 @@ Common PowerShell module paths include:
 >
 >  `WARNING: Unable to resolve package source 'https://www.powershellgallery.com/api/v2'.`
 >
-> There are two multiple solutions for this problem, the most permanent solution is to install PowerShell 7, which can be installed in as a side-by-side installation to Windows PowerShell. It is available here: [PowerShell 7 Link](https://aka.ms/pscore6).
+> There are two multiple solutions for this problem, the most permanent solution is to install PowerShell 7, which can be installed in as a side-by-side installation to Windows PowerShell. It is available here: [PowerShell Download Link](https://aka.ms/pscore6).
 >
 > Alternatively you could ensure that your current PowerShell session is configured with TLS 1.2 by running before following the steps listed below: `[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12`
 
-1. Ensure you have the latest version of [PowerShell](https://aka.ms/pscore6) installed, or [Windows Management Framework 5.0](https://www.microsoft.com/en-us/download/details.aspx?id=50395) or greater installed.
+1. Ensure you have the latest version of [PowerShell](https://aka.ms/pscore6) installed, or as a minimum [Windows Management Framework 5.1](http://aka.ms/wmf5download) or greater installed.
 2. Open a PowerShell console with the _Run as Administrator_ option.
 3. Run `Set-ExecutionPolicy` using the parameter _RemoteSigned_ or _Bypass_.
 4. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download and install the module from the PowerShell Gallery. Note that the first time you install from the PowerShell Gallery repository it may ask you to first trust the repository.
