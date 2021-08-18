@@ -1,4 +1,4 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Updated various sections of the documentations with additional TLS 1.2 troubleshooting steps & solutions, resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
 ### Added
 
 ### Fixed
