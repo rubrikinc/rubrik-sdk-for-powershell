@@ -30,11 +30,13 @@ Common PowerShell module paths include:
 >
 > `WARNING: Source Location 'https://www.powershellgallery.com/api/v2/package/Rubrik/5.3.1' is not valid.`
 >
->  `WARNING: Unable to resolve package source 'https://www.powershellgallery.com/api/v2'.`
+> `WARNING: Unable to resolve package source 'https://www.powershellgallery.com/api/v2'.`
 >
 > There are two multiple solutions for this problem, the most permanent solution is to install PowerShell 7, which can be installed in as a side-by-side installation to Windows PowerShell. It is available here: [PowerShell Download Link](https://aka.ms/pscore6).
 >
 > Alternatively you could ensure that your current PowerShell session is configured with TLS 1.2 by running before following the steps listed below: `[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12`
+>
+> It is also possible to make a permanent entry in your registry to enable TLS 1.2, for more information on this, the impact, and the configuration options: [Docs.Microsoft.com - How to enable TLS 1.2 on clients](https://docs.microsoft.com/en-us/mem/configmgr/core/plan-design/security/enable-tls-1-2-client)
 
 1. Ensure you have PowerShell 5.0 or greater installed [PowerShell Download Link](https://aka.ms/pscore6).
 1. Open a PowerShell console with the Run as Administrator option.
