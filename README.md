@@ -18,10 +18,10 @@ Where `#.#.#` represents the version number, for example 5.3.1
 
 The Rubrik SDK for PowerShell provides two mechanisms for supplying credentials to the Connect-Rubrik function. A combination of username and password or a credential object. Credentials in the credential object may be entered manually or provided as an object. The example below prompts for a username and password to create a credential object, connects to a cluster and displays the running version.
 
-```
+```powershell
 $Credential = Get-Credential
 Connect-Rubrik -Server 192.168.10.10 -Credential $Credential
-Get-RubrikVersion
+Get-RubrikDebugInfo
 ```
 
 # :blue_book: Documentation

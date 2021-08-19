@@ -4,8 +4,8 @@
 
 * [Contribution](user-documentation/contribution.md)
 * [FAQ](user-documentation/faq.md)
-* [Getting Started](user-documentation/getting_started.md)
 * [Installation](user-documentation/installation.md)
+* [Getting Started](user-documentation/getting_started.md)
 * [Licensing](user-documentation/licensing.md)
 * [Project Architecture](user-documentation/project_architecture.md)
 * [Requirements](user-documentation/requirements.md)
