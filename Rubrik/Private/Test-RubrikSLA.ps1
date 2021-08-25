@@ -27,15 +27,15 @@
     $slaid = & {
       $local:PSDefaultParameterValues = @{Disabled=$true}
       if (-not [string]::IsNullOrWhiteSpace($PrimaryClusterID)) {
-        $currentId = (Get-RubrikSLA -SLA $SLA -PrimaryClusterID $PrimaryClusterID).id
+        (Get-RubrikSLA -SLA $SLA -PrimaryClusterID $PrimaryClusterID).id
+      } else {
+        $currentId = (Get-RubrikSLA -SLA $SLA).id
         if (@($currentId).count -gt 1) {
           Write-Verbose -Message "Multiple SLA ID for '$SLA', limiting query to local cluster"
           (Get-RubrikSLA -SLA $SLA -PrimaryClusterID local).id
         } else {
           $currentId
         }
-      } else {
-        (Get-RubrikSLA -SLA $SLA).id
       }
     }
     if ($slaid -eq $null) {
