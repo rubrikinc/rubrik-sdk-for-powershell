@@ -183,10 +183,10 @@ function Get-RubrikAPIData {
                 }
                 Result      = 'data'
                 Filter      = @{
-                    # 'name'          = 'name'
-                    # 'id'            = 'id'
                 }
                 Success     = '200'
+                ObjectTName = 'Rubrik.RubrikFile'
+                
             }
         }
         'Get-RubrikAPIToken'         = @{
