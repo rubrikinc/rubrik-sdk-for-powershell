@@ -34,6 +34,11 @@ function Protect-RubrikFileset
     Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Gold' -SLAPrimaryClusterId 57bbd327-477d-40d8-b1d8-5820b37d88e5
     
     This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" on the cluster id specified in SLAPrimaryClusterId
+
+    .EXAMPLE
+    Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -DoNotProtect -ExistingSnapshotRetention ExpireImmediately
+
+    This will set the C_Drive fileset to not protected and subsequently expire existing snapshots
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High')]
