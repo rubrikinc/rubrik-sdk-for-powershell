@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 * Updated various sections of the documentations with additional TLS 1.2 troubleshooting steps & solutions, resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
+* Added ability to retain snapshots while setting the -DoNotProtect parameter to `Protect-RubrikFileset`,`Protect-RubrikDatabase`,`Protect-RubrikHyperVVM` and `Protect-RubrikNutanixVM`, this resolves [Issue 795](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/795) and [Issue 785](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/785) and [Issue 697](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/697)
+
 ### Added
 
 ### Fixed
