@@ -2343,6 +2343,20 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
+            '5.2' = @{
+                Description = 'Update a Microsoft SQL database with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{ 
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Protect-RubrikFileset'        = @{
             '1.0' = @{
@@ -2354,6 +2368,20 @@ function Get-RubrikAPIData {
                 }
                 Query       = ''
                 Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.2' = @{
+                Description = 'Update a fileset with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{ 
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
+                }
+                Query       = ''
+                Result      = ''
                 Filter      = ''
                 Success     = '200'
             }
@@ -2371,6 +2399,20 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
+            '5.2' = @{
+                Description = 'Update a VM with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{ 
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Protect-RubrikNutanixVM'             = @{
             '1.0' = @{
@@ -2379,6 +2421,20 @@ function Get-RubrikAPIData {
                 Method      = 'Patch'
                 Body        = @{
                     configuredSlaDomainId = 'configuredSlaDomainId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.2' = @{
+                Description = 'Update a VM with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{ 
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
                 }
                 Query       = ''
                 Result      = ''
