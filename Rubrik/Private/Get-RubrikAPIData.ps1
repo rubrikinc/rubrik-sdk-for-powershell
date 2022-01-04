@@ -1051,6 +1051,28 @@ function Get-RubrikAPIData {
                 Success     = '200'
                 ObjectTName = 'Rubrik.OracleDatabase'
             }
+            '6.0' = @{
+                Description = 'Get summary of all the Oracle DBs'
+                URI         = '/api/v1/oracle/db'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    is_live_mount           = 'is_live_mount'
+                    name                    = 'name'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                    is_data_guard_group     = 'is_data_guard_group'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.OracleDatabase'
+            }
         }
         'Get-RubrikOrganization'                 = @{
             '1.0' = @{
