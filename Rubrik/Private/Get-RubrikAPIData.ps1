@@ -2407,6 +2407,20 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
+            '5.2' = @{
+                Description = 'Update a VM with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{ 
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Protect-RubrikTag'            = @{
             '1.0' = @{

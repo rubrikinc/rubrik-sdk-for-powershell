@@ -28,6 +28,10 @@ function Protect-RubrikHyperVVM
       Get-RubrikHyperVVM "VM1" -SLA Silver | Protect-RubrikHyperVVM -SLA 'Gold' -Confirm:$False
       This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
       without asking for confirmation
+
+      .EXAMPLE
+      Get-RubrikHyperVVM "VM1" | Protect-RubrikHyperVVM -DoNotProtect -ExistingSnapshotRetention KeepForever
+      This will unprotect the VM1 HyperV VM while keeping existing snapshots forever
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="None")]
