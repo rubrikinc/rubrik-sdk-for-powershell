@@ -27,7 +27,7 @@ function Find-RubrikFile
 
   [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
-    # ID of the thing to search for
+    # ID of the object to search
     [ValidateNotNullOrEmpty()]
     [Parameter(
         ParameterSetName='Query',
@@ -36,24 +36,17 @@ function Find-RubrikFile
         ValueFromPipeline = $true,
         ValueFromPipelineByPropertyName = $true)]
     [String]$id,
-    # Seach string
+    # String to search for in filename
     [ValidateNotNullOrEmpty()]
     [Parameter(
         ParameterSetName='Query',
         Position = 1)]
     [String]$SearchString,
-    # Limit
+    # Limit the number of search results (API defaults to 100)
     [Parameter(
         ParameterSetName='Query',
         Position = 2)]
     [String]$Limit,
-    # Seach string
-    [Parameter(
-        ParameterSetName='Query',
-        Position = 3)]
-    [String]$Cursor,
-    # DetailedObject will retrieved the detailed archive object, the default behavior of the API is to only retrieve a subset of the archive object. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
-    [Switch]$DetailedObject,
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
