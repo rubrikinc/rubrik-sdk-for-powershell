@@ -9,15 +9,14 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Label>Filename</Label>
+                        <Label>File Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Object Name</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Path</Label>
-                    </TableColumnHeader>
-                    <TableColumnHeader>                   
+                    </TableColumnHeader>               
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
