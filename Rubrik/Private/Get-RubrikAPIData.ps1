@@ -169,6 +169,26 @@ function Get-RubrikAPIData {
                 Success     = '202'
             }
         }
+        'Find-RubrikFile'         = @{
+            '1.0' = @{
+                Description = 'Retrieves software version of the Rubrik cluster'
+                URI         = '/api/internal/search'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    'ID'    = 'managed_id'
+                    'SearchString' = 'query_string'
+                    'limit'        = 'limit'
+                    'cursor'       = 'cursor'
+                }
+                Result      = 'data'
+                Filter      = @{
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.RubrikFile'
+                
+            }
+        }
         'Get-RubrikAPIToken'         = @{
             '5.0' = @{
                 Description = 'Retrieves list of generated API tokens from the Rubrik cluster'

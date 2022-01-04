@@ -101,7 +101,8 @@
                    'ObjectDefinitions/Rubrik.Archive.ps1xml',
                    'ObjectDefinitions/Rubrik.ArchiveDetailed.ps1xml',
                    'ObjectDefinitions/Rubrik.VCDvApp.ps1xml',
-                   'ObjectDefinitions/Rubrik.VCDServer.ps1xml')
+                   'ObjectDefinitions/Rubrik.VCDServer.ps1xml',
+                   'ObjectDefinitions/Rubrik.RubrikFile.ps1xml')
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     # NestedModules = @()
@@ -115,6 +116,7 @@
                    'Export-RubrikVApp',
                    'Export-RubrikVCDTemplate',
                    'Export-RubrikVM',
+                   'Find-RubrikFile',
                    'Get-RubrikAPIToken',
                    'Get-RubrikAPIVersion',
                    'Get-RubrikArchive',
