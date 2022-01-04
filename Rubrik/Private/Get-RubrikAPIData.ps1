@@ -187,7 +187,6 @@ function Get-RubrikAPIData {
                     # 'id'            = 'id'
                 }
                 Success     = '200'
-                ObjectTName = 'Rubrik.RubrikFile'
             }
         }
         'Get-RubrikAPIToken'         = @{
