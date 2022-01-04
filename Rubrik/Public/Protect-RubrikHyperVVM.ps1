@@ -28,6 +28,10 @@ function Protect-RubrikHyperVVM
       Get-RubrikHyperVVM "VM1" -SLA Silver | Protect-RubrikHyperVVM -SLA 'Gold' -Confirm:$False
       This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
       without asking for confirmation
+
+      .EXAMPLE
+      Get-RubrikHyperVVM "VM1" | Protect-RubrikHyperVVM -DoNotProtect -ExistingSnapshotRetention KeepForever
+      This will unprotect the VM1 HyperV VM while keeping existing snapshots forever
   #>
 
   [CmdletBinding(SupportsShouldProcess = $true,ConfirmImpact = 'High',DefaultParameterSetName="None")]
@@ -48,6 +52,10 @@ function Protect-RubrikHyperVVM
     # SLA id value
     [Alias('configuredSlaDomainId')]
     [String]$SLAID = (Test-RubrikSLA -SLA $SLA -DoNotProtect $DoNotProtect -Inherit $Inherit -Mandatory:$true),    
+    # Determine the retention settings for the already existing snapshots
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
+    [ValidateSet('RetainSnapshots', 'KeepForever', 'ExpireImmediately')]
+    [string] $ExistingSnapshotRetention = 'RetainSnapshots',
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -76,9 +84,23 @@ function Protect-RubrikHyperVVM
 
   Process {
     
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $slaid
+      
+      $HashProps = [ordered]@{
+        managedIds = @($id)
+      }
+      if ($ExistingSnapshotRetention) {
+        $HashProps.existingSnapshotRetention = $ExistingSnapshotRetention
+      }
+
+      $body = [pscustomobject]$HashProps | ConvertTo-Json
+      Write-Verbose -Message "Body = $body"
+    } else {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    }
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result

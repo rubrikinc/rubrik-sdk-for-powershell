@@ -20,7 +20,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Updated various sections of the documentations with additional TLS 1.2 troubleshooting steps & solutions, resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
 * Added support for the v1 endpoint for `Get-RubrikOracleDB` when using 6.0 or above. Resolves [Issue 784](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/784)
+* Added ability to retain snapshots while setting the -DoNotProtect parameter to `Protect-RubrikFileset`,`Protect-RubrikDatabase`,`Protect-RubrikHyperVVM` and `Protect-RubrikNutanixVM`, this resolves [Issue 795](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/795) and [Issue 785](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/785) and [Issue 697](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/697)
+
 ### Added
+
+* Added `Find-RubrikFile` which allows end users to automate the search process of finding files within Rubrik snapshots. [Issue 789](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/798)
 
 ### Fixed
 

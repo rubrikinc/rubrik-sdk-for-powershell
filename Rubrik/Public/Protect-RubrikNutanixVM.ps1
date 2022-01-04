@@ -25,6 +25,10 @@ function Protect-RubrikNutanixVM
       This will assign the Gold SLA Domain to any virtual machine named "VM1"
 
       .EXAMPLE
+      Get-RubrikNutanixVM "VM1" | Protect-RubrikNutanixVM -DoNotProtect -ExistingSnapshotRetention KeepForever
+      This will unprotect the Nutanix VM VM1 while keeping existing snapshots forever
+
+      .EXAMPLE
       Get-RubrikNutanixVM "VM1" -SLA Silver | Protect-RubrikNutanixVM -SLA 'Gold' -Confirm:$False
       This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
       without asking for confirmation
@@ -45,6 +49,10 @@ function Protect-RubrikNutanixVM
     # Removes the SLA Domain assignment
     [Parameter(ParameterSetName = 'SLA_Unprotected')]
     [Switch]$DoNotProtect,
+    # Determine the retention settings for the already existing snapshots
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
+    [ValidateSet('RetainSnapshots', 'KeepForever', 'ExpireImmediately')]
+    [string] $ExistingSnapshotRetention = 'RetainSnapshots',
     # SLA id value
     [Alias('configuredSlaDomainId')]
     [String]$SLAID = (Test-RubrikSLA -SLA $SLA -DoNotProtect $DoNotProtect -Inherit $Inherit -Mandatory:$true),    
@@ -76,9 +84,25 @@ function Protect-RubrikNutanixVM
 
   Process {
     
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+
+    if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $slaid
+      
+      $HashProps = [ordered]@{
+        managedIds = @($id)
+      }
+      if ($ExistingSnapshotRetention) {
+        $HashProps.existingSnapshotRetention = $ExistingSnapshotRetention
+      }
+
+      $body = [pscustomobject]$HashProps | ConvertTo-Json
+      Write-Verbose -Message "Body = $body"
+    } else {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    }
+
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
