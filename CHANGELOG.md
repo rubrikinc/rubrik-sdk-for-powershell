@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 * Updated various sections of the documentations with additional TLS 1.2 troubleshooting steps & solutions, resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
+* Added support for the v1 endpoint for `Get-RubrikOracleDB` when using 6.0 or above. Resolves [Issue 784](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/784)
 ### Added
 
 ### Fixed
