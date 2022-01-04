@@ -27,7 +27,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* Added `Find-RubrikFile` which allows end users to automate the search process of finding files within Rubrik snapshots. [Issue 789](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/798)
+* Added `CANCELLED` as an exit condition for `Get-RubrikRequest` as suggested by @IamTHEvilONE, resolves [Issue 794](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/794)
+* Added `Find-RubrikFile` which allows end users to automate the search process of finding files within Rubrik snapshots. [Issue 789](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/789)
 
 ### Fixed
 
