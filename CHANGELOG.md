@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated various sections of the documentations with additional TLS 1.2 troubleshooting steps & solutions, resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
 ### Added
 
+* Added `Find-RubrikFile` which allows end users to automate the search process of finding files within Rubrik snapshots. [Issue 789](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/798)
+
 ### Fixed
 
 * `Test-UnicodeInString` issue fixed, issue with slowness for large JSON response thanks @nic080 & @iisresetme, resolves [Issue 774](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/774)
