@@ -1,64 +1,59 @@
 ﻿#requires -Version 3
 function Get-RubrikVgfClusterStorage
 {
-  <#
-      .SYNOPSIS
-      Returns cluster free space in the case of Volume Group format upgrade
+<#
+  .SYNOPSIS
+  Returns cluster free space in the case of Volume Group format upgrade
 
-      .DESCRIPTION
-      The Get-RubrikVgfClusterStorage cmdlet is used to return projected space consumption
-      on any number of volume groups if they are migrated to use the new format, and the
-      cluster free space before and after the migration. If no Volume Group ID or list of
-      ID is given, it will report the projected space consumption of migrating all Volume
-      Groups that are currently using the old format.
+  .DESCRIPTION
+  The Get-RubrikVgfClusterStorage cmdlet is used to return projected space consumption
+  on any number of volume groups if they are migrated to use the new format, and the
+  cluster free space before and after the migration. If no Volume Group ID or list of
+  ID is given, it will report the projected space consumption of migrating all Volume
+  Groups that are currently using the old format.
 
-      .NOTES
-      Written by Feng Lu for community usage
-      github: fenglu42
+  .NOTES
+  Written by Feng Lu for community usage
+  github: fenglu42
 
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvgfclusterstorage
+  .LINK
+  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvgfclusterstorage
 
-      .EXAMPLE
-      Get-RubrikVgfClusterStorage -VGList VolumeGroup:::e0a04776-ab8e-45d4-8501-8da658221d74, VolumeGroup:::9136a7ef-4ad2-4bb9-bf28-961fb74d4322
+  .EXAMPLE
+  Get-RubrikVgfClusterStorage -VGList VolumeGroup:::e0a04776-ab8e-45d4-8501-8da658221d74, VolumeGroup:::9136a7ef-4ad2-4bb9-bf28-961fb74d4322
 
-      This will return projected space consumption on volume groups within the given Volume Group ID list, and cluster free space before and after migration.
+  This will return projected space consumption on volume groups within the given Volume Group ID list, and cluster free space before and after migration.
 
-      .EXAMPLE
-      Get-RubrikVgfClusterStorage
+  .EXAMPLE
+  Get-RubrikVgfClusterStorage
 
-      This will return projected space consumption of migrating all old-format volume groups on the Rubrik cluster, and cluster free space before and after migration.
+  This will return projected space consumption of migrating all old-format volume groups on the Rubrik cluster, and cluster free space before and after migration.
 
-      .EXAMPLE
-      Get-RubrikVgfClusterStorage -Hostname 'Server1'
+  .EXAMPLE
+  Get-RubrikVgfClusterStorage -Hostname 'Server1'
 
-      This will return projected space consumption of migrating all old-format volume groups from host "Server1", and cluster free space before and after migration.
+  This will return projected space consumption of migrating all old-format volume groups from host "Server1", and cluster free space before and after migration.
 
-      .EXAMPLE
-      Get-RubrikVgfClusterStorage -Hostname 'Server1' -SLA Gold
+  .EXAMPLE
+  Get-RubrikVgfClusterStorage -Hostname 'Server1' -SLA Gold
 
-      This will return projected space consumption of migrating all old-format volume groups of "Server1" that are protected by the Gold SLA Domain, and cluster free space before and after migration.
+  This will return projected space consumption of migrating all old-format volume groups of "Server1" that are protected by the Gold SLA Domain, and cluster free space before and after migration.
 
-      .EXAMPLE
-      Get-RubrikVgfClusterStorage -Relic
+  .EXAMPLE
+  Get-RubrikVgfClusterStorage -Relic
 
-      This will return projected space consumption of migrating all old-format, removed volume groups that were formerly protected by Rubrik, and cluster free space before and after migration.
+  This will return projected space consumption of migrating all old-format, removed volume groups that were formerly protected by Rubrik, and cluster free space before and after migration.
 
-      .EXAMPLE
-      Get-RubrikVgfClusterStorage -FailedLastSnapshot
+  .EXAMPLE
+  Get-RubrikVgfClusterStorage -FailedLastSnapshot
 
-      This will return projected space consumption of migrating all old-format volume groups that needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format, and cluster free space before and after migration.
+  This will return projected space consumption of migrating all old-format volume groups that needs to be migrated to use fast VHDX format since they have failed the latest snapshot using the legacy backup format, and cluster free space before and after migration.
 
-      .EXAMPLE
-      Get-RubrikVgfClusterStorage -UsedFastVhdx false
-
-      This will return projected space consumption on volume groups that did not use fast VHDX format in the latest snapshot.
-
-      .EXAMPLE
-      Get-RubrikVgfClusterStorage -Id VolumeGroup:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
-      
-      This will return projected space consumption for the specified VolumeGroup ID, and 0 if this Volume Group uses fast VHDX format (no need for migration).
-  #>
+  .EXAMPLE
+  Get-RubrikVgfClusterStorage -Id VolumeGroup:::205b0b65-b90c-48c5-9cab-66b95ed18c0f
+  
+  This will return projected space consumption for the specified VolumeGroup ID, and 0 if this Volume Group uses fast VHDX format (no need for migration).
+#>
 
   [CmdletBinding()]
   Param(
@@ -198,7 +193,7 @@ function Get-RubrikVgfClusterStorage
 
     #get cluster storage
     $key = "StorageOverview"
-    $uri1 = New-URIString -server $Server -endpoint $Resources1.URI[$key] -id $id
+    $uri1 = New-URIString -server $Server -endpoint $Resources1.URI[$key]
     $result1 = Submit-Request -uri $uri1 -header $Header -method $($resources1.Method) -body $body
 
     $projectedSize.ClusterTotalUsableSpace = $result1.total

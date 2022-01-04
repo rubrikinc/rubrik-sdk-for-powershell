@@ -24,7 +24,7 @@ for read/write actions.
 
 ### EXAMPLE 1
 ```
-Start-ManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
+Start-RubrikManagedVolumeSnapshot -id ManagedVolume:::f68ecd45-bdb9-46dd-aea4-8f041fb2dec2
 ```
 
 Open the specified managed volume for read/write operations

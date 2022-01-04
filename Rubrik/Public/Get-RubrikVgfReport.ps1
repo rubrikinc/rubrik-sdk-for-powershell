@@ -128,7 +128,7 @@ function Get-RubrikVgfReport
       if (!$vgsnapshot) {
         continue
       }
-      $vgf = $vgsnapshot | Select-Object@{N='ID'; E={$_.VolumeGroupId}}, @{N='Migrated'; E={$_.usedFastVhdx}}
+      $vgf = $vgsnapshot | Select-Object @{N='ID'; E={$_.VolumeGroupId}}, @{N='Migrated'; E={$_.usedFastVhdx}}
       $vgf | Add-Member NoteProperty Name $vg.name
       $vgf | Add-Member NoteProperty SLADomain $vg.configuredSlaDomainName
       $vgf | Add-Member NoteProperty HostName $vg.hostname

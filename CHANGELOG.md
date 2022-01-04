@@ -1,4 +1,4 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -18,13 +18,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Updated various sections of the documentations with additional TLS 1.2 troubleshooting steps & solutions, resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
 ### Added
 
 ### Fixed
 
+* `Test-UnicodeInString` issue fixed, issue with slowness for large JSON response thanks @nic080 & @iisresetme, resolves [Issue 774](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/774)
+* `Get-RubrikDownloadLink` issue fixed where incorrect timezone could cause cmdlet to get stuck, thanks @benckendall
+
+## [5.3.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.3.1) - 2021-07-06
+
+### Changed
+
+* Added new parameter set & two parameters to `Get-RubrikSnapshot`, `-SnapshotId` & `-SnapshotType` to allow for querying by snapshotid [Issue 743](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/743)
+* Updated parameter help for `-Archival` parameter in `New-RubrikSla` cmdlet
+
+### Added
+
+* Added troubleshooting step and additional CDM API links, resolving [Issue 770](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/770)
+* Added additional debug logging to `Invoke-RubrikWebRequest`, resolving [Issue 721](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/721)
+
+### Fixed
+
+* Fixed typo in documentation, resolving [Issue 776](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/776)
+* Fixed Unicode issues for all cmdlets, resolving [Issue 768](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/768), [Issue 750](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/750), [Issue 749](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/749)
+* Fixed documentation for `Sync-RubrikTag`, resolving [Issue 757](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/757)
+* Fixed documentation for `New-RubrikHyperVVMMount` resolving [Issue 756](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/756)
+* Updated API endpoints to `v1` for `Get-RubrikHostVolume`, `New-RubrikSnapshot` (VolumeGroup endpoint) & `Protect-RubrikVolumeGroup` cmdlets, fixing [Issue 747](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/747)
 * Fixed bug in `Submit-Request` which causes several issues [Issue 751](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/751) & [Issue 752](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/752)
 
-## [5.3.0]() - 2021-04-09
+## [5.3.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/releases/tag/5.3) - 2021-04-09
 
 ### Changed
 

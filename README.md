@@ -1,8 +1,5 @@
 # Rubrik SDK for PowerShell
 
-[![Build Status](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_apis/build/status/rubrikinc.rubrik-sdk-for-powershell?branchName=devel)](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_build/latest?definitionId=3&branchName=devel)
-[![Build Status](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_apis/build/status/rubrikinc.rubrik-sdk-for-powershell?branchName=master)](https://dev.azure.com/rubrik-build/rubrik-sdk-for-powershell/_build/latest?definitionId=3&branchName=master)
-
 This is a community project that provides a Microsoft PowerShell module for managing and monitoring Rubrik's Multi-Cloud Data Control fabric by way of published RESTful APIs. If you're looking to perform interactive automation, setting up scheduled tasks, leverage an orchestration engine, or need ad-hoc operations, this module is intended to be valuable to your needs.
 
 # :hammer: Installation
@@ -13,18 +10,18 @@ Load the module by using:
 
 If you wish to load a specific version, use:
 
-`Import-Module Rubrik -RequiredVersion #.#.#.#`
+`Import-Module Rubrik -RequiredVersion #.#.#`
 
-Where `#.#.#.#` represents the version number.
+Where `#.#.#` represents the version number, for example 5.3.1
 
 # :mag: Example
 
 The Rubrik SDK for PowerShell provides two mechanisms for supplying credentials to the Connect-Rubrik function. A combination of username and password or a credential object. Credentials in the credential object may be entered manually or provided as an object. The example below prompts for a username and password to create a credential object, connects to a cluster and displays the running version.
 
-```
+```powershell
 $Credential = Get-Credential
 Connect-Rubrik -Server 192.168.10.10 -Credential $Credential
-Get-RubrikVersion
+Get-RubrikDebugInfo
 ```
 
 # :blue_book: Documentation

@@ -13,6 +13,7 @@ The code assumes that you have already deployed at least one Rubrik cluster into
 
 *The module has been written with PowerShell support in mind. For best performance and compatibility, the most recent release of PowerShell is recommended when using the Rubrik SDK for PowerShell.*
 
+
 # Installation
 
 The Rubrik SDK for PowerShell project contains a folder named [Rubrik](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/master/Rubrik). The folder needs to be installed into one of your PowerShell Module Paths using one of the installation options outlined below. To see the full list of available PowerShell Module paths, use `$env:PSModulePath.split(';')` in a PowerShell console.
@@ -25,10 +26,22 @@ Common PowerShell module paths include:
 
 ## Option 1: PowerShell Gallery (Recommended)
 
-1. Ensure you have the [Windows Management Framework 5.0](htps://www.microsoft.com/en-us/download/details.aspx?id=50395) or greater installed.
+> ### ❗ If you are using Windows PowerShell 5 you might encounter one of the following error messages:
+>
+> `WARNING: Source Location 'https://www.powershellgallery.com/api/v2/package/Rubrik/5.3.1' is not valid.`
+>
+> `WARNING: Unable to resolve package source 'https://www.powershellgallery.com/api/v2'.`
+>
+> There are two multiple solutions for this problem, the most permanent solution is to install PowerShell 7, which can be installed in as a side-by-side installation to Windows PowerShell. It is available here: [PowerShell Download Link](https://aka.ms/pscore6).
+>
+> Alternatively you could ensure that your current PowerShell session is configured with TLS 1.2 by running before following the steps listed below: `[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12`
+>
+> It is also possible to make a permanent entry in your registry to enable TLS 1.2, for more information on this, the impact, and the configuration options: [Docs.Microsoft.com - How to enable TLS 1.2 on clients](https://docs.microsoft.com/en-us/mem/configmgr/core/plan-design/security/enable-tls-1-2-client)
+
+1. Ensure you have PowerShell 5.0 or greater installed [PowerShell Download Link](https://aka.ms/pscore6).
 1. Open a PowerShell console with the Run as Administrator option.
-1. Run `Set-ExecutionPolicy` using the parameter RemoteSigned or Bypass.
-1. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository.
+1. Run `Set-ExecutionPolicy` using the parameter `RemoteSigned` or `Bypass`.
+1. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download the module from the PowerShell Gallery. Note that the first time you install from the remote repository it may ask you to first trust the repository. 
 1. Alternatively `Install-Module -Name Rubrik -Scope AllUsers` can be execute be used if you would like to install the module for all users on the current system.
 
 ## Option 2: Installer Script
@@ -345,7 +358,10 @@ Rubrik prides itself upon its API-first architecture, ensuring everything availa
 # Further Reading
 
 * [Rubrik PowerShell SDK GitHub Repository](https://github.com/rubrikinc/rubrik-sdk-for-powershell)
-* [Rubrik PowerShell SDK Official Documentation](http://rubrikinc.github.io/rubrik-sdk-for-powershell/)
-* [Rubrik CDM API Documentation (v1)](https://rubrikinc.github.io/api-doc-v1/)
-* [Rubrik CDM API Documentation (internal)](https://rubrikinc.github.io/api-doc-internal/)
+* [Rubrik PowerShell SDK Official Documentation](https://rubrikinc.github.io/rubrik-sdk-for-powershell/)
+* [Rubrik CDM API Documentation](https://github.com/rubrikinc/api-documentation)
+* [Rubrik CDM API Documentation 5.3 (v1)](https://rubrikinc.github.io/api-doc-v1-5.3/)
+* [Rubrik CDM API Documentation 5.3 (v2)](https://rubrikinc.github.io/api-doc-v2-5.3/)
+* [Rubrik CDM API Documentation 5.3 (v3)](https://rubrikinc.github.io/api-doc-v3-5.3/)
+* [Rubrik CDM API Documentation 5.3 (internal)](https://rubrikinc.github.io/api-doc-internal-5.3/)
 * [Get-Started with the Rubrik PowerShell Module](https://www.rubrik.com/blog/get-started-rubrik-powershell-module/)
