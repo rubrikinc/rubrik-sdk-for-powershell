@@ -63,6 +63,10 @@ function Protect-RubrikFileset
     )]
     [Alias('configuredSlaDomainId')]
     [String]$SLAID,
+    # Determine the retention settings for the already existing snapshots
+    [Parameter(ParameterSetName = 'SLA_Unprotected')]
+    [ValidateSet('RetainSnapshots', 'KeepForever', 'ExpireImmediately')]
+    [string] $ExistingSnapshotRetention = 'RetainSnapshots',
     # Rubrik server IP or FQDN
     [String]$Server = $global:RubrikConnection.server,
     # API version
@@ -104,9 +108,25 @@ function Protect-RubrikFileset
     }
     #endregion One-off
 
-    $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
-    $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
-    $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)
+    if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $slaid
+      
+      $HashProps = [ordered]@{
+        managedIds = @($id)
+      }
+      if ($ExistingSnapshotRetention) {
+        $HashProps.existingSnapshotRetention = $ExistingSnapshotRetention
+      }
+
+      $body = [pscustomobject]$HashProps | ConvertTo-Json
+      Write-Verbose -Message "Body = $body"
+    } else {
+      $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
+      $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
+      $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)  
+    }
+
+
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
