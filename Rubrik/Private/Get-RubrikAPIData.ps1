@@ -245,6 +245,25 @@ function Get-RubrikAPIData {
                 Body        = ''
                 Query       = @{
                     primary_database_id     = 'primary_database_id'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'GroupName'     = 'name'
+                    'SLA'      = 'effectiveSlaDomainName'
+                    'SLAID'    = 'effectiveSlaDomainId'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.AvailabilityGroup'
+            }
+            '6.0' = @{
+                Description = 'Get summary information for Microsoft SQL availability groups'
+                URI         = '/api/v1/mssql/availability_group'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_database_id     = 'primary_database_id'
+                    primary_cluster_id      = 'primary_cluster_id'
                 }
                 Result      = 'data'
                 Filter      = @{
