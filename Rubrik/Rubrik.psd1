@@ -115,6 +115,7 @@
                    'Export-RubrikVApp',
                    'Export-RubrikVCDTemplate',
                    'Export-RubrikVM',
+                   'Find-RubrikFile',
                    'Get-RubrikAPIToken',
                    'Get-RubrikAPIVersion',
                    'Get-RubrikArchive',

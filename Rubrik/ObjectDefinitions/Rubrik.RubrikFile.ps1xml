@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Default</Name>
+            <ViewSelectedBy>
+                <TypeName>Rubrik.RubrikFile</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Filename</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Object Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Path</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>                   
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>filename</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                               <PropertyName>ObjectName</PropertyName>
+                            </TableColumnItem>                            
+                            <TableColumnItem>
+                               <PropertyName>path</PropertyName>
+                            </TableColumnItem>                        
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>
