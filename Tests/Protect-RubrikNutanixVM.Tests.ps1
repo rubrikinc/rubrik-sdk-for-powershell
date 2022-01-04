@@ -35,8 +35,8 @@ Describe -Name 'Public/Protect-RubrikNutanixVM' -Tag 'Public', 'Protect-RubrikNu
                 Should -BeExactly 'test-valid_sla_name'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter/DoNotProtect' {
@@ -55,8 +55,8 @@ Describe -Name 'Public/Protect-RubrikNutanixVM' -Tag 'Public', 'Protect-RubrikNu
                 Should -BeExactly 'UNPROTECTED'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
     Context -Name 'Parameter/DoNotProtect/5.2' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
@@ -77,8 +77,8 @@ Describe -Name 'Public/Protect-RubrikNutanixVM' -Tag 'Public', 'Protect-RubrikNu
             (-join $Output) | Should -BeLike '*v2/sla_domain/UNPROTECTED/assign*'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
     Context -Name 'Parameter/Inherit' {
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
@@ -96,8 +96,8 @@ Describe -Name 'Public/Protect-RubrikNutanixVM' -Tag 'Public', 'Protect-RubrikNu
                 Should -BeExactly 'INHERIT'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter Validation' {

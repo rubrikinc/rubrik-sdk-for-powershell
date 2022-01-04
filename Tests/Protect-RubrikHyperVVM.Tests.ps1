@@ -35,8 +35,8 @@ Describe -Name 'Public/Protect-RubrikHyperVVM' -Tag 'Public', 'Protect-RubrikHyp
                 Should -BeExactly 'test-valid_sla_name'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter/DoNotProtect' {
@@ -55,8 +55,8 @@ Describe -Name 'Public/Protect-RubrikHyperVVM' -Tag 'Public', 'Protect-RubrikHyp
                 Should -BeExactly 'UNPROTECTED'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter/DoNotProtect/5.2' {
@@ -78,8 +78,8 @@ Describe -Name 'Public/Protect-RubrikHyperVVM' -Tag 'Public', 'Protect-RubrikHyp
             (-join $Output) | Should -BeLike '*v2/sla_domain/UNPROTECTED/assign*'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter/Inherit' {
@@ -98,8 +98,8 @@ Describe -Name 'Public/Protect-RubrikHyperVVM' -Tag 'Public', 'Protect-RubrikHyp
                 Should -BeExactly 'INHERIT'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter Validation' {

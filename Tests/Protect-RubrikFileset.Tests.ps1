@@ -63,8 +63,8 @@ Describe -Name 'Public/Protect-RubrikFileset' -Tag 'Public', 'Protect-RubrikFile
             (-join $Output) | Should -BeLike '*v2/sla_domain/UNPROTECTED/assign*'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
 

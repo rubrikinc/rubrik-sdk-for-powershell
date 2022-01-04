@@ -62,9 +62,9 @@ Describe -Name 'Public/Protect-RubrikDatabase' -Tag 'Public', 'Protect-RubrikDat
             $results.instanceName | Should -BeExactly 'MSSQLSERVER'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter/DoNotProtect/5.2' {
@@ -86,8 +86,8 @@ Describe -Name 'Public/Protect-RubrikDatabase' -Tag 'Public', 'Protect-RubrikDat
             (-join $Output) | Should -BeLike '*v2/sla_domain/UNPROTECTED/assign*'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter Validation' {
