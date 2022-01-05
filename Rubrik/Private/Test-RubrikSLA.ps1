@@ -29,11 +29,17 @@
       if (-not [string]::IsNullOrWhiteSpace($PrimaryClusterID)) {
         (Get-RubrikSLA -SLA $SLA -PrimaryClusterID $PrimaryClusterID).id
       } else {
-        (Get-RubrikSLA -SLA $SLA).id
+        $currentId = (Get-RubrikSLA -SLA $SLA).id
+        if (@($currentId).count -gt 1) {
+          Write-Verbose -Message "Multiple SLA ID for '$SLA', limiting query to local cluster"
+          (Get-RubrikSLA -SLA $SLA -PrimaryClusterID local).id
+        } else {
+          $currentId
+        }
       }
     }
     if ($slaid -eq $null) {
-      throw "No SLA Domains were found that match $SLA for $PrimaryClusterID"
+      throw "No SLA Domains were found that match '$SLA' for cluster ID '$PrimaryClusterID'"
     }
     return $slaid
   }

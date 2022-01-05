@@ -14,10 +14,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-## Unreleased
+## [6.0.0]()
 
 ### Changed
 
+* Changed behavior of `Test-RubrikSLA` when no explicit primaryclusterid is specified and multiple matches are found it defaults to local, resolves [Issue 782](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/782)
 * Updated various sections of the documentations with additional TLS 1.2 troubleshooting steps & solutions, resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
 * Modified `Get-RubrikAvailabilityGroup` query parameters to respect the `PrimaryClusterId`. Resolves [Issue 777](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/777)
 * Modified `Get-RubrikAvailabilityGroup` to use the v1 endpoint in CDM 6.0 and above

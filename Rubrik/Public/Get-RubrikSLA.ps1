@@ -1,37 +1,37 @@
 #Requires -Version 3
 function Get-RubrikSLA
 {
-  <#
-      .SYNOPSIS
-      Connects to Rubrik and retrieves details on SLA Domain(s)
+<#
+  .SYNOPSIS
+  Connects to Rubrik and retrieves details on SLA Domain(s)
 
-      .DESCRIPTION
-      The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains.
-      Information on each domain will be reported to the console.
+  .DESCRIPTION
+  The Get-RubrikSLA cmdlet will query the Rubrik API for details on all available SLA Domains.
+  Information on each domain will be reported to the console.
 
-      .NOTES
-      Written by Chris Wahl for community usage
-      Twitter: @ChrisWahl
-      GitHub: chriswahl
+  .NOTES
+  Written by Chris Wahl for community usage
+  Twitter: @ChrisWahl
+  GitHub: chriswahl
 
-      .LINK
-      https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriksla
+  .LINK
+  https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubriksla
 
-      .EXAMPLE
-      Get-RubrikSLA
+  .EXAMPLE
+  Get-RubrikSLA
 
-      Will return all known SLA Domains
+  Will return all known SLA Domains
 
-      .EXAMPLE
-      Get-RubrikSLA -Name 'Gold'
+  .EXAMPLE
+  Get-RubrikSLA -Name 'Gold'
 
-      Will return details on the SLA Domain named Gold
+  Will return details on the SLA Domain named Gold
 
-      .EXAMPLE
-      Get-RubrikSLA -Name 'Gold' -DetailedObject
-      
-      Will return information the SLA Domain named Gold, including full details on this SLA
-  #>
+  .EXAMPLE
+  Get-RubrikSLA -Name 'Gold' -DetailedObject
+  
+  Will return information the SLA Domain named Gold, including full details on this SLA
+#>
 
   [CmdletBinding(DefaultParameterSetName = 'Query')]
   Param(
