@@ -8,7 +8,7 @@ Load the module by using:
 
 `Import-Module Rubrik`
 
-GPG TEST If you wish to load a specific version, use:
+If you wish to load a specific version, use:
 
 `Import-Module Rubrik -RequiredVersion #.#.#`
 
