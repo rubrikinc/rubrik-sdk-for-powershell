@@ -45,6 +45,8 @@ function New-RubrikLogShipping
     
     [Parameter(Mandatory = $true)]
     [String]$targetInstanceId,  
+    [Parameter(Mandatory = $false)]
+    [Switch]$ReseedOnBreak,
 
     #Advanced Mode - Array of hash tables for file reloaction.
     [PSCustomObject[]] $TargetFilePaths,  
@@ -104,6 +106,16 @@ function New-RubrikLogShipping
       if($TargetLogFilePath){ $body.Add('targetLogFilePath',$TargetLogFilePath) }
     }
     
+    # Check Reseed
+    if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]"6.0") {
+      if ($ReseedOnBreak){
+        $body.makeupReseedLimit = 1
+      } else {
+        $body.makeupReseedLimit = 0
+      }
+    }
+
+
     $body = ConvertTo-Json $body
     Write-Verbose -Message "Body = $body"
     #endregion
