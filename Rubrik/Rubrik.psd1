@@ -127,6 +127,7 @@
                    'Get-RubrikClusterInfo',
                    'Get-RubrikClusterNetworkInterface',
                    'Get-RubrikClusterStorage',
+                   'Get-RubrikClusterUpgradeHistory',
                    'Get-RubrikDatabase',
                    'Get-RubrikDatabaseFiles',
                    'Get-RubrikDatabaseMount',
