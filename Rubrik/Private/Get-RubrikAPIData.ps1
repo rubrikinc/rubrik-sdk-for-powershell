@@ -3692,6 +3692,30 @@ function Get-RubrikAPIData {
                     Filter      = ''
                     Success     = '202'
                 }
+                '6.0' = @{
+                    Description = 'Create a log shipping configuration'
+                    URI         = '/api/v2/mssql/db/{id}/log_shipping'
+                    Method      = 'Post'
+                    Body        = @{
+                        state                             = 'state'
+                        shouldDisconnectStandbyUsers      = 'shouldDisconnectStandbyUsers'
+                        maxDataStreams                    = 'maxDataStreams'
+                        targetDatabaseName                = 'targetDatabaseName'
+                        targetDataFilePath                = 'targetDataFilePath'
+                        targetFilePaths = @{
+                            logicalName       = 'logicalName'
+                            exportPath        = 'exportPath'
+                            newLogicalName    = 'newLogicalName'
+                            newFilename       = 'newFilename'
+                        }
+                        targetInstanceId                  = 'targetInstanceId'
+                        targetLogFilePath                 = 'targetLogFilePath'
+                        makeupReseedLimit                 = 'makeupReseedLimit' 
+                    }
+                    Result      = ''
+                    Filter      = ''
+                    Success     = '202'
+                }
         }
         'Remove-RubrikLogShipping' = @{
             '1.0' = @{
