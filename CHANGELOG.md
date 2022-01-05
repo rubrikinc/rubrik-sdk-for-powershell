@@ -20,7 +20,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Changed behavior of `Test-RubrikSLA` when no explicit primaryclusterid is specified and multiple matches are found it defaults to local, resolves [Issue 782](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/782)
 * Updated various sections of the documentations with additional TLS 1.2 troubleshooting steps & solutions, resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
+* Modified `Get-RubrikAvailabilityGroup` query parameters to respect the `PrimaryClusterId`. Resolves [Issue 777](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/777)
+* Modified `Get-RubrikAvailabilityGroup` to use the v1 endpoint in CDM 6.0 and above
+* Modified TypeDefinition for SQL Instance to show status of unprotected instances rather than just show retention SLA. Resolves [Issue 760](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/760)
+* Added support for the v1 endpoint for `Get-RubrikOracleDB` when using 6.0 or above. Resolves [Issue 784](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/784)
+* Added ability to retain snapshots while setting the `-DoNotProtect` parameter to `Protect-RubrikFileset`,`Protect-RubrikDatabase`,`Protect-RubrikHyperVVM` and `Protect-RubrikNutanixVM`, this resolves [Issue 795](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/795) and [Issue 785](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/785) and [Issue 697](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/697)
+
 ### Added
+
+* Added `CANCELED` as an exit condition for `Get-RubrikRequest` as suggested by @IamTHEvilONE, resolves [Issue 794](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/794)
+* Added `Find-RubrikFile` which allows end users to automate the search process of finding files within Rubrik snapshots. [Issue 789](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/789)
 
 ### Fixed
 
@@ -31,7 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-* Added new parameter set & two parameters to `Get-RubrikSnapshot`, `-SnapshotId` & `-SnapshotType` to allow for querying by snapshotid [Issue 743](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/743)
+* Added new parameter set & two parameters to `Get-RubrikSnapshot`: `-SnapshotId` & `-SnapshotType` to allow for querying by snapshotid [Issue 743](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/743)
 * Updated parameter help for `-Archival` parameter in `New-RubrikSla` cmdlet
 
 ### Added

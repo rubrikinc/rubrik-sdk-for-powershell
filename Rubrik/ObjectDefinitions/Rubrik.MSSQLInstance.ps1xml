@@ -37,7 +37,13 @@
                                 <ScriptBlock>$_.rootProperties.rootName</ScriptBlock>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>configuredSlaDomainName</PropertyName>
+                                <ScriptBlock>
+                                    if ($_.configuredSlaDomainType -eq "RetentionSla") {
+                                        "Unprotected (Retention SLA Applied)"
+                                    } else {
+                                        $_.configuredSlaDomainName
+                                    }
+                                </ScriptBlock>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>id</PropertyName>

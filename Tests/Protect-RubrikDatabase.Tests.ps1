@@ -62,9 +62,32 @@ Describe -Name 'Public/Protect-RubrikDatabase' -Tag 'Public', 'Protect-RubrikDat
             $results.instanceName | Should -BeExactly 'MSSQLSERVER'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Test-RubrikSLA -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
+    }
+
+    Context -Name 'Parameter/DoNotProtect/5.2' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-RubrikSLA -Verifiable -ModuleName 'Rubrik' -MockWith {
+            'UNPROTECTED'
+        }
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{ 
+                'id'                   = 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab'
+                'effectiveSlaDomainId' = 'UNPROTECTED'
+            }
+        }
+        It -Name 'Should use the 5.2 endpoint' -Test {
+            $rubrikconnection.version = '5.2.0'
+            $Output = & {
+                Protect-RubrikFileset -id 'MssqlDatabase:::12345678-1234-abcd-8910-1234567890ab' -DoNotProtect -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*v2/sla_domain/UNPROTECTED/assign*'
+        }
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter Validation' {

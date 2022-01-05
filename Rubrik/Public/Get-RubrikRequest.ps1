@@ -134,7 +134,7 @@ function Get-RubrikRequest {
     #We added new code that will now wait for the Rubrik Async Request to complete. Once completion has happened, we return back the request object. 
     #region WaitForCompletion
     if ($WaitForCompletion) {
-      $ExitList = @("SUCCEEDED", "FAILED")
+      $ExitList = @("SUCCEEDED", "FAILED", "CANCELED")
       do {
         $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
         $result = Test-ReturnFormat -api $api -result $result -location $resources.Result

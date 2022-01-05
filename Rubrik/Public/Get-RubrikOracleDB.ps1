@@ -29,6 +29,10 @@ function Get-RubrikOracleDB
     This will return all removed Oracle DBs that were formerly protected by Rubrik.
 
     .EXAMPLE
+    Get-RubrikOracleDB -DataGuardGroup
+    This will return all Oracle DBs belonging to a Data Guard Group.
+
+    .EXAMPLE
     Get-RubrikOracleDB -Name OracleDB1 -DetailedObject
     This will return the Oracle DB object with all properties, including additional details such as snapshots taken of the Oracle DB. Using this switch parameter negatively affects performance as more API queries will be performed.
   #>
@@ -45,6 +49,9 @@ function Get-RubrikOracleDB
     [Switch]$Relic,
     [Alias('is_live_mount')]
     [Switch]$LiveMount,
+    # Filter results to incldue only data guard group dbs
+    [Alias('is_data_guard_group')]
+    [Switch]$DataGuardGroup,
     # DetailedObject will retrieved the detailed VM object, the default behavior of the API is to only retrieve a subset of the full VM object unless we query directly by ID. Using this parameter does affect performance as more data will be retrieved and more API-queries will be performed.
     [Switch]$DetailedObject,
     # SLA Domain policy assigned to the Oracle DB
