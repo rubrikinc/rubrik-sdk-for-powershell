@@ -27,7 +27,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* Added `Find-RubrikFile` which allows end users to automate the search process of finding files within Rubrik snapshots. [Issue 789](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/798)
+* Added `Get-RubrikClusterUpgradeHistory` which Retrieves upgrade history for a given cluster, resolves [Issue 789](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/789)
+* Added `Find-RubrikFile` which allows end users to automate the search process of finding files within Rubrik snapshots. [Issue 798](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/798)
 
 ### Fixed
 
