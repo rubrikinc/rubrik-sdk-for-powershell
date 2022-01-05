@@ -423,6 +423,18 @@ function Get-RubrikAPIData {
                 Success     = '200'
             }
         }
+        'Get-RubrikClusterUpgradeHistory'         = @{
+            '5.0' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = '/api/v1/config/history/list_updates?namespace=local_atlas&source=Upgrade'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikBackupServiceDeployment'           = @{
             '1.0' = @{
                 Description = 'Retrieve the global settings for automatic deployment of the Rubrik Backup Service to virtual machines.'

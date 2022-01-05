@@ -3,10 +3,10 @@ function Get-RubrikClusterUpgradeHistory
 {
   <#
     .SYNOPSIS
-    Connects to Rubrik and retrieves node information for a given cluster
+    Retrieves upgrade history for a given cluster
 
     .DESCRIPTION
-    The Get-RubrikClusterUpgradeHistory cmdlet will retrieve various information and settings for a given cluster.
+    The Get-RubrikClusterUpgradeHistory cmdlet will retrieve upgrade history for a given cluster.
 
     .NOTES
     Written by Jaap Brasser for community usage
@@ -18,7 +18,13 @@ function Get-RubrikClusterUpgradeHistory
 
     .EXAMPLE
     Get-RubrikClusterUpgradeHistory
-    This will return the advanced settings and information around the currently authenticated cluster.
+    
+    This will return the upgrade history for the currently authenticated cluster.
+
+    .EXAMPLE
+    Get-RubrikClusterUpgradeHistory -Verbose
+    
+    This will return the upgrade history for the currently authenticated cluster, while displaying verbose information
   #>
 
   [CmdletBinding()]
@@ -57,8 +63,19 @@ function Get-RubrikClusterUpgradeHistory
     $result = Submit-Request -uri $uri -header $Header -method $($resources.Method) -body $body
     $result = Test-ReturnFormat -api $api -result $result -location $resources.Result
     $result = Test-FilterObject -filter ($resources.Filter) -result $result
+    
+    # Specific filtering for Upgrade History, fixes broken JSON metadata and filters to one object per upgrade
+    $result | ForEach-Object {
+      [pscustomobject]@{
+        Version = ($_.configChangeMetadata | ConvertFrom-Json).tarball_version
+        DateTime = $_.modifiedDateTime
+        Source = $_.source
+      }
+    } | Group-Object -Property version | ForEach-Object {
+      $_.group[0]
+    }
 
-    return $result
+    #return $result
 
   } # End of process
 } # End of function
