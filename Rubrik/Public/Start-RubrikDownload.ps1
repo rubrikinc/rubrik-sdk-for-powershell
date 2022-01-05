@@ -93,7 +93,7 @@ function Start-RubrikDownload
       Uri = $Uri
     }
 
-    if ($Path -match '\.') {
+    if ($Path -match '\.' -and (-not (Get-Item -EA 0 -LiteralPath $Path|Where-Object psiscontainer -eq $true))) {
       $WebRequestSplat.OutFile = $Path
     } elseif ($Path) {
       $WebRequestSplat.OutFile = Join-Path $Path (Split-Path -Path $uri -Leaf)
