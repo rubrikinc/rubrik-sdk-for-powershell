@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added `Get-RubrikClusterUpgradeHistory` which Retrieves upgrade history for a given cluster, resolves [Issue 789](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/789)
 * Added `Find-RubrikFile` which allows end users to automate the search process of finding files within Rubrik snapshots. [Issue 798](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/798)
 * Added `CANCELED` as an exit condition for `Get-RubrikRequest` as suggested by @IamTHEvilONE, resolves [Issue 794](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/794)
-* Added `ReseedOnBreak` parameter to `New-RubrikLogShipping` to support reseed operations in version 6.0 and above, resolves [Issue 792](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/792)
+* Added `-ReseedOnBreak` switch parameter to `New-RubrikLogShipping` to support reseed operations in version 6.0 and above, resolves [Issue 792](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/792)
 
 ### Fixed
 
