@@ -133,6 +133,7 @@
                    'Get-RubrikDatabaseMount',
                    'Get-RubrikDatabaseRecoverableRange',
                    'Get-RubrikDatabaseRecoveryPoint',
+                   'Get-RubrikDatabaseDownloadLink',
                    'Get-RubrikDebugInfo',
                    'Get-RubrikDNSSetting',
                    'Get-RubrikDownloadLink',

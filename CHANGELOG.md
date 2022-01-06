@@ -49,7 +49,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added troubleshooting step and additional CDM API links, resolving [Issue 770](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/770)
 * Added additional debug logging to `Invoke-RubrikWebRequest`, resolving [Issue 721](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/721)
-
+* Added `Get-RubrikDatabaseDownloadLink` to support the ability to pull mdf/ldf files out of snapshots, resolving [Issue 790](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/790)
+* 
 ### Fixed
 
 * Fixed typo in documentation, resolving [Issue 776](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/776)
