@@ -472,6 +472,20 @@ function Get-RubrikAPIData {
                 ObjectTName = 'Rubrik.MSSQLDatabase'
             }
         }
+        'Get-RubrikDatabaseDownloadLink'      = @{
+            '1.0' = @{
+                Description = 'Returns a link to download the mdf/ldf files of a given MSSQL Snapshot'
+                URI         = '/api/v1/mssql/db/{id}/download_files_by_id'
+                Method      = 'POST'
+                Body        = @{
+                    items = @()
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
+            }
+        }
         'Get-RubrikDatabaseFiles'      = @{
             '1.0' = @{
                 Description = 'Returns a list of files for the database.'
