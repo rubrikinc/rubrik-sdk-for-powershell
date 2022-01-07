@@ -32,8 +32,8 @@ Protect-RubrikHyperVVM -id <String> [-Inherit] [-SLAID <String>] [-Server <Strin
 
 ### SLA_Unprotected
 ```
-Protect-RubrikHyperVVM -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Protect-RubrikHyperVVM -id <String> [-DoNotProtect] [-SLAID <String>] [-ExistingSnapshotRetention <String>]
+ [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -59,6 +59,13 @@ Get-RubrikHyperVVM "VM1" -SLA Silver | Protect-RubrikHyperVVM -SLA 'Gold' -Confi
 
 This will assign the Gold SLA Domain to any virtual machine named "VM1" that is currently assigned to the Silver SLA Domain
 without asking for confirmation
+
+### EXAMPLE 3
+```
+Get-RubrikHyperVVM "VM1" | Protect-RubrikHyperVVM -DoNotProtect -ExistingSnapshotRetention KeepForever
+```
+
+This will unprotect the VM1 HyperV VM while keeping existing snapshots forever
 
 ## PARAMETERS
 
@@ -133,6 +140,21 @@ Aliases: configuredSlaDomainId
 Required: False
 Position: Named
 Default value: (Test-RubrikSLA -SLA $SLA -DoNotProtect $DoNotProtect -Inherit $Inherit -Mandatory:$true)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExistingSnapshotRetention
+Determine the retention settings for the already existing snapshots
+
+```yaml
+Type: String
+Parameter Sets: SLA_Unprotected
+Aliases:
+
+Required: False
+Position: Named
+Default value: RetainSnapshots
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

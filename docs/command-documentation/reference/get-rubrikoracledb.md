@@ -14,16 +14,16 @@ Retrieves details on one or more Oracle DBs known to a Rubrik cluster
 
 ### Query (Default)
 ```
-Get-RubrikOracleDB [[-Name] <String>] [-Relic] [-LiveMount] [-DetailedObject] [-SLA <String>]
+Get-RubrikOracleDB [[-Name] <String>] [-Relic] [-LiveMount] [-DataGuardGroup] [-DetailedObject] [-SLA <String>]
  [-SLAAssignment <String>] [-PrimaryClusterID <String>] [-SLAID <String>] [-Server <String>] [-api <String>]
  [<CommonParameters>]
 ```
 
 ### ID
 ```
-Get-RubrikOracleDB [-Relic] [-LiveMount] [-DetailedObject] [-SLA <String>] [-SLAAssignment <String>]
- [-PrimaryClusterID <String>] [-id] <String> [-SLAID <String>] [-Server <String>] [-api <String>]
- [<CommonParameters>]
+Get-RubrikOracleDB [-Relic] [-LiveMount] [-DataGuardGroup] [-DetailedObject] [-SLA <String>]
+ [-SLAAssignment <String>] [-PrimaryClusterID <String>] [-id] <String> [-SLAID <String>] [-Server <String>]
+ [-api <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,6 +53,13 @@ Get-RubrikOracleDB -Relic
 This will return all removed Oracle DBs that were formerly protected by Rubrik.
 
 ### EXAMPLE 4
+```
+Get-RubrikOracleDB -DataGuardGroup
+```
+
+This will return all Oracle DBs belonging to a Data Guard Group.
+
+### EXAMPLE 5
 ```
 Get-RubrikOracleDB -Name OracleDB1 -DetailedObject
 ```
@@ -99,6 +106,21 @@ Accept wildcard characters: False
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: is_live_mount
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DataGuardGroup
+Filter results to incldue only data guard group dbs
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: is_data_guard_group
 
 Required: False
 Position: Named
