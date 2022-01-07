@@ -169,6 +169,26 @@ function Get-RubrikAPIData {
                 Success     = '202'
             }
         }
+        'Find-RubrikFile'         = @{
+            '1.0' = @{
+                Description = 'Retrieves software version of the Rubrik cluster'
+                URI         = '/api/internal/search'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    'ID'    = 'managed_id'
+                    'SearchString' = 'query_string'
+                    'limit'        = 'limit'
+                    'cursor'       = 'cursor'
+                }
+                Result      = 'data'
+                Filter      = @{
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.RubrikFile'
+                
+            }
+        }
         'Get-RubrikAPIToken'         = @{
             '5.0' = @{
                 Description = 'Retrieves list of generated API tokens from the Rubrik cluster'
@@ -225,6 +245,25 @@ function Get-RubrikAPIData {
                 Body        = ''
                 Query       = @{
                     primary_database_id     = 'primary_database_id'
+                    primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'GroupName'     = 'name'
+                    'SLA'      = 'effectiveSlaDomainName'
+                    'SLAID'    = 'effectiveSlaDomainId'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.AvailabilityGroup'
+            }
+            '6.0' = @{
+                Description = 'Get summary information for Microsoft SQL availability groups'
+                URI         = '/api/v1/mssql/availability_group'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    primary_database_id     = 'primary_database_id'
+                    primary_cluster_id      = 'primary_cluster_id'
                 }
                 Result      = 'data'
                 Filter      = @{
@@ -384,6 +423,18 @@ function Get-RubrikAPIData {
                 Success     = '200'
             }
         }
+        'Get-RubrikClusterUpgradeHistory'         = @{
+            '5.0' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = '/api/v1/config/history/list_updates?namespace=local_atlas&source=Upgrade'
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+        }
         'Get-RubrikBackupServiceDeployment'           = @{
             '1.0' = @{
                 Description = 'Retrieve the global settings for automatic deployment of the Rubrik Backup Service to virtual machines.'
@@ -419,6 +470,20 @@ function Get-RubrikAPIData {
                 }
                 Success     = '200'
                 ObjectTName = 'Rubrik.MSSQLDatabase'
+            }
+        }
+        'Get-RubrikDatabaseDownloadLink'      = @{
+            '1.0' = @{
+                Description = 'Returns a link to download the mdf/ldf files of a given MSSQL Snapshot'
+                URI         = '/api/v1/mssql/db/{id}/download_files_by_id'
+                Method      = 'POST'
+                Body        = @{
+                    items = @()
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '202'
             }
         }
         'Get-RubrikDatabaseFiles'      = @{
@@ -1022,6 +1087,28 @@ function Get-RubrikAPIData {
                     effective_sla_domain_id = 'effective_sla_domain_id'
                     sla_assignment          = 'sla_assignment'
                     primary_cluster_id      = 'primary_cluster_id'
+                }
+                Result      = 'data'
+                Filter      = @{
+                    'Name' = 'name'
+                    'SLA'  = 'effectiveSlaDomainName'
+                }
+                Success     = '200'
+                ObjectTName = 'Rubrik.OracleDatabase'
+            }
+            '6.0' = @{
+                Description = 'Get summary of all the Oracle DBs'
+                URI         = '/api/v1/oracle/db'
+                Method      = 'Get'
+                Body        = ''
+                Query       = @{
+                    is_relic                = 'is_relic'
+                    is_live_mount           = 'is_live_mount'
+                    name                    = 'name'
+                    effective_sla_domain_id = 'effective_sla_domain_id'
+                    sla_assignment          = 'sla_assignment'
+                    primary_cluster_id      = 'primary_cluster_id'
+                    is_data_guard_group     = 'is_data_guard_group'
                 }
                 Result      = 'data'
                 Filter      = @{
@@ -2323,6 +2410,20 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
+            '5.2' = @{
+                Description = 'Update a Microsoft SQL database with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{ 
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Protect-RubrikFileset'        = @{
             '1.0' = @{
@@ -2334,6 +2435,20 @@ function Get-RubrikAPIData {
                 }
                 Query       = ''
                 Result      = 'data'
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.2' = @{
+                Description = 'Update a fileset with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{ 
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
+                }
+                Query       = ''
+                Result      = ''
                 Filter      = ''
                 Success     = '200'
             }
@@ -2351,6 +2466,20 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
+            '5.2' = @{
+                Description = 'Update a VM with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{ 
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Protect-RubrikNutanixVM'             = @{
             '1.0' = @{
@@ -2359,6 +2488,20 @@ function Get-RubrikAPIData {
                 Method      = 'Patch'
                 Body        = @{
                     configuredSlaDomainId = 'configuredSlaDomainId'
+                }
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
+            '5.2' = @{
+                Description = 'Update a VM with the specified SLA Domain.'
+                URI         = '/api/v2/sla_domain/{id}/assign'
+                Method      = 'Post'
+                Body        = @{ 
+                    managedIds = [System.Collections.ArrayList]@()
+                    configuredSlaDomainId     = 'configuredSlaDomainId'
+                    existingSnapshotRetention = 'existingSnapshotRetention'
                 }
                 Query       = ''
                 Result      = ''
@@ -3558,6 +3701,30 @@ function Get-RubrikAPIData {
                         }
                         targetInstanceId                  = 'targetInstanceId'
                         targetLogFilePath                 = 'targetLogFilePath'
+                    }
+                    Result      = ''
+                    Filter      = ''
+                    Success     = '202'
+                }
+                '6.0' = @{
+                    Description = 'Create a log shipping configuration'
+                    URI         = '/api/v2/mssql/db/{id}/log_shipping'
+                    Method      = 'Post'
+                    Body        = @{
+                        state                             = 'state'
+                        shouldDisconnectStandbyUsers      = 'shouldDisconnectStandbyUsers'
+                        maxDataStreams                    = 'maxDataStreams'
+                        targetDatabaseName                = 'targetDatabaseName'
+                        targetDataFilePath                = 'targetDataFilePath'
+                        targetFilePaths = @{
+                            logicalName       = 'logicalName'
+                            exportPath        = 'exportPath'
+                            newLogicalName    = 'newLogicalName'
+                            newFilename       = 'newFilename'
+                        }
+                        targetInstanceId                  = 'targetInstanceId'
+                        targetLogFilePath                 = 'targetLogFilePath'
+                        makeupReseedLimit                 = 'makeupReseedLimit' 
                     }
                     Result      = ''
                     Filter      = ''

@@ -22,7 +22,19 @@ Common PowerShell module paths include:
 
 ## Option 1: PowerShell Gallery \(Recommended\)
 
-1. Ensure you have the latest version of [PowerShell](https://aka.ms/pscore6) installed, or [Windows Management Framework 5.0](https://www.microsoft.com/en-us/download/details.aspx?id=50395) or greater installed.
+> ### ❗ If you are using Windows PowerShell 5 you might encounter one of the following error messages:
+>
+> `WARNING: Source Location 'https://www.powershellgallery.com/api/v2/package/Rubrik/5.3.1' is not valid.`
+>
+> `WARNING: Unable to resolve package source 'https://www.powershellgallery.com/api/v2'.`
+>
+> There are two multiple solutions for this problem, the most permanent solution is to install PowerShell 7, which can be installed in as a side-by-side installation to Windows PowerShell. It is available here: [PowerShell Download Link](https://aka.ms/pscore6).
+>
+> Alternatively you could ensure that your current PowerShell session is configured with TLS 1.2 by running before following the steps listed below: `[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12`
+>
+> It is also possible to make a permanent entry in your registry to enable TLS 1.2, for more information on this, the impact, and the configuration options: [Docs.Microsoft.com - How to enable TLS 1.2 on clients](https://docs.microsoft.com/en-us/mem/configmgr/core/plan-design/security/enable-tls-1-2-client)
+
+1. Ensure you have the latest version of [PowerShell](https://aka.ms/pscore6) installed, or as a minimum [Windows Management Framework 5.1](http://aka.ms/wmf5download) or greater installed.
 2. Open a PowerShell console with the _Run as Administrator_ option.
 3. Run `Set-ExecutionPolicy` using the parameter _RemoteSigned_ or _Bypass_.
 4. Run `Install-Module -Name Rubrik -Scope CurrentUser` to download and install the module from the PowerShell Gallery. Note that the first time you install from the PowerShell Gallery repository it may ask you to first trust the repository.

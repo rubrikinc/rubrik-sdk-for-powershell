@@ -22,7 +22,7 @@ Every function needs to have two specific variables included and should not be r
 
 All API specific data for a function is abstracted into a helper function located in `Rubrik\Private` named `Get-RubrikAPIData.ps1`. This separates function logic from function data and allows for simple iterations to cross different API versions while also making unit testing much simpler. If your function is going to call the API directly, all API specific requirements should be stored in `Get-RubrikAPIData.ps1`. Data is stored in a hashtable like the sample below:
 
-```text
+```powershell
 Example                   = @{
   v1 = @{
     Description = 'Details about the API endpoint'
@@ -47,7 +47,7 @@ Below, let's look at `Get-RubrikDatabase` and how it builds a query. There are 4
 
 Note that the key and value match because this is the first version of the API; should the parameter name change in the future, the value would change to match it, but the key would remain static to avoid re-writing anything in the function itself.
 
-```text
+```powershell
 'Get-RubrikDatabase'      = @{
   v1 = @{
     Description = 'Returns a list of summary information for Microsoft SQL databases.'
@@ -76,7 +76,7 @@ The parameter names aren't very user friendly. In order to use friendly paramete
 
 In this case, if the user sets the switch to $true, the `is_relic` query will be added to the path. The same goes for `$PrimaryClusterID` and `$SLAID`.
 
-```text
+```powershell
 Param(
     # Name of the database
     [Alias('Database')]
@@ -113,7 +113,7 @@ If the Query building function doesn't find a particular parameter in the API da
 
 Constructing a body payload is very similar to a query. Let's look at the `New-RubrikMount` function as an example. Notice how it has a body section with parameters defined? The body parameters follow the same rules as query parameters do: include the key/value pairs in the API data, and then use aliases within the function to build a relationship.
 
-```text
+```powershell
 'New-RubrikMount'         = @{
   v1 = @{
     Description = 'Create a live mount request with given configuration'
@@ -137,7 +137,7 @@ Constructing a body payload is very similar to a query. Let's look at the `New-R
 
 And here's the PowerShell code to see the body parameter aliases. See how `[String]$MountName` has an alias of `[Alias('vmName')]` to avoid user confusion? And because that value is declared in the body section of the API data, the private functions know to use that parameter to construct the body payload.
 
-```text
+```powershell
 Param(
     # Rubrik id of the snapshot
     [Parameter(Mandatory = $true,ValueFromPipelineByPropertyName = $true)]
@@ -169,7 +169,7 @@ Not every API endpoint has the ability to filter results as desired. In those ca
 
 Let's take a peek at `Get-RubrikVM` as an example. Notice how the filter section is different from the query and body sections. The filter keys correspond to the function's actual parameter names. The values correspond to the keys found in the result data. This relationship is used to filter specific key/value pairs in the result for user driven filter criteria.
 
-```text
+```powershell
 'Get-RubrikVM'            = @{
   v1 = @{
     Description = 'Get summary of all the VMs'
@@ -195,7 +195,7 @@ Let's take the `'SLA' = 'effectiveSlaDomainName'` as an example: a user enters a
 
 There is no need to create an alias because the actual parameter name is used \(without the `$` symbol\).
 
-```text
+```powershell
 Param(
     # Name of the virtual machine
     [Parameter(Position = 0,ValueFromPipelineByPropertyName = $true)]
@@ -230,7 +230,7 @@ The Rubrik SDK for PowerShell follows a few design and syntax guidelines, each h
 
 To maintain consistency with the existing module code the usage of Boolean parameters is prohibited. Instead, a Switch parameter should be utilized to handle true/false situations. Let's take a look at the `New-RubrikMount` cmdlet as an example. The body defined within `Get-RubrikAPIData` contains a boolean entry named `powerOn` which control whether the newly mounted VM is powered on or not.  It's default, if not included, is to leave the VM powered off. Therefore, within the `New-RubrikMount` code we explicitly remove it if the `PowerOn` switch parameter is not specified
 
-```text
+```powershell
 if(-not $PSBoundParameters.ContainsKey('PowerOn')) { $Resources.Body.Remove('powerOn') }
 ```
 

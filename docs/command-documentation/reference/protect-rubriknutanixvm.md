@@ -32,8 +32,8 @@ Protect-RubrikNutanixVM -id <String> [-Inherit] [-SLAID <String>] [-Server <Stri
 
 ### SLA_Unprotected
 ```
-Protect-RubrikNutanixVM -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Protect-RubrikNutanixVM -id <String> [-DoNotProtect] [-ExistingSnapshotRetention <String>] [-SLAID <String>]
+ [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,6 +53,13 @@ Get-RubrikNutanixVM "VM1" | Protect-RubrikNutanixVM -SLA 'Gold'
 This will assign the Gold SLA Domain to any virtual machine named "VM1"
 
 ### EXAMPLE 2
+```
+Get-RubrikNutanixVM "VM1" | Protect-RubrikNutanixVM -DoNotProtect -ExistingSnapshotRetention KeepForever
+```
+
+This will unprotect the Nutanix VM VM1 while keeping existing snapshots forever
+
+### EXAMPLE 3
 ```
 Get-RubrikNutanixVM "VM1" -SLA Silver | Protect-RubrikNutanixVM -SLA 'Gold' -Confirm:$False
 ```
@@ -118,6 +125,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExistingSnapshotRetention
+Determine the retention settings for the already existing snapshots
+
+```yaml
+Type: String
+Parameter Sets: SLA_Unprotected
+Aliases:
+
+Required: False
+Position: Named
+Default value: RetainSnapshots
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

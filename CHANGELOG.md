@@ -1,4 +1,4 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -14,18 +14,51 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## [7.0.0]() -
+
+### Changed
+
+### Added
+
+### Fixed
+
+## [6.0.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.0) - 2022-01-07
+
+### Changed
+
+* Changed behavior of `Test-RubrikSLA` when no explicit primaryclusterid is specified and multiple matches are found it defaults to local, resolves [Issue 782](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/782)
+* Updated various sections of the documentations with additional TLS 1.2 troubleshooting steps & solutions, resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
+* Modified `Get-RubrikAvailabilityGroup` query parameters to respect the `PrimaryClusterId`. Resolves [Issue 777](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/777)
+* Modified `Get-RubrikAvailabilityGroup` to use the v1 endpoint in CDM 6.0 and above
+* Modified TypeDefinition for SQL Instance to show status of unprotected instances rather than just show retention SLA. Resolves [Issue 760](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/760)
+* Added support for the v1 endpoint for `Get-RubrikOracleDB` when using 6.0 or above. Resolves [Issue 784](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/784)
+* Added ability to retain snapshots while setting the `-DoNotProtect` parameter to `Protect-RubrikFileset`,`Protect-RubrikDatabase`,`Protect-RubrikHyperVVM` and `Protect-RubrikNutanixVM`, this resolves [Issue 795](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/795) and [Issue 785](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/785) and [Issue 697](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/697)
+
+### Added
+
+* Added `Get-RubrikClusterUpgradeHistory` which Retrieves upgrade history for a given cluster, resolves [Issue 789](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/789)
+* Added `Find-RubrikFile` which allows end users to automate the search process of finding files within Rubrik snapshots. [Issue 798](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/798)
+* Added `CANCELED` as an exit condition for `Get-RubrikRequest` as suggested by @IamTHEvilONE, resolves [Issue 794](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/794)
+* Added `-ReseedOnBreak` switch parameter to `New-RubrikLogShipping` to support reseed operations in version 6.0 and above, resolves [Issue 792](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/792)
+
+### Fixed
+
+* `Test-UnicodeInString` issue fixed, issue with slowness for large JSON response thanks @nic080 & @iisresetme, resolves [Issue 774](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/774)
+* `Get-RubrikDownloadLink` issue fixed where incorrect timezone could cause cmdlet to get stuck, thanks @benckendall
+
 ## [5.3.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/5.3.1) - 2021-07-06
 
 ### Changed
 
-* Added new parameter set & two parameters to `Get-RubrikSnapshot`, `-SnapshotId` & `-SnapshotType` to allow for querying by snapshotid [Issue 743](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/743)
+* Added new parameter set & two parameters to `Get-RubrikSnapshot`: `-SnapshotId` & `-SnapshotType` to allow for querying by snapshotid [Issue 743](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/743)
 * Updated parameter help for `-Archival` parameter in `New-RubrikSla` cmdlet
 
 ### Added
 
 * Added troubleshooting step and additional CDM API links, resolving [Issue 770](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/770)
 * Added additional debug logging to `Invoke-RubrikWebRequest`, resolving [Issue 721](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/721)
-
+* Added `Get-RubrikDatabaseDownloadLink` to support the ability to pull mdf/ldf files out of snapshots, resolving [Issue 790](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/790)
+* 
 ### Fixed
 
 * Fixed typo in documentation, resolving [Issue 776](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/776)

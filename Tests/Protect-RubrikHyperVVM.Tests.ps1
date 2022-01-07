@@ -35,8 +35,8 @@ Describe -Name 'Public/Protect-RubrikHyperVVM' -Tag 'Public', 'Protect-RubrikHyp
                 Should -BeExactly 'test-valid_sla_name'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter/DoNotProtect' {
@@ -55,8 +55,31 @@ Describe -Name 'Public/Protect-RubrikHyperVVM' -Tag 'Public', 'Protect-RubrikHyp
                 Should -BeExactly 'UNPROTECTED'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
+    }
+
+    Context -Name 'Parameter/DoNotProtect/5.2' {
+        Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {}
+        Mock -CommandName Test-RubrikSLA -Verifiable -ModuleName 'Rubrik' -MockWith {
+            'UNPROTECTED'
+        }
+        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+            @{ 
+                'id'                   = 'HypervVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-ffffffff-0000-1111-2222-333333333333'
+                'effectiveSlaDomainId' = 'UNPROTECTED'
+            }
+        }
+        It -Name 'Should use the 5.2 endpoint' -Test {
+            $rubrikconnection.version = '5.2.0'
+            $Output = & {
+                Protect-RubrikFileset -id 'HypervVirtualMachine:::aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-ffffffff-0000-1111-2222-333333333333' -DoNotProtect -Verbose 4>&1
+            }
+            (-join $Output) | Should -BeLike '*v2/sla_domain/UNPROTECTED/assign*'
+        }
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter/Inherit' {
@@ -75,8 +98,8 @@ Describe -Name 'Public/Protect-RubrikHyperVVM' -Tag 'Public', 'Protect-RubrikHyp
                 Should -BeExactly 'INHERIT'
         }
         Assert-VerifiableMock
-        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Times 1
-        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Times 1
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter Validation' {

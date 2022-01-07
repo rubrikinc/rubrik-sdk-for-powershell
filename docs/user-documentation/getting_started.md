@@ -68,8 +68,6 @@ Let's protect this virtual machine with the "Gold" SLA Domain. To do this, use t
 
 Before the change is made, a prompt will appear asking you to confirm the change.
 
-::
-
 ```text
 Confirm
 Are you sure you want to perform this action?

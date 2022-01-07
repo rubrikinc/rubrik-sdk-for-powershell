@@ -16,7 +16,7 @@
   Write-Verbose -Message 'Filter the results'
   foreach ($param in $filter.Keys) {
     if ((Get-Variable -Name $param -ErrorAction SilentlyContinue).Value -ne $null) {
-      Write-Verbose -Message "Filter match = $param"
+      Write-Verbose -Message "Filter match = '$param' with value = '$((Get-Variable -Name $param).Value)'"
       $result = Test-ReturnFilter -object (Get-Variable -Name $param).Value -location $filter[$param] -result $result
     }
   }
