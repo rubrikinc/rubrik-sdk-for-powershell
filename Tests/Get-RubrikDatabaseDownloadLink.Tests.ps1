@@ -23,16 +23,15 @@ Describe -Name 'Public/Get-RubrikDatabaseDownloadLink' -Tag 'Public', 'Get-Rubri
             }
         }
 
-        # TODO Fix this test
-        #It -Name "Should return the correctly formatted download link based on input" -Test {
-        #    Get-RubrikDownloadLink -Server 'test-server' -SLAObject ([pscustomobject]@{sourceObjectType='test'}) -sourceDirs '\test' |
-        #        Should -Be 'https://test-server/download_dir/ASDFASDF'
-        #}
+        It -Name "Should return the correctly formatted download link based on input" -Test {
+            Get-RubrikDownloadLink -Server 'test-server' -SLAObject ([pscustomobject]@{sourceObjectType='test'}) -sourceDirs '\test' |
+                Should -Be 'https://test-server/download_dir/ASDFASDF'
+        }
 
-        #Assert-VerifiableMock
-        #Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        #Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
-        #Assert-MockCalled -CommandName Get-RubrikEvent -ModuleName 'Rubrik' -Exactly 1
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Get-RubrikEvent -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter Validation' {
