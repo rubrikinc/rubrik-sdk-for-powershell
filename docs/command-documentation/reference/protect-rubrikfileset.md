@@ -20,8 +20,8 @@ Protect-RubrikFileset -id <String> -SLA <String> [-SLAPrimaryClusterId <String>]
 
 ### SLA_Unprotected
 ```
-Protect-RubrikFileset -id <String> [-DoNotProtect] [-Server <String>] [-api <String>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Protect-RubrikFileset -id <String> [-DoNotProtect] [-ExistingSnapshotRetention <String>] [-Server <String>]
+ [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### SLA_ByID
@@ -59,6 +59,13 @@ Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -SLA 'Go
 ```
 
 This will assign the Gold SLA Domain to the fileset named "C_Drive" residing on the host named "Server1" on the cluster id specified in SLAPrimaryClusterId
+
+### EXAMPLE 4
+```
+Get-RubrikFileset 'C_Drive' -HostName 'Server1' | Protect-RubrikFileset -DoNotProtect -ExistingSnapshotRetention ExpireImmediately
+```
+
+This will set the C_Drive fileset to not protected and subsequently expire existing snapshots
 
 ## PARAMETERS
 
@@ -133,6 +140,21 @@ Aliases: configuredSlaDomainId
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExistingSnapshotRetention
+Determine the retention settings for the already existing snapshots
+
+```yaml
+Type: String
+Parameter Sets: SLA_Unprotected
+Aliases:
+
+Required: False
+Position: Named
+Default value: RetainSnapshots
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

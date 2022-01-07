@@ -20,8 +20,8 @@ Protect-RubrikDatabase -id <String> [-SLA <String>] [-SLAID <String>] [-Server <
 
 ### SLA_Unprotected
 ```
-Protect-RubrikDatabase -id <String> [-DoNotProtect] [-SLAID <String>] [-Server <String>] [-api <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Protect-RubrikDatabase -id <String> [-DoNotProtect] [-SLAID <String>] [-ExistingSnapshotRetention <String>]
+ [-Server <String>] [-api <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### SLA_Inherit
@@ -52,6 +52,13 @@ Get-RubrikDatabase -Name "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase 
 ```
 
 This will assign the Gold SLA Domain to any database named "DB1" residing on an instance named "MSSQLSERVER" without asking for confirmation
+
+### EXAMPLE 3
+```
+Get-RubrikDatabase -Name "DB1" -Instance "MSSQLSERVER" | Protect-RubrikDatabase -DoNotProtect -ExistingSnapshotRetention KeepForever
+```
+
+This will set the DB1 database as unprotected, while keeping existing snapshots forever
 
 ## PARAMETERS
 
@@ -126,6 +133,21 @@ Aliases: configuredSlaDomainId
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExistingSnapshotRetention
+Determine the retention settings for the already existing snapshots
+
+```yaml
+Type: String
+Parameter Sets: SLA_Unprotected
+Aliases:
+
+Required: False
+Position: Named
+Default value: RetainSnapshots
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -14,7 +14,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-## [6.0.0]()
+## [7.0.0]() -
+
+### Changed
+
+### Added
+
+### Fixed
+
+## [6.0.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.0) - 2022-01-07
 
 ### Changed
 

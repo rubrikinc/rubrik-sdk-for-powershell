@@ -84,6 +84,13 @@ Returns the individual organization objects using the -ReturnNode parameter
 Queries all hosts with volumegroups for the SLA set on that specific volumegroup.
 Returns 3 properties: hostname, volumegroup, volumegroupsla
 
+### EXAMPLE 8
+```
+Invoke-RubrikGraphQLCall -Body '{"query":"fragment counts on GraphQlProtectedObjectCount {\n    numProtected\n    numUnprotected\n    numNoSla\n    numDoNotProtect\n}\nquery TallyCounts {\n    vms { ...counts },\n    vcdVapps { ...counts },\n    mssqlDbs { ...counts },\n    linuxHosts { ...counts },\n    windowHosts { ...counts },\n    nasShares { ...counts },\n    hypervVms { ...counts },\n    cloudNativeVms { ...counts }\n    managedVolumes {...counts},\n    nutanixVms { ...counts },\n    oracleDbs { ...counts }\n}\n","variables":{}}'
+```
+
+Gives a count of Protected, Unprotected, NoSla & DoNotProtect for cloudNativeVms, hypervVms, linuxHosts, managedVolumes, mssqlDbs, nasShares, nutanixVms, oracleDbs, vcdVapps, vms, windowHosts
+
 ## PARAMETERS
 
 ### -Body
