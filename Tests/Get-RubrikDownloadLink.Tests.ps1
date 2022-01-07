@@ -15,6 +15,7 @@ Describe -Name 'Public/Get-RubrikDownloadLink' -Tag 'Public', 'Get-RubrikDownloa
                 EventInfo = 'Download link for testtest "download_dir/ASDFASDF" testtest'
                 Links = 'Thisshouldbefiltered***File_ValidateLink_Thisshouldbefiltered***'
                 Date = (Get-Date).AddHours(-1)
+                Time = (Get-Date).AddHours(+1)
             }
         }
         Mock -CommandName Test-RubrikConnection -Verifiable -ModuleName 'Rubrik' -MockWith {
@@ -23,16 +24,15 @@ Describe -Name 'Public/Get-RubrikDownloadLink' -Tag 'Public', 'Get-RubrikDownloa
             }
         }
 
-        # TODO Fix this test
-        #It -Name "Should return the correctly formatted download link based on input" -Test {
-        #    Get-RubrikDownloadLink -Server 'test-server' -SLAObject ([pscustomobject]@{sourceObjectType='test'}) -sourceDirs '\test' |
-        #        Should -Be 'https://test-server/download_dir/ASDFASDF'
-        #}
+        It -Name "Should return the correctly formatted download link based on input" -Test {
+            Get-RubrikDownloadLink -Server 'test-server' -SLAObject ([pscustomobject]@{sourceObjectType='test'}) -sourceDirs '\test' |
+                Should -Be 'https://test-server/download_dir/ASDFASDF'
+        }
 
-        #Assert-VerifiableMock
-        #Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
-        #Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
-        #Assert-MockCalled -CommandName Get-RubrikEvent -ModuleName 'Rubrik' -Exactly 1
+        Assert-VerifiableMock
+        Assert-MockCalled -CommandName Test-RubrikConnection -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 1
+        Assert-MockCalled -CommandName Get-RubrikEvent -ModuleName 'Rubrik' -Exactly 1
     }
 
     Context -Name 'Parameter Validation' {
