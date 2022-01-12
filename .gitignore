@@ -38,3 +38,6 @@ Thumbs.db
 # Custom             #
 ######################
 .vscode/
+
+# Exclude while tests are being developed to not break CI processes
+/Tests/Performance
