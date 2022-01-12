@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added new ModuleOption in the `Set-RubrikModuleOption` cmdlet: `LegacyJSONConversion` allows for setting the options for JSON conversion. Either fallback to ConvertTo-Json on Windows PowerShell, or use a newer faster set of functions. Old functionality is maintained for backwards compatibility. Resolves [Issue 778](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/778)
+
 ### Fixed
 
 ## [6.0.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.0) - 2022-01-07
