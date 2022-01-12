@@ -16,10 +16,12 @@ function ExpandPayload($response) {
   }
 
   if ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'Experimental' -or $rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysExperimental') {
+    Write-Verbose 'Using ParseItemExp to convert JSON to PowerShell Object'
     return ParseItemExp -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
       MaxJsonLength = $response.length
     }).DeserializeObject($response))
   } else {
+    Write-Verbose 'Using ParseItem to convert JSON to PowerShell Object'
     return ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
       MaxJsonLength = 67108864
     }).DeserializeObject($response))
@@ -32,7 +34,6 @@ function ParseItem($jsonItem) {
     .SYNOPSIS
     Main function that determines the type of object and calls either ParseJsonObject or ParseJsonArray
   #>
-  Write-Verbose 'Using ParseItem to Write-Verbose to convert JSON to PowerShell Object'
   if($jsonItem.PSObject.TypeNames -match 'Array') {
     return ParseJsonArray -jsonArray ($jsonItem)
   } elseif($jsonItem.PSObject.TypeNames -match 'Dictionary') {
@@ -80,7 +81,6 @@ function ParseItemExp($jsonItem) {
     .SYNOPSIS
     Experimental faster: main function that determines the type of object and calls either ParseJsonObjectExp or ParseJsonArrayExp
   #>
-  Write-Verbose 'Using ParseItemExp to Write-Verbose to convert JSON to PowerShell Object'
   if($jsonItem.PSObject.TypeNames -match 'Array') {
     ParseJsonArrayExp -jsonArray ($jsonItem)
   } elseif($jsonItem.PSObject.TypeNames -match 'Dictionary') {
