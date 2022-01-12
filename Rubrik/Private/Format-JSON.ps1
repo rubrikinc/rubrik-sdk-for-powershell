@@ -16,7 +16,7 @@ function ExpandPayload($response) {
   }
 
   if ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'Experimental' -or $rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysExperimental') {
-    Write-Verbose 'Using ParseItemExp to convert JSON to PowerShell Object'
+    Write-Verbose 'Using ParseItemExp (Experimental) to convert JSON to PowerShell Object'
     return ParseItemExp -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
       MaxJsonLength = $response.length
     }).DeserializeObject($response))
