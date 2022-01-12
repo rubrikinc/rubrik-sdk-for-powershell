@@ -115,7 +115,7 @@ function ParseJsonArrayExp($jsonArray) {
   #>
   @(
     $jsonArray | ForEach-Object -Process {
-      ParseItemExp -jsonItem $_
+      , (ParseItemExp -jsonItem $_)
     }
   )
 }
