@@ -8,7 +8,12 @@ function ExpandPayload($response) {
     .SYNOPSIS
     This function use the .Net JSON Serializer in order to bypass the maxJson Length limitation
   #>
-  [void][System.Reflection.Assembly]::LoadWithPartialName('System.Web.Extensions')
+  try {
+    [void][System.Reflection.Assembly]::LoadWithPartialName('System.Web.Extensions')
+  } catch {
+    Write-Warning 'Run `Set-RubrikModuleOption -OptionName LegacyJSONConversion -OptionValue Default` to restore functionality...'
+    throw 'The System.Web.Extensions class is not available on this OS'
+  }
 
   if ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'Experimental' -or $rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysExperimental') {
     return ParseItemExp -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
