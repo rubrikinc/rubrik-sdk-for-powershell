@@ -46,6 +46,21 @@ function Set-RubrikModuleOption
     Set-RubrikModuleOption -OptionName DefaultWebRequestTimeOut -OptionValue 30
 
     Changes the default timeout for request to the Rubrik cluster to 30 seconds
+
+    .EXAMPLE
+    Set-RubrikModuleOption -OptionName LegacyJSONConversion -OptionValue Default
+
+    Same as undefined, using ExpandPayload to process JSON to PowerShell object conversion on Windows PowerShell
+
+    .EXAMPLE
+    Set-RubrikModuleOption -OptionName LegacyJSONConversion -OptionValue AlwaysConvertToJson
+
+    Forces the use of ConvertTo-Json, which is available on Windows PowerShell but it can cause unexpected behavior
+
+    .EXAMPLE
+    Set-RubrikModuleOption -OptionName LegacyJSONConversion -OptionValue Experimental
+
+    Using ExpandPayload to process JSON to Windows PowerShell object conversion using the new experimental, accelerated functions
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'NameValue')]
@@ -56,7 +71,7 @@ function Set-RubrikModuleOption
       ParameterSetName='NameValue',
       Position=0,
       Mandatory=$true)]
-    [ValidateSet('ApplyCustomViewDefinitions', 'CredentialPath', 'DefaultWebRequestTimeOut')]
+    [ValidateSet('ApplyCustomViewDefinitions', 'CredentialPath', 'DefaultWebRequestTimeOut', 'LegacyJSONConversion')]
     [string]$OptionName,
     # Desired value for option
     [Parameter(

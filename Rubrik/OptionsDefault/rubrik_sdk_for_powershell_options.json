@@ -3,6 +3,7 @@
   "ModuleOption":  {
     "ApplyCustomViewDefinitions":  "True",
     "CredentialPath": "",
-    "DefaultWebRequestTimeOut": 100
+    "DefaultWebRequestTimeOut": 100,
+    "LegacyJSONConversion": ""
   }
 }

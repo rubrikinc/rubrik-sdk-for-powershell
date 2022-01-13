@@ -33,11 +33,17 @@ function Submit-Request {
             Write-Verbose -Message 'Submitting the request'
             if ($resources.method -in ('Delete','Post','Put','Patch')) {
                 # Delete operations (and some post) generally have no response body, skip JSON formatting and store the response from Invoke-WebRequest
-                if (Test-PowerShellSix) {
+                if ((Test-PowerShellSix) -and (
+                ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysLegacy') -or
+                ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysExperimental'))) {
+                    $WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body
+                    $result = ExpandPayload -response $WebResult.Content
+                } elseif ((Test-PowerShellSix) -or ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysConvertToJson')) {
                     # Uses the improved ConvertFrom-Json cmdlet as provided in PowerShell 6.1
                     # In the case of DELETE, there is no content (json body) to parse.
                     $result = if (($WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body)) {
                         if ($WebResult.Content) {
+                            Write-Verbose 'Using ConvertFrom-Json to convert JSON to PowerShell Object'
                             ConvertFrom-Json -InputObject $WebResult.Content
                         } 
                     }
@@ -51,7 +57,7 @@ function Submit-Request {
                             StatusDescription = $WebResult.StatusDescription
                         }
                     }
-                    $result = ExpandPayload -response $WebResult
+                    $result = ExpandPayload -response $WebResult.Content
                 }
                 # If $result is null, build a $result object to return to the user. Otherwise, $result will be returned.
                 if ($null -eq $result) {   
@@ -74,8 +80,14 @@ function Submit-Request {
                 }
             }
             else {
-                if (Test-PowerShellSix) {
+                if ((Test-PowerShellSix) -and (
+                ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysLegacy') -or
+                ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysExperimental'))) {
+                    $WebResult = Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body
+                    $result = ExpandPayload -response $WebResult.Content
+                } elseif ((Test-PowerShellSix) -or ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysConvertToJson')) {
                     # Uses the improved ConvertFrom-Json cmdlet as provided in PowerShell 6.1
+                    Write-Verbose 'Using ConvertFrom-Json to convert JSON to PowerShell Object'
                     $result = ConvertFrom-Json -InputObject (Invoke-RubrikWebRequest -Uri $uri -Headers $header -Method $method -Body $body).Content
                 } else {
                     # Because some calls require more than the default payload limit of 2MB, ExpandPayload dynamically adjusts the payload limit
@@ -87,7 +99,7 @@ function Submit-Request {
                             StatusDescription = $WebResult.StatusDescription
                         }
                     }
-                    $result = ExpandPayload -response $WebResult
+                    $result = ExpandPayload -response $WebResult.Content
                 }
             }
         }

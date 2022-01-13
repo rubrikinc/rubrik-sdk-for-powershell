@@ -8,10 +8,24 @@ function ExpandPayload($response) {
     .SYNOPSIS
     This function use the .Net JSON Serializer in order to bypass the maxJson Length limitation
   #>
-  [void][System.Reflection.Assembly]::LoadWithPartialName('System.Web.Extensions')
-  return ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
-        MaxJsonLength = 67108864
-  }).DeserializeObject($response.Content))
+  try {
+    [void][System.Reflection.Assembly]::LoadWithPartialName('System.Web.Extensions')
+  } catch {
+    Write-Warning 'Run `Set-RubrikModuleOption -OptionName LegacyJSONConversion -OptionValue Default` to restore functionality...'
+    throw 'The System.Web.Extensions class is not available on this OS'
+  }
+
+  if ($rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'Experimental' -or $rubrikOptions.ModuleOption.LegacyJSONConversion -eq 'AlwaysExperimental') {
+    Write-Verbose 'Using ParseItemExp (Experimental) to convert JSON to PowerShell Object'
+    return ParseItemExp -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
+      MaxJsonLength = $response.length
+    }).DeserializeObject($response))
+  } else {
+    Write-Verbose 'Using ParseItem to convert JSON to PowerShell Object'
+    return ParseItem -jsonItem ((New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer -Property @{
+      MaxJsonLength = 67108864
+    }).DeserializeObject($response))
+  }
 }
 
 
@@ -60,4 +74,48 @@ function ParseJsonArray($jsonArray) {
     $result += , (ParseItem -jsonItem $_)
   }
   return $result
+}
+
+function ParseItemExp($jsonItem) {
+  <#
+    .SYNOPSIS
+    Experimental faster: main function that determines the type of object and calls either ParseJsonObjectExp or ParseJsonArrayExp
+  #>
+  if($jsonItem.PSObject.TypeNames -match 'Array') {
+    ParseJsonArrayExp -jsonArray ($jsonItem)
+  } elseif($jsonItem.PSObject.TypeNames -match 'Dictionary') {
+    ParseJsonObjectExp -jsonObj ([HashTable]$jsonItem)
+  } else  {
+    $jsonItem
+  }
+}
+
+function ParseJsonObjectExp($jsonObj) {
+  <#
+    .SYNOPSIS
+    Experimental faster: Converts JSON to PowerShell Custom objects
+  #>
+  $result = @{}
+  foreach ($key in $jsonObj.Keys) 
+  {
+    
+    if (-not [string]::IsNullOrEmpty($jsonObj[$key])) {
+      $result[$key] = ParseItemExp -jsonItem $jsonObj[$key]
+    } else {
+      $result[$key] = $null
+    }
+  }
+  [pscustomobject]$result
+}
+
+function ParseJsonArrayExp($jsonArray) {
+  <#
+    .SYNOPSIS
+    Experimental faster: Expands the array and feeds this back into ParseItem, in case of nested arrays this might occur multiple times
+  #>
+  @(
+    $jsonArray | ForEach-Object -Process {
+      , (ParseItemExp -jsonItem $_)
+    }
+  )
 }
