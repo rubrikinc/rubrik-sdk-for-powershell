@@ -32,7 +32,7 @@ Describe -Name 'Public/Set-RubrikModuleOption' -Tag 'Public', 'Set-RubrikModuleO
 
         It -Name "Should throw not found error" -Test {
             {Set-RubrikModuleOption -OptionName 'Test' -OptionValue 'Value' } |
-                Should -Throw '''OptionName''. The argument "Test" does not belong to the set "ApplyCustomViewDefinitions,CredentialPath,DefaultWebRequestTimeOut" specified by the ValidateSet attribute. Supply an argument that is in the set and then try the command again.'
+                Should -Throw '''OptionName''. The argument "Test" does not belong to the set "ApplyCustomViewDefinitions,CredentialPath,DefaultWebRequestTimeOut,LegacyJSONConversion" specified by the ValidateSet attribute. Supply an argument that is in the set and then try the command again.'
         }
 
     }
