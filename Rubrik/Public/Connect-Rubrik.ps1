@@ -36,6 +36,10 @@ function Connect-Rubrik {
       Rather than passing a username and secure password, you can now generate an API token key in Rubrik. This key can then be used to authenticate instead of a credential or user name and password. 
       
       .EXAMPLE
+      Connect-Rubrik -Server 192.168.1.1 -Id "Service Account ID" -Secret "Service Account Secret"
+      Connect to Rubrik cluster utilizing a Service Account ID and Secret
+            
+      .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Username admin -UserAgent @{platform_integration='Poshbot.Rubrik'}
 
       This will connect to Rubrik with a username of "admin" to the IP address 192.168.1.1, will prompt for password and provide additional information in the user-agent string.
@@ -46,6 +50,12 @@ function Connect-Rubrik {
         [Parameter(Mandatory = $true, Position = 0)]
         [ValidateNotNullorEmpty()]
         [String]$Server,
+        # Service Account authentication to CDM
+        [Parameter(ParameterSetName='ServiceAccount',Mandatory=$true, Position = 1)]
+        [String]$Id,
+        # Service Account Secret
+        [Parameter(ParameterSetName='ServiceAccount',Mandatory=$true, Position = 2)]
+        [String]$Secret,
         # Username with permissions to connect to the Rubrik cluster
         # Optionally, use the Credential parameter    
         [Parameter(ParameterSetName='UserPassword',Mandatory=$true, Position = 1)]
@@ -134,6 +144,33 @@ function Connect-Rubrik {
                 Write-Verbose -Message 'Removing API token from $RubrikConnection using Disconnect-Rubrik'
                 Disconnect-Rubrik
                 throw 'Invalid API Token provided, please provide correct token'
+            }
+        } elseif ($Id) {
+            # retrieve bearer token from service account endpoint
+            $RestSplat = @{
+                Method = 'Post'
+                ContentType = "application/json"
+                URI = "https://$Server/api/v1/service_account/session"
+                SkipCertificateCheck = $true
+                Body = @{
+                    serviceAccountId = "$($Id)"
+                    secret = "$($Secret)"
+                } | ConvertTo-Json
+            }
+            $response = Invoke-RestMethod @RestSplat -Verbose
+            $Token = $response.token
+            $head = @{'Authorization' = "Bearer $($Token)";'User-Agent' = $UserAgentString}
+            Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
+            $global:rubrikConnection = @{
+                id      = $null
+                userId  = $null
+                token   = $Token
+                server  = $Server
+                header  = $head
+                time    = (Get-Date)
+                api     = Get-RubrikAPIVersion -Server $Server
+                version = Get-RubrikSoftwareVersion -Server $Server
+                authType = 'Token'
             }
         } else {
             $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
