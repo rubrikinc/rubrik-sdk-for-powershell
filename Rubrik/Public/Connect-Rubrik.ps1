@@ -170,7 +170,7 @@ function Connect-Rubrik {
                 time    = (Get-Date)
                 api     = Get-RubrikAPIVersion -Server $Server
                 version = Get-RubrikSoftwareVersion -Server $Server
-                authType = 'Token'
+                authType = 'ServiceAccount'
             }
         } else {
             $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
