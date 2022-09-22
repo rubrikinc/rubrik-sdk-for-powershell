@@ -14,15 +14,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-## [7.0.0]() -
-
-### Changed
+## [6.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.1) - 2022-09-22
 
 ### Added
 
 * Added new parameterset to `Connect-Rubrik` containing `ID` and `Secret` parameter to facilitate logging into the SDK with Service Accounts.  Resolves [Issue 812](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/812)
-
-### Fixed
 
 ## [6.0.0](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.0) - 2022-01-07
 
