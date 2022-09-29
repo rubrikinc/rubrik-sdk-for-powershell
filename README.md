@@ -14,16 +14,26 @@ If you wish to load a specific version, use:
 
 Where `#.#.#` represents the version number, for example 5.3.1
 
-# :mag: Example
+# :electric_plug: Connection
 
-The Rubrik SDK for PowerShell provides two mechanisms for supplying credentials to the Connect-Rubrik function. A combination of username and password or a credential object. Credentials in the credential object may be entered manually or provided as an object. The example below prompts for a username and password to create a credential object, connects to a cluster and displays the running version.
-
-```powershell
-$Credential = Get-Credential
-Connect-Rubrik -Server 192.168.10.10 -Credential $Credential
-Get-RubrikDebugInfo
-```
-
+The Rubrik SDK for PowerShell provides multiple mechanisms for supplying credentials to the [Connect-Rubrik](https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/connect-rubrik) function; in particular we highlight here 2 methods:
+1. Using a credential object.
+   Credentials in the credential object may be entered manually or provided as an object.
+   ```powershell
+      $Credential = Get-Credential
+      Connect-Rubrik -Server 192.168.10.10 -Credential $Credential
+      Get-RubrikDebugInfo
+   ```
+   This prompts for a username and password to create a credential object,
+   connects to a cluster and displays the running version.
+2. Using a service account ID and secret.
+   Example:
+   ```powershell
+      Connect-Rubrik -Server 192.168.10.10 -Id "Service Account ID" -Secret "Service Account Secret"
+      Get-RubrikDebugInfo
+   ```
+   This connects to Rubrik cluster utilizing a service account ID and secret, and displays the running version.
+   
 # :blue_book: Documentation
 
 Here are some resources to get you started! If you find any challenges from this project are not properly documented or are unclear, please [raise an issue](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/new/choose) and let us know! This is a fun, safe environment - don't worry if you're a GitHub newbie! :heart:
