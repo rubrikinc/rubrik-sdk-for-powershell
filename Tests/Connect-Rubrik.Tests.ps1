@@ -28,11 +28,23 @@ Describe -Name 'Public/Connect-Rubrik' -Tag 'Public', 'Connect-Rubrik' -Fixture 
         Mock -CommandName New-UserAgentString -Verifiable -ModuleName 'Rubrik' -MockWith { }
         Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
             [pscustomobject]@{
-                id = 11111
-                userId = 22222
-                token = 33333
+                sessionId = "22222"
+                serviceAccountId = "11111"
+                token = "33333"
+                expirationTime = "3022-12-10T06:19:52.250Z"
+                organizationId = "44444"
             }
         }
+        Mock -CommandName Invoke-RestMethod -Verifiable -ModuleName 'Rubrik' -MockWith {
+            [pscustomobject]@{
+                "sessionId": "d417538a-c3f2-4e40-8977-1fd1448c6713",
+                "serviceAccountId": "User:::283c0f27-d4b5-469e-8f1a-663de1195e4c",
+                "token": "xxxxxxx"
+                "expirationTime": "2022-12-10T06:19:52.250Z", <--------------------------------------------------------
+                "organizationId": "e61a0588-53d7-494c-ba7b-a25e9a2068c0"
+            }
+        }
+
         It -Name 'Username / Password combination' -Test {
             (Connect-Rubrik -Server testcluster -Username jaapbrasser -Password $(ConvertTo-SecureString -String password -AsPlainText -Force)) | Out-String |
                 Should -BeLikeExactly '*Basic*'
@@ -51,9 +63,14 @@ Describe -Name 'Public/Connect-Rubrik' -Tag 'Public', 'Connect-Rubrik' -Fixture 
                 Should -BeLikeExactly '*Token*'
         }
 
-        It -Name 'RubrikConnections array should contain 3 entries' -Test {
+        It -Name 'Service Account' -Test {
+            (Connect-Rubrik -Server testcluster -Id Username -Secret 33333) | Out-String |
+                Should -BeLikeExactly '*ServiceAccount*'
+        }
+
+        It -Name 'RubrikConnections array should contain 4 entries' -Test {
             @($RubrikConnections).Count |
-                Should -Be 3
+                Should -Be 4
         }
 
         Assert-VerifiableMock
