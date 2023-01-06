@@ -14,6 +14,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## [6.0.2](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.2) - 2023-01-06
+
+### Added
+
+* Added `SessionID` property to output in `Connect-Rubrik` for service accounts thanks @tonypags, it was previously defined but had a `$null` value. This ID value can be used to disconnect a specific session listed under $global:RubrikConnections.
+
+### Fixed
+
+* `Connect-Rubrik` issue fixed with new service account implementation, won't run on PSv5 thanks @tonypags, resolves [Issue 817](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/817)
+
 ## [6.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.1) - 2022-09-22
 
 ### Added
