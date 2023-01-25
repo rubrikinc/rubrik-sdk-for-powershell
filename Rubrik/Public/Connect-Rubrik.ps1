@@ -151,18 +151,18 @@ function Connect-Rubrik {
                 Method = 'Post'
                 ContentType = "application/json"
                 URI = "https://$Server/api/v1/service_account/session"
-                SkipCertificateCheck = $true
                 Body = @{
                     serviceAccountId = "$($Id)"
                     secret = "$($Secret)"
                 } | ConvertTo-Json
             }
+            if ($PSVersiontable.PSVersion.Major -gt 5) {$RestSplat.SkipCertificateCheck = $true}
             $response = Invoke-RestMethod @RestSplat -Verbose
             $Token = $response.token
             $head = @{'Authorization' = "Bearer $($Token)";'User-Agent' = $UserAgentString}
             Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
             $global:rubrikConnection = @{
-                id      = $null
+                id      = $response.sessionId
                 userId  = $null
                 token   = $Token
                 server  = $Server
