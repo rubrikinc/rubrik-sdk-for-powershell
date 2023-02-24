@@ -20,21 +20,21 @@ function Start-RubrikVMDownload
     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/start-rubrikvmdownload
 
     .EXAMPLE
-     $GetRubrikVMSnapshot = Get-RubrikVMSnapshot -id <snapshotid>
-     $StartRubrikVMDownload = $GetRubrikVMSnapshot | Start-RubrikVMDownload -Path <downloaded filename> -paths <filename>
+     $snapshot = Get-RubrikVMSnapshot -id <snapshotid>
+     $RubrikVMDownload = $snapshot | Start-RubrikVMDownload -Path <downloaded filename> -paths "C:\path\to\file"
 
 
     Will download the specified file from the Rubrik cluster from the specific snapshot
 
     .EXAMPLE
-     $GetRubrikVM = Get-RubrikVM -Name <hostname>
-     $FindRubrikFile = $GetRubrikVM | Find-RubrikFile -SearchString <tag file created for the backup>
-     $GetRubrikVMSnapshot = Get-RubrikVMSnapshot -id $FindRubrikFile.fileVersions.snapshotId
-     $StartRubrikVMDownload = $GetRubrikVMSnapshot | Start-RubrikVMDownload -Path <downloaded filename> -paths <filename>
+     $vm = Get-RubrikVM -Name <hostname>
+     $RubrikFile = $vm | Find-RubrikFile -SearchString <tag file created for the backup>
+     $snapshot = Get-RubrikVMSnapshot -id $rubrikFile.fileVersions.snapshotId
+     $RubrikVMDownload = $snapshot | Start-RubrikVMDownload -Path <downloaded filename> -paths "C:\path\to\file"
 
 
     Will download the specified file from the Rubrik cluster to the <dowloaded filename>
-    Important here is to make sure that $FindRubrikFile.fileVersions.snapshotId is not empty
+    Important here is to make sure that $rubrikFile.fileVersions.snapshotId is not empty
   #>
 
   [CmdletBinding(DefaultParameterSetName = 'Uri')]

@@ -20,19 +20,19 @@ function Get-RubrikVMDownloadLink
     https://rubrik.gitbook.io/rubrik-sdk-for-powershell/command-documentation/reference/get-rubrikvmdownloadlink
 
     .EXAMPLE
-     $GetRubrikVMSnapshot = Get-RubrikVMSnapshot -id <snapshotid>
-     $GetRubrikVMDownloadLink = $GetRubrikVMSnapshot | Get-RubrikVMDownloadLink -paths <filename>
+     $Snapshot = Get-RubrikVMSnapshot -id <snapshotid>
+     $DownloadLink = $Snapshot | Get-RubrikVMDownloadLink -paths "C:\path\to\file"
 
     Will create a download link for the file specified
 
     .EXAMPLE
-     $GetRubrikVM = Get-RubrikVM -Name <hostname>
-     $FindRubrikFile = $GetRubrikVM | Find-RubrikFile -SearchString <tag file created for the backup>
-     $GetRubrikVMSnapshot = Get-RubrikVMSnapshot -id $FindRubrikFile.fileVersions.snapshotId
-     $GetRubrikVMDownloadLink = $GetRubrikVMSnapshot | Get-RubrikVMDownloadLink -paths <filename>
+     $vm = Get-RubrikVM -Name <hostname>
+     $rubrikFile = $vm | Find-RubrikFile -SearchString <tag file created for the backup>
+     $snapshot = Get-RubrikVMSnapshot -id $rubrikFile.fileVersions.snapshotId
+     $DownloadLink = $snapshot | Get-RubrikVMDownloadLink -paths "C:\path\to\file"
 
     Will only create a download link for the file specified in the snapshot specified
-    Important here is to make sure that $FindRubrikFile.fileVersions.snapshotId is not empty
+    Important here is to make sure that $rubrikFile.fileVersions.snapshotId is not empty
   #>
 
   [CmdletBinding()]
