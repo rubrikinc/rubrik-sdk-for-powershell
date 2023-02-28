@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## Unreleased
+
+### Added
+
+* New `Get-RubrikVMDownloadLink` and `Start-RubrikVMDownloadLink` cmdlets added along with associated unit tests
+
 ## [6.0.2](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.2) - 2023-01-06
 
 ### Added
