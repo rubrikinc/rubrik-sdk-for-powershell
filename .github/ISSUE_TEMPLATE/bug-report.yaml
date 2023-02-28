@@ -1,0 +1,50 @@
+name: Bug Report
+description: Report a bug encountered while using the Rubrik SDK for PowerShell.
+labels: ["kind-bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please use this template while reporting a bug and provide as much info as possible. Not doing so may result in your bug not being addressed in a timely manner. Thanks!  
+        Any bug reports submitted will be visible publicly, do not include any confidential information in this bug report.
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: Provide information about the failure by issuing the command using the `-Verbose` command. Ensure that any identifiable information (server names, tokens, passwords) is removed from your logs before sharing this on GitHub.
+      placeholder: Paste the verbose output from the command here
+      render: PowerShell
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: What should the command do?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Please provide detailed steps for reproducing the issue.
+      placeholder: |
+        1.
+        2.
+        3.
+        ...
+  - type: textarea
+    attributes:
+      label: Context
+      description: |
+        Please provide any relevant information about your setup. This is important in case the issue is not reproducible except for under certain conditions.
+        ```PowerShell
+        Connect-Rubrik
+        Get-RubrikDebugInfo
+        ```
+      placeholder: Get-RubrikDebugInfo
+      render: PowerShell
+  - type: textarea
+    attributes:
+      label: Failure Logs
+      description: |
+        Please include any relevant log snippets or files here.
+        > *Warning*
+        > All information will be visible publicly on GitHub. Do not include computer or user names, passwords, API tokens or any identifiable information when submitting failure logs.
