@@ -86,6 +86,14 @@ function Protect-RubrikVM
   }
 
   Process {
+
+    # If we are in RSC mode, call other cmdlet
+    if ($global:RubrikConnection.RSCInstance) {
+      Write-Verbose -Message "Connection to RSC detected, redirecting to Protect-RubrikRSCVM"
+      $response = Protect-RubrikRSCVM @PSBoundParameters
+      return $response
+    }
+
     if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
       $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $slaid
       

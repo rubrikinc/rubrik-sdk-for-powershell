@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * New `Get-RubrikVMDownloadLink` and `Start-RubrikVMDownloadLink` cmdlets added along with associated unit tests
+* Added integration into the RSC PS SDK to automatically send GQL queries if cluster is managed by RSC
 
 ## [6.0.2](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.2) - 2023-01-06
 
