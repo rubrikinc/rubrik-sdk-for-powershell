@@ -65,11 +65,11 @@ function Test-ManagedByRSC {
             }
 
             # Update Global Variable with RSC connection information
-            #$global:rubrikConnection.RSCToken = $connection.access_token
             $global:rubrikConnection.RSCHeaders = $rscheaders
             $global:rubrikConnection.RSCInstance = $($response.url)
             
             #-=MWP=- TODO - Once RSC connection bug is worked out, here is where we would Connect-Rsc
+            #$connection = Connect-RSC -ClientId $id -ClientSecret ($Secret | ConvertTo-SecureString -AsPlainText) -Server $($rscuri.split("/")[2])
             return $true
         } else {
             Write-Verbose -Message "RSC is not reachable, failing back to CDM only"

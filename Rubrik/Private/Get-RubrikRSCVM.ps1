@@ -55,23 +55,107 @@ function Get-RubrikRSCVM {
   )
 
 
-$query = @" 
-{
-query: vSphereVmNewConnection {
-    objects: nodes{
-      id
-      name
-    }
+  if ($Id) {
+    # Query for just ID
+$query = @'
+query vmdetails ($fid: UUID!) {
+  vSphereVmNew (fid: $fid) {
+    id
+    name
+    isRelic
   }
 }
-"@
-
+'@
+$variables = @{
+  "fid" = "$Id"
+}
 $body = @{
-    "query" = $query
-} | ConvertTo-Json 
-
-
-#$response = Invoke-WebRequest -Method POST -Uri $uri -Headers $headers -Body $body
+  "query" = $query
+  "variables" = $variables
+} | ConvertTo-Json -Compress -Depth 5
 $response = Invoke-RubrikGQLRequest -query $body | ConvertFrom-Json 
-return $response.data.query.objects
+return $response.data.vSphereVmNew
+
+  } else {
+
+
+  
+    $filter = New-Object System.Collections.ArrayList
+    $addFilter = $false
+$queryWithFilter = @'
+  query MyVMs ($filter: [Filter!]) {
+    data: vSphereVmNewConnection(filter: $filter) {
+      objects: nodes {
+        id
+        name
+        isRelic
+      }
+    }
+  }
+'@
+$queryWithoutFilter = @'
+  query {
+    data: vSphereVmNewConnection {
+      objects: nodes {
+        id
+        name
+        isRelic
+      }
+    }
+  }
+'@
+if ($Name) {
+  $filter.Add(
+      @{
+        "field" = "NAME_EXACT_MATCH"
+        "texts" = "$Name"
+      }
+    )
+  $addFilter = $true
+}
+
+if ($PSBoundParameters.containsKey("Relic")) {
+  if ($Relic -eq $true) {
+    $filter.Add(
+      @{
+        "field" = "IS_RELIC"
+        "texts" = "True"
+      }
+    )
+    $addFilter = $true
+  } elseif ($Relic -eq $false) {
+    $filter.Add(
+      @{
+        "field" = "IS_RELIC"
+        "texts" = "False"
+      }
+    )
+    $addFilter = $true
+  }
+} # else we leave it alone and return both
+
+
+
+
+$variables = @{
+  "filter" = $filter
+}
+
+if ($addFilter -eq $true) {
+  Write-Verbose -Message "Filter detecting, adding to variables"
+  $body = @{
+    "query" = $queryWithFilter
+    "variables" = $variables
+  } | ConvertTo-Json -Compress -Depth 5
+} else {
+  Write-Verbose -Message "No filter, running raw query"
+  $body = @{
+    "query" = $queryWithoutFilter
+  } | ConvertTo-Json -Compress -Depth 5
+}
+
+
+$response = Invoke-RubrikGQLRequest -query $body | ConvertFrom-Json 
+return $response.data.data.objects
+  }
 }
