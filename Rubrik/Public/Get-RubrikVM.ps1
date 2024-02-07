@@ -115,6 +115,13 @@ function Get-RubrikVM
 
   Process {
 
+      # If we are in RSC mode, call other cmdlet
+      if ($global:RubrikConnection.RSCInstance) {
+        WRite-Verbose -Message "RSC connection detected, redirecting to Get-RubrikRSCVM"
+        $response = Get-RubrikRSCVM @PSBoundParameters
+        return $response
+      }
+
     #region One-off
     if ($SLAID.Length -eq 0 -and $SLA.Length -gt 0) {
       $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect -PrimaryClusterID $PrimaryClusterID
