@@ -117,7 +117,7 @@ function Get-RubrikVM
 
       # If we are in RSC mode, call other cmdlet
       if ($global:RubrikConnection.RSCInstance) {
-        WRite-Verbose -Message "RSC connection detected, redirecting to Get-RubrikRSCVM"
+        Write-Verbose -Message "RSC connection detected, redirecting to Get-RubrikRSCVM"
         $response = Get-RubrikRSCVM @PSBoundParameters
         return $response
       }
