@@ -172,6 +172,8 @@ function Connect-Rubrik {
                 version = Get-RubrikSoftwareVersion -Server $Server
                 authType = 'ServiceAccount'
             }
+            # Determine if cluster is managed by RSC, if so, connect and store auth information in global variable
+            $RSCInfo = Test-ManagedByRSC -Id $id -Secret $secret
         } else {
             $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
 
