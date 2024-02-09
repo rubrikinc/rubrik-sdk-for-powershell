@@ -10,7 +10,6 @@ function Invoke-RubrikGQLRequest {
  
 
     $response = Invoke-WebRequest -Uri $rscuri -method $method -body $query -Headers $rscheaders
-
     return $response
 }
 

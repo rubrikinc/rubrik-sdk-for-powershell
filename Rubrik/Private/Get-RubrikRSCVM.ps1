@@ -54,15 +54,37 @@ function Get-RubrikRSCVM {
     [String]$api = $global:RubrikConnection.api
   )
 
-
+  
   if ($Id) {
     # Query for just ID
 $query = @'
 query vmdetails ($fid: UUID!) {
   vSphereVmNew (fid: $fid) {
-    id
-    name
-    isRelic
+
+      id
+      name
+      isRelic
+      slaAssignment
+      effectiveSlaDomain {
+        id
+        name
+      }
+      configuredSlaDomain {
+        id
+        name
+      }
+      cluster {
+        id
+        name
+      }
+      objectType
+      guestOsName
+      guestOsType
+      agentStatus {
+        agentStatus
+      }
+      powerStatus
+      
   }
 }
 '@
@@ -78,6 +100,14 @@ return $response.data.vSphereVmNew
 
   } else {
 
+    if ($SLA) {
+      $sla_id = (Get-RubrikSLA -Name "$SLA").id
+      if ($null -ne $sla_id){
+        $SLAID = $sla_id
+      }
+    }
+
+
 
   
     $filter = New-Object System.Collections.ArrayList
@@ -89,6 +119,27 @@ $queryWithFilter = @'
         id
         name
         isRelic
+        slaAssignment
+        effectiveSlaDomain {
+          id
+          name
+        }
+        configuredSlaDomain {
+          id
+          name
+        }
+        cluster {
+          id
+          name
+        }
+        objectType
+        guestOsName
+        guestOsType
+        agentStatus {
+          agentStatus
+        }
+        powerStatus
+        
       }
     }
   }
@@ -100,6 +151,27 @@ $queryWithoutFilter = @'
         id
         name
         isRelic
+        slaAssignment
+        effectiveSlaDomain {
+          id
+          name
+        }
+        configuredSlaDomain {
+          id
+          name
+        }
+        cluster {
+          id
+          name
+        }
+        objectType
+        guestOsName
+        guestOsType
+        agentStatus {
+          agentStatus
+        }
+        powerStatus
+        
       }
     }
   }
@@ -131,8 +203,19 @@ if ($PSBoundParameters.containsKey("Relic")) {
       }
     )
     $addFilter = $true
-  }
-} # else we leave it alone and return both
+  } 
+} 
+if ($SLAID) {
+  $filter.Add(
+    @{
+      "field" = "EFFECTIVE_SLA"
+      "texts" = "$SLAID"
+    }
+  )
+  $addFilter = $true
+}
+
+# else we leave it alone and return both
 
 
 

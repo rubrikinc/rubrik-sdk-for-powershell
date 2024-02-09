@@ -29,7 +29,7 @@ function Test-ManagedByRSC {
         [string] $Secret
     )
 
-    
+ 
     # Configure parameters to call API to check connection status
     $uri = "https://$($global:rubrikConnection.Server)/api/internal/cluster/me/global_manager"
     
@@ -42,6 +42,7 @@ function Test-ManagedByRSC {
     # If we are connected to RSC 
     if ($response.isConnected -eq "True") {
         Write-Verbose -Message "Connection to RSC Instance ($($response.url)) detected, checking if address is reachable"
+        
         # Is RSC Reachable (Internet available)
         $rscuri = "$($response.url)/api/client_token"
         if ((Test-Connection $($rscuri.split("/")[2]) -quiet ) -eq $true) {
@@ -63,13 +64,15 @@ function Test-ManagedByRSC {
                 "Authorization" = "Bearer $($connection.access_token)"
                 "Content-Type" = "application/json"
             }
-
+            #-=MWP=- Get Server id for $global:rubrikConnection.Server and store in global variable
             # Update Global Variable with RSC connection information
             $global:rubrikConnection.RSCHeaders = $rscheaders
             $global:rubrikConnection.RSCInstance = $($response.url)
             
             #-=MWP=- TODO - Once RSC connection bug is worked out, here is where we would Connect-Rsc
-            #$connection = Connect-RSC -ClientId $id -ClientSecret ($Secret | ConvertTo-SecureString -AsPlainText) -Server $($rscuri.split("/")[2])
+            #Import-Module RubrikSecurityCloud -Scope Global -Force
+            #Connect-RSC -ClientId $id -ClientSecret ($Secret | ConvertTo-SecureString -AsPlainText) -Server $($rscuri.split("/")[2])
+
             return $true
         } else {
             Write-Verbose -Message "RSC is not reachable, failing back to CDM only"

@@ -32,7 +32,9 @@ function Get-RubrikRSCSLA {
       [String]$api = $global:RubrikConnection.api
     )
 
-    # Let's deal with parameters and match up with old cmdlet
+
+
+
 
     if ($PSBoundParameters['Name']) {
 $query = @'
