@@ -56,189 +56,70 @@ function Get-RubrikRSCVM {
 
   
   if ($Id) {
-    # Query for just ID
-$query = @'
-query vmdetails ($fid: UUID!) {
-  vSphereVmNew (fid: $fid) {
-
-      id
-      name
-      isRelic
-      slaAssignment
-      effectiveSlaDomain {
-        id
-        name
-      }
-      configuredSlaDomain {
-        id
-        name
-      }
-      cluster {
-        id
-        name
-      }
-      objectType
-      guestOsName
-      guestOsType
-      agentStatus {
-        agentStatus
-      }
-      powerStatus
-      
-  }
-}
-'@
-$variables = @{
-  "fid" = "$Id"
-}
-$body = @{
-  "query" = $query
-  "variables" = $variables
-} | ConvertTo-Json -Compress -Depth 5
-$response = Invoke-RubrikGQLRequest -query $body | ConvertFrom-Json 
-return $response.data.vSphereVmNew
+    $variables = @{
+      "fid" = "$Id"
+    }
+    $response = Invoke-RubrikGQLRequest -query "vSphereVMSingle" -variables $variables | ConvertFrom-Json
+    return $response.data.vSphereVmNew
 
   } else {
-
     if ($SLA) {
       $sla_id = (Get-RubrikSLA -Name "$SLA").id
       if ($null -ne $sla_id){
         $SLAID = $sla_id
       }
     }
-
-
-
-  
     $filter = New-Object System.Collections.ArrayList
     $addFilter = $false
-$queryWithFilter = @'
-  query MyVMs ($filter: [Filter!]) {
-    data: vSphereVmNewConnection(filter: $filter) {
-      objects: nodes {
-        id
-        name
-        isRelic
-        slaAssignment
-        effectiveSlaDomain {
-          id
-          name
-        }
-        configuredSlaDomain {
-          id
-          name
-        }
-        cluster {
-          id
-          name
-        }
-        objectType
-        guestOsName
-        guestOsType
-        agentStatus {
-          agentStatus
-        }
-        powerStatus
-        
-      }
+    if ($Name) {
+      $filter.Add(
+          @{
+            "field" = "NAME_EXACT_MATCH"
+            "texts" = "$Name"
+          }
+        )
+      $addFilter = $true
     }
-  }
-'@
-$queryWithoutFilter = @'
-  query {
-    data: vSphereVmNewConnection {
-      objects: nodes {
-        id
-        name
-        isRelic
-        slaAssignment
-        effectiveSlaDomain {
-          id
-          name
+
+    if ($PSBoundParameters.containsKey("Relic")) {
+      if ($Relic -eq $true) {
+        $filter.Add(
+          @{
+            "field" = "IS_RELIC"
+            "texts" = "True"
+          }
+        )
+        $addFilter = $true
+      } elseif ($Relic -eq $false) {
+        $filter.Add(
+          @{
+            "field" = "IS_RELIC"
+            "texts" = "False"
+          }
+        )
+        $addFilter = $true
+      } 
+    } 
+    if ($SLAID) {
+      $filter.Add(
+        @{
+          "field" = "EFFECTIVE_SLA"
+          "texts" = "$SLAID"
         }
-        configuredSlaDomain {
-          id
-          name
-        }
-        cluster {
-          id
-          name
-        }
-        objectType
-        guestOsName
-        guestOsType
-        agentStatus {
-          agentStatus
-        }
-        powerStatus
-        
-      }
+      )
+      $addFilter = $true
     }
-  }
-'@
-if ($Name) {
-  $filter.Add(
-      @{
-        "field" = "NAME_EXACT_MATCH"
-        "texts" = "$Name"
-      }
-    )
-  $addFilter = $true
-}
-
-if ($PSBoundParameters.containsKey("Relic")) {
-  if ($Relic -eq $true) {
-    $filter.Add(
-      @{
-        "field" = "IS_RELIC"
-        "texts" = "True"
-      }
-    )
-    $addFilter = $true
-  } elseif ($Relic -eq $false) {
-    $filter.Add(
-      @{
-        "field" = "IS_RELIC"
-        "texts" = "False"
-      }
-    )
-    $addFilter = $true
-  } 
-} 
-if ($SLAID) {
-  $filter.Add(
-    @{
-      "field" = "EFFECTIVE_SLA"
-      "texts" = "$SLAID"
+    $variables = @{
+      "filter" = $filter
     }
-  )
-  $addFilter = $true
-}
 
-# else we leave it alone and return both
-
-
-
-
-$variables = @{
-  "filter" = $filter
-}
-
-if ($addFilter -eq $true) {
-  Write-Verbose -Message "Filter detecting, adding to variables"
-  $body = @{
-    "query" = $queryWithFilter
-    "variables" = $variables
-  } | ConvertTo-Json -Compress -Depth 5
-} else {
-  Write-Verbose -Message "No filter, running raw query"
-  $body = @{
-    "query" = $queryWithoutFilter
-  } | ConvertTo-Json -Compress -Depth 5
-}
-
-
-$response = Invoke-RubrikGQLRequest -query $body | ConvertFrom-Json 
-return $response.data.data.objects
+    if ($addFilter -eq $true) {
+      Write-Verbose -Message "Filter detecting, adding to variables"
+      $query = "vSphereVMMultiple"
+    } else {
+      $query = "vSphereVMMultipleNoFilter"
+    }
+    $response = Invoke-RubrikGQLRequest -query $query -variables $variables | ConvertFrom-Json 
+    return $response.data.data.objects
   }
 }

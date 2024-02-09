@@ -1,0 +1,28 @@
+query vmdetails ($fid: UUID!) {
+  vSphereVmNew (fid: $fid) {
+      id
+      name
+      isRelic
+      slaAssignment
+      effectiveSlaDomain {
+        id
+        name
+      }
+      configuredSlaDomain {
+        id
+        name
+      }
+      cluster {
+        id
+        name
+      }
+      objectType
+      guestOsName
+      guestOsType
+      agentStatus {
+        agentStatus
+      }
+      powerStatus
+      
+  }
+}
