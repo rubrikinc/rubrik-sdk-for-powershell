@@ -34,47 +34,38 @@ function Protect-RubrikRSCVM
     $SLAID = (Get-RubrikRSCSLA -Name "$SLA").id
   }
 
-$query = @'
-  mutation assignSLA($input: AssignSlaInput!) {
-      m: assignSla (input:$input) {
-        success
-      }
-  }
-'@
-
   if ($SLAID) {
-    $body = @{
-        "query" = $query
-        "variables" = @{
-            "input" = @{
-                "slaDomainAssignType" = "protectWithSlaId"
-                "objectIds" = @("$id")
-                "slaOptionalId" = "$SLAID"
-            }
+    $variables = @{
+        "input" = @{
+            "slaDomainAssignType" = "protectWithSlaId"
+            "objectIds" = @("$id")
+            "slaOptionalId" = "$SLAID"
         }
-    } | ConvertTo-Json -Compress -Depth 5
+    }
   } elseif ($DoNotProtect) {
-    $body = @{
-        "query" = $query
-        "variables" = @{
-            "input" = @{
-                "slaDomainAssignType" = "doNotProtect"
-                "objectIds" = @("$id")
-            }
+    $variables = @{
+        "input" = @{
+            "slaDomainAssignType" = "doNotProtect"
+            "objectIds" = @("$id")
         }
-    } | ConvertTo-Json -Compress -Depth 5
+    }
   } elseif ($Inherit) {
-    $body = @{
-        "query" = $query
-        "variables" = @{
-            "input" = @{
-                "slaDomainAssignType" = "noAssignment"
-                "objectIds" = @("$id")
-            }
+    $variables = @{
+        "input" = @{
+            "slaDomainAssignType" = "noAssignment"
+            "objectIds" = @("$id")
         }
-    } | ConvertTo-Json -Compress -Depth 5
+    }
   }
 
-$response = Invoke-RubrikGQLRequest -query $body | ConvertFrom-Json 
-return $response.data.m
+  $response = Invoke-RubrikGQLRequest -query "assignSla" -variables $variables | ConvertFrom-Json 
+  return $response.data.m
+  # attempting to return VM object, however it never applies the SLA that quick so might be confusing
+  <#
+  if ($response.data.m.success -eq "True") {
+    $vm = Get-RubrikVM -id $id
+    return $vm
+  }
+  #>
+  
 } # End of function

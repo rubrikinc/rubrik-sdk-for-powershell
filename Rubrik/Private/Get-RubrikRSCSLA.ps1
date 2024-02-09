@@ -53,12 +53,7 @@ function Get-RubrikRSCSLA {
     else {
       $response = Invoke-RubrikGQLRequest -query "slaDomainMultipleNoFilter" | ConvertFrom-Json 
       $response = $response.data.q.objects
-}
+    }
 
-
-
-
-
-return $response
-
+  return $response
 }
