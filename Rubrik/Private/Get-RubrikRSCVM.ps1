@@ -60,7 +60,42 @@ function Get-RubrikRSCVM {
     $query = New-RscQuery -GqlQuery vSphereVmNew
     $query.var.filter = @()
     $query.Var.fid = $Id
+    # Let's fetch some more objects other than the defaults now
+    # configuredSlaDomain
+    $sladomain = New-Object -TypeName RubrikSecurityCloud.Types.GlobalSlaReply
+    $sladomain.id = "FETCH"
+    $sladomain.name = "FETCH"
+    $sladomain.isRetentionLockedSla = $true
+    $query.field.configuredSlaDomain = $sladomain
+    # Protection Date
+    $query.field.ProtectionDate = New-Object -TypeName System.DateTime
+    # Guest OS Name
+    $query.field.GuestOsName = "FETCH"
+    # Tools Installed
+    $query.field.VMwareToolsInstalled = "FETCH"
+    # Agent Status
+    $query.field.AgentStatus = New-Object -TypeName RubrikSecurityCloud.Types.AgentStatus
+    $query.field.AgentStatus.AgentStatusField = "CONNECTED"
+    $query.field.AgentStatus.DisconnectReason = "FETCH"
+    
     $response = Invoke-Rsc $query
+
+    $response = $response | Select-Object -Property *, @{
+      Name="ConfiguredSlaDomainName"; Expression={$_.configuredSlaDomain.Name}
+    },@{
+      Name="ConfiguedSlaDomainId"; Expression={$_.configuredSlaDomain.id}
+    },@{
+      Name="isConfiguredSlaDomainRetentionLocked"; Expression={$_.configuredSlaDomain.isRetentionLockedSla}
+    },@{
+      Name="EffectiveSlaDomainName"; Expression={$_.effectiveSlaDomain.Name}
+    },@{
+      Name="EffectiveSlaDomainId"; Expression={$_.effectiveSlaDomain.id}
+    },@{
+      Name="isEffectiveSlaDomainRetentionLocked"; Expression={$_.effectiveSlaDomain.isRetentionLockedSla}
+    },@{
+      Name="toolsInstalled"; Expression={$_.VMwareToolsInstalled}
+    }
+
     return $response
 
   } else {
@@ -115,12 +150,51 @@ function Get-RubrikRSCVM {
     }
 
     $query = New-RscQuery -GqlQuery vsphereVmNewConnection
+
+    # Let's fetch some more objects other than the defaults now
+    # configuredSlaDomain
+    $sladomain = New-Object -TypeName RubrikSecurityCloud.Types.GlobalSlaReply
+    $sladomain.id = "FETCH"
+    $sladomain.name = "FETCH"
+    $sladomain.isRetentionLockedSla = $true
+    $query.field.nodes[0].configuredSlaDomain = $sladomain
+    # Protection Date
+    $query.field.nodes[0].ProtectionDate = New-Object -TypeName System.DateTime
+    # Guest OS Name
+    $query.field.nodes[0].GuestOsName = "FETCH"
+    # Tools Installed
+    $query.field.nodes[0].VMwareToolsInstalled = "FETCH"
+    # Agent Status
+    $query.field.nodes[0].AgentStatus = New-Object -TypeName RubrikSecurityCloud.Types.AgentStatus
+    $query.field.nodes[0].AgentStatus.AgentStatusField = "CONNECTED"
+    $query.field.nodes[0].AgentStatus.DisconnectReason = "FETCH"
+
     if ($addFilter -eq $true) {
       Write-Verbose -Message "Filter detecting, adding to variables"      
       $query.var.filter = $filter
     } 
 
-    $response = Invoke-Rsc $query
-    return $response.nodes
+    $response = (Invoke-Rsc $query).nodes
+
+    # Let's do a little translation to try and match up as many fields from the GQL response to the REST response
+
+    $response = $response | Select-Object -Property *, @{
+      Name="ConfiguredSlaDomainName"; Expression={$_.configuredSlaDomain.Name}
+    },@{
+      Name="ConfiguedSlaDomainId"; Expression={$_.configuredSlaDomain.id}
+    },@{
+      Name="isConfiguredSlaDomainRetentionLocked"; Expression={$_.configuredSlaDomain.isRetentionLockedSla}
+    },@{
+      Name="EffectiveSlaDomainName"; Expression={$_.effectiveSlaDomain.Name}
+    },@{
+      Name="EffectiveSlaDomainId"; Expression={$_.effectiveSlaDomain.id}
+    },@{
+      Name="isEffectiveSlaDomainRetentionLocked"; Expression={$_.effectiveSlaDomain.isRetentionLockedSla}
+    },@{
+      Name="toolsInstalled"; Expression={$_.VMwareToolsInstalled}
+    }
+
+
+    return $response
   }
 }
