@@ -71,7 +71,7 @@ function Test-ManagedByRSC {
             
             #-=MWP=- TODO - Once RSC connection bug is worked out, here is where we would Connect-Rsc
             #Import-Module RubrikSecurityCloud -Scope Global -Force
-            #Connect-RSC -ClientId $id -ClientSecret ($Secret | ConvertTo-SecureString -AsPlainText) -Server $($rscuri.split("/")[2])
+            Connect-RSC -ClientId $id -ClientSecret ($Secret | ConvertTo-SecureString -AsPlainText) -Server $($rscuri.split("/")[2]) | Out-Null
 
             return $true
         } else {

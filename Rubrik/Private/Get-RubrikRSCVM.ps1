@@ -56,11 +56,12 @@ function Get-RubrikRSCVM {
 
   
   if ($Id) {
-    $variables = @{
-      "fid" = "$Id"
-    }
-    $response = Invoke-RubrikGQLRequest -query "vSphereVMSingle" -variables $variables | ConvertFrom-Json
-    return $response.data.vSphereVmNew
+
+    $query = New-RscQuery -GqlQuery vSphereVmNew
+    $query.var.filter = @()
+    $query.Var.fid = $Id
+    $response = Invoke-Rsc $query
+    return $response
 
   } else {
     if ($SLA) {
@@ -69,15 +70,17 @@ function Get-RubrikRSCVM {
         $SLAID = $sla_id
       }
     }
+
     $filter = New-Object System.Collections.ArrayList
     $addFilter = $false
+
     if ($Name) {
       $filter.Add(
           @{
             "field" = "NAME_EXACT_MATCH"
             "texts" = "$Name"
           }
-        )
+        ) | Out-Null
       $addFilter = $true
     }
 
@@ -88,7 +91,7 @@ function Get-RubrikRSCVM {
             "field" = "IS_RELIC"
             "texts" = "True"
           }
-        )
+        ) | out-null
         $addFilter = $true
       } elseif ($Relic -eq $false) {
         $filter.Add(
@@ -96,30 +99,28 @@ function Get-RubrikRSCVM {
             "field" = "IS_RELIC"
             "texts" = "False"
           }
-        )
+        ) | out-null
         $addFilter = $true
       } 
-    } 
+    }
+
     if ($SLAID) {
       $filter.Add(
         @{
           "field" = "EFFECTIVE_SLA"
           "texts" = "$SLAID"
         }
-      )
+      ) | Out-null
       $addFilter = $true
     }
-    $variables = @{
-      "filter" = $filter
-    }
 
+    $query = New-RscQuery -GqlQuery vsphereVmNewConnection
     if ($addFilter -eq $true) {
-      Write-Verbose -Message "Filter detecting, adding to variables"
-      $query = "vSphereVMMultiple"
-    } else {
-      $query = "vSphereVMMultipleNoFilter"
-    }
-    $response = Invoke-RubrikGQLRequest -query $query -variables $variables | ConvertFrom-Json 
-    return $response.data.data.objects
+      Write-Verbose -Message "Filter detecting, adding to variables"      
+      $query.var.filter = $filter
+    } 
+
+    $response = Invoke-Rsc $query
+    return $response.nodes
   }
 }
