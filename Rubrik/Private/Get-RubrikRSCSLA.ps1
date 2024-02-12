@@ -33,17 +33,24 @@ function Get-RubrikRSCSLA {
     )
 
     if ($PSBoundParameters['Name']) {
-      $variables = @{
-          "filter" = @{
-              "field" = "NAME"
-              "text" = "$($Name)"
-          }
+      $filter = @{
+          "field" = "NAME"
+          "text" = "$($Name)"
       }
-      $response = Invoke-RubrikGQLRequest -query "slaDomainMultiple" -variables $variables | ConvertFrom-Json 
+      $query = New-RSCQuery -GqlQuery slaDomains
+      $query.var.filter = $filter
+      $response = (Invoke-Rsc $query).nodes
       # since there is no exact match
       Write-Verbose -Message "Matching $Name exactly"
-      $response = $response.data.q.objects | where {$_.name -eq "$Name"}
+      $response = $response | where {$_.name -eq "$Name"}
     } elseif ($PSBoundParameters['Id']) {
+      <#
+      # The following code is preferred, however is not currently working due to a bug in the SDK with the slaDomain GQL query implementing Cluster and Global SLAs
+      # Will comment out for now and use the original way of handcrafting the GQL queries...
+      $query = New-RscQuery -GqlQuery slaDomain
+      $query.var.id = $Id
+      $response = Invoke-Rsc $query
+      #>
       $variables = @{
         "id" = "$Id"
       }
@@ -51,8 +58,8 @@ function Get-RubrikRSCSLA {
       $response = $response.data.q
     }
     else {
-      $response = Invoke-RubrikGQLRequest -query "slaDomainMultipleNoFilter" | ConvertFrom-Json 
-      $response = $response.data.q.objects
+      $query = New-RscQuery -GqlQuery slaDomains
+      $response = (Invoke-Rsc $query).nodes
     }
 
   return $response
