@@ -35,37 +35,26 @@ function Protect-RubrikRSCVM
   }
 
   if ($SLAID) {
-    $variables = @{
-        "input" = @{
-            "slaDomainAssignType" = "protectWithSlaId"
-            "objectIds" = @("$id")
-            "slaOptionalId" = "$SLAID"
-        }
+    $input = @{
+        "slaDomainAssignType" = "protectWithSlaId"
+        "objectIds" = @("$id")
+        "slaOptionalId" = "$SLAID"
     }
   } elseif ($DoNotProtect) {
-    $variables = @{
-        "input" = @{
-            "slaDomainAssignType" = "doNotProtect"
-            "objectIds" = @("$id")
-        }
+    $input = @{
+        "slaDomainAssignType" = "doNotProtect"
+        "objectIds" = @("$id")
     }
   } elseif ($Inherit) {
-    $variables = @{
-        "input" = @{
-            "slaDomainAssignType" = "noAssignment"
-            "objectIds" = @("$id")
-        }
+    $input = @{
+        "slaDomainAssignType" = "noAssignment"
+        "objectIds" = @("$id")
     }
   }
 
-  $response = Invoke-RubrikGQLRequest -query "assignSla" -variables $variables | ConvertFrom-Json 
-  return $response.data.m
-  # attempting to return VM object, however it never applies the SLA that quick so might be confusing
-  <#
-  if ($response.data.m.success -eq "True") {
-    $vm = Get-RubrikVM -id $id
-    return $vm
-  }
-  #>
+  $mutation = New-RscMutation -gqlMutation assignSla
+  $mutation.var.input = $input
+  $response = Invoke-Rsc $mutation
+  return $response
   
 } # End of function

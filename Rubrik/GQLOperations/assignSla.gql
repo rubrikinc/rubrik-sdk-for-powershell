@@ -1,5 +1,0 @@
-mutation assignSLA($input: AssignSlaInput!) {
-    m: assignSla (input:$input) {
-    success
-    }
-}
