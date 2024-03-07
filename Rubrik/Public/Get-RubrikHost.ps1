@@ -69,6 +69,13 @@ function Get-RubrikHost
     # API version
     [String]$api = $global:RubrikConnection.api
   )
+  
+  # If connected to RSC, redirect to new GQL cmdlet
+  if ($global:rubrikConnection.RSCInstance) {
+    Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCHost"
+    $response = Get-RubrikRSCHost @PSBoundParameters
+    return $response
+  }
 
   Begin {
 
@@ -91,14 +98,6 @@ function Get-RubrikHost
   }
 
   Process {
-
-    # If connected to RSC, redirect to new GQL cmdlet
-    if ($global:rubrikConnection.RSCInstance) {
-      Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCHost"
-      $response = Get-RubrikRSCHost @PSBoundParameters
-      return $response
-    }
-
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

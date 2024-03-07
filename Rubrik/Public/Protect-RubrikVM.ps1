@@ -65,6 +65,13 @@ function Protect-RubrikVM
     [String]$api = $global:RubrikConnection.api
   )
 
+  # If we are in RSC mode, call other cmdlet
+  if ($global:RubrikConnection.RSCInstance) {
+    Write-Verbose -Message "Connection to RSC detected, redirecting to Protect-RubrikRSCVM"
+    $response = Protect-RubrikRSCVM @PSBoundParameters
+    return $response
+  }
+  
   Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
@@ -86,13 +93,6 @@ function Protect-RubrikVM
   }
 
   Process {
-
-    # If we are in RSC mode, call other cmdlet
-    if ($global:RubrikConnection.RSCInstance) {
-      Write-Verbose -Message "Connection to RSC detected, redirecting to Protect-RubrikRSCVM"
-      $response = Protect-RubrikRSCVM @PSBoundParameters
-      return $response
-    }
 
     if (($rubrikConnection.version.substring(0,5) -as [version]) -ge [version]5.2) {
       $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $slaid
