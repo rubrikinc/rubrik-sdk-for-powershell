@@ -83,6 +83,13 @@ function Protect-RubrikDatabase
 
   Process {
 
+    # If we are in RSC mode, call other cmdlet
+    if ($global:RubrikConnection.RSCInstance) {
+      Write-Verbose -Message "Connection to RSC detected, redirecting to Protect-RubrikRSCDatabase"
+      $response = Protect-RubrikRSCDatabase @PSBoundParameters
+      return $response
+    }
+
     #region One-off
     $SLAID = Test-RubrikSLA -SLA $SLA -Inherit $Inherit -DoNotProtect $DoNotProtect
     #endregion One-off
