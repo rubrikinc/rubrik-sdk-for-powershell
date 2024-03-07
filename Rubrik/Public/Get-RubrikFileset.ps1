@@ -131,13 +131,6 @@ function Get-RubrikFileset
     [String]$api = $global:RubrikConnection.api
   )
 
-  # If connected to RSC, redirect to new GQL cmdlet
-  if ($global:rubrikConnection.RSCInstance) {
-    Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCFileset"
-    #$response = Get-RubrikRSCHost @PSBoundParameters
-    #return $response
-  }
-  
   Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
@@ -167,6 +160,12 @@ function Get-RubrikFileset
   }
 
   Process {
+      # If connected to RSC, redirect to new GQL cmdlet
+    if ($global:rubrikConnection.RSCInstance) {
+      Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCFileset"
+      #$response = Get-RubrikRSCHost @PSBoundParameters
+      #return $response
+    }
     #region One-off
     # If SLA paramter defined, resolve SLAID
     If ($SLA) {
