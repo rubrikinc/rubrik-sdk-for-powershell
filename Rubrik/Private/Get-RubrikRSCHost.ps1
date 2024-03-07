@@ -53,12 +53,22 @@ function Get-RubrikRSCHost
     $query.field.nodes[1].ProtectedObjectCount = 0
     #>
     
+    Write-Verbose -Message "Filtering list by cluster"
+    $filter = New-Object System.Collections.ArrayList
+    $filter.Add(
+      @{
+        "field" = "CLUSTER_ID"
+        "texts" = "$($global:rubrikConnection.clusterId)"
+      }
+    ) | Out-Null
 
     if ($Name) { 
-        $query.Var.filter = @{
-            field = "NAME_EXACT_MATCH"
-            texts = "$Name"
+      filter.Add(
+        @{
+          field = "NAME_EXACT_MATCH"
+          texts = "$Name"
         }
+      )
     }
 
     if ($Type) {
@@ -72,7 +82,7 @@ function Get-RubrikRSCHost
     } else {
         $hostRoots = @("WINDOWS_HOST_ROOT", "LINUX_HOST_ROOT")
     }
-
+    $query.var.filter = $filter
     $response = foreach ($hostRoot in $hostRoots) {
         $query.Var.hostRoot = "$hostRoot"
         $response = Invoke-RSC $query

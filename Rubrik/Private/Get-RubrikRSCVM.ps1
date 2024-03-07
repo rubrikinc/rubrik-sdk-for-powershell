@@ -106,9 +106,16 @@ function Get-RubrikRSCVM {
       }
     }
 
+    Write-Verbose -Message "Filtering list by cluster"
     $filter = New-Object System.Collections.ArrayList
-    $addFilter = $false
 
+    $filter.Add(
+      @{
+        "field" = "CLUSTER_ID"
+        "texts" = "$($global:rubrikConnection.clusterId)"
+      }
+    ) | Out-Null
+    
     if ($Name) {
       $filter.Add(
           @{
@@ -116,7 +123,6 @@ function Get-RubrikRSCVM {
             "texts" = "$Name"
           }
         ) | Out-Null
-      $addFilter = $true
     }
 
     if ($PSBoundParameters.containsKey("Relic")) {
@@ -127,7 +133,6 @@ function Get-RubrikRSCVM {
             "texts" = "True"
           }
         ) | out-null
-        $addFilter = $true
       } elseif ($Relic -eq $false) {
         $filter.Add(
           @{
@@ -135,7 +140,6 @@ function Get-RubrikRSCVM {
             "texts" = "False"
           }
         ) | out-null
-        $addFilter = $true
       } 
     }
 
@@ -146,7 +150,6 @@ function Get-RubrikRSCVM {
           "texts" = "$SLAID"
         }
       ) | Out-null
-      $addFilter = $true
     }
 
     $query = New-RscQuery -GqlQuery vsphereVmNewConnection
@@ -169,10 +172,8 @@ function Get-RubrikRSCVM {
     $query.field.nodes[0].AgentStatus.AgentStatusField = "CONNECTED"
     $query.field.nodes[0].AgentStatus.DisconnectReason = "FETCH"
 
-    if ($addFilter -eq $true) {
-      Write-Verbose -Message "Filter detecting, adding to variables"      
-      $query.var.filter = $filter
-    } 
+    Write-Verbose -Message "Adding filter to query"      
+    $query.var.filter = $filter
 
     $response = (Invoke-Rsc $query).nodes
 

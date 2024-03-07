@@ -94,7 +94,7 @@ function Get-RubrikHost
 
     # If connected to RSC, redirect to new GQL cmdlet
     if ($global:rubrikConnection.RSCInstance) {
-      Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCSla"
+      Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCHost"
       $response = Get-RubrikRSCHost @PSBoundParameters
       return $response
     }

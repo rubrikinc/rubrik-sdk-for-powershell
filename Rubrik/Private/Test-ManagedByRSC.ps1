@@ -64,14 +64,26 @@ function Test-ManagedByRSC {
                 "Authorization" = "Bearer $($connection.access_token)"
                 "Content-Type" = "application/json"
             }
-            #-=MWP=- Get Server id for $global:rubrikConnection.Server and store in global variable
             # Update Global Variable with RSC connection information
             $global:rubrikConnection.RSCHeaders = $rscheaders
             $global:rubrikConnection.RSCInstance = $($response.url)
             
-            #-=MWP=- TODO - Once RSC connection bug is worked out, here is where we would Connect-Rsc
-            #Import-Module RubrikSecurityCloud -Scope Global -Force
+            # Connect to RSC
             Connect-RSC -ClientId $id -ClientSecret ($Secret | ConvertTo-SecureString -AsPlainText) -Server $($rscuri.split("/")[2]) | Out-Null
+
+            # Retrieve cluster id 
+            $uri = "https://$($global:rubrikConnection.Server)/api/v1/cluster/me"
+    
+            $headers = $global:rubrikConnection.header
+            $method = "GET"
+        
+            Write-Verbose -Message "Retrieving proper cluster name from REST endpoint $uri"
+            $response = Invoke-RestMethod -Uri $uri -headers $headers -method $method -SkipCertificateCheck
+            
+            # Place Cluster Name and ID in Global Variable
+            $global:rubrikConnection.clusterName = "$($response.name)"
+            $global:rubrikConnection.clusterId = "$($response.id)"
+
             return $true
         } else {
             Write-Verbose -Message "RSC is not reachable, failing back to CDM only"

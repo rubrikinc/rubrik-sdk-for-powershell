@@ -40,12 +40,23 @@ function Get-RubrikRSCFilesetTemplate
   }
   else {
     $query = New-RscQuery -GqlQuery filesetTemplates
+    Write-Verbose -Message "Filtering list by cluster"
+    $filter = New-Object System.Collections.ArrayList
+
+    $filter.Add(
+      @{
+        "field" = "CLUSTER_ID"
+        "texts" = "$($global:rubrikConnection.clusterId)"
+      }
+    ) | Out-Null
 
     if ($Name) {
-        $query.Var.Filter = @{
-            field = "NAME_EXACT_MATCH"
-            texts = "$Name"
-        }
+        $filter.Add( 
+          @{
+            "field" = "NAME_EXACT_MATCH"
+            "texts" = "$Name"
+          }
+        ) | Out-Null
     }
 
     if ($OperatingSystemType) {
@@ -67,6 +78,9 @@ function Get-RubrikRSCFilesetTemplate
     # For Example 
     $query.field.nodes[1].ProtectedObjectCount = 0
     #>
+    Write-Verbose -Message "Adding filter to query"      
+    $query.var.filter = $filter
+
     $response = foreach ($hostRoot in $hostRoots) {
         $query.Var.hostRoot = "$hostRoot"
         $response = Invoke-RSC $query
