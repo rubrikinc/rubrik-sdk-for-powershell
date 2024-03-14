@@ -56,6 +56,9 @@ function Connect-Rubrik {
         # Service Account Secret
         [Parameter(ParameterSetName='ServiceAccount',Mandatory=$true, Position = 2)]
         [String]$Secret,
+        # Toggle switch to turn GraphQL redirects on/off
+        [Parameter(ParameterSetName='ServiceAccount',Mandatory=$false, Position = 3)]
+        [Switch]$RedirectToRSC,
         # Username with permissions to connect to the Rubrik cluster
         # Optionally, use the Credential parameter    
         [Parameter(ParameterSetName='UserPassword',Mandatory=$true, Position = 1)]
@@ -173,7 +176,10 @@ function Connect-Rubrik {
                 authType = 'ServiceAccount'
             }
             # Determine if cluster is managed by RSC, if so, connect and store auth information in global variable
-            $RSCInfo = Test-ManagedByRSC -Id $id -Secret $secret
+            if ($RedirectToRSC) {
+                $RSCInfo = Test-ManagedByRSC -Id $id -Secret $secret
+            }
+            
         } else {
             $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
 
