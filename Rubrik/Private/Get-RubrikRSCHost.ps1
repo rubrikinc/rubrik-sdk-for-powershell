@@ -63,12 +63,12 @@ function Get-RubrikRSCHost
     ) | Out-Null
 
     if ($Name) { 
-      filter.Add(
+      $filter.Add(
         @{
           field = "NAME_EXACT_MATCH"
           texts = "$Name"
         }
-      )
+      ) | out-null
     }
 
     if ($Type) {
@@ -92,16 +92,6 @@ function Get-RubrikRSCHost
     
   }
 
-
-    <#
-    # Rename properties to match old SDK
-    # For Example 
-    $response = $response | Select-Object -Property *, @{
-        Name="isRetentionLocked"; Expression={$_.isRetentionLockedSla}
-    },@{
-        Name="numProtectedObjects"; Expression={$_.ProtectedObjectCount}
-    }
-    #>
     
   return $response
   
