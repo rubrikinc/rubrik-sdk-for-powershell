@@ -29,44 +29,52 @@ function Protect-RubrikRSCDatabase
     [String]$api = $global:RubrikConnection.api
   )
 
-  if ($SLA) {
-    $SLAID = (Get-RubrikRSCSLA -Name "$SLA").id
-  }
 
 
+  $RscParams = @{}
+
+  # Retrieve RSC MSSQL Database Object
+
+  # For now, let's get the name and use internal calls, but once the parameter is added we should be able to use the next line
+  #$database = Get-RscMssqlDatabase -id $id
+  $dbname = (Get-RubrikDatabase -id $id).name
+  $database = Get-RscMssqlDatabase -name "$dbname" | Where-Object {$_.id -eq "$id"}
+  $RscParams.Add("RscMssqlDatabase",$database)
   
+  # need cluster object
+  $query = New-RSCQueryCluster -Operation Cluster
+  $query.Var.clusterUuid = "$($global:rubrikConnection.clusterId)"
+  $localcluster = Invoke-RSC $query
+  $RscParams.Add("RscCluster",$localcluster)
+
+  # Now SLA
+  $slaobject = $null
+  if ($SLA) {
+      $slaobject = Get-RscSla | where-object {$_.name -eq "$SLA"}
+  }
   if ($SLAID) {
-    $input = @{
-            "updateInfo" = @{
-                "ids" = @("$id")
-                "mssqlSlaPatchProperties" = @{
-                    "configuredSlaDomainId" = "$SLAID"
-                }
-            }
-    }
-  } elseif ($DoNotProtect) {
-    $input = @{
-        "updateInfo" = @{
-            "ids" = @("$id")
-            "mssqlSlaPatchProperties" = @{
-                "configuredSlaDomainId" = "UNPROTECTED"
-            }
-        }
-    }
-  } elseif ($Inherit) {
-    $input = @{
-        "updateInfo" = @{
-            "ids" = @("$id")
-            "mssqlSlaPatchProperties" = @{
-                "configuredSlaDomainId" = "INHERIT"
-            }
-        }
-    }
+      $slaobject = Get-RscSla | where-object {$_.id -eq "$slaid"}
+  }
+  if ($slaobject) {
+      $RscParams.Add("RscSlaDomain",$slaobject)
   }
 
-  $mutation = New-RscMutation -gqlMutation assignMssqlSlaDomainPropertiesAsync
-  $mutation.var.input = $input
-  $response = Invoke-Rsc $mutation
+  if ($DoNotProtect) {
+      $RscParams.Add("DoNotProtect",$true)
+      if ($ExistingSnapshotRetention -eq "RetainSnapshots") {
+        $RscParams.Add("ExistingSnapshotRetention","RETAIN_SNAPSHOTS")
+      } elseif ($ExistingSnapshotRetention -eq "KeepForever") {
+        $RscParams.Add("ExistingSnapshotRetention","KEEP_FOREVER")
+      } elseif ($ExistingSnapshotRetention -eq "ExpireImmediately") {
+        $RscParams.Add("ExistingSnapshotRetention","EXPIRE_IMMEDIATELY")
+      }
+  }
+  if ($Inherit) {
+    $RscParams.Add("ClearExistingProtection",$true)
+  }
+
+  Write-Verbose -Message "Calling Set-RscMssqlDatabase"
+  $response = Set-RscMssqlDatabase @RscParams
   return $response
 
 }
