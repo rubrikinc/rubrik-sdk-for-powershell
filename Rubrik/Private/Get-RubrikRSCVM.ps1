@@ -115,6 +115,25 @@ function Get-RubrikRSCVM {
         "texts" = "$($global:rubrikConnection.clusterId)"
       }
     ) | Out-Null
+
+    $filter.Add(
+      @{
+        "field" = "IS_ACTIVE"
+        "texts" = "true"
+      }
+    ) | Out-Null
+    $filter.Add(
+      @{
+        "field" = "IS_REPLICATED"
+        "texts" = "false"
+      }
+    )| Out-Null
+    $filter.Add(
+      @{
+        "field" = "IS_ACTIVE_AMONG_DUPLICATED_OBJECTS"
+        "texts" = "false"
+      }
+    )| Out-Null
     
     if ($Name) {
       $filter.Add(

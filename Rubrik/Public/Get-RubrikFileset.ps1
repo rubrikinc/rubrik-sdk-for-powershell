@@ -164,7 +164,8 @@ function Get-RubrikFileset
     if ($global:rubrikConnection.RSCInstance) {
       Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCFileset"
       #$response = Get-RubrikRSCHost @PSBoundParameters
-      #return $response
+      $response = Get-RubrikRSCFileset @PSBoundParameters
+      return $response
     }
     #region One-off
     # If SLA paramter defined, resolve SLAID

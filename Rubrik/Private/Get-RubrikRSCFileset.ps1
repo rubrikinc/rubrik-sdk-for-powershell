@@ -79,12 +79,8 @@ function Get-RubrikRSCFileset {
     if ($Id) {
         $query = New-RSCQuery -GqlQuery filesetTemplate
         $query.Var.fid = "$Id"
-        $query.field.nodes[0].includes = "FETCH"
-        <#
-        # Populate Additional fields to fetch
-        # For Example 
-        $query.field.nodes[1].ProtectedObjectCount = 0
-        #>
+        $query.field.includes = "FETCH"
+
         
         $response = Invoke-RSC $query
       }
