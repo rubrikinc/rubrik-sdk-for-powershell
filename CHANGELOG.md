@@ -19,13 +19,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * New `Get-RubrikVMDownloadLink` and `Start-RubrikVMDownloadLink` cmdlets added along with associated unit tests
-* Added `Test-ManagedByRSC`,`Get-RubrikRSCVM`,`Get-RubrikRSCDatabase`,`Get-RubrikRSCFileset`,`Get-RubrikRSCFilesetTemplate`,`Get-RubrikRSCHost`,`Get-RubrikNutanixVM`,`Get-RubrikHyperVVM`, `Get-RubrikRSCSla`, `Get-RubrikRSCSqlInstance`, `Set-RubrikRSCDatabase`,`Protect-RubrikRSCVM`,`Protect-RubrikRSCHyperVVM`,`Protect-RubrikRSCDatabase`, and `Protect-RubrikRSCNutanixVM` to support integration into the RSC PowerShell SDK
+* Added `Test-ManagedByRSC`,`Get-RubrikRSCVM`,`Get-RubrikRSCDatabase`,`Get-RubrikRSCFileset`,`Get-RubrikRSCFilesetTemplate`,`Get-RubrikRSCHost`,`Get-RubrikNutanixVM`,`Get-RubrikHyperVVM`, `Get-RubrikRSCSla`, `Get-RubrikRSCSqlInstance`, `Set-RubrikRSCSqlInstance`, `Set-RubrikRSCDatabase`,`Protect-RubrikRSCVM`,`Protect-RubrikRSCHyperVVM`,`Protect-RubrikRSCDatabase`, and `Protect-RubrikRSCNutanixVM` to support integration into the RSC PowerShell SDK
 
 ### Modified
 * Modified `Connect-Rubrik` to detect if cluster is managed by RSC - if it is, redirect certain cmdlets to GQL Endpoints
 * Added a new `-RedirectToRSC` parameter to `Connect-Rubrik` to turn redirection to GQL endpoints on or off
 * Added new global variables `RSCInstance`,`clusterId`, and `RSCHeaders` to rubrikConnection
-* Modified `Get-RubrikSla`,`Get-RubrikVM`,`Get-RubrikHyperVVM`, `Get-RubrikNutanixVM`,`Get-RubrikFileset`,`Get-RubrikFilesetTemplate`,`Get-RubrikHost`,`Get-RubrikDatabase`, `Get-RubrikSqlInstance`, `Set-RubrikDatabase`,`Protect-RubrikDatabase`,`Protect-RubrikVM`,`Protect-RubrikNutanixVM`, and `Protect-RubrikHyperVVM` to redirect to newly added (above) cmdlets that call GQL endpoints
+* Modified `Get-RubrikSla`,`Get-RubrikVM`,`Get-RubrikHyperVVM`, `Get-RubrikNutanixVM`,`Get-RubrikFileset`,`Get-RubrikFilesetTemplate`,`Get-RubrikHost`,`Get-RubrikDatabase`, `Get-RubrikSqlInstance`, `Set-RubrikSqlInstance`, `Set-RubrikDatabase`,`Protect-RubrikDatabase`,`Protect-RubrikVM`,`Protect-RubrikNutanixVM`, and `Protect-RubrikHyperVVM` to redirect to newly added (above) cmdlets that call GQL endpoints
 
 ## [6.0.2](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.2) - 2023-01-06
 
