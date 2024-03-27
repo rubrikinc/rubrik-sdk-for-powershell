@@ -38,7 +38,11 @@ function Connect-Rubrik {
       .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Id "Service Account ID" -Secret "Service Account Secret"
       Connect to Rubrik cluster utilizing a Service Account ID and Secret
-            
+
+      .EXAMPLE
+      Connect-Rubrik -Server 192.168.1.1 -Id "Service Account ID" -Secret "Service Account Secret" -RedirectToRSC
+      Connect to Rubrik cluster utilizing a Service Account ID and Secret, redirecting certain cmdlets to utilized RSC GraphQL APIs where appropriate     
+
       .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Username admin -UserAgent @{platform_integration='Poshbot.Rubrik'}
 
