@@ -83,9 +83,6 @@ function Set-RubrikRSCDatabase {
       [String]$api = $global:RubrikConnection.api
     )
 
-
-    #Write-Host $PSCmdlet.ParameterSetName
-    
     $RscParams = @{}
 
     # Retrieve RSC MSSQL Database Object
@@ -165,14 +162,6 @@ function Set-RubrikRSCDatabase {
     if ($MaxDataStreams) {
         $RscParams.Add("MaxDataStreams",$MaxDataStreams)
     }
-
-    
-    
-
-
-    Write-Host @RscParams
-
-
 
     Set-RscMssqlDatabase @RscParams
 

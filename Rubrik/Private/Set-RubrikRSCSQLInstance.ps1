@@ -87,6 +87,4 @@ ValueFromPipelineByPropertyName = $true)]
 
     $response = Set-RscMssqlInstance @RscParams
     return $response
-
-
 }

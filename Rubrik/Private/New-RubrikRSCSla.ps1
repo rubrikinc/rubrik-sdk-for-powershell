@@ -216,7 +216,7 @@ function New-RubrikRSCSla {
     if ($YearlyFrequency) {
         $RetentionUnit = "YEARS"
         if ($YearStartMonth) {
-            $YearStart = [RubrikSecurityCloud.Types.Month] $YearStartMonth.ToUpper()
+            $YearStart = [RubrikSecurityCloud.Types.Month] $YearStartMonth.toUpper()
         } else {
             $YearStart = [RubrikSecurityCloud.Types.Month] "JANUARY"
         }
@@ -230,7 +230,6 @@ function New-RubrikRSCSla {
     }
 
     $RscParams.Add("ObjectType","VSPHERE_OBJECT_TYPE")
-    Write-Host @RscParams
     $response = New-RscSla @RscParams
     return $response
 }
