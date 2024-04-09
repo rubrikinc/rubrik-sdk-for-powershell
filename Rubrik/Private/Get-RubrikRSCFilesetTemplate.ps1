@@ -33,16 +33,11 @@ function Get-RubrikRSCFilesetTemplate
   if ($Id) {
     $query = New-RSCQuery -GqlQuery filesetTemplate
     $query.Var.fid = "$Id"
-    <#
-    # Populate Additional fields to fetch
-    # For Example 
-    $query.field.nodes[1].ProtectedObjectCount = 0
-    #>
-    
+    $query.Field.includes = "FETCH"
     $response = Invoke-RSC $query
   }
   else {
-    $query = New-RscQuery -GqlQuery filesetTemplates
+    $query = New-RscQuery -GqlQuery filesetTemplates -AddField Nodes.Includes
     Write-Verbose -Message "Filtering list by cluster"
     $filter = New-Object System.Collections.ArrayList
 
@@ -74,13 +69,6 @@ function Get-RubrikRSCFilesetTemplate
         $hostRoots = @("WINDOWS_HOST_ROOT", "LINUX_HOST_ROOT")
     }
 
-    # Add support for share type maybe?
-
-    <#
-    # Populate Additional fields to fetch
-    # For Example 
-    $query.field.nodes[1].ProtectedObjectCount = 0
-    #>
     Write-Verbose -Message "Adding filter to query"      
     $query.var.filter = $filter
 

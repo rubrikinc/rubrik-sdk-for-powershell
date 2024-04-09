@@ -75,14 +75,57 @@ function Get-RubrikRSCFileset {
       [String]$api = $global:RubrikConnection.api
     )
 
-    $RscParams = @{}
-
     if ($Id) {
-      $RscParams.Add('id',$Id)
+      $query = New-RSCQuery -GqlQuery filesetTemplate
+      $query.Var.fid = "$Id"
+      $query.Field.includes = "FETCH"
+      $response = Invoke-RSC $query
     }
-
-    $response = Get-RscFileset @RscParams
-    return $response.nodes
+    else {
+      $query = New-RscQuery -GqlQuery filesetTemplates -AddField Nodes.Includes
+      Write-Verbose -Message "Filtering list by cluster"
+      $filter = New-Object System.Collections.ArrayList
+  
+      $filter.Add(
+        @{
+          "field" = "CLUSTER_ID"
+          "texts" = "$($global:rubrikConnection.clusterId)"
+        }
+      ) | Out-Null
+  
+      if ($Name) {
+          $filter.Add( 
+            @{
+              "field" = "NAME_EXACT_MATCH"
+              "texts" = "$Name"
+            }
+          ) | Out-Null
+      }
+  
+      if ($OperatingSystemType) {
+          if ($OperatingSystemType -eq "Windows") {
+              $hostRoots = @("WINDOWS_HOST_ROOT")
+          } elseif ($OperatingSystemType -eq "Linux") {
+              $hostRoots = @("LINUX_HOST_ROOT")
+          } else {
+              $hostRoots = @("WINDOWS_HOST_ROOT", "LINUX_HOST_ROOT") 
+          }
+      } else {
+          $hostRoots = @("WINDOWS_HOST_ROOT", "LINUX_HOST_ROOT")
+      }
+  
+      Write-Verbose -Message "Adding filter to query"      
+      $query.var.filter = $filter
+  
+      $response = foreach ($hostRoot in $hostRoots) {
+          $query.Var.hostRoot = "$hostRoot"
+          $response = Invoke-RSC $query
+          $response.nodes
+      }
+    }
+  
+  
+    return $response
 
 
 
