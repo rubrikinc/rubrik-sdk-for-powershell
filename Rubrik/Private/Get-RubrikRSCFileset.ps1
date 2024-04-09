@@ -75,17 +75,14 @@ function Get-RubrikRSCFileset {
       [String]$api = $global:RubrikConnection.api
     )
 
+    $RscParams = @{}
 
     if ($Id) {
-        $query = New-RSCQuery -GqlQuery filesetTemplate
-        $query.Var.fid = "$Id"
-        $query.field.includes = "FETCH"
+      $RscParams.Add('id',$Id)
+    }
 
-        
-        $response = Invoke-RSC $query
-      }
-
-      return $response.nodes
+    $response = Get-RscFileset @RscParams
+    return $response.nodes
 
 
 

@@ -27,6 +27,9 @@ function Get-RubrikRSCFilesetTemplate
     [String]$api = $global:RubrikConnection.api
   )
 
+
+
+
   if ($Id) {
     $query = New-RSCQuery -GqlQuery filesetTemplate
     $query.Var.fid = "$Id"
@@ -88,15 +91,6 @@ function Get-RubrikRSCFilesetTemplate
     }
   }
 
-<#
-# Rename properties to match old SDK
-# For Example 
-$response = $response | Select-Object -Property *, @{
-    Name="isRetentionLocked"; Expression={$_.isRetentionLockedSla}
-},@{
-    Name="numProtectedObjects"; Expression={$_.ProtectedObjectCount}
-}
-#>
 
   return $response
 }
