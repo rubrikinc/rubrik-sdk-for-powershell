@@ -54,8 +54,8 @@ function Get-RubrikRSCSQLInstance {
     }
 
     if ($Hostname) {
-        $HostObject = Get-RubrikHost -Name "$Hostname"
-        $RscParams.Add("RscHost",$HostObject)
+        #$HostObject = Get-RubrikHost -Name "$Hostname"
+        $RscParams.Add("HostName",$Hostname)
     }
 
 
