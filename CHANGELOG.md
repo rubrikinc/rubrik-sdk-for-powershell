@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-## Unreleased
+## [9.0.0]
 
 ### Added
 
