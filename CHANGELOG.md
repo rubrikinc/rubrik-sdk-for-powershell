@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added a new `-RedirectToRSC` parameter to `Connect-Rubrik` to turn redirection to GQL endpoints on or off
 * Added new global variables `RSCInstance`,`clusterId`, and `RSCHeaders` to rubrikConnection
 * Modified `Get-RubrikSla`,`Get-RubrikVM`,`Get-RubrikHyperVVM`, `Get-RubrikNutanixVM`,`Get-RubrikFileset`,`Get-RubrikFilesetTemplate`,`Get-RubrikHost`,`Get-RubrikDatabase`, `Get-RubrikSqlInstance`, `New-RubrikSla`, `Set-RubrikSqlInstance`, `Set-RubrikSla`, `Set-RubrikDatabase`,`Protect-RubrikDatabase`,`Protect-RubrikVM`,`Protect-RubrikNutanixVM`, and `Protect-RubrikHyperVVM` to redirect to newly added (above) cmdlets that call GQL endpoints
+* Modified `Get-RubrikClusterInfo` to remove api call to /internal/cluster/is_register on CDM 9.0 and above as it doesn't exist
 
 ## [6.0.2](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.2) - 2023-01-06
 
