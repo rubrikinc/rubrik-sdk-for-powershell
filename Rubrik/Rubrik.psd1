@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '6.0.2'
+ModuleVersion = '9.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -51,7 +51,7 @@ PowerShellVersion = '4.0'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @("RubrikSecurityCloud")
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()

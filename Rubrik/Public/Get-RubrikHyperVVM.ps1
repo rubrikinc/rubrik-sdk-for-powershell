@@ -107,6 +107,13 @@ function Get-RubrikHyperVVM
 
   Process {
 
+    # If we are in RSC mode, call other cmdlet
+    if ($global:RubrikConnection.RSCInstance) {
+      Write-Verbose -Message "RSC connection detected, redirecting to Get-RubrikRSCHyperVVM"
+      $response = Get-RubrikRSCHyperVVM @PSBoundParameters
+      return $response
+    }
+
     #region One-off
     # If SLA paramter defined, resolve SLAID
     If ($SLA) {

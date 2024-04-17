@@ -351,6 +351,31 @@ function Get-RubrikAPIData {
                 Filter      = ''
                 Success     = '200'
             }
+            '9.0' = @{
+                Description = 'Retrieves advanced settings of the Rubrik cluster'
+                URI         = @{
+                    BrikCount           = '/api/internal/cluster/me/brik_count'
+                    MemoryCapacityInGb  = '/api/internal/cluster/me/memory_capacity'
+                    CPUCoresCount       = '/api/internal/node/*/cpu_cores_count'
+                    ConnectedToPolaris  = '/api/internal/cluster/me/global_manager'
+                    NodeCount           = '/api/internal/cluster/me/node'
+                    HasTPM              = '/api/internal/cluster/me/has_tpm'
+                    OnlyAzureSupport    = '/api/internal/cluster/me/is_azure_cloud_only'
+                    IsEncrypted         = '/api/internal/cluster/me/is_encrypted'
+                    IsHardwareEncrypted = '/api/internal/cluster/me/is_hardware_encrypted'
+                    IsOnCloud           = '/api/internal/cluster/me/is_on_cloud'
+                    IsSingleNode        = '/api/internal/cluster/me/is_single_node'
+                    Platform            = '/api/internal/cluster/me/platforminfo'
+                    GeneralInfo         = '/api/v1/cluster/me'
+                    Status              = '/api/internal/cluster/me/system_status'
+                }
+                Method      = 'Get'
+                Body        = ''
+                Query       = ''
+                Result      = ''
+                Filter      = ''
+                Success     = '200'
+            }
         }
         'Get-RubrikClusterNetworkInterface'           = @{
             '1.0' = @{

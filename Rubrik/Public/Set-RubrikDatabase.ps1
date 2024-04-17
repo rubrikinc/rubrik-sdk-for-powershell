@@ -167,6 +167,13 @@ function Set-RubrikDatabase
 
   Process {
 
+    # If we are in RSC mode, call other cmdlet
+    if ($global:RubrikConnection.RSCInstance) {
+      Write-Verbose -Message "RSC connection detected, redirecting to Set-RubrikRSCDatabase"
+      $response = Set-RubrikRSCDatabase @PSBoundParameters
+      return $response
+    }
+
     #region One-off
     if($SLA){
       $SLAID = Test-RubrikSLA $SLA

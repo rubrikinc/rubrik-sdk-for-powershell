@@ -160,7 +160,13 @@ function Get-RubrikFileset
   }
 
   Process {
-
+      # If connected to RSC, redirect to new GQL cmdlet
+    if ($global:rubrikConnection.RSCInstance) {
+      Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCFileset"
+      #$response = Get-RubrikRSCHost @PSBoundParameters
+      $response = Get-RubrikRSCFileset @PSBoundParameters
+      return $response
+    }
     #region One-off
     # If SLA paramter defined, resolve SLAID
     If ($SLA) {
