@@ -113,7 +113,6 @@ function Get-RubrikDatabase
   )
 
     Begin {
-
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
     # If a command needs to be run with each iteration or pipeline input, place it in the Process section
 
@@ -157,6 +156,13 @@ function Get-RubrikDatabase
 
   Process {
 
+    # If connected to RSC, redirect to new GQL cmdlet
+    if ($global:rubrikConnection.RSCInstance) {
+      Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCDatabase"
+      $response = Get-RubrikRSCDatabase @PSBoundParameters
+      return $response
+    }
+    
     #region One-off
     # If SLA paramter defined, resolve SLAID
     If ($SLA) {

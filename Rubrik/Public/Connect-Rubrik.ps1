@@ -38,7 +38,11 @@ function Connect-Rubrik {
       .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Id "Service Account ID" -Secret "Service Account Secret"
       Connect to Rubrik cluster utilizing a Service Account ID and Secret
-            
+
+      .EXAMPLE
+      Connect-Rubrik -Server 192.168.1.1 -Id "Service Account ID" -Secret "Service Account Secret" -RedirectToRSC
+      Connect to Rubrik cluster utilizing a Service Account ID and Secret, redirecting certain cmdlets to utilized RSC GraphQL APIs where appropriate     
+
       .EXAMPLE
       Connect-Rubrik -Server 192.168.1.1 -Username admin -UserAgent @{platform_integration='Poshbot.Rubrik'}
 
@@ -56,6 +60,9 @@ function Connect-Rubrik {
         # Service Account Secret
         [Parameter(ParameterSetName='ServiceAccount',Mandatory=$true, Position = 2)]
         [String]$Secret,
+        # Toggle switch to turn GraphQL redirects on/off
+        [Parameter(ParameterSetName='ServiceAccount',Mandatory=$false, Position = 3)]
+        [Switch]$RedirectToRSC,
         # Username with permissions to connect to the Rubrik cluster
         # Optionally, use the Credential parameter    
         [Parameter(ParameterSetName='UserPassword',Mandatory=$true, Position = 1)]
@@ -151,18 +158,18 @@ function Connect-Rubrik {
                 Method = 'Post'
                 ContentType = "application/json"
                 URI = "https://$Server/api/v1/service_account/session"
-                SkipCertificateCheck = $true
                 Body = @{
                     serviceAccountId = "$($Id)"
                     secret = "$($Secret)"
                 } | ConvertTo-Json
             }
+            if ($PSVersiontable.PSVersion.Major -gt 5) {$RestSplat.SkipCertificateCheck = $true}
             $response = Invoke-RestMethod @RestSplat -Verbose
             $Token = $response.token
             $head = @{'Authorization' = "Bearer $($Token)";'User-Agent' = $UserAgentString}
             Write-Verbose -Message 'Storing all connection details into $global:rubrikConnection'
             $global:rubrikConnection = @{
-                id      = $null
+                id      = $response.sessionId
                 userId  = $null
                 token   = $Token
                 server  = $Server
@@ -172,6 +179,11 @@ function Connect-Rubrik {
                 version = Get-RubrikSoftwareVersion -Server $Server
                 authType = 'ServiceAccount'
             }
+            # Determine if cluster is managed by RSC, if so, connect and store auth information in global variable
+            if ($RedirectToRSC) {
+                $RSCInfo = Test-ManagedByRSC -Id $id -Secret $secret
+            }
+            
         } else {
             $Credential = Test-RubrikCredential -Username $Username -Password $Password -Credential $Credential
 

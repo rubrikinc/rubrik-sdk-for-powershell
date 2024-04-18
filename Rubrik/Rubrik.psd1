@@ -12,7 +12,7 @@
 RootModule = 'Rubrik.psm1'
 
 # Version number of this module.
-ModuleVersion = '6.0.1'
+ModuleVersion = '9.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -51,7 +51,7 @@ PowerShellVersion = '4.0'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @("RubrikSecurityCloud")
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -150,7 +150,7 @@ FunctionsToExport = 'Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabas
                'Get-RubrikVAppExportOption', 'Get-RubrikVAppRecoverOption', 
                'Get-RubrikVAppSnapshot', 'Get-RubrikVCD', 
                'Get-RubrikVCDTemplateExportOption', 'Get-RubrikVCenter', 
-               'Get-RubrikVersion', 'Get-RubrikVM', 'Get-RubrikVMSnapshot', 
+               'Get-RubrikVersion', 'Get-RubrikVM', 'Get-RubrikVMDownloadLink','Get-RubrikVMSnapshot', 
                'Get-RubrikVMwareCluster', 'Get-RubrikVMwareDatacenter', 
                'Get-RubrikVMwareDatastore', 'Get-RubrikVMwareHost', 
                'Get-RubrikVgfAutoUpgrade', 'Get-RubrikVgfClusterStorage', 
@@ -200,7 +200,7 @@ FunctionsToExport = 'Connect-Rubrik', 'Disconnect-Rubrik', 'Export-RubrikDatabas
                'Set-RubrikUserRole', 'Set-RubrikVCD', 'Set-RubrikVCenter', 
                'Set-RubrikVgfAutoUpgrade', 'Set-RubrikVM', 
                'Set-RubrikVolumeFilterDriver', 'Start-RubrikDownload', 
-               'Start-RubrikManagedVolumeSnapshot', 
+               'Start-RubrikManagedVolumeSnapshot', 'Start-RubrikVMDownload',
                'Stop-RubrikManagedVolumeSnapshot', 'Sync-RubrikAnnotation', 
                'Sync-RubrikTag', 'Test-RubrikSnapshotVerification', 
                'Update-RubrikHost', 'Update-RubrikNutanixCluster', 

@@ -14,6 +14,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## [9.0.0]
+
+### Added
+
+* New `Get-RubrikVMDownloadLink` and `Start-RubrikVMDownloadLink` cmdlets added along with associated unit tests
+* Added `Test-ManagedByRSC`,`Get-RubrikRSCVM`,`Get-RubrikRSCDatabase`,`Get-RubrikRSCFileset`,`Get-RubrikRSCFilesetTemplate`,`Get-RubrikRSCHost`,`Get-RubrikNutanixVM`,`Get-RubrikHyperVVM`, `Get-RubrikRSCSla`, `Get-RubrikRSCSqlInstance`, `New-RubrikRSCSla`, `Set-RubrikRSCSla`, `Set-RubrikRSCSqlInstance`, `Set-RubrikRSCDatabase`,`Protect-RubrikRSCVM`,`Protect-RubrikRSCHyperVVM`,`Protect-RubrikRSCDatabase`, and `Protect-RubrikRSCNutanixVM` to support integration into the RSC PowerShell SDK
+
+### Modified
+* Modified `Connect-Rubrik` to detect if cluster is managed by RSC - if it is, redirect certain cmdlets to GQL Endpoints
+* Added a new `-RedirectToRSC` parameter to `Connect-Rubrik` to turn redirection to GQL endpoints on or off
+* Added new global variables `RSCInstance`,`clusterId`, and `RSCHeaders` to rubrikConnection
+* Modified `Get-RubrikSla`,`Get-RubrikVM`,`Get-RubrikHyperVVM`, `Get-RubrikNutanixVM`,`Get-RubrikFileset`,`Get-RubrikFilesetTemplate`,`Get-RubrikHost`,`Get-RubrikDatabase`, `Get-RubrikSqlInstance`, `New-RubrikSla`, `Set-RubrikSqlInstance`, `Set-RubrikSla`, `Set-RubrikDatabase`,`Protect-RubrikDatabase`,`Protect-RubrikVM`,`Protect-RubrikNutanixVM`, and `Protect-RubrikHyperVVM` to redirect to newly added (above) cmdlets that call GQL endpoints
+* Modified `Get-RubrikClusterInfo` to remove api call to /internal/cluster/is_register on CDM 9.0 and above as it doesn't exist
+
+## [6.0.2](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.2) - 2023-01-06
+
+### Added
+
+* Added `SessionID` property to output in `Connect-Rubrik` for service accounts thanks @tonypags, it was previously defined but had a `$null` value. This ID value can be used to disconnect a specific session listed under $global:RubrikConnections.
+
+### Fixed
+
+* `Connect-Rubrik` issue fixed with new service account implementation, won't run on PSv5 thanks @tonypags, resolves [Issue 817](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues/817)
+
 ## [6.0.1](https://github.com/rubrikinc/rubrik-sdk-for-powershell/tree/6.0.1) - 2022-09-22
 
 ### Added

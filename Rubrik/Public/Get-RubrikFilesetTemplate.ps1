@@ -56,6 +56,7 @@ function Get-RubrikFilesetTemplate
     [String]$api = $global:RubrikConnection.api
   )
 
+
   Begin {
 
     # The Begin section is used to perform one-time loads of data necessary to carry out the function's purpose
@@ -77,7 +78,13 @@ function Get-RubrikFilesetTemplate
   }
 
   Process {
-
+  
+    # If connected to RSC, redirect to new GQL cmdlet
+    if ($global:rubrikConnection.RSCInstance) {
+      Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCFilesetTemplate"
+      $response = Get-RubrikRSCFilesetTemplate @PSBoundParameters
+      return $response
+    }
     $uri = New-URIString -server $Server -endpoint ($resources.URI) -id $id
     $uri = Test-QueryParam -querykeys ($resources.Query.Keys) -parameters ((Get-Command $function).Parameters.Values) -uri $uri
     $body = New-BodyString -bodykeys ($resources.Body.Keys) -parameters ((Get-Command $function).Parameters.Values)

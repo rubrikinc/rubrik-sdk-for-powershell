@@ -97,6 +97,12 @@ function Get-RubrikVolumeGroup
 
   Process {
 
+      # If connected to RSC, redirect to new GQL cmdlet
+      if ($global:rubrikConnection.RSCInstance) {
+        Write-Verbose -Message "Cluster connected to RSC instance, redirecting to Get-RubrikRSCVolumeGroup"
+        $response = Get-RubrikRSCVolumeGroup @PSBoundParameters
+        return $response
+      }
     #region One-off
     # If SLA paramter defined, resolve SLAID
     If ($SLA) {

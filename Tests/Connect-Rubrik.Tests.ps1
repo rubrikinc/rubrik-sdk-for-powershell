@@ -33,6 +33,16 @@ Describe -Name 'Public/Connect-Rubrik' -Tag 'Public', 'Connect-Rubrik' -Fixture 
                 token = 33333
             }
         }
+        Mock -CommandName Invoke-RestMethod -Verifiable -ModuleName 'Rubrik' -MockWith {
+            [pscustomobject]@{
+                sessionId = "22222"
+                serviceAccountId = "11111"
+                token = "33333"
+                expirationTime = "3022-12-10T06:19:52.250Z"
+                organizationId = "44444"
+            }
+        }
+
         It -Name 'Username / Password combination' -Test {
             (Connect-Rubrik -Server testcluster -Username jaapbrasser -Password $(ConvertTo-SecureString -String password -AsPlainText -Force)) | Out-String |
                 Should -BeLikeExactly '*Basic*'
@@ -51,9 +61,14 @@ Describe -Name 'Public/Connect-Rubrik' -Tag 'Public', 'Connect-Rubrik' -Fixture 
                 Should -BeLikeExactly '*Token*'
         }
 
-        It -Name 'RubrikConnections array should contain 3 entries' -Test {
+        It -Name 'Service Account' -Test {
+            (Connect-Rubrik -Server testcluster -Id Username -Secret 33333) | Out-String |
+                Should -BeLikeExactly '*ServiceAccount*'
+        }
+
+        It -Name 'RubrikConnections array should contain 4 entries' -Test {
             @($RubrikConnections).Count |
-                Should -Be 3
+                Should -Be 4
         }
 
         Assert-VerifiableMock
