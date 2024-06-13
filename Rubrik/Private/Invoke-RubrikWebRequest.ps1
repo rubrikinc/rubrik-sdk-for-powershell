@@ -23,6 +23,9 @@ function Invoke-RubrikWebRequest {
     } 
     if (Test-PowerShellSeven) {
         if ($Method -eq "DELETE") {
+            if ($PSBoundParameters.ContainsKey('ContentType')) {
+                $PSBoundParameters.Remove('ContentType')
+            }
             $PSBoundParameters.Add('ContentType', 'application/json')
             Write-Verbose -Message ('Submitting "{0}" request as "application/json"' -f $Method)
         }
