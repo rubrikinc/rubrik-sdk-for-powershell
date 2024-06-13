@@ -16,8 +16,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+* Added `Test-PowerShellSeven` private function to test if PS 7 is being used to facilate fix for DELETE calls without explicit ContentType parameter.
+
 ### Modified
-* Added ContentType parameter to `Invoke-WebRequest` call in `Invoke-RubrikWebRequest` to properly issue `Disconnect-Rubrik` calls. This resolves [Issue 853](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues#:~:text=Issues%20list-,Disconnect%2DRubrik%20not%20working%20after%20PowerShell%207.3.9,-kind%2Dbug)
+* Modified `Invoke-RubrikWebRequest` to check for PS 7 and DELETE calls - if so, add ContentType parameter to bound parameters. This resolves [Issue 853](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues#:~:text=Issues%20list-,Disconnect%2DRubrik%20not%20working%20after%20PowerShell%207.3.9,-kind%2Dbug)
 
 ## [9.0.0]
 
