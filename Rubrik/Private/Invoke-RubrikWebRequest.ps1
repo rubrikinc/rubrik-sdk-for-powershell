@@ -20,8 +20,10 @@ function Invoke-RubrikWebRequest {
     if (Test-UnicodeInString -String $Body) {
         $PSBoundParameters.Add('ContentType', 'text/plain; charset=utf-8')
         Write-Verbose -Message ('Submitting "{0}" request as "text/plain; charset=utf-8"' -f $Method)
+    } else {
+        $PSBoundParameters.Add('ContentType', 'application/json')
     }
-
+    
     if (Test-PowerShellSix) {
         if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
             Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
