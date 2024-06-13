@@ -21,11 +21,13 @@ function Invoke-RubrikWebRequest {
         $PSBoundParameters.Add('ContentType', 'text/plain; charset=utf-8')
         Write-Verbose -Message ('Submitting "{0}" request as "text/plain; charset=utf-8"' -f $Method)
     } 
-    if (Test-PowerShellSeven and $Method -eq 'DELETE')
-    {
-        $PSBoundParameters.Add('ContentType', 'application/json')
-        Write-Verbose -Message ('Submitting "{0}" request as "application/json"' -f $Method)
-    }
+    if (Test-PowerShellSeven) {
+        if ($Method -eq "DELETE") {
+            $PSBoundParameters.Add('ContentType', 'application/json')
+            Write-Verbose -Message ('Submitting "{0}" request as "application/json"' -f $Method)
+        }
+    } 
+   
     
     if (Test-PowerShellSix) {
         if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
