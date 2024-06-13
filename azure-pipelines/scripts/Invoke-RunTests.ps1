@@ -1,6 +1,8 @@
 Install-Module -Name Pester -MaximumVersion 4.2.0 -Force
 Remove-Module Pester -ErrorAction SilentlyContinue
 Import-Module -Name Pester -MaximumVersion 4.2.0 
+Install-Module -Name RubrikSecurityCloud
+Import-Module RubrikSecurityCloud
 
 $PesterSplat = @{
     PassThru = $true
