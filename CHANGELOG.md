@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## Unreleased
+
+### Modified
+* Added ContentType parameter to `Invoke-WebRequest` call in `Invoke-RubrikWebRequest` to properly issue `Disconnect-Rubrik` calls. This resolves [Issue 853](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues#:~:text=Issues%20list-,Disconnect%2DRubrik%20not%20working%20after%20PowerShell%207.3.9,-kind%2Dbug)
+
 ## [9.0.0]
 
 ### Added
