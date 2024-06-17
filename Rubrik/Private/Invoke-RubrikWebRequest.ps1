@@ -33,7 +33,7 @@ function Invoke-RubrikWebRequest {
    
     
     if (Test-PowerShellSix) {
-        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
+        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -and $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
             Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
             $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
         } else {
@@ -41,7 +41,7 @@ function Invoke-RubrikWebRequest {
             $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
         }
     } else {
-        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
+        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -and $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
             Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
             $result = Invoke-WebRequest -UseBasicParsing -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
         } else {
