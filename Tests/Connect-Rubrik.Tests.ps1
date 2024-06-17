@@ -21,28 +21,29 @@ Describe -Name 'Public/Connect-Rubrik' -Tag 'Public', 'Connect-Rubrik' -Fixture 
     #endregion
 
     Context -Name 'Validate Connecting to Cluster' {
-        Mock -CommandName Get-RubrikAPIVersion -Verifiable -ModuleName 'Rubrik' -MockWith { }
-        Mock -CommandName Get-RubrikSoftwareVersion -Verifiable -ModuleName 'Rubrik' -MockWith {
-            '5.1.2-8188'
-        }
-        Mock -CommandName New-UserAgentString -Verifiable -ModuleName 'Rubrik' -MockWith { }
-        Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
-            [pscustomobject]@{
-                id = 11111
-                userId = 22222
-                token = 33333
-            }
-        }
-        Mock -CommandName Invoke-RestMethod -Verifiable -ModuleName 'Rubrik' -MockWith {
-            [pscustomobject]@{
-                sessionId = "22222"
-                serviceAccountId = "11111"
-                token = "33333"
-                expirationTime = "3022-12-10T06:19:52.250Z"
-                organizationId = "44444"
-            }
-        }
 
+            Mock -CommandName Get-RubrikAPIVersion -Verifiable -ModuleName 'Rubrik' -MockWith { }
+            Mock -CommandName Get-RubrikSoftwareVersion -Verifiable -ModuleName 'Rubrik' -MockWith {
+                '5.1.2-8188'
+            }
+            Mock -CommandName New-UserAgentString -Verifiable -ModuleName 'Rubrik' -MockWith { }
+            Mock -CommandName Submit-Request -Verifiable -ModuleName 'Rubrik' -MockWith {
+                [pscustomobject]@{
+                    id = 11111
+                    userId = 22222
+                    token = 33333
+                }
+
+            Mock -CommandName Invoke-RestMethod -Verifiable -ModuleName 'Rubrik' -MockWith {
+                [pscustomobject]@{
+                    sessionId = "22222"
+                    serviceAccountId = "11111"
+                    token = "33333"
+                    expirationTime = "3022-12-10T06:19:52.250Z"
+                    organizationId = "44444"
+                }
+            }
+    }
         It -Name 'Username / Password combination' -Test {
             (Connect-Rubrik -Server testcluster -Username jaapbrasser -Password $(ConvertTo-SecureString -String password -AsPlainText -Force)) | Out-String |
                 Should -BeLikeExactly '*Basic*'
@@ -59,19 +60,21 @@ Describe -Name 'Public/Connect-Rubrik' -Tag 'Public', 'Connect-Rubrik' -Fixture 
         It -Name 'API Token' -Test {
             (Connect-Rubrik -Server testcluster -Token 33333) | Out-String |
                 Should -BeLikeExactly '*Token*'
+                
         }
 
         It -Name 'Service Account' -Test {
             (Connect-Rubrik -Server testcluster -Id Username -Secret 33333) | Out-String |
                 Should -BeLikeExactly '*ServiceAccount*'
+                
         }
 
         It -Name 'RubrikConnections array should contain 4 entries' -Test {
             @($RubrikConnections).Count |
                 Should -Be 4
+                
         }
-
-        Assert-VerifiableMock
         Assert-MockCalled -CommandName Submit-Request -ModuleName 'Rubrik' -Exactly 3
+        
     }
 }
