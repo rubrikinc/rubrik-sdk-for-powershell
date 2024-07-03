@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [9.0.1]
+
 ### Added
 * Added `Test-PowerShellSeven` private function to test if PS 7 is being used to facilate fix for DELETE calls without explicit ContentType parameter.
 
