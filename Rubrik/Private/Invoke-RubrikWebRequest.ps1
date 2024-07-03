@@ -20,10 +20,20 @@ function Invoke-RubrikWebRequest {
     if (Test-UnicodeInString -String $Body) {
         $PSBoundParameters.Add('ContentType', 'text/plain; charset=utf-8')
         Write-Verbose -Message ('Submitting "{0}" request as "text/plain; charset=utf-8"' -f $Method)
-    }
-
+    } 
+    if (Test-PowerShellSeven) {
+        if ($Method -eq "DELETE") {
+            if ($PSBoundParameters.ContainsKey('ContentType')) {
+                $PSBoundParameters.Remove('ContentType')
+            }
+            $PSBoundParameters.Add('ContentType', 'application/json')
+            Write-Verbose -Message ('Submitting "{0}" request as "application/json"' -f $Method)
+        }
+    } 
+   
+    
     if (Test-PowerShellSix) {
-        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
+        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -and $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
             Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
             $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
         } else {
@@ -31,7 +41,7 @@ function Invoke-RubrikWebRequest {
             $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
         }
     } else {
-        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -or $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
+        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -and $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
             Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
             $result = Invoke-WebRequest -UseBasicParsing -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
         } else {
