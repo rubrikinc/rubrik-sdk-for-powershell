@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
+## Unreleased
+
+## [9.0.1]
+
+### Added
+* Added `Test-PowerShellSeven` private function to test if PS 7 is being used to facilate fix for DELETE calls without explicit ContentType parameter.
+
+### Modified
+* Modified `Invoke-RubrikWebRequest` to check for PS 7 and DELETE calls - if so, add ContentType parameter to bound parameters. This resolves [Issue 853](https://github.com/rubrikinc/rubrik-sdk-for-powershell/issues#:~:text=Issues%20list-,Disconnect%2DRubrik%20not%20working%20after%20PowerShell%207.3.9,-kind%2Dbug)
+* Modified `Invoke-RubrikWebRequest` to fix logic that tests for blank and/or default timeout value that is less than 100. Previously, if a timeout of less than 100 was specified it would be used by Invoke-WebRequest. We need at least a value of 100 so now the logic will ensure that is applied
+
 ## [9.0.0]
 
 ### Added
