@@ -30,6 +30,13 @@ Connect-Rubrik [-Server] <String> [-Token] <String> [-OrganizationID <String>] [
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
+### Service Account
+```
+Connect-Rubrik [-Server] <String> [-Id] <String> [-Secret] <String> [-OrganizationID <String>]
+ [-UserAgent <Hashtable>] [-WhatIf] [-Confirm] [-RedirectToRSC] [<CommonParameters>]
+
+```
+
 ## DESCRIPTION
 The Connect-Rubrik function is used to connect to the Rubrik RESTful API and supply credentials to the /login method.
 Rubrik then returns a unique token to represent the user's credentials for subsequent calls.
@@ -74,6 +81,22 @@ Connect-Rubrik -Server 192.168.1.1 -Username admin -UserAgent @{platform_integra
 ```
 
 This will connect to Rubrik with a username of "admin" to the IP address 192.168.1.1, will prompt for password and provide additional information in the user-agent string.
+
+### EXAMPLE 6
+```
+Connect-Rubrik -Server 192.168.1.1 -Id "Service Account ID" -Secret "Service Account Secret"
+```
+
+Connect to Rubrik cluster utilizing a Service Account ID and Secret
+
+### EXAMPLE 7
+```
+Connect-Rubrik -Server 192.168.1.1 -Id "Service Account ID" -Secret "Service Account Secret" -RedirectToRSC
+```
+
+Connect to Rubrik cluster utilizing a Service Account ID and Secret, redirecting certain cmdlets to utilized RSC GraphQL
+APIs where appropriate.
+
 
 ## PARAMETERS
 
