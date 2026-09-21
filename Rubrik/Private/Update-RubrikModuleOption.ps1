@@ -73,7 +73,11 @@
 
                 # Set value in global variable
                 Write-Verbose -Message "Setting $OptionName to $OptionValue in global options"
-                $global:rubrikOptions.ModuleOption.$OptionName = $OptionValue
+                if ($OptionName -eq 'DefaultWebRequestTimeOut') {
+                    $global:rubrikOptions.ModuleOption.$OptionName = [int]$OptionValue
+                } else {
+                    $global:rubrikOptions.ModuleOption.$OptionName = $OptionValue
+                }
                 # overwrite options file with global information
                 Write-Verbose -Message "Exporting global options to $(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
                 $global:rubrikOptions | ConvertTo-Json | Out-File -FilePath "$(Get-HomePath)\rubrik_sdk_for_powershell_options.json"
