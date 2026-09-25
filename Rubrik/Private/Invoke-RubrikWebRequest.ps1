@@ -33,17 +33,17 @@ function Invoke-RubrikWebRequest {
    
     
     if (Test-PowerShellSix) {
-        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -and $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
+        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -and [int]$rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
             Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
-            $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
+            $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck -TimeoutSec ([int]$rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) @PSBoundParameters
         } else {
             Write-Verbose -Message "No custom timeout specified or custom timeout is less than 100 seconds, invoking request with default value of 100 seconds"
             $result = Invoke-WebRequest -UseBasicParsing -SkipCertificateCheck @PSBoundParameters
         }
     } else {
-        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -and $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
+        if (-not [string]::IsNullOrWhiteSpace($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) -and [int]$rubrikOptions.ModuleOption.DefaultWebRequestTimeOut -gt 99) {
             Write-Verbose -Message "Invoking request with a custom timeout of $($rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) seconds"
-            $result = Invoke-WebRequest -UseBasicParsing -TimeoutSec $rubrikOptions.ModuleOption.DefaultWebRequestTimeOut @PSBoundParameters
+            $result = Invoke-WebRequest -UseBasicParsing -TimeoutSec ([int]$rubrikOptions.ModuleOption.DefaultWebRequestTimeOut) @PSBoundParameters
         } else {
             Write-Verbose -Message "No custom timeout specified or custom timeout is less than 100 seconds, invoking request with default value of 100 seconds"
             $result = Invoke-WebRequest -UseBasicParsing @PSBoundParameters
