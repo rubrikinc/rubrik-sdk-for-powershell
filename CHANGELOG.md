@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [9.0.2]
+
 ### Modified
 * Modified `Invoke-RubrikWebRequest` to fix logic that tests for blank and/or default timeout value that is less than 100. Previously, if a timeout of less than 100 was specified it would be used by Invoke-WebRequest. We need at least a value of 100 so now the logic will ensure that is applied
 * Modified `Update-RubrikModuleOption` to explicitly cast `DefaultWebRequestTimeOut` to integer when storing the value
